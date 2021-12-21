@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 
 class CustomWidget {
 
+  static int typeID = -1;
+
   String type;
   Widget widget;
 
-  CustomWidget(this.type, this.widget);
+
+  CustomWidget({required Map<String, dynamic> json, this.type = "Error", this.widget = const Text("Error")}) {
+    throw UnsupportedError("Unsupported Method call for Custom Widget");
+  }
 
 
 
@@ -14,9 +19,7 @@ class CustomWidget {
   }
 
 
-  bool fromJson(Map<String, dynamic> json) {
-    throw UnsupportedError("Unsupported Method call for Custom Widget");
-  }
+
 
 
 
