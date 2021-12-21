@@ -5,7 +5,7 @@ import 'package:smart_home/customAttributes/custom_attributes.dart';
 class CustomString implements CustomAttribute<String> {
 
   @override
-  String daa;
+  String data;
 
   @override
   Widget widget;
