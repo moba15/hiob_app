@@ -70,6 +70,22 @@ class CustomWidgetManager {
     return true;
   }
 
+  Future<List<int>> getScreens() async {
+    String jsonRaw = await readJson();
+    Map<String, dynamic> json = jsonDecode(jsonRaw);
+    if(json.isEmpty) {
+      return [];
+    }
+    List<int> screens = [];
+    for(String screenC in json.keys) {
+      int screen = int.fromEnvironment(screenC.replaceAll("Screen ", ""));
+      screens.add(screen);
+
+    }
+
+    return screens;
+  }
+
 
 
 }
