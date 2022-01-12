@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/screens/main_screen.dart';
 
 void main() {
+  Manager manager = Manager();
+
   runApp(const MyApp());
 }
 
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MainScreen()
     );
   }
 }
