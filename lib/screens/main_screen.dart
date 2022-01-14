@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/screens/settings/main_settings_screen.dart';
 import 'package:smart_home/setting/setting_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
 
           Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SettingScreen()),
+          MaterialPageRoute(builder: (context) => const MainSettingsScreen()),
           )
           }, icon: const Icon(Icons.settings))
         ],
