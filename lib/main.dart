@@ -3,7 +3,6 @@ import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screens/main_screen.dart';
 
 void main() {
-  Manager manager = Manager();
 
   runApp(const MyApp());
 }
