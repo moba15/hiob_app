@@ -23,24 +23,40 @@ class _DeviceSettingScreenState extends State<DeviceSettingScreen> {
             ListTile(
               leading: const Icon(Icons.power_settings_new),
               title: const Text("Device 1 (shelly)"),
+                subtitle: const Text("Last updated: 10s ago", style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 13
+                ),),
               trailing: const Icon(Icons.signal_cellular_4_bar, color: Colors.green,),
               onTap: () => {}
             ),
             ListTile(
                 leading: const Icon(Icons.power_settings_new),
                 title: const Text("Device 2 (ioBroker)"),
+                subtitle: const Text("Last updated: 10s ago", style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 13
+                ),),
                 trailing: const Icon(Icons.signal_cellular_4_bar, color: Colors.green,),
                 onTap: () => {}
             ),
             ListTile(
                 leading: const Icon(Icons.power_settings_new),
                 title: const Text("Device 3 (shelly)"),
+                subtitle: const Text("Last updated: 9m ago", style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 13
+                ),),
                 trailing: const Icon(Icons.signal_cellular_off, color: Colors.red,),
                 onTap: () => {}
             ),
             ListTile(
                 leading: const Icon(Icons.power_settings_new),
                 title: const Text("Device 4 (ioBroker)"),
+                subtitle: const Text("Last updated: 10s ago", style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 13
+                ),),
                 trailing: const Icon(Icons.signal_cellular_4_bar, color: Colors.green,),
                 onTap: () => {}
             )
@@ -48,6 +64,48 @@ class _DeviceSettingScreenState extends State<DeviceSettingScreen> {
         ),
       ),
 
+
+      floatingActionButton: FloatingActionButton(
+
+        onPressed: () {
+          showDialog(context: context, builder: (context) {
+            return const DeviceAddAlertDialog();
+          });
+        },
+        child: const Icon(Icons.add),
+        tooltip: "Neues Gerät Hinzufügen",
+      ),
+
+
+
     );
   }
 }
+
+class DeviceAddAlertDialog extends StatefulWidget  {
+  const DeviceAddAlertDialog({Key? key}) : super(key: key);
+
+  @override
+  _DeviceAddAlertDialogState createState() => _DeviceAddAlertDialogState();
+}
+
+class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
+  @override
+  AlertDialog build(BuildContext context) {
+    return  AlertDialog(
+      title: const Text("Add Device"),
+      content: Row(
+        children: [
+          const Text("Name"),
+
+          TextField(
+            onChanged: (e) => {},
+
+          )
+        ],
+      ),
+
+    );
+  }
+}
+
