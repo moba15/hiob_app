@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_iconpicker/IconPicker/iconPicker.dart';
+import 'package:smart_home/devices/device.dart';
 
 class DeviceSettingScreen extends StatefulWidget {
   const DeviceSettingScreen({Key? key}) : super(key: key);
@@ -68,7 +71,11 @@ class _DeviceSettingScreenState extends State<DeviceSettingScreen> {
       floatingActionButton: FloatingActionButton(
 
         onPressed: () {
-          showDialog(context: context, builder: (context) {
+          showDialog(
+            barrierDismissible: false,
+              context: context,
+              builder: (context) {
+
             return const DeviceAddAlertDialog();
           });
         },
@@ -90,22 +97,142 @@ class DeviceAddAlertDialog extends StatefulWidget  {
 }
 
 class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
+  DeviceType _deviceType = DeviceType.ioBroker;
+
+  final nameController = TextEditingController();
+  final idController = TextEditingController();
+  final iconController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    nameController.dispose();
+    idController.dispose();
+    iconController.dispose();
+    super.dispose();
+  }
+
   @override
   AlertDialog build(BuildContext context) {
+
+
+
+
+
+
+
     return  AlertDialog(
+      actions: [
+        TextButton(
+          onPressed: () { _save(); },
+          child: const Text("Save"),
+
+        ),
+        TextButton(
+          onPressed: () { Navigator.of(context).pop();  },
+          child: const Text("Cancle"),
+
+        )
+
+      ],
+
       title: const Text("Add Device"),
-      content: Row(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Name"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
 
-          TextField(
-            onChanged: (e) => {},
+                child: const SizedBox(
+                  width: 50,
+                  child: Text("Name:"),
+                ),
+                margin: const EdgeInsets.only(right: 20.0),
+              ),
+              Expanded(
 
-          )
+                child: TextField(
+                  onChanged: (value) {
+
+                  },
+                  controller: nameController,
+                  decoration: const InputDecoration(hintText: "Name of device"),
+                ),
+              )
+            ],
+          ),
+
+          Row(
+            children: [
+              Container(
+                child: const SizedBox(
+                  width: 50,
+                  child: Text("Type:"),
+                ),
+                margin: const EdgeInsets.only(right: 20.0),
+              ),
+              Expanded(
+
+                child: DropdownButton<DeviceType>(
+                  value: _deviceType,
+                  items: DeviceType.values
+                      .map<DropdownMenuItem<DeviceType>>((DeviceType value) {
+                    return DropdownMenuItem<DeviceType>(
+                      value: value,
+                      child: Text(value.name),
+                    );
+                  }).toList(),
+                  onChanged: (DeviceType? value) {
+                    setState(() {
+                      _deviceType = value!;
+                    });
+                  },
+
+                )
+              )
+            ],
+          ),
+          _deviceType.setupWidget(idController),
+          Row(
+            children: [
+              Container(
+                child: const SizedBox(
+                  width: 50,
+                  child: Text("Icon:"),
+                ),
+                margin: const EdgeInsets.only(right: 20.0),
+              ),
+              Expanded(
+
+                child: TextField(
+                  onChanged: (value) {
+
+                  },
+                  controller: iconController,
+                  decoration: const InputDecoration(hintText: "Icon ID"),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ], // Only numbers can be entered
+                ),
+              )
+            ],
+          ),
+
+
+
+
+
         ],
       ),
 
     );
   }
+
+  void _save() {}
 }
 

@@ -1,11 +1,11 @@
 class Screen {
-  final int _id;
+  final String _id;
   final String _name;
 
   Screen(this._id, this._name);
 
 
-  int get getID {
+  String get getID {
     return _id;
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/screen/screen.dart';
+import 'package:smart_home/utils/random_generator.dart';
 
 class CustomWidgetManager {
 
@@ -26,8 +27,8 @@ class CustomWidgetManager {
   }
 
   Future<void> _loadScreens() async {
-    Map<int, String> screens = await getScreens();
-    for(int id in screens.keys) {
+    Map<String, String> screens = await getScreens();
+    for(String id in screens.keys) {
       String? name = screens[id];
       if(name !=null) {
         _screens.add(Screen(id, name));
@@ -74,60 +75,74 @@ class CustomWidgetManager {
   }
 
 
-  Future<bool> addWidgetToScreen(CustomWidget customWidget, int screen) async {
+  Future<bool> addWidgetToScreen(CustomWidget customWidget, String screen) async {
     String jsonRaw = await readJsonFromCustomWidgetsFile();
     Map<String, dynamic> json = jsonDecode(jsonRaw);
     if(json.isEmpty) {
       return false;
     }
 
-    if(!json.containsKey("Screen $screen") ) {
+    if(!json.containsKey(screen) ) {
       return false;
     }
 
-    List<dynamic> widgets = json["Screen $screen"];
+    List<dynamic> widgets = json[screen];
     widgets.add(customWidget.toJson());
-    json["Screen $screen"] = widgets;
+    json[screen] = widgets;
     writeJsonToCustomWidgetFile(jsonEncode(json));
 
     return true;
   }
 
-
-  Future<bool> addScreen(int screen, String screenName) async {
-    String customWidgetJsonRaw = await readJsonFromCustomWidgetsFile();
+  Future<bool> exitsScreen(String screen) async {
     String screenJsonRaw = await readJsonFromScreenFile();
-    Map<String, dynamic> customWidgetsJson = jsonDecode(customWidgetJsonRaw);
     Map<String, dynamic> screensJson = jsonDecode(screenJsonRaw);
-    if(customWidgetsJson.isEmpty) {
+    if(screensJson.isEmpty || !screensJson.containsKey("screen")) {
       return false;
     }
-
-    if(customWidgetsJson.containsKey("Screen $screen") ||screensJson.containsKey("$screen") ) {
-      return false;
-    }
-
-
-
-    customWidgetsJson["Screen $screen"] = List<dynamic>;
-    screensJson["$screen"] = {
-      "screenName": screenName,
-    };
-
-    writeJsonToCustomWidgetFile(jsonEncode(customWidgetsJson));
 
     return true;
   }
 
-  Future<Map<int, String>> getScreens() async {
+
+  Future<bool> addScreen(String screenName) async {
+    String screen = RandomGen.getRandString(6);
+
+    while(await exitsScreen(screen)) {
+      screen = RandomGen.getRandString(6);
+    }
+
+    String customWidgetJsonRaw = await readJsonFromCustomWidgetsFile();
+
+    String screenJsonRaw = await readJsonFromScreenFile();
+    Map<String, dynamic> customWidgetsJson = jsonDecode(customWidgetJsonRaw);
+    Map<String, dynamic> screensJson = jsonDecode(screenJsonRaw);
+
+
+
+    customWidgetsJson[screen] = List<dynamic>;
+    screensJson[screen] = {
+      "screenName": screenName,
+      "created": DateTime.now().millisecondsSinceEpoch
+    };
+
+    writeJsonToCustomWidgetFile(jsonEncode(customWidgetsJson));
+    writeJsonToScreenFile(jsonEncode(screensJson));
+
+    return true;
+  }
+
+
+
+  Future<Map<String, String>> getScreens() async {
     String jsonRaw = await readJsonFromScreenFile();
     Map<String, dynamic> json = jsonDecode(jsonRaw);
     if(json.isEmpty) {
       return {};
     }
-    Map<int, String> screens = {};
+    Map<String, String> screens = {};
     for(String screenC in json.keys) {
-      int screen = int.fromEnvironment(screenC);
+      String screen = screenC;
       screens[screen] = json[screen]["screenName"];
 
     }
