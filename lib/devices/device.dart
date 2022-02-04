@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart';
 
+
+abstract class Device {
+  String id;
+  int iconID;
+  String name;
+
+
+  Device(this.id, this.iconID, this.name);
+
+  Map<String, dynamic> toMap();
+
+
+
+
+}
+
+
 enum DeviceType {
   httpDevice,
   ioBroker

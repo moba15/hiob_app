@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconpicker/IconPicker/iconPicker.dart';
 import 'package:smart_home/devices/device.dart';
+import 'package:smart_home/devices/http_devices/iobroker_device.dart';
 
 class DeviceSettingScreen extends StatefulWidget {
   const DeviceSettingScreen({Key? key}) : super(key: key);
@@ -233,6 +237,19 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
     );
   }
 
-  void _save() {}
+  void _save() {
+    if(_deviceType == DeviceType.ioBroker) {
+      IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
+          id: idController.text,
+          iconID: int.fromEnvironment(iconController.text),
+          name: nameController.text,
+          objectID: idController.text);
+      if (kDebugMode) {
+        print(jsonEncode(ioBrokerDevice));
+      }
+    }
+
+
+  }
 }
 
