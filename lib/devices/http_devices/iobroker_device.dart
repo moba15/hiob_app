@@ -8,12 +8,16 @@ class IoBrokerDevice extends Device {
   String objectID;
 
   IoBrokerDevice(
-      {required String id, required int iconID, required String name, required this.objectID})
-      : super(id, iconID, name);
+      {required int iconID, required String name, required this.objectID})
+      : super(iconID, name);
+
+  IoBrokerDevice.withID(
+      {required int iconID, required String name, required this.objectID, required String id})
+      : super.withID(iconID, name, id);
 
 
   factory IoBrokerDevice.fromJSON(Map<String, dynamic> json) =>
-      IoBrokerDevice(
+      IoBrokerDevice.withID(
         id: json["id"],
         iconID: json["iconID"],
         name: json["name"],

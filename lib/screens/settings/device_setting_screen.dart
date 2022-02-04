@@ -238,9 +238,11 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
   }
 
   void _save() {
+    if(int.tryParse(iconController.text) == null || nameController.text.isEmpty || idController.text.isEmpty || int.parse(iconController.text) <0) {
+      return;
+    }
     if(_deviceType == DeviceType.ioBroker) {
       IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
-          id: idController.text,
           iconID: int.parse(iconController.text),
           name: nameController.text,
           objectID: idController.text);

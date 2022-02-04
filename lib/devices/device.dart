@@ -1,15 +1,27 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
+import 'package:flutter/material.dart';
+var r = Random();
+
+String generateRandomString(int len) {
+
+  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+}
 
 abstract class Device {
-  String id;
+  String id = generateRandomString(10);
   int iconID;
   String name;
 
 
-  Device(this.id, this.iconID, this.name);
+  Device(this.iconID, this.name);
+
+  Device.withID(this.iconID, this.name, this.id);
 
   Map<String, dynamic> toJson();
+
+
 
 
 
