@@ -241,7 +241,7 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
     if(_deviceType == DeviceType.ioBroker) {
       IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
           id: idController.text,
-          iconID: int.fromEnvironment(iconController.text),
+          iconID: int.parse(iconController.text),
           name: nameController.text,
           objectID: idController.text);
       if (kDebugMode) {

@@ -1,23 +1,25 @@
 import 'package:smart_home/manager/customise_manager.dart';
+import 'package:smart_home/manager/device_manager.dart';
+import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/screens/loading_screen.dart';
 
 class Manager {
 
-  late CustomWidgetManager _customWidgetManager;
+  late CustomWidgetManager customWidgetManager;
+  late FileManager fileManager;
+  late DeviceManager deviceManager;
 
   Manager() {
-    _customWidgetManager =  CustomWidgetManager();
+    customWidgetManager =  CustomWidgetManager();
+    fileManager = FileManager();
+    deviceManager = DeviceManager(fileManager);
 
-
-    load();
 
 
 
   }
 
-  void load() async {
-    await  _customWidgetManager.load();
-  }
+
 
 
 

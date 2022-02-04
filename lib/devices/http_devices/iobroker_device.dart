@@ -12,7 +12,7 @@ class IoBrokerDevice extends Device {
       : super(id, iconID, name);
 
 
-  factory IoBrokerDevice.fromMap(Map<String, dynamic> json) =>
+  factory IoBrokerDevice.fromJSON(Map<String, dynamic> json) =>
       IoBrokerDevice(
         id: json["id"],
         iconID: json["iconID"],
@@ -20,7 +20,7 @@ class IoBrokerDevice extends Device {
         objectID: json["objectID"],
       );
 
-  Map<String, dynamic> toMap() =>
+  Map<String, dynamic> toJson() =>
       {
         "id": id,
         "name": name,
@@ -31,6 +31,6 @@ class IoBrokerDevice extends Device {
 
   @override
   String toString() {
-    return "Device: " + toMap().toString();
+    return "Device: " + toJson().toString();
   }
 }

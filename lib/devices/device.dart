@@ -9,7 +9,7 @@ abstract class Device {
 
   Device(this.id, this.iconID, this.name);
 
-  Map<String, dynamic> toMap();
+  Map<String, dynamic> toJson();
 
 
 
