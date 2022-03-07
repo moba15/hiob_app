@@ -36,7 +36,7 @@ class DeviceTile extends StatelessWidget {
 
     return ListTile(
       leading: Icon(IconData(int.parse(device.iconID, radix: 16),
-          fontFamily: 'MaterialIcons')),
+          fontFamily: "MaterialIcons")),
       title: (device is IoBrokerDevice)
           ? Text("${device.name} (IoBroker)")
           : Text("${device.name} "),
