@@ -9,7 +9,7 @@ class CustomAttribute<T> {
   CustomAttribute(this.data, this.widget);
 
   Map<String, dynamic> toJson() {
-    throw UnsupportedError("This Methode is unsupported for CustomAttribute");
+    throw UnsupportedError("This Methode is unsupported for CustomAttribute ");
   }
 
 
