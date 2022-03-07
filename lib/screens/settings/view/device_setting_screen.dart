@@ -4,11 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_iconpicker/IconPicker/iconPicker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:smart_home/devices/device.dart';
 import 'package:smart_home/devices/http_devices/iobroker_device.dart';
+import 'package:smart_home/manager/device_manager.dart';
+import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/screens/settings/device/view/device_list_page.dart';
 
-class DeviceSettingScreen extends StatefulWidget {
+
+class DeviceSettingsScreen extends MaterialApp {
+  DeviceSettingsScreen({Key? key, required DeviceManager manager}) : super(key: key,
+    home: RepositoryProvider.value(value: manager, child: const DeviceListPage(),),
+
+  );
+
+}
+
+/*class DeviceSettingScreen extends StatefulWidget {
   const DeviceSettingScreen({Key? key}) : super(key: key);
 
   @override
@@ -253,5 +266,5 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
 
 
   }
-}
+}*/
 

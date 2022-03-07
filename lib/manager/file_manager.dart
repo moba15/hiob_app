@@ -15,7 +15,7 @@ class FileManager {
 
 
   void _init() async {
-    pref = await SharedPreferences.getInstance();
+    //pref = await SharedPreferences.getInstance();
   }
 
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {

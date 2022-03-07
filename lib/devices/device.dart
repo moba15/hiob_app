@@ -1,7 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
+import 'cubit/device_cubit.dart';
 var r = Random();
+
+
 
 String generateRandomString(int len) {
 
@@ -9,25 +13,28 @@ String generateRandomString(int len) {
   return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
 }
 
-abstract class Device {
-  String id = generateRandomString(10);
+abstract class Device<T> extends DeviceCubit<T> {
   int iconID;
+  String id;
   String name;
+  Device({required this.id, required this.name, required this.iconID, required T? value, required DeviceStatus status}) : super(value, status);
 
-
-  Device(this.iconID, this.name);
-
-  Device.withID(this.iconID, this.name, this.id);
+  Future<void> startTimer() async {
+    int s = 0;
+    while(true) {
+      await Future.delayed(Duration(seconds: 1));
+      s++;
+      changeLastUpdated(Duration(seconds: s));
+      if(s%2==0) {
+        changeStatus(DeviceStatus.READY);
+      } else  {
+        changeStatus(DeviceStatus.UNAVALIBLE);
+      }
+    }
+  }
 
   Map<String, dynamic> toJson();
-
-
-
-
-
-
 }
-
 
 enum DeviceType {
   httpDevice,

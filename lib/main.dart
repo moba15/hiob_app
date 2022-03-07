@@ -1,10 +1,13 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screens/main_screen.dart';
 
+import 'App.dart';
+
 void main() {
 
-  runApp(const MyApp());
+  BlocOverrides.runZoned(() => runApp(App(manager: Manager())) );
 }
 
 class MyApp extends StatelessWidget {

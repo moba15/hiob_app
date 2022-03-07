@@ -12,7 +12,7 @@ class Manager {
   Manager() {
     customWidgetManager =  CustomWidgetManager();
     fileManager = FileManager();
-    deviceManager = DeviceManager(fileManager);
+    deviceManager = DeviceManager(fileManager, devicesList: []);
 
 
 

@@ -1,12 +1,19 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:smart_home/screens/settings/device_setting_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/screens/settings/view/device_setting_screen.dart';
+
+
 
 class MainSettingsScreen extends StatelessWidget {
-  const MainSettingsScreen({Key? key}) : super(key: key);
+  final Manager manager;
+  const MainSettingsScreen({Key? key, required this.manager}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -23,7 +30,7 @@ class MainSettingsScreen extends StatelessWidget {
 
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const DeviceSettingScreen()),
+                MaterialPageRoute(builder: (context) => DeviceSettingsScreen(manager: manager.deviceManager)),
               )
 
             },

@@ -2,26 +2,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/devices/device.dart';
 
-class IoBrokerDevice extends Device {
+import '../cubit/device_cubit.dart';
+
+class IoBrokerDevice<T> extends Device<T> {
 
 
   String objectID;
+  IoBrokerDevice({required String id, required String name, required T? value, required DeviceStatus status,  required this.objectID, required int iconID}) :
+        super(id: id, name: name, status: status, value: value, iconID: iconID);
 
-  IoBrokerDevice(
-      {required int iconID, required String name, required this.objectID})
-      : super(iconID, name);
 
-  IoBrokerDevice.withID(
-      {required int iconID, required String name, required this.objectID, required String id})
-      : super.withID(iconID, name, id);
 
 
   factory IoBrokerDevice.fromJSON(Map<String, dynamic> json) =>
-      IoBrokerDevice.withID(
+      IoBrokerDevice(
         id: json["id"],
         iconID: json["iconID"],
         name: json["name"],
         objectID: json["objectID"],
+        status: DeviceStatus.UNAVALIBLE, value: null
       );
 
   Map<String, dynamic> toJson() =>
