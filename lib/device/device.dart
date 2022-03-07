@@ -7,17 +7,25 @@ import 'package:smart_home/device/bloc/device_bloc.dart';
 class Device {
   String id;
   String name;
-  int iconID;
+  String iconID;
   dynamic value;
   DateTime lastUpdated;
   DeviceStatus status;
   DeviceType type;
 
-  Device({required this.id, required this.name,  required this.iconID, this.value, required this.lastUpdated, required this.type, this.status = DeviceStatus.unavailable});
+  Device(
+      {required this.id,
+      required this.name,
+      required this.iconID,
+      this.value,
+      required this.lastUpdated,
+      required this.type,
+      this.status = DeviceStatus.unavailable});
 
-
-  StreamController<dynamic> valueStreamController = StreamController.broadcast();
-  StreamController<DateTime> lastUpdatedStreamController = StreamController.broadcast();
+  StreamController<dynamic> valueStreamController =
+      StreamController.broadcast();
+  StreamController<DateTime> lastUpdatedStreamController =
+      StreamController.broadcast();
   StreamController<DeviceStatus> statusStreamController = StreamController.broadcast();
 
   set setValue(dynamic value) {

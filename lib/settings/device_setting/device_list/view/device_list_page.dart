@@ -172,19 +172,21 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            if(int.tryParse(iconController.text) == null || nameController.text.isEmpty || idController.text.isEmpty || int.parse(iconController.text) <0) {
+            if (int.tryParse(iconController.text, radix: 16) == null ||
+                nameController.text.isEmpty ||
+                idController.text.isEmpty ||
+                int.parse(iconController.text, radix: 16) < 0) {
               return;
             }
-            if(_deviceType == DeviceType.ioBroker) {
+            if (_deviceType == DeviceType.ioBroker) {
               IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
-                  iconID: int.parse(iconController.text),
+                  iconID: iconController.text,
                   name: nameController.text,
-                  objectID: idController.text, id: 'iasdasd',  lastUpdated: DateTime.now());
+                  objectID: idController.text,
+                  id: 'iasdasd',
+                  lastUpdated: DateTime.now());
               context.read<DeviceManager>().addDevice(ioBrokerDevice);
-
             }
-
-
           },
           child: const Text("Save"),
 
@@ -275,10 +277,6 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
                   controller: iconController,
                   decoration: const InputDecoration(hintText: "Icon ID"),
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-
-                  ], // Only numbers can be entered
                 ),
               )
             ],

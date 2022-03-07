@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/device.dart';
+
 import '../iobroker_device.dart';
 
 
@@ -35,16 +35,26 @@ class DeviceTile extends StatelessWidget {
     final device = context.select((DeviceBloc bloc) => bloc.device);
 
     return ListTile(
-      leading: const Icon(Icons.power_settings_new),
-      title:  (device is IoBrokerDevice) ? Text("${device.name} (IoBroker)") : Text("${device.name} "),
-      trailing: status == DeviceStatus.ready ? const Icon(Icons.signal_cellular_4_bar, color: Colors.green,)
-          : const Icon(Icons.signal_cellular_off, color: Colors.red,),
-      subtitle: Text("Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} ", style: TextStyle(
-          color: status == DeviceStatus.ready ? Colors.green
-              : Colors.red,
-          fontSize: 13
-      ),),
-
+      leading: Icon(IconData(int.parse(device.iconID, radix: 16),
+          fontFamily: 'MaterialIcons')),
+      title: (device is IoBrokerDevice)
+          ? Text("${device.name} (IoBroker)")
+          : Text("${device.name} "),
+      trailing: status == DeviceStatus.ready
+          ? const Icon(
+              Icons.signal_cellular_4_bar,
+              color: Colors.green,
+            )
+          : const Icon(
+              Icons.signal_cellular_off,
+              color: Colors.red,
+            ),
+      subtitle: Text(
+        "Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} ",
+        style: TextStyle(
+            color: status == DeviceStatus.ready ? Colors.green : Colors.red,
+            fontSize: 13),
+      ),
     );
   }
 

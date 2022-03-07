@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:smart_home/device/iobroker_device.dart';
-
 import 'package:smart_home/manager/file_manager.dart';
 
 import '../device/device.dart';
@@ -44,11 +41,7 @@ class DeviceManager {
             devicesList.add(IoBrokerDevice.fromJSON(rawMap));
             break;
         }
-
-
-
       }
-
     }
     loaded = true;
     deviceListStreamController.add(devicesList);
