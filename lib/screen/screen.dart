@@ -1,18 +1,31 @@
+import 'dart:convert';
+
 class Screen {
-  final String _id;
-  final String _name;
+  final String id;
+  final String name;
+  final int iconID;
+  final int index;
+  List<String> widgetIds;
 
-  Screen(this._id, this._name);
+  Screen(
+      {required this.id,
+      required this.name,
+      required this.iconID,
+      required this.index,
+      required this.widgetIds});
 
+  factory Screen.fromJSON(Map<String, dynamic> json) => Screen(
+      id: json["id"],
+      iconID: json["iconID"],
+      name: json["name"],
+      index: json["index"],
+      widgetIds: json["widgetIds"]);
 
-  String get getID {
-    return _id;
-  }
-
-  String get getName {
-    return _name;
-  }
-
-
-
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "iconID": iconID,
+        "index": index,
+        "widgetIds": jsonEncode(widgetIds),
+      };
 }
