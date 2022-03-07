@@ -1,15 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:smart_home/devices/device.dart';
-import 'package:smart_home/devices/http_devices/iobroker_device.dart';
 import 'package:smart_home/manager/device_manager.dart';
-import 'package:smart_home/manager/manager.dart';
 
 import '../../../settings/device_setting/device_list/view/device_list_page.dart';
 

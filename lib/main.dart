@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/screens/settings/view/main_screen.dart';
+import 'package:smart_home/settings/view/main_screen.dart';
 
 import 'App.dart';
 

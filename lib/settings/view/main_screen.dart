@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/screens/settings/view/main_settings_screen.dart';
-import 'package:smart_home/setting/setting_widget.dart';
+
+import 'main_settings_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
