@@ -10,8 +10,8 @@ import 'package:smart_home/devices/device.dart';
 import 'package:smart_home/devices/http_devices/iobroker_device.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/screens/settings/device/view/device_list_page.dart';
 
+import '../../../settings/device_setting/device_list/view/device_list_page.dart';
 
 class DeviceSettingsScreen extends MaterialApp {
   DeviceSettingsScreen({Key? key, required DeviceManager manager}) : super(key: key,

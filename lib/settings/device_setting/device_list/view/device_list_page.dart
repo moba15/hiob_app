@@ -1,27 +1,29 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/devices/device.dart';
-import 'package:smart_home/devices/http_devices/iobroker_device.dart';
+
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/screens/settings/device/cubit/device_list_cubit.dart';
 
+import '../../../../device/device.dart';
+import '../../../../device/iobroker_device.dart';
+import '../../../../device/view/device_tile.dart';
 import '../../../../devices/cubit/device_cubit.dart';
+import '../cubit/device_list_cubit.dart';
 
 class DeviceListPage extends StatelessWidget {
   const DeviceListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    DeviceListCubit deviceListCubit = DeviceListCubit(deviceManager: context.read<DeviceManager>());
     return Scaffold(
       appBar: AppBar(title: const Text("Device Settings"),),
       body: BlocProvider(
-        create: (_) => deviceListCubit..fetchList(),
+        create: (_) => DeviceListCubit(deviceManager: context.read<DeviceManager>())..fetchList(),
         child: DeviceListView(),
       ),
       floatingActionButton: FloatingActionButton(
@@ -30,9 +32,12 @@ class DeviceListPage extends StatelessWidget {
           showDialog(
               barrierDismissible: false,
               context: context,
-              builder: (context) {
+              builder: (c) {
 
-                return DeviceListView();
+                return RepositoryProvider<DeviceManager>.value(
+                  value:  context.read<DeviceManager>(),
+                  child: const DeviceAddAlertDialog(),
+                );
               });
         },
         child: const Icon(Icons.add),
@@ -49,7 +54,7 @@ class DeviceListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<DeviceListCubit>().state; //Listen to state
+    final state = context.select((DeviceListCubit cubit) => cubit.state);
     switch(state.status) {
       case ListStatus.failure:
         return const Center(child: Text("Something went wrong!!"),);
@@ -74,10 +79,13 @@ class DeviceView extends StatelessWidget {
     ListView.builder(
       itemCount: devices.length,
       itemBuilder: (context, int index) {
-        return BlocProvider(
-          create: (_) => devices[index],
-          child: DeviceTile(device: devices[index], onDelete: (s) => {},),
-
+        return Dismissible(
+          key: ValueKey<Device>(devices[index]),
+          child: DeviceTileApp(device: devices[index]),
+          dragStartBehavior: DragStartBehavior.down,
+          onDismissed: (direction) => {
+            context.read<DeviceListCubit>().deviceManager.removeDevice(devices[index])
+          },
         );
 
       },
@@ -86,7 +94,7 @@ class DeviceView extends StatelessWidget {
   }
 }
 
-class DeviceTile extends StatelessWidget {
+/*class DeviceTile extends StatelessWidget {
   final Device device;
   final ValueSetter<String> onDelete;
   const DeviceTile({Key? key, required this.device, required this.onDelete}) : super(key: key);
@@ -124,7 +132,7 @@ class DeviceTile extends StatelessWidget {
     }
 
   }
-}
+}*/
 
 
 
@@ -176,11 +184,9 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
               IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
                   iconID: int.parse(iconController.text),
                   name: nameController.text,
-                  objectID: idController.text, value: null, id: 'iasdasd', status: DeviceStatus.UNAVALIBLE);
-              context.watch<DeviceListCubit>().addDevice(ioBrokerDevice);
-              if (kDebugMode) {
-                print(jsonEncode(ioBrokerDevice));
-              }
+                  objectID: idController.text, id: 'iasdasd',  lastUpdated: DateTime.now());
+              context.read<DeviceManager>().addDevice(ioBrokerDevice);
+
             }
 
 

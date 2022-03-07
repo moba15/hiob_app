@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/screens/main_screen.dart';
+import 'package:smart_home/screens/settings/view/main_screen.dart';
 
 class App extends MaterialApp {
   App({Key? key, required manager}) : super(key: key,

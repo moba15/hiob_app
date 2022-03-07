@@ -1,48 +1,52 @@
-import 'dart:math';
+import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/device/bloc/device_bloc.dart';
 
-import 'cubit/device_cubit.dart';
-var r = Random();
-
-
-
-String generateRandomString(int len) {
-
-  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
-}
-
-abstract class Device<T> extends DeviceCubit<T> {
-
-  int iconID;
+class Device {
   String id;
   String name;
-  Device({required this.id, required this.name, required this.iconID, required T? value, required DeviceStatus status}) : super(value, status);
+  int iconID;
+  dynamic value;
+  DateTime lastUpdated;
+  DeviceStatus status;
+  DeviceType type;
 
-  Future<void> startTimer() async {
-    int s = 0;
-    while(true) {
-      await Future.delayed(Duration(seconds: 1));
-      s++;
-      changeLastUpdated(Duration(seconds: s));
-      if(s%2==0) {
-        changeStatus(DeviceStatus.READY);
-      } else  {
-        changeStatus(DeviceStatus.UNAVALIBLE);
-      }
-    }
+  Device({required this.id, required this.name,  required this.iconID, this.value, required this.lastUpdated, required this.type, this.status = DeviceStatus.unavailable});
+
+
+  StreamController<dynamic> valueStreamController = StreamController.broadcast();
+  StreamController<DateTime> lastUpdatedStreamController = StreamController.broadcast();
+  StreamController<DeviceStatus> statusStreamController = StreamController.broadcast();
+
+  set setValue(dynamic value) {
+    this.value = value;
+    valueStreamController.add(value);
   }
 
-  Map<String, dynamic> toJson();
-}
 
+  set setStatus(DeviceStatus status) {
+    this.status = status;
+    statusStreamController.add(status);
+  }
+
+  set setLastUpdated(DateTime lastUpdated) {
+    this.lastUpdated = lastUpdated;
+    lastUpdatedStreamController.add(lastUpdated);
+  }
+
+
+  void idle() {
+    lastUpdatedStreamController.add(DateTime.fromMillisecondsSinceEpoch(lastUpdated.millisecondsSinceEpoch));
+  }
+
+}
 enum DeviceType {
   httpDevice,
   ioBroker
 
 }
-
 extension DeviceExtension on DeviceType {
 
   String get name {
@@ -54,6 +58,8 @@ extension DeviceExtension on DeviceType {
       default:
         return "Unknown, you fucked up";
     }
+
+
   }
 
 

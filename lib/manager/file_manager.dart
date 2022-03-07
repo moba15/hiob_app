@@ -15,10 +15,14 @@ class FileManager {
 
 
   void _init() async {
-    //pref = await SharedPreferences.getInstance();
+    pref = await SharedPreferences.getInstance();
   }
 
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {
+    return await pref.setString(key, jsonEncode(content));
+  }
+
+  Future<bool> writeJSONList(String key, List<dynamic> content) async {
     return await pref.setString(key, jsonEncode(content));
   }
 
@@ -59,6 +63,14 @@ class FileManager {
 
   Future<Map<String, dynamic>?> getMap(String key) async {
     return jsonDecode(pref.getString(key)!);
+
+  }
+  Future<List<dynamic>?> getList(String key) async {
+    if(pref.containsKey(key)) {
+      return jsonDecode(pref.getString(key)!);
+    } else {
+      return null;
+    }
 
   }
 

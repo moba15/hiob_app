@@ -1,44 +1,94 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:smart_home/devices/cubit/device_cubit.dart';
-import 'package:smart_home/devices/http_devices/iobroker_device.dart';
-import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/screens/settings/device/cubit/device_list_cubit.dart';
+import 'package:smart_home/device/iobroker_device.dart';
 
-import '../devices/device.dart';
+import 'package:smart_home/manager/file_manager.dart';
+
+import '../device/device.dart';
+
 
 class DeviceManager {
 
   FileManager fileManager;
   List<Device> devicesList;
+  StreamController deviceListStreamController = StreamController.broadcast();
   bool loaded = false;
+  final String key = "devices";
+
   DeviceManager(this.fileManager, {required this.devicesList});
 
 
   Future<List<Device>> loadDevices() async {
-    await Future.delayed(const Duration(seconds: 5));
-    devicesList.add(IoBrokerDevice(
-        name: "Name",
-        objectID: "Id",
-        status: DeviceStatus.READY,
-        iconID: 20,
-        value: 100,
-        id: "id"
+    if(loaded) {
+      return devicesList;
+    }
 
-    )..startTimer());
+    List<dynamic>? l = await fileManager.getList(key);
+    if(l== null) {
+      devicesList = [];
+    } else  {
+      for(dynamic rawDevice in l) {
+
+        Map<String, dynamic> rawMap = rawDevice;
+        int? typeInt = rawMap["type"];
+        if(typeInt == null) {
+          throw Exception("Dumm?");
+        }
+
+        DeviceType type = DeviceType.values[typeInt];
+        print(typeInt);
+        switch (type) {
+          case DeviceType.ioBroker:
+            devicesList.add(IoBrokerDevice.fromJSON(rawMap));
+            break;
+        }
+
+
+
+      }
+
+    }
+    loaded = true;
+    deviceListStreamController.add(devicesList);
 
     return devicesList;
 
   }
 
-
-
-  bool addDevice(Device device) {
-    if (kDebugMode) {
-      print(jsonEncode(device));
+  void startIdle() async {
+    while(true) {
+      await Future.delayed(const Duration(seconds: 2));
+      for(Device d in devicesList) {
+        d.idle();
+      }
     }
-    return true;
+  }
+
+
+
+
+  Future<bool> addDevice(Device device) async {
+    devicesList.add(device);
+
+    bool suc = await fileManager.writeJSONList(key, devicesList);
+    if(!suc) {
+      devicesList.remove(device);
+    }
+    deviceListStreamController.add(devicesList);
+
+    return suc;
+  }
+
+  Future<bool> removeDevice(Device device) async{
+    devicesList.remove(device);
+    bool suc = await fileManager.writeJSONList(key, devicesList);
+    if(!suc) {
+      devicesList.add(device);
+    }
+    deviceListStreamController.add(devicesList);
+    return suc;
   }
 
 
