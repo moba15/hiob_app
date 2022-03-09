@@ -21,7 +21,7 @@ class DeviceListCubit extends Cubit<DeviceListState> {
 
   @override
   Future<void> close() async {
-    print("close");
+    deviceListSubscription?.cancel();
     super.close();
 
   }

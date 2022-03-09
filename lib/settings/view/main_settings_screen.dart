@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/settings/view/screen_setting_screen.dart';
 
 import 'device_setting_screen.dart';
 
@@ -27,6 +28,19 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => DeviceSettingsScreen(manager: manager.deviceManager)),
+              )
+
+            },
+          ),
+          ListTile(
+            title: const Text("Screen Settings"),
+            leading: const Icon(Icons.add_to_home_screen_outlined),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ScreenListSettingsScreen(manager: manager.screenManager)),
               )
 
             },

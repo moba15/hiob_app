@@ -3,7 +3,7 @@ import 'dart:convert';
 class Screen {
   final String id;
   final String name;
-  final int iconID;
+  final String iconID;
   final int index;
   List<String> widgetIds;
 
