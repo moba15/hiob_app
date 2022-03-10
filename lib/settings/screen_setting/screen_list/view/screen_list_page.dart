@@ -65,24 +65,34 @@ class ScreensView extends StatelessWidget {
         :
         ReorderableListView.builder(
           itemCount: screens.length,
-          itemBuilder: (BuildContext context, int index) => ScreenListTile(key: ValueKey(index),screen: screens[index]),
-          onReorder: (oldIndex, newIndex) {
-
-          },
-        );
-
+            itemBuilder: (BuildContext c, int index) => ScreenListTile(
+              key: ValueKey(index),
+              screen: screens[index],
+              screenManager: context.read<ScreenManager>(),
+            ),
+            onReorder: (oldIndex, newIndex) {
+              context.read<ScreenManager>().reorderScreen(oldIndex, newIndex);
+            },
+          );
   }
 }
 
-
-class ScreenAddPage extends StatelessWidget {
+class ScreenAddPage extends StatefulWidget {
   final ScreenManager screenManager;
+
+  const ScreenAddPage({Key? key, required this.screenManager})
+      : super(key: key);
+
+  @override
+  State<ScreenAddPage> createState() => _ScreenAddPageState();
+}
+
+class _ScreenAddPageState extends State<ScreenAddPage> {
   TextEditingController nameController = TextEditingController();
+
   TextEditingController iconController = TextEditingController();
   TextEditingController indexController = TextEditingController();
-  ScreenAddPage({Key? key, required this.screenManager}) : super(key: key);
-
-
+  Icon icon = const Icon(Icons.insert_emoticon);
 
   @override
   Widget build(BuildContext context) {
@@ -94,96 +104,155 @@ class ScreenAddPage extends StatelessWidget {
         onPressed: save,
         child: const Icon(Icons.save),
       ),
-      body: ScreenAddForm(nameController: nameController, iconController: iconController, indexController: indexController,),
-    );
-
-  }
-
-
-
-  void save() {
-
-  }
-}
-
-class ScreenAddForm extends StatefulWidget {
-  TextEditingController nameController ;
-  TextEditingController iconController ;
-  TextEditingController indexController;
-  ScreenAddForm({Key? key, required this.nameController, required this.iconController, required this.indexController}) : super(key: key);
-
-  @override
-  State<ScreenAddForm> createState() => _ScreenAddFormState();
-}
-
-class _ScreenAddFormState extends State<ScreenAddForm> {
-
-  Icon icon = const Icon(Icons.insert_emoticon);
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: TextField(
-              controller: widget.nameController,
-              decoration: const InputDecoration(hintText: "Name"),
-              keyboardType: TextInputType.text,
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                controller: nameController,
+                decoration: const InputDecoration(hintText: "Name"),
+                keyboardType: TextInputType.text,
+              ),
             ),
-          ),
-
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: TextField(
-              onChanged: (value) {
-                if(int.tryParse(value, radix: 16) != null) {
-                  setState(() {
-                    icon = Icon(IconData(int.parse(value, radix: 16), fontFamily: 'MaterialIcons'));
-                  });
-                }
-              },
-              controller: widget.iconController,
-              decoration: InputDecoration(hintText: "IconID", suffixIcon: icon),
-              keyboardType: TextInputType.text,
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                onChanged: (value) {
+                  if (int.tryParse(value, radix: 16) != null) {
+                    setState(() {
+                      icon = Icon(IconData(int.parse(value, radix: 16),
+                          fontFamily: 'MaterialIcons'));
+                    });
+                  }
+                },
+                controller: iconController,
+                decoration:
+                    InputDecoration(hintText: "IconID", suffixIcon: icon),
+                keyboardType: TextInputType.text,
+              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: TextField(
-              controller: widget.indexController,
-              decoration: const InputDecoration(hintText: "Index"),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ], // Only numbers can be entered
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                controller: indexController,
+                decoration: const InputDecoration(hintText: "Index"),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ], // Only numbers can be entered
+              ),
             ),
-          ),
-
-
-        ],
+          ],
+        ),
       ),
     );
   }
+
+  void save() {
+    String name = nameController.text;
+    String iconID = iconController.text;
+    int index = int.parse(indexController.text);
+    widget.screenManager.addScreen(Screen(
+        id: "idsdfsf",
+        name: name,
+        iconID: iconID,
+        index: index,
+        widgetIds: []));
+    Navigator.pop(context);
+  }
 }
 
-
-class ScreenEditPage extends StatelessWidget {
+class ScreenEditPage extends StatefulWidget {
   final Screen screen;
-  const ScreenEditPage({Key? key, required this.screen}) : super(key: key);
+  final ScreenManager screenManager;
+
+  const ScreenEditPage(
+      {Key? key, required this.screen, required this.screenManager})
+      : super(key: key);
+
+  @override
+  State<ScreenEditPage> createState() => _ScreenEditPageState(screen: screen);
+}
+
+class _ScreenEditPageState extends State<ScreenEditPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController iconController = TextEditingController();
+  TextEditingController indexController = TextEditingController();
+
+  _ScreenEditPageState({required Screen screen}) {
+    nameController.text = screen.name;
+    iconController.text = screen.iconID;
+    indexController.text = screen.index.toString();
+    icon = Icon(IconData(int.parse(screen.iconID, radix: 16),
+        fontFamily: 'MaterialIcons'));
+  }
+
+  Icon icon = const Icon(Icons.insert_emoticon);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Screen"),
-
+        title: const Text("Add Screen"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: save,
         child: const Icon(Icons.save),
       ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                controller: nameController,
+                decoration: const InputDecoration(hintText: "Name"),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                onChanged: (value) {
+                  if (int.tryParse(value, radix: 16) != null) {
+                    setState(() {
+                      icon = Icon(IconData(int.parse(value, radix: 16),
+                          fontFamily: 'MaterialIcons'));
+                    });
+                  }
+                },
+                controller: iconController,
+                decoration:
+                    InputDecoration(hintText: "IconID", suffixIcon: icon),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                controller: indexController,
+                decoration: const InputDecoration(hintText: "Index"),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ], // Only numbers can be entered
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  void save() {
+    widget.screenManager.editScreen(
+        screen: widget.screen,
+        name: nameController.text,
+        iconID: iconController.text,
+        index: int.parse(indexController.text));
+    Navigator.pop(context);
   }
 }
