@@ -1,38 +1,50 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/settings/view/main_screen.dart';
 
 import 'App.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  BlocOverrides.runZoned(() => runApp(App(manager: Manager())) );
+  Manager manager = Manager();
+  await manager.load();
+  BlocOverrides.runZoned(() => runApp(App(
+        manager: manager,
+        screenManager: manager.screenManager,
+      )));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final Manager manager;
+
+  const MyApp({Key? key, required this.manager}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MainScreen()
-    );
+    return BlocProvider<ScreenListCubit>(
+        create: (c) => ScreenListCubit(screenManager: manager.screenManager),
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            primarySwatch: Colors.blue,
+          ),
+          home: MainScreen(
+            manager: manager,
+          ),
+        ));
   }
 }
 

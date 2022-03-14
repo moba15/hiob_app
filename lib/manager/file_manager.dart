@@ -1,21 +1,19 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FileManager {
+  SharedPreferences pref;
+  bool isLoaded = false;
 
-
-  late SharedPreferences pref;
-
-  FileManager() {
-    _init();
+  FileManager({required this.pref}) {
+    //_init();
   }
-
 
   void _init() async {
     pref = await SharedPreferences.getInstance();
+    print("init");
+    isLoaded = true;
   }
 
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {

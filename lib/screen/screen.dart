@@ -5,7 +5,7 @@ class Screen {
   final String name;
   final String iconID;
   final int index;
-  List<String> widgetIds;
+  List<dynamic> widgetIds;
 
   Screen(
       {required this.id,
@@ -15,11 +15,12 @@ class Screen {
       required this.widgetIds});
 
   factory Screen.fromJSON(Map<String, dynamic> json) => Screen(
-      id: json["id"],
-      iconID: json["iconID"],
-      name: json["name"],
-      index: json["index"],
-      widgetIds: json["widgetIds"]);
+        id: json["id"],
+        iconID: json["iconID"],
+        name: json["name"],
+        index: json["index"],
+        widgetIds: jsonDecode(json["widgetIds"]),
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,

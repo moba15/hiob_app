@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 
@@ -28,8 +27,6 @@ class ScreenListCubit extends Cubit<ScreenListState> {
   }
 
   void fetchList() async {
-    await screenManager.loadScreens();
-
-
+    screenManager.loadScreens();
   }
 }

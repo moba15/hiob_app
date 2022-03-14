@@ -13,6 +13,7 @@ class ScreenManager {
   ScreenManager({required this.fileManager, required this.screens});
 
   Future<List<Screen>> loadScreens() async {
+    print("Loading");
     if (loaded) {
       screenStreamController.add(screens);
       return screens;
@@ -24,8 +25,11 @@ class ScreenManager {
     } else {
       for (dynamic rawScreens in l) {
         Map<String, dynamic> rawMap = rawScreens;
+        Screen s = Screen.fromJSON(rawMap);
+        screens.add(s);
       }
     }
+    print("Loaded");
     loaded = true;
     screenStreamController.add(screens);
 
