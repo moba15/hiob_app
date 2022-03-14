@@ -1,17 +1,9 @@
-import 'package:smart_home/screen/screen.dart';
+import 'package:smart_home/customwidgets/custom_widget.dart';
 
 class CustomWidgetManager {
+  final List<CustomWidget> templates = [];
 
   CustomWidgetManager();
 
-  final List<Screen> _screens = [];
-
-
-
-
-
-
-
-
-
+  void loadTemplates() async {}
 }
