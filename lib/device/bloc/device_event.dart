@@ -3,7 +3,6 @@ part of 'device_bloc.dart';
 abstract class DeviceEvent extends Equatable {
   const DeviceEvent();
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 

@@ -8,6 +8,8 @@ import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/screen/view/screen_tile.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 
+import '../../../../utils/list_status.dart';
+
 class ScreenListPage extends StatelessWidget {
   const ScreenListPage({Key? key}) : super(key: key);
 
@@ -16,7 +18,6 @@ class ScreenListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Screen Settings"),
-
       ),
       body: BlocProvider(
         create: (_) => ScreenListCubit(screenManager: context.read<ScreenManager>())..fetchList(),

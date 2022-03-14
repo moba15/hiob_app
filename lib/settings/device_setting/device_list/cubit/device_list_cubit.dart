@@ -3,11 +3,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/device_manager.dart';
 
 import '../../../../device/device.dart';
+import '../../../../utils/list_status.dart';
 
 part 'device_list_state.dart';
 

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 
-class CustomAttribute<T> {
+part 'custom_text_attribute.dart';
 
-  static int typeID = -1;
+abstract class CustomAttribute<T> {
+  static String typeID = "custom";
 
-  T data;
-  Widget widget;
-  CustomAttribute(this.data, this.widget);
+  final T data;
 
-  Map<String, dynamic> toJson() {
-    throw UnsupportedError("This Methode is unsupported for CustomAttribute ");
+  const CustomAttribute({required this.data});
+
+  Map<String, dynamic> toJson();
+
+  Widget get getSettingWidget;
+
+  factory CustomAttribute.fromJSON(Map<String, dynamic> json) {
+    throw UnimplementedError();
   }
-
-
-
-
-
-
 }

@@ -1,7 +1,5 @@
 part of 'screen_list_cubit.dart';
 
-enum ListStatus { loading, success, failure }
-
 class ScreenListState  {
   final ListStatus status;
   final List<Screen> screens;

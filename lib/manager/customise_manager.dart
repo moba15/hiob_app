@@ -5,5 +5,5 @@ class CustomWidgetManager {
 
   CustomWidgetManager();
 
-  void loadTemplates() async {}
+  Future<void> loadTemplates() async {}
 }

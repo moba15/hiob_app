@@ -1,5 +1,4 @@
 part of 'device_list_cubit.dart';
-enum ListStatus { loading, success, failure }
 
 class DeviceListState  {
   final ListStatus status;
