@@ -5,17 +5,18 @@ class CustomTextWidget extends CustomWidget {
   static const String typeID = "custom_text:widget";
   final CustomTextAttribute text;
 
-  CustomTextWidget({required this.text})
-      : super(type: typeID, settings: {"text": text.toJson()});
+  CustomTextWidget({required this.text, required name})
+      : super(name: name, type: typeID, settings: {"text": text.toJson()});
 
   @override
-  Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    return super.toJson();
-  }
+  Map<String, dynamic> toJson() => {
+        "type": typeID,
+        "text": text,
+      };
 
   factory CustomTextWidget.fromJson(Map<String, dynamic> json) =>
       CustomTextWidget(
-        text: CustomTextAttribute(data: "asdasd"), //TODO: Finish From JSON
+        text: CustomTextAttribute(data: "assayed"),
+        name: json["name"], //TODO: Finish From JSON ZCgRaLnf2Xsy5wGQN2pD
       );
 }

@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
-import 'package:smart_home/screen/view/screen_tile.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
+import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/widget_template_list_cubit.dart';
 
+import '../../../../customwidgets/view/custom_widget_tile.dart';
 import '../../../../utils/list_status.dart';
 
 class WidgetTemplateListPage extends StatelessWidget {
@@ -17,13 +17,13 @@ class WidgetTemplateListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Screen Settings"),
+        title: const Text("Widget Templates"),
       ),
       body: BlocProvider(
         create: (_) =>
             ScreenListCubit(screenManager: context.read<ScreenManager>())
               ..fetchList(),
-        child: WidgetTemplateListView(),
+        child: const WidgetTemplateListView(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -35,7 +35,7 @@ class WidgetTemplateListPage extends StatelessWidget {
                       )));
         },
         child: const Icon(Icons.add),
-        tooltip: "Neues Gerät Hinzufügen",
+        tooltip: "Neues Template hinzufügen",
       ),
     );
   }
@@ -46,7 +46,7 @@ class WidgetTemplateListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ScreenListCubit>().state;
+    final state = context.watch<WidgetTemplateListCubit>().state;
     switch (state.status) {
       case ListStatus.loading:
         return const Center(
@@ -57,28 +57,27 @@ class WidgetTemplateListView extends StatelessWidget {
           child: Text("Ups da ist ein fehler aufgetreten"),
         );
       case ListStatus.success:
-        return TemplatesView(screens: state.screens);
+        return TemplatesView(templates: state.templates);
     }
   }
 }
 
 class TemplatesView extends StatelessWidget {
-  final List<Screen> screens;
+  final List<CustomWidget> templates;
 
-  const TemplatesView({Key? key, required this.screens}) : super(key: key);
+  const TemplatesView({Key? key, required this.templates}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return screens.isEmpty
+    return templates.isEmpty
         ? const Center(
             child: Text("Es konnten keine screens gefunden werden"),
           )
         : ReorderableListView.builder(
-            itemCount: screens.length,
-            itemBuilder: (BuildContext c, int index) => ScreenListTile(
+            itemCount: templates.length,
+            itemBuilder: (BuildContext c, int index) => CustomWidgetTile(
               key: ValueKey(index),
-              screen: screens[index],
-              screenManager: context.read<ScreenManager>(),
+              customWidget: templates[index],
             ),
             onReorder: (oldIndex, newIndex) {
               context.read<ScreenManager>().reorderScreen(oldIndex, newIndex);
