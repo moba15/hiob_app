@@ -108,17 +108,7 @@ class _MainViewState extends State<MainView>
         ),
         body: TabBarView(
           controller: _tabController,
-          children: const [
-            Text("Nice"),
-            Text("Nice"),
-            Text("Nice"),
-            Text("Nice"),
-            Text("Nice"),
-            Text("Nice"),
-            Text("Nice"),
-            Text("Nice"),
-            Text("Nice"),
-          ],
+          children: const [],
         ));
   }
 }

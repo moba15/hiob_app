@@ -9,6 +9,9 @@ class WidgetTemplateSettingScreen extends MaterialApp {
       : super(
           key: key,
           home: RepositoryProvider.value(
-              value: manager, child: const WidgetTemplateListPage()),
+              value: manager,
+              child: WidgetTemplateListPage(
+                customWidgetManager: manager,
+              )),
         );
 }

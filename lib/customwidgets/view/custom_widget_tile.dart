@@ -10,7 +10,9 @@ class CustomWidgetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(customWidget.type),
+      title: Text(customWidget.type == null
+          ? "Error 301"
+          : customWidget.type.toString()),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
     );
   }

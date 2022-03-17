@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
-import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/widget_template_list_cubit.dart';
 
+import '../../../../customAttributes/custom_attributes.dart';
 import '../../../../customwidgets/view/custom_widget_tile.dart';
 import '../../../../utils/list_status.dart';
 
 class WidgetTemplateListPage extends StatelessWidget {
-  const WidgetTemplateListPage({Key? key}) : super(key: key);
+  final CustomWidgetManager customWidgetManager;
+
+  const WidgetTemplateListPage({Key? key, required this.customWidgetManager})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class WidgetTemplateListPage extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (_) =>
-            ScreenListCubit(screenManager: context.read<ScreenManager>())
+            WidgetTemplateListCubit(customWidgetManager: customWidgetManager)
               ..fetchList(),
         child: const WidgetTemplateListView(),
       ),
@@ -31,7 +35,7 @@ class WidgetTemplateListPage extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (c) => TemplateAddPage(
-                        screenManager: context.read<ScreenManager>(),
+                    customWidgetManager: customWidgetManager,
                       )));
         },
         child: const Icon(Icons.add),
@@ -87,9 +91,9 @@ class TemplatesView extends StatelessWidget {
 }
 
 class TemplateAddPage extends StatefulWidget {
-  final ScreenManager screenManager;
+  final CustomWidgetManager customWidgetManager;
 
-  const TemplateAddPage({Key? key, required this.screenManager})
+  const TemplateAddPage({Key? key, required this.customWidgetManager})
       : super(key: key);
 
   @override
@@ -114,47 +118,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         child: const Icon(Icons.save),
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextField(
-                controller: nameController,
-                decoration: const InputDecoration(hintText: "Name"),
-                keyboardType: TextInputType.text,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextField(
-                onChanged: (value) {
-                  if (int.tryParse(value, radix: 16) != null) {
-                    setState(() {
-                      icon = Icon(IconData(int.parse(value, radix: 16),
-                          fontFamily: 'MaterialIcons'));
-                    });
-                  }
-                },
-                controller: iconController,
-                decoration:
-                    InputDecoration(hintText: "IconID", suffixIcon: icon),
-                keyboardType: TextInputType.text,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextField(
-                controller: indexController,
-                decoration: const InputDecoration(hintText: "Index"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ], // Only numbers can be entered
-              ),
-            ),
-          ],
-        ),
+        child: CustomTextAttribute().getSettingWidget,
       ),
     );
   }
@@ -163,12 +127,12 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     String name = nameController.text;
     String iconID = iconController.text;
     int index = int.parse(indexController.text);
-    widget.screenManager.addScreen(Screen(
+    /*widget.screenManager.addScreen(Screen(
         id: "idsdfsf",
         name: name,
         iconID: iconID,
         index: index,
-        widgetIds: []));
+        widgetIds: [])); */
     Navigator.pop(context);
   }
 }
