@@ -12,6 +12,7 @@ class Device {
   DateTime lastUpdated;
   DeviceStatus status;
   DeviceType type;
+  List<String> s;
 
   Device(
       {required this.id,
