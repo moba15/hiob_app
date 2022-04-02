@@ -13,7 +13,6 @@ class DeviceSettingsScreen extends MaterialApp {
   );
 
 }
-
 /*class DeviceSettingScreen extends StatefulWidget {
   const DeviceSettingScreen({Key? key}) : super(key: key);
 

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/utils/list_status.dart';
 
@@ -21,11 +21,17 @@ class WidgetTemplateListCubit extends Cubit<WidgetTemplateListState> {
     });
   }
 
+  @override
+  Future<void> close() async {
+    templateListSubscription?.cancel();
+    super.close();
+  }
+
   Future<void> fetchList() async {
     await customWidgetManager.loadTemplates();
   }
 
-  void update(List<CustomWidget> templates) {
+  void update(List<CustomWidgetTemplate> templates) {
     emit(WidgetTemplateListState(
         templates: templates, status: ListStatus.success));
   }

@@ -161,14 +161,6 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
 
   @override
   AlertDialog build(BuildContext context) {
-
-
-
-
-
-
-
-
     return  AlertDialog(
       actions: [
         TextButton(
@@ -184,7 +176,7 @@ class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
                   iconID: iconController.text,
                   name: nameController.text,
                   objectID: idController.text,
-                  id: 'iasdasd',
+                  id: context.read<DeviceManager>().manager.getRandString(12),
                   lastUpdated: DateTime.now());
               context.read<DeviceManager>().addDevice(ioBrokerDevice);
             }

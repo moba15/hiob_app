@@ -2,11 +2,9 @@ part of 'widget_template_list_cubit.dart';
 
 @immutable
 class WidgetTemplateListState {
-  final List<CustomWidget> templates;
+  final List<CustomWidgetTemplate> templates;
   final ListStatus status;
 
   const WidgetTemplateListState(
-      {required this.templates,
-      required this.status});
-
+      {required this.templates, required this.status});
 }

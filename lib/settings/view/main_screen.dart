@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import '../../screen/screen.dart';
 import '../../screen/view/screen_menu_tabbar.dart';
-import '../../utils/list_status.dart';
-import '../screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'main_settings_screen.dart';
 
 class MainPage extends StatelessWidget {
@@ -14,7 +13,6 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Nice");
     return MainScreen(
       manager: context.read<Manager>(),
     );
@@ -28,21 +26,22 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ScreenListCubit, ScreenListState>(
+    return BlocBuilder<ManagerCubit, ManagerState>(
       builder: (context, state) {
-        print("Saze: " + state.screens.length.toString());
-
         switch (state.status) {
-          case ListStatus.loading:
+          case ManagerStatus.loading:
+          case ManagerStatus.connecting:
             return Scaffold(
               appBar: AppBar(
                 title: Text("Loading"),
               ),
               body: CircularProgressIndicator(),
             );
+          case ManagerStatus.error:
+            return Text("error");
           default:
             return MainView(
-              size: state.screens.length,
+              size: manager.screenManager.screens.length,
             );
         }
       },
@@ -108,7 +107,18 @@ class _MainViewState extends State<MainView>
         ),
         body: TabBarView(
           controller: _tabController,
-          children: const [],
+          children: [
+            for (Screen screen in context.read<Manager>().screenManager.screens)
+              ListView(
+                  children: context
+                      .read<Manager>()
+                      .customWidgetManager
+                      .templates
+                      .where((element) =>
+                          screen.widgetTemplates.contains(element.id))
+                      .map((e) => e.customWidget.widget)
+                      .toList(growable: true))
+          ],
         ));
   }
 }

@@ -1,21 +1,26 @@
 import 'dart:async';
 
 import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screen/screen.dart';
 
 class ScreenManager {
   final FileManager fileManager;
+  final Manager manager;
   List<Screen> screens;
   final String key = "screens";
   StreamController screenStreamController = StreamController.broadcast();
   bool loaded = false;
 
-  ScreenManager({required this.fileManager, required this.screens});
+  ScreenManager(
+      {required this.fileManager,
+      required this.screens,
+      required this.manager});
 
   Future<List<Screen>> loadScreens() async {
-    print("Loading");
     if (loaded) {
       screenStreamController.add(screens);
+      loaded = true;
       return screens;
     }
 
@@ -29,7 +34,6 @@ class ScreenManager {
         screens.add(s);
       }
     }
-    print("Loaded");
     loaded = true;
     screenStreamController.add(screens);
 
@@ -81,7 +85,7 @@ class ScreenManager {
             name: name,
             iconID: iconID,
             index: index,
-            widgetIds: screen.widgetIds);
+            widgetTemplates: screen.widgetTemplates);
         break;
       }
     }
@@ -89,6 +93,13 @@ class ScreenManager {
     bool suc = await fileManager.writeJSONList(key, screens);
     if (!suc) {
       screens[z] = screen;
+      screenStreamController.add(screens);
+    }
+  }
+
+  void update() async {
+    bool suc = await fileManager.writeJSONList(key, screens);
+    if (suc) {
       screenStreamController.add(screens);
     }
   }

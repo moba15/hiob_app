@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../device/device.dart';
+
+part 'custom_device_attribute.dart';
+
 part 'custom_text_attribute.dart';
 
 abstract class CustomAttribute<T> {
   static String typeID = "custom";
 
-  final T data;
+  T data;
 
-  const CustomAttribute({required this.data});
+  CustomAttribute({required this.data});
 
   Map<String, dynamic> toJson();
 

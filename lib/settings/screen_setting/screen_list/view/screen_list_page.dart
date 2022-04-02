@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/screen/view/screen_tile.dart';
@@ -156,11 +157,11 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
     String iconID = iconController.text;
     int index = int.parse(indexController.text);
     widget.screenManager.addScreen(Screen(
-        id: "idsdfsf",
+        id: widget.screenManager.manager.getRandString(12),
         name: name,
         iconID: iconID,
         index: index,
-        widgetIds: []));
+        widgetTemplates: []));
     Navigator.pop(context);
   }
 }
@@ -196,11 +197,29 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Screen"),
+        title: const Text("Edit Screen"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: save,
-        child: const Icon(Icons.save),
+      floatingActionButton: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 31),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: FloatingActionButton(
+                onPressed: addTemplate,
+                child: const Icon(Icons.add),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              heroTag: "tag",
+              onPressed: save,
+              child: const Icon(Icons.save),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -210,7 +229,10 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: TextField(
                 controller: nameController,
-                decoration: const InputDecoration(hintText: "Name"),
+                decoration: const InputDecoration(
+                  labelText: "Name",
+                  border: UnderlineInputBorder(),
+                ),
                 keyboardType: TextInputType.text,
               ),
             ),
@@ -226,8 +248,10 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                   }
                 },
                 controller: iconController,
-                decoration:
-                    InputDecoration(hintText: "IconID", suffixIcon: icon),
+                decoration: InputDecoration(
+                    labelText: "IconID",
+                    suffixIcon: icon,
+                    border: const UnderlineInputBorder()),
                 keyboardType: TextInputType.text,
               ),
             ),
@@ -235,13 +259,23 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: TextField(
                 controller: indexController,
-                decoration: const InputDecoration(hintText: "Index"),
+                decoration: const InputDecoration(labelText: "Index"),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
                 ], // Only numbers can be entered
               ),
             ),
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: BlocProvider(
+                create: (_) =>
+                    ScreenListCubit(screenManager: widget.screenManager),
+                child: ScreenWidgetTemplateListPage(
+                    screen: widget.screen, screenManager: widget.screenManager),
+              ),
+            )),
           ],
         ),
       ),
@@ -255,5 +289,111 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
         iconID: iconController.text,
         index: int.parse(indexController.text));
     Navigator.pop(context);
+  }
+
+  void addTemplate() {
+    //widget.screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: "id", name: "name", customWidget: CustomTextWidget(name: "", text: CustomTextAttribute(data: ""))));
+    List<CustomWidgetTemplate> templates =
+        widget.screenManager.manager.customWidgetManager.templates;
+    showDialog(
+        context: context,
+        builder: (context) => AddTemplateAlertDialog(
+              screen: widget.screen,
+              screenManager: widget.screenManager,
+            ));
+  }
+}
+
+class AddTemplateAlertDialog extends StatefulWidget {
+  final Screen screen;
+  final ScreenManager screenManager;
+
+  const AddTemplateAlertDialog(
+      {Key? key, required this.screen, required this.screenManager})
+      : super(key: key);
+
+  @override
+  State<AddTemplateAlertDialog> createState() => _AddTemplateAlertDialogState();
+}
+
+class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
+  List<CustomWidgetTemplate> selected = [];
+
+  @override
+  Widget build(BuildContext context) {
+    List<CustomWidgetTemplate> templates =
+        widget.screenManager.manager.customWidgetManager.templates;
+    return AlertDialog(
+        title: const Text("Select Widget Template"),
+        actions: [
+          TextButton(onPressed: cancel, child: const Text("Cancel")),
+          TextButton(onPressed: add, child: const Text("Add")),
+        ],
+        content: Container(
+          height: 500,
+          width: 100,
+          child: ListView(
+            children: [
+              for (CustomWidgetTemplate t in templates)
+                ListTile(
+                  selected: selected.contains(t),
+                  leading: Checkbox(
+                    onChanged: (bool? value) {
+                      setState(() {
+                        if (value == true) {
+                          selected.add(t);
+                        } else {
+                          selected.remove(t);
+                        }
+                      });
+                    },
+                    value: selected.contains(t),
+                  ),
+                  title: Text(t.name),
+                  subtitle: Text(t.customWidget.type.toString()),
+                )
+            ],
+          ),
+        ));
+  }
+
+  void add() {
+    widget.screen.addWidgetTemplates(widget.screenManager, selected);
+    Navigator.pop(context);
+  }
+
+  void cancel() {
+    Navigator.pop(context);
+  }
+}
+
+class ScreenWidgetTemplateListPage extends StatelessWidget {
+  final Screen screen;
+  final ScreenManager screenManager;
+
+  const ScreenWidgetTemplateListPage(
+      {Key? key, required this.screen, required this.screenManager})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<ScreenListCubit>().state;
+    List<CustomWidgetTemplate> templates =
+        screenManager.manager.customWidgetManager.templates.where((element) {
+      return screen.widgetTemplates.contains(element.id);
+    }).toList();
+    return ListView(
+      children: [
+        for (CustomWidgetTemplate t in templates)
+          ListTile(
+            title: Text(t.name),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete_forever),
+              onPressed: () => {screen.removeWidgetTemplate(screenManager, t)},
+              color: Colors.red,
+            ),
+          ),
+      ],
+    );
   }
 }

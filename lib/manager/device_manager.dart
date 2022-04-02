@@ -4,26 +4,28 @@ import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/file_manager.dart';
 
 import '../device/device.dart';
-
+import 'manager.dart';
 
 class DeviceManager {
 
   FileManager fileManager;
+  Manager manager;
   List<Device> devicesList;
   StreamController deviceListStreamController = StreamController.broadcast();
   bool loaded = false;
   final String key = "devices";
 
-  DeviceManager(this.fileManager, {required this.devicesList});
-
+  DeviceManager(this.fileManager,
+      {required this.devicesList, required this.manager});
 
   Future<List<Device>> loadDevices() async {
-    if(loaded) {
+    if (loaded) {
       return devicesList;
     }
 
     List<dynamic>? l = await fileManager.getList(key);
     if(l== null) {
+      loaded = true;
       devicesList = [];
     } else  {
       for(dynamic rawDevice in l) {
@@ -35,7 +37,6 @@ class DeviceManager {
         }
 
         DeviceType type = DeviceType.values[typeInt];
-        print(typeInt);
         switch (type) {
           case DeviceType.ioBroker:
             devicesList.add(IoBrokerDevice.fromJSON(rawMap));
@@ -45,7 +46,6 @@ class DeviceManager {
     }
     loaded = true;
     deviceListStreamController.add(devicesList);
-
     return devicesList;
 
   }
@@ -90,22 +90,31 @@ class DeviceManager {
   }
 
   Device? getDevice(String id) {
-    for(Device d in devicesList) {
-      if(d.id == id) {
+    for (Device d in devicesList) {
+      if (d.id == id) {
         return d;
       }
     }
     return null;
   }
 
+  IoBrokerDevice? getIoBrokerDeviceByObjectID(String objectID) {
+    for (Device d in devicesList) {
+      if (d is IoBrokerDevice) {
+        IoBrokerDevice ioBd = d;
+        if (ioBd.objectID == objectID) {
+          return ioBd;
+        }
+      }
+    }
+    return null;
+  }
 
-
-
-
-
-
-
-
-
-
+  void valueChange(Device? device, dynamic value) {
+    if (device == null) {
+      return;
+    }
+    device.value = value;
+    device.valueStreamController.add(value);
+  }
 }

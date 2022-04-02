@@ -16,6 +16,7 @@ class DeviceState extends Equatable {
 }
 
 class DeviceInitial extends DeviceState {
-  const DeviceInitial({required DateTime t}) : super(value: null, lastUpdated: t);
+  const DeviceInitial({required DateTime t, dynamic value})
+      : super(value: value, lastUpdated: t);
   const DeviceInitial.value({dynamic value, required DateTime t}) : super(value: value, lastUpdated: t);
 }
