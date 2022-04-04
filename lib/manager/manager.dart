@@ -11,6 +11,8 @@ import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 
 class Manager {
+  static Manager? instance;
+
   late FileManager fileManager;
 
   late CustomWidgetManager customWidgetManager;
@@ -28,10 +30,11 @@ class Manager {
   int loadingState = 0;
   int maxLoadingState = 4;
   StreamController<ManagerStatus> managerStatusStreamController =
-      StreamController.broadcast();
+  StreamController.broadcast();
   var random = Random();
 
   Future<void> load() async {
+    instance = this;
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref);
@@ -44,7 +47,7 @@ class Manager {
         fileManager: fileManager, deviceManager: deviceManager, manager: this)
       ..loadTemplates();
     connectionManager = ConnectionManager(
-        ip: "192.168.178.68", port: 8090, deviceManager: deviceManager);
+        ip: "10.0.2.2", port: 8090, deviceManager: deviceManager);
 
     subscription1 =
         customWidgetManager.templatesStreamController.stream.listen((event) {
@@ -62,8 +65,8 @@ class Manager {
 
     subscription4 =
         connectionManager.statusStreamController.stream.listen((event) {
-      onLoaded();
-    });
+          onLoaded();
+        });
     connectionManager.connectIoB();
   }
 

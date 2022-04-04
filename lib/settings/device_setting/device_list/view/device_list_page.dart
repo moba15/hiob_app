@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/device_manager.dart';
 
 import '../../../../device/device.dart';
@@ -25,7 +26,7 @@ class DeviceListPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
 
         onPressed: () {
-          showDialog(
+          /*showDialog(
               barrierDismissible: false,
               context: context,
               builder: (c) {
@@ -34,7 +35,13 @@ class DeviceListPage extends StatelessWidget {
                   value:  context.read<DeviceManager>(),
                   child: const DeviceAddAlertDialog(),
                 );
-              });
+              });*/
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (c) => DeviceAddPage(
+                        deviceManager: context.read<DeviceManager>(),
+                      )));
         },
         child: const Icon(Icons.add),
         tooltip: "Neues Gerät Hinzufügen",
@@ -130,11 +137,99 @@ class DeviceView extends StatelessWidget {
   }
 }*/
 
+class DeviceAddPage extends StatefulWidget {
+  final DeviceManager deviceManager;
 
+  const DeviceAddPage({Key? key, required this.deviceManager})
+      : super(key: key);
 
+  @override
+  State<DeviceAddPage> createState() => _DeviceAddPageState();
+}
 
+class _DeviceAddPageState extends State<DeviceAddPage> {
+  TextEditingController nameController = TextEditingController();
+  final DeviceType _deviceType = DeviceType.ioBroker;
+  DataPoint? _currentDataPoint;
 
-class DeviceAddAlertDialog extends StatefulWidget  {
+  final TextEditingController iconController = TextEditingController();
+  final TextEditingController idController = TextEditingController();
+  Icon icon = const Icon(Icons.insert_emoticon);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add Device"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: save,
+        child: const Icon(Icons.save),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                controller: nameController,
+                decoration: const InputDecoration(labelText: "Name"),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                onChanged: (value) {
+                  if (int.tryParse(value, radix: 16) != null) {
+                    setState(() {
+                      icon = Icon(IconData(int.parse(value, radix: 16),
+                          fontFamily: 'MaterialIcons'));
+                    });
+                  }
+                },
+                controller: iconController,
+                decoration:
+                    InputDecoration(labelText: "IconID", suffixIcon: icon),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextField(
+                controller: idController,
+                decoration: const InputDecoration(labelText: "ObjectID"),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void save() {
+    if (int.tryParse(iconController.text, radix: 16) == null ||
+        nameController.text.isEmpty ||
+        idController.text.isEmpty ||
+        int.parse(iconController.text, radix: 16) < 0) {
+      return;
+    }
+    if (_deviceType == DeviceType.ioBroker) {
+      IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
+          iconID: iconController.text,
+          name: nameController.text,
+          objectID: idController.text,
+          id: widget.deviceManager.manager.getRandString(12),
+          lastUpdated: DateTime.now());
+      widget.deviceManager.addDevice(ioBrokerDevice);
+      Navigator.pop(context);
+    }
+  }
+}
+
+class DeviceAddAlertDialog extends StatefulWidget {
   const DeviceAddAlertDialog({Key? key}) : super(key: key);
 
   @override

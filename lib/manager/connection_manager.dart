@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:smart_home/device/device.dart';
+import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/device_manager.dart';
@@ -20,14 +20,13 @@ class ConnectionManager {
 
   Future<void> connectIoB() async {
     print("Connecting to " + ip + ":" + port.toString());
-    socket = await Socket.connect("192.168.178.68", 8081);
+    socket = await Socket.connect(ip, port);
     print("Connected");
     ioBConnected = true;
     statusStreamController.add(true);
     statusStreamController.close();
     socket?.handleError(onError);
-    socket?.listen(onData);
-    done();
+    socket?.listen(onData, onDone: onDone);
   }
 
   void onError(e) {
@@ -48,17 +47,21 @@ class ConnectionManager {
     ioBConnected = false;
   }
 
-  void done() async {
-    await socket?.done;
+  void onDone() async {
     print("Connection closed");
     ioBConnected = false;
+    while (!ioBConnected) {
+      await connectIoB();
+    }
   }
 
   void readPackage(String msg) {
     Map<String, dynamic> rawMap = jsonDecode(msg);
-    String packageType = rawMap["type"];
+    DataPackageType packageType = DataPackageType.values
+        .firstWhere((element) => element.name == rawMap["type"]);
+    print("Recieved MSG:" + packageType.name);
     switch (packageType) {
-      case "StateChanged": //TODO: ENUM
+      case DataPackageType.iobStateChanged:
         stateChangedPackage(
             objectID: rawMap["objectID"], value: rawMap["value"]);
         break;
@@ -69,17 +72,11 @@ class ConnectionManager {
     IoBrokerDevice? ioBrokerDevice =
         deviceManager.getIoBrokerDeviceByObjectID(objectID);
     deviceManager.valueChange(ioBrokerDevice, value);
-    print("Change");
   }
 
-  void sendIoBChangeValue(Device device, dynamic v) {
-    if (device is! IoBrokerDevice) {
-      return;
-    }
-    socket?.write(jsonEncode({
-      "type": "StateChangeRequest",
-      "objectID": (device).objectID,
-      "value": v,
-    }));
+  void sendMsg(DataPackage dataPackage) {
+    print("Sending Msg: " + dataPackage.type.name);
+    socket?.write(jsonEncode(
+        {"type": dataPackage.type.name, "content": dataPackage.content}));
   }
 }

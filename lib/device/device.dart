@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
+import 'package:smart_home/device/datapoint/datapoint.dart';
 
 class Device {
   String id;
@@ -12,7 +13,7 @@ class Device {
   DateTime lastUpdated;
   DeviceStatus status;
   DeviceType type;
-  List<String> s;
+  List<DataPoint> dataPoints;
 
   Device(
       {required this.id,
@@ -21,7 +22,8 @@ class Device {
       this.value,
       required this.lastUpdated,
       required this.type,
-      this.status = DeviceStatus.unavailable});
+      this.status = DeviceStatus.unavailable,
+      this.dataPoints = const []});
 
   StreamController<dynamic> valueStreamController =
       StreamController.broadcast();
@@ -74,33 +76,17 @@ extension DeviceExtension on DeviceType {
 
   Widget setupWidget(TextEditingController controller) {
     switch (this) {
-      case DeviceType.ioBroker: {
-
-
-
-        return  Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              child: const SizedBox(
-                width: 50,
-                child: Text("ID:"),
-              ),
-              margin: const EdgeInsets.only(right: 20.0),
+      case DeviceType.ioBroker:
+        {
+          return Container(
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: TextField(
+              onChanged: (value) {},
+              controller: controller,
+              decoration: const InputDecoration(hintText: "ID of device"),
             ),
-            Expanded(
-
-              child: TextField(
-                onChanged: (value) {
-
-                },
-                controller: controller,
-                decoration: const InputDecoration(hintText: "ID of device"),
-              ),
-            )
-          ],
-        );
-      }
+          );
+        }
 
       case DeviceType.httpDevice:
         return Row(

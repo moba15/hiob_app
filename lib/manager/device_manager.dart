@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/file_manager.dart';
 
@@ -14,6 +15,8 @@ class DeviceManager {
   StreamController deviceListStreamController = StreamController.broadcast();
   bool loaded = false;
   final String key = "devices";
+
+  List<DataPoint> possibleDataPoints = [];
 
   DeviceManager(this.fileManager,
       {required this.devicesList, required this.manager});
@@ -51,22 +54,21 @@ class DeviceManager {
   }
 
   void startIdle() async {
-    while(true) {
+    while (true) {
       await Future.delayed(const Duration(seconds: 2));
-      for(Device d in devicesList) {
+      for (Device d in devicesList) {
         d.idle();
       }
     }
   }
 
-
-
+  void loadPossibleDataPoints(Map<String, dynamic> data) {}
 
   Future<bool> addDevice(Device device) async {
     devicesList.add(device);
 
     bool suc = await fileManager.writeJSONList(key, devicesList);
-    if(!suc) {
+    if (!suc) {
       devicesList.remove(device);
     }
     deviceListStreamController.add(devicesList);

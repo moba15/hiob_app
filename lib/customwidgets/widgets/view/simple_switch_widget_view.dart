@@ -47,11 +47,7 @@ class SimpleSwitchWidgetDeviceView extends StatelessWidget {
         child: SwitchListTile(
       value: bloc.state.value == true,
       onChanged: (v) {
-        bloc.add(DeviceValueUpdate(value: v));
-        context
-            .read<Manager>()
-            .connectionManager
-            .sendIoBChangeValue(bloc.device, v);
+        bloc.add(DeviceValueUpdateRequest(value: v));
       },
       title: Text(text),
     ));

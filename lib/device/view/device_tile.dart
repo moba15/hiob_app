@@ -50,11 +50,13 @@ class DeviceTile extends StatelessWidget {
               color: Colors.red,
             ),
       subtitle: Text(
-        "Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} ",
+        "Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} \n ID: " +
+            device.id,
         style: TextStyle(
             color: status == DeviceStatus.ready ? Colors.green : Colors.red,
             fontSize: 13),
       ),
+      isThreeLine: true,
     );
   }
 
