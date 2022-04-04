@@ -1,17 +1,13 @@
 part of 'datapoint_bloc.dart';
 
-enum DeviceStatus {
-  unavailable, ready, error
-}
 
 class DataPointState extends Equatable {
   final dynamic value;
-  final DeviceStatus status;
   
-  const DataPointState({required this.value, this.status =  DeviceStatus.unavailable});
+  const DataPointState({required this.value,});
 
   @override
-  List<Object?> get props => [status, value];
+  List<Object?> get props => [value];
 }
 
 class DataPointInitial extends DataPointState {
