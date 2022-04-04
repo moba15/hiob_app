@@ -24,6 +24,7 @@ class CustomWidgetManager {
       required this.manager});
 
   Future<void> loadTemplates() async {
+
     if (loaded) {
       templatesStreamController.add(templates);
       return;

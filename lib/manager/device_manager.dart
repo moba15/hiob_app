@@ -27,6 +27,7 @@ class DeviceManager {
     }
 
     List<dynamic>? l = await fileManager.getList(key);
+    print(l);
     if(l== null) {
       loaded = true;
       devicesList = [];
@@ -66,13 +67,11 @@ class DeviceManager {
 
   Future<bool> addDevice(Device device) async {
     devicesList.add(device);
-
     bool suc = await fileManager.writeJSONList(key, devicesList);
     if (!suc) {
       devicesList.remove(device);
     }
     deviceListStreamController.add(devicesList);
-
     return suc;
   }
 
@@ -81,6 +80,22 @@ class DeviceManager {
     bool suc = await fileManager.writeJSONList(key, devicesList);
     if(!suc) {
       devicesList.add(device);
+    }
+    deviceListStreamController.add(devicesList);
+    return suc;
+  }
+
+  Future<bool> update() async{
+    bool suc = await fileManager.writeJSONList(key, devicesList);
+    deviceListStreamController.add(devicesList);
+    return suc;
+  }
+
+  Future<bool> addDataPointToDevice(Device device, DataPoint dataPoint) async {
+    device.addDataPoint(dataPoint);
+    bool suc = await fileManager.writeJSONList(key, devicesList);
+    if(!suc) {
+      device.removeDataPoint(dataPoint);
     }
     deviceListStreamController.add(devicesList);
     return suc;
@@ -112,11 +127,29 @@ class DeviceManager {
     return null;
   }
 
-  void valueChange(Device? device, dynamic value) {
-    if (device == null) {
+  DataPoint? getIoBrokerDataPointByObjectID(String objectID) {
+    for (Device d in devicesList) {
+      print("l");
+      for (DataPoint dataPoint in d.dataPoints ?? []) {
+        print("ok " + dataPoint.id);
+
+        if(dataPoint.id == objectID) {
+          return dataPoint;
+        }
+
+      }
+
+    }
+    return null;
+  }
+
+  void valueChange(DataPoint? dataPoint, dynamic value) {
+    print("c" + dataPoint.toString());
+    if (dataPoint == null) {
       return;
     }
-    device.value = value;
-    device.valueStreamController.add(value);
+    print("change");
+    dataPoint.value = value;
+    dataPoint.valueStreamController.add(value);
   }
 }

@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/ioBroker/enum/enum.dart';
 import 'package:smart_home/manager/device_manager.dart';
+import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 
 import '../../../../device/device.dart';
 import '../../../../device/iobroker_device.dart';
@@ -18,13 +21,16 @@ class DeviceListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Device Settings"),),
+      appBar: AppBar(
+        title: const Text("Device Settings"),
+      ),
       body: BlocProvider(
-        create: (_) => DeviceListCubit(deviceManager: context.read<DeviceManager>())..fetchList(),
+        create: (_) =>
+            DeviceListCubit(deviceManager: context.read<DeviceManager>())
+              ..fetchList(),
         child: DeviceListView(),
       ),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () {
           /*showDialog(
               barrierDismissible: false,
@@ -46,54 +52,56 @@ class DeviceListPage extends StatelessWidget {
         child: const Icon(Icons.add),
         tooltip: "Neues Gerät Hinzufügen",
       ),
-
-
     );
   }
 }
 
 class DeviceListView extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     final state = context.select((DeviceListCubit cubit) => cubit.state);
-    switch(state.status) {
+    switch (state.status) {
       case ListStatus.failure:
-        return const Center(child: Text("Something went wrong!!"),);
+        return const Center(
+          child: Text("Something went wrong!!"),
+        );
       case ListStatus.success:
         return DeviceView(devices: state.devices);
       case ListStatus.loading:
-        return const Center(child: CircularProgressIndicator(),);
-
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
     }
   }
 }
 
 class DeviceView extends StatelessWidget {
   final List<Device> devices;
+
   const DeviceView({Key? key, required this.devices}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return devices.isEmpty ?
-        const Center(child: Text("No Device yet"),)
-        :
-    ListView.builder(
-      itemCount: devices.length,
-      itemBuilder: (context, int index) {
-        return Dismissible(
-          key: ValueKey<Device>(devices[index]),
-          child: DeviceTileApp(device: devices[index]),
-          dragStartBehavior: DragStartBehavior.down,
-          onDismissed: (direction) => {
-            context.read<DeviceListCubit>().deviceManager.removeDevice(devices[index])
-          },
-        );
-
-      },
-
-      );
+    return devices.isEmpty
+        ? const Center(
+            child: Text("No Device yet"),
+          )
+        : ListView.builder(
+            itemCount: devices.length,
+            itemBuilder: (context, int index) {
+              return Dismissible(
+                key: ValueKey<Device>(devices[index]),
+                child: DeviceTileApp(device: devices[index]),
+                dragStartBehavior: DragStartBehavior.down,
+                onDismissed: (direction) => {
+                  context
+                      .read<DeviceListCubit>()
+                      .deviceManager
+                      .removeDevice(devices[index])
+                },
+              );
+            },
+          );
   }
 }
 
@@ -150,7 +158,8 @@ class DeviceAddPage extends StatefulWidget {
 class _DeviceAddPageState extends State<DeviceAddPage> {
   TextEditingController nameController = TextEditingController();
   final DeviceType _deviceType = DeviceType.ioBroker;
-  DataPoint? _currentDataPoint;
+
+  List<DataPoint> dataPoints = [];
 
   final TextEditingController iconController = TextEditingController();
   final TextEditingController idController = TextEditingController();
@@ -167,8 +176,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
         child: const Icon(Icons.save),
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
           children: [
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -196,11 +204,60 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextField(
-                controller: idController,
-                decoration: const InputDecoration(labelText: "ObjectID"),
-                keyboardType: TextInputType.text,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
+              child: const Text("Data Points:", style: TextStyle(fontSize: 17)),
+            ),
+            for (DataPoint dataPoint in dataPoints)
+              Dismissible(
+                key: ValueKey(dataPoint),
+                onDismissed: (d) {
+                  setState(() {
+                    dataPoints.remove(dataPoint);
+                  });
+                },
+                background: Container(
+                  color: Colors.red,
+                  child: Container(
+                    child: const Icon(Icons.delete_forever),
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  ),
+                  alignment: Alignment.centerLeft,
+                ),
+                secondaryBackground: Container(
+                  color: Colors.red,
+                  child: Container(
+                    child: const Icon(Icons.delete_forever),
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  ),
+                  alignment: Alignment.centerRight,
+                ),
+                child: Container(
+                  margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: DataPointInputField(
+                    dataPoint: dataPoint,
+                  ),
+                ),
+              ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    dataPoints
+                        .add(DataPoint(name: "name", device: null, id: "id"));
+                  });
+                },
+                child: const Text("Add Data Point Man."),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => EnumNavigationPage(ioBrokerManager: Manager.instance!.ioBrokerManager, id: "enum.app", depth: 1, onSelected: onSelected,)));
+                },
+                child: const Text("Add Enum from IoB."),
               ),
             ),
           ],
@@ -209,178 +266,159 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
     );
   }
 
+  void onSelected(List<String> ids) {
+    setState(() {
+      for(String id in ids) {
+        dataPoints.add(DataPoint(name: id.split(".").last, device: null, id: id));
+      }
+    });
+  }
+
   void save() {
     if (int.tryParse(iconController.text, radix: 16) == null ||
         nameController.text.isEmpty ||
-        idController.text.isEmpty ||
         int.parse(iconController.text, radix: 16) < 0) {
       return;
     }
     if (_deviceType == DeviceType.ioBroker) {
+      print("save");
+      dataPoints.removeWhere((element) =>
+          element.name.trim().isEmpty || element.id.trim().isEmpty);
       IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
           iconID: iconController.text,
           name: nameController.text,
           objectID: idController.text,
+          dataPoints: dataPoints,
           id: widget.deviceManager.manager.getRandString(12),
           lastUpdated: DateTime.now());
+      dataPoints.forEach((element) => {element.device = ioBrokerDevice});
       widget.deviceManager.addDevice(ioBrokerDevice);
       Navigator.pop(context);
     }
   }
 }
 
-class DeviceAddAlertDialog extends StatefulWidget {
-  const DeviceAddAlertDialog({Key? key}) : super(key: key);
+class DataPointInputField extends StatelessWidget {
+  final DataPoint dataPoint;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController idController = TextEditingController();
 
-  @override
-  _DeviceAddAlertDialogState createState() => _DeviceAddAlertDialogState();
-}
-
-class _DeviceAddAlertDialogState extends State<DeviceAddAlertDialog> {
-  DeviceType _deviceType = DeviceType.ioBroker;
-
-  final nameController = TextEditingController();
-  final idController = TextEditingController();
-  final iconController = TextEditingController();
-
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the
-    // widget tree.
-    nameController.dispose();
-    idController.dispose();
-    iconController.dispose();
-    super.dispose();
+  DataPointInputField({Key? key, required this.dataPoint}) : super(key: key) {
+    nameController.value = TextEditingValue(text: dataPoint.name);
+    idController.value = TextEditingValue(text: dataPoint.id);
   }
 
   @override
-  AlertDialog build(BuildContext context) {
-    return  AlertDialog(
-      actions: [
-        TextButton(
-          onPressed: () {
-            if (int.tryParse(iconController.text, radix: 16) == null ||
-                nameController.text.isEmpty ||
-                idController.text.isEmpty ||
-                int.parse(iconController.text, radix: 16) < 0) {
-              return;
-            }
-            if (_deviceType == DeviceType.ioBroker) {
-              IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
-                  iconID: iconController.text,
-                  name: nameController.text,
-                  objectID: idController.text,
-                  id: context.read<DeviceManager>().manager.getRandString(12),
-                  lastUpdated: DateTime.now());
-              context.read<DeviceManager>().addDevice(ioBrokerDevice);
-            }
-          },
-          child: const Text("Save"),
-
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: TextField(
+            onChanged: (value) => {dataPoint.name = value},
+            decoration: const InputDecoration(labelText: "Name"),
+            keyboardType: TextInputType.text,
+            controller: nameController,
+          ),
         ),
-        TextButton(
-          onPressed: () { Navigator.of(context).pop();  },
-          child: const Text("Cancle"),
-
+        Container(width: 20),
+        Expanded(
+          flex: 3,
+          child: TextField(
+            onChanged: (value) => {dataPoint.id = value},
+            decoration: const InputDecoration(labelText: "ID"),
+            keyboardType: TextInputType.text,
+            controller: idController,
+          ),
         )
-
       ],
-
-      title: const Text("Add Device"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-
-                child: const SizedBox(
-                  width: 50,
-                  child: Text("Name:"),
-                ),
-                margin: const EdgeInsets.only(right: 20.0),
-              ),
-              Expanded(
-
-                child: TextField(
-                  onChanged: (value) {
-
-                  },
-                  controller: nameController,
-                  decoration: const InputDecoration(hintText: "Name of device"),
-                ),
-              )
-            ],
-          ),
-
-          Row(
-            children: [
-              Container(
-                child: const SizedBox(
-                  width: 50,
-                  child: Text("Type:"),
-                ),
-                margin: const EdgeInsets.only(right: 20.0),
-              ),
-              Expanded(
-
-                  child: DropdownButton<DeviceType>(
-                    value: _deviceType,
-                    items: DeviceType.values
-                        .map<DropdownMenuItem<DeviceType>>((DeviceType value) {
-                      return DropdownMenuItem<DeviceType>(
-                        value: value,
-                        child: Text(value.name),
-                      );
-                    }).toList(),
-                    onChanged: (DeviceType? value) {
-                      setState(() {
-                        _deviceType = value!;
-                      });
-                    },
-
-                  )
-              )
-            ],
-          ),
-          _deviceType.setupWidget(idController),
-          Row(
-            children: [
-              Container(
-                child: const SizedBox(
-                  width: 50,
-                  child: Text("Icon:"),
-                ),
-                margin: const EdgeInsets.only(right: 20.0),
-              ),
-              Expanded(
-
-                child: TextField(
-                  onChanged: (value) {
-
-                  },
-                  controller: iconController,
-                  decoration: const InputDecoration(hintText: "Icon ID"),
-                  keyboardType: TextInputType.number,
-                ),
-              )
-            ],
-          ),
-
-
-
-
-
-        ],
-      ),
-
     );
   }
-
-
 }
 
+class EnumNavigationPage extends StatelessWidget {
+  final IoBrokerManager ioBrokerManager;
+  final String id;
+  final int depth;
+  Function(List<String>) onSelected;
 
+  EnumNavigationPage(
+      {Key? key, required this.ioBrokerManager, required this.id, required this.depth, required this.onSelected})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Select Enum"),
+      ),
+      body: EnumNavigationView(
+        id: id,
+        ioBrokerManager: ioBrokerManager,
+        depth: depth,
+        onSelected: onSelected,
+      ),
+    );
+  }
+}
+
+class EnumNavigationView extends StatelessWidget {
+  int depth;
+  final String id;
+  final IoBrokerManager ioBrokerManager;
+  Function(List<String>) onSelected;
+
+  EnumNavigationView(
+      {Key? key, required this.id, required this.ioBrokerManager, required this.depth, required this.onSelected})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        RichText(
+          text: TextSpan(
+              style: const TextStyle(color: Colors.grey, fontSize: 15),
+              children: <TextSpan>[
+                for (String s in id.split("."))
+                  TextSpan(
+                    text: s + ">",
+                  )
+              ]),
+        ),
+        for (Enum e in ioBrokerManager.getEnumChilds(id))
+          ListTile(
+            title: Text(e.name),
+            subtitle: Text(e.id),
+            onTap: () => {
+              Navigator.push(
+                  context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => EnumNavigationPage(ioBrokerManager: ioBrokerManager, id: e.id, depth: depth+1, onSelected: onSelected,),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                ),)
+            },
+            trailing: IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: ()  {
+                  if(e.members.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("No members found!"),
+                    ));
+                  } else {
+                    onSelected(e.members);
+                    Navigator.popUntil(context, (route) {
+                      depth--;
+                      return depth <= -1;
+                    });
+                  }
+
+
+                    },
+                tooltip: "Add"),
+          )
+      ],
+    );
+  }
+}

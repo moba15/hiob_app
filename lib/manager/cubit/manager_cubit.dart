@@ -18,6 +18,7 @@ class ManagerCubit extends Cubit<ManagerState> {
   }
 
   void onStatusChange(ManagerStatus status) {
+    print("Status change");
     emit(ManagerState(status: status));
   }
 

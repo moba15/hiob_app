@@ -13,8 +13,7 @@ class Device {
   DateTime lastUpdated;
   DeviceStatus status;
   DeviceType type;
-  List<DataPoint> dataPoints;
-
+  List<DataPoint>? dataPoints;
   Device(
       {required this.id,
       required this.name,
@@ -46,12 +45,18 @@ class Device {
     this.lastUpdated = lastUpdated;
     lastUpdatedStreamController.add(lastUpdated);
   }
-
-
   void idle() {
     lastUpdatedStreamController.add(DateTime.fromMillisecondsSinceEpoch(lastUpdated.millisecondsSinceEpoch));
   }
-
+  void addDataPoint(DataPoint dataPoint) {
+    dataPoints?.add(dataPoint);
+  }
+  void removeDataPoint(DataPoint dataPoint) {
+    dataPoints?.remove(dataPoint);
+  }
+  void removeDataPointById(String id) {
+    dataPoints?.removeWhere((element) => element.id == id);
+  }
 }
 enum DeviceType {
   httpDevice,
@@ -87,7 +92,6 @@ extension DeviceExtension on DeviceType {
             ),
           );
         }
-
       case DeviceType.httpDevice:
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

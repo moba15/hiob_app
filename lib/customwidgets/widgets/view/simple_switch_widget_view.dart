@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/device/bloc/device_bloc.dart';
+import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
+import 'package:smart_home/device/datapoint/datapoint.dart';
 
-import '../../../device/device.dart';
 import '../../../manager/manager.dart';
 
 class SimpleSwitchWidgetView extends StatelessWidget {
@@ -15,9 +15,10 @@ class SimpleSwitchWidgetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Device? device = customSimpleSwitchWidget
-        .getDevice(context.read<Manager>().deviceManager);
-    if (device == null) {
+    DataPoint? dataPoint = customSimpleSwitchWidget
+        .getDataPoint(context.read<Manager>().deviceManager);
+
+    if (dataPoint == null) {
       return SwitchListTile(
         value: false,
         onChanged: (v) => {},
@@ -26,7 +27,7 @@ class SimpleSwitchWidgetView extends StatelessWidget {
     }
 
     return BlocProvider(
-      create: (_) => DeviceBloc(device, t: DateTime.now()),
+      create: (_) => DataPointBloc(dataPoint),
       child: SimpleSwitchWidgetDeviceView(
         text: customSimpleSwitchWidget.text ?? "null",
       ),
@@ -42,12 +43,12 @@ class SimpleSwitchWidgetDeviceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<DeviceBloc>();
+    final bloc = context.watch<DataPointBloc>();
     return Card(
         child: SwitchListTile(
       value: bloc.state.value == true,
       onChanged: (v) {
-        bloc.add(DeviceValueUpdateRequest(value: v));
+        bloc.add(DataPointValueUpdateRequest(value: v));
       },
       title: Text(text),
     ));

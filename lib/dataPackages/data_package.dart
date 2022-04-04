@@ -3,6 +3,8 @@ enum DataPackageType {
   enumPackage,
   iobStateChanged,
   iobStateChangeRequest,
+  enumUpdateRequest,
+  enumUpdate,
 }
 
 class DataPackage {
@@ -38,3 +40,11 @@ class StateChangeRequestIobPackage extends DataPackage {
             type: DataPackageType.iobStateChangeRequest,
             content: {"stateID": stateID, "value": value});
 }
+
+class EnumUpdateRequestIobPackage extends DataPackage {
+  EnumUpdateRequestIobPackage()
+      : super(
+      type: DataPackageType.enumUpdateRequest,
+      content: {"id": "enum.app.*"});
+}
+

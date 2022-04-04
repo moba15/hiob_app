@@ -8,6 +8,7 @@ import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 
 class Manager {
@@ -24,11 +25,16 @@ class Manager {
   late ScreenManager screenManager;
   StreamSubscription? subscription3;
 
-  late ConnectionManager connectionManager;
+  late IoBrokerManager ioBrokerManager;
   StreamSubscription? subscription4;
 
+  late ConnectionManager connectionManager;
+  StreamSubscription? subscription5;
+  
+  
+
   int loadingState = 0;
-  int maxLoadingState = 4;
+  int maxLoadingState = 5;
   StreamController<ManagerStatus> managerStatusStreamController =
   StreamController.broadcast();
   var random = Random();
@@ -46,8 +52,11 @@ class Manager {
     customWidgetManager = CustomWidgetManager(
         fileManager: fileManager, deviceManager: deviceManager, manager: this)
       ..loadTemplates();
+    ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
+
     connectionManager = ConnectionManager(
-        ip: "10.0.2.2", port: 8090, deviceManager: deviceManager);
+        deviceManager: deviceManager, ioBrokerManager: ioBrokerManager);
+
 
     subscription1 =
         customWidgetManager.templatesStreamController.stream.listen((event) {
@@ -63,11 +72,16 @@ class Manager {
       onLoaded();
     });
 
-    subscription4 =
+    subscription4 = ioBrokerManager.statusStreamController.stream.listen((event) {
+      onLoaded();
+    });
+
+
+    subscription5 =
         connectionManager.statusStreamController.stream.listen((event) {
           onLoaded();
         });
-    connectionManager.connectIoB();
+
   }
 
   String getRandString(int len) {
@@ -77,7 +91,12 @@ class Manager {
 
   void onLoaded() {
     loadingState += 1;
-    if (loadingState == maxLoadingState) {
+    if(loadingState == maxLoadingState -1) {
+
+      connectionManager.connectIoB();
+    }
+    if (loadingState >= maxLoadingState-1) {
+      print("finish");
       managerStatusStreamController.add(ManagerStatus.finished);
       subscription1?.cancel();
       subscription2?.cancel();

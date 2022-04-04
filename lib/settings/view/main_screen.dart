@@ -28,17 +28,29 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ManagerCubit, ManagerState>(
       builder: (context, state) {
+        print("state" + state.status.name);
         switch (state.status) {
           case ManagerStatus.loading:
-          case ManagerStatus.connecting:
             return Scaffold(
               appBar: AppBar(
                 title: Text("Loading"),
+                actions: [
+                  IconButton(
+                      onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MainSettingsScreen(manager: manager)),
+                        )
+                      },
+                      icon: const Icon(Icons.settings))
+                ],
               ),
-              body: CircularProgressIndicator(),
+              body: const Center(
+                child: CircularProgressIndicator(),
+              )
             );
-          case ManagerStatus.error:
-            return Text("error");
           default:
             return MainView(
               size: manager.screenManager.screens.length,

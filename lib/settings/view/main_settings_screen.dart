@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/settings/view/screen_setting_screen.dart';
 
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
@@ -56,6 +58,18 @@ class MainSettingsScreen extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => WidgetTemplateListPage(
                         customWidgetManager: manager.customWidgetManager)),
+              )
+            },
+          ),
+          ListTile(
+            title: const Text("IoBroker Settings"),
+            leading: const Icon(Icons.stream),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>  RepositoryProvider.value(value: manager, child: IoBrokerSettingsPage(),)),
               )
             },
           )
