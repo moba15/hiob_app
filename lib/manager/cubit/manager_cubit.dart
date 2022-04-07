@@ -12,9 +12,10 @@ class ManagerCubit extends Cubit<ManagerState> {
   StreamSubscription? streamSubscription;
 
   ManagerCubit({required this.manager})
-      : super(ManagerState(status: ManagerStatus.loading)) {
+      : super(ManagerState(status: manager.status)) {
     streamSubscription =
-        manager.managerStatusStreamController.stream.listen(onStatusChange);
+        manager.managerStatusStreamController.stream.listen(onStatusChange, onError: (e) => (print(e.toString())), onDone: () => {print("done")});
+    print("ok");
   }
 
   void onStatusChange(ManagerStatus status) {
@@ -24,6 +25,7 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   @override
   Future<void> close() {
+    print("close");
     streamSubscription?.cancel();
     return super.close();
   }

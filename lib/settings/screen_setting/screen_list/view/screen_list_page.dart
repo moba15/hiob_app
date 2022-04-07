@@ -67,13 +67,32 @@ class ScreensView extends StatelessWidget {
         :
         ReorderableListView.builder(
           itemCount: screens.length,
-            itemBuilder: (BuildContext c, int index) => ScreenListTile(
-              key: ValueKey(index),
-              screen: screens[index],
-              screenManager: context.read<ScreenManager>(),
+            itemBuilder: (BuildContext c, int index) => Dismissible(
+              background: Container(
+                color: Colors.red,
+                child: Container(
+                  child: const Icon(Icons.delete_forever),
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+              secondaryBackground: Container(
+                color: Colors.red,
+                child: Container(
+                  child: const Icon(Icons.delete_forever),
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                ),
+                alignment: Alignment.centerRight,
+              ),
+              onDismissed: (d) => {context.read<ScreenManager>().removeScreen(screens[index])},
+              key: ValueKey(screens[index]),
+              child: ScreenListTile(
+                screen: screens[index],
+                screenManager: context.read<ScreenManager>(),
+              ),
             ),
             onReorder: (oldIndex, newIndex) {
-              context.read<ScreenManager>().reorderScreen(oldIndex, newIndex);
+              context.read<ScreenManager>().reorderScreen(oldIndex: oldIndex, newIndex: newIndex);
             },
           );
   }
@@ -270,10 +289,8 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                 child: Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: BlocProvider(
-                create: (_) =>
-                    ScreenListCubit(screenManager: widget.screenManager),
-                child: ScreenWidgetTemplateListPage(
-                    screen: widget.screen, screenManager: widget.screenManager),
+                create: (_) => ScreenListCubit(screenManager: widget.screenManager),
+                child: ScreenWidgetTemplateListPage(screen: widget.screen, screenManager: widget.screenManager),
               ),
             )),
           ],
@@ -382,18 +399,23 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
         screenManager.manager.customWidgetManager.templates.where((element) {
       return screen.widgetTemplates.contains(element.id);
     }).toList();
-    return ListView(
-      children: [
-        for (CustomWidgetTemplate t in templates)
-          ListTile(
-            title: Text(t.name),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete_forever),
-              onPressed: () => {screen.removeWidgetTemplate(screenManager, t)},
-              color: Colors.red,
-            ),
+    return ReorderableListView.builder(
+      itemCount: templates.length,
+      onReorder: (int oldIndex, int newIndex) {
+        screen.reorderWidgetTemplates(oldIndex: oldIndex, newIndex: newIndex, screenManager: screenManager);
+      },
+      itemBuilder: (BuildContext context, int index)  {
+        return ListTile(
+          key: ValueKey(templates[index]),
+          title: Text(templates[index].name),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete_forever),
+            onPressed: () => {screen.removeWidgetTemplate(screenManager, templates[index])},
+            color: Colors.red,
           ),
-      ],
+        );
+      },
+
     );
   }
 }

@@ -6,13 +6,16 @@ import 'package:smart_home/manager/device_manager.dart';
 
 import '../../../settings/device_setting/device_list/view/device_list_page.dart';
 
-class DeviceSettingsScreen extends MaterialApp {
-  DeviceSettingsScreen({Key? key, required DeviceManager manager}) : super(key: key,
-    home: RepositoryProvider.value(value: manager, child: const DeviceListPage(),),
+class DeviceSettingsScreen extends StatelessWidget {
+  final DeviceManager manager;
+  const DeviceSettingsScreen ({Key? key, required this.manager}) : super(key: key);
 
-  );
-
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider.value(value: manager, child: const DeviceListPage(),);
+  }
 }
+
 /*class DeviceSettingScreen extends StatefulWidget {
   const DeviceSettingScreen({Key? key}) : super(key: key);
 

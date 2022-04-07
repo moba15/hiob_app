@@ -35,4 +35,6 @@ class WidgetTemplateListCubit extends Cubit<WidgetTemplateListState> {
     emit(WidgetTemplateListState(
         templates: templates, status: ListStatus.success));
   }
+
+
 }

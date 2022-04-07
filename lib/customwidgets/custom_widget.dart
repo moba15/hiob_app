@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_text_widget.dart';
 
 enum CustomWidgetType {
-  text,
   simpleSwitch,
+  light,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
-  Widget getSettingWidget() {
+  CustomWidgetSettingWidget get settingWidget {
     switch (this) {
-      case CustomWidgetType.text:
-        return CustomTextWidget.edit().settingWidget;
       case CustomWidgetType.simpleSwitch:
         return CustomSimpleSwitchWidget.edit().settingWidget;
-      default:
-        return const Text("Error 12");
+      case CustomWidgetType.light:
+        return CustomLightWidget(name: "").settingWidget;
     }
   }
 
   String get name {
     switch (this) {
-      case CustomWidgetType.text:
-        return "Simple Text Widget";
       case CustomWidgetType.simpleSwitch:
         return "Simple Switch Widget";
+      case CustomWidgetType.light:
+        return "Light Switch";
       default:
         return "Error";
     }
   }
 }
 
-class CustomWidget {
+abstract class CustomWidget {
   static String typeID = "-1";
   String? name;
   CustomWidgetType? type;
@@ -40,18 +38,34 @@ class CustomWidget {
   CustomWidget(
       {required this.name, required this.type, required this.settings});
 
-  CustomWidget.edit();
+  CustomWidget.edit({required this.type});
 
-  Widget get widget {
+  Widget get widget;
+
+  CustomWidgetSettingWidget get settingWidget;
+
+  factory CustomWidget.fromJSON(Map<String, dynamic> json) {
     throw UnimplementedError();
   }
 
-  factory CustomWidget.fromJSON(Map<String, dynamic> json) => CustomWidget(
-      name: json["name"], type: json["type"], settings: json["settings"]);
+  Map<String, dynamic> toJson();
+}
 
-  Map<String, dynamic> toJson() => {
-        "type": type,
-        "settings": settings,
-        "name": name,
-      };
+
+
+abstract class CustomWidgetSettingWidget {
+  bool validate();
+  CustomWidget get customWidget;
+
+}
+
+abstract class CustomWidgetSettingStatelessWidget extends StatelessWidget implements CustomWidgetSettingWidget{
+  const CustomWidgetSettingStatelessWidget({Key? key}) : super(key: key);
+
+
+}
+
+abstract class CustomWidgetSettingStatefulWidget extends StatefulWidget implements CustomWidgetSettingWidget {
+  const CustomWidgetSettingStatefulWidget({Key? key}) : super(key: key);
+
 }

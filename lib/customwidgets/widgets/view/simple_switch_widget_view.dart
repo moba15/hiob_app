@@ -5,8 +5,6 @@ import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
-import '../../../manager/manager.dart';
-
 class SimpleSwitchWidgetView extends StatelessWidget {
   final CustomSimpleSwitchWidget customSimpleSwitchWidget;
 
@@ -15,14 +13,14 @@ class SimpleSwitchWidgetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DataPoint? dataPoint = customSimpleSwitchWidget
-        .getDataPoint(context.read<Manager>().deviceManager);
+    DataPoint? dataPoint = customSimpleSwitchWidget.dataPoint;
 
     if (dataPoint == null) {
       return SwitchListTile(
         value: false,
         onChanged: (v) => {},
         title: Text(customSimpleSwitchWidget.text ?? "null"),
+        subtitle:  const Text("No Data Point found"),
       );
     }
 

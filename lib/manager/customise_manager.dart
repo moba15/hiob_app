@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_text_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -30,6 +30,8 @@ class CustomWidgetManager {
       return;
     }
 
+
+
     List? listRaw = await fileManager.getList(templateKey);
 
     if (listRaw == null) {
@@ -46,16 +48,14 @@ class CustomWidgetManager {
           .firstWhere((element) => element.toString() == typeRaw);
       CustomWidget customWidget;
       switch (type) {
-        case CustomWidgetType.text:
-          customWidget = CustomTextWidget.fromJson(widgetRaw);
-          break;
         case CustomWidgetType.simpleSwitch:
           customWidget = CustomSimpleSwitchWidget.fromJson(widgetRaw);
           break;
+        case CustomWidgetType.light:
+          customWidget = CustomLightWidget.fromJson(widgetRaw);
       }
 
-      CustomWidgetTemplate template =
-          CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
+      CustomWidgetTemplate template = CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
       templates.add(template);
     }
 
@@ -63,12 +63,37 @@ class CustomWidgetManager {
     templatesStreamController.add(templates);
   }
 
-  Future<void> save(CustomWidgetTemplate customWidget) async {
-    templates.add(customWidget);
+  Future<void> save({required CustomWidgetTemplate template}) async {
+    templates.add(template);
     templatesStreamController.add(templates);
     if (!await fileManager.writeJSONList(templateKey, templates)) {
-      templates.remove(customWidget);
+      templates.remove(template);
       templatesStreamController.add(templates);
     }
+  }
+
+  Future<bool> edit({required CustomWidgetTemplate template}) async {
+    templatesStreamController.add(templates);
+    if (!await fileManager.writeJSONList(templateKey, templates)) {
+      templatesStreamController.add(templates);
+      return false;
+    }
+
+    manager.screenManager.templateEdited(template);
+
+    return true;
+  }
+
+  Future<void> removeTemplate(CustomWidgetTemplate template) async {
+    templates.remove(template);
+    templatesStreamController.add(templates);
+    if (!await fileManager.writeJSONList(templateKey, templates)) {
+      templates.add(template);
+      templatesStreamController.add(templates);
+    } else {
+      manager.screenManager.templateRemoved(template);
+    }
+
+
   }
 }

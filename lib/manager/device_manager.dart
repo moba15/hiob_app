@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/iobroker_device.dart';
+import 'package:smart_home/manager/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 
 import '../device/device.dart';
@@ -23,11 +25,11 @@ class DeviceManager {
 
   Future<List<Device>> loadDevices() async {
     if (loaded) {
+      deviceListStreamController.add(devicesList);
       return devicesList;
     }
 
     List<dynamic>? l = await fileManager.getList(key);
-    print(l);
     if(l== null) {
       loaded = true;
       devicesList = [];
@@ -72,7 +74,20 @@ class DeviceManager {
       devicesList.remove(device);
     }
     deviceListStreamController.add(devicesList);
+    if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+    }
     return suc;
+  }
+
+  Future<bool> editDevice(Device device) async {
+    bool suc = await fileManager.writeJSONList(key, devicesList);
+    deviceListStreamController.add(devicesList);
+    if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+    }
+    return suc;
+
   }
 
   Future<bool> removeDevice(Device device) async{
@@ -98,6 +113,9 @@ class DeviceManager {
       device.removeDataPoint(dataPoint);
     }
     deviceListStreamController.add(devicesList);
+    if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+    }
     return suc;
   }
 
@@ -129,9 +147,7 @@ class DeviceManager {
 
   DataPoint? getIoBrokerDataPointByObjectID(String objectID) {
     for (Device d in devicesList) {
-      print("l");
       for (DataPoint dataPoint in d.dataPoints ?? []) {
-        print("ok " + dataPoint.id);
 
         if(dataPoint.id == objectID) {
           return dataPoint;
@@ -144,12 +160,25 @@ class DeviceManager {
   }
 
   void valueChange(DataPoint? dataPoint, dynamic value) {
-    print("c" + dataPoint.toString());
     if (dataPoint == null) {
       return;
     }
-    print("change");
     dataPoint.value = value;
     dataPoint.valueStreamController.add(value);
   }
+
+
+  void subscribeToDataPointsIoB(ConnectionManager connectionManager) {
+    List<String> dataPoints = [];
+    for(Device device in devicesList) {
+      if(device is IoBrokerDevice) {
+        for(DataPoint dataPoint in device.dataPoints ?? []) {
+          dataPoints.add(dataPoint.id);
+        }
+      }
+    }
+    connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: dataPoints));
+  }
+
+
 }

@@ -51,10 +51,26 @@ class Screen {
     screenManager.update();
   }
 
-  void removeWidgetTemplate(
-      ScreenManager screenManager, CustomWidgetTemplate customWidgetTemplate) {
+  void removeWidgetTemplate(ScreenManager screenManager, CustomWidgetTemplate customWidgetTemplate) {
     widgetTemplates
         .removeWhere((element) => element == customWidgetTemplate.id);
+    screenManager.update();
+  }
+
+  void reorderWidgetTemplates({required int oldIndex, required int newIndex, required ScreenManager screenManager}) {
+    String widgetTemplate = widgetTemplates[oldIndex];
+    print(widgetTemplates);
+    if(widgetTemplates.length <=newIndex) {
+      widgetTemplates.add(widgetTemplate);
+    }
+
+    widgetTemplates.insert(newIndex, widgetTemplate);
+    print(widgetTemplates);
+    widgetTemplates.removeAt(oldIndex+1);
+    if(widgetTemplates.length <=newIndex) {
+      widgetTemplates.removeLast();
+    }
+    print(widgetTemplates);
     screenManager.update();
   }
 }

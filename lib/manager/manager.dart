@@ -30,13 +30,14 @@ class Manager {
 
   late ConnectionManager connectionManager;
   StreamSubscription? subscription5;
+
+  ManagerStatus status = ManagerStatus.loading;
   
   
 
   int loadingState = 0;
   int maxLoadingState = 5;
-  StreamController<ManagerStatus> managerStatusStreamController =
-  StreamController.broadcast();
+  StreamController<ManagerStatus> managerStatusStreamController = StreamController.broadcast();
   var random = Random();
 
   Future<void> load() async {
@@ -91,17 +92,20 @@ class Manager {
 
   void onLoaded() {
     loadingState += 1;
+    print(loadingState);
     if(loadingState == maxLoadingState -1) {
-
+      status = ManagerStatus.finished;
+      managerStatusStreamController.add(ManagerStatus.finished);
       connectionManager.connectIoB();
     }
     if (loadingState >= maxLoadingState-1) {
-      print("finish");
-      managerStatusStreamController.add(ManagerStatus.finished);
+      status = ManagerStatus.finished;
+      managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();
       subscription2?.cancel();
       subscription3?.cancel();
       subscription4?.cancel();
+      subscription5?.cancel();
     }
   }
 }

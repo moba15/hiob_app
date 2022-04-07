@@ -2,14 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
-
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status;
+import 'package:web_socket_channel/web_socket_channel.dart';
 class ConnectionManager {
   bool ioBConnected = false;
   Socket? socket;
+  WebSocketChannel? _webSocket;
+  StreamSubscription? _webSocketStreamSub;
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
   final IoBrokerManager ioBrokerManager;
@@ -18,19 +23,19 @@ class ConnectionManager {
       {required this.deviceManager, required this.ioBrokerManager});
 
   Future<void> connectIoB() async {
+    
+    
     try {
       print("Connecting to " + ioBrokerManager.ip + ":" +
           ioBrokerManager.port.toString());
-      socket = await Socket.connect(ioBrokerManager.ip, ioBrokerManager.port);
-      print("Connected");
-      socket?.handleError(onError);
-      socket?.listen(onData, onDone: onDone);
-
+      _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()), pingInterval: const Duration(minutes: 5));
+      _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
+      ioBrokerManager.connectionStatusStreamController.add(true);
+      ioBrokerManager.connected = true;
       ioBConnected = true;
 
+      print("Connected to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
 
-      ioBrokerManager.connected = true;
-      ioBrokerManager.connectionStatusStreamController.add(true);
     } catch(e) {
       ioBrokerManager.connectionStatusStreamController.addError("Connection failed");
     } finally {
@@ -46,50 +51,53 @@ class ConnectionManager {
 
     ioBConnected = false;
     ioBrokerManager.connected = true;
-    ioBrokerManager.statusStreamController.add(false);
-    print("Error: " + e);
 
   }
 
   void reconnect() async {
+    if(_webSocketStreamSub != null) {
+      _webSocketStreamSub!.cancel();
+    }
+    if(_webSocket != null) {
+      _webSocket?.sink.close(status.goingAway);
+    }
+    _webSocket = null;
 
-    await socket?.close();
-    socket?.destroy();
-    ioBConnected = false;
     ioBrokerManager.connected = false;
-
-
+    
     print("Connecting to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
     try {
-      socket = await Socket.connect(ioBrokerManager.ip, ioBrokerManager.port);
-      socket?.handleError(onError);
-      socket?.listen(onData, onDone: onDone);
+      _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()));
+      _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
 
       ioBConnected = true;
-
       ioBrokerManager.connected = true;
       ioBrokerManager.connectionStatusStreamController.add(true);
+      print("Connected to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
     } catch(e) {
-      ioBrokerManager.connected = true;
+      ioBrokerManager.connected = false;
       ioBrokerManager.connectionStatusStreamController.add(false);
+      _webSocket = null;
+      _webSocketStreamSub = null;
     }
 
   }
 
   void onData(event) {
-    String msg = utf8.decode(event);
-    print("Data received: " + msg.toString());
-    readPackage(msg);
+    print("Data received: " + event + DateFormat(" hh:mm:ss").format(DateTime.now()));
+    readPackage(event);
   }
 
   void close()  async {
-    socket?.destroy();
+    await _webSocketStreamSub?.cancel();
+    await _webSocket?.sink.close();
+
     ioBConnected = false;
   }
 
   void onDone() async {
     print("Connection closed");
-    ioBrokerManager.connected = true;
+    ioBrokerManager.connected = false;
     ioBrokerManager.connectionStatusStreamController.add(false);
     ioBConnected = false;
 
@@ -109,22 +117,30 @@ class ConnectionManager {
         case DataPackageType.enumUpdate:
           ioBrokerManager.enumUpdate(rawData: rawMap);
           break;
+        case DataPackageType.firstPingFromIob:
+          onFirstPing();
+          break;
       }
     } catch(e) {
+      print(e);
 
     }
   }
 
   void stateChangedPackage({required String objectID, required dynamic value}) {
-    print("t"); //TODO:
     DataPoint? iobDataPoint =
         deviceManager.getIoBrokerDataPointByObjectID(objectID);
     deviceManager.valueChange(iobDataPoint, value);
   }
 
+  void onFirstPing() {
+    deviceManager.subscribeToDataPointsIoB(this);
+  }
+
   void sendMsg(DataPackage dataPackage) {
-    print("Sending Msg: " + dataPackage.type.name);
-    socket?.write(jsonEncode(
-        {"type": dataPackage.type.name, "content": dataPackage.content}));
+    if(!ioBConnected) {
+      return;
+    }
+    _webSocket?.sink.add(jsonEncode({"type": dataPackage.type.name, "content": dataPackage.content}));
   }
 }

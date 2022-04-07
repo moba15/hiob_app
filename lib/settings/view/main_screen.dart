@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 
 import '../../screen/screen.dart';
 import '../../screen/view/screen_menu_tabbar.dart';
@@ -28,7 +30,6 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ManagerCubit, ManagerState>(
       builder: (context, state) {
-        print("state" + state.status.name);
         switch (state.status) {
           case ManagerStatus.loading:
             return Scaffold(
@@ -52,9 +53,7 @@ class MainScreen extends StatelessWidget {
               )
             );
           default:
-            return MainView(
-              size: manager.screenManager.screens.length,
-            );
+            return MainView();
         }
       },
     );
@@ -62,36 +61,95 @@ class MainScreen extends StatelessWidget {
 }
 
 class MainView extends StatefulWidget {
-  final int size;
-
-  const MainView({Key? key, required this.size}) : super(key: key);
+  const MainView({Key? key}) : super(key: key);
 
   @override
   State<MainView> createState() => _MainViewState();
 }
 
 class _MainViewState extends State<MainView>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
+    with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: widget.size);
+    //_tabController = TabController(vsync: this, length: widget.size);
+    //_tabController.addListener(onViewChange);
+
+  }
+
+  void onViewChange() {
+    print("change");
+    setState(() {
+
+    });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    //_tabController.dispose();
+    //_tabController.removeListener(onViewChange);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Manager manager = context.read<Manager>();
-    return Scaffold(
+    ScreenManager screenManager = manager.screenManager;
+    return BlocBuilder<ScreenListCubit, ScreenListState>(
+      bloc: ScreenListCubit(screenManager: screenManager)..fetchList(),
+      builder: (context, state) {
+        List<Screen> screens = state.screens;
+        TabController _tabController = TabController(length: screens.length, vsync: this);
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(screenManager.screens[_tabController.index].name),
+              actions: [
+                IconButton(
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MainSettingsScreen(manager: manager)),
+                      )
+                    },
+                    icon: const Icon(Icons.settings))
+              ],
+              automaticallyImplyLeading: false,
+              bottom: TabBar(
+                isScrollable: true,
+                controller: _tabController,
+                tabs: [
+                  for (int i = 0; i<screens.length; i++)
+                    ScreenTab(
+                      screen: screens[i],
+                    )
+                ],
+              ),
+            ),
+            body: _tabController.length == 0 ? Text("null"): TabBarView(
+              controller: _tabController,
+              children: [
+                for (int i = 0; i<_tabController.length; i++)
+                  ListView(
+                      children: context
+                          .read<Manager>()
+                          .customWidgetManager
+                          .templates
+                          .where((element) =>
+                          screens[i].widgetTemplates.contains(element.id))
+                          .map((e) => e.customWidget.widget)
+                          .toList(growable: true))
+              ],
+            )
+        );
+      },
+
+    );
+
+    /*return Scaffold(
         appBar: AppBar(
-          title: const Text("Main screen"),
+          title: Text(context.read<Manager>().screenManager.screens[_tabController.index].name),
           actions: [
             IconButton(
                 onPressed: () => {
@@ -109,10 +167,9 @@ class _MainViewState extends State<MainView>
             isScrollable: true,
             controller: _tabController,
             tabs: [
-              for (Screen screen
-                  in context.read<Manager>().screenManager.screens)
+              for (int i = 0; i<widget.size; i++)
                 ScreenTab(
-                  screen: screen,
+                  screen: screens[i],
                 )
             ],
           ),
@@ -120,17 +177,17 @@ class _MainViewState extends State<MainView>
         body: TabBarView(
           controller: _tabController,
           children: [
-            for (Screen screen in context.read<Manager>().screenManager.screens)
+            for (int i = 0; i<widget.size; i++)
               ListView(
                   children: context
                       .read<Manager>()
                       .customWidgetManager
                       .templates
                       .where((element) =>
-                          screen.widgetTemplates.contains(element.id))
+                        screens[i].widgetTemplates.contains(element.id))
                       .map((e) => e.customWidget.widget)
                       .toList(growable: true))
           ],
-        ));
+        ));*/
   }
 }

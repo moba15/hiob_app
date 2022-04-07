@@ -17,7 +17,6 @@ class MainSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
-        leading: const Icon(Icons.settings),
       ),
 
       body: ListView(
@@ -44,7 +43,7 @@ class MainSettingsScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ScreenListSettingsScreen(
-                        manager: manager.screenManager)),
+                        screenManager: manager.screenManager)),
               )
             },
           ),
@@ -71,6 +70,14 @@ class MainSettingsScreen extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) =>  RepositoryProvider.value(value: manager, child: IoBrokerSettingsPage(),)),
               )
+            },
+          ),
+          ListTile(
+            title: const Text("License Page"),
+            leading: const Icon(Icons.warning_amber_outlined),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+              showLicensePage(context: context, applicationName: "HIoB", applicationVersion: "0.1", applicationLegalese: "LICENCE MIT", applicationIcon: const Icon(Icons.smartphone_sharp))
             },
           )
         ],

@@ -5,6 +5,8 @@ enum DataPackageType {
   iobStateChangeRequest,
   enumUpdateRequest,
   enumUpdate,
+  subscribeToDataPoints,
+  firstPingFromIob,
 }
 
 class DataPackage {
@@ -46,5 +48,19 @@ class EnumUpdateRequestIobPackage extends DataPackage {
       : super(
       type: DataPackageType.enumUpdateRequest,
       content: {"id": "enum.app.*"});
+}
+
+class SubscribeToDataPointsIobPackage extends DataPackage {
+  SubscribeToDataPointsIobPackage({required List<String> dataPoints})
+      : super(
+      type: DataPackageType.subscribeToDataPoints,
+      content: {"dataPoints": dataPoints});
+}
+
+class FirstPingFromIobPackage extends DataPackage {
+  FirstPingFromIobPackage()
+      : super(
+      type: DataPackageType.firstPingFromIob,
+      content: {});
 }
 

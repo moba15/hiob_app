@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screen/screen.dart';
@@ -35,6 +36,9 @@ class ScreenManager {
       }
     }
     loaded = true;
+    if(screens.isEmpty) {
+      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
+    }
     screenStreamController.add(screens);
 
     return screens;
@@ -52,23 +56,31 @@ class ScreenManager {
 
   void removeScreen(Screen screen) async {
     screens.remove(screen);
+    if(screens.isEmpty) {
+      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
+    }
     screenStreamController.add(screens);
     bool suc = await fileManager.writeJSONList(key, screens);
     if (!suc) {
       screens.add(screen);
       screenStreamController.add(screens);
     }
+
   }
 
-  void reorderScreen(int screen, int index) async {
-    Screen last = screens[screen];
-    for (int i = index; i < screens.length; i++) {
-      Screen tmp = screens[i];
-      screens[i] = last;
-      last = tmp;
-    }
+  void reorderScreen({required int oldIndex, required int newIndex}) async {
+    Screen tmp = screens[oldIndex];
+    screens.removeAt(oldIndex);
+    screens.add(tmp);
+    screens.insert(newIndex, tmp);
+    screens.removeLast();
     screenStreamController.add(screens);
     bool suc = await fileManager.writeJSONList(key, screens);
+    if(!suc) {
+      screens.removeAt(newIndex);
+      screens.insert(oldIndex, tmp);
+      screenStreamController.add(screens);
+    }
   }
 
   void editScreen(
@@ -103,4 +115,17 @@ class ScreenManager {
       screenStreamController.add(screens);
     }
   }
+
+  void templateRemoved(CustomWidgetTemplate template) async {
+    for(Screen s in screens) {
+      s.widgetTemplates.removeWhere((element) => template.id == element);
+    }
+    await fileManager.writeJSONList(key, screens);
+    screenStreamController.add(screens);
+  }
+
+  void templateEdited(CustomWidgetTemplate template) {
+    screenStreamController.add(screens);
+  }
+
 }

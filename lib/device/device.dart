@@ -57,6 +57,15 @@ class Device {
   void removeDataPointById(String id) {
     dataPoints?.removeWhere((element) => element.id == id);
   }
+
+  DataPoint? getDataPoint({required String id}) {
+    for(DataPoint dataPoint in dataPoints ?? []) {
+      if(dataPoint.id == id) {
+        return dataPoint;
+      }
+    }
+      return null;
+  }
 }
 enum DeviceType {
   httpDevice,

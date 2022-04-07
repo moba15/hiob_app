@@ -12,6 +12,8 @@ class App extends MaterialApp {
       required ScreenManager screenManager})
       : super(
             key: key,
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
             home: RepositoryProvider<Manager>.value(
                 value: manager,
                 child: BlocProvider(

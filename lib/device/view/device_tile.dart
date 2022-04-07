@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/device.dart';
+import 'package:smart_home/manager/manager.dart';
 
+import '../../settings/device_setting/device_list/view/device_list_page.dart';
 import '../iobroker_device.dart';
 
 
@@ -57,6 +59,17 @@ class DeviceTile extends StatelessWidget {
             fontSize: 13),
       ),
       isThreeLine: true,
+
+      onTap: ()  {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => DeviceEditPage(
+                  deviceManager: Manager.instance!.deviceManager,
+                  device: device
+                )));
+
+      },
     );
   }
 
