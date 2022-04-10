@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
@@ -24,6 +25,7 @@ class CustomWidgetManager {
       required this.manager});
 
   Future<void> loadTemplates() async {
+    //fileManager.writeJSONList(templateKey, templates);
 
     if (loaded) {
       templatesStreamController.add(templates);
@@ -53,6 +55,13 @@ class CustomWidgetManager {
           break;
         case CustomWidgetType.light:
           customWidget = CustomLightWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetType.group:
+        case CustomWidgetType.line:
+          continue;
+        case CustomWidgetType.simpleValue:
+          customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
+          break;
       }
 
       CustomWidgetTemplate template = CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
@@ -60,11 +69,33 @@ class CustomWidgetManager {
     }
 
     loaded = true;
+    sort();
     templatesStreamController.add(templates);
   }
 
+  void sort() {
+    templates.sort((a, b) {
+      if(a.customWidget.type == b.customWidget.type) {
+        return a.name.compareTo(b.name);
+      } else {
+        return a.customWidget.type?.index.compareTo(b.customWidget.type?.index ?? 0) ?? 0;
+      }
+    });
+  }
+
+  List<CustomWidgetTemplate> getTemplatesByType(CustomWidgetType type) {
+    List<CustomWidgetTemplate> tmps = [];
+    for(CustomWidgetTemplate t in templates) {
+      if(t.customWidget.type == type)
+        tmps.add(t);
+    }
+    return tmps;
+  }
+
   Future<void> save({required CustomWidgetTemplate template}) async {
+    
     templates.add(template);
+    sort();
     templatesStreamController.add(templates);
     if (!await fileManager.writeJSONList(templateKey, templates)) {
       templates.remove(template);
@@ -73,7 +104,9 @@ class CustomWidgetManager {
   }
 
   Future<bool> edit({required CustomWidgetTemplate template}) async {
+    sort();
     templatesStreamController.add(templates);
+
     if (!await fileManager.writeJSONList(templateKey, templates)) {
       templatesStreamController.add(templates);
       return false;

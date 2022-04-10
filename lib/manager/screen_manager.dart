@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screen/screen.dart';
@@ -19,11 +20,14 @@ class ScreenManager {
       required this.manager});
 
   Future<List<Screen>> loadScreens() async {
+
     if (loaded) {
       screenStreamController.add(screens);
       loaded = true;
       return screens;
     }
+
+    await manager.customWidgetManager.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
     if (l == null) {
@@ -32,6 +36,7 @@ class ScreenManager {
       for (dynamic rawScreens in l) {
         Map<String, dynamic> rawMap = rawScreens;
         Screen s = Screen.fromJSON(rawMap);
+        print("Screen " + s.toString());
         screens.add(s);
       }
     }
@@ -118,7 +123,12 @@ class ScreenManager {
 
   void templateRemoved(CustomWidgetTemplate template) async {
     for(Screen s in screens) {
-      s.widgetTemplates.removeWhere((element) => template.id == element);
+      s.widgetTemplates.removeWhere((element) => template == element);
+      for(dynamic temp in s.widgetTemplates) {
+        if(temp is CustomGroupWidget) {
+          temp.templates.removeWhere((element) => element == template);
+        }
+      }
     }
     await fileManager.writeJSONList(key, screens);
     screenStreamController.add(screens);

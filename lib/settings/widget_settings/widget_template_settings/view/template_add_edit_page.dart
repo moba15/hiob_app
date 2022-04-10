@@ -56,7 +56,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: DropdownButtonFormField<CustomWidgetType>(
                 items: [
-                  for (CustomWidgetType c in CustomWidgetType.values)
+                  for (CustomWidgetType c in CustomWidgetType.values.where((value) => value != CustomWidgetType.group))
                     DropdownMenuItem(
                       child: Text(c.name),
                       value: c,
@@ -88,15 +88,20 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   }
 
   void _save() {
+    if(nameController.text.isEmpty) {
+      return;
+    }
 
     if(_customWidgetSettingWidget != null && _customWidgetSettingWidget!.validate() ) {
       if(widget.preSelectedTemplate != null) {
+        widget.preSelectedTemplate!.customWidget.name = nameController.text;
         widget.preSelectedTemplate!.customWidget = _customWidgetSettingWidget!.customWidget;
         widget.preSelectedTemplate!.name = nameController.text;
         widget.customWidgetManager.edit(
           template: widget.preSelectedTemplate!
         );
       } else {
+        _customWidgetSettingWidget!.customWidget.name = nameController.text;
         widget.customWidgetManager.save(
             template: CustomWidgetTemplate(
               id: Manager.instance?.getRandString(12) ?? "",

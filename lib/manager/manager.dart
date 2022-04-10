@@ -47,12 +47,12 @@ class Manager {
     fileManager = FileManager(pref: pref);
     deviceManager = DeviceManager(fileManager, devicesList: [], manager: this)
       ..loadDevices();
+    customWidgetManager = CustomWidgetManager(
+        fileManager: fileManager, deviceManager: deviceManager, manager: this);
     screenManager =
         ScreenManager(fileManager: fileManager, screens: [], manager: this)
           ..loadScreens();
-    customWidgetManager = CustomWidgetManager(
-        fileManager: fileManager, deviceManager: deviceManager, manager: this)
-      ..loadTemplates();
+
     ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
 
     connectionManager = ConnectionManager(

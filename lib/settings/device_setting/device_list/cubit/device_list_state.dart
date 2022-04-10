@@ -13,6 +13,8 @@ class DeviceListState  {
       : this._(status: ListStatus.success, devices: devices);
   const DeviceListState.added(List<Device> devices)
       : this._(status: ListStatus.success, devices: devices);
+  const DeviceListState.update(List<Device> devices)
+      : this._(status: ListStatus.success, devices: devices);
   const DeviceListState.failure() : this._(status: ListStatus.failure);
 
 

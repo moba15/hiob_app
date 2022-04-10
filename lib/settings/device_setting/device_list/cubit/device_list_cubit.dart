@@ -37,19 +37,19 @@ class DeviceListCubit extends Cubit<DeviceListState> {
   }
 
   void addDevice(Device device) async {
-    print("adsd");
+    print("adsdasdasdasdas");
     deviceManager.addDevice(device);
 
   }
 
   @override
   void onChange(Change<DeviceListState> change) {
-    print("Change");
     super.onChange(change);
   }
 
   void update(List<Device> devices) {
-    emit(DeviceListState.added(deviceManager.devicesList));
+    print("Changeasdasd");
+    emit(DeviceListState.update(devices));
 
   }
 

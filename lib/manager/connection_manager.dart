@@ -18,7 +18,7 @@ class ConnectionManager {
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
   final IoBrokerManager ioBrokerManager;
-
+  int tries = 0;
   ConnectionManager(
       {required this.deviceManager, required this.ioBrokerManager});
 
@@ -30,9 +30,7 @@ class ConnectionManager {
           ioBrokerManager.port.toString());
       _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()), pingInterval: const Duration(minutes: 5));
       _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      ioBrokerManager.connectionStatusStreamController.add(true);
-      ioBrokerManager.connected = true;
-      ioBConnected = true;
+
 
       print("Connected to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
 
@@ -70,10 +68,7 @@ class ConnectionManager {
       _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()));
       _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
 
-      ioBConnected = true;
-      ioBrokerManager.connected = true;
-      ioBrokerManager.connectionStatusStreamController.add(true);
-      print("Connected to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
+
     } catch(e) {
       ioBrokerManager.connected = false;
       ioBrokerManager.connectionStatusStreamController.add(false);
@@ -100,6 +95,11 @@ class ConnectionManager {
     ioBrokerManager.connected = false;
     ioBrokerManager.connectionStatusStreamController.add(false);
     ioBConnected = false;
+    await Future.delayed(const Duration(seconds: 3));
+    tries++;
+    if(tries<=20) {
+      reconnect();
+    }
 
   }
 
@@ -134,6 +134,11 @@ class ConnectionManager {
   }
 
   void onFirstPing() {
+    ioBConnected = true;
+    ioBrokerManager.connected = true;
+    ioBrokerManager.connectionStatusStreamController.add(true);
+    print("Connected to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
+    tries = 0;
     deviceManager.subscribeToDataPointsIoB(this);
   }
 

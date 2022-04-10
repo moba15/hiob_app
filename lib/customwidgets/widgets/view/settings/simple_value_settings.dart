@@ -1,31 +1,41 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
 import '../../../../device/device.dart';
 import '../../../../manager/customise_manager.dart';
 
-class CustomSwitchWidgetSettingWidget extends StatefulWidget {
-  final CustomSimpleSwitchWidget customSwitchWidget;
-  final TextEditingController nameController;
-
-
-  const CustomSwitchWidgetSettingWidget({Key? key, required this.customSwitchWidget, required this.nameController}) : super(key: key);
+class CustomSimpleValueWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
+  final CustomSimpleValueWidget customSimpleValueWidget;
+  const CustomSimpleValueWidgetSettingWidget({Key? key, required this.customSimpleValueWidget}) : super(key: key);
 
   @override
-  State<CustomSwitchWidgetSettingWidget> createState() => _CustomSwitchWidgetSettingWidgetState();
+  State<CustomSimpleValueWidgetSettingWidget> createState() => _CustomSimpleValueWidgetSettingWidgetState();
+
+  @override
+  CustomWidget get customWidget => customSimpleValueWidget;
+
+  @override
+  bool validate() {
+    return customSimpleValueWidget.dataPoint != null
+        && customSimpleValueWidget.device != null && customSimpleValueWidget.round != null && customSimpleValueWidget.round! > 0;
+  }
 }
 
-class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSettingWidget> {
+class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomSimpleValueWidgetSettingWidget> {
   final TextEditingController valueController = TextEditingController();
   Device? currentDevice;
   DataPoint? currentDataPoint;
 
   @override
   void initState() {
-    valueController.value = TextEditingValue(text: widget.customSwitchWidget.text ?? "");
+    currentDevice = widget.customSimpleValueWidget.device;
+    currentDataPoint = widget.customSimpleValueWidget.dataPoint;
+
     super.initState();
   }
 
@@ -35,7 +45,6 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     CustomWidgetManager customWidgetManager = context.read<CustomWidgetManager>();
@@ -43,17 +52,22 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
           child: TextField(
-            controller: valueController,
-            onChanged: (value) => widget.customSwitchWidget.text = value,
-            decoration: const InputDecoration(labelText: "Value"),
+            onChanged: (s) => {widget.customSimpleValueWidget.round = int.tryParse(s) ?? 3},
+            decoration: const InputDecoration(labelText: "Round to"),
+            controller: TextEditingController(text: widget.customSimpleValueWidget.round.toString()),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
           ),
         ),
         Container(
           margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
           child: Row(
             children: [
+
               Expanded(
                 child: DropdownSearch<Device>(
                   items: customWidgetManager.manager.deviceManager.devicesList,
@@ -63,7 +77,10 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
                       setState(() {
                         currentDevice = e;
                         currentDataPoint = null;
+
                       });
+                      widget.customSimpleValueWidget.device = currentDevice;
+                      widget.customSimpleValueWidget.dataPoint = currentDataPoint;
                     }
 
                   },
@@ -83,8 +100,9 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
                 child: DropdownSearch<DataPoint>(
                   items: currentDevice?.dataPoints ?? [],
                   itemAsString: (e) => e?.name ?? "Error",
-                  onChanged: (e) => {
-                    currentDataPoint = e
+                  onChanged: (e) =>{
+                    currentDataPoint = e,
+                    widget.customSimpleValueWidget.dataPoint = currentDataPoint
                   },
                   showClearButton: true,
                   showAsSuffixIcons: true,

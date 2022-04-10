@@ -7,7 +7,6 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/bool_se
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
-import '../../../../device/device.dart';
 import '../../../../manager/customise_manager.dart';
 
 class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
@@ -27,15 +26,15 @@ class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
 }
 
 class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettingWidget> {
-
-  Device? _onDevice;
   DataPoint? _onDataPoint;
 
   bool _briSelected = false;
   
   
   bool _reachableSelected = false;
-
+  final TextEditingController _displayController = TextEditingController();
+  final TextEditingController _briDisplayController = TextEditingController();
+  final TextEditingController _reachDisplayController = TextEditingController();
   final TextEditingController _minController = TextEditingController();
   final TextEditingController _maxController = TextEditingController();
   final TextEditingController _stepController = TextEditingController();
@@ -47,6 +46,9 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
     _onDataPoint = widget.customLightWidget.onDataPoint;
     _minController.text = widget.customLightWidget.briMin.toString();
     _maxController.text = widget.customLightWidget.briMax.toString();
+    _stepController.text = widget.customLightWidget.briSteps.toString();
+    _briDisplayController.text = widget.customLightWidget.briDisplay;
+    _reachDisplayController.text = widget.customLightWidget.reachableDisplay;
     super.initState();
   }
 
@@ -57,6 +59,7 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
       margin: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
         children: [
+          Container(height: 20,),
           Container(
             margin: const EdgeInsets.only(top: 10),
             alignment: Alignment.centerLeft,
@@ -71,6 +74,8 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             selectedDataPoint: _onDataPoint,
             selectedDevice: _onDataPoint?.device,
           ),
+
+          Container(height: 20,),
 
 
           //Brightness
@@ -87,6 +92,11 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             startValue: _briSelected,
           ),
           if(_briSelected) ...[
+            TextField(
+              onChanged: (v)=> {widget.customLightWidget.briDisplay = v},
+              decoration: const InputDecoration(labelText: "Brightness Display"),
+              controller: _briDisplayController,
+            ),
             Container(
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.centerLeft,
@@ -138,14 +148,15 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
               onDeviceSelected: (device) => {},
               onDataPointSelected: (dataPoint) => {widget.customLightWidget.briDataPoint = dataPoint},
               customWidgetManager: customWidgetManager,
-              deviceLabel: "Brightness Device",
-              dataPointLabel: "Brightness Datapoint",
+              deviceLabel: "Bri Device",
+              dataPointLabel: "Bri Datapoint",
               selectedDataPoint: widget.customLightWidget.briDataPoint,
-              selectedDevice: widget.customLightWidget.briDataPoint?.device,
+              selectedDevice: widget.customLightWidget.briDataPoint?.device ?? widget.customLightWidget.onDataPoint?.device,
             ),
           ],
 
 
+          Container(height: 20,),
           //Reachable
           BoolSelectionTemplate(
             onChange: (v)  {
@@ -160,6 +171,11 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             title: "Reachable:",
           ),
           if(_reachableSelected) ...[
+            TextField(
+              onChanged: (v)=> {widget.customLightWidget.reachableDisplay = v},
+              decoration: const InputDecoration(labelText: "Reachable Display"),
+              controller: _reachDisplayController,
+            ),
             Container(
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.centerLeft,
@@ -172,11 +188,10 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
               customWidgetManager: customWidgetManager,
               deviceLabel: "Reachable Device",
               dataPointLabel: "Reachable Datapoint",
-              selectedDataPoint: widget.customLightWidget.briDataPoint,
-              selectedDevice: widget.customLightWidget.briDataPoint?.device,
+              selectedDataPoint: widget.customLightWidget.reachableDataPoint,
+              selectedDevice: widget.customLightWidget.reachableDataPoint?.device ?? widget.customLightWidget.onDataPoint?.device,
             ),
           ]
-
         ],
       ),
     );

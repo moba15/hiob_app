@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
@@ -69,6 +73,7 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView>
     with TickerProviderStateMixin {
+  final StreamController<int> _controller = StreamController.broadcast();
   @override
   void initState() {
     super.initState();
@@ -76,6 +81,9 @@ class _MainViewState extends State<MainView>
     //_tabController.addListener(onViewChange);
 
   }
+
+
+  int currentTab = 0;
 
   void onViewChange() {
     print("change");
@@ -102,7 +110,16 @@ class _MainViewState extends State<MainView>
         TabController _tabController = TabController(length: screens.length, vsync: this);
         return Scaffold(
             appBar: AppBar(
-              title: Text(screenManager.screens[_tabController.index].name),
+              title: screens.isEmpty ? const Text("Loading") : StreamBuilder<int>(
+                stream: _controller.stream,
+                builder: (context, snapshot) {
+                  if(snapshot.hasError) {
+                    return const Text("Error");
+                  }
+                  return Text(screens[snapshot.data ?? 0].name);
+
+                },
+              ),
               actions: [
                 IconButton(
                     onPressed: () => {
@@ -117,6 +134,9 @@ class _MainViewState extends State<MainView>
               ],
               automaticallyImplyLeading: false,
               bottom: TabBar(
+                onTap: (i)  {
+                  _controller.add(i);
+                },
                 isScrollable: true,
                 controller: _tabController,
                 tabs: [
@@ -132,14 +152,21 @@ class _MainViewState extends State<MainView>
               children: [
                 for (int i = 0; i<_tabController.length; i++)
                   ListView(
-                      children: context
-                          .read<Manager>()
-                          .customWidgetManager
-                          .templates
-                          .where((element) =>
-                          screens[i].widgetTemplates.contains(element.id))
-                          .map((e) => e.customWidget.widget)
-                          .toList(growable: true))
+                      children: screens[i].widgetTemplates.map((e) {
+                        print(e);
+                        if(e is CustomWidgetTemplate) {
+                          return Card(
+                            child: e.customWidget.widget,
+                          );
+                        } else if(e is CustomGroupWidget) {
+                          return Card(
+                            child: e.widget,
+                          );
+                        } else {
+                          return const Text("Error 404");
+                        }
+                      }).toList(),
+                  ),
               ],
             )
         );

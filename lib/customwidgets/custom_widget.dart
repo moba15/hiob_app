@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 
 enum CustomWidgetType {
   simpleSwitch,
+  simpleValue,
   light,
+  group,
+  line,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
@@ -14,15 +19,25 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return CustomSimpleSwitchWidget.edit().settingWidget;
       case CustomWidgetType.light:
         return CustomLightWidget(name: "").settingWidget;
+      case CustomWidgetType.group:
+        throw UnimplementedError("Error 12");
+      case CustomWidgetType.line:
+        return CustomDivisionLineWidget(name: "").settingWidget;
+      case CustomWidgetType.simpleValue:
+        return CustomSimpleValueWidget.edit().settingWidget;
     }
   }
 
   String get name {
     switch (this) {
       case CustomWidgetType.simpleSwitch:
-        return "Simple Switch Widget";
+        return "Simple Switch";
       case CustomWidgetType.light:
         return "Light Switch";
+      case CustomWidgetType.line:
+        return "Division Line";
+      case CustomWidgetType.simpleValue:
+        return "Simple Value";
       default:
         return "Error";
     }

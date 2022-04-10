@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/ioBroker/enum/enum.dart';
 import 'package:smart_home/manager/device_manager.dart';
@@ -49,7 +50,8 @@ class DeviceListPage extends StatelessWidget {
 class DeviceListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final state = context.select((DeviceListCubit cubit) => cubit.state);
+    final state = context.watch<DeviceListCubit>().state;
+    print("build");
     switch (state.status) {
       case ListStatus.failure:
         return const Center(
@@ -167,7 +169,8 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
 
   List<DataPoint> dataPoints = [];
 
-  final TextEditingController iconController = TextEditingController();
+  IconData? currentSelectedIconData = Icons.home;
+
   final TextEditingController idController = TextEditingController();
   Icon icon = const Icon(Icons.insert_emoticon);
 
@@ -193,20 +196,11 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextField(
-                onChanged: (value) {
-                  if (int.tryParse(value, radix: 16) != null) {
-                    setState(() {
-                      icon = Icon(IconData(int.parse(value, radix: 16),
-                          fontFamily: 'MaterialIcons'));
-                    });
-                  }
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+              child: IconPickerTemplate(
+                onChange: (d) => {
+                  currentSelectedIconData = d
                 },
-                controller: iconController,
-                decoration:
-                    InputDecoration(labelText: "IconID", suffixIcon: icon),
-                keyboardType: TextInputType.text,
               ),
             ),
             Container(
@@ -266,31 +260,32 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                 child: const Text("Add Enum from IoB."),
               ),
             ),
+
           ],
         ),
       ),
     );
   }
 
-  void onSelected(List<String> ids) {
+  void onSelected(String name, List<String> ids) {
     setState(() {
       for(String id in ids) {
+        nameController.text = name;
         dataPoints.add(DataPoint(name: id.split(".").last, device: null, id: id));
       }
     });
   }
 
   void save() {
-    if (int.tryParse(iconController.text, radix: 16) == null ||
-        nameController.text.isEmpty ||
-        int.parse(iconController.text, radix: 16) < 0) {
+    if (currentSelectedIconData == null ||
+        nameController.text.isEmpty ) {
       return;
     }
     if (_deviceType == DeviceType.ioBroker) {
       dataPoints.removeWhere((element) =>
           element.name.trim().isEmpty || element.id.trim().isEmpty);
       IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
-          iconID: iconController.text,
+          iconID: currentSelectedIconData!.codePoint.toRadixString(16),
           name: nameController.text,
           objectID: idController.text,
           dataPoints: dataPoints,
@@ -325,21 +320,20 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
 
   List<DataPoint> dataPoints = [];
 
-  final TextEditingController iconController = TextEditingController();
+  IconData? currentSelectedIconData;
   Icon icon = const Icon(Icons.insert_emoticon);
 
   @override
   void initState() {
     dataPoints = widget.device.dataPoints ?? [];
     nameController.text = widget.device.name;
-    iconController.text = widget.device.iconID;
+    currentSelectedIconData = IconData(int.tryParse(widget.device.iconID, radix: 16) ?? 0);
     super.initState();
   }
 
   @override
   void dispose() {
     nameController.dispose();
-    iconController.dispose();
     super.dispose();
   }
 
@@ -365,20 +359,12 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextField(
-                onChanged: (value) {
-                  if (int.tryParse(value, radix: 16) != null) {
-                    setState(() {
-                      icon = Icon(IconData(int.parse(value, radix: 16),
-                          fontFamily: 'MaterialIcons'));
-                    });
-                  }
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+              child: IconPickerTemplate(
+                selected: currentSelectedIconData ?? Icons.home,
+                onChange: (d) => {
+                  currentSelectedIconData = d
                 },
-                controller: iconController,
-                decoration:
-                InputDecoration(labelText: "IconID", suffixIcon: icon),
-                keyboardType: TextInputType.text,
               ),
             ),
             Container(
@@ -444,28 +430,28 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
     );
   }
 
-  void onSelected(List<String> ids) {
+  void onSelected(String name, List<String> ids) {
     setState(() {
       for(String id in ids) {
+
+        nameController.text = name;
         dataPoints.add(DataPoint(name: id.split(".").last, device: null, id: id));
       }
     });
   }
 
   void save() {
-    if (int.tryParse(iconController.text, radix: 16) == null ||
-        nameController.text.isEmpty ||
-        int.parse(iconController.text, radix: 16) < 0) {
+    if (currentSelectedIconData == null ||
+        nameController.text.isEmpty ) {
       return;
     }
     if (_deviceType == DeviceType.ioBroker) {
-      print("edit");
       dataPoints.removeWhere((element) =>
       element.name.trim().isEmpty || element.id.trim().isEmpty);
 
       IoBrokerDevice ioBrokerDevice = widget.device as IoBrokerDevice;
       ioBrokerDevice.name = nameController.text;
-      ioBrokerDevice.iconID = ioBrokerDevice.iconID;
+      ioBrokerDevice.iconID = currentSelectedIconData!.codePoint.toRadixString(16);
       ioBrokerDevice.dataPoints = dataPoints;
       dataPoints.forEach((element) => {element.device = ioBrokerDevice});
       widget.deviceManager.editDevice(ioBrokerDevice);
@@ -516,9 +502,9 @@ class EnumNavigationPage extends StatelessWidget {
   final IoBrokerManager ioBrokerManager;
   final String id;
   final int depth;
-  Function(List<String>) onSelected;
+  final Function(String, List<String>) onSelected;
 
-  EnumNavigationPage(
+  const EnumNavigationPage(
       {Key? key, required this.ioBrokerManager, required this.id, required this.depth, required this.onSelected})
       : super(key: key);
 
@@ -542,7 +528,7 @@ class EnumNavigationView extends StatelessWidget {
   int depth;
   final String id;
   final IoBrokerManager ioBrokerManager;
-  Function(List<String>) onSelected;
+  final Function(String, List<String>) onSelected;
 
   EnumNavigationView(
       {Key? key, required this.id, required this.ioBrokerManager, required this.depth, required this.onSelected})
@@ -583,7 +569,7 @@ class EnumNavigationView extends StatelessWidget {
                       content: Text("No members found!"),
                     ));
                   } else {
-                    onSelected(e.members);
+                    onSelected(e.name,e.members);
                     Navigator.popUntil(context, (route) {
                       depth--;
                       return depth <= -1;

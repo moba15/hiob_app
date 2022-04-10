@@ -16,8 +16,7 @@ class CustomLightWidget extends CustomWidget {
   DataPoint? reachableDataPoint;
   String briDisplay = "Brightness";
   String reachableDisplay = "Reachable";
-  String display = "Display";
-  CustomLightWidget({required String? name, this.onDataPoint, this.briDataPoint, this.briMax = 100, this.briMin = 1, this.reachableDataPoint, this.briSteps = 1}) : super(name: name, type: TYPE, settings: {});
+  CustomLightWidget({required String? name, this.onDataPoint, this.briDataPoint, this.briMax = 100, this.briMin = 0, this.reachableDataPoint, this.briSteps = 10}) : super(name: name, type: TYPE, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => CustomLightWidgetSettingWidget(customLightWidget: this);
@@ -49,7 +48,6 @@ class CustomLightWidget extends CustomWidget {
     "briMax": briMax,
     "briMin": briMin,
     "briSteps": briSteps,
-    "display": display,
     "briDisplay": briDisplay,
     "reachableDisplay": reachableDisplay,
   };

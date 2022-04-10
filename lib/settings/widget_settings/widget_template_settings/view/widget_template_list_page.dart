@@ -85,6 +85,7 @@ class TemplatesView extends StatelessWidget {
             onDismissed: (d) => {_delete(index)},
             child: CustomWidgetTemplateTile(
               customWidget: templates[index],
+              customWidgetManager: context.read<WidgetTemplateListCubit>().customWidgetManager,
             ),
             background: Container(
               color: Colors.red,

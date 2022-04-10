@@ -14,23 +14,32 @@ class CustomLightWidgetView extends StatefulWidget {
 class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
   @override
   Widget build(BuildContext context) {
+    if(widget.customLightWidget.onDataPoint == null) {
+      return ListTile(
+        title: Text(widget.customLightWidget.name ?? "No name"),
+        onTap: ()  {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Device Not Found")));
+        },
+
+      );
+    }
     final onBloc = DataPointBloc(widget.customLightWidget.onDataPoint!);
-    return Card(
-      child: ListTile(
-        trailing: BlocBuilder<DataPointBloc, DataPointState>(
-          bloc: onBloc,
-          builder: (context, state)  {
-            return Switch(
-              onChanged: (v) => {
-                onBloc.add(DataPointValueUpdateRequest(value: v)),
-              } ,
-              value: state.value == true,
-            );
-          },
-        ),
-        title: Text(widget.customLightWidget.display),
-        onTap: onTab,
+    return ListTile(
+      trailing: BlocBuilder<DataPointBloc, DataPointState>(
+        bloc: onBloc,
+        builder: (context, state)  {
+          return Switch(
+            inactiveThumbColor: Colors.red[500],
+            activeColor: Colors.green[600],
+            onChanged: (v) => {
+              onBloc.add(DataPointValueUpdateRequest(value: v)),
+            } ,
+            value: state.value == true,
+          );
+        },
       ),
+      title: Text(widget.customLightWidget.name ?? "No Name"),
+      onTap: onTab,
     );
   }
 
@@ -53,11 +62,15 @@ class _CustomLightWidgetAlert extends StatefulWidget {
 }
 
 class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
+  int? briTemp;
   @override
   Widget build(BuildContext context) {
     final briBloc = DataPointBloc(widget.customLightWidget.briDataPoint!);
     return AlertDialog(
-      title: Text(widget.customLightWidget.display),
+      title: Container(
+        alignment: Alignment.center,
+        child: Text(widget.customLightWidget.name ?? "No Name"),
+      ),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: const Text("Back"))
       ],
@@ -72,6 +85,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
         children: [
           Container(
             alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(left: 22),
             child: Text(widget.customLightWidget.briDisplay) ,
           ),
           Container(
@@ -82,17 +96,36 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
             child: BlocBuilder<DataPointBloc, DataPointState>(
               bloc: briBloc,
               builder: (context, state)  {
-                return Slider(
 
-                  value: (state.value).toDouble(),
-                  label: (state.value).round().toString(),
-                  divisions: ((state.value.toDouble() > widget.customLightWidget.briMax.toDouble() ? state.value.toDouble() : widget.customLightWidget.briMax.toDouble())/widget.customLightWidget.briSteps).round(),
-                  onChanged: (d) => {
-                    briBloc.add(DataPointValueUpdateRequest(value: d.round())),
-                  },
-                  max: state.value.toDouble() > widget.customLightWidget.briMax.toDouble() ? state.value.toDouble() : widget.customLightWidget.briMax.toDouble(),
-                  min: widget.customLightWidget.briMin.toDouble(),
+                return SliderTheme(
+                  data:  const SliderThemeData(
+                    showValueIndicator: ShowValueIndicator.always,
 
+                  ),
+                  child: Slider(
+
+
+                    value: briTemp?.toDouble() ?? (state.value).toDouble(),
+                    label: (briTemp?.toDouble() ?? (state.value).toDouble()).round().toString(),
+                    divisions: ((state.value.toDouble() > widget.customLightWidget.briMax.toDouble() ? state.value.toDouble() : widget.customLightWidget.briMax.toDouble())/widget.customLightWidget.briSteps).round(),
+                    onChangeStart: (d)  {
+                      setState(() {
+                        briTemp = d.round();
+                      });
+                    },
+                    onChanged: (d)  {
+                      setState(() {
+                        briTemp = d.round();
+                      });
+                    },
+                    onChangeEnd: (d) => {
+                      briTemp = null,
+                      briBloc.add(DataPointValueUpdateRequest(value: d.round())),
+                    },
+                    max: state.value.toDouble() > widget.customLightWidget.briMax.toDouble() ? state.value.toDouble() : widget.customLightWidget.briMax.toDouble(),
+                    min: widget.customLightWidget.briMin.toDouble(),
+
+                  ),
                 );
               },
             )

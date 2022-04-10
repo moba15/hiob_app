@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:smart_home/dataPackages/data_package.dart';
+import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/ioBroker/enum/enum.dart';
+import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 
@@ -106,5 +109,26 @@ class IoBrokerManager {
       List<String> parents = element.id.split(".");
       return element.id.startsWith(currentID) &&  element.id.replaceAll(currentID, "").split(".").length == 2;
     }).toList();
+  }
+
+  void exportEnumsToDevice() {
+    for(Enum e in enums) {
+      DeviceManager deviceManager = Manager.instance!.deviceManager;
+      if(e.members.isNotEmpty) {
+        if(deviceManager.devicesList.where((element) => element.name == e.name).isEmpty) {
+          IoBrokerDevice device = IoBrokerDevice(
+              id: Manager.instance!.getRandString(12),
+              name: e.name,
+              iconID: "ee98",
+              lastUpdated: DateTime.now(),
+              objectID: "");
+          device.dataPoints = e.members.map((el) =>
+              DataPoint(name: el
+                  .split(".")
+                  .last, device: device, id: el)).toList();
+          deviceManager.addDevice(device);
+        }
+      }
+    }
   }
 }

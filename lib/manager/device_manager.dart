@@ -51,9 +51,13 @@ class DeviceManager {
       }
     }
     loaded = true;
+    sort();
     deviceListStreamController.add(devicesList);
     return devicesList;
 
+  }
+  void sort() {
+    devicesList.sort((a, b) => a.name.compareTo(b.name),);
   }
 
   void startIdle() async {
@@ -69,6 +73,7 @@ class DeviceManager {
 
   Future<bool> addDevice(Device device) async {
     devicesList.add(device);
+    sort();
     bool suc = await fileManager.writeJSONList(key, devicesList);
     if (!suc) {
       devicesList.remove(device);
@@ -81,6 +86,7 @@ class DeviceManager {
   }
 
   Future<bool> editDevice(Device device) async {
+    sort();
     bool suc = await fileManager.writeJSONList(key, devicesList);
     deviceListStreamController.add(devicesList);
     if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {

@@ -8,18 +8,27 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 class SimpleSwitchWidgetView extends StatelessWidget {
   final CustomSimpleSwitchWidget customSimpleSwitchWidget;
 
-  SimpleSwitchWidgetView({Key? key, required this.customSimpleSwitchWidget})
+  const SimpleSwitchWidgetView({Key? key, required this.customSimpleSwitchWidget})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if(customSimpleSwitchWidget.dataPoint == null) {
+      return ListTile(
+        title: Text(customSimpleSwitchWidget.text?? "No Text Found"),
+        onTap: ()  {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Device Not Found")));
+        },
+
+      );
+    }
     DataPoint? dataPoint = customSimpleSwitchWidget.dataPoint;
 
     if (dataPoint == null) {
       return SwitchListTile(
         value: false,
         onChanged: (v) => {},
-        title: Text(customSimpleSwitchWidget.text ?? "null"),
+        title: Text(customSimpleSwitchWidget.text ?? "No Text Found"),
         subtitle:  const Text("No Data Point found"),
       );
     }
@@ -27,7 +36,7 @@ class SimpleSwitchWidgetView extends StatelessWidget {
     return BlocProvider(
       create: (_) => DataPointBloc(dataPoint),
       child: SimpleSwitchWidgetDeviceView(
-        text: customSimpleSwitchWidget.text ?? "null",
+        text: customSimpleSwitchWidget.text ?? "No Text Found",
       ),
     );
   }
@@ -42,13 +51,12 @@ class SimpleSwitchWidgetDeviceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<DataPointBloc>();
-    return Card(
-        child: SwitchListTile(
+    return SwitchListTile(
       value: bloc.state.value == true,
       onChanged: (v) {
         bloc.add(DataPointValueUpdateRequest(value: v));
       },
       title: Text(text),
-    ));
+    );
   }
 }

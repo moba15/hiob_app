@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/settings/screen_setting/screen_list/view/screen_edit_page.dart';
 
-import '../../settings/screen_setting/screen_list/view/screen_list_page.dart';
 import '../screen.dart';
 
 class ScreenListTile extends StatelessWidget {
   final Screen screen;
   final ScreenManager screenManager;
 
-  ScreenListTile({Key? key, required this.screen, required this.screenManager})
+  const ScreenListTile({Key? key, required this.screen, required this.screenManager})
       : super(key: key);
 
   @override

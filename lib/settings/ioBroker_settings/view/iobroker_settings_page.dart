@@ -129,6 +129,12 @@ class IoBrokerSettingsView extends StatelessWidget {
             }
           },
         ),
+        ListTile(
+          leading: const Icon(Icons.import_export),
+          title: const Text("Import Enums"),
+          trailing: TextButton(onPressed: ioBrokerManager.exportEnumsToDevice, child: const Text("Import")),
+        )
+
 
       ],
     );
