@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
@@ -15,7 +14,7 @@ class IoBrokerSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("IoBroker Settings"),
+        title: const Text("IoBroker Settings"),
       ),
       body: IoBrokerSettingsView(),
     );
@@ -68,12 +67,10 @@ class IoBrokerSettingsView extends StatelessWidget {
         StreamBuilder<bool>(
           stream: ioBrokerManager.connectionStatusStreamController.stream,
           builder: (context, snapshot) {
-            print("Build");
             if(snapshot.hasError) {
-              return  Container(margin: const EdgeInsets.only(left: 20.0, right: 20.0), child: Text("Error", style: TextStyle(color: Colors.red),));
+              return  Container(margin: const EdgeInsets.only(left: 20.0, right: 20.0), child: const Text("Error", style: TextStyle(color: Colors.red),));
             }
             if(snapshot.hasData && snapshot.data != null) {
-              print("Data: " + snapshot.data.toString());
               return Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: Text(snapshot.data! ? "Connected" : "Not Connected", style: TextStyle(color: snapshot.data! ? Colors.green : Colors.red),),

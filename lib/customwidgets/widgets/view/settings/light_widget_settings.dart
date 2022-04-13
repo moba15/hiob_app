@@ -32,7 +32,7 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
   
   
   bool _reachableSelected = false;
-  final TextEditingController _displayController = TextEditingController();
+  final TextEditingController _valueController = TextEditingController();
   final TextEditingController _briDisplayController = TextEditingController();
   final TextEditingController _reachDisplayController = TextEditingController();
   final TextEditingController _minController = TextEditingController();
@@ -41,6 +41,7 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
   
   @override
   void initState() {
+    _valueController.text = widget.customLightWidget.value ?? "";
     _briSelected = widget.customLightWidget.briDataPoint != null;
     _reachableSelected = widget.customLightWidget.reachableDataPoint != null;
     _onDataPoint = widget.customLightWidget.onDataPoint;
@@ -60,6 +61,11 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
       child: Column(
         children: [
           Container(height: 20,),
+          TextField(
+            onChanged: (s) => { widget.customLightWidget.value = s, if(s.isEmpty) widget.customLightWidget.value = null},
+            decoration: const InputDecoration(labelText: "Value (optional)", hintText: "Value"),
+            controller: _valueController,
+          ),
           Container(
             margin: const EdgeInsets.only(top: 10),
             alignment: Alignment.centerLeft,

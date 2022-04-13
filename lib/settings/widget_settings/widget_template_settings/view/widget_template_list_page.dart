@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/widget_template_list_cubit.dart';
@@ -77,40 +78,50 @@ class TemplatesView extends StatelessWidget {
             child: Text("Es konnten keine Widget Templates gefunden werden"),
           )
         :
-    ListView.builder(
-      itemCount: templates.length,
-      itemBuilder: (BuildContext c, int index) =>
-          Dismissible(
-            key: ValueKey(templates[index]),
-            onDismissed: (d) => {_delete(index)},
-            child: CustomWidgetTemplateTile(
-              customWidget: templates[index],
-              customWidgetManager: context.read<WidgetTemplateListCubit>().customWidgetManager,
+    ListView(
+      children: [
+        for(CustomWidgetType type in CustomWidgetType.values.where((element) => element != CustomWidgetType.group))
+
+          if(templates.any((element) => element.customWidget.type == type))
+            ExpansionTile(
+              title: Text(type.name + " (" + templates.where((element) => element.customWidget.type == type).length.toString() + ")"),
+              children: [
+                for(CustomWidgetTemplate t in templates.where((element) => element.customWidget.type == type))
+                  Dismissible(
+                    key: ValueKey(t),
+                    onDismissed: (d) => {_delete(t)},
+                    child: CustomWidgetTemplateTile(
+                      customWidget: t,
+                      customWidgetManager: context.read<WidgetTemplateListCubit>().customWidgetManager,
+                    ),
+                    background: Container(
+                      color: Colors.red,
+                      child: Container(
+                        child: const Icon(Icons.delete_forever),
+                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      ),
+                      alignment: Alignment.centerLeft,
+                    ),
+                    secondaryBackground: Container(
+                      color: Colors.red,
+                      child: Container(
+                        child: const Icon(Icons.delete_forever),
+                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      ),
+                      alignment: Alignment.centerRight,
+                    ),
+                  ),
+              ],
             ),
-            background: Container(
-              color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
-              alignment: Alignment.centerLeft,
-            ),
-            secondaryBackground: Container(
-              color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
-              alignment: Alignment.centerRight,
-            ),
-          ),
+      ],
+
     );
   }
 
-  void _delete(int index) {
+  void _delete(CustomWidgetTemplate template) {
 
 
-    Manager.instance?.customWidgetManager.removeTemplate(templates[index]);
+    Manager.instance?.customWidgetManager.removeTemplate(template);
   }
 }
 

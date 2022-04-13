@@ -10,16 +10,16 @@ import '../../device/device.dart';
 
 class CustomSimpleSwitchWidget extends CustomWidget {
   static const CustomWidgetType TYPE = CustomWidgetType.simpleSwitch;
-  String? text;
+  String? value;
   Device? device;
   DataPoint? dataPoint;
 
   CustomSimpleSwitchWidget(
-      {required this.text, required name, required this.device, this.dataPoint})
+      {required this.value, required name, required this.device, this.dataPoint})
       : super(
             name: name,
             type: TYPE,
-            settings: {"text": text, "device": device?.id});
+            settings: {"text": value, "device": device?.id});
 
   CustomSimpleSwitchWidget.edit() : super.edit(type:TYPE);
 
@@ -27,15 +27,18 @@ class CustomSimpleSwitchWidget extends CustomWidget {
   Map<String, dynamic> toJson() => {
 
     "type": CustomWidgetType.simpleSwitch.toString(),
-    "text": text,
+    "value": value,
     "device": device?.id, //Device ID
     "dataPoint": dataPoint?.id, // DataPoint ID
+    "name": name,
   };
 
   factory CustomSimpleSwitchWidget.fromJson(Map<String, dynamic> json) {
-    Device? device = Manager.instance?.deviceManager.getDevice(json["device"]);
+    Device? device = Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
+    print("Device: " + (device?.name.toString()).toString());
+    //DataPoint? onDataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"]);
     return CustomSimpleSwitchWidget(
-      text: json["text"],
+      value: json["value"],
       name: json["name"],
       device: device,
       dataPoint: device?.getDataPoint(id: json["dataPoint"]),

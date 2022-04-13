@@ -9,10 +9,11 @@ import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 
+import '../../device/device.dart';
+
 enum EnumUpdateState {
   loading, finished,none
 }
-
 
 class IoBrokerManager {
 
@@ -49,7 +50,6 @@ class IoBrokerManager {
     if((await fileManager.containsKey(enumKey))) {
       enumsUpdateStateStreamController.add(EnumUpdateState.loading);
       Map<String, dynamic>? enumsRaw = await fileManager.getMap(enumKey);
-      print(enumsRaw);
       lastEnumUpdate = DateTime.fromMillisecondsSinceEpoch(enumsRaw?["lastUpdated"]);
       List<dynamic> enumsListRaw = enumsRaw?["enums"] ?? [];
       for(Map<String, dynamic> enumRaw in enumsListRaw) {
@@ -103,12 +103,12 @@ class IoBrokerManager {
 
 
   List<Enum> getEnumChilds(String currentID) {
-    for(Enum e in enums)
-      print(e.name);
-    return enums.where((element) {
-      List<String> parents = element.id.split(".");
+    for(Enum e in enums) {
+      return enums.where((element) {
       return element.id.startsWith(currentID) &&  element.id.replaceAll(currentID, "").split(".").length == 2;
     }).toList();
+    }
+    return [];
   }
 
   void exportEnumsToDevice() {
@@ -127,6 +127,18 @@ class IoBrokerManager {
                   .split(".")
                   .last, device: device, id: el)).toList();
           deviceManager.addDevice(device);
+        } else {
+          Device device = deviceManager.devicesList.firstWhere((element) => element.name == e.name);
+          if(device is IoBrokerDevice) {
+            device.dataPoints ??= [];
+            List<String> dataPoints = device.dataPoints?.map((e) => e.id).toList() ?? [];
+            for(String d in e.members) {
+              if(!dataPoints.contains(d)) {
+                device.dataPoints?.add(DataPoint(name: d.split(".").last, device: device, id: d ));
+                deviceManager.editDevice(device);
+              }
+            }
+          }
         }
       }
     }

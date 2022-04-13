@@ -45,6 +45,7 @@ class DeviceManager {
         DeviceType type = DeviceType.values[typeInt];
         switch (type) {
           case DeviceType.ioBroker:
+            print("Raw: " + rawMap.toString());
             devicesList.add(IoBrokerDevice.fromJSON(rawMap));
             break;
         }
@@ -58,6 +59,34 @@ class DeviceManager {
   }
   void sort() {
     devicesList.sort((a, b) => a.name.compareTo(b.name),);
+  }
+
+  void reload() async {
+    devicesList.clear();
+    List<dynamic>? l = await fileManager.getList(key);
+    if(l== null) {
+      loaded = true;
+      devicesList = [];
+    } else  {
+      for(dynamic rawDevice in l) {
+
+        Map<String, dynamic> rawMap = rawDevice;
+        int? typeInt = rawMap["type"];
+        if(typeInt == null) {
+          throw Exception("Dumm?");
+        }
+
+        DeviceType type = DeviceType.values[typeInt];
+        switch (type) {
+          case DeviceType.ioBroker:
+            devicesList.add(IoBrokerDevice.fromJSON(rawMap));
+            break;
+        }
+      }
+    }
+    loaded = true;
+    sort();
+    deviceListStreamController.add(devicesList);
   }
 
   void startIdle() async {
@@ -165,12 +194,29 @@ class DeviceManager {
     return null;
   }
 
+  List<DataPoint>? getIoBrokerDataPointsByObjectID(String objectID) {
+    List<DataPoint> dataPoints = [];
+    for (Device d in devicesList) {
+      for (DataPoint dataPoint in d.dataPoints ?? []) {
+
+        if(dataPoint.id == objectID) {
+          dataPoints.add(dataPoint);
+        }
+
+      }
+
+    }
+    return dataPoints;
+  }
+
   void valueChange(DataPoint? dataPoint, dynamic value) {
     if (dataPoint == null) {
       return;
     }
+
     dataPoint.value = value;
     dataPoint.valueStreamController.add(value);
+    print(dataPoint.value.toString() + " Value");
   }
 
 
@@ -185,6 +231,8 @@ class DeviceManager {
     }
     connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: dataPoints));
   }
+
+
 
 
 }

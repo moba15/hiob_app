@@ -44,7 +44,8 @@ class Manager {
     instance = this;
     final pref = await SharedPreferences.getInstance();
 
-    fileManager = FileManager(pref: pref);
+
+    fileManager = FileManager(pref: pref, manager: this);
     deviceManager = DeviceManager(fileManager, devicesList: [], manager: this)
       ..loadDevices();
     customWidgetManager = CustomWidgetManager(
@@ -92,7 +93,6 @@ class Manager {
 
   void onLoaded() {
     loadingState += 1;
-    print(loadingState);
     if(loadingState == maxLoadingState -1) {
       status = ManagerStatus.finished;
       managerStatusStreamController.add(ManagerStatus.finished);

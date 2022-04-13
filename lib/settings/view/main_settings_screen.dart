@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/settings/general_settings/view/general_settings_page.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/settings/view/screen_setting_screen.dart';
 
@@ -21,19 +22,6 @@ class MainSettingsScreen extends StatelessWidget {
 
       body: ListView(
         children: [
-          ListTile(
-            title: const Text("Device Settings"),
-            leading: const Icon(Icons.device_unknown),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => {
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DeviceSettingsScreen(manager: manager.deviceManager)),
-              )
-
-            },
-          ),
           ListTile(
             title: const Text("Screen Settings"),
             leading: const Icon(Icons.add_to_home_screen_outlined),
@@ -61,6 +49,19 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
+            title: const Text("Device Settings"),
+            leading: const Icon(Icons.device_unknown),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DeviceSettingsScreen(manager: manager.deviceManager)),
+              )
+
+            },
+          ),
+          ListTile(
             title: const Text("IoBroker Settings"),
             leading: const Icon(Icons.stream),
             trailing: const Icon(Icons.arrow_forward_ios),
@@ -68,7 +69,19 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>  RepositoryProvider.value(value: manager, child: IoBrokerSettingsPage(),)),
+                    builder: (context) =>  RepositoryProvider.value(value: manager, child: const IoBrokerSettingsPage(),)),
+              )
+            },
+          ),
+          ListTile(
+            title: const Text("General Settings"),
+            leading: const Icon(Icons.settings_rounded),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>  RepositoryProvider.value(value: manager, child: const GeneralSettingsPage(),)),
               )
             },
           ),

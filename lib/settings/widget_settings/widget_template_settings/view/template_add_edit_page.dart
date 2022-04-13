@@ -26,7 +26,6 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   
   @override
   void initState() {
-    print("name: " + (widget.preSelectedTemplate.toString()));
     nameController.value = TextEditingValue(text: widget.preSelectedTemplate?.name ?? "");
     _selectedType = widget.preSelectedTemplate?.customWidget.type ?? CustomWidgetType.simpleSwitch;
     _customWidgetSettingWidget = widget.preSelectedTemplate?.customWidget.settingWidget  ?? _selectedType!.settingWidget;

@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
@@ -29,7 +28,7 @@ class DeviceListPage extends StatelessWidget {
         create: (_) =>
             DeviceListCubit(deviceManager: context.read<DeviceManager>())
               ..fetchList(),
-        child: DeviceListView(),
+        child: const DeviceListView(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -48,10 +47,12 @@ class DeviceListPage extends StatelessWidget {
 }
 
 class DeviceListView extends StatelessWidget {
+  const DeviceListView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final state = context.watch<DeviceListCubit>().state;
-    print("build");
+
     switch (state.status) {
       case ListStatus.failure:
         return const Center(
@@ -291,7 +292,9 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
           dataPoints: dataPoints,
           id: widget.deviceManager.manager.getRandString(12),
           lastUpdated: DateTime.now());
-      dataPoints.forEach((element) => {element.device = ioBrokerDevice});
+      for (var element in dataPoints) {
+        element.device = ioBrokerDevice;
+      }
       widget.deviceManager.addDevice(ioBrokerDevice);
       Navigator.pop(context);
     }

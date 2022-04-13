@@ -12,11 +12,12 @@ class CustomLightWidgetView extends StatefulWidget {
 }
 
 class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
+  bool currentValue = false;
   @override
   Widget build(BuildContext context) {
     if(widget.customLightWidget.onDataPoint == null) {
       return ListTile(
-        title: Text(widget.customLightWidget.name ?? "No name"),
+        title: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
         onTap: ()  {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Device Not Found")));
         },
@@ -25,21 +26,23 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
     }
     final onBloc = DataPointBloc(widget.customLightWidget.onDataPoint!);
     return ListTile(
+      visualDensity: VisualDensity.compact,
       trailing: BlocBuilder<DataPointBloc, DataPointState>(
         bloc: onBloc,
         builder: (context, state)  {
+          currentValue = state.value == true;
           return Switch(
-            inactiveThumbColor: Colors.red[500],
-            activeColor: Colors.green[600],
             onChanged: (v) => {
               onBloc.add(DataPointValueUpdateRequest(value: v)),
+              currentValue = v,
             } ,
             value: state.value == true,
           );
         },
       ),
-      title: Text(widget.customLightWidget.name ?? "No Name"),
-      onTap: onTab,
+      title: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+      onLongPress: onTab,
+      onTap: () => onBloc.add(DataPointValueUpdateRequest(value: !currentValue)),
     );
   }
 
@@ -69,13 +72,13 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
     return AlertDialog(
       title: Container(
         alignment: Alignment.center,
-        child: Text(widget.customLightWidget.name ?? "No Name"),
+        child: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
       ),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: const Text("Back"))
       ],
       insetPadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.all(10),
+      contentPadding: const EdgeInsets.all(10),
       shape: const RoundedRectangleBorder(
           borderRadius:
           BorderRadius.all(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
@@ -9,6 +8,8 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_pi
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
+
+import '../../../../customwidgets/custom_widget.dart';
 
 class ScreenEditPage extends StatefulWidget {
   final Screen screen;
@@ -89,7 +90,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: IconPickerTemplate(
-                onChange: (IconData iconData) { 
+                onChange: (IconData? iconData) {
                   currentIconData = iconData;
                 },
                 selected: currentIconData ?? Icons.home,
@@ -121,8 +122,6 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
 
   void addTemplate() {
     //widget.screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: "id", name: "name", customWidget: CustomTextWidget(name: "", text: CustomTextAttribute(data: ""))));
-    List<CustomWidgetTemplate> templates =
-        widget.screenManager.manager.customWidgetManager.templates;
     showDialog(
         context: context,
         builder: (context) => AddTemplateAlertDialog(
@@ -159,39 +158,48 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
   @override
   Widget build(BuildContext context) {
     List<CustomWidgetTemplate> templates =
-        widget.screenManager.manager.customWidgetManager.templates;
+        List.of(widget.screenManager.manager.customWidgetManager.templates);
+    templates.removeWhere((element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
         title: const Text("Select Widget Template"),
         actions: [
           TextButton(onPressed: cancel, child: const Text("Cancel")),
           TextButton(onPressed: add, child: const Text("Add")),
         ],
-        content: Container(
-          height: 500,
-          width: 100,
-          child: ListView(
+        content: SizedBox(
+          child: Column(
             children: [
-              for (CustomWidgetTemplate t in templates)
-                ListTile(
-                  selected: selected.contains(t),
-                  leading: Checkbox(
-                    onChanged: (bool? value) {
-                      setState(() {
-                        if (value == true) {
-                          selected.add(t);
-                        } else {
-                          selected.remove(t);
-                        }
-                      });
-                    },
-                    value: selected.contains(t),
+              for(CustomWidgetType type in CustomWidgetType.values.where((element) => element != CustomWidgetType.group))
+
+                if(templates.any((element) => element.customWidget.type == type))
+                  ExpansionTile(
+                    title: Text(type.name + " (" + templates.where((element) => element.customWidget.type == type).length.toString() + ")"),
+                    children: [
+                      for(CustomWidgetTemplate t in templates.where((element) => element.customWidget.type == type))
+                        ListTile(
+                          selected: selected.contains(t),
+                          leading: Checkbox(
+                            onChanged: (bool? value) {
+                              setState(() {
+                                if (value == true) {
+                                  selected.add(t);
+                                } else {
+                                  selected.remove(t);
+                                }
+                              });
+                            },
+                            value: selected.contains(t),
+                          ),
+                          title: Text(t.name),
+                          subtitle: Text(t.customWidget.type?.name ?? "Error"),
+                        )
+                    ],
                   ),
-                  title: Text(t.name),
-                  subtitle: Text(t.customWidget.type.toString()),
-                )
             ],
           ),
-        ));
+        ),
+      scrollable: true,
+    );
   }
 
   void add() {

@@ -55,7 +55,6 @@ class _ScreenTabBarState extends State<ScreenTabBar>
 
   @override
   void initState() {
-    print("a");
     _tabController = TabController(vsync: this, length: 2);
     super.initState();
   }
@@ -72,7 +71,7 @@ class _ScreenTabBarState extends State<ScreenTabBar>
     return TabBar(
       isScrollable: true,
       controller: _tabController,
-      tabs: [
+      tabs: const [
         Tab(
           text: "LOL",
         ),

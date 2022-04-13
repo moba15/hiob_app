@@ -13,9 +13,10 @@ class CustomSimpleValueWidget extends CustomWidget {
   Device? device;
   DataPoint? dataPoint;
   int? round = 2;
+  String? value;
 
   CustomSimpleValueWidget(
-      {required name, required this.device, this.dataPoint, this.round})
+      {required name, required this.device, this.dataPoint, this.round, this.value})
       : super(
             name: name,
             type: TYPE,
@@ -30,6 +31,7 @@ class CustomSimpleValueWidget extends CustomWidget {
     "dataPoint": dataPoint?.id, // DataPoint ID
     "round": round,
     "name": name,
+    "value": value,
   };
 
   factory CustomSimpleValueWidget.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,7 @@ class CustomSimpleValueWidget extends CustomWidget {
       round: json["round"],
       device: device,
       dataPoint: device?.getDataPoint(id: json["dataPoint"]),
+      value: json["value"]
 
     );
   }

@@ -20,20 +20,19 @@ class CustomSwitchWidgetSettingWidget extends CustomWidgetSettingStatefulWidget 
 
   @override
   bool validate() {
-    return customSimpleSwitchWidget.text != null && customSimpleSwitchWidget.text!.isNotEmpty
-        && customSimpleSwitchWidget.dataPoint != null
+    return customSimpleSwitchWidget.dataPoint != null
         && customSimpleSwitchWidget.device != null;
   }
 }
 
 class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSettingWidget> {
-  final TextEditingController valueController = TextEditingController();
+  final TextEditingController _valueController = TextEditingController();
   Device? currentDevice;
   DataPoint? currentDataPoint;
 
   @override
   void initState() {
-    valueController.value = TextEditingValue(text: widget.customSimpleSwitchWidget.text ?? "");
+    _valueController.value = TextEditingValue(text: widget.customSimpleSwitchWidget.value ?? "");
     currentDevice = widget.customSimpleSwitchWidget.device;
     currentDataPoint = widget.customSimpleSwitchWidget.dataPoint;
 
@@ -42,7 +41,7 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
 
   @override
   void dispose() {
-    valueController.dispose();
+    _valueController.dispose();
     super.dispose();
   }
 
@@ -53,11 +52,11 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
           child: TextField(
-            controller: valueController,
-            onChanged: (value) => widget.customSimpleSwitchWidget.text = value,
-            decoration: const InputDecoration(labelText: "Value"),
+            onChanged: (s) => { widget.customSimpleSwitchWidget.value = s, if(s.isEmpty) widget.customSimpleSwitchWidget.value = null},
+            decoration: const InputDecoration(labelText: "Value (optional)", hintText: "Value"),
+            controller: _valueController,
           ),
         ),
         Container(

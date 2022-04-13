@@ -13,37 +13,82 @@ class SimpleValueWidgetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(customSimpleValueWidget.dataPoint == null) {
+    if (customSimpleValueWidget.dataPoint == null) {
       return ListTile(
-        title: Text(customSimpleValueWidget.name?? "No Text Found"),
-        onTap: ()  {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Device Not Found")));
+        visualDensity: VisualDensity.compact,
+        title: Text(customSimpleValueWidget.name ?? "No Text Found"),
+        onTap: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Error Device Not Found")));
         },
-
       );
     }
     DataPoint? dataPoint = customSimpleValueWidget.dataPoint;
 
     if (dataPoint == null) {
       return ListTile(
-        title: Text(customSimpleValueWidget.name ?? "No Text Found"),
-        subtitle:  const Text("No Data Point found"),
+        visualDensity: VisualDensity.compact,
+        title: Text(customSimpleValueWidget.value ??
+            customSimpleValueWidget.name ??
+            "No Name Found"),
+        subtitle: const Text("No Data Point found"),
       );
     }
 
-    return ListTile(
-      title: Text(customSimpleValueWidget.name ?? "No Text Found"),
-      trailing: BlocBuilder<DataPointBloc, DataPointState>(
-        bloc: DataPointBloc(dataPoint),
-        builder: (context, state) {
-          if(state.value is double) {
-            return Text((state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) , style: const TextStyle(fontSize: 17),);
-          } else {
-            return Text(state.value.toString(), style: const TextStyle(fontSize: 17),);
-          }
-        },
-      ),
+    return BlocBuilder<DataPointBloc, DataPointState>(
+      bloc: DataPointBloc(dataPoint),
+      builder: (context, state) {
+        return SizedBox.fromSize(
+
+          child: ListTile(
+            visualDensity: VisualDensity.compact,
+            onLongPress: () => onTab(context),
+            title: Text(customSimpleValueWidget.value ??
+                customSimpleValueWidget.name ??
+                "No Name Found"),
+            trailing: state.value is double
+                ? Text(
+                    (state.value as double)
+                        .toStringAsFixed(customSimpleValueWidget.round ?? 800),
+                    style: const TextStyle(fontSize: 16),
+                  )
+                : Container(
+                    constraints: const BoxConstraints(maxWidth: 200),
+                    child: Text(
+                      state.value.toString(),
+                      style: const TextStyle(fontSize: 16),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ),
+          ),
+        );
+      },
+    );
+  }
+
+  void onTab(BuildContext context) {
+    showDialog(context: context, builder:(c) => _ValueDialog(title: customSimpleValueWidget.value ?? customSimpleValueWidget.name ?? "No Name Found",dataPoint: customSimpleValueWidget.dataPoint!,) );
+  }
+}
+
+
+class _ValueDialog extends StatelessWidget {
+  final DataPoint dataPoint;
+  final String title;
+  const _ValueDialog({Key? key, required this.dataPoint, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      scrollable: true,
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text("Back"))
+      ],
+      title: Text(title),
+      content: Text(dataPoint.value.toString(), style: const TextStyle(fontSize: 17),),
 
     );
   }
 }
+

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
@@ -38,7 +37,7 @@ class MainScreen extends StatelessWidget {
           case ManagerStatus.loading:
             return Scaffold(
               appBar: AppBar(
-                title: Text("Loading"),
+                title: const Text("Loading"),
                 actions: [
                   IconButton(
                       onPressed: () => {
@@ -57,7 +56,7 @@ class MainScreen extends StatelessWidget {
               )
             );
           default:
-            return MainView();
+            return const MainView();
         }
       },
     );
@@ -86,7 +85,6 @@ class _MainViewState extends State<MainView>
   int currentTab = 0;
 
   void onViewChange() {
-    print("change");
     setState(() {
 
     });
@@ -108,6 +106,7 @@ class _MainViewState extends State<MainView>
       builder: (context, state) {
         List<Screen> screens = state.screens;
         TabController _tabController = TabController(length: screens.length, vsync: this);
+        _tabController.addListener(() { _controller.add(_tabController.index);});
         return Scaffold(
             appBar: AppBar(
               title: screens.isEmpty ? const Text("Loading") : StreamBuilder<int>(
@@ -147,13 +146,12 @@ class _MainViewState extends State<MainView>
                 ],
               ),
             ),
-            body: _tabController.length == 0 ? Text("null"): TabBarView(
+            body: _tabController.length == 0 ? const Text("null"): TabBarView(
               controller: _tabController,
               children: [
                 for (int i = 0; i<_tabController.length; i++)
                   ListView(
                       children: screens[i].widgetTemplates.map((e) {
-                        print(e);
                         if(e is CustomWidgetTemplate) {
                           return Card(
                             child: e.customWidget.widget,

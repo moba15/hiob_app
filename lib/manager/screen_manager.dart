@@ -20,7 +20,7 @@ class ScreenManager {
       required this.manager});
 
   Future<List<Screen>> loadScreens() async {
-
+    //await fileManager.writeJSONList(key, screens);
     if (loaded) {
       screenStreamController.add(screens);
       loaded = true;
@@ -36,7 +36,6 @@ class ScreenManager {
       for (dynamic rawScreens in l) {
         Map<String, dynamic> rawMap = rawScreens;
         Screen s = Screen.fromJSON(rawMap);
-        print("Screen " + s.toString());
         screens.add(s);
       }
     }
@@ -47,6 +46,27 @@ class ScreenManager {
     screenStreamController.add(screens);
 
     return screens;
+  }
+
+  void reload() async {
+    screens.clear();
+    await manager.customWidgetManager.reload();
+
+    List<dynamic>? l = await fileManager.getList(key);
+    if (l == null) {
+      screens = [];
+    } else {
+      for (dynamic rawScreens in l) {
+        Map<String, dynamic> rawMap = rawScreens;
+        Screen s = Screen.fromJSON(rawMap);
+        screens.add(s);
+      }
+    }
+    loaded = true;
+    if(screens.isEmpty) {
+      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
+    }
+    screenStreamController.add(screens);
   }
 
   void addScreen(Screen screen) async {
@@ -137,5 +157,7 @@ class ScreenManager {
   void templateEdited(CustomWidgetTemplate template) {
     screenStreamController.add(screens);
   }
+
+
 
 }

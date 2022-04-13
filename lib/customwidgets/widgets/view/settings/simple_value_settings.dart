@@ -22,7 +22,7 @@ class CustomSimpleValueWidgetSettingWidget extends CustomWidgetSettingStatefulWi
   @override
   bool validate() {
     return customSimpleValueWidget.dataPoint != null
-        && customSimpleValueWidget.device != null && customSimpleValueWidget.round != null && customSimpleValueWidget.round! > 0;
+        && customSimpleValueWidget.device != null && customSimpleValueWidget.round != null && customSimpleValueWidget.round! >= 0;
   }
 }
 
@@ -33,6 +33,7 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomSimpleValue
 
   @override
   void initState() {
+    valueController.text = widget.customSimpleValueWidget.value ?? "";
     currentDevice = widget.customSimpleValueWidget.device;
     currentDataPoint = widget.customSimpleValueWidget.dataPoint;
 
@@ -51,6 +52,14 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomSimpleValue
 
     return Column(
       children: [
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+          child: TextField(
+            onChanged: (s) => { widget.customSimpleValueWidget.value = s, if(s.isEmpty) widget.customSimpleValueWidget.value = null},
+            decoration: const InputDecoration(labelText: "Value (optional)", hintText: "Value"),
+            controller: valueController,
+          ),
+        ),
         Container(
           margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
           child: TextField(

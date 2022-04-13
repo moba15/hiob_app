@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
@@ -49,6 +50,7 @@ class CustomWidgetManager {
       CustomWidgetType type = CustomWidgetType.values
           .firstWhere((element) => element.toString() == typeRaw);
       CustomWidget customWidget;
+      print(templateRaw);
       switch (type) {
         case CustomWidgetType.simpleSwitch:
           customWidget = CustomSimpleSwitchWidget.fromJson(widgetRaw);
@@ -57,8 +59,54 @@ class CustomWidgetManager {
           customWidget = CustomLightWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.group:
-        case CustomWidgetType.line:
           continue;
+        case CustomWidgetType.line:
+          customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetType.simpleValue:
+          customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
+          break;
+      }
+
+      CustomWidgetTemplate template = CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
+      templates.add(template);
+    }
+
+    loaded = true;
+    sort();
+    templatesStreamController.add(templates);
+  }
+
+  Future<void> reload() async {
+    templates.clear();
+    List? listRaw = await fileManager.getList(templateKey);
+
+    if (listRaw == null) {
+      loaded = true;
+      templatesStreamController.add(templates);
+      return;
+    }
+    for (Map<String, dynamic> templateRaw in listRaw) {
+      String name = templateRaw["name"];
+      String id = templateRaw["id"];
+      Map<String, dynamic> widgetRaw = templateRaw["widget"];
+      String typeRaw = widgetRaw["type"];
+      CustomWidgetType type = CustomWidgetType.values
+          .firstWhere((element) => element.toString() == typeRaw);
+      CustomWidget customWidget;
+      print(templateRaw);
+      switch (type) {
+        case CustomWidgetType.simpleSwitch:
+          customWidget = CustomSimpleSwitchWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetType.light:
+          customWidget = CustomLightWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetType.group:
+          continue;
+        case CustomWidgetType.line:
+          customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
+          break;
         case CustomWidgetType.simpleValue:
           customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
           break;
@@ -129,4 +177,6 @@ class CustomWidgetManager {
 
 
   }
+
+
 }

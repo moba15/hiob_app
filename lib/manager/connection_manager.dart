@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/device_manager.dart';
@@ -10,7 +11,7 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
-class ConnectionManager {
+class ConnectionManager with WidgetsBindingObserver {
   bool ioBConnected = false;
   Socket? socket;
   WebSocketChannel? _webSocket;
@@ -18,21 +19,21 @@ class ConnectionManager {
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
   final IoBrokerManager ioBrokerManager;
+  AppLifecycleState? _notification;
   int tries = 0;
   ConnectionManager(
-      {required this.deviceManager, required this.ioBrokerManager});
+      {required this.deviceManager, required this.ioBrokerManager}) {
+    WidgetsBinding.instance?.addObserver(this);
+  }
 
   Future<void> connectIoB() async {
     
     
     try {
-      print("Connecting to " + ioBrokerManager.ip + ":" +
-          ioBrokerManager.port.toString());
       _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()), pingInterval: const Duration(minutes: 5));
       _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
 
 
-      print("Connected to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
 
     } catch(e) {
       ioBrokerManager.connectionStatusStreamController.addError("Connection failed");
@@ -44,6 +45,28 @@ class ConnectionManager {
 
 
   }
+
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch(state) {
+      case AppLifecycleState.detached:
+        break;
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.paused:
+        close();
+        break;
+      case AppLifecycleState.resumed:
+        if(!ioBConnected) {
+          tries = 0;
+
+          reconnect();
+        }
+        break;
+    }
+  }
+
 
   void onError(e) {
 
@@ -62,8 +85,7 @@ class ConnectionManager {
     _webSocket = null;
 
     ioBrokerManager.connected = false;
-    
-    print("Connecting to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
+
     try {
       _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()));
       _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
@@ -79,7 +101,6 @@ class ConnectionManager {
   }
 
   void onData(event) {
-    print("Data received: " + event + DateFormat(" hh:mm:ss").format(DateTime.now()));
     readPackage(event);
   }
 
@@ -91,7 +112,6 @@ class ConnectionManager {
   }
 
   void onDone() async {
-    print("Connection closed");
     ioBrokerManager.connected = false;
     ioBrokerManager.connectionStatusStreamController.add(false);
     ioBConnected = false;
@@ -104,11 +124,11 @@ class ConnectionManager {
   }
 
   void readPackage(String msg) {
-    try {
+    //TODO Error Handling
       Map<String, dynamic> rawMap = jsonDecode(msg);
+      print(rawMap);
       DataPackageType packageType = DataPackageType.values
           .firstWhere((element) => element.name == rawMap["type"]);
-      print("Recieved MSG:" + packageType.name);
       switch (packageType) {
         case DataPackageType.iobStateChanged:
           stateChangedPackage(
@@ -121,23 +141,21 @@ class ConnectionManager {
           onFirstPing();
           break;
       }
-    } catch(e) {
-      print(e);
 
-    }
   }
 
   void stateChangedPackage({required String objectID, required dynamic value}) {
-    DataPoint? iobDataPoint =
-        deviceManager.getIoBrokerDataPointByObjectID(objectID);
-    deviceManager.valueChange(iobDataPoint, value);
+    List<DataPoint>? iobDataPoints =
+        deviceManager.getIoBrokerDataPointsByObjectID(objectID);
+    for(DataPoint dataPoint in iobDataPoints ?? []) {
+      deviceManager.valueChange(dataPoint, value);
+    }
   }
 
   void onFirstPing() {
     ioBConnected = true;
     ioBrokerManager.connected = true;
     ioBrokerManager.connectionStatusStreamController.add(true);
-    print("Connected to " + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString());
     tries = 0;
     deviceManager.subscribeToDataPointsIoB(this);
   }

@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_light_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/light_widget_settings.dart';
@@ -14,9 +14,10 @@ class CustomLightWidget extends CustomWidget {
   int briMin;
   int briSteps;
   DataPoint? reachableDataPoint;
+  String? value;
   String briDisplay = "Brightness";
   String reachableDisplay = "Reachable";
-  CustomLightWidget({required String? name, this.onDataPoint, this.briDataPoint, this.briMax = 100, this.briMin = 0, this.reachableDataPoint, this.briSteps = 10}) : super(name: name, type: TYPE, settings: {});
+  CustomLightWidget({required String? name, this.onDataPoint, this.briDataPoint, this.briMax = 100, this.briMin = 0, this.reachableDataPoint, this.briSteps = 10, this.value}) : super(name: name, type: TYPE, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => CustomLightWidgetSettingWidget(customLightWidget: this);
@@ -34,6 +35,7 @@ class CustomLightWidget extends CustomWidget {
       reachableDataPoint: reachableDataPoint,
       briDataPoint: briDataPoint,
       briSteps: json["briSteps"],
+      value: json["value"],
 
     );
   }
@@ -50,6 +52,7 @@ class CustomLightWidget extends CustomWidget {
     "briSteps": briSteps,
     "briDisplay": briDisplay,
     "reachableDisplay": reachableDisplay,
+    "value": value,
   };
 
   @override

@@ -37,7 +37,6 @@ class DeviceListCubit extends Cubit<DeviceListState> {
   }
 
   void addDevice(Device device) async {
-    print("adsdasdasdasdas");
     deviceManager.addDevice(device);
 
   }
@@ -48,7 +47,6 @@ class DeviceListCubit extends Cubit<DeviceListState> {
   }
 
   void update(List<Device> devices) {
-    print("Changeasdasd");
     emit(DeviceListState.update(devices));
 
   }

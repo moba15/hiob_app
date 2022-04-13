@@ -24,9 +24,8 @@ class Screen {
     List<dynamic> widgetTemplates = [];
     for(Map<String, dynamic> templateRaw in jsonDecode(json["widgetIds"])) {
       if(templateRaw.containsKey("widget")) {
-        print("templateRaw " + templateRaw.toString());
-        for(CustomWidgetTemplate t in Manager.instance!.customWidgetManager.templates) {
-          print(t.id);
+        if(!Manager.instance!.customWidgetManager.templates.any((element) => element.id == templateRaw["id"])) {
+          continue;
         }
         widgetTemplates.add(Manager.instance?.customWidgetManager.templates.firstWhere((element) => element.id == templateRaw["id"]));
       } else {

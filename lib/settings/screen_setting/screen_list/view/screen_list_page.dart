@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/screen_manager.dart';
@@ -22,7 +20,7 @@ class ScreenListPage extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (_) => ScreenListCubit(screenManager: context.read<ScreenManager>())..fetchList(),
-        child: ScreenListView(),
+        child: const ScreenListView(),
       ),
       floatingActionButton: FloatingActionButton(
 
@@ -138,7 +136,7 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: IconPickerTemplate(
-                onChange: (IconData iconData) {
+                onChange: (IconData? iconData) {
                   currentIconData = iconData;
                 },
                 selected: currentIconData ?? Icons.home,

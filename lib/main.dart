@@ -5,7 +5,7 @@ import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/settings/view/main_screen.dart';
 
-import 'App.dart';
+import 'app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

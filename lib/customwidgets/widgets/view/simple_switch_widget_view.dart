@@ -15,7 +15,8 @@ class SimpleSwitchWidgetView extends StatelessWidget {
   Widget build(BuildContext context) {
     if(customSimpleSwitchWidget.dataPoint == null) {
       return ListTile(
-        title: Text(customSimpleSwitchWidget.text?? "No Text Found"),
+        visualDensity: VisualDensity.compact,
+        title: Text(customSimpleSwitchWidget.value ??  customSimpleSwitchWidget.name ?? "No Text Found"),
         onTap: ()  {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Device Not Found")));
         },
@@ -26,17 +27,18 @@ class SimpleSwitchWidgetView extends StatelessWidget {
 
     if (dataPoint == null) {
       return SwitchListTile(
+        visualDensity: VisualDensity.compact,
         value: false,
         onChanged: (v) => {},
-        title: Text(customSimpleSwitchWidget.text ?? "No Text Found"),
+        title: Text(customSimpleSwitchWidget.value ??  customSimpleSwitchWidget.name ?? "No Text Found"),
         subtitle:  const Text("No Data Point found"),
       );
     }
-
+    print(customSimpleSwitchWidget.name);
     return BlocProvider(
       create: (_) => DataPointBloc(dataPoint),
       child: SimpleSwitchWidgetDeviceView(
-        text: customSimpleSwitchWidget.text ?? "No Text Found",
+        text: customSimpleSwitchWidget.value ??  customSimpleSwitchWidget.name ?? "No Text Found",
       ),
     );
   }
@@ -51,8 +53,11 @@ class SimpleSwitchWidgetDeviceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<DataPointBloc>();
+    print("state: " + bloc.state.value.toString());
     return SwitchListTile(
+      visualDensity: VisualDensity.compact,
       value: bloc.state.value == true,
+
       onChanged: (v) {
         bloc.add(DataPointValueUpdateRequest(value: v));
       },

@@ -9,13 +9,17 @@ class CustomGroupWidgetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("IconID " + customGroupWidget.iconID.toString());
     return Column(
         children: [
-          ListTile(
-            title: Text(customGroupWidget.name ?? "No Group Name Set", style: TextStyle(fontSize: 25),),
-
+          ExpansionTile(
+            leading: customGroupWidget.iconID != null ?Icon(IconData(int.tryParse(customGroupWidget.iconID!, radix: 16) ?? 0, fontFamily: "MaterialIcons")) : null,
+            initiallyExpanded: customGroupWidget.isExtended,
+            textColor: Theme.of(context).colorScheme.onSurface,
+            title: Text(customGroupWidget.name ?? "No Group Name Set", style: const TextStyle(fontSize: 25),),
+            children: customGroupWidget.templates.map((e) => e.customWidget.widget).toList(),
           ),
-          ... customGroupWidget.templates.map((e) => e.customWidget.widget).toList()
+
         ]
     );
   }

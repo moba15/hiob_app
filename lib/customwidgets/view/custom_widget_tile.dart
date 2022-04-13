@@ -18,7 +18,7 @@ class CustomWidgetTemplateTile extends StatelessWidget {
     return ListTile(
       title: Text(customWidget.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
-      subtitle: Text(type.toString()),
+      subtitle: Text(type?.name ?? "Error"),
       onTap: ()  {
         Navigator.push(
             context,
