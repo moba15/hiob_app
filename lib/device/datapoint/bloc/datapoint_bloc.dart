@@ -21,10 +21,8 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
       : super(DataPointInitial(value: dataPoint.value)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
-    print("Listen");
     _deviceValueSubscription =
         dataPoint.valueStreamController.stream.listen((event) {
-          print("Event");
       add(DataPointValueUpdate(value: event));
     });
   }
@@ -36,7 +34,6 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   }
 
   void _onValueUpdated(DataPointValueUpdate event, Emitter<DataPointState> emit) {
-    print("Value updated");
     emit(DataPointState(
         value: event.value));
     dataPoint.value = event.value;

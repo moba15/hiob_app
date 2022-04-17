@@ -42,7 +42,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Add Screen"),
+          title: const Text("Edit Template"),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: _save,
@@ -65,7 +65,15 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                 onChanged: (CustomWidgetType? type) {
                   setState(() {
                     _selectedType = type!;
-                    _customWidgetSettingWidget = widget.preSelectedTemplate?.customWidget.settingWidget  ?? _selectedType!.settingWidget;
+                    if(widget.preSelectedTemplate == null) {
+                      _customWidgetSettingWidget =  _selectedType!.settingWidget;
+                    } else {
+                      if(_selectedType == widget.preSelectedTemplate!.customWidget.type) {
+                        _customWidgetSettingWidget = widget.preSelectedTemplate!.customWidget.settingWidget;
+                      } else {
+                        _customWidgetSettingWidget =  _selectedType!.settingWidget;
+                      }
+                    }
                   });
                 },
               ),

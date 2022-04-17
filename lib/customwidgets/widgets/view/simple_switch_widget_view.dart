@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
@@ -34,11 +33,11 @@ class SimpleSwitchWidgetView extends StatelessWidget {
         subtitle:  const Text("No Data Point found"),
       );
     }
-    print(customSimpleSwitchWidget.name);
     return BlocProvider(
       create: (_) => DataPointBloc(dataPoint),
       child: SimpleSwitchWidgetDeviceView(
         text: customSimpleSwitchWidget.value ??  customSimpleSwitchWidget.name ?? "No Text Found",
+        buttonText: customSimpleSwitchWidget.buttonText ?? "Press",
       ),
     );
   }
@@ -46,22 +45,26 @@ class SimpleSwitchWidgetView extends StatelessWidget {
 
 class SimpleSwitchWidgetDeviceView extends StatelessWidget {
   final String text;
+  final String buttonText;
 
-  const SimpleSwitchWidgetDeviceView({Key? key, required this.text})
+  const SimpleSwitchWidgetDeviceView({Key? key, required this.text, required this.buttonText})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<DataPointBloc>();
-    print("state: " + bloc.state.value.toString());
-    return SwitchListTile(
+    return ListTile(
       visualDensity: VisualDensity.compact,
-      value: bloc.state.value == true,
-
-      onChanged: (v) {
-        bloc.add(DataPointValueUpdateRequest(value: v));
+      onTap: () {
+        bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true)));
       },
       title: Text(text),
+      trailing: TextButton(
+        child: Text(buttonText),
+        onPressed: () {
+          bloc.add(const DataPointValueUpdateRequest(value: true));
+        },
+      ),
     );
   }
 }

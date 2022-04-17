@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 Map<String, IconData> icons = {
   "import export": Icons.import_export,
   "home": Icons.home,
@@ -103,6 +104,9 @@ Map<String, IconData> icons = {
   "water damage outline": Icons.water_damage_outlined,
   "sensor": Icons.sensors,
   "sensor off": Icons.sensors_off,
+  "bell": FontAwesomeIcons.bell,
+  "kitchen": FontAwesomeIcons.kitchenSet,
+  "fire Burner": FontAwesomeIcons.fireBurner,
 };
 class IconPickerTemplate extends StatefulWidget {
   final Function(IconData? iconData) onChange;

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
@@ -30,6 +31,7 @@ class DeviceManager {
     }
 
     List<dynamic>? l = await fileManager.getList(key);
+    developer.log("Devices Raw Loaded " + l.toString(), name: "de.bachmaiers/device_manager.dart", time: DateTime.now(), zone: Zone.current);
     if(l== null) {
       loaded = true;
       devicesList = [];
@@ -45,9 +47,10 @@ class DeviceManager {
         DeviceType type = DeviceType.values[typeInt];
         switch (type) {
           case DeviceType.ioBroker:
-            print("Raw: " + rawMap.toString());
             devicesList.add(IoBrokerDevice.fromJSON(rawMap));
             break;
+          default:
+            throw UnimplementedError("Error");
         }
       }
     }
@@ -81,6 +84,8 @@ class DeviceManager {
           case DeviceType.ioBroker:
             devicesList.add(IoBrokerDevice.fromJSON(rawMap));
             break;
+          default:
+            throw UnimplementedError("Error");
         }
       }
     }
@@ -216,7 +221,6 @@ class DeviceManager {
 
     dataPoint.value = value;
     dataPoint.valueStreamController.add(value);
-    print(dataPoint.value.toString() + " Value");
   }
 
 

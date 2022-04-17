@@ -91,9 +91,7 @@ class IoBrokerManager {
     enums.clear();
     List<dynamic> enumsListRaw = jsonDecode(rawData["enums"]);
     for(Map<String, dynamic> enumRaw in enumsListRaw) {
-      if(enumRaw != null) {
-        enums.add(Enum.fromJSON(enumRaw));
-      }
+      enums.add(Enum.fromJSON(enumRaw));
     }
     lastEnumUpdate = DateTime.now();
     fileManager.writeJSON(enumKey, {"lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch, "enums": enums});

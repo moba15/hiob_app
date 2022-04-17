@@ -78,7 +78,6 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
 
   @override
   Widget build(BuildContext context) {
-    print("ok" + widget.customGroupWidget.isExtended.toString());
     return  Column(
       children: [
         TextField(

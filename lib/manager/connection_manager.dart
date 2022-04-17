@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/device_manager.dart';
@@ -19,7 +18,6 @@ class ConnectionManager with WidgetsBindingObserver {
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
   final IoBrokerManager ioBrokerManager;
-  AppLifecycleState? _notification;
   int tries = 0;
   ConnectionManager(
       {required this.deviceManager, required this.ioBrokerManager}) {
@@ -126,7 +124,6 @@ class ConnectionManager with WidgetsBindingObserver {
   void readPackage(String msg) {
     //TODO Error Handling
       Map<String, dynamic> rawMap = jsonDecode(msg);
-      print(rawMap);
       DataPackageType packageType = DataPackageType.values
           .firstWhere((element) => element.name == rawMap["type"]);
       switch (packageType) {
@@ -140,6 +137,8 @@ class ConnectionManager with WidgetsBindingObserver {
         case DataPackageType.firstPingFromIob:
           onFirstPing();
           break;
+        default:
+          throw UnimplementedError("Error");
       }
 
   }

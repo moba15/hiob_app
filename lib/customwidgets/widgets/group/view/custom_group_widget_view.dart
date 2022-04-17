@@ -9,7 +9,6 @@ class CustomGroupWidgetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("IconID " + customGroupWidget.iconID.toString());
     return Column(
         children: [
           ExpansionTile(

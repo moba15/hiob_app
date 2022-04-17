@@ -27,12 +27,14 @@ class CustomSwitchWidgetSettingWidget extends CustomWidgetSettingStatefulWidget 
 
 class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSettingWidget> {
   final TextEditingController _valueController = TextEditingController();
+  final TextEditingController _buttonController = TextEditingController();
   Device? currentDevice;
   DataPoint? currentDataPoint;
 
   @override
   void initState() {
     _valueController.value = TextEditingValue(text: widget.customSimpleSwitchWidget.value ?? "");
+    _buttonController.value = TextEditingValue(text: widget.customSimpleSwitchWidget.buttonText ?? "");
     currentDevice = widget.customSimpleSwitchWidget.device;
     currentDataPoint = widget.customSimpleSwitchWidget.dataPoint;
 
@@ -57,6 +59,14 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
             onChanged: (s) => { widget.customSimpleSwitchWidget.value = s, if(s.isEmpty) widget.customSimpleSwitchWidget.value = null},
             decoration: const InputDecoration(labelText: "Value (optional)", hintText: "Value"),
             controller: _valueController,
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+          child: TextField(
+            onChanged: (s) => { widget.customSimpleSwitchWidget.buttonText = s, if(s.isEmpty) widget.customSimpleSwitchWidget.buttonText = null},
+            decoration: const InputDecoration(labelText: "Button Text (optional)"),
+            controller: _buttonController,
           ),
         ),
         Container(

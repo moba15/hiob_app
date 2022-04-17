@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -86,7 +85,6 @@ class FileManager {
     }
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Exporting...")));
     try {
-      print(result);
       File myFile = File(result + "/exportHioB.json");
       Map<String,dynamic> data = {
         "devices": jsonEncode(manager.deviceManager.devicesList),
@@ -117,7 +115,6 @@ class FileManager {
         manager.deviceManager.reload();
         manager.screenManager.reload();
       } catch (e) {
-        print(e);
         ScaffoldMessenger.of(context).showSnackBar(
              SnackBar(content: Text("Error importing! " + e.toString())));
         return;

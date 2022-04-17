@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -30,6 +31,7 @@ class ScreenManager {
     await manager.customWidgetManager.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
+    developer.log("Screens Raw Loaded " + l.toString(), name: "de.bachmaiers/screen_manager.dart", time: DateTime.now(), zone: Zone.current);
     if (l == null) {
       screens = [];
     } else {

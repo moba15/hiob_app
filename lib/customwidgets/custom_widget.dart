@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
@@ -7,6 +8,7 @@ import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 enum CustomWidgetType {
   simpleSwitch,
   simpleValue,
+  advanced,
   light,
   group,
   line,
@@ -25,19 +27,23 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return CustomDivisionLineWidget(name: "").settingWidget;
       case CustomWidgetType.simpleValue:
         return CustomSimpleValueWidget.edit().settingWidget;
+      case CustomWidgetType.advanced:
+        return AdvancedCustomWidget.edit().settingWidget;
     }
   }
 
   String get name {
     switch (this) {
       case CustomWidgetType.simpleSwitch:
-        return "Simple Switch";
+        return "Button";
       case CustomWidgetType.light:
-        return "Light Switch";
+        return "Switch with Slider";
       case CustomWidgetType.line:
         return "Division Line";
       case CustomWidgetType.simpleValue:
-        return "Simple Value";
+        return "Value";
+      case CustomWidgetType.advanced:
+        return "Advanced (In Progress)";
       default:
         return "Error";
     }

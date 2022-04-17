@@ -13,9 +13,10 @@ class CustomSimpleSwitchWidget extends CustomWidget {
   String? value;
   Device? device;
   DataPoint? dataPoint;
+  String? buttonText;
 
   CustomSimpleSwitchWidget(
-      {required this.value, required name, required this.device, this.dataPoint})
+      {required this.value, required name, required this.device, this.dataPoint, this.buttonText})
       : super(
             name: name,
             type: TYPE,
@@ -31,17 +32,18 @@ class CustomSimpleSwitchWidget extends CustomWidget {
     "device": device?.id, //Device ID
     "dataPoint": dataPoint?.id, // DataPoint ID
     "name": name,
+    "buttonText": buttonText,
   };
 
   factory CustomSimpleSwitchWidget.fromJson(Map<String, dynamic> json) {
     Device? device = Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
-    print("Device: " + (device?.name.toString()).toString());
     //DataPoint? onDataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"]);
     return CustomSimpleSwitchWidget(
       value: json["value"],
       name: json["name"],
       device: device,
       dataPoint: device?.getDataPoint(id: json["dataPoint"]),
+      buttonText: json["buttonText"]
 
     );
   }
