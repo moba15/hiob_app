@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:smart_home/dataPackages/data_package.dart';
+import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/connection_manager.dart';
@@ -221,6 +222,9 @@ class DeviceManager {
 
     dataPoint.value = value;
     dataPoint.valueStreamController.add(value);
+
+
+    dataPoint.device?.status = DeviceStatus.ready;
   }
 
 

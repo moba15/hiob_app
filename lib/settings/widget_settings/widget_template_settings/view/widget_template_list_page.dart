@@ -88,12 +88,6 @@ class TemplatesView extends StatelessWidget {
               children: [
                 for(CustomWidgetTemplate t in templates.where((element) => element.customWidget.type == type))
                   Dismissible(
-                    key: ValueKey(t),
-                    onDismissed: (d) => {_delete(t)},
-                    child: CustomWidgetTemplateTile(
-                      customWidget: t,
-                      customWidgetManager: context.read<WidgetTemplateListCubit>().customWidgetManager,
-                    ),
                     background: Container(
                       color: Colors.red,
                       child: Container(
@@ -110,6 +104,14 @@ class TemplatesView extends StatelessWidget {
                       ),
                       alignment: Alignment.centerRight,
                     ),
+                    direction: DismissDirection.endToStart,
+                    key: ValueKey(t),
+                    onDismissed: (d) => {_delete(t)},
+                    child: CustomWidgetTemplateTile(
+                      customWidget: t,
+                      customWidgetManager: context.read<WidgetTemplateListCubit>().customWidgetManager,
+                    ),
+
                   ),
               ],
             ),

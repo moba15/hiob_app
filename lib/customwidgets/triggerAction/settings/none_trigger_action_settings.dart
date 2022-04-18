@@ -90,6 +90,22 @@ class _RulesSettingsState extends State<_RulesSettings> {
 
 
             ),
+            background: Container(
+              color: Colors.red,
+              child: Container(
+                child: const Icon(Icons.delete_forever),
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              ),
+              alignment: Alignment.centerLeft,
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              child: Container(
+                child: const Icon(Icons.delete_forever),
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              ),
+              alignment: Alignment.centerRight,
+            ),
             direction: DismissDirection.endToStart,
           )
       ],

@@ -99,6 +99,7 @@ class DeviceView extends StatelessWidget {
                   ),
                   alignment: Alignment.centerRight,
                 ),
+                direction: DismissDirection.endToStart,
                 key: ValueKey<Device>(devices[index]),
                 child: DeviceTileApp(device: devices[index]),
                 dragStartBehavior: DragStartBehavior.down,
@@ -232,6 +233,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                   ),
                   alignment: Alignment.centerRight,
                 ),
+                direction: DismissDirection.endToStart,
                 child: Container(
                   margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: DataPointInputField(
@@ -376,12 +378,6 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
             ),
             for (DataPoint dataPoint in dataPoints)
               Dismissible(
-                key: ValueKey(dataPoint),
-                onDismissed: (d) {
-                  setState(() {
-                    dataPoints.remove(dataPoint);
-                  });
-                },
                 background: Container(
                   color: Colors.red,
                   child: Container(
@@ -398,6 +394,14 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
                   ),
                   alignment: Alignment.centerRight,
                 ),
+                direction: DismissDirection.endToStart,
+                key: ValueKey(dataPoint),
+                onDismissed: (d) {
+                  setState(() {
+                    dataPoints.remove(dataPoint);
+                  });
+                },
+
                 child: Container(
                   margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: DataPointInputField(

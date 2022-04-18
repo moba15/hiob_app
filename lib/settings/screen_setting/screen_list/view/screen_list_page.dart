@@ -82,6 +82,7 @@ class ScreensView extends StatelessWidget {
                 ),
                 alignment: Alignment.centerRight,
               ),
+              direction: DismissDirection.endToStart,
               onDismissed: (d) => {context.read<ScreenManager>().removeScreen(screens[index])},
               key: ValueKey(screens[index]),
               child: ScreenListTile(

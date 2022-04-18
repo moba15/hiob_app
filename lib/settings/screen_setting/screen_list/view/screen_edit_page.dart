@@ -278,7 +278,23 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         if (templates[index] is CustomWidgetTemplate) {
           return Dismissible(
-            direction: DismissDirection.endToStart,
+              background: Container(
+                color: Colors.red,
+                child: Container(
+                  child: const Icon(Icons.delete_forever),
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+              secondaryBackground: Container(
+                color: Colors.red,
+                child: Container(
+                  child: const Icon(Icons.delete_forever),
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                ),
+                alignment: Alignment.centerRight,
+              ),
+              direction: DismissDirection.endToStart,
             onDismissed: (d) => screen.removeWidgetTemplate(screenManager, templates[index]),
             key: ValueKey(templates[index]),
             child: CustomWidgetTemplateTile(customWidget: templates[index], customWidgetManager: screenManager.manager.customWidgetManager,)
