@@ -59,7 +59,8 @@ class SimpleSwitchWidgetDeviceView extends StatelessWidget {
         bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true)));
       },
       title: Text(text),
-      trailing: TextButton(
+      trailing: OutlinedButton(
+
         child: Text(buttonText),
         onPressed: () {
           bloc.add(const DataPointValueUpdateRequest(value: true));
