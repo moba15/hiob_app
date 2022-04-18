@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 
 class CustomGroupWidgetView extends StatelessWidget {
@@ -16,7 +18,15 @@ class CustomGroupWidgetView extends StatelessWidget {
             initiallyExpanded: customGroupWidget.isExtended,
             textColor: Theme.of(context).colorScheme.onSurface,
             title: Text(customGroupWidget.name ?? "No Group Name Set", style: const TextStyle(fontSize: 25),),
-            children: customGroupWidget.templates.map((e) => e.customWidget.widget).toList(),
+            children: customGroupWidget.templates.map((e) {
+              if(e is CustomWidgetTemplate) {
+                return e.customWidget.widget;
+              } else if(e is CustomDivisionLineWidget) {
+                return e.widget;
+              } else {
+                return const Text("Error 404");
+              }
+            }).toList(),
           ),
 
         ]

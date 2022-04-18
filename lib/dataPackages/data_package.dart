@@ -47,7 +47,7 @@ class EnumUpdateRequestIobPackage extends DataPackage {
   EnumUpdateRequestIobPackage()
       : super(
       type: DataPackageType.enumUpdateRequest,
-      content: {"id": "enum.app.*"});
+      content: {"id": "enum.hiob.*"});
 }
 
 class SubscribeToDataPointsIobPackage extends DataPackage {

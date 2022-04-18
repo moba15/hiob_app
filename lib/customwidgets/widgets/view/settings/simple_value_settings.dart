@@ -74,6 +74,14 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomSimpleValue
         ),
         Container(
           margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+          child: TextField(
+            onChanged: (s) => {widget.customSimpleValueWidget.unit = s, if(s.isEmpty) widget.customSimpleValueWidget.unit = null},
+            decoration: const InputDecoration(labelText: "Unit (optional)"),
+            controller: TextEditingController(text: widget.customSimpleValueWidget.unit ?? ""),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
           child: Row(
             children: [
 

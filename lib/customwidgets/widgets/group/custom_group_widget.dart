@@ -1,15 +1,17 @@
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 import 'package:flutter/cupertino.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
 
 class CustomGroupWidget extends CustomWidget {
   static const CustomWidgetType TYPE = CustomWidgetType.group;
 
 
-  List<CustomWidgetTemplate> templates;
+  List<dynamic> templates;
   bool isExtended;
   String? iconID;
 
@@ -32,12 +34,20 @@ class CustomGroupWidget extends CustomWidget {
   }
 
   factory CustomGroupWidget.fromJSON(Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
-    List<CustomWidgetTemplate> templates = [];
+    List<dynamic> templates = [];
+    developer.log("Loaded Group: " + json.toString(), name: "de.bachmaiers/custom_group_widget");
     for(Map<String, dynamic> templatesRaw in jsonDecode(json["templates"])) {
-      if(!allTemplates.any((element) => element.id == templatesRaw["id"])) {
-        continue; //TODO: Delete From file
+      if(templatesRaw.containsKey("widget")) {
+        if (!allTemplates.any((element) => element.id == templatesRaw["id"])) {
+          continue; //TODO: Delete From file
+        }
+        templates.add(allTemplates.firstWhere((element) => element.id == templatesRaw["id"]));
+      } else {
+        //Is a Line Widget
+        templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
       }
-      templates.add(allTemplates.firstWhere((element) => element.id == templatesRaw["id"]));
+
+
     }
     return CustomGroupWidget(name: json["name"], templates: templates, isExtended: json["isExtended"] ?? true, iconID: json["iconID"]);
   }
@@ -59,12 +69,16 @@ class CustomGroupWidget extends CustomWidget {
     }
   }
 
-  void removeTemplate(CustomWidgetTemplate template) {
+  void addLine(CustomDivisionLineWidget customDivisionLineWidget) {
+    templates.add(customDivisionLineWidget);
+  }
+
+  void removeTemplate(dynamic template) {
     templates.remove(template);
   }
 
   void reorder({required int oldIndex, required int newIndex}) {
-    CustomWidgetTemplate tmp = templates[oldIndex];
+    dynamic tmp = templates[oldIndex];
     if(newIndex>=templates.length) {
       templates.add(tmp);
     }

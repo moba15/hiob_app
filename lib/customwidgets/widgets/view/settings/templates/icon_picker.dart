@@ -107,6 +107,15 @@ Map<String, IconData> icons = {
   "bell": FontAwesomeIcons.bell,
   "kitchen": FontAwesomeIcons.kitchenSet,
   "fire Burner": FontAwesomeIcons.fireBurner,
+  /*"floor home 0 zero ground ": CommunityMaterialIcons.home_floor_0,
+  "floor home 1 first ": CommunityMaterialIcons.home_floor_1,
+  "floor home 2 second ": CommunityMaterialIcons.home_floor_2,
+  "floor home 3 third ": CommunityMaterialIcons.home_floor_3,
+  "floor home -1 negative one basement": CommunityMaterialIcons.home_floor_negative_1,
+  "floor home a": CommunityMaterialIcons.home_floor_a,
+  "floor home b": CommunityMaterialIcons.home_floor_b,
+  "floor home g": CommunityMaterialIcons.home_floor_g,
+  "floor home l": CommunityMaterialIcons.home_floor_l,*/
 };
 class IconPickerTemplate extends StatefulWidget {
   final Function(IconData? iconData) onChange;
@@ -121,6 +130,7 @@ class IconPickerTemplate extends StatefulWidget {
 class _IconPickerTemplateState extends State<IconPickerTemplate> {
   @override
   Widget build(BuildContext context) {
+
     return DropdownSearch<String>(
       showClearButton: widget.reset,
       mode: Mode.BOTTOM_SHEET,
@@ -128,13 +138,15 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
       showSearchBox: true,
       dropdownSearchDecoration: const InputDecoration(labelText: "Icon"),
       onChanged: (s) => widget.onChange(icons[s]),
-      items: icons.keys.toList(),
+      items: icons.keys.toList()..sort(),
       selectedItem: icons.keys.firstWhere((element) => icons[element]?.codePoint == widget.selected.codePoint, orElse: () => "home"),
       dropdownBuilder: (context, iconKey) {
         return iconKey != null ? Icon(icons[iconKey]) : const Text("");
       },
       popupItemBuilder: (context, iconKey, b) {
-        return Icon(icons[iconKey]?? icons["home"]);
+        return ListTile(
+          title: Icon(icons[iconKey]?? icons["home"]),
+        );
       },
     );
   }

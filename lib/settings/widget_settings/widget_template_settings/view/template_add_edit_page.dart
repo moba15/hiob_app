@@ -26,6 +26,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   
   @override
   void initState() {
+
     nameController.value = TextEditingValue(text: widget.preSelectedTemplate?.name ?? "");
     _selectedType = widget.preSelectedTemplate?.customWidget.type ?? CustomWidgetType.simpleSwitch;
     _customWidgetSettingWidget = widget.preSelectedTemplate?.customWidget.settingWidget  ?? _selectedType!.settingWidget;
@@ -55,7 +56,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: DropdownButtonFormField<CustomWidgetType>(
                 items: [
-                  for (CustomWidgetType c in CustomWidgetType.values.where((value) => value != CustomWidgetType.group))
+                  for (CustomWidgetType c in CustomWidgetType.values.where((value) => value != CustomWidgetType.group && value != CustomWidgetType.line))
                     DropdownMenuItem(
                       child: Text(c.name),
                       value: c,

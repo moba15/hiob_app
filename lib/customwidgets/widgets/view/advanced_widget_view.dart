@@ -58,6 +58,9 @@ class _NoneTriggerActionView extends StatelessWidget {
           } else if(state.value is double) {
             leading = (state.value as double).toStringAsFixed(noneTriggerAction.round);
           }
+          if(noneTriggerAction.unit != null) {
+            leading = leading + " " + noneTriggerAction.unit!;
+          }
           return Container(
             constraints: const BoxConstraints(maxWidth: 200),
             child: Text(

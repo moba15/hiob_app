@@ -29,6 +29,12 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           ],
           onChanged: (v) => noneTriggerAction.round = int.tryParse(v) ?? 2,
         ),
+        TextField(
+          controller: TextEditingController.fromValue(TextEditingValue(text: noneTriggerAction.unit ?? "")),
+          decoration: const InputDecoration(labelText: "Unit (optional)"),
+          maxLength: 10,
+          onChanged: (v) => {noneTriggerAction.unit = v, if(v.isEmpty) noneTriggerAction.unit = null}
+        ),
         _RulesSettings(noneTriggerAction: noneTriggerAction),
       ],
     );

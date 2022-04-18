@@ -4,7 +4,6 @@ import 'dart:developer' as developer;
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
@@ -60,11 +59,9 @@ class CustomWidgetManager {
         case CustomWidgetType.light:
           customWidget = CustomLightWidget.fromJson(widgetRaw);
           break;
+        case CustomWidgetType.line:
         case CustomWidgetType.group:
           continue;
-        case CustomWidgetType.line:
-          customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
-          break;
         case CustomWidgetType.simpleValue:
           customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
           break;
@@ -108,11 +105,9 @@ class CustomWidgetManager {
         case CustomWidgetType.light:
           customWidget = CustomLightWidget.fromJson(widgetRaw);
           break;
+        case CustomWidgetType.line:
         case CustomWidgetType.group:
           continue;
-        case CustomWidgetType.line:
-          customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
-          break;
         case CustomWidgetType.simpleValue:
           customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
           break;

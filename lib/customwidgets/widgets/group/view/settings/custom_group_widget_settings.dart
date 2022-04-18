@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -9,24 +12,65 @@ import 'package:smart_home/manager/screen_manager.dart';
 
 class CustomGroupWidgetSettingsPage extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
-  const CustomGroupWidgetSettingsPage({Key? key, required this.customGroupWidget}) : super(key: key);
+  final StreamController<dynamic> _addedController = StreamController.broadcast();
+  CustomGroupWidgetSettingsPage({Key? key, required this.customGroupWidget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     CustomGroupWidget clone = customGroupWidget.clone();
-    CustomGroupWidgetSettings customGroupWidgetSettings = CustomGroupWidgetSettings(customGroupWidget: clone,);
+    CustomGroupWidgetSettings customGroupWidgetSettings = CustomGroupWidgetSettings(customGroupWidget: clone, stream: _addedController.stream,);
     return WillPopScope(
       child: Scaffold(
           appBar: AppBar(
             title: const Text("Edit Group"),
 
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => {
-              if(customGroupWidgetSettings.validate())
-                save(context, clone)
-            },
-            child: const Icon(Icons.save),
+          floatingActionButton: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 31),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      showDialog(context: context, builder: (context) =>
+                          AddTemplateAlertDialog(
+                            customGroupWidget: clone,
+                            onAdded: (template) => {_addedController.add(template), print("Added")},
+                            screenManager: Manager.instance!.screenManager,));
+                    },
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 90),
+                alignment: Alignment.bottomLeft,
+                child: FloatingActionButton(
+                  heroTag: "d",
+                  onPressed: ()  {
+                    showDialog(context: context, builder: (context) => _AddDivisionLineTemplate(onAdd: (widget) => {
+                      {_addedController.add(widget), print("Added")},
+
+
+                    },));
+                  },
+                  child: const Icon(Icons.splitscreen),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: FloatingActionButton(
+                  heroTag: "tag",
+                  onPressed: () => {
+                    if(customGroupWidgetSettings.validate())
+                      save(context, clone)
+                  },
+                  child: const Icon(Icons.save),
+                ),
+              ),
+
+            ],
           ),
           body: Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
@@ -52,7 +96,8 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
 
 class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
   final CustomGroupWidget customGroupWidget;
-  const CustomGroupWidgetSettings({Key? key, required this.customGroupWidget}) : super(key: key);
+  final Stream stream;
+  const CustomGroupWidgetSettings({Key? key, required this.customGroupWidget, required this.stream}) : super(key: key);
 
   @override
   State<CustomGroupWidgetSettings> createState() => _CustomGroupWidgetSettingsState();
@@ -70,10 +115,30 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
 
 class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
   final TextEditingController _nameController = TextEditingController();
+  StreamSubscription? _streamSub;
   @override
   void initState() {
     _nameController.text = widget.customGroupWidget.name ?? "";
+    _streamSub = widget.stream.listen((event) {
+      setState(() {
+        if(event is List<dynamic>) {
+          List<dynamic> e = event;
+          widget.customGroupWidget.addTemplates(
+              List<CustomWidgetTemplate>.from(e));
+        } else {
+          print("ok");
+          widget.customGroupWidget.addLine(event);
+        }
+
+      });
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _streamSub?.cancel();
+    super.dispose();
   }
 
   @override
@@ -116,23 +181,6 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
          children: [
            const Text("Templates:", style: TextStyle(fontSize: 17),),
            Container(width: 16,),
-           TextButton(
-             onPressed: ()  => {
-               showDialog(
-                   context: context,
-                   builder: (context) => AddTemplateAlertDialog(
-                     screenManager: Manager.instance!.screenManager,
-                     customGroupWidget: widget.customGroupWidget,
-                     onAdded: (templates)  {
-                       setState(() {
-                         widget.customGroupWidget.addTemplates(templates);
-                       });
-                     },
-                   )
-               )
-             },
-             child: const Text("Add"),
-           ),
 
          ],
        ),
@@ -147,16 +195,37 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
             },
             itemCount: widget.customGroupWidget.templates.length,
             itemBuilder: (BuildContext context, int index) {
-              return Dismissible(
-                child: CustomWidgetTemplateTile(customWidget: widget.customGroupWidget.templates[index], customWidgetManager: Manager.instance!.customWidgetManager),
-                onDismissed: (d)  {
-                  setState(() {
-                    widget.customGroupWidget.removeTemplate(widget.customGroupWidget.templates[index]);
-                  });
-                },
-                direction: DismissDirection.endToStart,
-                key: ValueKey(widget.customGroupWidget.templates[index].id),
-              );
+              if(widget.customGroupWidget.templates[index] is CustomWidgetTemplate) {
+                return Dismissible(
+                  child: CustomWidgetTemplateTile(
+                      customWidget: widget.customGroupWidget.templates[index],
+                      customWidgetManager: Manager.instance!
+                          .customWidgetManager),
+                  onDismissed: (d) {
+                    setState(() {
+                      widget.customGroupWidget.removeTemplate(widget
+                          .customGroupWidget.templates[index]);
+                    });
+                  },
+                  direction: DismissDirection.endToStart,
+                  key: ValueKey(widget.customGroupWidget.templates[index].id),
+                );
+              } else {
+                return  Dismissible(
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (d) {
+                    setState(() {
+                      widget.customGroupWidget.removeTemplate(widget
+                          .customGroupWidget.templates[index]);
+                    });
+                  },
+                  key: ValueKey(widget.customGroupWidget.templates[index]),
+                  child: ListTile(
+                    title: Text("Line"),
+                    subtitle: Text("Thickness: " + (widget.customGroupWidget.templates[index] as CustomDivisionLineWidget).thickness.toString()),
+                  ),
+                );
+              }
             },
           ),
         ),
@@ -242,5 +311,49 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
     Navigator.pop(context);
   }
 }
+
+class _AddDivisionLineTemplate extends StatelessWidget {
+  final Function(CustomDivisionLineWidget) onAdd;
+  int thickness = 2;
+  _AddDivisionLineTemplate({Key? key, required this.onAdd}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Add Divider"),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel"),),
+        TextButton(onPressed: () {
+          onAdd(CustomDivisionLineWidget(thickness: thickness, name: 'Line (t: ' + thickness.toString() + ")"));
+        }, child: const Text("Add"),)
+      ],
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text("Thickness"),
+          StatefulBuilder(
+            builder: (context, setState) {
+              int value = thickness;
+              return Slider(
+                onChanged: (v)  {
+                  setState(()  {
+                    value = v.round();
+                    thickness = v.round();
+                  });
+                },
+                max: 10,
+                min: 1,
+                label: value.toString(),
+                divisions: 10,
+                value: value.toDouble(),
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+}
+
 
 
