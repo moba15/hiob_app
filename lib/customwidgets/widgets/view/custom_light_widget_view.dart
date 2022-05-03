@@ -30,20 +30,22 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: onBloc,
       builder: (context, state) {
+        currentValue = state.value;
 
         return ListTile(
           visualDensity: VisualDensity.compact,
           trailing: Switch(
             onChanged: (v) => {
-              onBloc.add(DataPointValueUpdateRequest(value: v)),
               currentValue = v,
+              onBloc.add(DataPointValueUpdateRequest(value: v)),
+
             } ,
             value: state.value == true,
           ),
           title: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
           onLongPress: onTab,
           subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
-          onTap: () => onBloc.add(DataPointValueUpdateRequest(value: !(state.value == true))),
+          onTap: () => onBloc.add(DataPointValueUpdateRequest(value: !currentValue)),
         );
       },
     );
