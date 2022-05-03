@@ -85,13 +85,21 @@ class Screen {
 
   void reorderWidgetTemplates({required int oldIndex, required int newIndex, required ScreenManager screenManager}) {
     dynamic widget = widgetTemplates[oldIndex];
-    if(widgetTemplates.length <=newIndex) {
+    int length = widgetTemplates.length;
+
+    if(length <=newIndex) {
+
       widgetTemplates.add(widget);
     }
-
     widgetTemplates.insert(newIndex, widget);
-    widgetTemplates.removeAt(oldIndex+1);
-    if(widgetTemplates.length <=newIndex) {
+    if(newIndex<=oldIndex) {
+      widgetTemplates.removeAt(oldIndex+1);
+    } else {
+      widgetTemplates.removeAt(oldIndex);
+    }
+
+    if(length <=newIndex) {
+
       widgetTemplates.removeLast();
     }
     screenManager.update();

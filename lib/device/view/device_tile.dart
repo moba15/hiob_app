@@ -52,13 +52,13 @@ class DeviceTile extends StatelessWidget {
               color: Colors.red,
             ),
       subtitle: Text(
-        "Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} \nID: " +
-            device.id,
+        "Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} " + (device.getBatteryLevel() != null ? "\nBattery: " +
+            device.getBatteryLevel().toString() + "%": ""),
         style: TextStyle(
             color: status == DeviceStatus.ready ? Colors.green : Colors.red,
             fontSize: 13),
       ),
-      isThreeLine: true,
+      isThreeLine: device.getBatteryLevel() != null,
 
       onTap: ()  {
         Navigator.push(

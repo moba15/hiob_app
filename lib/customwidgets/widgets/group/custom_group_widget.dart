@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer' as developer;
 
 import 'package:flutter/cupertino.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
@@ -35,7 +34,6 @@ class CustomGroupWidget extends CustomWidget {
 
   factory CustomGroupWidget.fromJSON(Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
     List<dynamic> templates = [];
-    developer.log("Loaded Group: " + json.toString(), name: "de.bachmaiers/custom_group_widget");
     for(Map<String, dynamic> templatesRaw in jsonDecode(json["templates"])) {
       if(templatesRaw.containsKey("widget")) {
         if (!allTemplates.any((element) => element.id == templatesRaw["id"])) {

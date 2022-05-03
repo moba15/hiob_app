@@ -36,7 +36,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
                       showDialog(context: context, builder: (context) =>
                           AddTemplateAlertDialog(
                             customGroupWidget: clone,
-                            onAdded: (template) => {_addedController.add(template), print("Added")},
+                            onAdded: (template) => {_addedController.add(template)},
                             screenManager: Manager.instance!.screenManager,));
                     },
                     child: const Icon(Icons.add),
@@ -50,7 +50,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
                   heroTag: "d",
                   onPressed: ()  {
                     showDialog(context: context, builder: (context) => _AddDivisionLineTemplate(onAdd: (widget) => {
-                      {_addedController.add(widget), print("Added")},
+                      {_addedController.add(widget)},
 
 
                     },));
@@ -126,7 +126,6 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
           widget.customGroupWidget.addTemplates(
               List<CustomWidgetTemplate>.from(e));
         } else {
-          print("ok");
           widget.customGroupWidget.addLine(event);
         }
 
@@ -253,7 +252,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   },
                   key: ValueKey(widget.customGroupWidget.templates[index]),
                   child: ListTile(
-                    title: Text("Line"),
+                    title: const Text("Line"),
                     subtitle: Text("Thickness: " + (widget.customGroupWidget.templates[index] as CustomDivisionLineWidget).thickness.toString()),
                   ),
                 );

@@ -16,7 +16,7 @@ class NoneTriggerAction extends TriggerAction  {
   
   factory NoneTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"]);
-    return NoneTriggerAction(dataPoint: dataPoint, displayRules: Map.from(jsonDecode(json["displayRules"])), round: json["round"] ?? 2, unit: json["unit"]);
+    return NoneTriggerAction(dataPoint: dataPoint, displayRules: Map.from(jsonDecode(json["displayRules"]) ?? {}), round: json["round"] ?? 2, unit: json["unit"]);
   }
   @override
   bool isTypeAllowed(value) {

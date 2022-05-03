@@ -1,5 +1,5 @@
 name: smart_home
-description: A new Flutter project.
+description: Your ioBroker app!
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.203+27
+version: 0.0.204+47
 
 environment:
   sdk: ">=2.15.0-116.0.dev <3.0.0"
@@ -43,10 +43,11 @@ dependencies:
   dropdown_search: ^2.0.1
   web_socket_channel: ^2.1.0
   icon_picker: ^2.1.0
-  permission_handler: ^9.2.0
   file_picker: ^4.5.1
   font_awesome_flutter: ^10.1.0
   community_material_icon: ^5.9.55
+  flutter_logs: ^2.1.5
+  webview_flutter: ^3.0.2
 
 dev_dependencies:
   flutter_test:

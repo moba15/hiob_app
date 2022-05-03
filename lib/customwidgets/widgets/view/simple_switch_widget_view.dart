@@ -4,6 +4,8 @@ import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
+import '../../../device/bloc/device_bloc.dart';
+
 class SimpleSwitchWidgetView extends StatelessWidget {
   final CustomSimpleSwitchWidget customSimpleSwitchWidget;
 
@@ -43,29 +45,77 @@ class SimpleSwitchWidgetView extends StatelessWidget {
   }
 }
 
-class SimpleSwitchWidgetDeviceView extends StatelessWidget {
+
+class SimpleSwitchWidgetDeviceView extends StatefulWidget {
   final String text;
   final String buttonText;
+  const SimpleSwitchWidgetDeviceView({Key? key, required this.text, required this.buttonText}) : super(key: key);
 
-  const SimpleSwitchWidgetDeviceView({Key? key, required this.text, required this.buttonText})
-      : super(key: key);
+  @override
+  State<SimpleSwitchWidgetDeviceView> createState() => _SimpleSwitchWidgetDeviceViewState();
+}
 
+class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceView> with SingleTickerProviderStateMixin{
+  late AnimationController _animationController;
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 80),
+      lowerBound: 0,
+      upperBound: 0.15
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<DataPointBloc>();
-    return ListTile(
-      visualDensity: VisualDensity.compact,
-      onTap: () {
-        bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true)));
-      },
-      title: Text(text),
-      trailing: OutlinedButton(
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTapDown: (details) => startAnimation(),
+      onTapCancel: () =>startAnimationRev(),
+      child: ListTile(
+          visualDensity: VisualDensity.compact,
+          onTap: () {
 
-        child: Text(buttonText),
-        onPressed: () {
-          bloc.add(const DataPointValueUpdateRequest(value: true));
-        },
+            bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true)));
+          },
+          title: Text(widget.text),
+          subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+          trailing: AnimatedBuilder(
+              child: OutlinedButton(
+                child: Text(widget.buttonText),
+                onPressed: () {
+
+                  bloc.add(const DataPointValueUpdateRequest(value: true));
+                },
+              ),
+              animation: _animationController,
+              builder: (context, child)  {
+                return Transform.scale(
+                  child: child,
+                  scale: 1 - _animationController.value,
+
+                );
+              }
+          )
       ),
     );
   }
+
+  void startAnimation() {
+    print("start");
+    _animationController.forward();
+  }
+  void startAnimationRev() {
+    print("cancle");
+      _animationController.reverse();
+  }
 }
+

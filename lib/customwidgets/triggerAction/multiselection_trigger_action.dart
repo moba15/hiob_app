@@ -1,13 +1,18 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:smart_home/customwidgets/triggerAction/settings/multiselection_trigger_action_settings.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
+import 'package:smart_home/customwidgets/triggerAction/view/multiselection_trigger_view.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
-class MultiSelectionTriggerAction extends TriggerAction {
-  DataPoint dataPoint;
-  String? value; 
-  Map<String, dynamic> selections;
+import '../../manager/manager.dart';
 
-  MultiSelectionTriggerAction({required this.value, required this.dataPoint, required this.selections});
+class MultiSelectionTriggerAction extends TriggerAction {
+  DataPoint? dataPoint;
+  Map<String, String> selections;
+
+  MultiSelectionTriggerAction({required this.dataPoint, required this.selections});
 
 
   @override
@@ -15,13 +20,20 @@ class MultiSelectionTriggerAction extends TriggerAction {
     return true;
   }
 
-  @override
-  TriggerActionSetting? get settings => throw UnimplementedError();
+  factory MultiSelectionTriggerAction.fromJSON(Map<String, dynamic> json) {
+    DataPoint? dataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+    return MultiSelectionTriggerAction(dataPoint: dataPoint, selections: Map.from(jsonDecode(json["selections"])));
+  }
 
   @override
-  Map<String, dynamic> toJson() {
-    throw UnimplementedError();
-  }
+  TriggerActionSetting? get settings => MultiSelectionTriggerActionSettings(multiSelectionTriggerAction: this);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    "type": type.toString(),
+    "dataPoint": dataPoint?.id,
+    "selections": jsonEncode(selections),
+  };
 
   @override
   void trigger() {
@@ -29,14 +41,49 @@ class MultiSelectionTriggerAction extends TriggerAction {
 
 
   @override
-  TriggerActionType get type => throw UnimplementedError();
+  TriggerActionType get type => TriggerActionType.multiSelection;
 
   @override
   bool validate() {
-    throw UnimplementedError();
+    return dataPoint != null && selections.length >= 2;
+  }
+
+  void reorderSelection(int oldIndex, int newIndex) {
+    String? toReorder = selections[selections.keys.elementAt(oldIndex)];
+    if(toReorder == null) {
+      return;
+    }
+    Map<String,String> orderedMap = {};
+    if(oldIndex<newIndex) {
+      for (int i = 0; i < newIndex; i++) {
+        if(i == oldIndex) {
+          continue;
+        }
+        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+      }
+
+      orderedMap[selections.keys.elementAt(oldIndex)] = toReorder;
+      for (int i = newIndex; i < selections.keys.length; i++) {
+        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+      }
+    } else if(oldIndex>newIndex){
+      for (int i = 0; i < newIndex; i++) {
+
+        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+      }
+      orderedMap[selections.keys.elementAt(oldIndex)] = toReorder;
+      for (int i = newIndex; i < selections.keys.length; i++) {
+        if(i==oldIndex) {
+          continue;
+        }
+        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+      }
+    }
+
+    selections = orderedMap;
   }
 
   @override
-  Widget get widget => throw UnimplementedError();
+  Widget get widget => MultiSelectionTriggerActionView(multiSelectionTriggerAction: this);
   
 }

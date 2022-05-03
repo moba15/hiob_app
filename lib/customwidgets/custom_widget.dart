@@ -4,6 +4,7 @@ import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 
 enum CustomWidgetType {
   simpleSwitch,
@@ -12,6 +13,7 @@ enum CustomWidgetType {
   light,
   group,
   line,
+  webView,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
@@ -29,6 +31,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return CustomSimpleValueWidget.edit().settingWidget;
       case CustomWidgetType.advanced:
         return AdvancedCustomWidget.edit().settingWidget;
+      case CustomWidgetType.webView:
+        return CustomWebViewWidget(name: null, url: null).settingWidget;
     }
   }
 
@@ -44,6 +48,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return "Value";
       case CustomWidgetType.advanced:
         return "Advanced (In Progress)";
+      case CustomWidgetType.webView:
+        return "Web View";
       default:
         return "Error";
     }

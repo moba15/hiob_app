@@ -230,8 +230,6 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
   final TextEditingController _nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetTemplate> templates =
-        widget.screenManager.manager.customWidgetManager.templates;
     return AlertDialog(
         title: const Text("Select Widget Template"),
         actions: [
@@ -276,7 +274,7 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
         screen.reorderWidgetTemplates(oldIndex: oldIndex, newIndex: newIndex, screenManager: screenManager);
       },
       itemBuilder: (BuildContext context, int index) {
-        if (templates[index] is CustomWidgetTemplate) {
+        if (templates.length> index && templates[index] is CustomWidgetTemplate) {
           return Dismissible(
               background: Container(
                 color: Colors.red,

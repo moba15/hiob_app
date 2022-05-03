@@ -33,8 +33,7 @@ class IoBrokerDevice extends Device {
     List<DataPoint>? dataPoints = [];
     if(dataPointsRaw != null) {
       for (Map<String, dynamic> dataPointRaw in dataPointsRaw) {
-        dataPoints.add(DataPoint(
-            name: dataPointRaw["name"], device: d, id: dataPointRaw["id"]));
+        dataPoints.add(DataPoint.fromJSON(dataPointRaw, d));
       }
     }
     d.dataPoints = dataPoints;

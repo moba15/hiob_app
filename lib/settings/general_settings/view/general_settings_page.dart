@@ -47,7 +47,7 @@ class _GeneralSettingsView extends StatelessWidget {
                 context.read<Manager>().fileManager.import(context),
               },
             )
-        )
+        ),
       ],
     );
   }

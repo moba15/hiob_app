@@ -13,6 +13,7 @@ class DeviceSelection extends StatefulWidget {
   final String dataPointLabel;
   final Device? selectedDevice;
   final DataPoint? selectedDataPoint;
+  final String? preferredRole;
   const DeviceSelection(
       {
         Key? key,
@@ -22,7 +23,8 @@ class DeviceSelection extends StatefulWidget {
         this.deviceLabel = "Device",
         this.dataPointLabel = "Datapoint",
         this.selectedDataPoint,
-        this.selectedDevice
+        this.selectedDevice,
+        this.preferredRole
 
       }) : super(key: key);
 
@@ -54,10 +56,9 @@ class _DeviceSelectionState extends State<DeviceSelection> {
               if(e!=_currentDevice) {
                 setState(() {
                   _currentDevice = e;
-                  _currentDataPoint = null;
+                  _currentDataPoint = selectPrefDataPoint(e);
                   widget.onDataPointSelected(_currentDataPoint);
                   widget.onDeviceSelected(_currentDevice);
-
                 });
               }
 
@@ -93,5 +94,21 @@ class _DeviceSelectionState extends State<DeviceSelection> {
         )
       ],
     );
+  }
+
+  DataPoint? selectPrefDataPoint(Device? device) {
+    print("ok");
+    if(widget.preferredRole == null) {
+      print("ok2");
+      return null;
+    }
+    for(DataPoint d in device?.dataPoints ?? []) {
+      print("select " + d.role.toString());
+      if(d.role == widget.preferredRole) {
+
+        return d;
+      }
+    }
+    return null;
   }
 }

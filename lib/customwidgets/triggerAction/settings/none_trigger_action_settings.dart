@@ -140,7 +140,7 @@ class _RuleAddAlertDialog extends StatelessWidget {
             controller: valueController,
           ),
           DropdownButtonFormField<int>(
-            items: [],
+            items: const [],
             onChanged: (int? value) {  },
 
           )

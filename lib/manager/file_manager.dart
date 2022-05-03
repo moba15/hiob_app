@@ -101,13 +101,31 @@ class FileManager {
   }
   void import(BuildContext context) async {
     //TODO: Add IOS Support
-    FilePickerResult? result = await FilePicker.platform.pickFiles(allowedExtensions: ["json"], type: FileType.custom, dialogTitle: "Dialog", withData: true);
+
+    FilePickerResult? result;
+    try {
+      result = await FilePicker.platform.pickFiles(allowedExtensions: ["json"], type: FileType.custom, dialogTitle: "Dialog", withData: true);
+    } catch(e) {
+      result = await FilePicker.platform.pickFiles(type: FileType.any, dialogTitle: "Dialog", withData: true);
+    }
+    _import(result, context);
+
+
+  }
+
+  void _import(FilePickerResult? result, BuildContext context) {
     if(result == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please Select File to import!"), duration: Duration(seconds: 1),));
     } else {
+      if(result.files.first.extension != "json") {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Please select a valid file format")));
+        return;
+      }
       try {
         Uint8List fileBytes = result.files.first.bytes!;
         String t = String.fromCharCodes(fileBytes.toList());
+        t = utf8.decode(fileBytes.toList());
         Map<String, dynamic> map = jsonDecode(t);
         pref.setString(manager.deviceManager.key, map["devices"]);
         pref.setString(manager.customWidgetManager.templateKey, map["widgets"]);
@@ -116,7 +134,7 @@ class FileManager {
         manager.screenManager.reload();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(content: Text("Error importing! " + e.toString())));
+            SnackBar(content: Text("Error importing! " + e.toString())));
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(

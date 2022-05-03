@@ -77,6 +77,7 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             customWidgetManager: customWidgetManager,
             deviceLabel: "Switch Device",
             dataPointLabel: "Switch Datapoint",
+            preferredRole: "switch.*",
             selectedDataPoint: _onDataPoint,
             selectedDevice: _onDataPoint?.device,
           ),
@@ -94,13 +95,13 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
                 }
               });
             },
-            title: "Brightness:",
+            title: "Slider:",
             startValue: _briSelected,
           ),
           if(_briSelected) ...[
             TextField(
               onChanged: (v)=> {widget.customLightWidget.briDisplay = v},
-              decoration: const InputDecoration(labelText: "Brightness Display"),
+              decoration: const InputDecoration(labelText: "Slider Display"),
               controller: _briDisplayController,
             ),
             Container(
@@ -154,8 +155,9 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
               onDeviceSelected: (device) => {},
               onDataPointSelected: (dataPoint) => {widget.customLightWidget.briDataPoint = dataPoint},
               customWidgetManager: customWidgetManager,
-              deviceLabel: "Bri Device",
-              dataPointLabel: "Bri Datapoint",
+              deviceLabel: "Device",
+              dataPointLabel: "Datapoint",
+
               selectedDataPoint: widget.customLightWidget.briDataPoint,
               selectedDevice: widget.customLightWidget.briDataPoint?.device ?? widget.customLightWidget.onDataPoint?.device,
             ),
@@ -194,6 +196,7 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
               customWidgetManager: customWidgetManager,
               deviceLabel: "Reachable Device",
               dataPointLabel: "Reachable Datapoint",
+
               selectedDataPoint: widget.customLightWidget.reachableDataPoint,
               selectedDevice: widget.customLightWidget.reachableDataPoint?.device ?? widget.customLightWidget.onDataPoint?.device,
             ),

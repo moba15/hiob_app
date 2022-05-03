@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/datapoint/datapointTypes/datapoint_role.dart';
 
 class Device {
   String id;
@@ -10,18 +11,17 @@ class Device {
   String iconID;
   dynamic value;
   DateTime lastUpdated;
-  DeviceStatus status;
+  bool _firstUpdateFromServer = false;
   DeviceType type;
   List<DataPoint>? dataPoints;
   Device(
-      {required this.id,
-      required this.name,
-      required this.iconID,
-      this.value,
-      required this.lastUpdated,
-      required this.type,
-      this.status = DeviceStatus.unavailable,
-      this.dataPoints = const []});
+      { required this.id,
+        required this.name,
+        required this.iconID,
+        this.value,
+        required this.lastUpdated,
+        required this.type,
+        this.dataPoints = const []});
 
   StreamController<dynamic> valueStreamController =
       StreamController.broadcast();
@@ -35,9 +35,12 @@ class Device {
   }
 
 
-  set setStatus(DeviceStatus status) {
-    this.status = status;
-    statusStreamController.add(status);
+  set setFirstUpdate(bool firstUpdateFromServer) {
+    if(_firstUpdateFromServer) {
+      return;
+    }
+    _firstUpdateFromServer = firstUpdateFromServer;
+    statusStreamController.add(getDeviceStatus());
   }
 
   set setLastUpdated(DateTime lastUpdated) {
@@ -55,6 +58,44 @@ class Device {
   }
   void removeDataPointById(String id) {
     dataPoints?.removeWhere((element) => element.id == id);
+  }
+
+  DeviceStatus getDeviceStatus() {
+    if(!_firstUpdateFromServer) {
+      return DeviceStatus.error;
+    }
+    for(DataPoint dataPoint in dataPoints ?? []) {
+      if(dataPoint.role == IoBrokerStateRoles.indicatorReachable) {
+        if(dataPoint.value == true) {
+          return DeviceStatus.ready;
+        } else {
+          return DeviceStatus.unavailable;
+        }
+
+
+      }
+    }
+    if(!_firstUpdateFromServer) {
+      return DeviceStatus.error;
+    }
+    return DeviceStatus.ready;
+  }
+
+  int? getBatteryLevel() {
+    for(DataPoint dataPoint in dataPoints ?? []) {
+      if(dataPoint.role == IoBrokerStateRoles.valueBattery) {
+        if(dataPoint.value is int ) {
+          return dataPoint.value;
+        } else if(dataPoint.value is double) {
+          return dataPoint.value.round();
+        } else {
+          return null;
+        }
+
+
+      }
+    }
+    return null;
   }
 
   DataPoint? getDataPoint({required String id}) {

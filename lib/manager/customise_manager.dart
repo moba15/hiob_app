@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -36,8 +39,16 @@ class CustomWidgetManager {
 
 
 
+
     List? listRaw = await fileManager.getList(templateKey);
     developer.log("Widgets Raw Loaded " + listRaw.toString(), name: "de.bachmaiers/customise_manager.dart", time: DateTime.now(), zone: Zone.current);
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    FlutterLogs.logInfo(
+      "customise",
+      "loadedBootup",
+      encoder.convert(listRaw),
+
+    );
 
     if (listRaw == null) {
       loaded = true;
@@ -67,6 +78,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetType.advanced:
           customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetType.webView:
+          customWidget = CustomWebViewWidget.fromJSON(widgetRaw);
           break;
 
       }
@@ -113,6 +127,10 @@ class CustomWidgetManager {
           break;
         case CustomWidgetType.advanced:
           customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetType.webView:
+          customWidget = CustomWebViewWidget.fromJSON(widgetRaw);
+          break;
       }
 
       CustomWidgetTemplate template = CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
@@ -137,8 +155,9 @@ class CustomWidgetManager {
   List<CustomWidgetTemplate> getTemplatesByType(CustomWidgetType type) {
     List<CustomWidgetTemplate> tmps = [];
     for(CustomWidgetTemplate t in templates) {
-      if(t.customWidget.type == type)
+      if(t.customWidget.type == type) {
         tmps.add(t);
+      }
     }
     return tmps;
   }
@@ -152,6 +171,14 @@ class CustomWidgetManager {
       templates.remove(template);
       templatesStreamController.add(templates);
     }
+
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    FlutterLogs.logInfo(
+      "customise",
+      "save",
+      encoder.convert(await fileManager.getList(templateKey)),
+
+    );
   }
 
   Future<bool> edit({required CustomWidgetTemplate template}) async {
@@ -164,6 +191,13 @@ class CustomWidgetManager {
     }
 
     manager.screenManager.templateEdited(template);
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    FlutterLogs.logInfo(
+      "customise",
+      "edit",
+      encoder.convert(await fileManager.getList(templateKey)),
+
+    );
 
     return true;
   }
@@ -177,6 +211,13 @@ class CustomWidgetManager {
     } else {
       manager.screenManager.templateRemoved(template);
     }
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    FlutterLogs.logInfo(
+      "customise",
+      "removed",
+      encoder.convert(await fileManager.getList(templateKey)),
+
+    );
 
 
   }

@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:smart_home/device/datapoint/datapointTypes/datapoint_role.dart';
 import 'package:smart_home/device/datapoint/datapointTypes/datapoint_types.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 
@@ -13,12 +11,16 @@ class DataPoint {
   String id;
   Device? device;
   DataPointType? type;
-  DataPointRoles? role;
-  Map<String, dynamic>? information;
+  String? role;
+  String? valueType;
 
   StreamController valueStreamController = StreamController.broadcast();
 
-  DataPoint({required this.name, required this.device, required this.id});
+  DataPoint({required this.name, required this.device, required this.id,  this.role, this.type});
+
+  factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device)  {
+    return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"]);
+  }
 
 
   Map<String, dynamic> toJson() =>
@@ -27,11 +29,15 @@ class DataPoint {
         "name": name,
         "type": type,
         "role": role,
-        "information": jsonEncode(information),
+        "valueType": valueType,
       };
   set setValue(dynamic value) {
     this.value = value;
     valueStreamController.add(value);
   }
   get isIoBrokerDataPoint => device is IoBrokerDevice;
+
+
+
+
 }

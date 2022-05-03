@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 
+import '../../../device/bloc/device_bloc.dart';
+
 class CustomLightWidgetView extends StatefulWidget {
   final CustomLightWidget customLightWidget;
   const CustomLightWidgetView({Key? key, required this.customLightWidget}) : super(key: key);
@@ -25,24 +27,25 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
       );
     }
     final onBloc = DataPointBloc(widget.customLightWidget.onDataPoint!);
-    return ListTile(
-      visualDensity: VisualDensity.compact,
-      trailing: BlocBuilder<DataPointBloc, DataPointState>(
-        bloc: onBloc,
-        builder: (context, state)  {
-          currentValue = state.value == true;
-          return Switch(
+    return BlocBuilder<DataPointBloc, DataPointState>(
+      bloc: onBloc,
+      builder: (context, state) {
+
+        return ListTile(
+          visualDensity: VisualDensity.compact,
+          trailing: Switch(
             onChanged: (v) => {
               onBloc.add(DataPointValueUpdateRequest(value: v)),
               currentValue = v,
             } ,
             value: state.value == true,
-          );
-        },
-      ),
-      title: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
-      onLongPress: onTab,
-      onTap: () => onBloc.add(DataPointValueUpdateRequest(value: !currentValue)),
+          ),
+          title: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+          onLongPress: onTab,
+          subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+          onTap: () => onBloc.add(DataPointValueUpdateRequest(value: !(state.value == true))),
+        );
+      },
     );
   }
 

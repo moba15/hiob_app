@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/none_trigger_action.dart';
+import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dart';
 
 enum TriggerActionType {
   button,
@@ -34,9 +36,9 @@ extension TriggerActionTypeExtension on TriggerActionType {
       case TriggerActionType.handle:
         throw UnimplementedError();
       case TriggerActionType.multiSelection:
-        throw UnimplementedError();
+        return MultiSelectionTriggerAction(dataPoint: null, selections: Map.from({}));
       case TriggerActionType.slider:
-        throw UnimplementedError();
+        return SliderTriggerAction(dataPoint: null);
       case TriggerActionType.none:
         return NoneTriggerAction(dataPoint: null, displayRules: null);
     }
@@ -61,6 +63,10 @@ abstract class TriggerAction {
     switch (type) {
       case TriggerActionType.none:
         return  NoneTriggerAction.fromJSON(map);
+      case TriggerActionType.multiSelection:
+        return MultiSelectionTriggerAction.fromJSON(map);
+      case TriggerActionType.slider:
+        return SliderTriggerAction.fromJSON(map);
       default:
         throw UnimplementedError("No Trigger Action found");
     }

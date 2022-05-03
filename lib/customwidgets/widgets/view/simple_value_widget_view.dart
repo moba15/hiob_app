@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
+import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
@@ -43,8 +44,8 @@ class SimpleValueWidgetView extends StatelessWidget {
             visualDensity: VisualDensity.compact,
             onLongPress: () => onTab(context),
             title: Text(customSimpleValueWidget.value ??
-                customSimpleValueWidget.name ??
-                "No Name Found"),
+                customSimpleValueWidget.name ?? "No Name Found"),
+            subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
             trailing: state.value is double
                 ? Text(
                     (state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) + (customSimpleValueWidget.unit == null ? "": " " + customSimpleValueWidget.unit!),

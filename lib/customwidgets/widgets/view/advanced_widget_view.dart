@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/none_trigger_action.dart';
+import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
+
+import '../../../device/bloc/device_bloc.dart';
 
 class AdvancedWidgetView extends StatelessWidget {
   final AdvancedCustomWidget advancedCustomWidget;
@@ -23,6 +27,13 @@ class AdvancedWidgetView extends StatelessWidget {
             advancedCustomWidget: advancedCustomWidget,
             noneTriggerAction: advancedCustomWidget.bodyTriggerAction as NoneTriggerAction
         );
+      case TriggerActionType.multiSelection:
+        return _MultiSelectionTriggerActionView(
+          advancedCustomWidget: advancedCustomWidget,
+          multiSelectionTriggerAction: advancedCustomWidget.bodyTriggerAction as MultiSelectionTriggerAction,
+        );
+      case TriggerActionType.slider:
+        return _SliderTriggerView(advancedCustomWidget: advancedCustomWidget, sliderTriggerAction:  advancedCustomWidget.bodyTriggerAction as SliderTriggerAction,);
       default:
         return const Text("Error 404 no view found");
 
@@ -49,6 +60,7 @@ class _NoneTriggerActionView extends StatelessWidget {
 
     return ListTile(
       title: advancedCustomWidget.value == null ? Text(advancedCustomWidget.name ?? "No Name Fund") : Text(advancedCustomWidget.value!),
+      subtitle: noneTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
       trailing: BlocBuilder<DataPointBloc, DataPointState>(
         bloc: DataPointBloc(noneTriggerAction.dataPoint!),
         builder: (context, state) {
@@ -77,4 +89,61 @@ class _NoneTriggerActionView extends StatelessWidget {
     );
   }
 }
+
+class _MultiSelectionTriggerActionView extends StatelessWidget {
+  final AdvancedCustomWidget advancedCustomWidget;
+  final MultiSelectionTriggerAction multiSelectionTriggerAction;
+  const _MultiSelectionTriggerActionView({Key? key, required this.advancedCustomWidget, required this.multiSelectionTriggerAction}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if(multiSelectionTriggerAction.dataPoint == null) {
+      return const ListTile(
+        title: Text("No Device found"),
+      );
+    }
+    if(multiSelectionTriggerAction.selections.length<2) {
+      return const ListTile(
+        title: Text("Please add more selections"),
+      );
+    }
+    return ListTile(
+        title: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name Found"),
+        subtitle: multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+        trailing: FractionallySizedBox(
+          widthFactor: 0.40,
+          child: multiSelectionTriggerAction.widget,
+        )
+    );
+  }
+}
+
+class _SliderTriggerView extends StatelessWidget {
+  final AdvancedCustomWidget advancedCustomWidget;
+  final SliderTriggerAction sliderTriggerAction;
+  const _SliderTriggerView({Key? key, required this.advancedCustomWidget, required this.sliderTriggerAction}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    if(sliderTriggerAction.dataPoint == null) {
+      return const ListTile(
+        title: Text("No Device found"),
+      );
+    }
+    return ListTile(
+      title: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found"),
+      subtitle: Column(
+        children: [
+          sliderTriggerAction.widget,
+          if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
+            const Text("Unavailable", style: TextStyle(color: Colors.red),),
+        ],
+      ),
+
+    );
+  }
+}
+
+
 

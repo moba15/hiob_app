@@ -99,40 +99,44 @@ class IoBrokerManager {
     isUpdating = false;
   }
 
+  void enumsClear() {
+    enums.clear();
+
+    lastEnumUpdate = null;
+    fileManager.writeJSON(enumKey, {"lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch, "enums": enums});
+    enumsUpdateStateStreamController.add(EnumUpdateState.finished);
+    isUpdating = false;
+  }
+
 
   List<Enum> getEnumChilds(String currentID) {
-    for(Enum e in enums) {
-      return enums.where((element) {
+    return enums.where((element) {
       return element.id.startsWith(currentID) &&  element.id.replaceAll(currentID, "").split(".").length == 2;
     }).toList();
-    }
-    return [];
   }
 
   void exportEnumsToDevice() {
+    DeviceManager deviceManager = Manager.instance!.deviceManager;
     for(Enum e in enums) {
-      DeviceManager deviceManager = Manager.instance!.deviceManager;
-      if(e.members.isNotEmpty) {
+
+      if(e.dataPointMembers.isNotEmpty) {
+
         if(deviceManager.devicesList.where((element) => element.name == e.name).isEmpty) {
-          IoBrokerDevice device = IoBrokerDevice(
-              id: Manager.instance!.getRandString(12),
-              name: e.name,
-              iconID: "ee98",
-              lastUpdated: DateTime.now(),
-              objectID: "");
-          device.dataPoints = e.members.map((el) =>
-              DataPoint(name: el
-                  .split(".")
-                  .last, device: device, id: el)).toList();
+          print("empty");
+          IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
+          device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
+
+
         } else {
+          print("not empty");
           Device device = deviceManager.devicesList.firstWhere((element) => element.name == e.name);
           if(device is IoBrokerDevice) {
             device.dataPoints ??= [];
-            List<String> dataPoints = device.dataPoints?.map((e) => e.id).toList() ?? [];
-            for(String d in e.members) {
-              if(!dataPoints.contains(d)) {
-                device.dataPoints?.add(DataPoint(name: d.split(".").last, device: device, id: d ));
+            for(DataPoint d in e.dataPointMembers) {
+              if(device.dataPoints!.where((element) => element.id == d.id).isEmpty) {
+                device.dataPoints?.add(d..device = device);
+                
                 deviceManager.editDevice(device);
               }
             }
@@ -140,5 +144,7 @@ class IoBrokerManager {
         }
       }
     }
+
+    deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
   }
 }

@@ -32,7 +32,6 @@ class ConnectionManager with WidgetsBindingObserver {
       _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
 
 
-
     } catch(e) {
       ioBrokerManager.connectionStatusStreamController.addError("Connection failed");
     } finally {
@@ -88,7 +87,6 @@ class ConnectionManager with WidgetsBindingObserver {
       _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()));
       _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
 
-
     } catch(e) {
       ioBrokerManager.connected = false;
       ioBrokerManager.connectionStatusStreamController.add(false);
@@ -112,6 +110,7 @@ class ConnectionManager with WidgetsBindingObserver {
   void onDone() async {
     ioBrokerManager.connected = false;
     ioBrokerManager.connectionStatusStreamController.add(false);
+
     ioBConnected = false;
     await Future.delayed(const Duration(seconds: 3));
     tries++;
