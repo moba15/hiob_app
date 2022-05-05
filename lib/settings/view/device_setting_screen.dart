@@ -12,6 +12,7 @@ class DeviceSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(value: manager, child: const DeviceListPage(),);
+
   }
 }
 
