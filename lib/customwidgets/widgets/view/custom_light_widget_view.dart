@@ -30,7 +30,7 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: onBloc,
       builder: (context, state) {
-        currentValue = state.value;
+        currentValue = state.value == true;
 
         return ListTile(
           visualDensity: VisualDensity.compact,
