@@ -88,12 +88,14 @@ class IoBrokerManager {
   }
 
   void enumUpdate({required Map<String, dynamic> rawData}) {
+    print("raw: " + jsonEncode(rawData));
     enums.clear();
     List<dynamic> enumsListRaw = jsonDecode(rawData["enums"]);
     for(Map<String, dynamic> enumRaw in enumsListRaw) {
       enums.add(Enum.fromJSON(enumRaw));
     }
     lastEnumUpdate = DateTime.now();
+
     fileManager.writeJSON(enumKey, {"lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch, "enums": enums});
     enumsUpdateStateStreamController.add(EnumUpdateState.finished);
     isUpdating = false;
@@ -122,22 +124,26 @@ class IoBrokerManager {
       if(e.dataPointMembers.isNotEmpty) {
 
         if(deviceManager.devicesList.where((element) => element.name == e.name).isEmpty) {
-          print("empty");
           IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
           device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
 
-
         } else {
-          print("not empty");
           Device device = deviceManager.devicesList.firstWhere((element) => element.name == e.name);
           if(device is IoBrokerDevice) {
             device.dataPoints ??= [];
             for(DataPoint d in e.dataPointMembers) {
               if(device.dataPoints!.where((element) => element.id == d.id).isEmpty) {
                 device.dataPoints?.add(d..device = device);
-                
                 deviceManager.editDevice(device);
+              } else {
+                DataPoint dataPoint = device.dataPoints!.firstWhere((element) => element.id == d.id);
+                dataPoint.otherDetails = d.otherDetails;
+                dataPoint.name = d.name;
+                dataPoint.type = d.type;
+                dataPoint.role = d.role;
+                deviceManager.editDevice(device);
+
               }
             }
           }

@@ -84,7 +84,7 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
           visualDensity: VisualDensity.compact,
           onTap: () {
 
-            bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true)));
+            bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true), oldValue: bloc.state.value));
           },
           title: Text(widget.text),
           subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
@@ -93,7 +93,7 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
                 child: Text(widget.buttonText),
                 onPressed: () {
 
-                  bloc.add(const DataPointValueUpdateRequest(value: true));
+                  bloc.add( DataPointValueUpdateRequest(value: true, oldValue: bloc.state.value == true));
                 },
               ),
               animation: _animationController,

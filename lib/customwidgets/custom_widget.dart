@@ -47,7 +47,7 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.simpleValue:
         return "Value";
       case CustomWidgetType.advanced:
-        return "Advanced (In Progress)";
+        return "Advanced/Flexible";
       case CustomWidgetType.webView:
         return "Web View";
       default:

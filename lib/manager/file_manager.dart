@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/manager/manager.dart';
 
@@ -85,7 +87,7 @@ class FileManager {
     }
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Exporting...")));
     try {
-      File myFile = File(result + "/exportHioB.json");
+      File myFile = File(result + "/exportHioB"  + DateFormat("y_M_d_mm_ss_a").format(DateTime.now()) + ".json");
       Map<String,dynamic> data = {
         "devices": jsonEncode(manager.deviceManager.devicesList),
         "widgets": jsonEncode(manager.customWidgetManager.templates),
@@ -93,8 +95,16 @@ class FileManager {
       };
       String t = jsonEncode(data);
       await myFile.writeAsString(t, mode: FileMode.write);
-    } catch(e) {
+    } on Exception catch (e) {
+      dev.log(e.toString(), name: "error exporting");
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error exporting!")));
+      showDialog(context: context, builder: (context) {
+        return AlertDialog(
+         title: const Text("Error details:"),
+         content: Text(e.toString(),),
+         scrollable: true,
+        );
+      });
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Export Successful")));
@@ -107,6 +117,7 @@ class FileManager {
       result = await FilePicker.platform.pickFiles(allowedExtensions: ["json"], type: FileType.custom, dialogTitle: "Dialog", withData: true);
     } catch(e) {
       result = await FilePicker.platform.pickFiles(type: FileType.any, dialogTitle: "Dialog", withData: true);
+
     }
     _import(result, context);
 
@@ -135,6 +146,13 @@ class FileManager {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Error importing! " + e.toString())));
+        showDialog(context: context, builder: (context) {
+          return AlertDialog(
+            title: const Text("Error details:"),
+            content: Text(e.toString(),),
+            scrollable: true,
+          );
+        });
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(

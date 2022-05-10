@@ -22,7 +22,7 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
     _deviceValueSubscription =
         dataPoint.valueStreamController.stream.listen((event) {
-      add(DataPointValueUpdate(value: event));
+      add(DataPointValueUpdate(value: event, oldValue: dataPoint.olderValue));
     });
   }
 
@@ -34,14 +34,13 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
 
   void _onValueUpdated(DataPointValueUpdate event, Emitter<DataPointState> emit) {
     emit(DataPointState(
-        value: event.value));
+        value: event.value, oldValue: event.oldValue));
     dataPoint.value = event.value;
   }
 
   void _onValueUpdateRequest(
       DataPointValueUpdateRequest event, Emitter<DataPointState> emit) {
-    emit(DataPointState(
-        value: event.value));
+    emit(DataPointState(value: event.value, oldValue: event.oldValue));
     dataPoint.value = event.value;
     dataPoint.device?.lastUpdated = DateTime.now();
     if (dataPoint.device is IoBrokerDevice) {

@@ -56,15 +56,13 @@ class _SliderState extends State<_Slider> {
 
   @override
   Widget build(BuildContext context) {
-    double value = widget.value is double
-        ? widget.value
-        : (widget.value is int
+    double value = widget.value is double ? widget.value : (widget.value is int
             ? widget.value.toDouble()
             : widget.sliderTriggerAction.min.toDouble());
     if (value > widget.sliderTriggerAction.max ||
         value < widget.sliderTriggerAction.min) {
       return Text(
-          "Error: " + value.toString() + " smaller or greater than min or max");
+          "Error: " + value.toString() + " smaller/greater than min/max");
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
@@ -91,7 +89,7 @@ class _SliderState extends State<_Slider> {
             vTemp = null;
           });
           widget.dataPointBloc
-              .add(DataPointValueUpdateRequest(value: d.round()));
+              .add(DataPointValueUpdateRequest(value: d.round(), oldValue: widget.dataPointBloc.state.value));
         },
       ),
     );

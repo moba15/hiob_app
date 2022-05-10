@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
@@ -12,6 +13,18 @@ class App extends MaterialApp {
       required ScreenManager screenManager})
       : super(
             key: key,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+
+
+            ],
+            supportedLocales: [
+
+              const Locale('en', ''),
+              const Locale('de', ''),
+            ],
             theme: ThemeData.light(),
             darkTheme: ThemeData.dark(),
             home: RepositoryProvider<Manager>.value(

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
-import 'package:smart_home/settings/view/main_screen.dart';
 
 import 'app.dart';
 
@@ -36,26 +34,4 @@ void main() async {
         manager: manager,
         screenManager: manager.screenManager,
       )));
-}
-
-class MyApp extends StatelessWidget {
-  final Manager manager;
-
-  const MyApp({Key? key, required this.manager}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<ScreenListCubit>(
-        create: (c) => ScreenListCubit(screenManager: manager.screenManager),
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.red,
-          ),
-          home: MainScreen(
-            manager: manager,
-          ),
-        ));
-  }
 }

@@ -499,11 +499,91 @@ class DataPointInputField extends StatelessWidget {
             keyboardType: TextInputType.text,
             controller: idController,
           ),
-        )
+        ),
+        IconButton(onPressed: ()  {
+          showDialog(context: context, builder: (_) => _DataPointInfoDialog(dataPoint: dataPoint));
+        }, icon: const Icon(Icons.info_outline))
       ],
     );
   }
 }
+
+
+class _DataPointInfoDialog extends StatelessWidget {
+  final DataPoint dataPoint;
+  const _DataPointInfoDialog({Key? key, required this.dataPoint}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(dataPoint.name + ": " + dataPoint.id),
+      scrollable: true,
+      content: Column(
+        children: [
+          TextFormField(
+            enabled: false,
+            onChanged: (s) {
+              if(s.isEmpty) {
+                dataPoint.role = null;
+              }
+              dataPoint.role = s;
+            },
+            decoration: const InputDecoration(labelText: "Value"),
+            controller: TextEditingController(text: dataPoint.value.toString()),
+
+          ),
+          TextFormField(
+            enabled: false,
+            onChanged: (s) {
+              if(s.isEmpty) {
+                dataPoint.role = null;
+              }
+              dataPoint.role = s;
+            },
+            decoration: const InputDecoration(labelText: "Role"),
+            controller: TextEditingController(text: dataPoint.role),
+
+          ),
+          TextFormField(
+            enabled: false,
+            onChanged: (s) {
+              if(s.isEmpty) {
+                dataPoint.role = null;
+              }
+              dataPoint.role = s;
+            },
+            decoration: const InputDecoration(labelText: "Name"),
+            controller: TextEditingController(text: dataPoint.otherDetails?["name"]),
+
+          ),
+          ExpansionTile(
+            title: const Text("More Information"),
+            childrenPadding: const EdgeInsets.only(left: 15, right: 10),
+            children: [
+              for(String s in dataPoint.otherDetails?.keys.where((element) => element != "name") ?? [])
+                TextFormField(
+                  enabled: false,
+                  onChanged: (s) {
+                    if(s.isEmpty) {
+                      dataPoint.role = null;
+                    }
+                    dataPoint.role = s;
+                  },
+                  decoration: InputDecoration(labelText: s.replaceFirst(s.substring(0, 1), s.substring(0, 1).toUpperCase())),
+                  controller: TextEditingController(text: dataPoint.otherDetails![s].toString()),
+
+                ),
+            ],
+          )
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context ), child: const Text("Back"))
+      ],
+    );
+  }
+}
+
 
 class EnumNavigationPage extends StatelessWidget {
   final IoBrokerManager ioBrokerManager;

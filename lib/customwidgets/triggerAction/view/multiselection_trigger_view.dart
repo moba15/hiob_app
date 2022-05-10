@@ -36,7 +36,7 @@ class MultiSelectionTriggerActionView extends StatelessWidget {
                 value = double.parse(value.toString());
               }
 
-              bloc.add(DataPointValueUpdateRequest(value: value));
+              bloc.add(DataPointValueUpdateRequest(value: value, oldValue: state.value));
             }
 
           },
