@@ -9,7 +9,6 @@ import 'package:smart_home/manager/manager.dart';
 import '../../device/device.dart';
 
 class CustomSimpleValueWidget extends CustomWidget {
-  static const CustomWidgetType TYPE = CustomWidgetType.simpleValue;
   Device? device;
   DataPoint? dataPoint;
   int? round = 2;
@@ -20,10 +19,10 @@ class CustomSimpleValueWidget extends CustomWidget {
       {required name, required this.device, this.dataPoint, this.round, this.value, this.unit})
       : super(
             name: name,
-            type: TYPE,
+            type: CustomWidgetType.simpleValue,
             settings: {"device": device?.id});
 
-  CustomSimpleValueWidget.edit() : super.edit(type:TYPE);
+  CustomSimpleValueWidget.edit() : super.edit(type: CustomWidgetType.simpleValue);
 
   @override
   Map<String, dynamic> toJson() => {
@@ -42,7 +41,7 @@ class CustomSimpleValueWidget extends CustomWidget {
       name: json["name"],
       round: json["round"],
       device: device,
-      dataPoint: device?.getDataPoint(id: json["dataPoint"]),
+      dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
       value: json["value"],
       unit: json["unit"]
 

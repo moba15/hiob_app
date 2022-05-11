@@ -79,7 +79,17 @@ class _DeviceSelectionState extends State<DeviceSelection> {
           child: DropdownSearch<DataPoint>(
             popupTitle: Text(widget.dataPointLabel, style: const TextStyle(fontSize: 17.5),),
             items: _currentDevice?.dataPoints ?? [],
-            itemAsString: (e) => e?.name ?? "Error",
+            itemAsString: (e) {
+              if(e == null) {
+                return "Error";
+              }
+              String name = e.name;
+              String? sName = e.getInformation("name");
+              if(sName != null) {
+                name+=" (" + sName + ")";
+              }
+              return name;
+            },
             onChanged: (e) =>{
               _currentDataPoint = e,
               widget.onDataPointSelected(_currentDataPoint)
@@ -97,13 +107,10 @@ class _DeviceSelectionState extends State<DeviceSelection> {
   }
 
   DataPoint? selectPrefDataPoint(Device? device) {
-    print("ok");
     if(widget.preferredRole == null) {
-      print("ok2");
       return null;
     }
     for(DataPoint d in device?.dataPoints ?? []) {
-      print("select " + d.role.toString());
       if(d.role == widget.preferredRole) {
 
         return d;

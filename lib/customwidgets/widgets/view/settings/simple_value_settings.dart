@@ -1,9 +1,9 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
 import '../../../../device/device.dart';
@@ -86,50 +86,28 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomSimpleValue
             children: [
 
               Expanded(
-                child: DropdownSearch<Device>(
-                  items: customWidgetManager.manager.deviceManager.devicesList,
-                  itemAsString: (e) => e?.name ?? "Error",
-                  onChanged: (e)  {
-                    if(e!=currentDevice) {
-                      setState(() {
-                        currentDevice = e;
-                        currentDataPoint = null;
-
-                      });
-                      widget.customSimpleValueWidget.device = currentDevice;
-                      widget.customSimpleValueWidget.dataPoint = currentDataPoint;
+                child: DeviceSelection(
+                  selectedDataPoint: widget.customSimpleValueWidget.dataPoint,
+                  selectedDevice: widget.customSimpleValueWidget.device,
+                  onDeviceSelected: (Device? d ) {
+                    if(d != currentDevice) {
+                      currentDataPoint = null;
                     }
-
+                    currentDevice = d;
+                    widget.customSimpleValueWidget.dataPoint = null;
+                    widget.customSimpleValueWidget.device = d;
                   },
-                  searchDelay: const Duration(seconds: 0),
-                  showClearButton: true,
-                  showAsSuffixIcons: true,
-                  dropdownSearchDecoration: const InputDecoration(labelText: "Device"),
+                  onDataPointSelected: (DataPoint? d ) {
+                    widget.customSimpleValueWidget.dataPoint = d;
+                    String? unit = d?.getInformation("unit") ?? widget.customSimpleValueWidget.unit;
+                    setState(() {
+                      widget.customSimpleValueWidget.unit = unit;
+                    });
+                  },
+                  customWidgetManager: customWidgetManager,
 
-
-                  mode: Mode.BOTTOM_SHEET,
-                  showSearchBox: true,
-                  selectedItem: currentDevice,
-                ),
+                )
               ),
-              Container(width: 10,),
-              Expanded(
-                child: DropdownSearch<DataPoint>(
-                  items: currentDevice?.dataPoints ?? [],
-                  itemAsString: (e) => e?.name ?? "Error",
-                  onChanged: (e) =>{
-                    currentDataPoint = e,
-                    widget.customSimpleValueWidget.dataPoint = currentDataPoint
-                  },
-                  showClearButton: true,
-                  showAsSuffixIcons: true,
-                  dropdownSearchDecoration: const InputDecoration(labelText: "DataPoint"),
-
-                  mode: Mode.BOTTOM_SHEET,
-                  showSearchBox: true,
-                  selectedItem: currentDataPoint,
-                ),
-              )
             ],
           ),
         ),
@@ -137,3 +115,7 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomSimpleValue
     );
   }
 }
+
+
+
+

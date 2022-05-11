@@ -1,8 +1,8 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
 import '../../../../device/device.dart';
@@ -74,50 +74,25 @@ class _CustomSwitchWidgetSettingWidgetState extends State<CustomSwitchWidgetSett
           child: Row(
             children: [
               Expanded(
-                child: DropdownSearch<Device>(
-                  items: customWidgetManager.manager.deviceManager.devicesList,
-                  itemAsString: (e) => e?.name ?? "Error",
-                  onChanged: (e)  {
-                    if(e!=currentDevice) {
-                      setState(() {
-                        currentDevice = e;
-                        currentDataPoint = null;
-
-                      });
-                      widget.customSimpleSwitchWidget.device = currentDevice;
-                      widget.customSimpleSwitchWidget.dataPoint = currentDataPoint;
+                child: DeviceSelection(
+                  selectedDevice: currentDevice,
+                  selectedDataPoint: currentDataPoint,
+                  onDeviceSelected: (d)  {
+                    if(d == null) {
+                      currentDataPoint = null;
                     }
-
+                    currentDevice = d;
+                    currentDevice = d;
+                    widget.customSimpleSwitchWidget.dataPoint = currentDataPoint;
+                    widget.customSimpleSwitchWidget.device = d;
                   },
-                  searchDelay: const Duration(seconds: 0),
-                  showClearButton: true,
-                  showAsSuffixIcons: true,
-                  dropdownSearchDecoration: const InputDecoration(labelText: "Device"),
-
-
-                  mode: Mode.BOTTOM_SHEET,
-                  showSearchBox: true,
-                  selectedItem: currentDevice,
-                ),
+                  onDataPointSelected: (DataPoint? d ) {
+                    widget.customSimpleSwitchWidget.dataPoint = d;
+                  },
+                  customWidgetManager: customWidgetManager,
+                )
               ),
-              Container(width: 10,),
-              Expanded(
-                child: DropdownSearch<DataPoint>(
-                  items: currentDevice?.dataPoints ?? [],
-                  itemAsString: (e) => e?.name ?? "Error",
-                  onChanged: (e) =>{
-                    currentDataPoint = e,
-                    widget.customSimpleSwitchWidget.dataPoint = currentDataPoint
-                  },
-                  showClearButton: true,
-                  showAsSuffixIcons: true,
-                  dropdownSearchDecoration: const InputDecoration(labelText: "DataPoint"),
 
-                  mode: Mode.BOTTOM_SHEET,
-                  showSearchBox: true,
-                  selectedItem: currentDataPoint,
-                ),
-              )
             ],
           ),
         ),

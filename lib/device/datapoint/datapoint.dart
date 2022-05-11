@@ -52,7 +52,7 @@ class DataPoint {
   }
   get isIoBrokerDataPoint => device is IoBrokerDevice;
 
-
-
-
+  dynamic getInformation(String key) {
+    return otherDetails?[key];
+  }
 }

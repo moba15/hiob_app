@@ -635,7 +635,7 @@ class EnumNavigationView extends StatelessWidget {
                   )
               ]),
         ),
-        for (Enum e in ioBrokerManager.getEnumChilds(id))
+        for (Enum e in ioBrokerManager.getEnumChildren(id))
           ListTile(
             title: Text(e.name),
             subtitle: Text(e.id),

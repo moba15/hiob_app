@@ -111,7 +111,7 @@ class IoBrokerManager {
   }
 
 
-  List<Enum> getEnumChilds(String currentID) {
+  List<Enum> getEnumChildren(String currentID) {
     return enums.where((element) {
       return element.id.startsWith(currentID) &&  element.id.replaceAll(currentID, "").split(".").length == 2;
     }).toList();
@@ -120,14 +120,11 @@ class IoBrokerManager {
   void exportEnumsToDevice() {
     DeviceManager deviceManager = Manager.instance!.deviceManager;
     for(Enum e in enums) {
-
       if(e.dataPointMembers.isNotEmpty) {
-
         if(deviceManager.devicesList.where((element) => element.name == e.name).isEmpty) {
           IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
           device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
-
         } else {
           Device device = deviceManager.devicesList.firstWhere((element) => element.name == e.name);
           if(device is IoBrokerDevice) {
@@ -150,7 +147,6 @@ class IoBrokerManager {
         }
       }
     }
-
     deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
   }
 }
