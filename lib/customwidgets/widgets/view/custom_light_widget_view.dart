@@ -113,8 +113,8 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
                   child: Slider(
 
                     value: state.value != null ? briTemp?.toDouble() ?? (state.value)?.toDouble() : briTemp ?? 0,
-                    label: (briTemp?.toDouble() ?? (state.value)?.toDouble())?.round().toString(),
-                    divisions: ((state.value?.toDouble() ?? 0 > widget.customLightWidget.briMax.toDouble() ? state.value?.toDouble() : widget.customLightWidget.briMax.toDouble())/widget.customLightWidget.briSteps).round(),
+                    label:(state.value != null ? briTemp?.round() ?? (state.value)?.round() : briTemp ?? 0).toString(),
+                    divisions: widget.customLightWidget.briSteps,
                     onChangeStart: (d)  {
                       setState(() {
                         briTemp = d.round();
@@ -129,7 +129,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
 
                       briBloc.add(DataPointValueUpdateRequest(value: d.round(), oldValue: state.value)),
                     },
-                    max: state.value?.toDouble() ?? 0 > widget.customLightWidget.briMax.toDouble() ? state.value.toDouble() : widget.customLightWidget.briMax.toDouble(),
+                    max: (state.value != null ? briTemp?.toDouble() ?? (state.value)?.toDouble() : briTemp ?? 0)>widget.customLightWidget.briMax? (state.value != null ? briTemp?.toDouble() ?? (state.value)?.toDouble() : briTemp ?? 0) : widget.customLightWidget.briMax.toDouble(),
                     min: widget.customLightWidget.briMin.toDouble(),
 
                   ),

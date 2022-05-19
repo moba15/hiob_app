@@ -53,6 +53,11 @@ class CustomSimpleValueWidget extends CustomWidget {
 
   @override
   Widget get widget => SimpleValueWidgetView(customSimpleValueWidget: this);
+
+  @override
+  CustomWidget clone() {
+    return CustomSimpleValueWidget(name: name, device: device, dataPoint: dataPoint, unit: unit, round: round, value: value);
+  }
 }
 
 

@@ -23,6 +23,13 @@ class DeviceListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Device Settings"),
+        actions: [
+          IconButton(onPressed: ()  {
+
+            Navigator.popUntil(context, (route) => route.isFirst);
+
+          }, icon: const Icon(Icons.home)),
+        ],
       ),
       body: BlocProvider(
         create: (_) =>
@@ -181,6 +188,13 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Device"),
+        actions: [
+          IconButton(onPressed: ()  {
+
+            Navigator.popUntil(context, (route) => route.isFirst);
+
+          }, icon: const Icon(Icons.home)),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: save,
@@ -347,7 +361,15 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Device"),
+        actions: [
+          IconButton(onPressed: ()  {
+
+            Navigator.popUntil(context, (route) => route.isFirst);
+
+          }, icon: const Icon(Icons.home)),
+        ],
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: save,
         child: const Icon(Icons.save),

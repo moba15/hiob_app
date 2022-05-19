@@ -26,7 +26,7 @@ class DataPoint {
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device)  {
     print("Data: " + jsonEncode(json));
-    return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: jsonDecode(json["otherDetails"]));
+    return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: jsonDecode(json["otherDetails"] ??"{}"));
   }
 
 

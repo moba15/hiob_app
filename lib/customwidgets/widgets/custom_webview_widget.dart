@@ -29,4 +29,9 @@ class CustomWebViewWidget extends CustomWidget {
   // TODO: implement widget
   Widget get widget => CustomWebViewView(customWebViewWidget: this);
 
+  @override
+  CustomWidget clone() {
+    return CustomWebViewWidget(name: name, url: url, height: height, javaScript: javaScript);
+  }
+
 }

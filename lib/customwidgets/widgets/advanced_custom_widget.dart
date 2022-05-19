@@ -54,6 +54,11 @@ class AdvancedCustomWidget extends CustomWidget {
 
   @override
   Widget get widget => AdvancedWidgetView(advancedCustomWidget: this,);
+
+  @override
+  CustomWidget clone() {
+    return AdvancedCustomWidget(name: name, value: value, bodyTriggerAction: bodyTriggerAction, subTitle: subTitle, subTitleDataPoint: subTitleDataPoint, bodyIconID: bodyIconID);
+  }
 }
 
 

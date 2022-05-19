@@ -113,8 +113,18 @@ class DeviceManager {
   }
 
   void loadPossibleDataPoints(Map<String, dynamic> data) {}
-
+  bool _containsID(String id) {
+    for(Device device in devicesList) {
+      if(device.id == id) {
+        return true;
+      }
+    }
+    return false;
+  }
   Future<bool> addDevice(Device device) async {
+    while(_containsID(device.id)) {
+      device.id = Manager.instance!.getRandString(14);
+    }
     devicesList.add(device);
     sort();
     bool suc = await fileManager.writeJSONList(key, devicesList);

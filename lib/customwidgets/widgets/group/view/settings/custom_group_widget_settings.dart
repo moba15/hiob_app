@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
@@ -23,6 +24,17 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             title: const Text("Edit Group"),
+            actions: [
+              IconButton(onPressed: ()  {
+                if(!_saved(clone)) {
+                  showDialog(context: context, builder: (_) => _SaveDialog(
+                    onSave: () => {save(context, clone), Navigator.popUntil(context, (route) => route.isFirst)}, cancel: () => Navigator.popUntil(context, (route) => route.isFirst),));
+                  return;
+                }
+                Navigator.popUntil(context, (route) => route.isFirst);
+
+              }, icon: const Icon(Icons.home)),
+            ],
 
           ),
           floatingActionButton: Stack(
@@ -63,8 +75,10 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
                 child: FloatingActionButton(
                   heroTag: "tag",
                   onPressed: () => {
-                    if(customGroupWidgetSettings.validate())
-                      save(context, clone)
+                    if(customGroupWidgetSettings.validate()) {
+                      save(context, clone),
+                      Navigator.pop(context)
+                    }
                   },
                   child: const Icon(Icons.save),
                 ),
@@ -75,12 +89,25 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
           body: Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: customGroupWidgetSettings,
-          )
+          ),
+
       ),
       onWillPop: () async {
+        if(!_saved(clone)) {
+          showDialog(context: context, builder: (_) => _SaveDialog(onSave: () => {save(context, clone), Navigator.pop(context)}, cancel: () => Navigator.pop(context)));
+          return false;
+        }
         return true;
       },
+
     );
+  }
+  
+  bool _saved(CustomGroupWidget clone) {
+    if(jsonEncode(clone.toJson()) != jsonEncode(customGroupWidget.toJson())) {
+      return false;
+    }
+    return true;
   }
 
   void save(BuildContext context, CustomGroupWidget clone) {
@@ -89,7 +116,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     customGroupWidget.isExtended = clone.isExtended;
     customGroupWidget.iconID = clone.iconID;
     Manager.instance!.screenManager.update();
-    Navigator.pop(context);
+    
   }
 }
 
@@ -386,5 +413,28 @@ class _AddDivisionLineTemplate extends StatelessWidget {
   }
 }
 
+class _SaveDialog extends StatelessWidget {
+  final Function onSave;
+  final Function cancel;
+  const _SaveDialog({Key? key, required this.onSave, required this.cancel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Changes not saved"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text("Do you want exit without exit!"),
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => {Navigator.pop(context), cancel()}, child: const Text("Exit")),
+        TextButton(onPressed: () => {Navigator.pop(context), onSave()}, child: const Text("Save")),
+
+      ],
+    );
+  }
+}
 
 

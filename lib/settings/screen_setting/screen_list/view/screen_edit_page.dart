@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
@@ -20,112 +22,144 @@ class ScreenEditPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ScreenEditPage> createState() => _ScreenEditPageState(screen: screen);
+  State<ScreenEditPage> createState() => _ScreenEditPageState();
 }
 
 class _ScreenEditPageState extends State<ScreenEditPage> {
   TextEditingController nameController = TextEditingController();
   IconData? currentIconData;
 
-  _ScreenEditPageState({required Screen screen}) {
+
+  late Screen screen;
+  @override
+  void initState() {
+    screen = widget.screen.clone();
     nameController.text = screen.name;
     currentIconData = IconData(int.parse(screen.iconID, radix: 16));
+    super.initState();
   }
 
   Icon icon = const Icon(Icons.insert_emoticon);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Edit Screen"),
-      ),
-      floatingActionButton: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 31),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: FloatingActionButton(
-                onPressed: addTemplate,
-                child: const Icon(Icons.add),
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 90),
-            alignment: Alignment.bottomLeft,
-            child: FloatingActionButton(
-              heroTag: "d",
-              onPressed: addGroup,
-              child: const Icon(Icons.group_add),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-              heroTag: "tag",
-              onPressed: save,
-              child: const Icon(Icons.save),
-            ),
-          ),
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Edit Screen"),
+          actions: [
+            IconButton(onPressed: ()  {
+              if(!_isSaved()) {
+                showDialog(context: context, builder: (_) => _SaveDialog(
+                  onSave: () => {_save(), Navigator.popUntil(context, (route) => route.isFirst)}, cancel: () => Navigator.popUntil(context, (route) => route.isFirst),));
+                return;
+              }
+              Navigator.popUntil(context, (route) => route.isFirst);
 
-        ],
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: "Name",
-                  border: UnderlineInputBorder(),
-                ),
-                keyboardType: TextInputType.text,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: IconPickerTemplate(
-                onChange: (IconData? iconData) {
-                  currentIconData = iconData;
-                },
-                selected: currentIconData ?? Icons.home,
-                
-              )
-            ),
-            Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: BlocProvider(
-                    create: (_) => ScreenListCubit(screenManager: widget.screenManager),
-                    child: ScreenWidgetTemplateListPage(screen: widget.screen, screenManager: widget.screenManager),
-                  ),
-                )),
+            }, icon: const Icon(Icons.home)),
           ],
         ),
+        floatingActionButton: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 31),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: FloatingActionButton(
+                  onPressed: addTemplate,
+                  child: const Icon(Icons.add),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 90),
+              alignment: Alignment.bottomLeft,
+              child: FloatingActionButton(
+                heroTag: "d",
+                onPressed: addGroup,
+                child: const Icon(Icons.group_add),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                heroTag: "tag",
+                onPressed: () => {_save, Navigator.pop(context) },
+                child: const Icon(Icons.save),
+              ),
+            ),
+
+          ],
+        ),
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: "Name",
+                    border: UnderlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.text,
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: IconPickerTemplate(
+                    onChange: (IconData? iconData) {
+                      currentIconData = iconData;
+                    },
+                    selected: currentIconData ?? Icons.home,
+
+                  )
+              ),
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: BlocProvider(
+                      create: (_) => ScreenListCubit(screenManager: widget.screenManager),
+                      child: ScreenWidgetTemplateListPage(screen: screen, screenManager: widget.screenManager),
+                    ),
+                  )),
+            ],
+          ),
+        ),
       ),
+      onWillPop: () async {
+        if(!_isSaved()) {
+          showDialog(context: context, builder: (_) => _SaveDialog(
+            onSave: () => {_save(), Navigator.pop(context)}, cancel: () => Navigator.pop(context),));
+          return false;
+        }
+        return true;
+      },
     );
   }
+  
+  bool _isSaved() {
+    return jsonEncode(screen.toJson()) == jsonEncode(widget.screen.toJson());
+  }
 
-  void save() {
+  void _save() {
+    widget.screen.widgetTemplates = screen.widgetTemplates;
+
     widget.screenManager.editScreen(
         screen: widget.screen,
         name: nameController.text,
         iconID: currentIconData?.codePoint.toRadixString(16) ?? "ee98",
         index: 1);
-    Navigator.pop(context);
+    
   }
 
   void addTemplate() {
     //widget.screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: "id", name: "name", customWidget: CustomTextWidget(name: "", text: CustomTextAttribute(data: ""))));
     showDialog(
         context: context,
-        builder: (context) => AddTemplateAlertDialog(
-          screen: widget.screen,
+        builder: (context) => _AddTemplateAlertDialog(
+          screen: screen,
           screenManager: widget.screenManager,
         ));
   }
@@ -134,31 +168,57 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     showDialog(
         context: context,
         builder: (context) => AddGroupAlertDialog(
-          screen: widget.screen,
+          screen: screen,
           screenManager: widget.screenManager,
         ));
   }
 }
 
-class AddTemplateAlertDialog extends StatefulWidget {
+class _SaveDialog extends StatelessWidget {
+  final Function onSave;
+  final Function cancel;
+  const _SaveDialog({Key? key, required this.onSave, required this.cancel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Changes not saved"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text("Do you want exit without exit!"),
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => {Navigator.pop(context), cancel()}, child: const Text("Exit")),
+        TextButton(onPressed: () => {Navigator.pop(context), onSave()}, child: const Text("Save")),
+
+      ],
+    );
+  }
+}
+
+class _AddTemplateAlertDialog extends StatefulWidget {
   final Screen screen;
   final ScreenManager screenManager;
 
-  const AddTemplateAlertDialog(
+  const _AddTemplateAlertDialog(
       {Key? key, required this.screen, required this.screenManager})
       : super(key: key);
 
   @override
-  State<AddTemplateAlertDialog> createState() => _AddTemplateAlertDialogState();
+  State<_AddTemplateAlertDialog> createState() => _AddTemplateAlertDialogState();
 }
 
-class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
+class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
   List<CustomWidgetTemplate> selected = [];
+
+
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetTemplate> templates =
-        List.of(widget.screenManager.manager.customWidgetManager.templates);
+
+    List<CustomWidgetTemplate> templates = List.of(widget.screenManager.manager.customWidgetManager.templates);
     templates.removeWhere((element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
         title: const Text("Select Widget Template"),

@@ -17,7 +17,16 @@ class CustomLightWidget extends CustomWidget {
   String? value;
   String briDisplay = "Brightness";
   String reachableDisplay = "Reachable";
-  CustomLightWidget({required String? name, this.onDataPoint, this.briDataPoint, this.briMax = 100, this.briMin = 0, this.reachableDataPoint, this.briSteps = 10, this.value, this.briDisplay = "Brightness"}) : super(name: name, type: TYPE, settings: {});
+  CustomLightWidget({
+    required String? name,
+    this.onDataPoint,
+    this.briDataPoint,
+    this.briMax = 100,
+    this.briMin = 0,
+    this.reachableDataPoint,
+    this.briSteps = 10,
+    this.value,
+    this.briDisplay = "Brightness"}) : super(name: name, type: TYPE, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => CustomLightWidgetSettingWidget(customLightWidget: this);
@@ -58,5 +67,10 @@ class CustomLightWidget extends CustomWidget {
 
   @override
   Widget get widget => CustomLightWidgetView(customLightWidget: this,);
+
+  @override
+  CustomWidget clone() {
+    return CustomLightWidget(name: name, onDataPoint: onDataPoint, value: value, briSteps: briSteps, briMax: briMax, briDataPoint: briDataPoint, reachableDataPoint: reachableDataPoint, briMin: briMin, briDisplay: briDisplay,);
+  }
 
 }

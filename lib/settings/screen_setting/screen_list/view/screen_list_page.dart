@@ -17,6 +17,13 @@ class ScreenListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Screen Settings"),
+        actions: [
+          IconButton(onPressed: ()  {
+
+            Navigator.popUntil(context, (route) => route.isFirst);
+
+          }, icon: const Icon(Icons.home)),
+        ],
       ),
       body: BlocProvider(
         create: (_) => ScreenListCubit(screenManager: context.read<ScreenManager>())..fetchList(),

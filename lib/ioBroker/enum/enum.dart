@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer' as dev;
 
 import 'package:smart_home/device/datapoint/datapoint.dart';
 class Enum {
@@ -33,7 +32,6 @@ class Enum {
     }
     Enum e = Enum(name: json["name"], id: json["id"], icon: json["icon"], members: (jsonDecode(json["members"] ?? "[]") as List<dynamic>).map((e) =>
         e.toString()).toList(), dataPointMembers: dataPointMembers );
-    dev.log("Loaded enum: " + jsonEncode(e.toJson()), name: "enum.fromJSON");
     return e;
   }
 

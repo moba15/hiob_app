@@ -52,7 +52,7 @@ class ScreenManager {
     }
     loaded = true;
     if(screens.isEmpty) {
-      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
+      screens.add(Screen(id: Manager.instance!.getRandString(15), name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
     }
     screenStreamController.add(screens);
 

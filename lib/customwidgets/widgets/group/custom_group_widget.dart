@@ -20,12 +20,27 @@ class CustomGroupWidget extends CustomWidget {
   CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();
 
   @override
-  Map<String, dynamic> toJson() => {
-    "name":  name,
-    "templates": jsonEncode(templates),
-    "isExtended": isExtended,
-    "iconID": iconID,
-  };
+  Map<String, dynamic> toJson()  {
+    Map<String, dynamic> map = {
+      "name":  name,
+      "isExtended": isExtended,
+      "iconID": iconID,
+    };
+    List<Map<String, dynamic>> widgets = [];
+    for(dynamic t in templates) {
+      if(t is CustomWidgetTemplate) {
+        widgets.add({
+          "widget": t.name,
+          "id": t.id,
+        });
+      } else if(t is CustomDivisionLineWidget) {
+        widgets.add(t.toJson());
+      }
+    }
+    map["templates"] = widgets;
+    return map;
+
+  }
 
   void addTemplate(CustomWidgetTemplate template) {
     templates.add(template);
@@ -34,7 +49,7 @@ class CustomGroupWidget extends CustomWidget {
 
   factory CustomGroupWidget.fromJSON(Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
     List<dynamic> templates = [];
-    for(Map<String, dynamic> templatesRaw in jsonDecode(json["templates"])) {
+    for(Map<String, dynamic> templatesRaw in json["templates"] is String ? jsonDecode(json["templates"]) : json["templates"]) {
       if(templatesRaw.containsKey("widget")) {
         if (!allTemplates.any((element) => element.id == templatesRaw["id"])) {
           continue; //TODO: Delete From file

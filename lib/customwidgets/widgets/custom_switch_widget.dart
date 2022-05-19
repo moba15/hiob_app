@@ -51,6 +51,11 @@ class CustomSimpleSwitchWidget extends CustomWidget {
 
   @override
   Widget get widget => SimpleSwitchWidgetView(customSimpleSwitchWidget: this);
+
+  @override
+  CustomWidget clone() {
+    return CustomSimpleSwitchWidget(value: value, name: name, device: device, dataPoint: dataPoint, buttonText: buttonText,);
+  }
 }
 
 

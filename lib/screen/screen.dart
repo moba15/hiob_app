@@ -22,7 +22,7 @@ class Screen {
 
   factory Screen.fromJSON(Map<String, dynamic> json) {
     List<dynamic> widgetTemplates = [];
-    for(Map<String, dynamic> templateRaw in jsonDecode(json["widgetIds"])) {
+    for(Map<String, dynamic> templateRaw in json["widgetIds"] is String ? jsonDecode(json["widgetIds"]) : json["widgetIds"]) {
       if(templateRaw.containsKey("widget")) {
         if(!Manager.instance!.customWidgetManager.templates.any((element) => element.id == templateRaw["id"])) {
           continue;
@@ -41,13 +41,32 @@ class Screen {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "iconID": iconID,
-        "index": index,
-        "widgetIds": jsonEncode(widgetTemplates),
-      };
+  Map<String, dynamic> toJson()  {
+        Map<String, dynamic> map = {
+          "id": id,
+          "name": name,
+          "iconID": iconID,
+          "index": index,
+
+        };
+        List<Map<String, dynamic>> widgets = [];
+        for(dynamic w in widgetTemplates) {
+          if(w is CustomGroupWidget) {
+            widgets.add(w.toJson());
+          } else if(w is CustomWidgetTemplate) {
+            widgets.add({
+              "widget": w.name,
+              "id": w.id,
+            });
+
+          }
+        }
+        map["widgetIds"] = widgets;
+
+
+
+        return map;
+  }
 
   void addWidgetTemplate(ScreenManager screenManager, CustomWidgetTemplate customWidgetTemplate) async {
     widgetTemplates.add(customWidgetTemplate);
@@ -80,7 +99,6 @@ class Screen {
       widgetTemplates
           .removeWhere((element) => (element is CustomGroupWidget)  && element == template);
     }
-    screenManager.update();
   }
 
   void reorderWidgetTemplates({required int oldIndex, required int newIndex, required ScreenManager screenManager}) {
@@ -107,5 +125,9 @@ class Screen {
 
   void onTemplateRemove(CustomWidgetTemplate customWidgetTemplate) {
 
+  }
+
+  Screen clone() {
+    return Screen(id: id, name: name, iconID: iconID, index: index, widgetTemplates: List.of(widgetTemplates) );
   }
 }

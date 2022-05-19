@@ -30,4 +30,9 @@ class CustomDivisionLineWidget extends CustomWidget {
     thickness: thickness.toDouble(),
   );
 
+  @override
+  CustomWidget clone() {
+    return CustomDivisionLineWidget(name: name, color: color, thickness: thickness);
+  }
+
 }

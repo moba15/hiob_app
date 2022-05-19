@@ -15,6 +15,13 @@ class IoBrokerSettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("IoBroker Settings"),
+        actions: [
+          IconButton(onPressed: ()  {
+
+            Navigator.popUntil(context, (route) => route.isFirst);
+
+          }, icon: const Icon(Icons.home)),
+        ],
       ),
       body: IoBrokerSettingsView(),
     );

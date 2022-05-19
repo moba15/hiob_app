@@ -21,6 +21,13 @@ class WidgetTemplateListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Widget Templates"),
+        actions: [
+          IconButton(onPressed: ()  {
+
+            Navigator.popUntil(context, (route) => route.isFirst);
+
+          }, icon: const Icon(Icons.home)),
+        ],
       ),
       body: BlocProvider(
         create: (_) =>

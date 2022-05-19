@@ -76,6 +76,8 @@ abstract class CustomWidget {
   }
 
   Map<String, dynamic> toJson();
+
+  CustomWidget clone();
 }
 
 
@@ -84,15 +86,19 @@ abstract class CustomWidgetSettingWidget {
   bool validate();
   CustomWidget get customWidget;
 
+
 }
 
 abstract class CustomWidgetSettingStatelessWidget extends StatelessWidget implements CustomWidgetSettingWidget{
   const CustomWidgetSettingStatelessWidget({Key? key}) : super(key: key);
 
 
+
+
 }
 
 abstract class CustomWidgetSettingStatefulWidget extends StatefulWidget implements CustomWidgetSettingWidget {
   const CustomWidgetSettingStatefulWidget({Key? key}) : super(key: key);
+
 
 }
