@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 
 import '../../../device/bloc/device_bloc.dart';
+import '../../../manager/manager.dart';
 import '../../../shapes/sldier/custom_slider_thumb_value.dart';
 
 class CustomLightWidgetView extends StatefulWidget {
@@ -36,17 +38,31 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
         return ListTile(
           visualDensity: VisualDensity.compact,
           trailing: Switch(
-            onChanged: (v) => {
-              currentValue = v,
-              onBloc.add(DataPointValueUpdateRequest(value: v, oldValue: state.value == true)),
+            onChanged: (v)  {
+              currentValue = v;
+              onBloc.add(DataPointValueUpdateRequest(value: v, oldValue: state.value == true));
+              if(context.read<Manager>().generalManager.vibrateEnabled) {
+                HapticFeedback.lightImpact();
+              }
 
             } ,
             value: state.value == true,
           ),
-          title: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+          title: Row(
+            children: [
+              Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+              if(onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
+                const Text(" (Unavailable)", style: TextStyle(color: Colors.red),)
+            ],
+          ),
           onLongPress: onTab,
-          subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
-          onTap: () => onBloc.add(DataPointValueUpdateRequest(value: !currentValue, oldValue: state.value == true)),
+          //subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+          onTap: ()  {
+            onBloc.add(DataPointValueUpdateRequest(value: !currentValue, oldValue: state.value == true));
+            if(context.read<Manager>().generalManager.vibrateEnabled) {
+              HapticFeedback.lightImpact();
+            }
+          },
         );
       },
     );
@@ -112,7 +128,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
                   ),
                   child: Slider(
 
-                    value: state.value != null ? briTemp?.toDouble() ?? (state.value)?.toDouble() : briTemp ?? 0,
+                    value: state.value != null ? briTemp?.toDouble() ?? (state.value)?.toDouble() : briTemp?.toDouble() ?? 0.0,
                     label:(state.value != null ? briTemp?.round() ?? (state.value)?.round() : briTemp ?? 0).toString(),
                     divisions: widget.customLightWidget.briSteps,
                     onChangeStart: (d)  {
@@ -121,9 +137,13 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
                       });
                     },
                     onChanged: (d)  {
+
                       setState(() {
                         briTemp = d.round();
                       });
+                      if(Manager.instance!.generalManager.vibrateEnabled) {
+                        HapticFeedback.lightImpact();
+                      }
                     },
                     onChangeEnd: (d) => {
 

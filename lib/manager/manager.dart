@@ -8,6 +8,7 @@ import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 
@@ -31,12 +32,16 @@ class Manager {
   late ConnectionManager connectionManager;
   StreamSubscription? subscription5;
 
+  late GeneralManager generalManager;
+  StreamSubscription? subscription6;
+
   ManagerStatus status = ManagerStatus.loading;
+
   
   
 
   int loadingState = 0;
-  int maxLoadingState = 5;
+  int maxLoadingState = 6;
   StreamController<ManagerStatus> managerStatusStreamController = StreamController.broadcast();
   var random = Random();
 
@@ -58,6 +63,8 @@ class Manager {
 
     connectionManager = ConnectionManager(
         deviceManager: deviceManager, ioBrokerManager: ioBrokerManager);
+
+    generalManager = GeneralManager(manager: this, fileManager: fileManager)..load();
 
 
     subscription1 =
@@ -83,7 +90,11 @@ class Manager {
         connectionManager.statusStreamController.stream.listen((event) {
           onLoaded();
         });
-
+    subscription6 =
+        generalManager.statusStreamController.stream.listen((event) {
+          print("asdujasdjuasdhjkasdfjuhasduijfhoisdfjkjasdjfklasdjfoikasdjfokiasjdfasdfasdf");
+          onLoaded();
+        });
   }
 
   String getRandString(int len) {
@@ -106,6 +117,7 @@ class Manager {
       subscription3?.cancel();
       subscription4?.cancel();
       subscription5?.cancel();
+      subscription6?.cancel();
     }
   }
 }

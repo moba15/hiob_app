@@ -1,9 +1,13 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
+
+import '../../../../manager/manager.dart';
 
 class CustomGroupWidgetView extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
@@ -14,6 +18,11 @@ class CustomGroupWidgetView extends StatelessWidget {
     return Column(
         children: [
           ExpansionTile(
+            onExpansionChanged: (v) {
+              if(context.read<Manager>().generalManager.vibrateEnabled) {
+                HapticFeedback.lightImpact();
+              }
+            },
             leading: customGroupWidget.iconID != null ?Icon(IconData(int.tryParse(customGroupWidget.iconID!, radix: 16) ?? 0, fontFamily: "MaterialIcons")) : null,
             initiallyExpanded: customGroupWidget.isExtended,
             textColor: Theme.of(context).colorScheme.onSurface,

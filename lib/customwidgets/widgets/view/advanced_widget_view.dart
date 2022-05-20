@@ -108,8 +108,14 @@ class _MultiSelectionTriggerActionView extends StatelessWidget {
       );
     }
     return ListTile(
-        title: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name Found"),
-        subtitle: multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+        title: Row(
+          children: [
+            Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name Found"),
+            if(multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
+              const Text(" (Unavailable)", style: TextStyle(color: Colors.red),),
+          ],
+        ),
+        //subtitle: multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
         trailing: FractionallySizedBox(
           widthFactor: 0.40,
           child: multiSelectionTriggerAction.widget,
@@ -132,12 +138,18 @@ class _SliderTriggerView extends StatelessWidget {
       );
     }
     return ListTile(
-      title: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found"),
+      title: Row(
+        children: [
+          Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found"),
+          if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
+            const Text(" (Unavailable)", style: TextStyle(color: Colors.red),),
+        ],
+      ),
       subtitle: Column(
         children: [
           sliderTriggerAction.widget,
-          if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-            const Text("Unavailable", style: TextStyle(color: Colors.red),),
+          //if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
+            //const Text("Unavailable", style: TextStyle(color: Colors.red),),
         ],
       ),
 

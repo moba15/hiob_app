@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:smart_home/shapes/sldier/custom_slider_thumb_value.dart';
+
+import '../../../manager/manager.dart';
 
 class SliderTriggerView extends StatelessWidget {
   final SliderTriggerAction sliderTriggerAction;
@@ -80,6 +83,9 @@ class _SliderState extends State<_Slider> {
           setState(() {
             vTemp = d;
           });
+          if(context.read<Manager>().generalManager.vibrateEnabled) {
+            HapticFeedback.lightImpact();
+          }
         },
         label: vTemp == null
             ? value.round().toString()

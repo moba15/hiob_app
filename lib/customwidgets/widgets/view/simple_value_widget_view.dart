@@ -43,9 +43,15 @@ class SimpleValueWidgetView extends StatelessWidget {
           child: ListTile(
             visualDensity: VisualDensity.compact,
             onLongPress: () => onTab(context),
-            title: Text(customSimpleValueWidget.value ??
-                customSimpleValueWidget.name ?? "No Name Found"),
-            subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+            title: Row(
+              children: [
+                Text(customSimpleValueWidget.value ??
+                    customSimpleValueWidget.name ?? "No Name Found"),
+                if(dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
+                  const Text(" (Unavailable)", style: TextStyle(color: Colors.red),)
+              ],
+            ),
+            //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
             trailing: state.value is double
                 ? Text(
                     (state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) + (customSimpleValueWidget.unit == null ? "": " " + customSimpleValueWidget.unit!),

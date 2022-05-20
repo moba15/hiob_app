@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_action.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
+
+import '../../../manager/manager.dart';
 
 class MultiSelectionTriggerActionView extends StatelessWidget {
   final MultiSelectionTriggerAction multiSelectionTriggerAction;
@@ -37,6 +40,9 @@ class MultiSelectionTriggerActionView extends StatelessWidget {
               }
 
               bloc.add(DataPointValueUpdateRequest(value: value, oldValue: state.value));
+              if(context.read<Manager>().generalManager.vibrateEnabled) {
+                HapticFeedback.lightImpact();
+              }
             }
 
           },

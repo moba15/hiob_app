@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
 import '../../../device/bloc/device_bloc.dart';
+import '../../../manager/manager.dart';
 
 class SimpleSwitchWidgetView extends StatelessWidget {
   final CustomSimpleSwitchWidget customSimpleSwitchWidget;
@@ -85,15 +87,29 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
           onTap: () {
 
             bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true), oldValue: bloc.state.value));
+            if(context.read<Manager>().generalManager.vibrateEnabled) {
+              HapticFeedback.lightImpact();
+            }
           },
-          title: Text(widget.text),
-          subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+          title: Row(
+            children: [
+              Text(widget.text),
+              if(bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
+                const Text(" (Unavailable)", style: TextStyle(color: Colors.red),)
+            ],
+          ),
+          //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
           trailing: AnimatedBuilder(
               child: OutlinedButton(
                 child: Text(widget.buttonText),
-                onPressed: () {
+                onPressed: () async {
 
                   bloc.add( DataPointValueUpdateRequest(value: true, oldValue: bloc.state.value == true));
+                  if(context.read<Manager>().generalManager.vibrateEnabled) {
+                    HapticFeedback.lightImpact();
+                  }
+
+
                 },
               ),
               animation: _animationController,

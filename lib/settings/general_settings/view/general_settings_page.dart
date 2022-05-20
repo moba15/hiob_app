@@ -28,6 +28,7 @@ class _GeneralSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Manager manager = context.read<Manager>();
     return ListView(
       children: [
         ListTile(
@@ -35,9 +36,12 @@ class _GeneralSettingsView extends StatelessWidget {
           trailing: IconButton(
             icon: const Icon(Icons.import_export),
             onPressed: () => {
-              context.read<Manager>().fileManager.export(context),
+              manager.fileManager.export(context),
             },
-          )
+          ),
+          onTap: ()=> {
+            manager.fileManager.export(context),
+          },
         ),
         ListTile(
             title: const Text("Import"),
@@ -46,8 +50,24 @@ class _GeneralSettingsView extends StatelessWidget {
               onPressed: () => {
                 context.read<Manager>().fileManager.import(context),
               },
-            )
+            ),
+          onTap: () => {
+            context.read<Manager>().fileManager.import(context),
+          },
         ),
+        StatefulBuilder(
+          builder: (_, setState)  {
+            return SwitchListTile(
+              value: manager.generalManager.vibrateEnabled,
+              onChanged: (v)  {
+                setState(()  {
+                  manager.generalManager.updateVibrateEnabled(v);
+                });
+              },
+              title: const Text("Extra Vibration"),
+            );
+          },
+        )
       ],
     );
   }
