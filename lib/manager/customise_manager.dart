@@ -55,6 +55,15 @@ class CustomWidgetManager {
       templatesStreamController.add(templates);
       return;
     }
+    templates.addAll(loadTemplate(listRaw));
+
+    loaded = true;
+    sort();
+    templatesStreamController.add(templates);
+  }
+
+  List<CustomWidgetTemplate> loadTemplate(List<dynamic> listRaw) {
+    List<CustomWidgetTemplate> templates = [];
     for (Map<String, dynamic> templateRaw in listRaw) {
       String name = templateRaw["name"];
       String id = templateRaw["id"];
@@ -72,6 +81,7 @@ class CustomWidgetManager {
           break;
         case CustomWidgetType.line:
         case CustomWidgetType.group:
+        case CustomWidgetType.alertDialog:
           continue;
         case CustomWidgetType.simpleValue:
           customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
@@ -82,16 +92,13 @@ class CustomWidgetManager {
         case CustomWidgetType.webView:
           customWidget = CustomWebViewWidget.fromJSON(widgetRaw);
           break;
-
+    
       }
-
+    
       CustomWidgetTemplate template = CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
       templates.add(template);
     }
-
-    loaded = true;
-    sort();
-    templatesStreamController.add(templates);
+    return templates;
   }
 
   Future<void> reload() async {
@@ -104,38 +111,7 @@ class CustomWidgetManager {
       templatesStreamController.add(templates);
       return;
     }
-    for (Map<String, dynamic> templateRaw in listRaw) {
-      String name = templateRaw["name"];
-      String id = templateRaw["id"];
-      Map<String, dynamic> widgetRaw = templateRaw["widget"];
-      String typeRaw = widgetRaw["type"];
-      CustomWidgetType type = CustomWidgetType.values
-          .firstWhere((element) => element.toString() == typeRaw);
-      CustomWidget customWidget;
-      switch (type) {
-        case CustomWidgetType.simpleSwitch:
-          customWidget = CustomSimpleSwitchWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetType.light:
-          customWidget = CustomLightWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetType.line:
-        case CustomWidgetType.group:
-          continue;
-        case CustomWidgetType.simpleValue:
-          customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetType.advanced:
-          customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetType.webView:
-          customWidget = CustomWebViewWidget.fromJSON(widgetRaw);
-          break;
-      }
-
-      CustomWidgetTemplate template = CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
-      templates.add(template);
-    }
+    templates.addAll(loadTemplate(listRaw));
 
     loaded = true;
     sort();

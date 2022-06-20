@@ -37,7 +37,7 @@ class _TriggerActionSelectionTemplateState extends State<TriggerActionSelectionT
           showClearButton: false,
           showSearchBox: false,
           selectedItem: _selectedType,
-          items: const [TriggerActionType.none, TriggerActionType.multiSelection, TriggerActionType.slider],
+          items: const [TriggerActionType.none, TriggerActionType.multiSelection, TriggerActionType.slider, TriggerActionType.handleSwitch],
           mode: Mode.BOTTOM_SHEET,
           itemAsString: (i) => i?.name ?? "",
 

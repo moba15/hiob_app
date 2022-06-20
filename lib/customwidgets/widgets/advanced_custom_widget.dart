@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
+import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/advanced_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/advanced_widget_settings.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
@@ -18,8 +19,11 @@ class AdvancedCustomWidget extends CustomWidget {
   String? subTitle;
   DataPoint? subTitleDataPoint;
 
+  CustomAlertDialogWidget? customAlertDialogWidget =  CustomAlertDialogWidget(name: "", title: "");
+
   AdvancedCustomWidget(
-      {required name, this.value, this.bodyTriggerAction, this.subTitle, this.subTitleDataPoint, this.bodyIconID})
+      {required name, this.value, this.bodyTriggerAction, this.subTitle, this.subTitleDataPoint, this.bodyIconID,
+        this.customAlertDialogWidget})
       : super(name: name, type: TYPE, settings: {});
 
   AdvancedCustomWidget.edit() : super.edit(type:TYPE);
@@ -32,7 +36,8 @@ class AdvancedCustomWidget extends CustomWidget {
     "subTitleDataPoint": subTitleDataPoint?.id,
     "name": name,
     "value": value,
-    "bodyIconID": bodyIconID
+    "bodyIconID": bodyIconID,
+    "customAlertDialogWidget": customAlertDialogWidget,
   };
 
   factory AdvancedCustomWidget.fromJson(Map<String, dynamic> json) {
@@ -44,7 +49,8 @@ class AdvancedCustomWidget extends CustomWidget {
         subTitleDataPoint: dataPoint,
         bodyTriggerAction: triggerAction, //TODO:
         value: json["value"],
-        bodyIconID: json["bodyIconID"]
+        bodyIconID: json["bodyIconID"],
+      customAlertDialogWidget:  json["customAlertDialogWidget"] == null ? CustomAlertDialogWidget(name: "Not Set",) : CustomAlertDialogWidget.fromJSON(json["customAlertDialogWidget"]),
 
     );
   }
@@ -57,7 +63,7 @@ class AdvancedCustomWidget extends CustomWidget {
 
   @override
   CustomWidget clone() {
-    return AdvancedCustomWidget(name: name, value: value, bodyTriggerAction: bodyTriggerAction, subTitle: subTitle, subTitleDataPoint: subTitleDataPoint, bodyIconID: bodyIconID);
+    return AdvancedCustomWidget(name: name, value: value, bodyTriggerAction: bodyTriggerAction, subTitle: subTitle, subTitleDataPoint: subTitleDataPoint, bodyIconID: bodyIconID, customAlertDialogWidget: customAlertDialogWidget);
   }
 }
 

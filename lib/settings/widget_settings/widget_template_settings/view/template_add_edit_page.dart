@@ -12,8 +12,8 @@ import '../../../../manager/customise_manager.dart';
 class TemplateAddPage extends StatefulWidget {
   final CustomWidgetManager customWidgetManager;
   final CustomWidgetTemplate? preSelectedTemplate;
-
-  const TemplateAddPage({Key? key, required this.customWidgetManager, this.preSelectedTemplate})
+  final Function(CustomWidgetTemplate)? onSave;
+  const TemplateAddPage({Key? key, required this.customWidgetManager, this.preSelectedTemplate, this.onSave})
       : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class TemplateAddPage extends StatefulWidget {
 
 class _TemplateAddPageState extends State<TemplateAddPage> {
   CustomWidgetType? _selectedType;
-  Map<String, dynamic>? oldJSON;
+  String? _oldJSON;
   final TextEditingController _nameController = TextEditingController();
   CustomWidgetSettingWidget? _customWidgetSettingWidget;
   
@@ -32,7 +32,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     _nameController.value = TextEditingValue(text: widget.preSelectedTemplate?.name ?? "");
     _selectedType = widget.preSelectedTemplate?.customWidget.type ?? CustomWidgetType.simpleSwitch;
     _customWidgetSettingWidget = widget.preSelectedTemplate?.customWidget.clone().settingWidget  ?? _selectedType!.settingWidget;
-    oldJSON = _customWidgetSettingWidget!.customWidget.toJson();
+    _oldJSON = jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
     super.initState();
   }
   
@@ -118,8 +118,8 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   }
 
   bool _isSaved() {
-    
-    return jsonEncode(oldJSON) == jsonEncode(_customWidgetSettingWidget?.customWidget.toJson()  ?? "[]");
+
+    return _oldJSON == jsonEncode(_customWidgetSettingWidget?.customWidget.toJson()  ?? "[]");
   }
 
   void _save() {
@@ -129,24 +129,36 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
 
     if(_customWidgetSettingWidget != null && _customWidgetSettingWidget!.validate() ) {
       
-      
+
       if(widget.preSelectedTemplate != null) {
         widget.preSelectedTemplate!.customWidget.name = _nameController.text;
         widget.preSelectedTemplate!.customWidget = _customWidgetSettingWidget!.customWidget;
         
         widget.preSelectedTemplate!.name = _nameController.text;
-        widget.customWidgetManager.edit(
-          template: widget.preSelectedTemplate!
-        );
+        if(widget.onSave == null) {
+          widget.customWidgetManager.edit(
+            template: widget.preSelectedTemplate!
+          );
+        } else {
+          widget.onSave!(widget.preSelectedTemplate!);
+        }
       } else {
         _customWidgetSettingWidget!.customWidget.name = _nameController.text;
-        widget.customWidgetManager.save(
+        if(widget.onSave == null) {
+          widget.customWidgetManager.save(
             template: CustomWidgetTemplate(
               id: Manager.instance?.getRandString(22) ?? "",
               name: _nameController.text,
               customWidget: _customWidgetSettingWidget!.customWidget,
             )
-        );
+          );
+        } else {
+          widget.onSave!(CustomWidgetTemplate(
+            id: Manager.instance?.getRandString(22) ?? "",
+            name: _nameController.text,
+            customWidget: _customWidgetSettingWidget!.customWidget,
+          ));
+        }
       }
       Navigator.pop(context);
     }
@@ -195,7 +207,7 @@ class _SaveDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          Text("Do you want exit without exit!"),
+          Text("Do you want exit without saving!"),
         ],
       ),
       actions: [

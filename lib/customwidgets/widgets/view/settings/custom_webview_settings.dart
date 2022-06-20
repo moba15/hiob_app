@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
+import 'package:smart_home/manager/manager.dart';
 
 
 
@@ -47,6 +49,18 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
             decoration: const InputDecoration(labelText: "Url"),
             onChanged: (s) =>  {widget.customWebViewWidget.url = s, if(s.isEmpty) widget.customWebViewWidget.url = null},
             controller: _urlController,
+          ),
+          DeviceSelection(
+            onDataPointSelected: (d) => widget.customWebViewWidget.dataPoint = d,
+            selectedDataPoint: widget.customWebViewWidget.dataPoint,
+            selectedDevice: widget.customWebViewWidget.dataPoint?.device,
+            onDeviceSelected:  (d) {
+              if(d == null) {
+                widget.customWebViewWidget.dataPoint = null;
+              }
+
+            },
+            customWidgetManager: Manager.instance!.customWidgetManager,
           ),
           Row(
             children: [

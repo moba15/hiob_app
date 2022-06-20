@@ -84,6 +84,6 @@ class MultiSelectionTriggerAction extends TriggerAction {
   }
 
   @override
-  Widget get widget => MultiSelectionTriggerActionView(multiSelectionTriggerAction: this);
+  Widget getWidget({VoidCallback? onLongTab}) => MultiSelectionTriggerActionView(multiSelectionTriggerAction: this);
   
 }

@@ -84,7 +84,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
                 heroTag: "tag",
-                onPressed: () => {_save, Navigator.pop(context) },
+                onPressed: () => {_save(), Navigator.pop(context) },
                 child: const Icon(Icons.save),
               ),
             ),
@@ -144,8 +144,8 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   }
 
   void _save() {
+    print("save");
     widget.screen.widgetTemplates = screen.widgetTemplates;
-
     widget.screenManager.editScreen(
         screen: widget.screen,
         name: nameController.text,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_logs/flutter_logs.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import 'app.dart';
@@ -27,9 +28,12 @@ void main() async {
       debugFileOperations: false,
       attachTimeStamp: true,
       isDebuggable: false);
-
-  Manager manager = Manager();
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String version = packageInfo.version;
+  String buildNumber = packageInfo.buildNumber;
+  Manager manager = Manager(versionNumber: version, buildNumber: buildNumber);
   await manager.load();
+
   BlocOverrides.runZoned(() => runApp(App(
         manager: manager,
         screenManager: manager.screenManager,

@@ -50,9 +50,9 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
           ),
           title: Row(
             children: [
-              Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+              Flexible(child:  Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found", overflow: TextOverflow.clip,)),
               if(onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
-                const Text(" (Unavailable)", style: TextStyle(color: Colors.red),)
+                const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
             ],
           ),
           onLongPress: onTab,
@@ -60,7 +60,7 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
           onTap: ()  {
             onBloc.add(DataPointValueUpdateRequest(value: !currentValue, oldValue: state.value == true));
             if(context.read<Manager>().generalManager.vibrateEnabled) {
-              HapticFeedback.lightImpact();
+              HapticFeedback.vibrate();
             }
           },
         );
@@ -94,7 +94,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
     return AlertDialog(
       title: Container(
         alignment: Alignment.center,
-        child: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+        child: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found", overflow: TextOverflow.ellipsis,),
       ),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: const Text("Back"))

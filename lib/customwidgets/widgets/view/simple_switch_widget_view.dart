@@ -93,9 +93,13 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
           },
           title: Row(
             children: [
-              Text(widget.text),
+              Flexible(
+                child: Text(widget.text, overflow: TextOverflow.clip,),
+              ),
               if(bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
-                const Text(" (Unavailable)", style: TextStyle(color: Colors.red),)
+                const Flexible(
+                  child: Text(" (Unavailable)", style: TextStyle(color: Colors.red),overflow: TextOverflow.clip,),
+                )
             ],
           ),
           //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red, fontSize: 12),) : null,

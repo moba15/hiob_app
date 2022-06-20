@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
@@ -14,6 +15,7 @@ enum CustomWidgetType {
   group,
   line,
   webView,
+  alertDialog,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
@@ -32,7 +34,9 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.advanced:
         return AdvancedCustomWidget.edit().settingWidget;
       case CustomWidgetType.webView:
-        return CustomWebViewWidget(name: null, url: null).settingWidget;
+        return CustomWebViewWidget(name: null, url: null, dataPoint: null).settingWidget;
+      case CustomWidgetType.alertDialog:
+        return CustomAlertDialogWidget(name: "").settingWidget;
     }
   }
 

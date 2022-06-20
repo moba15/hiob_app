@@ -50,6 +50,6 @@ class SliderTriggerAction extends TriggerAction {
   }
 
   @override
-  Widget get widget => SliderTriggerView(sliderTriggerAction: this);
+  Widget getWidget({VoidCallback? onLongTab}) => SliderTriggerView(sliderTriggerAction: this);
 
 }

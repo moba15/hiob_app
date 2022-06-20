@@ -63,6 +63,7 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
       ),
       children: [
         ReorderableListView.builder(
+            physics : const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
               String selectionKey = widget.multiSelectionTriggerAction.selections.keys.elementAt(index);
@@ -74,8 +75,8 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
                 },
                 key: ValueKey(selectionKey),
                 child: ListTile(
-                  title: Text(selectionKey),
-                  subtitle: Text(widget.multiSelectionTriggerAction.selections[selectionKey] ?? "Not Found"),
+                  title: Text("View: " + selectionKey),
+                  subtitle: Text("Value: " + widget.multiSelectionTriggerAction.selections[selectionKey].toString()),
 
 
                 ),

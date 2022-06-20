@@ -15,7 +15,9 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
 
   @override
   bool validate() {
-    return advancedCustomWidget.bodyTriggerAction != null && advancedCustomWidget.bodyTriggerAction!.validate();
+    print(advancedCustomWidget.customAlertDialogWidget?.templates != null);
+    return advancedCustomWidget.bodyTriggerAction != null && advancedCustomWidget.bodyTriggerAction!.validate() &&
+        advancedCustomWidget.customAlertDialogWidget != null;
   }
 
   @override
@@ -32,11 +34,38 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
           ),
           Container(
             height: 20,
+
           ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text("Main body:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+          ),
+
           TriggerActionSelectionTemplate(
             onChange: (trigger) => {advancedCustomWidget.bodyTriggerAction = trigger},
             preSelectedTriggerAction: advancedCustomWidget.bodyTriggerAction,
           ),
+
+          Container(
+            height: 20,
+
+          ),
+          ExpansionTile(
+            title: const Text("Popup menu:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+            leading: const Icon(Icons.menu),
+
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 15, right:  15),
+                child: (advancedCustomWidget.customAlertDialogWidget?.settingWidget ?? const Text("Error 404") )as Widget,
+              )
+            ],
+          ),
+
+
+
+
+
 
         ],
       ),

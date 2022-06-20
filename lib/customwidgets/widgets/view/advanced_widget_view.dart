@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/none_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dart';
+import 'package:smart_home/customwidgets/triggerAction/switch_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
@@ -25,15 +26,23 @@ class AdvancedWidgetView extends StatelessWidget {
       case TriggerActionType.none:
         return _NoneTriggerActionView(
             advancedCustomWidget: advancedCustomWidget,
-            noneTriggerAction: advancedCustomWidget.bodyTriggerAction as NoneTriggerAction
+            noneTriggerAction: advancedCustomWidget.bodyTriggerAction as NoneTriggerAction,
+          onLongTab: () => _onLongTab(context),
         );
       case TriggerActionType.multiSelection:
         return _MultiSelectionTriggerActionView(
           advancedCustomWidget: advancedCustomWidget,
           multiSelectionTriggerAction: advancedCustomWidget.bodyTriggerAction as MultiSelectionTriggerAction,
+          onLongTab: () => _onLongTab(context),
         );
       case TriggerActionType.slider:
-        return _SliderTriggerView(advancedCustomWidget: advancedCustomWidget, sliderTriggerAction:  advancedCustomWidget.bodyTriggerAction as SliderTriggerAction,);
+        return _SliderTriggerView(advancedCustomWidget: advancedCustomWidget,
+          sliderTriggerAction:  advancedCustomWidget.bodyTriggerAction as SliderTriggerAction,
+          onLongTab: () => _onLongTab(context));
+      case TriggerActionType.handleSwitch:
+        return _SwitchTriggerView(advancedCustomWidget: advancedCustomWidget,
+          switchTriggerAction: advancedCustomWidget.bodyTriggerAction as SwitchTriggerAction,
+          onLongTab: () => _onLongTab(context));
       default:
         return const Text("Error 404 no view found");
 
@@ -41,13 +50,21 @@ class AdvancedWidgetView extends StatelessWidget {
 
 
   }
+
+  void _onLongTab(BuildContext context) {
+    if(advancedCustomWidget.customAlertDialogWidget == null) {
+      return;
+    }
+    showDialog(context: context, builder: (_) => advancedCustomWidget.customAlertDialogWidget!.widget);
+  }
 }
 
 //TODO: Maybe in sperate File usw.
 class _NoneTriggerActionView extends StatelessWidget {
   final AdvancedCustomWidget advancedCustomWidget;
   final NoneTriggerAction noneTriggerAction;
-  const _NoneTriggerActionView({Key? key, required this.advancedCustomWidget, required this.noneTriggerAction}) : super(key: key);
+  final VoidCallback onLongTab;
+  const _NoneTriggerActionView({Key? key, required this.advancedCustomWidget, required this.noneTriggerAction, required this.onLongTab}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +76,9 @@ class _NoneTriggerActionView extends StatelessWidget {
 
 
     return ListTile(
-      title: advancedCustomWidget.value == null ? Text(advancedCustomWidget.name ?? "No Name Fund") : Text(advancedCustomWidget.value!),
-      subtitle: noneTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+      onLongPress: onLongTab ,
+      title: advancedCustomWidget.value == null ? Text(advancedCustomWidget.name ?? "No Name Found", overflow: TextOverflow.clip,) : Text(advancedCustomWidget.value!, overflow: TextOverflow.ellipsis,),
+      subtitle: noneTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red), overflow: TextOverflow.ellipsis,) : null,
       trailing: BlocBuilder<DataPointBloc, DataPointState>(
         bloc: DataPointBloc(noneTriggerAction.dataPoint!),
         builder: (context, state) {
@@ -93,7 +111,8 @@ class _NoneTriggerActionView extends StatelessWidget {
 class _MultiSelectionTriggerActionView extends StatelessWidget {
   final AdvancedCustomWidget advancedCustomWidget;
   final MultiSelectionTriggerAction multiSelectionTriggerAction;
-  const _MultiSelectionTriggerActionView({Key? key, required this.advancedCustomWidget, required this.multiSelectionTriggerAction}) : super(key: key);
+  final VoidCallback onLongTab;
+  const _MultiSelectionTriggerActionView({Key? key, required this.advancedCustomWidget, required this.multiSelectionTriggerAction, required this.onLongTab}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,18 +127,22 @@ class _MultiSelectionTriggerActionView extends StatelessWidget {
       );
     }
     return ListTile(
+
         title: Row(
           children: [
-            Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name Found"),
+            Flexible(
+              child: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name Found", overflow: TextOverflow.clip,),
+            ),
             if(multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-              const Text(" (Unavailable)", style: TextStyle(color: Colors.red),),
+              const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,),)
           ],
         ),
         //subtitle: multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
         trailing: FractionallySizedBox(
           widthFactor: 0.40,
-          child: multiSelectionTriggerAction.widget,
-        )
+          child: multiSelectionTriggerAction.getWidget(),
+        ),
+      onLongPress: onLongTab,
     );
   }
 }
@@ -127,7 +150,8 @@ class _MultiSelectionTriggerActionView extends StatelessWidget {
 class _SliderTriggerView extends StatelessWidget {
   final AdvancedCustomWidget advancedCustomWidget;
   final SliderTriggerAction sliderTriggerAction;
-  const _SliderTriggerView({Key? key, required this.advancedCustomWidget, required this.sliderTriggerAction}) : super(key: key);
+  final VoidCallback onLongTab;
+  const _SliderTriggerView({Key? key, required this.advancedCustomWidget, required this.sliderTriggerAction, required this.onLongTab}) : super(key: key);
 
 
   @override
@@ -138,16 +162,17 @@ class _SliderTriggerView extends StatelessWidget {
       );
     }
     return ListTile(
+      onLongPress: onLongTab,
       title: Row(
         children: [
-          Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found"),
+          Flexible(child: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found", overflow: TextOverflow.clip,),),
           if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-            const Text(" (Unavailable)", style: TextStyle(color: Colors.red),),
+            const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,),)
         ],
       ),
       subtitle: Column(
         children: [
-          sliderTriggerAction.widget,
+          sliderTriggerAction.getWidget(),
           //if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
             //const Text("Unavailable", style: TextStyle(color: Colors.red),),
         ],
@@ -156,6 +181,59 @@ class _SliderTriggerView extends StatelessWidget {
     );
   }
 }
+
+class _SwitchTriggerView extends StatelessWidget {
+  final AdvancedCustomWidget advancedCustomWidget;
+  final SwitchTriggerAction switchTriggerAction;
+  final VoidCallback onLongTab;
+  const _SwitchTriggerView({Key? key,required this.advancedCustomWidget, required this.switchTriggerAction,required this.onLongTab}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if(switchTriggerAction.dataPoint == null) {
+      return const ListTile(
+        title: Text("No Device found"),
+      );
+    }
+    final bloc = DataPointBloc(switchTriggerAction.dataPoint!);
+    return ListTile(
+      onLongPress: onLongTab,
+      onTap: () => {
+        if(bloc.state.value == switchTriggerAction.switchFalse) {
+          bloc.add(DataPointValueUpdateRequest(value: switchTriggerAction.switchTrue, oldValue: bloc.state.value))
+        } else {
+          bloc.add(DataPointValueUpdateRequest(value: switchTriggerAction.switchFalse, oldValue: bloc.state.value))
+        }
+      },
+      trailing: BlocBuilder<DataPointBloc, DataPointState>(
+        bloc: bloc,
+        builder: (_, state) =>
+            Switch(
+              value: state.value == switchTriggerAction.switchTrue,
+              onChanged: (v) => {
+                if(v)  {
+                  bloc.add(DataPointValueUpdateRequest(value: switchTriggerAction.switchTrue, oldValue: bloc.state.value))
+                } else {
+                  bloc.add(DataPointValueUpdateRequest(value: switchTriggerAction.switchFalse, oldValue: bloc.state.value))
+                }
+              },
+            )
+
+      ),
+      title: Row(
+        children: [
+          Flexible(child: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found", overflow: TextOverflow.clip,)),
+
+        if(switchTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
+          const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
+
+        ],
+      ),
+    );
+  }
+}
+
+
 
 
 

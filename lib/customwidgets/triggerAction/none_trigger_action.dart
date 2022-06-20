@@ -40,7 +40,7 @@ class NoneTriggerAction extends TriggerAction  {
   TriggerActionType get type => TriggerActionType.none;
 
   @override
-  Widget get widget => throw UnimplementedError();
+  Widget getWidget({VoidCallback? onLongTab}) => throw UnimplementedError();
 
   @override
   bool validate() {
