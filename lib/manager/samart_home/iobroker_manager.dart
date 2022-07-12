@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/iobroker_device.dart';
@@ -81,6 +82,12 @@ class IoBrokerManager {
   }
 
   void updateEnums() {
+    FlutterLogs.logInfo(
+      "ioBrokerManager",
+      "updateEnums",
+      "Update Enums started",
+
+    );
     enumsUpdateStateStreamController.add(EnumUpdateState.loading);
     isUpdating = true;
     Manager.instance?.connectionManager.sendMsg(EnumUpdateRequestIobPackage());
@@ -88,17 +95,32 @@ class IoBrokerManager {
   }
 
   void enumUpdate({required Map<String, dynamic> rawData}) {
-    print("raw: " + jsonEncode(rawData));
-    enums.clear();
-    List<dynamic> enumsListRaw = jsonDecode(rawData["enums"]);
-    for(Map<String, dynamic> enumRaw in enumsListRaw) {
-      enums.add(Enum.fromJSON(enumRaw));
-    }
-    lastEnumUpdate = DateTime.now();
+    try {
+      enums.clear();
+      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "Starting enumUpdate \n" + encoder.convert(rawData));
 
-    fileManager.writeJSON(enumKey, {"lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch, "enums": enums});
-    enumsUpdateStateStreamController.add(EnumUpdateState.finished);
-    isUpdating = false;
+
+      List<dynamic> enumsListRaw = jsonDecode(rawData["enums"]);
+      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"]);
+      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "enumsListRaw: " + encoder.convert(enumsListRaw));
+      for (Map<String, dynamic> enumRaw in enumsListRaw) {
+        enums.add(Enum.fromJSON(enumRaw));
+      }
+      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "added ");
+      lastEnumUpdate = DateTime.now();
+
+      fileManager.writeJSON(enumKey, {
+        "lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch,
+        "enums": enums
+      });
+      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "writeJSON");
+      enumsUpdateStateStreamController.add(EnumUpdateState.finished);
+      isUpdating = false;
+    } on Error catch(e) {
+      FlutterLogs.logErrorTrace("iobrokerManager", "enumUpdate", "error while parsing?\n " + rawData.toString(), e);
+
+    }
   }
 
   void enumsClear() {

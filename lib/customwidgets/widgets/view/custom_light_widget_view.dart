@@ -52,11 +52,11 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
             children: [
               Flexible(child:  Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found", overflow: TextOverflow.clip,)),
               if(onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
-                const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
+                const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
             ],
           ),
           onLongPress: onTab,
-          //subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+          //subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
           onTap: ()  {
             onBloc.add(DataPointValueUpdateRequest(value: !currentValue, oldValue: state.value == true));
             if(context.read<Manager>().generalManager.vibrateEnabled) {
@@ -123,7 +123,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
               builder: (context, state)  {
                 return SliderTheme(
                   data:  SliderThemeData(
-                    thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.customLightWidget.briMax),
+                    thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.customLightWidget.briMax, min: widget.customLightWidget.briMin),
 
                   ),
                   child: Slider(

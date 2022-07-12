@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/triggerAction/button_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/none_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dart';
@@ -43,6 +44,8 @@ class AdvancedWidgetView extends StatelessWidget {
         return _SwitchTriggerView(advancedCustomWidget: advancedCustomWidget,
           switchTriggerAction: advancedCustomWidget.bodyTriggerAction as SwitchTriggerAction,
           onLongTab: () => _onLongTab(context));
+      case TriggerActionType.button:
+        return _ButtonTriggerView(advancedCustomWidget: advancedCustomWidget, buttonTriggerAction: advancedCustomWidget.bodyTriggerAction as ButtonTriggerAction, onLongTab: () => _onLongTab(context));
       default:
         return const Text("Error 404 no view found");
 
@@ -78,7 +81,7 @@ class _NoneTriggerActionView extends StatelessWidget {
     return ListTile(
       onLongPress: onLongTab ,
       title: advancedCustomWidget.value == null ? Text(advancedCustomWidget.name ?? "No Name Found", overflow: TextOverflow.clip,) : Text(advancedCustomWidget.value!, overflow: TextOverflow.ellipsis,),
-      subtitle: noneTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red), overflow: TextOverflow.ellipsis,) : null,
+      subtitle: noneTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.ellipsis,) : null,
       trailing: BlocBuilder<DataPointBloc, DataPointState>(
         bloc: DataPointBloc(noneTriggerAction.dataPoint!),
         builder: (context, state) {
@@ -134,10 +137,10 @@ class _MultiSelectionTriggerActionView extends StatelessWidget {
               child: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name Found", overflow: TextOverflow.clip,),
             ),
             if(multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-              const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,),)
+              const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,),)
           ],
         ),
-        //subtitle: multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+        //subtitle: multiSelectionTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
         trailing: FractionallySizedBox(
           widthFactor: 0.40,
           child: multiSelectionTriggerAction.getWidget(),
@@ -167,14 +170,14 @@ class _SliderTriggerView extends StatelessWidget {
         children: [
           Flexible(child: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found", overflow: TextOverflow.clip,),),
           if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-            const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,),)
+            const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,),)
         ],
       ),
       subtitle: Column(
         children: [
           sliderTriggerAction.getWidget(),
           //if(sliderTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-            //const Text("Unavailable", style: TextStyle(color: Colors.red),),
+            //const Text("U/A", style: TextStyle(color: Colors.red),),
         ],
       ),
 
@@ -225,13 +228,94 @@ class _SwitchTriggerView extends StatelessWidget {
           Flexible(child: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found", overflow: TextOverflow.clip,)),
 
         if(switchTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-          const Flexible(child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
+          const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
 
         ],
       ),
     );
   }
 }
+
+
+class _ButtonTriggerView extends StatefulWidget {
+  final AdvancedCustomWidget advancedCustomWidget;
+  final ButtonTriggerAction buttonTriggerAction;
+  final VoidCallback onLongTab;
+  const _ButtonTriggerView({Key? key, required this.advancedCustomWidget, required this.buttonTriggerAction, required this.onLongTab}) : super(key: key);
+
+  @override
+  State<_ButtonTriggerView> createState() => _ButtonTriggerViewState();
+}
+
+class _ButtonTriggerViewState extends State<_ButtonTriggerView> with SingleTickerProviderStateMixin{
+  late AnimationController _animationController;
+  @override
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 80),
+        lowerBound: 0,
+        upperBound: 0.15
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    if(widget.buttonTriggerAction.dataPoint == null) {
+      return const ListTile(
+        title: Text("No Device found"),
+      );
+    }
+    final bloc = DataPointBloc(widget.buttonTriggerAction.dataPoint!);
+    return ListTile(
+      onLongPress: widget.onLongTab,
+      onTap: () => {
+        bloc.add(DataPointValueUpdateRequest(value: true, oldValue: bloc.state.value))
+      },
+      trailing: BlocBuilder<DataPointBloc, DataPointState>(
+          bloc: bloc,
+          builder: (_, state) =>
+              AnimatedBuilder(
+                  child: OutlinedButton(
+                    child: Text(widget.buttonTriggerAction.label ?? "No Lable Set"),
+                    onPressed: () async {
+
+                      bloc.add( DataPointValueUpdateRequest(value: true, oldValue: bloc.state.value == true));
+
+
+                    },
+                  ),
+                  animation: _animationController,
+                  builder: (context, child)  {
+                    return Transform.scale(
+                      child: child,
+                      scale: 1 - _animationController.value,
+
+                    );
+                  }
+              )
+
+      ),
+      title: Row(
+    children: [
+    Flexible(child: Text(widget.advancedCustomWidget.value ?? widget.advancedCustomWidget.name ?? "No Name found", overflow: TextOverflow.clip,)),
+
+    if(widget.buttonTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
+    const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
+
+    ],
+    ),
+    );
+  }
+}
+
+
 
 
 

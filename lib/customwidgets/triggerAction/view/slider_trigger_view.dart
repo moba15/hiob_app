@@ -70,7 +70,7 @@ class _SliderState extends State<_Slider> {
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.sliderTriggerAction.max),
+        thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.sliderTriggerAction.max, min: widget.sliderTriggerAction.min),
 
 
       ),

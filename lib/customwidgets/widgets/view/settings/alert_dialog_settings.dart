@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
@@ -46,15 +44,10 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
               newIndex--;
             }
             CustomWidgetTemplate tmp = widget.customAlertDialogWidget.templates![oldIndex];
-            print("old: " + widget.customAlertDialogWidget.templates!.map((e) => e.id).toString());
             widget.customAlertDialogWidget.templates!.removeAt(oldIndex);
-            print("remove: " + widget.customAlertDialogWidget.templates!.map((e) => e.id).toString());
             widget.customAlertDialogWidget.templates!.add(tmp);
-            print("add: " + widget.customAlertDialogWidget.templates!.map((e) => e.id).toString());
             widget.customAlertDialogWidget.templates!.insert(newIndex, tmp);
-            print("insert: " + widget.customAlertDialogWidget.templates!.map((e) => e.id).toString());
             widget.customAlertDialogWidget.templates!.removeLast();
-            print("removeLast: " + widget.customAlertDialogWidget.templates!.map((e) => e.id).toString());
             setState(() {
 
             });

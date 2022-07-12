@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:smart_home/customwidgets/triggerAction/button_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/none_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dart';
@@ -33,7 +34,7 @@ extension TriggerActionTypeExtension on TriggerActionType {
   TriggerAction get triggerAction {
     switch(this) {
       case TriggerActionType.button:
-        throw UnimplementedError();
+        return ButtonTriggerAction(label: "", dataPoint: null);
 
       case TriggerActionType.handleSwitch:
         return SwitchTriggerAction(dataPoint: null);
@@ -74,6 +75,8 @@ abstract class TriggerAction {
         return SliderTriggerAction.fromJSON(map);
       case TriggerActionType.handleSwitch:
         return SwitchTriggerAction.fromJSON(map);
+      case TriggerActionType.button:
+        return ButtonTriggerAction.fromJSON(map);
       default:
         throw UnimplementedError("No Trigger Action found");
     }

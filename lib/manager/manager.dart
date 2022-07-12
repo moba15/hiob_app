@@ -94,7 +94,6 @@ class Manager {
         });
     subscription6 =
         generalManager.statusStreamController.stream.listen((event) {
-          print("asdujasdjuasdhjkasdfjuhasduijfhoisdfjkjasdjfklasdjfoikasdjfokiasjdfasdfasdf");
           onLoaded();
         });
   }

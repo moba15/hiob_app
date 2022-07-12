@@ -52,11 +52,11 @@ class SimpleValueWidgetView extends StatelessWidget {
                 ),
                 if(dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
                   const Flexible(
-                    child: Text(" (Unavailable)", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip, softWrap: false, maxLines: 1,),
+                    child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip, softWrap: false, maxLines: 1,),
                   )
               ],
             ),
-            //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+            //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
             trailing: state.value is double
                 ? Text(
                     (state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) + (customSimpleValueWidget.unit == null ? "": " " + customSimpleValueWidget.unit!),

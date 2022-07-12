@@ -15,7 +15,6 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
 
   @override
   bool validate() {
-    print(advancedCustomWidget.customAlertDialogWidget?.templates != null);
     return advancedCustomWidget.bodyTriggerAction != null && advancedCustomWidget.bodyTriggerAction!.validate() &&
         advancedCustomWidget.customAlertDialogWidget != null;
   }

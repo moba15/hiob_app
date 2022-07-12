@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_home/customwidgets/triggerAction/settings/switch_trigger_action_settings.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';

@@ -144,7 +144,6 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   }
 
   void _save() {
-    print("save");
     widget.screen.widgetTemplates = screen.widgetTemplates;
     widget.screenManager.editScreen(
         screen: widget.screen,

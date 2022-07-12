@@ -98,11 +98,11 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
               ),
               if(bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
                 const Flexible(
-                  child: Text(" (Unavailable)", style: TextStyle(color: Colors.red),overflow: TextOverflow.clip,),
+                  child: Text(" U/A", style: TextStyle(color: Colors.red),overflow: TextOverflow.clip,),
                 )
             ],
           ),
-          //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
+          //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
           trailing: AnimatedBuilder(
               child: OutlinedButton(
                 child: Text(widget.buttonText),
@@ -130,11 +130,10 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
   }
 
   void startAnimation() {
-    print("start");
+
     _animationController.forward();
   }
   void startAnimationRev() {
-    print("cancle");
       _animationController.reverse();
   }
 }

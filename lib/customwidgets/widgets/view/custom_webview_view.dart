@@ -23,7 +23,6 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.customWebViewWidget.dataPoint);
     return GestureDetector(
       onLongPress: () => _webViewController?.reload() ,
       child: Column(

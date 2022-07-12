@@ -54,8 +54,8 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
           },
           decoration: const InputDecoration(border: OutlineInputBorder(),labelText: "Test"),
 
-          iconEnabledColor: SchedulerBinding.instance!.window.platformBrightness == Brightness.dark ? Colors.grey[400] : Colors.black,
-          iconDisabledColor: SchedulerBinding.instance!.window.platformBrightness == Brightness.dark ? Colors.grey[400] : Colors.black,
+          iconEnabledColor: SchedulerBinding.instance.window.platformBrightness == Brightness.dark ? Colors.grey[400] : Colors.black,
+          iconDisabledColor: SchedulerBinding.instance.window.platformBrightness == Brightness.dark ? Colors.grey[400] : Colors.black,
 
 
           items: w.mode == DropdownMenuMode.bottomSheet ? [] : w.items.map((e) {
@@ -68,7 +68,7 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
       );
     }
 
-    return Text("");
+    return const Text("");
 
   }
 
