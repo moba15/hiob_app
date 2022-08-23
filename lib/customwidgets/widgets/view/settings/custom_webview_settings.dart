@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
@@ -9,7 +10,11 @@ import 'package:smart_home/manager/manager.dart';
 
 class CustomWebViewWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
-  const CustomWebViewWidgetSettingWidget({Key? key, required this.customWebViewWidget}) : super(key: key);
+  final GlobalKey urlKey = GlobalKey();
+  final GlobalKey datapointKey = GlobalKey();
+  final GlobalKey heightKey = GlobalKey();
+  final GlobalKey javascriptKey = GlobalKey();
+  CustomWebViewWidgetSettingWidget({Key? key, required this.customWebViewWidget}) : super(key: key);
 
   @override
   State<CustomWebViewWidgetSettingWidget> createState() => _CustomSimpleValueWidgetSettingWidgetState();
@@ -21,6 +26,9 @@ class CustomWebViewWidgetSettingWidget extends CustomWidgetSettingStatefulWidget
   bool validate() {
     return customWebViewWidget.url != null;
   }
+
+  @override
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [urlKey, datapointKey, heightKey, javascriptKey];
 }
 
 class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidgetSettingWidget> {
@@ -45,55 +53,75 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
-          TextField(
-            decoration: const InputDecoration(labelText: "Url"),
-            onChanged: (s) =>  {widget.customWebViewWidget.url = s, if(s.isEmpty) widget.customWebViewWidget.url = null},
-            controller: _urlController,
+          Showcase(
+            key: widget.urlKey,
+            title: "Url",
+            description: "The url you want to load into this widget",
+            child: TextField(
+              decoration: const InputDecoration(labelText: "Url"),
+              onChanged: (s) =>  {widget.customWebViewWidget.url = s, if(s.isEmpty) widget.customWebViewWidget.url = null},
+              controller: _urlController,
+            ),
           ),
-          DeviceSelection(
-            onDataPointSelected: (d) => widget.customWebViewWidget.dataPoint = d,
-            selectedDataPoint: widget.customWebViewWidget.dataPoint,
-            selectedDevice: widget.customWebViewWidget.dataPoint?.device,
-            onDeviceSelected:  (d) {
-              if(d == null) {
-                widget.customWebViewWidget.dataPoint = null;
-              }
+          Showcase(
+            key: widget.datapointKey,
+            title: "Datapoint",
+            description: "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
+            child: DeviceSelection(
+              onDataPointSelected: (d) => widget.customWebViewWidget.dataPoint = d,
+              selectedDataPoint: widget.customWebViewWidget.dataPoint,
+              selectedDevice: widget.customWebViewWidget.dataPoint?.device,
+              onDeviceSelected:  (d) {
+                if(d == null) {
+                  widget.customWebViewWidget.dataPoint = null;
+                }
 
-            },
-            customWidgetManager: Manager.instance!.customWidgetManager,
+              },
+              customWidgetManager: Manager.instance!.customWidgetManager,
+            ),
           ),
-          Row(
-            children: [
-              const Text("Height: ", style: TextStyle(fontSize: 17),),
-              Expanded(
-                child: Slider(
-                  value: widget.customWebViewWidget.height.toDouble(),
-                  max: 1000,
-                  min: 100,
-                  divisions: 18,
-                  onChanged: (d) {
-                    setState(() {
-                      widget.customWebViewWidget.height = d.round();
-                    });
-                  },
-                  label: widget.customWebViewWidget.height.toString(),
+          Showcase(
+            key: widget.heightKey,
+            title: "Height",
+            description: "Height of the Web View",
+            child: Row(
+              children: [
+                const Text("Height: ", style: TextStyle(fontSize: 17),),
+                Expanded(
+                  child: Slider(
+                    value: widget.customWebViewWidget.height.toDouble(),
+                    max: 1000,
+                    min: 100,
+                    divisions: 18,
+                    onChanged: (d) {
+                      setState(() {
+                        widget.customWebViewWidget.height = d.round();
+                      });
+                    },
+                    label: widget.customWebViewWidget.height.toString(),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Showcase(
+            key: widget.javascriptKey,
+            title: "Javascript",
+            description: "Some websites need javascript to work probably",
+            child: Row(
+              children: [
+                const Text("Javascript enabled: ", style: TextStyle(fontSize: 17),),
+                Checkbox(
+                    value: widget.customWebViewWidget.javaScript,
+                    onChanged: (d) {
+                      setState(() {
+                        widget.customWebViewWidget.javaScript = d ?? false;
+                      });
+                    }
                 ),
-              )
-            ],
+              ],
+            ),
           ),
-          Row(
-            children: [
-              const Text("Javascript enabled: ", style: TextStyle(fontSize: 17),),
-              Checkbox(
-                  value: widget.customWebViewWidget.javaScript,
-                  onChanged: (d) {
-                    setState(() {
-                      widget.customWebViewWidget.javaScript = d ?? false;
-                    });
-                  }
-              ),
-            ],
-          )
         ],
       ),
     );

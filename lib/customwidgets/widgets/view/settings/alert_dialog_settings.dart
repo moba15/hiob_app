@@ -22,6 +22,10 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   bool validate() {
     return customAlertDialogWidget.name != null;
   }
+
+  @override
+  // TODO: implement showKeys
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => throw UnimplementedError();
 }
 
 class _AlertDialogSettingsState extends State<AlertDialogSettings> {

@@ -27,7 +27,7 @@ extension TriggerActionTypeExtension on TriggerActionType {
       case TriggerActionType.slider:
         return "Slider";
       case TriggerActionType.none:
-        return "None";
+        return "Value";
     }
   }
 
@@ -86,4 +86,5 @@ abstract class TriggerAction {
 
 abstract class TriggerActionSetting extends StatelessWidget {
   const TriggerActionSetting({Key? key}) : super(key: key);
+  List<GlobalKey> get showKeys;
 }

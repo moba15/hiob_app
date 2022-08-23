@@ -89,6 +89,7 @@ abstract class CustomWidget {
 abstract class CustomWidgetSettingWidget {
   bool validate();
   CustomWidget get customWidget;
+  List<GlobalKey> get showKeys;
 
 
 }
