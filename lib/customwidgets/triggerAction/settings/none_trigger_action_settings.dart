@@ -59,7 +59,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
         Showcase(
           key: textRulesKey,
           title: "Text Rules",
-          description: "Here you can map on value to an other",
+          description: "Here you can map one value to an other",
           child: _RulesSettings(noneTriggerAction: noneTriggerAction),
         )
       ],
