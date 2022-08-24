@@ -9,6 +9,7 @@ import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
@@ -37,17 +38,16 @@ class CustomWidgetManager {
       return;
     }
 
-
-
-
     List? listRaw = await fileManager.getList(templateKey);
-    developer.log("Widgets Raw Loaded " + listRaw.toString(), name: "de.bachmaiers/customise_manager.dart", time: DateTime.now(), zone: Zone.current);
+    developer.log("Widgets Raw Loaded " + listRaw.toString(),
+        name: "de.bachmaiers/customise_manager.dart",
+        time: DateTime.now(),
+        zone: Zone.current);
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     FlutterLogs.logInfo(
       "customise",
       "loadedBootup",
       encoder.convert(listRaw),
-
     );
 
     if (listRaw == null) {
@@ -92,10 +92,13 @@ class CustomWidgetManager {
         case CustomWidgetType.webView:
           customWidget = CustomWebViewWidget.fromJSON(widgetRaw);
           break;
-    
+        case CustomWidgetType.table:
+          customWidget = CustomTableWidget.fromJson(widgetRaw);
+          break;
       }
-    
-      CustomWidgetTemplate template = CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
+
+      CustomWidgetTemplate template =
+          CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
       templates.add(template);
     }
     return templates;
@@ -104,7 +107,6 @@ class CustomWidgetManager {
   Future<void> reload() async {
     templates.clear();
     List? listRaw = await fileManager.getList(templateKey);
-
 
     if (listRaw == null) {
       loaded = true;
@@ -120,18 +122,20 @@ class CustomWidgetManager {
 
   void sort() {
     templates.sort((a, b) {
-      if(a.customWidget.type == b.customWidget.type) {
+      if (a.customWidget.type == b.customWidget.type) {
         return a.name.compareTo(b.name);
       } else {
-        return a.customWidget.type?.index.compareTo(b.customWidget.type?.index ?? 0) ?? 0;
+        return a.customWidget.type?.index
+                .compareTo(b.customWidget.type?.index ?? 0) ??
+            0;
       }
     });
   }
 
   List<CustomWidgetTemplate> getTemplatesByType(CustomWidgetType type) {
     List<CustomWidgetTemplate> tmps = [];
-    for(CustomWidgetTemplate t in templates) {
-      if(t.customWidget.type == type) {
+    for (CustomWidgetTemplate t in templates) {
+      if (t.customWidget.type == type) {
         tmps.add(t);
       }
     }
@@ -139,7 +143,6 @@ class CustomWidgetManager {
   }
 
   Future<void> save({required CustomWidgetTemplate template}) async {
-    
     templates.add(template);
     sort();
     templatesStreamController.add(templates);
@@ -153,7 +156,6 @@ class CustomWidgetManager {
       "customise",
       "save",
       encoder.convert(await fileManager.getList(templateKey)),
-
     );
   }
 
@@ -172,7 +174,6 @@ class CustomWidgetManager {
       "customise",
       "edit",
       encoder.convert(await fileManager.getList(templateKey)),
-
     );
 
     return true;
@@ -192,11 +193,6 @@ class CustomWidgetManager {
       "customise",
       "removed",
       encoder.convert(await fileManager.getList(templateKey)),
-
     );
-
-
   }
-
-
 }

@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 
 enum CustomWidgetType {
@@ -16,6 +17,7 @@ enum CustomWidgetType {
   line,
   webView,
   alertDialog,
+  table,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
@@ -37,6 +39,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return CustomWebViewWidget(name: null, url: null, dataPoint: null).settingWidget;
       case CustomWidgetType.alertDialog:
         return CustomAlertDialogWidget(name: "").settingWidget;
+      case CustomWidgetType.table:
+        return CustomTableWidget(name: "", header: "", sortAsc: true, initialSortColumn: 1, initialSortEnabled: false, elementsPerPage: 10, columns: {}).settingWidget;
     }
   }
 
@@ -54,6 +58,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return "Advanced/Flexible";
       case CustomWidgetType.webView:
         return "Web View";
+      case CustomWidgetType.table:
+        return "Table";
       default:
         return "Error";
     }
