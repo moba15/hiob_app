@@ -15,10 +15,11 @@ class SliderTriggerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = DataPointBloc(sliderTriggerAction.dataPoint!);
+
     if (sliderTriggerAction.dataPoint == null) {
       return const Text("Device not found");
     }
+    final bloc = DataPointBloc(sliderTriggerAction.dataPoint!);
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: bloc,
       builder: (context, state) {
@@ -69,7 +70,7 @@ class _SliderState extends State<_Slider> {
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.sliderTriggerAction.max),
+        thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.sliderTriggerAction.max, min: widget.sliderTriggerAction.min),
 
 
       ),

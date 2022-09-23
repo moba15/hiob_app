@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 
@@ -8,6 +9,7 @@ class GeneralManager {
   final FileManager fileManager;
   final Manager manager;
   final String key = "generalSettings";
+  final String buildKey = "buildKey";
   StreamController<bool> statusStreamController = StreamController();
   
   late bool vibrateEnabled;
@@ -22,6 +24,13 @@ class GeneralManager {
     Map<String, dynamic> settings = (await fileManager.getMap(key)) ?? _loadDefaultSettings();
     vibrateEnabled = settings["vibrateEnabled"] ?? false;
     statusStreamController.add(true);
+    if(!await fileManager.containsKey(buildKey) || (await fileManager.getString(buildKey) )!= manager.buildNumber) {
+      await Future.delayed(const Duration(seconds: 4));
+      manager.status = ManagerStatus.changeLog;
+      manager.managerStatusStreamController.sink.add(ManagerStatus.changeLog);
+      fileManager.writeString(buildKey , manager.buildNumber);
+
+    }
     
     
   }

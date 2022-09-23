@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/bool_selection.dart';
@@ -11,7 +12,10 @@ import '../../../../manager/customise_manager.dart';
 
 class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
   final CustomLightWidget customLightWidget;
-  const CustomLightWidgetSettingWidget({Key? key, required this.customLightWidget}) : super(key: key);
+  final GlobalKey valueKey = GlobalKey();
+  final GlobalKey switchDatapoint = GlobalKey();
+  final GlobalKey sliderKey = GlobalKey();
+  CustomLightWidgetSettingWidget({Key? key, required this.customLightWidget}) : super(key: key);
 
   @override
   State<CustomLightWidgetSettingWidget> createState() => _CustomLightWidgetSettingWidgetState();
@@ -23,6 +27,9 @@ class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
   bool validate() {
     return customLightWidget.onDataPoint != null;
   }
+
+  @override
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [valueKey, switchDatapoint, sliderKey];
 }
 
 class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettingWidget> {
@@ -61,42 +68,57 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
       child: Column(
         children: [
           Container(height: 20,),
-          TextField(
-            onChanged: (s) => { widget.customLightWidget.value = s, if(s.isEmpty) widget.customLightWidget.value = null},
-            decoration: const InputDecoration(labelText: "Value (optional)", hintText: "Value"),
-            controller: _valueController,
+          Showcase(
+            key: widget.valueKey,
+            title: "Value",
+            description: "Text next to the button (if not set it is the Name)",
+            child: TextField(
+              onChanged: (s) => { widget.customLightWidget.value = s, if(s.isEmpty) widget.customLightWidget.value = null},
+              decoration: const InputDecoration(labelText: "Value (optional)", hintText: "Value"),
+              controller: _valueController,
+            ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10),
             alignment: Alignment.centerLeft,
             child: const Text("Switch Datapoint:", style: TextStyle(fontSize: 16.5)),
           ),
-          DeviceSelection(
-            onDeviceSelected: (device) => {},
-            onDataPointSelected: (dataPoint) => {widget.customLightWidget.onDataPoint = dataPoint},
-            customWidgetManager: customWidgetManager,
-            deviceLabel: "Switch Device",
-            dataPointLabel: "Switch Datapoint",
-            preferredRole: "switch.*",
-            selectedDataPoint: _onDataPoint,
-            selectedDevice: _onDataPoint?.device,
+          Showcase(
+            key: widget.switchDatapoint,
+            title: "Switch Datapoint",
+            description: "The Datapoint which will be controlled by the Button",
+            child: DeviceSelection(
+              onDeviceSelected: (device) => {},
+              onDataPointSelected: (dataPoint) => {widget.customLightWidget.onDataPoint = dataPoint},
+              customWidgetManager: customWidgetManager,
+              deviceLabel: "Switch Device",
+              dataPointLabel: "Switch Datapoint",
+              preferredRole: "switch.*",
+              selectedDataPoint: _onDataPoint,
+              selectedDevice: _onDataPoint?.device,
+            ),
           ),
 
           Container(height: 20,),
 
 
           //Brightness
-          BoolSelectionTemplate(
-            onChange: (v)  {
-              setState(() {
-                _briSelected = v;
-                if(!v) {
-                  widget.customLightWidget.briDataPoint = null;
-                }
-              });
-            },
-            title: "Slider:",
-            startValue: _briSelected,
+          Showcase(
+            key: widget.sliderKey,
+            title: "Slider",
+            description: "If enabled you can setup a Slider which you can then open by pressing long enough on the Widget",
+            child: BoolSelectionTemplate(
+              onChange: (v)  {
+                setState(() {
+                  _briSelected = v;
+                  if(!v) {
+                    widget.customLightWidget.briDataPoint = null;
+                  }
+                });
+              },
+              title: "Slider:",
+              startValue: _briSelected,
+            ),
           ),
           if(_briSelected) ...[
             TextField(

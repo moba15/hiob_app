@@ -80,34 +80,42 @@ class FileManager {
   }
 
   void export(BuildContext context) async {
-    //TODO: Add IOS Support
-    String?  result = await FilePicker.platform.getDirectoryPath(dialogTitle: 'Please select an output file:',);
-    if(result == null) {
-      return;
-    }
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Exporting...")));
-    try {
-      File myFile = File(result + "/exportHioB"  + DateFormat("y_M_d_mm_ss_a").format(DateTime.now()) + ".json");
-      Map<String,dynamic> data = {
-        "devices": jsonEncode(manager.deviceManager.devicesList),
-        "widgets": jsonEncode(manager.customWidgetManager.templates),
-        "screens": jsonEncode(manager.screenManager.screens)
-      };
-      String t = jsonEncode(data);
-      await myFile.writeAsString(t, mode: FileMode.write);
-    } on Exception catch (e) {
-      dev.log(e.toString(), name: "error exporting");
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error exporting!")));
-      showDialog(context: context, builder: (context) {
-        return AlertDialog(
-         title: const Text("Error details:"),
-         content: Text(e.toString(),),
-         scrollable: true,
-        );
-      });
-      return;
-    }
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Export Successful")));
+      //TODO: Add IOS Support
+      String?  result = await FilePicker.platform.getDirectoryPath(dialogTitle: 'Please select an output file:',initialDirectory: "Download");
+      if(result == null) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Exporting...")));
+      try {
+        File myFile = File(result + "/exportHioB"  + DateFormat("y_M_d_mm_ss_a").format(DateTime.now()) + ".json");
+        Map<String,dynamic> data = {
+          "devices": jsonEncode(manager.deviceManager.devicesList),
+          "widgets": jsonEncode(manager.customWidgetManager.templates),
+          "screens": jsonEncode(manager.screenManager.screens)
+        };
+        String t = jsonEncode(data);
+        await myFile.writeAsString(t, mode: FileMode.write);
+      } on Exception catch (e) {
+        dev.log(e.toString(), name: "error exporting");
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error exporting!")));
+        showDialog(context: context, builder: (context) {
+          return AlertDialog(
+            title: const Text("Error details:"),
+            content: Column(
+              children: [
+                const Text("Please try to export into the Download folder", style: TextStyle(fontSize: 18),),
+                Container(height: 5,),
+                Text(e.toString(), style: const TextStyle(fontSize: 12),)
+              ],
+            ),
+            scrollable: true,
+          );
+        });
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Export Successful")));
+
+
   }
   void import(BuildContext context) async {
     //TODO: Add IOS Support
@@ -149,7 +157,12 @@ class FileManager {
         showDialog(context: context, builder: (context) {
           return AlertDialog(
             title: const Text("Error details:"),
-            content: Text(e.toString(),),
+            content:  Row(
+              children: [
+                const Text("Please use the Download folder to import a file", style: TextStyle(fontSize: 18),),
+                Text(e.toString(), style: const TextStyle(fontSize: 12),)
+              ],
+            ),
             scrollable: true,
           );
         });

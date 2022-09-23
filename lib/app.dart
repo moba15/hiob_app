@@ -17,8 +17,6 @@ class App extends MaterialApp {
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
-
-
             ],
             supportedLocales: [
 

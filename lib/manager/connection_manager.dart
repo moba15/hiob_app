@@ -21,7 +21,7 @@ class ConnectionManager with WidgetsBindingObserver {
   int tries = 0;
   ConnectionManager(
       {required this.deviceManager, required this.ioBrokerManager}) {
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   Future<void> connectIoB() async {

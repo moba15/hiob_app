@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -12,8 +13,8 @@ import '../../../../manager/customise_manager.dart';
 class TemplateAddPage extends StatefulWidget {
   final CustomWidgetManager customWidgetManager;
   final CustomWidgetTemplate? preSelectedTemplate;
-
-  const TemplateAddPage({Key? key, required this.customWidgetManager, this.preSelectedTemplate})
+  final Function(CustomWidgetTemplate)? onSave;
+  const TemplateAddPage({Key? key, required this.customWidgetManager, this.preSelectedTemplate, this.onSave})
       : super(key: key);
 
   @override
@@ -21,8 +22,9 @@ class TemplateAddPage extends StatefulWidget {
 }
 
 class _TemplateAddPageState extends State<TemplateAddPage> {
+  final GlobalKey _nameKey = GlobalKey();
   CustomWidgetType? _selectedType;
-  Map<String, dynamic>? oldJSON;
+  String? _oldJSON;
   final TextEditingController _nameController = TextEditingController();
   CustomWidgetSettingWidget? _customWidgetSettingWidget;
   
@@ -32,7 +34,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     _nameController.value = TextEditingValue(text: widget.preSelectedTemplate?.name ?? "");
     _selectedType = widget.preSelectedTemplate?.customWidget.type ?? CustomWidgetType.simpleSwitch;
     _customWidgetSettingWidget = widget.preSelectedTemplate?.customWidget.clone().settingWidget  ?? _selectedType!.settingWidget;
-    oldJSON = _customWidgetSettingWidget!.customWidget.toJson();
+    _oldJSON = jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
     super.initState();
   }
   
@@ -41,6 +43,92 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     _nameController.dispose();
     super.dispose();
   }
+
+  Widget  mainScreen(BuildContext context) {
+    return  Scaffold(
+        appBar: AppBar(
+          title: const Text("Edit Template"),
+          actions: [
+
+            IconButton(
+                tooltip: "Help: " + (_selectedType?.name ?? ""),
+                onPressed: () {
+                  if(_customWidgetSettingWidget != null) {
+                    ShowCaseWidget.of(context).startShowCase(_customWidgetSettingWidget!.showKeys);
+                  }
+                },
+                icon: const Icon(Icons.help_outline)
+            ),
+
+            IconButton(onPressed: ()  {
+              if(!_isSaved()) {
+                showDialog(context: context, builder: (_) => _SaveDialog(
+                  onSave: () => {_save(), Navigator.popUntil(context, (route) => route.isFirst)}, cancel: () => Navigator.popUntil(context, (route) => route.isFirst),));
+                return;
+              }
+              Navigator.popUntil(context, (route) => route.isFirst);
+
+            }, icon: const Icon(Icons.home), tooltip: "Go Home",),
+
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _save,
+          child: const Icon(Icons.save),
+        ),
+        body: ListView(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20),
+              child: DropdownButtonFormField<CustomWidgetType>(
+                items: [
+                  for (CustomWidgetType c in CustomWidgetType.values.where((value) => value != CustomWidgetType.group && value != CustomWidgetType.line && value  != CustomWidgetType.alertDialog))
+                    DropdownMenuItem(
+                      child: Text(c.name),
+                      value: c,
+                    )
+                ],
+                value: _selectedType,
+                onChanged: (CustomWidgetType? type) {
+                  setState(() {
+                    _selectedType = type!;
+                    if(widget.preSelectedTemplate == null) {
+                      _customWidgetSettingWidget =  _selectedType!.settingWidget;
+                    } else {
+                      if(_selectedType == widget.preSelectedTemplate!.customWidget.type) {
+                        _customWidgetSettingWidget = widget.preSelectedTemplate!.customWidget.settingWidget;
+                      } else {
+                        _customWidgetSettingWidget =  _selectedType!.settingWidget;
+                      }
+                    }
+                  });
+                },
+              ),
+            ),
+            Showcase(
+              key: _nameKey,
+              title: "Name",
+              description: "Der Name des Templates",
+              showArrow: true,
+
+              child: Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: TextField(
+                  controller: _nameController,
+                  onChanged: (value) => {},
+                  decoration: const InputDecoration(labelText: "Name"),
+                ),
+              ),
+            ),
+            RepositoryProvider.value(
+                value: widget.customWidgetManager,
+                child: _customWidgetSettingWidget == null ? const Text("Error") : _customWidgetSettingWidget as Widget
+            )
+          ],
+        )
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,74 +140,17 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           }
           return true;
         },
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text("Edit Template"),
-            actions: [
-              IconButton(onPressed: ()  {
-                if(!_isSaved()) {
-                  showDialog(context: context, builder: (_) => _SaveDialog(
-                    onSave: () => {_save(), Navigator.popUntil(context, (route) => route.isFirst)}, cancel: () => Navigator.popUntil(context, (route) => route.isFirst),));
-                  return;
-                }
-                Navigator.popUntil(context, (route) => route.isFirst);
-
-              }, icon: const Icon(Icons.home)),
-            ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: _save,
-            child: const Icon(Icons.save),
-          ),
-          body: ListView(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                child: DropdownButtonFormField<CustomWidgetType>(
-                  items: [
-                    for (CustomWidgetType c in CustomWidgetType.values.where((value) => value != CustomWidgetType.group && value != CustomWidgetType.line))
-                      DropdownMenuItem(
-                        child: Text(c.name),
-                        value: c,
-                      )
-                  ],
-                  value: _selectedType,
-                  onChanged: (CustomWidgetType? type) {
-                    setState(() {
-                      _selectedType = type!;
-                      if(widget.preSelectedTemplate == null) {
-                        _customWidgetSettingWidget =  _selectedType!.settingWidget;
-                      } else {
-                        if(_selectedType == widget.preSelectedTemplate!.customWidget.type) {
-                          _customWidgetSettingWidget = widget.preSelectedTemplate!.customWidget.settingWidget;
-                        } else {
-                          _customWidgetSettingWidget =  _selectedType!.settingWidget;
-                        }
-                      }
-                    });
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: TextField(
-                  controller: _nameController,
-                  onChanged: (value) => {},
-                  decoration: const InputDecoration(labelText: "Name"),
-                ),
-              ),
-              RepositoryProvider.value(
-                  value: widget.customWidgetManager,
-                  child: _customWidgetSettingWidget == null ? const Text("Error") : _customWidgetSettingWidget as Widget
-              )
-            ],
-          )),
+      child: ShowCaseWidget(
+        builder: Builder(builder: (c) => mainScreen(c),),
+      )
     );
   }
 
+
+
   bool _isSaved() {
-    
-    return jsonEncode(oldJSON) == jsonEncode(_customWidgetSettingWidget?.customWidget.toJson()  ?? "[]");
+
+    return _oldJSON == jsonEncode(_customWidgetSettingWidget?.customWidget.toJson()  ?? "[]");
   }
 
   void _save() {
@@ -129,24 +160,36 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
 
     if(_customWidgetSettingWidget != null && _customWidgetSettingWidget!.validate() ) {
       
-      
+
       if(widget.preSelectedTemplate != null) {
         widget.preSelectedTemplate!.customWidget.name = _nameController.text;
         widget.preSelectedTemplate!.customWidget = _customWidgetSettingWidget!.customWidget;
         
         widget.preSelectedTemplate!.name = _nameController.text;
-        widget.customWidgetManager.edit(
-          template: widget.preSelectedTemplate!
-        );
+        if(widget.onSave == null) {
+          widget.customWidgetManager.edit(
+            template: widget.preSelectedTemplate!
+          );
+        } else {
+          widget.onSave!(widget.preSelectedTemplate!);
+        }
       } else {
         _customWidgetSettingWidget!.customWidget.name = _nameController.text;
-        widget.customWidgetManager.save(
+        if(widget.onSave == null) {
+          widget.customWidgetManager.save(
             template: CustomWidgetTemplate(
               id: Manager.instance?.getRandString(22) ?? "",
               name: _nameController.text,
               customWidget: _customWidgetSettingWidget!.customWidget,
             )
-        );
+          );
+        } else {
+          widget.onSave!(CustomWidgetTemplate(
+            id: Manager.instance?.getRandString(22) ?? "",
+            name: _nameController.text,
+            customWidget: _customWidgetSettingWidget!.customWidget,
+          ));
+        }
       }
       Navigator.pop(context);
     }
@@ -195,7 +238,7 @@ class _SaveDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          Text("Do you want exit without exit!"),
+          Text("Do you want exit without saving!"),
         ],
       ),
       actions: [

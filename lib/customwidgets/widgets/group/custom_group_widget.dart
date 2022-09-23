@@ -65,6 +65,7 @@ class CustomGroupWidget extends CustomWidget {
     return CustomGroupWidget(name: json["name"], templates: templates, isExtended: json["isExtended"] ?? true, iconID: json["iconID"]);
   }
 
+  @override
   CustomGroupWidget clone() {
     return CustomGroupWidget(name: name, templates: List.from(templates), isExtended: isExtended, iconID: iconID);
   }

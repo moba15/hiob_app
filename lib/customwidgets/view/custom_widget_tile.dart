@@ -8,8 +8,8 @@ import '../templates/custom_widget_template.dart';
 class CustomWidgetTemplateTile extends StatelessWidget {
   final CustomWidgetTemplate customWidget;
   final CustomWidgetManager customWidgetManager;
-
-  const CustomWidgetTemplateTile({Key? key, required this.customWidget, required this.customWidgetManager})
+  final Function(CustomWidgetTemplate)? onSave;
+  const CustomWidgetTemplateTile({Key? key, required this.customWidget, required this.customWidgetManager, this.onSave})
       : super(key: key);
 
   @override
@@ -26,6 +26,7 @@ class CustomWidgetTemplateTile extends StatelessWidget {
                 builder: (c) => TemplateAddPage(
                   customWidgetManager: customWidgetManager,
                   preSelectedTemplate: customWidget,
+                  onSave: onSave,
                 )));
       },
     );

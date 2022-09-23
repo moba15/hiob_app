@@ -137,6 +137,10 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
     return customGroupWidget.name != null && customGroupWidget.name!.isNotEmpty;
   }
 
+  @override
+  // TODO: implement showKeys
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => throw UnimplementedError();
+
 
 }
 

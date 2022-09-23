@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 
 class TriggerActionSelectionTemplate extends StatefulWidget {
-  final Function(TriggerAction?) onChange;
+  final Function(TriggerAction?, TriggerActionSetting?) onChange;
   final TriggerAction? preSelectedTriggerAction;
   const TriggerActionSelectionTemplate({Key? key, required this.onChange, required this.preSelectedTriggerAction}) : super(key: key);
 
@@ -31,13 +31,13 @@ class _TriggerActionSelectionTemplateState extends State<TriggerActionSelectionT
             setState(() {
               _triggerAction= d?.triggerAction;
               _triggerActionSetting = _triggerAction?.settings;
-              widget.onChange(_triggerAction);
+              widget.onChange(_triggerAction, _triggerActionSetting);
             });
           },
           showClearButton: false,
           showSearchBox: false,
           selectedItem: _selectedType,
-          items: const [TriggerActionType.none, TriggerActionType.multiSelection, TriggerActionType.slider],
+          items: const [TriggerActionType.none, TriggerActionType.multiSelection, TriggerActionType.slider, TriggerActionType.handleSwitch, TriggerActionType.button],
           mode: Mode.BOTTOM_SHEET,
           itemAsString: (i) => i?.name ?? "",
 

@@ -44,18 +44,23 @@ class SimpleValueWidgetView extends StatelessWidget {
             visualDensity: VisualDensity.compact,
             onLongPress: () => onTab(context),
             title: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(customSimpleValueWidget.value ??
-                    customSimpleValueWidget.name ?? "No Name Found"),
+                Flexible(
+                  child: Text(customSimpleValueWidget.value ??
+                      customSimpleValueWidget.name ?? "No Name Found", overflow: TextOverflow.ellipsis, softWrap: false,),
+                ),
                 if(dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
-                  const Text(" (Unavailable)", style: TextStyle(color: Colors.red),)
+                  const Flexible(
+                    child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip, softWrap: false, maxLines: 1,),
+                  )
               ],
             ),
-            //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+            //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
             trailing: state.value is double
                 ? Text(
                     (state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) + (customSimpleValueWidget.unit == null ? "": " " + customSimpleValueWidget.unit!),
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16), overflow: TextOverflow.fade,
                   )
                 : Container(
                     constraints: const BoxConstraints(maxWidth: 200),

@@ -20,16 +20,18 @@ void main() async {
 
       timeStampFormat: TimeStampFormat.TIME_FORMAT_READABLE,
       directoryStructure: DirectoryStructure.FOR_DATE,
-      logTypesEnabled: ["device","customise","connection", "screen"],
+      logTypesEnabled: ["device","customise","connection", "screen", "iobrokerManager", "error"],
       logFileExtension: LogFileExtension.LOG,
       logsWriteDirectoryName: "logs",
       logsExportDirectoryName: "logs/Exported",
       debugFileOperations: false,
       attachTimeStamp: true,
       isDebuggable: false);
-
-  Manager manager = Manager();
+  String version = "1.0";
+  String buildNumber = "73";
+  Manager manager = Manager(versionNumber: version, buildNumber: buildNumber);
   await manager.load();
+
   BlocOverrides.runZoned(() => runApp(App(
         manager: manager,
         screenManager: manager.screenManager,

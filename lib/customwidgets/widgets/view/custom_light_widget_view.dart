@@ -50,17 +50,17 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
           ),
           title: Row(
             children: [
-              Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+              Flexible(child:  Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found", overflow: TextOverflow.clip,)),
               if(onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
-                const Text(" (Unavailable)", style: TextStyle(color: Colors.red),)
+                const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
             ],
           ),
           onLongPress: onTab,
-          //subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("Unavailable", style: TextStyle(color: Colors.red),) : null,
+          //subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
           onTap: ()  {
             onBloc.add(DataPointValueUpdateRequest(value: !currentValue, oldValue: state.value == true));
             if(context.read<Manager>().generalManager.vibrateEnabled) {
-              HapticFeedback.lightImpact();
+              HapticFeedback.vibrate();
             }
           },
         );
@@ -94,7 +94,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
     return AlertDialog(
       title: Container(
         alignment: Alignment.center,
-        child: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found"),
+        child: Text(widget.customLightWidget.value ?? widget.customLightWidget.name ?? "No Name Found", overflow: TextOverflow.ellipsis,),
       ),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: const Text("Back"))
@@ -123,7 +123,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
               builder: (context, state)  {
                 return SliderTheme(
                   data:  SliderThemeData(
-                    thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.customLightWidget.briMax),
+                    thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.customLightWidget.briMax, min: widget.customLightWidget.briMin),
 
                   ),
                   child: Slider(

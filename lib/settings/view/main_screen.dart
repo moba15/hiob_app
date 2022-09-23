@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
@@ -60,6 +61,8 @@ class MainScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               )
             );
+          case ManagerStatus.changeLog:
+            return ChangeLogScreen(manager: manager);
           default:
             return const MainView();
         }
@@ -94,7 +97,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
       });
       }
     });
-
   }
 
 
@@ -102,7 +104,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
 
   void onViewChange() {
     setState(() {
-
     });
   }
 
@@ -128,7 +129,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
       numberOfRows = 1;
     }
     Manager manager = context.read<Manager>();
-
     ScreenManager screenManager = manager.screenManager;
     return BlocBuilder<ScreenListCubit, ScreenListState>(
       bloc: ScreenListCubit(screenManager: screenManager)..fetchList(),

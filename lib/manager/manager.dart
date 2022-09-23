@@ -37,7 +37,9 @@ class Manager {
 
   ManagerStatus status = ManagerStatus.loading;
 
-  
+  String versionNumber;
+  String buildNumber;
+  Manager({required this.versionNumber, required this.buildNumber});
   
 
   int loadingState = 0;
@@ -92,7 +94,6 @@ class Manager {
         });
     subscription6 =
         generalManager.statusStreamController.stream.listen((event) {
-          print("asdujasdjuasdhjkasdfjuhasduijfhoisdfjkjasdjfklasdjfoikasdjfokiasjdfasdfasdf");
           onLoaded();
         });
   }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 
 enum CustomWidgetType {
@@ -14,6 +16,8 @@ enum CustomWidgetType {
   group,
   line,
   webView,
+  alertDialog,
+  table,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
@@ -32,7 +36,11 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.advanced:
         return AdvancedCustomWidget.edit().settingWidget;
       case CustomWidgetType.webView:
-        return CustomWebViewWidget(name: null, url: null).settingWidget;
+        return CustomWebViewWidget(name: null, url: null, dataPoint: null).settingWidget;
+      case CustomWidgetType.alertDialog:
+        return CustomAlertDialogWidget(name: "").settingWidget;
+      case CustomWidgetType.table:
+        return CustomTableWidget(name: "", header: "", sortAsc: true, initialSortColumn: 1, initialSortEnabled: false, elementsPerPage: 10, columns: {}).settingWidget;
     }
   }
 
@@ -50,6 +58,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return "Advanced/Flexible";
       case CustomWidgetType.webView:
         return "Web View";
+      case CustomWidgetType.table:
+        return "Table";
       default:
         return "Error";
     }
@@ -85,6 +95,7 @@ abstract class CustomWidget {
 abstract class CustomWidgetSettingWidget {
   bool validate();
   CustomWidget get customWidget;
+  List<GlobalKey> get showKeys;
 
 
 }
