@@ -41,11 +41,16 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
         for(Map m in raw) {
           data.add(Map.from(m));
         }
+        int rowsPerPage = (widget.customTableWidget.elementsPerPage <= 0 ? data.length : widget.customTableWidget.elementsPerPage);
+        if(rowsPerPage<=0) {
+          rowsPerPage = 1;
+        }
         return PaginatedDataTable(
-
+          header: Text(widget.customTableWidget.header),
+          headingRowHeight: 30,
           sortColumnIndex: sortedColumn,
-          sortAscending: sortedAsc ?? false,
-          rowsPerPage: widget.customTableWidget.elementsPerPage <= 0 ? data.length : widget.customTableWidget.elementsPerPage,
+          sortAscending: sortedAsc,
+          rowsPerPage: rowsPerPage,
           columns: widget.customTableWidget.columns.entries.map((e) =>
               DataColumn(
                   label: Text(e.value),

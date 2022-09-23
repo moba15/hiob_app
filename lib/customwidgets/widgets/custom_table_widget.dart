@@ -64,7 +64,7 @@ class CustomTableWidget extends CustomWidget {
         elementsPerPage: json["elementsPerPage"],
         dataPoint: Manager.instance!.deviceManager
             .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? ""),
-        columns: Map<String, String>.from(json["columns"]) ?? {});
+        columns: Map<String, String>.from(json["columns"]));
   }
 
   @override
