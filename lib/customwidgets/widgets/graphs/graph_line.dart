@@ -12,6 +12,28 @@ class GraphLine {
   bool? showDataDots;
   bool? background;
   int? backgroundOpacity;
+  Map<int, dynamic>? data;
+
+
+  void getData(int from, int to) {
+
+  }
+
+  void fetchData(int from, int to) {
+    //TODO: Send Request to Server
+  }
+
+  void removeData(int from, int to) {
+
+  }
+
+  void removeDataExcept(int from, int to) {
+
+  }
+
+  void addData(Map<int, dynamic> dataToAdd) {
+    //TODO: Check if is added
+  }
 
 
 }
