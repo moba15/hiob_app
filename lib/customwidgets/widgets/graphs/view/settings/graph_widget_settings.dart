@@ -31,7 +31,7 @@ class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {
         margin: const EdgeInsets.only(left: 20, right: 20), 
         child: Column(
           children: [
-            DropdownButton(items: items, onChanged: onChanged)
+
           ],
         )
     );

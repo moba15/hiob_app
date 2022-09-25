@@ -49,7 +49,15 @@ class _DeviceSelectionState extends State<DeviceSelection> {
       children: [
         Expanded(
           child: DropdownSearch<Device>(
-            popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
+            popupProps: PopupProps.modalBottomSheet(
+              showSelectedItems: true,
+              title: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
+              showSearchBox: true,
+              isFilterOnline: false,
+              searchDelay: const Duration(seconds: 0)
+              
+            ),
+            //popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
             items: widget.customWidgetManager.manager.deviceManager.devicesList,
             itemAsString: (e) => e?.name ?? "Error",
             onChanged: (e)  {
@@ -63,21 +71,48 @@ class _DeviceSelectionState extends State<DeviceSelection> {
               }
 
             },
-            searchDelay: const Duration(seconds: 0),
+            filterFn: (d, s) {
+              return d.id.toLowerCase().contains(s.toLowerCase()) || d.name.toLowerCase().contains(s.toLowerCase()) ;
+            },
+            compareFn: (d, d1) {
+              return d.id == d1.id;
+            },
+            dropdownDecoratorProps: DropDownDecoratorProps(
+
+              dropdownSearchDecoration: InputDecoration(
+                labelText: widget.deviceLabel,
+              ),
+            ),
+
+
+            /*searchDelay: const Duration(seconds: 0),
             showClearButton: true,
             showAsSuffixIcons: true,
             dropdownSearchDecoration: InputDecoration(labelText: widget.deviceLabel),
 
 
             mode: Mode.BOTTOM_SHEET,
-            showSearchBox: true,
+            showSearchBox: true, */
             selectedItem: _currentDevice,
           ),
         ),
         Container(width: 10,),
         Expanded(
           child: DropdownSearch<DataPoint>(
-            popupTitle: Text(widget.dataPointLabel, style: const TextStyle(fontSize: 17.5),),
+            popupProps:  PopupProps.modalBottomSheet(
+              showSelectedItems: true,
+              searchDelay: const Duration(seconds: 0),
+              showSearchBox: true,
+              title: Text(widget.dataPointLabel, style: const TextStyle(fontSize: 17.5),),
+
+            ),
+
+            dropdownDecoratorProps: DropDownDecoratorProps(
+
+              dropdownSearchDecoration: InputDecoration(
+                labelText: widget.dataPointLabel,
+              ),
+            ),
             items: _currentDevice?.dataPoints ?? [],
             itemAsString: (e) {
               if(e == null) {
@@ -94,11 +129,18 @@ class _DeviceSelectionState extends State<DeviceSelection> {
               _currentDataPoint = e,
               widget.onDataPointSelected(_currentDataPoint)
             },
-            showClearButton: true,
+
+            filterFn: (d, s) {
+              return d.id.toLowerCase().contains(s.toLowerCase()) || d.name.toLowerCase().contains(s.toLowerCase()) ;
+            },
+            compareFn: (d, d1) {
+              return d.id == d1.id;
+            },
+            /*showClearButton: true,
             showAsSuffixIcons: true,
             dropdownSearchDecoration:  InputDecoration(labelText: widget.dataPointLabel),
             mode: Mode.BOTTOM_SHEET,
-            showSearchBox: true,
+            showSearchBox: true,*/
             selectedItem: _currentDataPoint,
           ),
         )

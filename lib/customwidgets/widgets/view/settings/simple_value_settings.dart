@@ -63,7 +63,7 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomSimpleValue
         Showcase(
           key: widget.valueKey,
           title: "Value",
-          description: "Text next to the button (if not set it is the Name)",
+          description: "Text next to the value (if not set it is the Name)",
           child: Container(
             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
             child: TextField(
