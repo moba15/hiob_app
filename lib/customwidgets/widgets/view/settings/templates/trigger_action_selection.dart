@@ -34,7 +34,10 @@ class _TriggerActionSelectionTemplateState extends State<TriggerActionSelectionT
               widget.onChange(_triggerAction, _triggerActionSetting);
             });
           },
-          popupProps:  const PopupProps.modalBottomSheet(
+          popupProps:   PopupProps.modalBottomSheet(
+            modalBottomSheetProps: ModalBottomSheetProps(
+                backgroundColor: Theme.of(context).backgroundColor
+            ),
             showSelectedItems: true,
 
           ),

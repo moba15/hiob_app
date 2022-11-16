@@ -1,3 +1,5 @@
+
+
 enum DataPackageType {
   requestEnums,
   enumPackage,
@@ -7,6 +9,14 @@ enum DataPackageType {
   enumUpdate,
   subscribeToDataPoints,
   firstPingFromIob,
+  subscribeHistory,
+  historyDataUpdate,
+  requestLogin,
+  answerLogin,
+  loginDeclined,
+  loginApproved,
+  loginKey,
+
 }
 
 class DataPackage {
@@ -57,10 +67,28 @@ class SubscribeToDataPointsIobPackage extends DataPackage {
       content: {"dataPoints": dataPoints});
 }
 
+class RequestLoginPackage extends DataPackage {
+  RequestLoginPackage({required String? deviceName, required String? deviceID, required String? key}) : super(type: DataPackageType.requestLogin, content: {
+    "deviceName": deviceName,
+    "deviceID": deviceID,
+    "key": key,
+  });
+
+}
+
+class LoginAnswerPackage extends DataPackage {
+  LoginAnswerPackage({required String key, required suc}) : super(type: DataPackageType.answerLogin, content: {
+
+  });
+
+}
+
 class FirstPingFromIobPackage extends DataPackage {
   FirstPingFromIobPackage()
       : super(
       type: DataPackageType.firstPingFromIob,
       content: {});
 }
+
+
 

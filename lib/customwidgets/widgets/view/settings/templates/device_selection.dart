@@ -54,7 +54,11 @@ class _DeviceSelectionState extends State<DeviceSelection> {
               title: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
               showSearchBox: true,
               isFilterOnline: false,
-              searchDelay: const Duration(seconds: 0)
+              searchDelay: const Duration(seconds: 0),
+              modalBottomSheetProps: ModalBottomSheetProps(
+                backgroundColor: Theme.of(context).backgroundColor
+              )
+
               
             ),
             //popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
@@ -99,17 +103,24 @@ class _DeviceSelectionState extends State<DeviceSelection> {
         Container(width: 10,),
         Expanded(
           child: DropdownSearch<DataPoint>(
+            
             popupProps:  PopupProps.modalBottomSheet(
+              modalBottomSheetProps: ModalBottomSheetProps(
+                  backgroundColor: Theme.of(context).backgroundColor
+              ),
               showSelectedItems: true,
               searchDelay: const Duration(seconds: 0),
               showSearchBox: true,
+
+
               title: Text(widget.dataPointLabel, style: const TextStyle(fontSize: 17.5),),
 
             ),
 
             dropdownDecoratorProps: DropDownDecoratorProps(
-
+              
               dropdownSearchDecoration: InputDecoration(
+                
                 labelText: widget.dataPointLabel,
               ),
             ),
@@ -125,10 +136,14 @@ class _DeviceSelectionState extends State<DeviceSelection> {
               }
               return name;
             },
+            
             onChanged: (e) =>{
               _currentDataPoint = e,
               widget.onDataPointSelected(_currentDataPoint)
             },
+            clearButtonProps: const ClearButtonProps(
+              isVisible: true
+            ),
 
             filterFn: (d, s) {
               return d.id.toLowerCase().contains(s.toLowerCase()) || d.name.toLowerCase().contains(s.toLowerCase()) ;

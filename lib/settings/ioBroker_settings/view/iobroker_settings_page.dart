@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_home/manager/connection/connection_manager.dart';
+import 'package:smart_home/manager/connection/cubit/connection_cubit.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 
 import '../../../manager/manager.dart';
@@ -71,7 +72,49 @@ class IoBrokerSettingsView extends StatelessWidget {
             )
           ],
         ),
-        StreamBuilder<bool>(
+        BlocBuilder<ConnectionCubit, ConnectionStatus>(
+          builder: (context, state) {
+            Text text;
+            switch (state) {
+
+              case ConnectionStatus.error:
+                 text = Text("Error", style: TextStyle(color: Theme.of(context).errorColor));
+                 break;
+              case ConnectionStatus.disconnected:
+                text = Text("Disconnected", style: TextStyle(color: Theme.of(context).errorColor));
+                break;
+              case ConnectionStatus.connecting:
+                text = const Text("Connecting", style: TextStyle(color: Colors.orange));
+                break;
+              case ConnectionStatus.connected:
+                text = const Text("Connected", style: TextStyle(color: Colors.green));
+                break;
+              case ConnectionStatus.loggingIn:
+                text = const Text("Logging in...", style: TextStyle(color: Colors.orange));
+                break;
+              case ConnectionStatus.loggedIn:
+                text = const Text("Logged in", style: TextStyle(color: Colors.green));
+                break;
+              case ConnectionStatus.loginDeclined:
+                text = const Text("Login declined (need approval)", style: TextStyle(color: Colors.redAccent));
+                break;
+              case ConnectionStatus.tryAgain:
+                text = const Text("Trying again...", style: TextStyle(color: Colors.orange));
+                break;
+              default:
+                text = Text("Unknown: " + state.name, style: const TextStyle(color: Colors.grey),);
+
+
+
+            }
+
+            return Container(margin: const EdgeInsets.only(left: 20.0, right: 20.0), child: text);
+          },
+          bloc: ConnectionCubit(status: Manager.instance!.connectionManager.connectionStatus),
+
+        ),
+
+        /*StreamBuilder<bool>(
           stream: ioBrokerManager.connectionStatusStreamController.stream,
           builder: (context, snapshot) {
             if(snapshot.hasError) {
@@ -89,7 +132,7 @@ class IoBrokerSettingsView extends StatelessWidget {
               );
             }
           },
-        ),
+        ), */
 
         Center(
           child: ElevatedButton(
@@ -135,12 +178,50 @@ class IoBrokerSettingsView extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.import_export),
-          title: const Text("Import Enums"),
-          trailing: TextButton(onPressed: ioBrokerManager.exportEnumsToDevice, child: const Text("Import")),
-        )
+          title: const Text("Synchronize Enums"),
+          trailing: TextButton(onPressed: ioBrokerManager.syncEnumsToDevice, child: const Text("Sync")),
+        ),
+
 
 
       ],
+    );
+  }
+}
+
+
+
+
+
+
+
+
+class _ExternalIPConfig extends StatefulWidget {
+  const _ExternalIPConfig({Key? key}) : super(key: key);
+
+  @override
+  State<_ExternalIPConfig> createState() => _ExternalIPConfigState();
+}
+
+class _ExternalIPConfigState extends State<_ExternalIPConfig> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        children:  [
+          Row(
+            children: const [
+
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(label: Text("IP/URL")),
+                ),
+              )
+            ],
+          )
+        ],
+      )
     );
   }
 }

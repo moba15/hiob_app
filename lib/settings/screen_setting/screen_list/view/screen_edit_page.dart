@@ -7,11 +7,13 @@ import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
+import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 
 import '../../../../customwidgets/custom_widget.dart';
+import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
 
 class ScreenEditPage extends StatefulWidget {
   final Screen screen;
@@ -80,6 +82,15 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                 child: const Icon(Icons.group_add),
               ),
             ),
+            Container(
+              padding: const EdgeInsets.only(left: 149),
+              alignment: Alignment.bottomLeft,
+              child: FloatingActionButton(
+                heroTag: "dasd",
+                onPressed: addLine,
+                child: const Icon(Icons.splitscreen),
+              ),
+            ),
             Align(
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
@@ -88,6 +99,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                 child: const Icon(Icons.save),
               ),
             ),
+
 
           ],
         ),
@@ -170,6 +182,20 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
           screen: screen,
           screenManager: widget.screenManager,
         ));
+  }
+
+  void addLine() {
+    showDialog(
+      context: context,
+      builder: (context) => _AddDivisionLineTemplate(
+        onAdd: (CustomDivisionLineWidget c) {
+          setState(() {
+            screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: Manager.instance!.getRandString(12), name: "Line", customWidget: c));
+          });
+        },
+
+      )
+    );
   }
 }
 
@@ -366,6 +392,50 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
 
       }
 
+    );
+  }
+}
+
+
+class _AddDivisionLineTemplate extends StatelessWidget {
+  final Function(CustomDivisionLineWidget) onAdd;
+  int thickness = 2;
+  _AddDivisionLineTemplate({Key? key, required this.onAdd}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Add Divider"),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel"),),
+        TextButton(onPressed: () {
+          onAdd(CustomDivisionLineWidget(thickness: thickness, name: 'Line (t: ' + thickness.toString() + ")"));
+        }, child: const Text("Add"),)
+      ],
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text("Thickness"),
+          StatefulBuilder(
+            builder: (context, setState) {
+              int value = thickness;
+              return Slider(
+                onChanged: (v)  {
+                  setState(()  {
+                    value = v.round();
+                    thickness = v.round();
+                  });
+                },
+                max: 10,
+                min: 1,
+                label: value.toString(),
+                divisions: 10,
+                value: value.toDouble(),
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 }

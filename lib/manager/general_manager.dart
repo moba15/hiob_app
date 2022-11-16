@@ -13,7 +13,9 @@ class GeneralManager {
   StreamController<bool> statusStreamController = StreamController();
   
   late bool vibrateEnabled;
-  
+  String? deviceName;
+  String? deviceID;
+  String? loginKey;
   
   GeneralManager({required this.manager,required this.fileManager});
   
@@ -23,6 +25,9 @@ class GeneralManager {
     }
     Map<String, dynamic> settings = (await fileManager.getMap(key)) ?? _loadDefaultSettings();
     vibrateEnabled = settings["vibrateEnabled"] ?? false;
+    deviceName = settings["deviceName"] ?? manager.androidInfo.model;
+    loginKey = settings["loginKey"]; //TODO: Exclude in Backup
+    deviceID = manager.androidInfo.id;
     statusStreamController.add(true);
     if(!await fileManager.containsKey(buildKey) || (await fileManager.getString(buildKey) )!= manager.buildNumber) {
       await Future.delayed(const Duration(seconds: 4));
@@ -44,7 +49,8 @@ class GeneralManager {
 
   void _save() async {
     Map<String, dynamic> settings =  {
-      "vibrateEnabled": vibrateEnabled
+      "vibrateEnabled": vibrateEnabled,
+      "loginKey": loginKey,
     };
 
     await fileManager.writeJSON(key, settings);
@@ -55,6 +61,13 @@ class GeneralManager {
     vibrateEnabled = vibrate;
     _save();
   }
+
+  void updateLoginKey(String key) {
+    print("Update login key");
+    loginKey = key;
+    _save();
+  }
+
   
   
   

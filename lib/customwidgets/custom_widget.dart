@@ -7,6 +7,7 @@ import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
+import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 
 enum CustomWidgetType {
   simpleSwitch,
@@ -18,6 +19,7 @@ enum CustomWidgetType {
   webView,
   alertDialog,
   table,
+  graph,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
@@ -41,6 +43,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return CustomAlertDialogWidget(name: "").settingWidget;
       case CustomWidgetType.table:
         return CustomTableWidget(name: "", header: "", sortAsc: true, initialSortColumn: 1, initialSortEnabled: false, elementsPerPage: 10, columns: {}).settingWidget;
+      case CustomWidgetType.graph:
+        return GraphWidget(name: "name").settingWidget;
     }
   }
 
@@ -60,6 +64,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return "Web View";
       case CustomWidgetType.table:
         return "Table";
+      case CustomWidgetType.graph:
+        return "Graph (only sql Adapter)";
       default:
         return "Error";
     }

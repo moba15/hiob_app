@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 
@@ -42,7 +42,7 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
               currentValue = v;
               onBloc.add(DataPointValueUpdateRequest(value: v, oldValue: state.value == true));
               if(context.read<Manager>().generalManager.vibrateEnabled) {
-                HapticFeedback.lightImpact();
+                Vibrate.feedback(FeedbackType.light);
               }
 
             } ,
@@ -60,7 +60,7 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
           onTap: ()  {
             onBloc.add(DataPointValueUpdateRequest(value: !currentValue, oldValue: state.value == true));
             if(context.read<Manager>().generalManager.vibrateEnabled) {
-              HapticFeedback.vibrate();
+              Vibrate.feedback(FeedbackType.light);
             }
           },
         );
@@ -141,9 +141,7 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
                       setState(() {
                         briTemp = d.round();
                       });
-                      if(Manager.instance!.generalManager.vibrateEnabled) {
-                        HapticFeedback.lightImpact();
-                      }
+                      Vibrate.feedback(FeedbackType.light);
                     },
                     onChangeEnd: (d) => {
 

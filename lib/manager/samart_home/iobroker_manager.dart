@@ -11,7 +11,6 @@ import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import '../../device/device.dart';
-
 enum EnumUpdateState {
   loading, finished,none
 }
@@ -31,7 +30,6 @@ class IoBrokerManager {
   List<Enum> enums = [];
 
   final StreamController statusStreamController = StreamController();
-  final StreamController<bool> connectionStatusStreamController = StreamController.broadcast(); //TODO: Kein Broadcast
   final StreamController<EnumUpdateState> enumsUpdateStateStreamController = StreamController.broadcast(); //TODO: Export into Cubit structure
   bool isUpdating = false;
   IoBrokerManager({required this.fileManager});
@@ -95,14 +93,14 @@ class IoBrokerManager {
   }
 
   void enumUpdate({required Map<String, dynamic> rawData}) {
-    try {
       enums.clear();
       const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+      //log("Enum Update " + encoder.convert(rawData));
       FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "Starting enumUpdate \n" + encoder.convert(rawData));
 
 
-      List<dynamic> enumsListRaw = jsonDecode(rawData["enums"]);
-      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"]);
+      List<dynamic> enumsListRaw = rawData["enums"];
+     // FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"].toString());
       FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "enumsListRaw: " + encoder.convert(enumsListRaw));
       for (Map<String, dynamic> enumRaw in enumsListRaw) {
         enums.add(Enum.fromJSON(enumRaw));
@@ -117,10 +115,7 @@ class IoBrokerManager {
       FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "writeJSON");
       enumsUpdateStateStreamController.add(EnumUpdateState.finished);
       isUpdating = false;
-    } on Error catch(e) {
-      FlutterLogs.logErrorTrace("iobrokerManager", "enumUpdate", "error while parsing?\n " + rawData.toString(), e);
 
-    }
   }
 
   void enumsClear() {
@@ -139,20 +134,21 @@ class IoBrokerManager {
     }).toList();
   }
 
-  void exportEnumsToDevice() {
+  void syncEnumsToDevice() {
     DeviceManager deviceManager = Manager.instance!.deviceManager;
     for(Enum e in enums) {
       if(e.dataPointMembers.isNotEmpty) {
-        if(deviceManager.devicesList.where((element) => element.name == e.name).isEmpty) {
+        if(!deviceManager.devicesList.any((element) => element.name == e.name)) {
           IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
           device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
+
         } else {
           Device device = deviceManager.devicesList.firstWhere((element) => element.name == e.name);
           if(device is IoBrokerDevice) {
             device.dataPoints ??= [];
             for(DataPoint d in e.dataPointMembers) {
-              if(device.dataPoints!.where((element) => element.id == d.id).isEmpty) {
+              if(!device.dataPoints!.any((element) => element.id == d.id)) {
                 device.dataPoints?.add(d..device = device);
                 deviceManager.editDevice(device);
               } else {
@@ -165,10 +161,40 @@ class IoBrokerManager {
 
               }
             }
+
           }
         }
       }
     }
+    List<Device> removeDevice = [];
+    Map<Device, List<DataPoint>> deleteDataPoint = {};
+    for(Device device in deviceManager.devicesList) {
+      if(!enums.any((element) => device.name == element.name)) {
+        removeDevice.add(device);
+        continue;
+      }
+
+
+      if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+        deleteDataPoint[device] = device.dataPoints!.where((element) => !enums.firstWhere((e2) => e2.name == device.name).dataPointMembers.any((e) => e.id == element.id)).toList();
+
+
+      }
+
+
+    }
+    for(Device d in removeDevice) {
+      deviceManager.removeDevice(d);
+    }
+    for(Device d in deleteDataPoint.keys) {
+      if(d.dataPoints != null && deleteDataPoint[d] != null && deleteDataPoint[d]!.isNotEmpty) {
+        d.dataPoints!.removeWhere((element) => deleteDataPoint[d]!.any((e) => e.id == element.id));
+
+
+
+      }
+    }
+
     deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
   }
 }

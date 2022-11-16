@@ -6,11 +6,13 @@ import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
+import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -80,8 +82,11 @@ class CustomWidgetManager {
           customWidget = CustomLightWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.line:
+          customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
+          break;
         case CustomWidgetType.group:
         case CustomWidgetType.alertDialog:
+
           continue;
         case CustomWidgetType.simpleValue:
           customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
@@ -94,6 +99,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetType.table:
           customWidget = CustomTableWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetType.graph:
+          customWidget = GraphWidget.fromJSON(widgetRaw);
           break;
       }
 

@@ -6,7 +6,7 @@ import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/iobroker_device.dart';
-import 'package:smart_home/manager/connection_manager.dart';
+import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 
 import '../device/device.dart';
