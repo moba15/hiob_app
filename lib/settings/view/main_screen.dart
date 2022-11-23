@@ -35,6 +35,8 @@ class MainScreen extends StatelessWidget {
 
   const MainScreen({Key? key, required this.manager}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -90,6 +92,9 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
     _controller = StreamController.broadcast();
     _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     ioConnected = context.read<Manager>().connectionManager.ioBConnected;
+    context.read<Manager>().generalManager.dialogStreamController.stream.listen((event) {
+      showDialog(context: context, builder:  event);
+    });
     super.initState();
     _ioConnectionSub = context.read<Manager>().connectionManager.connectionStatusStreamController.stream.listen((event) {
       if(man.ConnectionStatus.error != event && man.ConnectionStatus.disconnected != event && man.ConnectionStatus.loginDeclined != event ) {

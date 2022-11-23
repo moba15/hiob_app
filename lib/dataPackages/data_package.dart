@@ -9,6 +9,7 @@ enum DataPackageType {
   enumUpdate,
   subscribeToDataPoints,
   firstPingFromIob,
+  firstPingFromIob2,
   subscribeHistory,
   historyDataUpdate,
   requestLogin,
@@ -68,10 +69,12 @@ class SubscribeToDataPointsIobPackage extends DataPackage {
 }
 
 class RequestLoginPackage extends DataPackage {
-  RequestLoginPackage({required String? deviceName, required String? deviceID, required String? key}) : super(type: DataPackageType.requestLogin, content: {
+  RequestLoginPackage({required String? deviceName, required String? deviceID, required String? key, required String? user, required String? password}) : super(type: DataPackageType.requestLogin, content: {
     "deviceName": deviceName,
     "deviceID": deviceID,
     "key": key,
+    "user": user,
+    "password": password
   });
 
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -11,6 +12,7 @@ class GeneralManager {
   final String key = "generalSettings";
   final String buildKey = "buildKey";
   StreamController<bool> statusStreamController = StreamController();
+  StreamController<AlertDialog Function(BuildContext)> dialogStreamController = StreamController.broadcast();
   
   late bool vibrateEnabled;
   String? deviceName;

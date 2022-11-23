@@ -25,6 +25,8 @@ class IoBrokerManager {
   FileManager fileManager;
   String ip = "10.0.2.2";
   int port = 8090;
+  String user = "user";
+  String password = "password";
 
   DateTime? lastEnumUpdate;
   List<Enum> enums = [];
@@ -40,6 +42,9 @@ class IoBrokerManager {
       Map<String, dynamic>? settings = await fileManager.getMap(key);
       ip = settings?["ip"] ?? "10.0.2.2";
       port = settings?["port"] ?? 8090;
+      user = settings?["user"] ?? "user";
+      password = settings?["password"] ?? "password";
+
     } else {
       ip =  "10.0.2.2";
       port =  8090;
@@ -68,6 +73,8 @@ class IoBrokerManager {
     await fileManager.writeJSON(key, {
       "ip": ip,
       "port": port,
+      "user": user,
+      "password": password,
     });
   }
 
@@ -76,6 +83,29 @@ class IoBrokerManager {
     await fileManager.writeJSON(key, {
       "ip": ip,
       "port": port,
+      "user": user,
+      "password": password,
+    });
+  }
+
+
+  void changeUser(String user) async {
+    this.user = user;
+    await fileManager.writeJSON(key, {
+      "ip": ip,
+      "port": port,
+      "user": user,
+      "password": password,
+    });
+  }
+
+  void changePassword(String password) async {
+    this.password = password;
+    await fileManager.writeJSON(key, {
+      "ip": ip,
+      "port": port,
+      "user": user,
+      "password": password,
     });
   }
 

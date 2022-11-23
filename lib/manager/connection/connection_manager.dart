@@ -154,6 +154,7 @@ class ConnectionManager with WidgetsBindingObserver {
       Map<String, dynamic> rawMap = jsonDecode(msg);
       DataPackageType packageType = DataPackageType.values
           .firstWhere((element) => element.name == rawMap["type"]);
+      print("type" + rawMap["type"]);
       switch (packageType) {
         case DataPackageType.iobStateChanged:
           stateChangedPackage(
@@ -163,6 +164,12 @@ class ConnectionManager with WidgetsBindingObserver {
           ioBrokerManager.enumUpdate(rawData: rawMap);
           break;
         case DataPackageType.firstPingFromIob:
+          generalManager.dialogStreamController.sink.add((p0) => const AlertDialog(
+            title: Text("Error"),
+            content: Text("Make sure you installed the newest Hiob adapter"),
+          ));
+          break;
+        case DataPackageType.firstPingFromIob2:
           _onFirstPing();
           break;
         case DataPackageType.historyDataUpdate:
@@ -175,7 +182,6 @@ class ConnectionManager with WidgetsBindingObserver {
           _onLoginApproved();
           break;
         case DataPackageType.loginKey:
-          print("Key");
           _onLoginKey(rawMap["key"]);
           break;
 
@@ -208,7 +214,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void _requestLogin() async {
     connectionStatusStreamController.add(ConnectionStatus.loggingIn);
-    sendMsg(RequestLoginPackage(deviceName: generalManager.deviceName, deviceID: generalManager.deviceID, key: generalManager.loginKey));
+    sendMsg(RequestLoginPackage(deviceName: generalManager.deviceName, deviceID: generalManager.deviceID, key: generalManager.loginKey, password: ioBrokerManager.password, user: ioBrokerManager.user));
   }
   
   

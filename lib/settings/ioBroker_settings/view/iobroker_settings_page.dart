@@ -140,6 +140,18 @@ class IoBrokerSettingsView extends StatelessWidget {
             child: const Text("Reconnect"),
           ),
         ),
+        TextFormField(
+          initialValue: ioBrokerManager.user,
+          decoration: const InputDecoration(labelText: "User"),
+          onChanged: (v) => ioBrokerManager.changeUser(v),
+        ),
+
+        TextFormField(
+          initialValue: ioBrokerManager.password,
+          decoration: const InputDecoration(labelText: "Password"),
+          onChanged: (v) => ioBrokerManager.changePassword(v),
+        ),
+
         StreamBuilder<EnumUpdateState>(
           stream: ioBrokerManager.enumsUpdateStateStreamController.stream,
           builder: (context, snapshot) {
