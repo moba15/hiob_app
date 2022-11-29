@@ -23,11 +23,13 @@ class MultiSelectionTriggerActionView extends StatelessWidget {
 
     return BlocBuilder<DataPointBloc, DataPointState>(
       builder: (context, state) {
-        if(!multiSelectionTriggerAction.selections.containsValue(state.value.toString())) {
-          return const Text("Error 404");
+
+        List<String> items = multiSelectionTriggerAction.selections.keys.toList();
+        if(!items.any((element) => element == state.value.toString())) {
+          items.add(state.value.toString());
         }
         return DropdownButtonFormField<String>(
-          items: multiSelectionTriggerAction.selections.keys.map((e) => DropdownMenuItem<String>(child: Text(e), value: multiSelectionTriggerAction.selections[e],)).toList(),
+          items: items.map((e) => DropdownMenuItem<String>(child: Text(e), value: multiSelectionTriggerAction.selections[e] ?? e.toString(),)).toList(),
           onChanged: (d)  {
             if(multiSelectionTriggerAction.selections.containsValue(d)) {
               dynamic value = d;

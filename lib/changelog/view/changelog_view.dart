@@ -37,8 +37,7 @@ class ChangeLogScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                Text("- Some smaller Bugfixes"),
-                Text("- Fixed some performance issues"),
+                Text("- You should now be able to update the new Devices in IoBroker Settings"),
 
               ],
             ),
@@ -49,23 +48,43 @@ class ChangeLogScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("- Updated the WebView Widget:"),
+                const Text("- Added the Graph Widget (only use this widget if you backedup your current state):"),
                 Container(
-                  child: const Text("You can now select a DataPoint to update the displayed Website"),
+                  child: const Text("If you use the sql Adapter you can now use this Widget to display a Graph"),
                   margin: const EdgeInsets.only(left: 15),
                 ),
-                const Text("- Advanced Widget:"),
-                Container(
-                  child: const Text("You can setup a custom Popup-Menu which will appear if you press down the Widget for a longer moment"),
-                  margin: const EdgeInsets.only(left: 15),
-                )
+
 
               ],
             ),
             margin: const EdgeInsets.only(top: 3, left: 10),
           ),
 
-          const Text("Other", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)
+          const Text("Other", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("- Connection to IoBroker:"),
+                Container(
+                  child: const Text("-You now need to setup a username and password to connect to your IoBroker"),
+                  margin: const EdgeInsets.only(left: 15),
+                ),
+                Container(
+                  child: const Text("-You must use the same username and password you use to login to the IoBroker"),
+                  margin: const EdgeInsets.only(left: 15),
+                ),
+
+                Container(
+                  child: const Text("-After the first connection you need to approve the device in hiob.x.device.<device>.approved"),
+                  margin: const EdgeInsets.only(left: 15),
+                ),
+
+
+              ],
+            ),
+            margin: const EdgeInsets.only(top: 3, left: 10),
+          ),
         ],
       ),
     );
