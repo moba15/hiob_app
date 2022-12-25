@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/connection/cubit/connection_cubit.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
@@ -37,7 +38,7 @@ class IoBrokerSettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     IoBrokerManager ioBrokerManager = context.read<Manager>().ioBrokerManager;
-    ipController.value = TextEditingValue(text: ioBrokerManager.ip);
+    ipController.value = TextEditingValue(text: ioBrokerManager.mainIp);
     portController.value = TextEditingValue(text: ioBrokerManager.port.toString());
     return ListView(
       children:  [
@@ -149,8 +150,14 @@ class IoBrokerSettingsView extends StatelessWidget {
         TextFormField(
           initialValue: ioBrokerManager.password,
           decoration: const InputDecoration(labelText: "Password"),
+          obscureText: true,
           onChanged: (v) => ioBrokerManager.changePassword(v),
         ),
+
+        _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager,),
+
+
+
 
         StreamBuilder<EnumUpdateState>(
           stream: ioBrokerManager.enumsUpdateStateStreamController.stream,
@@ -208,33 +215,80 @@ class IoBrokerSettingsView extends StatelessWidget {
 
 
 
-class _ExternalIPConfig extends StatefulWidget {
-  const _ExternalIPConfig({Key? key}) : super(key: key);
+
+
+
+class _SecondaryAddressSettings extends StatefulWidget {
+  final IoBrokerManager ioBrokerManager;
+  const _SecondaryAddressSettings({Key? key, required this.ioBrokerManager}) : super(key: key);
 
   @override
-  State<_ExternalIPConfig> createState() => _ExternalIPConfigState();
+  State<_SecondaryAddressSettings> createState() => _SecondaryAddressSettingsState();
 }
 
-class _ExternalIPConfigState extends State<_ExternalIPConfig> {
+class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        children:  [
-          Row(
-            children: const [
+    return ExpansionTile(
 
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(label: Text("IP/URL")),
-                ),
-              )
-            ],
-          )
-        ],
-      )
+      title: const Text("Second Address"),
+      children: [
+
+        CheckboxListTile(
+          title: Text("Use Secondary IP"),
+          value: widget.ioBrokerManager.useSecondaryAddress,
+          onChanged: (v ) async {
+            if(v == true) {
+              var status = await Permission.location.status;
+              if(status.isDenied) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Missing Permissions"),
+                      content: const Text("To use this feature this app needd access to your location in order to check the current Wifi name"),
+                      actions: [
+                        TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text("Back"))
+                      ],
+                    );
+                  }
+
+                );
+                return;
+              }
+
+            }
+
+            setState(() {
+              widget.ioBrokerManager.changeUseSecondaryAddress(v ?? false);
+            });
+          },
+        ),
+
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+          child: TextFormField(
+            initialValue: widget.ioBrokerManager.knownNetwork,
+            decoration: const InputDecoration(labelText: "Home network name"),
+            enabled: widget.ioBrokerManager.useSecondaryAddress,
+            onChanged: (v) => widget.ioBrokerManager.changeKnownNetwork(v),
+          ),
+        ),
+
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+          child: TextFormField(
+            initialValue: widget.ioBrokerManager.secondaryAddress,
+            decoration: const InputDecoration(labelText: "IP/URL"),
+            enabled: widget.ioBrokerManager.useSecondaryAddress,
+            onChanged: (v) => widget.ioBrokerManager.changeSecondaryAddress(v),
+          ),
+        )
+
+
+      ],
     );
   }
 }
+
 

@@ -23,10 +23,16 @@ class IoBrokerManager {
   bool loaded = false;
   bool connected = false;
   FileManager fileManager;
-  String ip = "10.0.2.2";
+  String mainIp = "10.0.2.2";
   int port = 8090;
   String user = "user";
   String password = "password";
+
+
+  bool useSecondaryAddress = false;
+  String knownNetwork = "";
+  String secondaryAddress = "";
+
 
   DateTime? lastEnumUpdate;
   List<Enum> enums = [];
@@ -40,13 +46,16 @@ class IoBrokerManager {
 
     if((await fileManager.containsKey(key))) {
       Map<String, dynamic>? settings = await fileManager.getMap(key);
-      ip = settings?["ip"] ?? "10.0.2.2";
+      mainIp = settings?["ip"] ?? "10.0.2.2";
       port = settings?["port"] ?? 8090;
       user = settings?["user"] ?? "user";
       password = settings?["password"] ?? "password";
+      knownNetwork = settings?["knownNetwork"] ?? "";
+      secondaryAddress = settings?["secondaryAddress"] ?? "";
+      useSecondaryAddress = settings?["useSecondaryAddress"] ?? false;
 
     } else {
-      ip =  "10.0.2.2";
+      mainIp =  "10.0.2.2";
       port =  8090;
     }
 
@@ -69,22 +78,28 @@ class IoBrokerManager {
 
 
   void changeIp(String ip) async {
-    this.ip = ip;
+    this.mainIp = ip;
     await fileManager.writeJSON(key, {
-      "ip": ip,
+      "ip": mainIp,
       "port": port,
       "user": user,
       "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress
     });
   }
 
   void changePort(int port) async {
     this.port = port;
     await fileManager.writeJSON(key, {
-      "ip": ip,
+      "ip": mainIp,
       "port": port,
       "user": user,
       "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress
     });
   }
 
@@ -92,22 +107,70 @@ class IoBrokerManager {
   void changeUser(String user) async {
     this.user = user;
     await fileManager.writeJSON(key, {
-      "ip": ip,
+      "ip": mainIp,
       "port": port,
       "user": user,
       "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress
     });
   }
 
   void changePassword(String password) async {
     this.password = password;
     await fileManager.writeJSON(key, {
-      "ip": ip,
+      "ip": mainIp,
       "port": port,
       "user": user,
       "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress":useSecondaryAddress
     });
   }
+
+  void changeKnownNetwork(String knownNetwork) async {
+    this.knownNetwork = knownNetwork;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress,
+    });
+  }
+
+  void changeSecondaryAddress(String secondaryAddress) async {
+    this.secondaryAddress = secondaryAddress;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress,
+    });
+  }
+
+
+  void changeUseSecondaryAddress(bool useSecondaryAddress) async {
+    this.useSecondaryAddress = useSecondaryAddress;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress,
+    });
+  }
+
+
 
   void updateEnums() {
     FlutterLogs.logInfo(

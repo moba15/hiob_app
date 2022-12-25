@@ -85,6 +85,17 @@ class MainSettingsScreen extends StatelessWidget {
               )
             },
           ),
+
+          ListTile(
+            title: const Text("Config Sync (WORK IN PROGRESS)"),
+            leading: const Icon(Icons.cloud),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+             // showLicensePage(context: context, applicationName: "HIoB", applicationVersion: "0.1", applicationLegalese: "LICENCE MIT", applicationIcon: const Icon(Icons.smartphone_sharp))
+            },
+          ),
+
+
           ListTile(
             title: const Text("License Page"),
             leading: const Icon(Icons.warning_amber_outlined),

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/device_manager.dart';
@@ -13,6 +14,8 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
+
+
 
 enum ConnectionStatus {
   disconnected,connected, loggedIn,waiting, loggingIn, connecting, tryAgain, error, loginDeclined
@@ -26,7 +29,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
 
 
-
+  final networkInfo = NetworkInfo();
   Socket? socket;
   WebSocketChannel? _webSocket;
   StreamSubscription? _webSocketStreamSub;
@@ -48,8 +51,16 @@ class ConnectionManager with WidgetsBindingObserver {
     
     
     try {
-      _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()), pingInterval: const Duration(minutes: 5));
-      _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
+      if(ioBrokerManager.useSecondaryAddress && (await networkInfo.getWifiName()) != ioBrokerManager.knownNetwork) {
+
+        _webSocket =  IOWebSocketChannel.connect(Uri.parse(ioBrokerManager.secondaryAddress), pingInterval: const Duration(minutes: 5));
+        _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
+
+      } else {
+        _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.mainIp + ":" + ioBrokerManager.port.toString()), pingInterval: const Duration(minutes: 5));
+        _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
+      }
+
 
 
     } catch(e) {
@@ -87,6 +98,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void onError(e) {
 
+
     ioBConnected = false;
     ioBrokerManager.connected = true;
 
@@ -104,11 +116,31 @@ class ConnectionManager with WidgetsBindingObserver {
 
     ioBrokerManager.connected = false;
 
+    print(ioBrokerManager.knownNetwork);
+
+    print((await networkInfo.getWifiName()));
+
     try {
-      _webSocket =  IOWebSocketChannel.connect(Uri.parse("ws://" + ioBrokerManager.ip + ":" + ioBrokerManager.port.toString()));
-      _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
+      if(ioBrokerManager.useSecondaryAddress && (await networkInfo.getWifiName()).toString().trim() != ( "\"" + ioBrokerManager.knownNetwork.trim() + "\"")) {
+
+
+        _webSocket =  IOWebSocketChannel.connect(Uri.parse(ioBrokerManager.secondaryAddress), pingInterval: const Duration(minutes: 5));
+        _webSocketStreamSub = _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
+
+      } else {
+
+
+        _webSocket = IOWebSocketChannel.connect(Uri.parse(
+            "ws://" + ioBrokerManager.mainIp + ":" +
+                ioBrokerManager.port.toString()));
+        _webSocketStreamSub =
+            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
+      }
 
     } catch(e) {
+
+
+      print(e);
       ioBrokerManager.connected = false;
 
       connectionStatusStreamController.add(ConnectionStatus.error);
