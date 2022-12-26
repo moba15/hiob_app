@@ -141,17 +141,23 @@ class IoBrokerSettingsView extends StatelessWidget {
             child: const Text("Reconnect"),
           ),
         ),
-        TextFormField(
-          initialValue: ioBrokerManager.user,
-          decoration: const InputDecoration(labelText: "User"),
-          onChanged: (v) => ioBrokerManager.changeUser(v),
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+          child: TextFormField(
+            initialValue: ioBrokerManager.user,
+            decoration: const InputDecoration(labelText: "User"),
+            onChanged: (v) => ioBrokerManager.changeUser(v),
+          ),
         ),
 
-        TextFormField(
-          initialValue: ioBrokerManager.password,
-          decoration: const InputDecoration(labelText: "Password"),
-          obscureText: true,
-          onChanged: (v) => ioBrokerManager.changePassword(v),
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+          child: TextFormField(
+            initialValue: ioBrokerManager.password,
+            decoration: const InputDecoration(labelText: "Password"),
+            obscureText: true,
+            onChanged: (v) => ioBrokerManager.changePassword(v),
+          ),
         ),
 
         _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager,),
@@ -274,6 +280,8 @@ class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
             onChanged: (v) => widget.ioBrokerManager.changeKnownNetwork(v),
           ),
         ),
+
+
 
         Container(
           margin: const EdgeInsets.only(left: 20.0, right: 20.0),
