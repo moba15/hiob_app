@@ -27,8 +27,8 @@ void main() async {
       debugFileOperations: false,
       attachTimeStamp: true,
       isDebuggable: false);
-  String version = "1.0";
-  String buildNumber = "73";
+  String version = "1.1";
+  String buildNumber = "75";
   Manager manager = Manager(versionNumber: version, buildNumber: buildNumber);
   await manager.load();
 

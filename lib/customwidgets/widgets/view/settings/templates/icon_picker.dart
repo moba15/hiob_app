@@ -132,22 +132,37 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
   Widget build(BuildContext context) {
 
     return DropdownSearch<String>(
-      showClearButton: widget.reset,
-      mode: Mode.BOTTOM_SHEET,
-      searchDelay: const Duration(seconds: 0),
-      showSearchBox: true,
-      dropdownSearchDecoration: const InputDecoration(labelText: "Icon"),
+      dropdownDecoratorProps: const DropDownDecoratorProps(
+
+        dropdownSearchDecoration: InputDecoration(
+          labelText: "Icon",
+        ),
+      ),
       onChanged: (s) => widget.onChange(icons[s]),
       items: icons.keys.toList()..sort(),
       selectedItem: icons.keys.firstWhere((element) => icons[element]?.codePoint == widget.selected.codePoint, orElse: () => "home"),
       dropdownBuilder: (context, iconKey) {
         return iconKey != null ? Icon(icons[iconKey]) : const Text("");
       },
-      popupItemBuilder: (context, iconKey, b) {
-        return ListTile(
-          title: Icon(icons[iconKey]?? icons["home"]),
-        );
-      },
+      clearButtonProps: ClearButtonProps(
+        isVisible: widget.reset,
+
+      ),
+      popupProps:  PopupProps.modalBottomSheet(
+        modalBottomSheetProps: ModalBottomSheetProps(
+            backgroundColor: Theme.of(context).backgroundColor
+        ),
+        showSelectedItems: true,
+        searchDelay: const Duration(seconds: 0),
+        showSearchBox: true,
+        title: const Text("Icon", style: TextStyle(fontSize: 17.5),),
+        itemBuilder: (context, iconKey, b) {
+          return ListTile(
+            title: Icon(icons[iconKey]?? icons["home"]),
+          );
+        },
+
+      ),
     );
   }
 }

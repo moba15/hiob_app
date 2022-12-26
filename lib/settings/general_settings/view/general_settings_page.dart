@@ -67,8 +67,48 @@ class _GeneralSettingsView extends StatelessWidget {
               title: const Text("Extra Vibration"),
             );
           },
-        )
+        ),
+        _DeviceInfo()
       ],
+    );
+  }
+}
+
+
+
+class _DeviceInfo extends StatelessWidget {
+  const _DeviceInfo({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: TextFormField(
+                  initialValue: Manager.instance!.androidInfo.model,
+                  decoration: const InputDecoration(labelText: "Device Name"),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+              ),
+              Expanded(
+                flex: 1,
+                child: TextFormField(
+                  enabled: false,
+                  initialValue: Manager.instance!.androidInfo.id,
+                  decoration: const InputDecoration(labelText: "Device ID"),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }

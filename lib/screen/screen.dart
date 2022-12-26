@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/manager.dart';
 
+import '../customwidgets/custom_widget.dart';
 import '../manager/screen_manager.dart';
 
 class Screen {
@@ -29,7 +31,11 @@ class Screen {
         }
         widgetTemplates.add(Manager.instance?.customWidgetManager.templates.firstWhere((element) => element.id == templateRaw["id"]));
       } else {
-        widgetTemplates.add(CustomGroupWidget.fromJSON(templateRaw, Manager.instance!.customWidgetManager.templates ));
+        if(templateRaw["type"] == CustomWidgetType.line.toString() ) {
+          widgetTemplates.add(CustomWidgetTemplate(id: Manager.instance!.getRandString(12), name: "Line", customWidget: CustomDivisionLineWidget.fromJson(templateRaw)));
+        } else {
+          widgetTemplates.add(CustomGroupWidget.fromJSON(templateRaw, Manager.instance!.customWidgetManager.templates ));
+        }
       }
     }
     return Screen(
@@ -51,8 +57,10 @@ class Screen {
         };
         List<Map<String, dynamic>> widgets = [];
         for(dynamic w in widgetTemplates) {
-          if(w is CustomGroupWidget) {
+          if(w is CustomGroupWidget ) {
             widgets.add(w.toJson());
+          } else if(w is CustomWidgetTemplate && w.customWidget is CustomDivisionLineWidget) {
+            widgets.add(w.customWidget.toJson());
           } else if(w is CustomWidgetTemplate) {
             widgets.add({
               "widget": w.name,

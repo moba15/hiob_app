@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
+import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
@@ -33,6 +34,8 @@ class MainScreen extends StatelessWidget {
   final Manager manager;
 
   const MainScreen({Key? key, required this.manager}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,19 +85,26 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   late StreamController<int> _controller;
   int numberOfRows = 1;
   late AnimationController _animationController;
-  late StreamSubscription<bool> _ioConnectionSub;
+  late StreamSubscription<man.ConnectionStatus> _ioConnectionSub;
   bool ioConnected = false;
   @override
   void initState() {
     _controller = StreamController.broadcast();
     _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     ioConnected = context.read<Manager>().connectionManager.ioBConnected;
+    context.read<Manager>().generalManager.dialogStreamController.stream.listen((event) {
+      showDialog(context: context, builder:  event);
+    });
     super.initState();
-    _ioConnectionSub = context.read<Manager>().ioBrokerManager.connectionStatusStreamController.stream.listen((event) {
-      if(ioConnected != event) {
+    _ioConnectionSub = context.read<Manager>().connectionManager.connectionStatusStreamController.stream.listen((event) {
+      if(man.ConnectionStatus.error != event && man.ConnectionStatus.disconnected != event && man.ConnectionStatus.loginDeclined != event ) {
         setState(() {
-        ioConnected = event;
+        ioConnected = true;
       });
+      } else {
+        setState(() {
+          ioConnected = false;
+        });
       }
     });
   }

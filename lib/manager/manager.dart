@@ -2,18 +2,24 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_home/manager/connection_manager.dart';
+import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/history/history_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 
 class Manager {
   static Manager? instance;
+
+
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  late AndroidDeviceInfo androidInfo;
 
   late FileManager fileManager;
 
@@ -35,6 +41,9 @@ class Manager {
   late GeneralManager generalManager;
   StreamSubscription? subscription6;
 
+  late HistoryManager historyManager;
+  StreamSubscription? subscription7;
+
   ManagerStatus status = ManagerStatus.loading;
 
   String versionNumber;
@@ -49,24 +58,42 @@ class Manager {
 
   Future<void> load() async {
     instance = this;
+    deviceInfo.androidInfo.then((value) => androidInfo = value);
     final pref = await SharedPreferences.getInstance();
 
 
     fileManager = FileManager(pref: pref, manager: this);
     deviceManager = DeviceManager(fileManager, devicesList: [], manager: this)
       ..loadDevices();
+
+    ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
+
+    generalManager = GeneralManager(manager: this, fileManager: fileManager)..load();
+
+    connectionManager = ConnectionManager(
+        deviceManager: deviceManager, ioBrokerManager: ioBrokerManager, generalManager: generalManager);
+
+    historyManager = HistoryManager(connectionManager: connectionManager);
+
+
+
+
+
+
+
     customWidgetManager = CustomWidgetManager(
         fileManager: fileManager, deviceManager: deviceManager, manager: this);
     screenManager =
         ScreenManager(fileManager: fileManager, screens: [], manager: this)
           ..loadScreens();
 
-    ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
 
-    connectionManager = ConnectionManager(
-        deviceManager: deviceManager, ioBrokerManager: ioBrokerManager);
 
-    generalManager = GeneralManager(manager: this, fileManager: fileManager)..load();
+
+
+
+
+
 
 
     subscription1 =
@@ -96,6 +123,7 @@ class Manager {
         generalManager.statusStreamController.stream.listen((event) {
           onLoaded();
         });
+
   }
 
   String getRandString(int len) {

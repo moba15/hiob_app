@@ -82,7 +82,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: DropdownButtonFormField<CustomWidgetType>(
                 items: [
-                  for (CustomWidgetType c in CustomWidgetType.values.where((value) => value != CustomWidgetType.group && value != CustomWidgetType.line && value  != CustomWidgetType.alertDialog))
+                  for (CustomWidgetType c in CustomWidgetType.values.where((value) => value != CustomWidgetType.group  && value  != CustomWidgetType.alertDialog))
                     DropdownMenuItem(
                       child: Text(c.name),
                       value: c,

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:smart_home/device/datapoint/datapointTypes/datapoint_types.dart';
 import 'package:smart_home/device/iobroker_device.dart';
+import 'package:smart_home/manager/history/history_data.dart';
 
 import '../device.dart';
 
@@ -18,6 +19,8 @@ class DataPoint {
 
   Map<String, dynamic>? otherDetails;
 
+  HistoryData historyData = HistoryData();
+
 
 
   StreamController valueStreamController = StreamController.broadcast();
@@ -25,7 +28,11 @@ class DataPoint {
   DataPoint({required this.name, required this.device, required this.id,  this.role, this.type, this.otherDetails});
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device)  {
-    return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: jsonDecode(json["otherDetails"] ??"{}"));
+    if(json["otherDetails"] is String) {
+      return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: jsonDecode(json["otherDetails"]));
+    } else {
+      return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: json["otherDetails"]);
+    }
   }
 
 
@@ -53,5 +60,9 @@ class DataPoint {
 
   dynamic getInformation(String key) {
     return otherDetails?[key];
+  }
+  @override
+  bool operator ==(Object o) {
+    return identical(o, this) || o is DataPoint && o.type == type && o.id == id;
   }
 }

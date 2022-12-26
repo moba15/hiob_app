@@ -226,9 +226,15 @@ class _SwitchTriggerView extends StatelessWidget {
       title: Row(
         children: [
           Flexible(child: Text(advancedCustomWidget.value ?? advancedCustomWidget.name ?? "No Name found", overflow: TextOverflow.clip,)),
-
-        if(switchTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready)
-          const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,))
+          BlocBuilder<DataPointBloc, DataPointState>(
+            bloc: bloc,
+            builder: (context, state) {
+              if(switchTriggerAction.dataPoint?.device?.getDeviceStatus() != DeviceStatus.ready) {
+                const Flexible(child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip,));
+              }
+              return  const SizedBox.shrink();
+            },
+          )
 
         ],
       ),

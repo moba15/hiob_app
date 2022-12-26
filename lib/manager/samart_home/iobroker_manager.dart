@@ -11,7 +11,6 @@ import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import '../../device/device.dart';
-
 enum EnumUpdateState {
   loading, finished,none
 }
@@ -24,14 +23,21 @@ class IoBrokerManager {
   bool loaded = false;
   bool connected = false;
   FileManager fileManager;
-  String ip = "10.0.2.2";
+  String mainIp = "10.0.2.2";
   int port = 8090;
+  String user = "user";
+  String password = "password";
+
+
+  bool useSecondaryAddress = false;
+  String knownNetwork = "";
+  String secondaryAddress = "";
+
 
   DateTime? lastEnumUpdate;
   List<Enum> enums = [];
 
   final StreamController statusStreamController = StreamController();
-  final StreamController<bool> connectionStatusStreamController = StreamController.broadcast(); //TODO: Kein Broadcast
   final StreamController<EnumUpdateState> enumsUpdateStateStreamController = StreamController.broadcast(); //TODO: Export into Cubit structure
   bool isUpdating = false;
   IoBrokerManager({required this.fileManager});
@@ -40,10 +46,16 @@ class IoBrokerManager {
 
     if((await fileManager.containsKey(key))) {
       Map<String, dynamic>? settings = await fileManager.getMap(key);
-      ip = settings?["ip"] ?? "10.0.2.2";
+      mainIp = settings?["ip"] ?? "10.0.2.2";
       port = settings?["port"] ?? 8090;
+      user = settings?["user"] ?? "user";
+      password = settings?["password"] ?? "password";
+      knownNetwork = settings?["knownNetwork"] ?? "";
+      secondaryAddress = settings?["secondaryAddress"] ?? "";
+      useSecondaryAddress = settings?["useSecondaryAddress"] ?? false;
+
     } else {
-      ip =  "10.0.2.2";
+      mainIp =  "10.0.2.2";
       port =  8090;
     }
 
@@ -66,20 +78,99 @@ class IoBrokerManager {
 
 
   void changeIp(String ip) async {
-    this.ip = ip;
+    this.mainIp = ip;
     await fileManager.writeJSON(key, {
-      "ip": ip,
+      "ip": mainIp,
       "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress
     });
   }
 
   void changePort(int port) async {
     this.port = port;
     await fileManager.writeJSON(key, {
-      "ip": ip,
+      "ip": mainIp,
       "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress
     });
   }
+
+
+  void changeUser(String user) async {
+    this.user = user;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress
+    });
+  }
+
+  void changePassword(String password) async {
+    this.password = password;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress":useSecondaryAddress
+    });
+  }
+
+  void changeKnownNetwork(String knownNetwork) async {
+    this.knownNetwork = knownNetwork;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress,
+    });
+  }
+
+  void changeSecondaryAddress(String secondaryAddress) async {
+    this.secondaryAddress = secondaryAddress;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress,
+    });
+  }
+
+
+  void changeUseSecondaryAddress(bool useSecondaryAddress) async {
+    this.useSecondaryAddress = useSecondaryAddress;
+    await fileManager.writeJSON(key, {
+      "ip": mainIp,
+      "port": port,
+      "user": user,
+      "password": password,
+      "knownNetwork": knownNetwork,
+      "secondaryAddress": secondaryAddress,
+      "useSecondaryAddress": useSecondaryAddress,
+    });
+  }
+
+
 
   void updateEnums() {
     FlutterLogs.logInfo(
@@ -95,14 +186,14 @@ class IoBrokerManager {
   }
 
   void enumUpdate({required Map<String, dynamic> rawData}) {
-    try {
       enums.clear();
       const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+      //log("Enum Update " + encoder.convert(rawData));
       FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "Starting enumUpdate \n" + encoder.convert(rawData));
 
 
-      List<dynamic> enumsListRaw = jsonDecode(rawData["enums"]);
-      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"]);
+      List<dynamic> enumsListRaw = rawData["enums"];
+     // FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"].toString());
       FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "enumsListRaw: " + encoder.convert(enumsListRaw));
       for (Map<String, dynamic> enumRaw in enumsListRaw) {
         enums.add(Enum.fromJSON(enumRaw));
@@ -117,10 +208,7 @@ class IoBrokerManager {
       FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "writeJSON");
       enumsUpdateStateStreamController.add(EnumUpdateState.finished);
       isUpdating = false;
-    } on Error catch(e) {
-      FlutterLogs.logErrorTrace("iobrokerManager", "enumUpdate", "error while parsing?\n " + rawData.toString(), e);
 
-    }
   }
 
   void enumsClear() {
@@ -139,20 +227,21 @@ class IoBrokerManager {
     }).toList();
   }
 
-  void exportEnumsToDevice() {
+  void syncEnumsToDevice() {
     DeviceManager deviceManager = Manager.instance!.deviceManager;
     for(Enum e in enums) {
       if(e.dataPointMembers.isNotEmpty) {
-        if(deviceManager.devicesList.where((element) => element.name == e.name).isEmpty) {
+        if(!deviceManager.devicesList.any((element) => element.name == e.name)) {
           IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
           device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
+
         } else {
           Device device = deviceManager.devicesList.firstWhere((element) => element.name == e.name);
           if(device is IoBrokerDevice) {
             device.dataPoints ??= [];
             for(DataPoint d in e.dataPointMembers) {
-              if(device.dataPoints!.where((element) => element.id == d.id).isEmpty) {
+              if(!device.dataPoints!.any((element) => element.id == d.id)) {
                 device.dataPoints?.add(d..device = device);
                 deviceManager.editDevice(device);
               } else {
@@ -165,10 +254,40 @@ class IoBrokerManager {
 
               }
             }
+
           }
         }
       }
     }
+    List<Device> removeDevice = [];
+    Map<Device, List<DataPoint>> deleteDataPoint = {};
+    for(Device device in deviceManager.devicesList) {
+      if(!enums.any((element) => device.name == element.name)) {
+        removeDevice.add(device);
+        continue;
+      }
+
+
+      if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+        deleteDataPoint[device] = device.dataPoints!.where((element) => !enums.firstWhere((e2) => e2.name == device.name).dataPointMembers.any((e) => e.id == element.id)).toList();
+
+
+      }
+
+
+    }
+    for(Device d in removeDevice) {
+      deviceManager.removeDevice(d);
+    }
+    for(Device d in deleteDataPoint.keys) {
+      if(d.dataPoints != null && deleteDataPoint[d] != null && deleteDataPoint[d]!.isNotEmpty) {
+        d.dataPoints!.removeWhere((element) => deleteDataPoint[d]!.any((e) => e.id == element.id));
+
+
+
+      }
+    }
+
     deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
   }
 }
