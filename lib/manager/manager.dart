@@ -13,6 +13,7 @@ import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/history/history_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/settings_sync_manager.dart';
 
 class Manager {
   static Manager? instance;
@@ -43,6 +44,9 @@ class Manager {
 
   late HistoryManager historyManager;
   StreamSubscription? subscription7;
+
+
+  late SettingsSyncManager settingsSyncManager;
 
   ManagerStatus status = ManagerStatus.loading;
 
@@ -86,6 +90,9 @@ class Manager {
     screenManager =
         ScreenManager(fileManager: fileManager, screens: [], manager: this)
           ..loadScreens();
+
+    settingsSyncManager = SettingsSyncManager(connectionManager: connectionManager, fileManager: fileManager)
+    ..loadSettings();
 
 
 

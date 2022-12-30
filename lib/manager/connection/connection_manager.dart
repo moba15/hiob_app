@@ -216,6 +216,19 @@ class ConnectionManager with WidgetsBindingObserver {
         case DataPackageType.loginKey:
           _onLoginKey(rawMap["key"]);
           break;
+        case DataPackageType.templateSettingCreate:
+          _onTemplateSettingCreate();
+          break;
+        case DataPackageType.requestTemplatesSettings:
+          Manager.instance!.settingsSyncManager.fetchedConfigListStreamController.sink.add(List<String>.from(rawMap["settings"]));
+          break;
+
+        case DataPackageType.uploadTemplateSettingSuccess:
+          Manager.instance!.settingsSyncManager.uploadSuccessStreamController.sink.add(true);
+          break;
+        case DataPackageType.getTemplatesSetting:
+          Manager.instance!.settingsSyncManager.loadGotTemplate(rawMap["devices"], rawMap["screens"], rawMap["widg"]);
+          break;
 
         default:
           throw UnimplementedError("Error");
@@ -280,6 +293,10 @@ class ConnectionManager with WidgetsBindingObserver {
       return;
     }
     _webSocket?.sink.add(jsonEncode({"type": dataPackage.type.name, "content": dataPackage.content}));
+  }
+
+  void _onTemplateSettingCreate() {
+    Manager.instance!.settingsSyncManager.onTemplateCreate();
   }
   
   

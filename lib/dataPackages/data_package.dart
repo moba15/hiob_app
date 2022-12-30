@@ -18,6 +18,11 @@ enum DataPackageType {
   loginApproved,
   loginKey,
 
+  requestTemplatesSettings,
+  templateSettingCreate,
+  uploadTemplateSetting,
+  uploadTemplateSettingSuccess, getTemplatesSetting,
+
 }
 
 class DataPackage {
@@ -92,6 +97,31 @@ class FirstPingFromIobPackage extends DataPackage {
       type: DataPackageType.firstPingFromIob,
       content: {});
 }
+
+
+
+class RequestTemplateSettings extends DataPackage {
+  RequestTemplateSettings() : super(type: DataPackageType.requestTemplatesSettings, content: {});
+
+}
+
+
+class CreateTemplateSetting extends DataPackage {
+  CreateTemplateSetting({required String name}) : super(type: DataPackageType.templateSettingCreate, content: {"name": name});
+
+}
+
+class UploadTemplateSetting extends DataPackage {
+  UploadTemplateSetting({required String name, required String devicesJSON, required String widgetsJSON, required String screensJSON }) : super(type: DataPackageType.uploadTemplateSetting, content: {"name": name, "devices": devicesJSON, "screens": screensJSON, "widgets": widgetsJSON});
+
+}
+
+class GetTemplateSetting extends DataPackage {
+  GetTemplateSetting({required String name}) : super(type: DataPackageType.getTemplatesSetting, content: {"name": name});
+
+}
+
+
 
 
 
