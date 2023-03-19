@@ -16,7 +16,6 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
 
   @override
   Widget build(BuildContext context) {
-    print("Build:" + roundToKey.toString());
     return Column(
       children: [
         Showcase(

@@ -65,7 +65,7 @@ class GeneralManager {
   }
 
   void updateLoginKey(String key) {
-    print("Update login key");
+
     loginKey = key;
     _save();
   }

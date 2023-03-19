@@ -2,7 +2,9 @@
 
 import 'dart:async';
 
+import 'package:smart_home/dataPackages/subscribe_history_package.dart';
 import 'package:smart_home/manager/history/history_subscription.dart';
+import 'package:smart_home/manager/manager.dart';
 
 class HistoryData {
 
@@ -25,15 +27,17 @@ class HistoryData {
   }
 
   void startSub(HistorySubscription historySubscription) {
+    print("startSub");
     if(subs.any((element) => element == historySubscription)) {
       return;
     }
     subs.add(historySubscription);
     //TODO: Send request
+
   }
 
   void addData(int time, dynamic value) {
-    print("ADD");
+    print("add Data");
     streamController.sink.add({"time": time, "value": value});
     loadedHistory[time] = value;
 

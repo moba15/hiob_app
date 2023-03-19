@@ -50,6 +50,7 @@ class HistoryManager {
     HistoryData historyData = subscriptions.keys.firstWhere((element) => element==dataPoint).historyData;
     if(!_isIntervalIsLoaded(historyData, start, end)) {
       //Send request
+      print("send");
       SubscribeSmartHistoryPackage smartHistoryPackage = SubscribeSmartHistoryPackage(dataPoint: dataPoint, start: start, end: end, interval: interval);
       if(historyData.historyInterval.end< end) {
         historyData.historyInterval.end = end;
@@ -63,6 +64,7 @@ class HistoryManager {
   }
 
   void onHistoryUpdate({required List data}) {
+    print("Update");
     for(Map rawDate in data) {
 
       String id = rawDate["id"];

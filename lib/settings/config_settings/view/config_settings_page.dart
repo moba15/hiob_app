@@ -116,7 +116,6 @@ class _ConfigsListViewState extends State<_ConfigsListView> {
     return BlocBuilder<ConfigBloc, ConfigState>(
       bloc: widget.configBloc..add(ConfigReloadEvent()),
       builder: (context, state) {
-        print("BUILD");
         if(state.configs.isEmpty) {
           return const Center(
             child: Text("It looks like you don't have any settings to sync"),
@@ -161,7 +160,7 @@ class _ConfigCard extends StatelessWidget {
                 children: [
                   OutlinedButton(
                     onPressed: () {
-                      Manager.instance!.settingsSyncManager.uploadSuccessStreamController.stream.first.then((value) => showSuccessSnackBar(context));
+                      Manager.instance!.settingsSyncManager.uploadSuccessStreamController.stream.first.then((value) => showSuccessSnackBar(context, "Uploaded"));
                       Manager.instance!.settingsSyncManager.uploadSettings(preConfig);
 
                       },
@@ -169,7 +168,7 @@ class _ConfigCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   OutlinedButton(
-                    onPressed: () { Manager.instance!.settingsSyncManager.getTemplateSettings(preConfig);  },
+                    onPressed: () {Manager.instance!.settingsSyncManager.loadedSuccessStreamController.stream.first.then((value) => showSuccessSnackBar(context, "Loaded")); Manager.instance!.settingsSyncManager.getTemplateSettings(preConfig);   },
                     child: const Text("Load"),
                   ),
                   const Spacer(),
@@ -187,11 +186,11 @@ class _ConfigCard extends StatelessWidget {
         )
     );
   }
-  void showSuccessSnackBar(context) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  void showSuccessSnackBar(context, text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       duration: Duration(milliseconds: 700),
       behavior: SnackBarBehavior.floating,
-      content: Text("Uploaded", style: TextStyle(color: Colors.green),),
+      content: Text(text, style: TextStyle(color: Colors.green),),
     ));
   }
 }

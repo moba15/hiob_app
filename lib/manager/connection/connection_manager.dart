@@ -116,9 +116,6 @@ class ConnectionManager with WidgetsBindingObserver {
 
     ioBrokerManager.connected = false;
 
-    print(ioBrokerManager.knownNetwork);
-
-    print((await networkInfo.getWifiName()));
 
     try {
       if(ioBrokerManager.useSecondaryAddress && (await networkInfo.getWifiName()).toString().trim() != ( "\"" + ioBrokerManager.knownNetwork.trim() + "\"")) {
@@ -140,7 +137,6 @@ class ConnectionManager with WidgetsBindingObserver {
     } catch(e) {
 
 
-      print(e);
       ioBrokerManager.connected = false;
 
       connectionStatusStreamController.add(ConnectionStatus.error);
@@ -152,9 +148,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void onData(event) {
-    if (kDebugMode) {
-      print(event);
-    }
     readPackage(event);
   }
 
@@ -186,7 +179,6 @@ class ConnectionManager with WidgetsBindingObserver {
       Map<String, dynamic> rawMap = jsonDecode(msg);
       DataPackageType packageType = DataPackageType.values
           .firstWhere((element) => element.name == rawMap["type"]);
-      print("type" + rawMap["type"]);
       switch (packageType) {
         case DataPackageType.iobStateChanged:
           stateChangedPackage(
@@ -205,6 +197,7 @@ class ConnectionManager with WidgetsBindingObserver {
           _onFirstPing();
           break;
         case DataPackageType.historyDataUpdate:
+          print("asdjasdjshbdf");
           Manager.instance!.historyManager.onHistoryUpdate(data: jsonDecode( rawMap["data"]));
           break;
         case DataPackageType.loginDeclined:
@@ -274,7 +267,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
   
   void _onLoginKey(String? key) {
-    print("Login key: " + key.toString());
     if(key == null) {
       return;
     }

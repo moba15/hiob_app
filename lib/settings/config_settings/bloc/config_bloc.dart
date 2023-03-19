@@ -34,7 +34,6 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   void _onConfigAdded(emit) async {
     List<PreConfig> list = await Manager.instance!.settingsSyncManager.fetchTemplatesFromAdapter();
 
-    print(list);
     add(ConfigLoadedEvent(list));
   }
 }

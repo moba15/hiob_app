@@ -52,7 +52,7 @@ class ScreenManager {
     }
     loaded = true;
     if(screens.isEmpty) {
-      screens.add(Screen(id: Manager.instance!.getRandString(15), name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
+      screens.add(Screen(id: Manager.instance!.getRandString(15), name: "Template", iconID: "ee98", index: 1, widgetTemplates: [], enabled: true));
     }
     screenStreamController.add(screens);
 
@@ -82,7 +82,7 @@ class ScreenManager {
     }
     loaded = true;
     if(screens.isEmpty) {
-      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
+      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: [], enabled: true));
     }
     screenStreamController.add(screens);
   }
@@ -108,7 +108,7 @@ class ScreenManager {
   void removeScreen(Screen screen) async {
     screens.remove(screen);
     if(screens.isEmpty) {
-      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: []));
+      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: [], enabled: true));
     }
     screenStreamController.add(screens);
     bool suc = await fileManager.writeJSONList(key, screens);
@@ -152,7 +152,7 @@ class ScreenManager {
       {required Screen screen,
       required String name,
       required String iconID,
-      required int index}) async {
+      required int index, required bool enabled}) async {
     int z = -1;
     for (int i = 0; i < screens.length; i++) {
       if (screens[i] == screen) {
@@ -162,7 +162,7 @@ class ScreenManager {
             name: name,
             iconID: iconID,
             index: index,
-            widgetTemplates: screen.widgetTemplates);
+            widgetTemplates: screen.widgetTemplates, enabled: enabled);
         break;
       }
     }

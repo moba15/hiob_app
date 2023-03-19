@@ -59,17 +59,22 @@ class _GraphViewState extends State<GraphView>{
 
   List<LineSeries<_ChartData, DateTime>> getSeries() {
 
+
+
+
     List<LineSeries<_ChartData, DateTime>> series = [];
 
     for(GraphLine graphLine in widget.graphWidget.graphLines ?? []) {
       if(graphLine.dataPoint == null) {
         continue;
       }
+      print("GetSeries");
       Map startEndMap = graphLine.getStartEnd(widget.graphWidget);
       int start = startEndMap["start"].millisecondsSinceEpoch;
-      int end = startEndMap["end"].add(const Duration(seconds: 2, milliseconds: 500)).millisecondsSinceEpoch;
+      int end = startEndMap["end"].add(const Duration(seconds: 2)).millisecondsSinceEpoch;
       DataPoint dataPoint = graphLine.dataPoint!;
       List<int> timeKeys = dataPoint.historyData.loadedHistory.keys.where((element) => element >= start && element<=end).toList();
+      print(timeKeys);
       List<_ChartData> data = [];
       for(int time in timeKeys) {
         if(dataPoint.historyData.loadedHistory[time]  != null) {

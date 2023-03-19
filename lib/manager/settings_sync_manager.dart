@@ -27,6 +27,8 @@ class SettingsSyncManager {
 
   StreamController<bool> uploadSuccessStreamController = StreamController.broadcast();
 
+  StreamController<bool> loadedSuccessStreamController = StreamController.broadcast();
+
 
 
 
@@ -98,7 +100,6 @@ class SettingsSyncManager {
   }
 
   void getTemplateSettings(PreConfig preConfig) {
-    print("send");
     connectionManager.sendMsg(GetTemplateSetting(name: preConfig.name));
   }
 
@@ -109,6 +110,7 @@ class SettingsSyncManager {
     fileManager.pref.setString(manager.screenManager.key, screens);
     manager.deviceManager.reload();
     manager.screenManager.reload();
+    loadedSuccessStreamController.add(true);
 
 
   }

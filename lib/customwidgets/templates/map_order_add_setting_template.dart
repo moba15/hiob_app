@@ -125,23 +125,22 @@ class _MapOrderSettingTemplateState<V>
         String key = data.keys.elementAt(i);
         newMap[key] = data[key]!;
       }
-      print(newMap);
 
       for(int i = oldIndex+1; i<newIndex; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key]!;
       }
 
-      print(newMap);
+
 
       newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)]!;
-      print(newMap);
+
 
       for(int i = newIndex; i<data.length; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key]!;
       }
-      print(newMap);
+
     } else {
       newMap = data;
     }

@@ -96,7 +96,6 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
   @override
 
   List<GlobalKey<State<StatefulWidget>>> get showKeys {
-    print(advancedCustomWidget.bodyTriggerAction!.settings!.showKeys);
     return  [valueKey, mainBodyKey, ...?setting?.showKeys , popupKey];
   }
 

@@ -91,7 +91,6 @@ class GraphWidget extends CustomWidget {
 
     for(GraphLine line in graphLines ?? []) {
       if(line.xAxis != null && line.xAxis == a) {
-        print("nukkkkk");
         line.xAxis = null;
       }
     }

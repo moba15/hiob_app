@@ -17,9 +17,25 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
   
   @override
   void initState() {
-    _webViewController = WebViewController()
-    ..setJavaScriptMode(widget.customWebViewWidget.javaScript ? JavaScriptMode.unrestricted : JavaScriptMode.disabled)
-    ..loadRequest(Uri.parse(widget.customWebViewWidget.dataPoint!.value.toString()));
+    if(widget.customWebViewWidget.dataPoint != null) {
+      _webViewController = WebViewController()
+      ..setJavaScriptMode(widget.customWebViewWidget.javaScript ? JavaScriptMode.unrestricted : JavaScriptMode.disabled)
+      ..loadRequest(Uri.parse(widget.customWebViewWidget.dataPoint!.value.toString()));
+    } else {
+      if(widget.customWebViewWidget.url.toString().startsWith("https://") || widget.customWebViewWidget.url.toString().startsWith("http://")) {
+        _webViewController = WebViewController()
+          ..setJavaScriptMode(
+              widget.customWebViewWidget.javaScript ? JavaScriptMode
+                  .unrestricted : JavaScriptMode.disabled)
+          ..loadRequest(Uri.parse(widget.customWebViewWidget.url ?? ""));
+      } else {
+        _webViewController = WebViewController()
+          ..setJavaScriptMode(
+              widget.customWebViewWidget.javaScript ? JavaScriptMode
+                  .unrestricted : JavaScriptMode.disabled)
+          ..loadRequest(Uri.parse("https://${widget.customWebViewWidget.url ?? ""}"));
+      }
+    }
 
     super.initState();
   }

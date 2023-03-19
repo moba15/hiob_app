@@ -166,7 +166,7 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
         name: name,
         iconID: iconID,
         index: 1,
-        widgetTemplates: []));
+        widgetTemplates: [], enabled: true));
     Navigator.pop(context);
   }
 }

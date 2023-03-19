@@ -13,6 +13,7 @@ class Screen {
   final String name;
   final String iconID;
   final int index;
+  final bool enabled;
   List<dynamic> widgetTemplates;
 
   Screen(
@@ -20,7 +21,7 @@ class Screen {
       required this.name,
       required this.iconID,
       required this.index,
-      required this.widgetTemplates});
+      required this.widgetTemplates, required this.enabled});
 
   factory Screen.fromJSON(Map<String, dynamic> json) {
     List<dynamic> widgetTemplates = [];
@@ -44,6 +45,7 @@ class Screen {
       name: json["name"],
       index: json["index"],
       widgetTemplates: widgetTemplates,
+      enabled: json["enabled"] ?? true,
     );
   }
 
@@ -53,6 +55,7 @@ class Screen {
           "name": name,
           "iconID": iconID,
           "index": index,
+          "enabled": enabled,
 
         };
         List<Map<String, dynamic>> widgets = [];
@@ -136,6 +139,6 @@ class Screen {
   }
 
   Screen clone() {
-    return Screen(id: id, name: name, iconID: iconID, index: index, widgetTemplates: List.of(widgetTemplates) );
+    return Screen(id: id, name: name, iconID: iconID, index: index, widgetTemplates: List.of(widgetTemplates) , enabled: enabled);
   }
 }

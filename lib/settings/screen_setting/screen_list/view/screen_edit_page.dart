@@ -30,11 +30,13 @@ class ScreenEditPage extends StatefulWidget {
 class _ScreenEditPageState extends State<ScreenEditPage> {
   TextEditingController nameController = TextEditingController();
   IconData? currentIconData;
+  bool? enabled;
 
 
   late Screen screen;
   @override
   void initState() {
+    enabled = widget.screen.enabled;
     screen = widget.screen.clone();
     nameController.text = screen.name;
     currentIconData = IconData(int.parse(screen.iconID, radix: 16));
@@ -128,6 +130,20 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
 
                   )
               ),
+              CheckboxListTile(
+                onChanged: (value) {
+                  setState(() {
+                    enabled = value ?? true;
+                  });
+
+                },
+                value: enabled ?? true,
+                title: Text("Enabled"),
+
+                secondary: enabled  == true || enabled == null ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+
+
+              ),
               Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -161,7 +177,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
         screen: widget.screen,
         name: nameController.text,
         iconID: currentIconData?.codePoint.toRadixString(16) ?? "ee98",
-        index: 1);
+        index: 1, enabled: enabled ?? true);
     
   }
 
@@ -258,7 +274,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
 
                 if(templates.any((element) => element.customWidget.type == type))
                   ExpansionTile(
-                    title: Text(type.name + " (" + templates.where((element) => element.customWidget.type == type).length.toString() + ")"),
+                    title: Text("${type.name} (${templates.where((element) => element.customWidget.type == type).length})"),
                     children: [
                       for(CustomWidgetTemplate t in templates.where((element) => element.customWidget.type == type))
                         ListTile(

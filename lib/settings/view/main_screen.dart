@@ -143,8 +143,9 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
     return BlocBuilder<ScreenListCubit, ScreenListState>(
       bloc: ScreenListCubit(screenManager: screenManager)..fetchList(),
       builder: (context, state) {
-        List<Screen> screens = state.screens;
-        TabController _tabController = TabController(length: screens.length, vsync: this);
+        List<Screen> screens = state.screens.where((element) => element.enabled).toList();
+        TabController _tabController = TabController(initialIndex: 0,length: screens.length, vsync: this, );
+        ScrollController _scrollControllr = ScrollController();
         _tabController.addListener(() { _controller.add(_tabController.index);});
         return Scaffold(
             appBar: AppBar(
@@ -184,26 +185,34 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 )
               ],
               automaticallyImplyLeading: false,
+
               bottom: TabBar(
+
                 onTap: (i)  {
                   _controller.add(i);
                 },
                 indicatorWeight: 3,
                 isScrollable: true,
+
                 controller: _tabController,
+
                 tabs: [
+
                   for (int i = 0; i<screens.length; i++)
                     ScreenTab(
                       screen: screens[i],
-                    )
+                    ),
+
                 ],
               ),
+
             ),
             body: _tabController.length == 0 ? const Text("null"): TabBarView(
               controller: _tabController,
               children: [
                 for (int i = 0; i<_tabController.length; i++)
                   ListView.builder(
+
                     itemCount: 1,
                     itemBuilder: (context, index) {
                       Screen screen = screens[i];
