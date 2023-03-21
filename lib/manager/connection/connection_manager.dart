@@ -252,7 +252,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void _requestLogin() async {
     connectionStatusStreamController.add(ConnectionStatus.loggingIn);
-    sendMsg(RequestLoginPackage(deviceName: generalManager.deviceName, deviceID: generalManager.deviceID, key: generalManager.loginKey, password: ioBrokerManager.password, user: ioBrokerManager.user));
+    sendMsg(RequestLoginPackage(deviceName: generalManager.deviceName, deviceID: generalManager.deviceID, key: generalManager.loginKey, password: ioBrokerManager.usePwd ? ioBrokerManager.password : null, user: ioBrokerManager.user));
   }
   
   

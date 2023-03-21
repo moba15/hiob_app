@@ -51,10 +51,10 @@ class SettingsSyncManager {
   }
 
 
-  void uploadSettings(PreConfig preConfig) {
-    String devicesJSON = jsonEncode(Manager.instance!.deviceManager.devicesList);
-    String widgetsJSON = jsonEncode(Manager.instance!.customWidgetManager.templates);
-    String screensJSON = jsonEncode(Manager.instance!.screenManager.screens);
+  void uploadSettings(PreConfig preConfig, {required bool device, required bool widget, required bool screen}) {
+    String? devicesJSON = !device ? null : jsonEncode(Manager.instance!.deviceManager.devicesList);
+    String? widgetsJSON = !widget ? null : jsonEncode(Manager.instance!.customWidgetManager.templates);
+    String? screensJSON = !screen ? null : jsonEncode(Manager.instance!.screenManager.screens);
 
     connectionManager.sendMsg(UploadTemplateSetting(name: preConfig.name, devicesJSON: devicesJSON, widgetsJSON: widgetsJSON, screensJSON: screensJSON));
 
@@ -65,19 +65,12 @@ class SettingsSyncManager {
 
 
   void createNewSettingsTemplate(String name) {
-    /*
-    * TODO:
-    *  1. Send request to Server
-    *  2. Send updated List to stream
-    *
-    * */
     connectionManager.sendMsg(CreateTemplateSetting(name: name));
   }
 
 
 
   Future<List<PreConfig>> fetchTemplatesFromAdapter() async {
-    //TODO: Send Request for list of Settings Templates
     Manager.instance?.connectionManager.sendMsg(RequestTemplateSettings());
     List rawData = await fetchedConfigListStreamController.stream.first;
     List<PreConfig> configs = [];
@@ -99,15 +92,22 @@ class SettingsSyncManager {
     configAddedStreamController.sink.add(true);
   }
 
-  void getTemplateSettings(PreConfig preConfig) {
-    connectionManager.sendMsg(GetTemplateSetting(name: preConfig.name));
+  void getTemplateSettings(PreConfig preConfig, {required bool device, required bool widget, required bool screen}) {
+    connectionManager.sendMsg(GetTemplateSetting(name: preConfig.name, device: device, widget: widget, screen: screen));
   }
 
-  void loadGotTemplate(String devices, String screens, String widgets) {
+  void loadGotTemplate(String? devices, String? screens, String? widgets) {
     Manager manager = Manager.instance!;
-    fileManager.pref.setString(manager.deviceManager.key, devices);
-    fileManager.pref.setString(manager.customWidgetManager.templateKey, widgets);
-    fileManager.pref.setString(manager.screenManager.key, screens);
+
+    if(devices != null) {
+      fileManager.pref.setString(manager.deviceManager.key, devices);
+    }
+    if(widgets != null) {
+      fileManager.pref.setString(manager.customWidgetManager.templateKey, widgets);
+    }
+    if(screens != null) {
+      fileManager.pref.setString(manager.screenManager.key, screens);
+    }
     manager.deviceManager.reload();
     manager.screenManager.reload();
     loadedSuccessStreamController.add(true);

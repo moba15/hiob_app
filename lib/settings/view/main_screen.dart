@@ -145,8 +145,14 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
       builder: (context, state) {
         List<Screen> screens = state.screens.where((element) => element.enabled).toList();
         TabController _tabController = TabController(initialIndex: 0,length: screens.length, vsync: this, );
-        ScrollController _scrollControllr = ScrollController();
         _tabController.addListener(() { _controller.add(_tabController.index);});
+        if(screens.isEmpty) {
+          return Scaffold(
+            appBar: AppBar(
+
+            ),
+          );
+        }
         return Scaffold(
             appBar: AppBar(
               backgroundColor: !ioConnected ? Colors.red : null,
@@ -198,6 +204,7 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
 
                 tabs: [
 
+
                   for (int i = 0; i<screens.length; i++)
                     ScreenTab(
                       screen: screens[i],
@@ -207,10 +214,10 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
               ),
 
             ),
-            body: _tabController.length == 0 ? const Text("null"): TabBarView(
+            body: screens.length == 0 ? const Text("null"): TabBarView(
               controller: _tabController,
               children: [
-                for (int i = 0; i<_tabController.length; i++)
+                for (int i = 0; i<screens.length; i++)
                   ListView.builder(
 
                     itemCount: 1,

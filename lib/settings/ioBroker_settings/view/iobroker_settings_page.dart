@@ -115,50 +115,50 @@ class IoBrokerSettingsView extends StatelessWidget {
 
         ),
 
-        /*StreamBuilder<bool>(
-          stream: ioBrokerManager.connectionStatusStreamController.stream,
-          builder: (context, snapshot) {
-            if(snapshot.hasError) {
-              return  Container(margin: const EdgeInsets.only(left: 20.0, right: 20.0), child: const Text("Error", style: TextStyle(color: Colors.red),));
-            }
-            if(snapshot.hasData && snapshot.data != null) {
-              return Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Text(snapshot.data! ? "Connected" : "Not Connected", style: TextStyle(color: snapshot.data! ? Colors.green : Colors.red),),
-              );
-            } else {
-              return Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Text(ioBrokerManager.connected ? "Connected" : "Not Connected", style: TextStyle(color: ioBrokerManager.connected ? Colors.green : Colors.red),),
-              );
-            }
-          },
-        ), */
-
         Center(
           child: ElevatedButton(
             onPressed: () => {context.read<Manager>().connectionManager.reconnect()},
             child: const Text("Reconnect"),
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: TextFormField(
-            initialValue: ioBrokerManager.user,
-            decoration: const InputDecoration(labelText: "User"),
-            onChanged: (v) => ioBrokerManager.changeUser(v),
-          ),
+
+
+        StatefulBuilder(
+          builder: (context, setState) {
+            return Column(
+              children: [
+                CheckboxListTile(
+                  value: ioBrokerManager.usePwd,
+                  onChanged: (b)  {
+                    setState(() => {ioBrokerManager.changeUsePWD(b ?? true)});
+                  },
+                  title: const Text("Use Password Login"),
+
+                ),
+                if(ioBrokerManager.usePwd)
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, right: 20.0),
+                    child: TextFormField(
+                      initialValue: ioBrokerManager.user,
+                      decoration: const InputDecoration(labelText: "User"),
+                      onChanged: (v) => ioBrokerManager.changeUser(v),
+                    ),
+                  ),
+                if(ioBrokerManager.usePwd)
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, right: 20.0),
+                    child: TextFormField(
+                      initialValue: ioBrokerManager.password,
+                      decoration: const InputDecoration(labelText: "Password"),
+                      obscureText: true,
+                      onChanged: (v) => ioBrokerManager.changePassword(v),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
 
-        Container(
-          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: TextFormField(
-            initialValue: ioBrokerManager.password,
-            decoration: const InputDecoration(labelText: "Password"),
-            obscureText: true,
-            onChanged: (v) => ioBrokerManager.changePassword(v),
-          ),
-        ),
 
         _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager,),
 
@@ -241,7 +241,7 @@ class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
       children: [
 
         CheckboxListTile(
-          title: Text("Use Secondary IP"),
+          title: const Text("Use Secondary IP"),
           value: widget.ioBrokerManager.useSecondaryAddress,
           onChanged: (v ) async {
             if(v == true) {

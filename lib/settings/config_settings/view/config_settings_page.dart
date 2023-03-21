@@ -159,23 +159,15 @@ class _ConfigCard extends StatelessWidget {
               Row(
                 children: [
                   OutlinedButton(
-                    onPressed: () {
-                      Manager.instance!.settingsSyncManager.uploadSuccessStreamController.stream.first.then((value) => showSuccessSnackBar(context, "Uploaded"));
-                      Manager.instance!.settingsSyncManager.uploadSettings(preConfig);
-
-                      },
+                    onPressed: () => showDialog(context: context, builder: (c) =>  _ConfigLoadingDialog(preConfig: preConfig, upload: true,)),
                     child: const Text("Upload Settings"),
                   ),
                   const Spacer(),
                   OutlinedButton(
-                    onPressed: () {Manager.instance!.settingsSyncManager.loadedSuccessStreamController.stream.first.then((value) => showSuccessSnackBar(context, "Loaded")); Manager.instance!.settingsSyncManager.getTemplateSettings(preConfig);   },
+                    onPressed: () => showDialog(context: context, builder: (c) =>  _ConfigLoadingDialog(preConfig: preConfig, upload: false,)),
                     child: const Text("Load"),
                   ),
-                  const Spacer(),
-                  OutlinedButton(
-                    onPressed: () {  },
-                    child: selected ? const Text("Auto sync on"): const Text("Auto sync off"),
-                  ),
+
 
                 ],
               ),
@@ -194,6 +186,134 @@ class _ConfigCard extends StatelessWidget {
     ));
   }
 }
+
+
+
+class _ConfigLoadingDialog extends StatefulWidget {
+  final PreConfig preConfig;
+  final bool upload;
+  const _ConfigLoadingDialog({Key? key, required this.preConfig, required this.upload}) : super(key: key);
+
+  @override
+  State<_ConfigLoadingDialog> createState() => _ConfigLoadingDialogState();
+}
+
+class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
+  bool device = true;
+  bool widgets = true;
+  bool screens = true;
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Choose what to load: ${widget.preConfig.name}"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+            children: [
+              buildSelectionCardCard(name: "Screens", iconData: Icons.add_to_home_screen, selected: screens, onTap: () => setState(() {
+                screens = !screens;
+              })),
+              buildSelectionCardCard(name: "Widgets",iconData: Icons.widgets, selected: widgets, onTap: () => setState(() {
+                widgets = !widgets;
+              })),
+
+            ],
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+
+            children: [
+
+              buildSelectionCardCard(name: "Devices", iconData: Icons.devices,selected: device,onTap: () => setState(() {
+                device = !device;
+              })),
+
+
+            ],
+          ),
+        ],
+      ),
+      actions: [
+
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Cancel"),
+
+        ),
+        TextButton(
+          onPressed: widget.upload ? upload : load,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children:  [
+              widget.upload ? Text("Upload") : Text("Load"),
+              widget.upload ? Icon(Icons.upload): Icon(Icons.download)
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Card buildSelectionCardCard({required String name, bool selected = true, required VoidCallback onTap, required IconData iconData}) {
+    return Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: selected ? Colors.green : Colors.red, width: 2),
+
+            ),
+            shadowColor: Colors.green,
+            borderOnForeground: true,
+            surfaceTintColor: Colors.green,
+
+            child: InkWell(
+              onTap: onTap,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children:  [
+                  Icon(iconData, size: 35,),
+                  Row(
+                    children: [
+                      Container(margin: const EdgeInsets.only(left: 5),),
+                      Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                      Icon(selected ? Icons.check: Icons.close, color: selected ? Colors.green : Colors.red,),
+                      Container(margin: const EdgeInsets.only(right: 5),),
+                    ],
+                  )
+                ],
+              ),
+            ),
+        );
+  }
+
+  void load() {
+    Navigator.pop(context);
+    Manager.instance!.settingsSyncManager.loadedSuccessStreamController.stream.first.then((value) => showSuccessSnackBar(context, "Loaded"));
+    Manager.instance!.settingsSyncManager.getTemplateSettings(widget.preConfig, device: device, screen: screens, widget: widgets);
+  }
+
+
+  void upload() {
+    Navigator.pop(context);
+    Manager.instance!.settingsSyncManager.uploadSuccessStreamController.stream.first.then((value) => showSuccessSnackBar(context, "Uploaded"));
+    Manager.instance!.settingsSyncManager.uploadSettings(widget.preConfig, device: device, screen: screens, widget: widgets);
+  }
+
+  void showSuccessSnackBar(context, text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(milliseconds: 700),
+      behavior: SnackBarBehavior.floating,
+      content: Text(text, style: const TextStyle(color: Colors.green),),
+    ));
+  }
+}
+
+
+
 
 
 

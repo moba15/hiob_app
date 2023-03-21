@@ -28,11 +28,8 @@ class DataPoint {
   DataPoint({required this.name, required this.device, required this.id,  this.role, this.type, this.otherDetails});
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device)  {
-    if(json["otherDetails"] is String) {
-      return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: jsonDecode(json["otherDetails"]));
-    } else {
-      return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: json["otherDetails"]);
-    }
+
+      return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: json);
   }
 
 
