@@ -23,11 +23,11 @@ class Enum {
     List<DataPoint> dataPointMembers = [];
     if(json["dataPointMembers"] is String) {
       for (Map<String, dynamic> dataPointRaw in jsonDecode(json["dataPointMembers"] ?? "[]") ?? []) {
-        dataPointMembers.add(DataPoint.fromJSON(dataPointRaw, null)..name = dataPointRaw["id"].split(".").last);
+        dataPointMembers.add(DataPoint.fromJSON(dataPointRaw, null));
       }
     } else {
       for (Map<String, dynamic> dataPointRaw in json["dataPointMembers"] ?? []) {
-        dataPointMembers.add(DataPoint.fromJSON(dataPointRaw, null)..name = dataPointRaw["id"].split(".").last);
+        dataPointMembers.add(DataPoint.fromJSON(dataPointRaw, null));
       }
     }
     Enum e = Enum(name: json["name"], id: json["id"], icon: json["icon"], members: (jsonDecode(json["members"] ?? "[]") as List<dynamic>).map((e) =>

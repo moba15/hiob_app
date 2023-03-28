@@ -29,19 +29,27 @@ class DataPoint {
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device)  {
 
+    print("Name: " + json["name"]);
+
       return DataPoint(name: json["name"], device: device, id: json["id"], role: json["role"], type: json["valueType"], otherDetails: json);
   }
 
 
-  Map<String, dynamic> toJson() =>
-      {
-        "id": id,
-        "name": name,
-        "type": type,
-        "role": role,
-        "valueType": valueType,
-        "otherDetails": jsonEncode(otherDetails),
-      };
+  Map<String, dynamic> toJson() {
+
+    print("TOJSON: " + name);
+
+    return {
+      "id": id,
+      "name": name,
+      "type": type,
+      "role": role,
+      "valueType": valueType,
+      "otherDetails": jsonEncode(otherDetails),
+    };
+
+  }
+
   set setValue(dynamic value) {
     if(value != this.value) {
       if(this.value != null) {

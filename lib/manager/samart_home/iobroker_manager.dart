@@ -55,7 +55,8 @@ class IoBrokerManager {
       knownNetwork = settings?["knownNetwork"] ?? "";
       secondaryAddress = settings?["secondaryAddress"] ?? "";
       useSecondaryAddress = settings?["useSecondaryAddress"] ?? false;
-      usePwd = settings?["usePwd"] ?? true;
+
+      usePwd = settings?["usePWD"] ?? true;
 
     } else {
       mainIp =  "10.0.2.2";
@@ -181,6 +182,7 @@ class IoBrokerManager {
   }
 
   void changeUsePWD(bool usePwd) async {
+    print("Change " + usePwd.toString());
     this.usePwd = usePwd;
     await fileManager.writeJSON(key, {
       "ip": mainIp,
@@ -192,6 +194,8 @@ class IoBrokerManager {
       "useSecondaryAddress": useSecondaryAddress,
       "usePWD": usePwd
     });
+
+    print("MAP: ${jsonEncode(await fileManager.getMap(key)!)}");
   }
 
 
@@ -320,5 +324,9 @@ class IoBrokerManager {
     }
 
     deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
+
+    for(Device d   in deviceManager.devicesList) {
+      print((d as IoBrokerDevice).toJson());
+    }
   }
 }
