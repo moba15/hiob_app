@@ -83,20 +83,15 @@ class IoBrokerManager {
 
   void changeIp(String ip) async {
     this.mainIp = ip;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
-    });
+    _save();
   }
 
   void changePort(int port) async {
     this.port = port;
+    await _save();
+  }
+
+  Future<void> _save() async {
     await fileManager.writeJSON(key, {
       "ip": mainIp,
       "port": port,
@@ -112,88 +107,34 @@ class IoBrokerManager {
 
   void changeUser(String user) async {
     this.user = user;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
-    });
+    _save();
   }
 
   void changePassword(String password) async {
     this.password = password;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
-    });
+    _save();
   }
 
   void changeKnownNetwork(String knownNetwork) async {
     this.knownNetwork = knownNetwork;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
-    });
+    _save();
   }
 
   void changeSecondaryAddress(String secondaryAddress) async {
     this.secondaryAddress = secondaryAddress;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
-    });
+    _save();
   }
 
 
   void changeUseSecondaryAddress(bool useSecondaryAddress) async {
     this.useSecondaryAddress = useSecondaryAddress;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
-    });
+    _save();
   }
 
   void changeUsePWD(bool usePwd) async {
     print("Change " + usePwd.toString());
     this.usePwd = usePwd;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
-    });
+    _save();
 
     print("MAP: ${jsonEncode(await fileManager.getMap(key)!)}");
   }
