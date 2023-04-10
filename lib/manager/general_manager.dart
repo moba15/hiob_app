@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
-
+import 'package:uuid/uuid.dart';
 class GeneralManager {
-  
+
+  var uuid = Uuid();
+
+
   final FileManager fileManager;
   final Manager manager;
   final String key = "generalSettings";
@@ -29,7 +32,8 @@ class GeneralManager {
     vibrateEnabled = settings["vibrateEnabled"] ?? false;
     deviceName = settings["deviceName"] ?? manager.androidInfo.model;
     loginKey = settings["loginKey"]; //TODO: Exclude in Backup
-    deviceID = manager.androidInfo.id;
+    deviceID = settings["id"] ?? uuid.v4();
+    settings["id"] = deviceID;
     statusStreamController.add(true);
     if(!await fileManager.containsKey(buildKey) || (await fileManager.getString(buildKey) )!= manager.buildNumber) {
       await Future.delayed(const Duration(seconds: 4));
@@ -53,6 +57,7 @@ class GeneralManager {
     Map<String, dynamic> settings =  {
       "vibrateEnabled": vibrateEnabled,
       "loginKey": loginKey,
+      "id": deviceID,
     };
 
     await fileManager.writeJSON(key, settings);
