@@ -79,10 +79,10 @@ class IoBrokerSettingsView extends StatelessWidget {
             switch (state) {
 
               case ConnectionStatus.error:
-                 text = Text("Error", style: TextStyle(color: Theme.of(context).errorColor));
+                 text = Text("Error", style: TextStyle(color: Theme.of(context).colorScheme.error));
                  break;
               case ConnectionStatus.disconnected:
-                text = Text("Disconnected", style: TextStyle(color: Theme.of(context).errorColor));
+                text = Text("Disconnected", style: TextStyle(color: Theme.of(context).colorScheme.error));
                 break;
               case ConnectionStatus.connecting:
                 text = const Text("Connecting", style: TextStyle(color: Colors.orange));

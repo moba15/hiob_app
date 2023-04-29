@@ -154,7 +154,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
             showSearchBox: true,
             title: const Text("End of axis", style: TextStyle(fontSize: 17.5),),
             modalBottomSheetProps: ModalBottomSheetProps(
-              backgroundColor: Theme.of(context).backgroundColor
+              backgroundColor: Theme.of(context).colorScheme.background
             )
 
           ),
@@ -203,7 +203,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
                   showSearchBox: true,
                   title: const Text("Scope Unit", style: TextStyle(fontSize: 17.5),),
                   modalBottomSheetProps: ModalBottomSheetProps(
-                    backgroundColor: Theme.of(context).backgroundColor,
+                    backgroundColor: Theme.of(context).colorScheme.background,
                   )
 
                 ),

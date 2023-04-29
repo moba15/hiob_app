@@ -36,14 +36,14 @@ class _TriggerActionSelectionTemplateState extends State<TriggerActionSelectionT
           },
           popupProps:   PopupProps.modalBottomSheet(
             modalBottomSheetProps: ModalBottomSheetProps(
-                backgroundColor: Theme.of(context).backgroundColor
+                backgroundColor: Theme.of(context).colorScheme.background
             ),
             showSelectedItems: true,
 
           ),
           selectedItem: _selectedType,
           items: const [TriggerActionType.none, TriggerActionType.multiSelection, TriggerActionType.slider, TriggerActionType.handleSwitch, TriggerActionType.button],
-          itemAsString: (i) => i?.name ?? "",
+          itemAsString: (i) => i.name,
           compareFn: (d, d2) => d==d2,
 
 

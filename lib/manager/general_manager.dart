@@ -7,7 +7,7 @@ import 'package:smart_home/manager/manager.dart';
 import 'package:uuid/uuid.dart';
 class GeneralManager {
 
-  var uuid = Uuid();
+  var uuid = const Uuid();
 
 
   final FileManager fileManager;
@@ -75,28 +75,5 @@ class GeneralManager {
     _save();
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 }
