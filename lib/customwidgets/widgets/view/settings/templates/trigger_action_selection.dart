@@ -52,7 +52,7 @@ class _TriggerActionSelectionTemplateState extends State<TriggerActionSelectionT
           title: const Text("Trigger Settings"),
           leading: const Icon(Icons.settings),
           initiallyExpanded: true,
-          childrenPadding: const EdgeInsets.only(left: 10),
+          childrenPadding: const EdgeInsets.only(left: 10,),
           expandedAlignment: Alignment.centerLeft,
           children: [
             _triggerActionSetting == null ? const Text("No Settings") : _triggerActionSetting as Widget

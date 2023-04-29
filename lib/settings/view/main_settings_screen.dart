@@ -20,7 +20,6 @@ class MainSettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Settings"),
       ),
-
       body: ListView(
         children: [
           ListTile(
@@ -54,12 +53,12 @@ class MainSettingsScreen extends StatelessWidget {
             leading: const Icon(Icons.device_unknown),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
-
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DeviceSettingsScreen(manager: manager.deviceManager)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        DeviceSettingsScreen(manager: manager.deviceManager)),
               )
-
             },
           ),
           ListTile(
@@ -70,7 +69,10 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>  RepositoryProvider.value(value: manager, child: const IoBrokerSettingsPage(),)),
+                    builder: (context) => RepositoryProvider.value(
+                          value: manager,
+                          child: const IoBrokerSettingsPage(),
+                        )),
               )
             },
           ),
@@ -82,11 +84,13 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>  RepositoryProvider.value(value: manager, child: const GeneralSettingsPage(),)),
+                    builder: (context) => RepositoryProvider.value(
+                          value: manager,
+                          child: const GeneralSettingsPage(),
+                        )),
               )
             },
           ),
-
           ListTile(
             title: const Text("Config Sync (WORK IN PROGRESS)"),
             leading: const Icon(Icons.cloud),
@@ -98,14 +102,17 @@ class MainSettingsScreen extends StatelessWidget {
               )
             },
           ),
-
-
           ListTile(
             title: const Text("License Page"),
             leading: const Icon(Icons.warning_amber_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
-              showLicensePage(context: context, applicationName: "HIoB", applicationVersion: "0.1", applicationLegalese: "LICENCE MIT", applicationIcon: const Icon(Icons.smartphone_sharp))
+              showLicensePage(
+                  context: context,
+                  applicationName: "HIoB",
+                  applicationVersion: "0.1",
+                  applicationLegalese: "LICENCE MIT",
+                  applicationIcon: const Icon(Icons.smartphone_sharp))
             },
           )
         ],

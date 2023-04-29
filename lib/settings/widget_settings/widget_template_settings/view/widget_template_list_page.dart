@@ -22,11 +22,11 @@ class WidgetTemplateListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Widget Templates"),
         actions: [
-          IconButton(onPressed: ()  {
-
-            Navigator.popUntil(context, (route) => route.isFirst);
-
-          }, icon: const Icon(Icons.home)),
+          IconButton(
+              onPressed: () {
+                Navigator.popUntil(context, (route) => route.isFirst);
+              },
+              icon: const Icon(Icons.home)),
         ],
       ),
       body: BlocProvider(
@@ -41,7 +41,7 @@ class WidgetTemplateListPage extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (c) => TemplateAddPage(
-                    customWidgetManager: customWidgetManager,
+                        customWidgetManager: customWidgetManager,
                       )));
         },
         child: const Icon(Icons.add),
@@ -80,58 +80,63 @@ class TemplatesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return templates.isEmpty
-        ?
-    const Center(
+        ? const Center(
             child: Text("Es konnten keine Widget Templates gefunden werden"),
           )
-        :
-    ListView(
-      children: [
-        for(CustomWidgetType type in CustomWidgetType.values.where((element) => element != CustomWidgetType.group))
-
-          if(templates.any((element) => element.customWidget.type == type))
-            ExpansionTile(
-              title: Text(type.name + " (" + templates.where((element) => element.customWidget.type == type).length.toString() + ")"),
-              children: [
-                for(CustomWidgetTemplate t in templates.where((element) => element.customWidget.type == type))
-                  Dismissible(
-                    background: Container(
-                      color: Colors.red,
-                      child: Container(
-                        child: const Icon(Icons.delete_forever),
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                      ),
-                      alignment: Alignment.centerLeft,
-                    ),
-                    secondaryBackground: Container(
-                      color: Colors.red,
-                      child: Container(
-                        child: const Icon(Icons.delete_forever),
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                      ),
-                      alignment: Alignment.centerRight,
-                    ),
-                    direction: DismissDirection.endToStart,
-                    key: ValueKey(t),
-                    onDismissed: (d) => {_delete(t)},
-                    child: CustomWidgetTemplateTile(
-                      customWidget: t,
-                      customWidgetManager: context.read<WidgetTemplateListCubit>().customWidgetManager,
-                    ),
-
+        : ListView(
+            children: [
+              for (CustomWidgetType type in CustomWidgetType.values
+                  .where((element) => element != CustomWidgetType.group))
+                if (templates
+                    .any((element) => element.customWidget.type == type))
+                  ExpansionTile(
+                    title: Text(type.name +
+                        " (" +
+                        templates
+                            .where(
+                                (element) => element.customWidget.type == type)
+                            .length
+                            .toString() +
+                        ")"),
+                    children: [
+                      for (CustomWidgetTemplate t in templates.where(
+                          (element) => element.customWidget.type == type))
+                        Dismissible(
+                          background: Container(
+                            color: Colors.red,
+                            child: Container(
+                              child: const Icon(Icons.delete_forever),
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 20.0),
+                            ),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          secondaryBackground: Container(
+                            color: Colors.red,
+                            child: Container(
+                              child: const Icon(Icons.delete_forever),
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 20.0),
+                            ),
+                            alignment: Alignment.centerRight,
+                          ),
+                          direction: DismissDirection.endToStart,
+                          key: ValueKey(t),
+                          onDismissed: (d) => {_delete(t)},
+                          child: CustomWidgetTemplateTile(
+                            customWidget: t,
+                            customWidgetManager: context
+                                .read<WidgetTemplateListCubit>()
+                                .customWidgetManager,
+                          ),
+                        ),
+                    ],
                   ),
-              ],
-            ),
-      ],
-
-    );
+            ],
+          );
   }
 
   void _delete(CustomWidgetTemplate template) {
-
-
     Manager.instance?.customWidgetManager.removeTemplate(template);
   }
 }
-
-

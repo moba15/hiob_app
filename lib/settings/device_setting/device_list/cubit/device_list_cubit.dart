@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
@@ -12,8 +10,13 @@ part 'device_list_state.dart';
 
 class DeviceListCubit extends Cubit<DeviceListState> {
   StreamSubscription? deviceListSubscription;
-  DeviceListCubit({required this.deviceManager}) : super(const DeviceListState.loading()) {
-    deviceListSubscription = deviceManager.deviceListStreamController.stream.listen((event) { update(event);});
+
+  DeviceListCubit({required this.deviceManager})
+      : super(const DeviceListState.loading()) {
+    deviceListSubscription =
+        deviceManager.deviceListStreamController.stream.listen((event) {
+      update(event);
+    });
   }
 
   final DeviceManager deviceManager;
@@ -22,15 +25,12 @@ class DeviceListCubit extends Cubit<DeviceListState> {
   Future<void> close() async {
     deviceListSubscription?.cancel();
     super.close();
-
   }
-
 
   Future<void> fetchList() async {
     try {
       final items = await deviceManager.loadDevices();
       emit(DeviceListState.success(items));
-
     } on Exception {
       emit(const DeviceListState.failure());
     }
@@ -38,7 +38,6 @@ class DeviceListCubit extends Cubit<DeviceListState> {
 
   void addDevice(Device device) async {
     deviceManager.addDevice(device);
-
   }
 
   @override
@@ -48,8 +47,5 @@ class DeviceListCubit extends Cubit<DeviceListState> {
 
   void update(List<Device> devices) {
     emit(DeviceListState.update(devices));
-
   }
-
-
 }

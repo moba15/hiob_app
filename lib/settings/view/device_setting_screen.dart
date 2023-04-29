@@ -7,12 +7,15 @@ import '../../../settings/device_setting/device_list/view/device_list_page.dart'
 
 class DeviceSettingsScreen extends StatelessWidget {
   final DeviceManager manager;
-  const DeviceSettingsScreen ({Key? key, required this.manager}) : super(key: key);
+
+  const DeviceSettingsScreen({Key? key, required this.manager})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(value: manager, child: const DeviceListPage(),);
-
+    return RepositoryProvider.value(
+      value: manager,
+      child: const DeviceListPage(),
+    );
   }
 }
-

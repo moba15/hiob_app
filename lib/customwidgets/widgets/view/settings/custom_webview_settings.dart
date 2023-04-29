@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/utils/theme.dart';
 
 
 
@@ -57,17 +58,18 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
             key: widget.urlKey,
             title: "Url",
             description: "The url you want to load into this widget",
-            child: TextField(
+            child: InputFieldContainer.inputContainer(widget: TextField(
+
               decoration: const InputDecoration(labelText: "Url"),
               onChanged: (s) =>  {widget.customWebViewWidget.url = s, if(s.isEmpty) widget.customWebViewWidget.url = null},
               controller: _urlController,
-            ),
+            ),)
           ),
           Showcase(
             key: widget.datapointKey,
             title: "Datapoint",
             description: "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
-            child: DeviceSelection(
+            child: InputFieldContainer.inputContainer(widget: DeviceSelection(
               onDataPointSelected: (d) => widget.customWebViewWidget.dataPoint = d,
               selectedDataPoint: widget.customWebViewWidget.dataPoint,
               selectedDevice: widget.customWebViewWidget.dataPoint?.device,
@@ -78,7 +80,7 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
 
               },
               customWidgetManager: Manager.instance!.customWidgetManager,
-            ),
+            ),)
           ),
           Showcase(
             key: widget.heightKey,

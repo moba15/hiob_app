@@ -24,12 +24,10 @@ class ScreenListCubit extends Cubit<ScreenListState> {
   Future<void> close() async {
     screenListSubscription?.cancel();
     super.close();
-
   }
 
   void update(List<Screen> screens) {
     emit(ScreenListState.added(screens));
-
   }
 
   void fetchList() async {

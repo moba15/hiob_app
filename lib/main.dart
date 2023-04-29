@@ -15,12 +15,17 @@ void main() async {
         LogLevel.WARNING,
         LogLevel.ERROR,
         LogLevel.SEVERE,
-
       ],
-
       timeStampFormat: TimeStampFormat.TIME_FORMAT_READABLE,
       directoryStructure: DirectoryStructure.FOR_DATE,
-      logTypesEnabled: ["device","customise","connection", "screen", "iobrokerManager", "error"],
+      logTypesEnabled: [
+        "device",
+        "customise",
+        "connection",
+        "screen",
+        "iobrokerManager",
+        "error"
+      ],
       logFileExtension: LogFileExtension.LOG,
       logsWriteDirectoryName: "logs",
       logsExportDirectoryName: "logs/Exported",

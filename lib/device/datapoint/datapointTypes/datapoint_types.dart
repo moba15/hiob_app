@@ -1,3 +1,1 @@
-enum DataPointType {
-  string,boolean,number
-}
+enum DataPointType { string, boolean, number }

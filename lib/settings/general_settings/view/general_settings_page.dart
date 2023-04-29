@@ -12,7 +12,8 @@ class GeneralSettingsPage extends StatelessWidget {
         title: const Text("General Settings"),
         actions: [
           IconButton(
-            onPressed: () => {Navigator.popUntil(context, (route) => route.isFirst)},
+            onPressed: () =>
+                {Navigator.popUntil(context, (route) => route.isFirst)},
             icon: const Icon(Icons.home),
           ),
         ],
@@ -21,7 +22,6 @@ class GeneralSettingsPage extends StatelessWidget {
     );
   }
 }
-
 
 class _GeneralSettingsView extends StatelessWidget {
   const _GeneralSettingsView({Key? key}) : super(key: key);
@@ -39,28 +39,28 @@ class _GeneralSettingsView extends StatelessWidget {
               manager.fileManager.export(context),
             },
           ),
-          onTap: ()=> {
+          onTap: () => {
             manager.fileManager.export(context),
           },
         ),
         ListTile(
-            title: const Text("Import"),
-            trailing: IconButton(
-              icon: const Icon(Icons.import_export),
-              onPressed: () => {
-                context.read<Manager>().fileManager.import(context),
-              },
-            ),
+          title: const Text("Import"),
+          trailing: IconButton(
+            icon: const Icon(Icons.import_export),
+            onPressed: () => {
+              context.read<Manager>().fileManager.import(context),
+            },
+          ),
           onTap: () => {
             context.read<Manager>().fileManager.import(context),
           },
         ),
         StatefulBuilder(
-          builder: (_, setState)  {
+          builder: (_, setState) {
             return SwitchListTile(
               value: manager.generalManager.vibrateEnabled,
-              onChanged: (v)  {
-                setState(()  {
+              onChanged: (v) {
+                setState(() {
                   manager.generalManager.updateVibrateEnabled(v);
                 });
               },
@@ -73,8 +73,6 @@ class _GeneralSettingsView extends StatelessWidget {
     );
   }
 }
-
-
 
 class _DeviceInfo extends StatelessWidget {
   const _DeviceInfo({Key? key}) : super(key: key);

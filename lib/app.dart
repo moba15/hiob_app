@@ -5,7 +5,7 @@ import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/settings/view/main_screen.dart';
-
+import 'package:smart_home/utils/theme.dart';
 class App extends MaterialApp {
   App(
       {Key? key,
@@ -23,8 +23,8 @@ class App extends MaterialApp {
               const Locale('en', ''),
               const Locale('de', ''),
             ],
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
+            theme: ThemeData.light(useMaterial3: true),
+            darkTheme: Material3Theme.darkMaterial3Theme,
             home: RepositoryProvider<Manager>.value(
                 value: manager,
                 child: BlocProvider(

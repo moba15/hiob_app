@@ -18,7 +18,6 @@ import 'package:smart_home/manager/settings_sync_manager.dart';
 class Manager {
   static Manager? instance;
 
-
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   late AndroidDeviceInfo androidInfo;
 
@@ -45,19 +44,19 @@ class Manager {
   late HistoryManager historyManager;
   StreamSubscription? subscription7;
 
-
   late SettingsSyncManager settingsSyncManager;
 
   ManagerStatus status = ManagerStatus.loading;
 
   String versionNumber;
   String buildNumber;
+
   Manager({required this.versionNumber, required this.buildNumber});
-  
 
   int loadingState = 0;
   int maxLoadingState = 6;
-  StreamController<ManagerStatus> managerStatusStreamController = StreamController.broadcast();
+  StreamController<ManagerStatus> managerStatusStreamController =
+      StreamController.broadcast();
   var random = Random();
 
   Future<void> load() async {
@@ -65,25 +64,21 @@ class Manager {
     deviceInfo.androidInfo.then((value) => androidInfo = value);
     final pref = await SharedPreferences.getInstance();
 
-
     fileManager = FileManager(pref: pref, manager: this);
     deviceManager = DeviceManager(fileManager, devicesList: [], manager: this)
       ..loadDevices();
 
     ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
 
-    generalManager = GeneralManager(manager: this, fileManager: fileManager)..load();
+    generalManager = GeneralManager(manager: this, fileManager: fileManager)
+      ..load();
 
     connectionManager = ConnectionManager(
-        deviceManager: deviceManager, ioBrokerManager: ioBrokerManager, generalManager: generalManager);
+        deviceManager: deviceManager,
+        ioBrokerManager: ioBrokerManager,
+        generalManager: generalManager);
 
     historyManager = HistoryManager(connectionManager: connectionManager);
-
-
-
-
-
-
 
     customWidgetManager = CustomWidgetManager(
         fileManager: fileManager, deviceManager: deviceManager, manager: this);
@@ -91,17 +86,9 @@ class Manager {
         ScreenManager(fileManager: fileManager, screens: [], manager: this)
           ..loadScreens();
 
-    settingsSyncManager = SettingsSyncManager(connectionManager: connectionManager, fileManager: fileManager)
-    ..loadSettings();
-
-
-
-
-
-
-
-
-
+    settingsSyncManager = SettingsSyncManager(
+        connectionManager: connectionManager, fileManager: fileManager)
+      ..loadSettings();
 
     subscription1 =
         customWidgetManager.templatesStreamController.stream.listen((event) {
@@ -117,20 +104,19 @@ class Manager {
       onLoaded();
     });
 
-    subscription4 = ioBrokerManager.statusStreamController.stream.listen((event) {
+    subscription4 =
+        ioBrokerManager.statusStreamController.stream.listen((event) {
       onLoaded();
     });
 
-
     subscription5 =
         connectionManager.statusStreamController.stream.listen((event) {
-          onLoaded();
-        });
+      onLoaded();
+    });
     subscription6 =
         generalManager.statusStreamController.stream.listen((event) {
-          onLoaded();
-        });
-
+      onLoaded();
+    });
   }
 
   String getRandString(int len) {
@@ -140,12 +126,12 @@ class Manager {
 
   void onLoaded() {
     loadingState += 1;
-    if(loadingState == maxLoadingState -1) {
+    if (loadingState == maxLoadingState - 1) {
       status = ManagerStatus.finished;
       managerStatusStreamController.add(ManagerStatus.finished);
       connectionManager.connectIoB();
     }
-    if (loadingState >= maxLoadingState-1) {
+    if (loadingState >= maxLoadingState - 1) {
       status = ManagerStatus.finished;
       managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();

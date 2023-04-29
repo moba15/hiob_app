@@ -9,6 +9,7 @@ import '../../dataPackages/data_package.dart';
 import '../device.dart';
 
 part 'device_event.dart';
+
 part 'device_state.dart';
 
 class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
@@ -17,7 +18,8 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
   Device device;
 
   DeviceBloc(this.device, {required DateTime t})
-      : super(DeviceInitial(t: t, value: device.value, status: device.getDeviceStatus())) {
+      : super(DeviceInitial(
+            t: t, value: device.value, status: device.getDeviceStatus())) {
     on<DeviceValueUpdate>(_onValueUpdated);
     on<DeviceIdle>(_onDeviceIdle);
     on<DeviceValueUpdateRequest>(_onValueUpdateRequest);

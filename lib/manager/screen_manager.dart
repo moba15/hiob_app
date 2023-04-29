@@ -38,9 +38,11 @@ class ScreenManager {
       "secreen",
       "loadedBootup",
       encoder.convert(l),
-
     );
-    developer.log("Screens Raw Loaded " + l.toString(), name: "de.bachmaiers/screen_manager.dart", time: DateTime.now(), zone: Zone.current);
+    developer.log("Screens Raw Loaded " + l.toString(),
+        name: "de.bachmaiers/screen_manager.dart",
+        time: DateTime.now(),
+        zone: Zone.current);
     if (l == null) {
       screens = [];
     } else {
@@ -51,8 +53,14 @@ class ScreenManager {
       }
     }
     loaded = true;
-    if(screens.isEmpty) {
-      screens.add(Screen(id: Manager.instance!.getRandString(15), name: "Template", iconID: "ee98", index: 1, widgetTemplates: [], enabled: true));
+    if (screens.isEmpty) {
+      screens.add(Screen(
+          id: Manager.instance!.getRandString(15),
+          name: "Template",
+          iconID: "ee98",
+          index: 1,
+          widgetTemplates: [],
+          enabled: true));
     }
     screenStreamController.add(screens);
 
@@ -69,7 +77,6 @@ class ScreenManager {
       "screen",
       "loaded reload",
       encoder.convert(l),
-
     );
     if (l == null) {
       screens = [];
@@ -81,8 +88,14 @@ class ScreenManager {
       }
     }
     loaded = true;
-    if(screens.isEmpty) {
-      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: [], enabled: true));
+    if (screens.isEmpty) {
+      screens.add(Screen(
+          id: "testID11&",
+          name: "Template",
+          iconID: "ee98",
+          index: 1,
+          widgetTemplates: [],
+          enabled: true));
     }
     screenStreamController.add(screens);
   }
@@ -101,14 +114,19 @@ class ScreenManager {
       "screen",
       "added",
       encoder.convert(await fileManager.getList(key)),
-
     );
   }
 
   void removeScreen(Screen screen) async {
     screens.remove(screen);
-    if(screens.isEmpty) {
-      screens.add(Screen(id: "testID11&", name: "Template", iconID: "ee98", index: 1, widgetTemplates: [], enabled: true));
+    if (screens.isEmpty) {
+      screens.add(Screen(
+          id: "testID11&",
+          name: "Template",
+          iconID: "ee98",
+          index: 1,
+          widgetTemplates: [],
+          enabled: true));
     }
     screenStreamController.add(screens);
     bool suc = await fileManager.writeJSONList(key, screens);
@@ -121,9 +139,7 @@ class ScreenManager {
       "screen",
       "removed",
       encoder.convert(await fileManager.getList(key)),
-
     );
-
   }
 
   void reorderScreen({required int oldIndex, required int newIndex}) async {
@@ -134,7 +150,7 @@ class ScreenManager {
     screens.removeLast();
     screenStreamController.add(screens);
     bool suc = await fileManager.writeJSONList(key, screens);
-    if(!suc) {
+    if (!suc) {
       screens.removeAt(newIndex);
       screens.insert(oldIndex, tmp);
       screenStreamController.add(screens);
@@ -144,7 +160,6 @@ class ScreenManager {
       "screen",
       "reordered",
       encoder.convert(await fileManager.getList(key)),
-
     );
   }
 
@@ -152,7 +167,8 @@ class ScreenManager {
       {required Screen screen,
       required String name,
       required String iconID,
-      required int index, required bool enabled}) async {
+      required int index,
+      required bool enabled}) async {
     int z = -1;
     for (int i = 0; i < screens.length; i++) {
       if (screens[i] == screen) {
@@ -162,7 +178,8 @@ class ScreenManager {
             name: name,
             iconID: iconID,
             index: index,
-            widgetTemplates: screen.widgetTemplates, enabled: enabled);
+            widgetTemplates: screen.widgetTemplates,
+            enabled: enabled);
         break;
       }
     }
@@ -177,7 +194,6 @@ class ScreenManager {
       "screen",
       "edit",
       encoder.convert(await fileManager.getList(key)),
-
     );
   }
 
@@ -191,15 +207,14 @@ class ScreenManager {
       "screen",
       "update",
       encoder.convert(await fileManager.getList(key)),
-
     );
   }
 
   void templateRemoved(CustomWidgetTemplate template) async {
-    for(Screen s in screens) {
+    for (Screen s in screens) {
       s.widgetTemplates.removeWhere((element) => template == element);
-      for(dynamic temp in s.widgetTemplates) {
-        if(temp is CustomGroupWidget) {
+      for (dynamic temp in s.widgetTemplates) {
+        if (temp is CustomGroupWidget) {
           temp.templates.removeWhere((element) => element == template);
         }
       }
@@ -211,7 +226,4 @@ class ScreenManager {
   void templateEdited(CustomWidgetTemplate template) {
     screenStreamController.add(screens);
   }
-
-
-
 }

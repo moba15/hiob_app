@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:smart_home/dataPackages/subscribe_history_package.dart';
@@ -7,20 +5,14 @@ import 'package:smart_home/manager/history/history_subscription.dart';
 import 'package:smart_home/manager/manager.dart';
 
 class HistoryData {
+  StreamController<Map<String, dynamic>> streamController =
+      StreamController.broadcast();
 
-  StreamController<Map<String, dynamic>> streamController = StreamController.broadcast();
-  
   final Map<int, dynamic> loadedHistory = {};
   final HistoryInterval historyInterval = HistoryInterval(start: -1, end: -1);
   final List<HistorySubscription> subs = [];
 
   HistoryData();
-
-
-
-
-
-
 
   void fetchHistory(int start, int end) {
     //TODO: Logic here
@@ -28,12 +20,11 @@ class HistoryData {
 
   void startSub(HistorySubscription historySubscription) {
     print("startSub");
-    if(subs.any((element) => element == historySubscription)) {
+    if (subs.any((element) => element == historySubscription)) {
       return;
     }
     subs.add(historySubscription);
     //TODO: Send request
-
   }
 
   void addData(int time, dynamic value) {
@@ -41,11 +32,9 @@ class HistoryData {
     streamController.sink.add({"time": time, "value": value});
     loadedHistory[time] = value;
 
-    if(historyInterval.end < time) {
+    if (historyInterval.end < time) {
       historyInterval.end = time;
     }
-
-
   }
 }
 
@@ -53,5 +42,7 @@ class HistoryInterval {
   int start;
   int end;
   bool complete;
-  HistoryInterval({required this.start, required this.end, this.complete = true});
+
+  HistoryInterval(
+      {required this.start, required this.end, this.complete = true});
 }

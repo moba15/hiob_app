@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
@@ -18,21 +17,27 @@ class ScreenListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Screen Settings"),
         actions: [
-          IconButton(onPressed: ()  {
-
-            Navigator.popUntil(context, (route) => route.isFirst);
-
-          }, icon: const Icon(Icons.home)),
+          IconButton(
+              onPressed: () {
+                Navigator.popUntil(context, (route) => route.isFirst);
+              },
+              icon: const Icon(Icons.home)),
         ],
       ),
       body: BlocProvider(
-        create: (_) => ScreenListCubit(screenManager: context.read<ScreenManager>())..fetchList(),
+        create: (_) =>
+            ScreenListCubit(screenManager: context.read<ScreenManager>())
+              ..fetchList(),
         child: const ScreenListView(),
       ),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (c) =>  ScreenAddPage(screenManager: context.read<ScreenManager>(),)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (c) => ScreenAddPage(
+                        screenManager: context.read<ScreenManager>(),
+                      )));
         },
         child: const Icon(Icons.add),
         tooltip: "Neues Gerät Hinzufügen",
@@ -40,8 +45,6 @@ class ScreenListPage extends StatelessWidget {
     );
   }
 }
-
-
 
 class ScreenListView extends StatelessWidget {
   const ScreenListView({Key? key}) : super(key: key);
@@ -51,27 +54,32 @@ class ScreenListView extends StatelessWidget {
     final state = context.watch<ScreenListCubit>().state;
     switch (state.status) {
       case ListStatus.loading:
-        return const Center(child: CircularProgressIndicator(),);
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       case ListStatus.failure:
-        return const Center(child: Text("Ups da ist ein fehler aufgetreten"),);
+        return const Center(
+          child: Text("Ups da ist ein fehler aufgetreten"),
+        );
       case ListStatus.success:
         return ScreensView(screens: state.screens);
     }
-
   }
 }
 
 class ScreensView extends StatelessWidget {
   final List<Screen> screens;
-  const ScreensView({Key? key, required this.screens }) : super(key: key);
+
+  const ScreensView({Key? key, required this.screens}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return screens.isEmpty ?
-        const Center(child: Text("Es konnten keine screens gefunden werden"),)
-        :
-        ReorderableListView.builder(
-          itemCount: screens.length,
+    return screens.isEmpty
+        ? const Center(
+            child: Text("Es konnten keine screens gefunden werden"),
+          )
+        : ReorderableListView.builder(
+            itemCount: screens.length,
             itemBuilder: (BuildContext c, int index) => Dismissible(
               background: Container(
                 color: Colors.red,
@@ -90,7 +98,8 @@ class ScreensView extends StatelessWidget {
                 alignment: Alignment.centerRight,
               ),
               direction: DismissDirection.endToStart,
-              onDismissed: (d) => {context.read<ScreenManager>().removeScreen(screens[index])},
+              onDismissed: (d) =>
+                  {context.read<ScreenManager>().removeScreen(screens[index])},
               key: ValueKey(screens[index]),
               child: ScreenListTile(
                 screen: screens[index],
@@ -98,7 +107,9 @@ class ScreensView extends StatelessWidget {
               ),
             ),
             onReorder: (oldIndex, newIndex) {
-              context.read<ScreenManager>().reorderScreen(oldIndex: oldIndex, newIndex: newIndex);
+              context
+                  .read<ScreenManager>()
+                  .reorderScreen(oldIndex: oldIndex, newIndex: newIndex);
             },
           );
   }
@@ -142,16 +153,13 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: IconPickerTemplate(
-                onChange: (IconData? iconData) {
-                  currentIconData = iconData;
-                },
-                selected: currentIconData ?? Icons.home,
-
-              )
-            ),
-
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: IconPickerTemplate(
+                  onChange: (IconData? iconData) {
+                    currentIconData = iconData;
+                  },
+                  selected: currentIconData ?? Icons.home,
+                )),
           ],
         ),
       ),
@@ -166,8 +174,8 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
         name: name,
         iconID: iconID,
         index: 1,
-        widgetTemplates: [], enabled: true));
+        widgetTemplates: [],
+        enabled: true));
     Navigator.pop(context);
   }
 }
-
