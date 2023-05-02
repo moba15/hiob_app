@@ -58,7 +58,7 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
             key: widget.urlKey,
             title: "Url",
             description: "The url you want to load into this widget",
-            child: InputFieldContainer.inputContainer(widget: TextField(
+            child: InputFieldContainer.inputContainer(child: TextField(
 
               decoration: const InputDecoration(labelText: "Url"),
               onChanged: (s) =>  {widget.customWebViewWidget.url = s, if(s.isEmpty) widget.customWebViewWidget.url = null},
@@ -69,7 +69,7 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
             key: widget.datapointKey,
             title: "Datapoint",
             description: "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
-            child: InputFieldContainer.inputContainer(widget: DeviceSelection(
+            child: InputFieldContainer.inputContainer(child: DeviceSelection(
               onDataPointSelected: (d) => widget.customWebViewWidget.dataPoint = d,
               selectedDataPoint: widget.customWebViewWidget.dataPoint,
               selectedDevice: widget.customWebViewWidget.dataPoint?.device,

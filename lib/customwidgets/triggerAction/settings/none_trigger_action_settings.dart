@@ -35,7 +35,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           key: roundToKey,
           title: "Round",
           description: "If the value of the datapoint is a number it will be round to x decimals",
-          child: InputFieldContainer.inputContainer(widget: TextField(
+          child: InputFieldContainer.inputContainer(child: TextField(
             controller: TextEditingController.fromValue(TextEditingValue(text: noneTriggerAction.round.toString())),
             decoration: const InputDecoration(labelText: "Round to"),
             keyboardType: TextInputType.number,
@@ -49,7 +49,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           key: unitKey,
           title: "Unit",
           description: "If set this will be written behind the actual value of the datapoint",
-          child: InputFieldContainer.inputContainer(widget: TextField(
+          child: InputFieldContainer.inputContainer(child: TextField(
               controller: TextEditingController.fromValue(TextEditingValue(text: noneTriggerAction.unit ?? "")),
               decoration: const InputDecoration(labelText: "Unit (optional)"),
               maxLength: 10,
@@ -60,7 +60,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           key: textRulesKey,
           title: "Text Rules",
           description: "Here you can map one value to an other",
-          child: InputFieldContainer.inputContainer(widget: _RulesSettings(noneTriggerAction: noneTriggerAction)),
+          child: InputFieldContainer.inputContainer(child: _RulesSettings(noneTriggerAction: noneTriggerAction)),
         )
       ],
     );
@@ -166,15 +166,13 @@ class _RuleAddAlertDialog extends StatelessWidget {
             decoration: const InputDecoration(labelText: "Old Value"),
             controller: keyController,
           ),
-          TextField(
-            decoration: const InputDecoration(labelText: "New Value"),
-            controller: valueController,
+          InputFieldContainer.inputContainer(
+            child: TextField(
+              decoration: const InputDecoration(labelText: "New Value"),
+              controller: valueController,
+            ),
           ),
-          DropdownButtonFormField<int>(
-            items: const [],
-            onChanged: (int? value) {  },
 
-          )
 
         ],
       ),

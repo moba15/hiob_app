@@ -34,7 +34,7 @@ void main() async {
       isDebuggable: false);
   String version = "1.3";
   String buildNumber = "100";
-  Manager manager = Manager(versionNumber: version, buildNumber: buildNumber);
+  Manager manager = Manager();
   await manager.load();
   //TODO:
   BlocOverrides.runZoned(() => runApp(App(

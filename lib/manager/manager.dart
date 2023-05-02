@@ -16,7 +16,11 @@ import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 
 class Manager {
-  static Manager? instance;
+  static final Manager instance = Manager._internal(versionNumber: "1.3", buildNumber: "100");
+
+  factory Manager() {
+    return instance;
+  }
 
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   late AndroidDeviceInfo androidInfo;
@@ -51,7 +55,7 @@ class Manager {
   String versionNumber;
   String buildNumber;
 
-  Manager({required this.versionNumber, required this.buildNumber});
+  Manager._internal({required this.versionNumber, required this.buildNumber});
 
   int loadingState = 0;
   int maxLoadingState = 6;
@@ -60,7 +64,6 @@ class Manager {
   var random = Random();
 
   Future<void> load() async {
-    instance = this;
     deviceInfo.androidInfo.then((value) => androidInfo = value);
     final pref = await SharedPreferences.getInstance();
 

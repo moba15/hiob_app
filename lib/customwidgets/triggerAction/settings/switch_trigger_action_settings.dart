@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/triggerAction/switch_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
+import 'package:smart_home/utils/theme.dart';
 
 import '../../../manager/manager.dart';
 import '../../widgets/view/settings/templates/device_selection.dart';
@@ -11,7 +12,9 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey datapointKey = GlobalKey();
   final GlobalKey sendOnKey = GlobalKey();
   final GlobalKey sendOffKey = GlobalKey();
-  SwitchTriggerActionSettings({Key? key, required this.switchTriggerAction}) : super(key: key);
+
+  SwitchTriggerActionSettings({Key? key, required this.switchTriggerAction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,6 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
             selectedDataPoint: switchTriggerAction.dataPoint,
             dataPointLabel: "Datapoint",
             deviceLabel: "Device",
-
           ),
         ),
         Showcase(
@@ -39,34 +41,36 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-
               Expanded(
-                flex: 8,
-                child: TextFormField(
-                  controller: TextEditingController.fromValue(TextEditingValue(text: switchTriggerAction.switchTrue.toString())),
-                  decoration: const InputDecoration(hintText: "true", labelText: "Send if on"),
-                  autocorrect: false,
-                  onChanged: (v)  {
-                    if(v.isEmpty) {
-                      switchTriggerAction.switchTrue = null;
-                    } else {
-                      int? i = int.tryParse(v.trim());
-                      if(i != null) {
-                        switchTriggerAction.switchTrue = i;
-                      } else {
-                        if(v.trim() == "true") {
-                          switchTriggerAction.switchTrue = true;
-                        } else if(v.trim() == "false") {
-                          switchTriggerAction.switchTrue = false;
+                  flex: 8,
+                  child: InputFieldContainer.inputContainer(
+                    child: TextFormField(
+                      controller: TextEditingController.fromValue(
+                          TextEditingValue(
+                              text: switchTriggerAction.switchTrue.toString())),
+                      decoration: const InputDecoration(
+                          hintText: "true", labelText: "Send if on"),
+                      autocorrect: false,
+                      onChanged: (v) {
+                        if (v.isEmpty) {
+                          switchTriggerAction.switchTrue = null;
                         } else {
-                          switchTriggerAction.switchTrue = v;
+                          int? i = int.tryParse(v.trim());
+                          if (i != null) {
+                            switchTriggerAction.switchTrue = i;
+                          } else {
+                            if (v.trim() == "true") {
+                              switchTriggerAction.switchTrue = true;
+                            } else if (v.trim() == "false") {
+                              switchTriggerAction.switchTrue = false;
+                            } else {
+                              switchTriggerAction.switchTrue = v;
+                            }
+                          }
                         }
-
-                      }
-                    }
-                  },
-                ),
-              )
+                      },
+                    ),
+                  ))
             ],
           ),
         ),
@@ -76,42 +80,42 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
           description: "This value will be sent if the handle is switched off",
           child: Row(
             children: [
-
               Expanded(
+                  child: InputFieldContainer.inputContainer(
                 child: TextFormField(
-                  controller: TextEditingController.fromValue(TextEditingValue(text: switchTriggerAction.switchFalse.toString())),
-                  decoration: const InputDecoration(hintText: "false", labelText: "Send if off"),
+                  controller: TextEditingController.fromValue(TextEditingValue(
+                      text: switchTriggerAction.switchFalse.toString())),
+                  decoration: const InputDecoration(
+                      hintText: "false", labelText: "Send if off"),
                   autocorrect: false,
-                  onChanged: (v)  {
-                    if(v.isEmpty) {
+                  onChanged: (v) {
+                    if (v.isEmpty) {
                       switchTriggerAction.switchFalse = null;
                     } else {
                       int? i = int.tryParse(v.trim());
-                      if(i != null) {
+                      if (i != null) {
                         switchTriggerAction.switchFalse = i;
                       } else {
-                        if(v.trim() == "true") {
+                        if (v.trim() == "true") {
                           switchTriggerAction.switchFalse = true;
-                        } else if(v.trim() == "false") {
+                        } else if (v.trim() == "false") {
                           switchTriggerAction.switchFalse = false;
                         } else {
                           switchTriggerAction.switchFalse = v;
                         }
-
                       }
                     }
                   },
                 ),
-              )
+              ))
             ],
           ),
         )
       ],
     );
-
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys => [datapointKey, sendOnKey, sendOffKey];
-
+  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
+      [datapointKey, sendOnKey, sendOffKey];
 }

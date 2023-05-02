@@ -14,7 +14,7 @@ class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
       margin: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
-          InputFieldContainer.inputContainer(widget: TextField(
+          InputFieldContainer.inputContainer(child: TextField(
             onChanged: (s) => {customDivisionLineWidget.thickness = int.tryParse(s) ?? 3},
             decoration: const InputDecoration(labelText: "Thickness"),
             controller: TextEditingController(text: customDivisionLineWidget.thickness.toString()),

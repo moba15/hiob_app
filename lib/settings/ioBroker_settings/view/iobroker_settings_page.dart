@@ -155,7 +155,7 @@ class IoBrokerSettingsView extends StatelessWidget {
                   ),
                 if (ioBrokerManager.usePwd)
                   Container(
-                    margin: const EdgeInsets.only(left: 30.0, right: 20.0),
+                    margin: const EdgeInsets.only(left: 30.0, right: 20.0, top:10),
                     child: TextFormField(
                       initialValue: ioBrokerManager.password,
                       decoration: const InputDecoration(labelText: "Password"),

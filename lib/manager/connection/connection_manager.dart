@@ -27,6 +27,12 @@ enum ConnectionStatus {
   loginDeclined
 }
 
+extension ConnectionStatusExtension on ConnectionStatus {
+  bool get isConnected {
+    return this == ConnectionStatus.connected;
+  }
+}
+
 class ConnectionManager with WidgetsBindingObserver {
   bool ioBConnected = false;
 

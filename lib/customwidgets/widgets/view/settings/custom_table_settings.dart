@@ -49,7 +49,7 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
               title: "Header",
               description: "The Header will be displayed above the Table",
               child: InputFieldContainer.inputContainer(
-                widget: TextFormField(
+                child: TextFormField(
                   initialValue: widget.customTableWidget.header,
                   onChanged: (s) => widget.customTableWidget.header = s,
                   decoration: const InputDecoration(labelText: "Header"),
@@ -61,7 +61,7 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
               description:
                   "How many Rows does one Page contains (Set it to 0 to show all Elements on the first page)",
               child: InputFieldContainer.inputContainer(
-                widget: TextFormField(
+                child: TextFormField(
                   initialValue:
                       widget.customTableWidget.elementsPerPage.toString(),
                   onChanged: (s) {

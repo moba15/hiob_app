@@ -11,10 +11,12 @@ import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
+import 'package:smart_home/utils/blinking_widget.dart';
+import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
 
 import '../../screen/screen.dart';
 import '../../screen/view/screen_menu_tabbar.dart';
-import 'main_settings_screen.dart';
+import '../../settings/view/main_settings_screen.dart';
 
 const double breakpoint = 800;
 const int paneProportion = 70;
@@ -80,15 +82,12 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   late StreamController<int> _controller;
   int numberOfRows = 1;
-  late AnimationController _animationController;
   late StreamSubscription<man.ConnectionStatus> _ioConnectionSub;
   bool ioConnected = false;
 
   @override
   void initState() {
     _controller = StreamController.broadcast();
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     ioConnected = context.read<Manager>().connectionManager.ioBConnected;
     context
         .read<Manager>()
@@ -109,6 +108,7 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
           man.ConnectionStatus.disconnected != event &&
           man.ConnectionStatus.loginDeclined != event) {
         setState(() {
+          print(ioConnected);
           ioConnected = true;
         });
       } else {
@@ -148,8 +148,8 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
     }
     Manager manager = context.read<Manager>();
     ScreenManager screenManager = manager.screenManager;
-    return BlocBuilder<ScreenListCubit, ScreenListState>(
-      bloc: ScreenListCubit(screenManager: screenManager)..fetchList(),
+    return BlocBuilder<MainViewCubit, MainViewState>(
+      bloc: MainViewCubit(),
       builder: (context, state) {
         List<Screen> screens =
             state.screens.where((element) => element.enabled).toList();
@@ -168,11 +168,11 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
         }
         return Scaffold(
             appBar: AppBar(
-              backgroundColor: !ioConnected ? Colors.red : null,
+              toolbarHeight: 90,
               centerTitle: true,
-              leading: !ioConnected
-                  ? const Icon(Icons.signal_cellular_off_sharp)
-                  : null,
+              leading: Container(
+                child: _getAppBarStatus(state.connectionStatus),
+              ),
               title: screens.isEmpty
                   ? const Text("Loading")
                   : StreamBuilder<int>(
@@ -185,28 +185,17 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                       },
                     ),
               actions: [
-                AnimatedBuilder(
-                    builder: (context, child) {
-                      return Transform.rotate(
-                        angle: _animationController.value * 2 * math.pi,
-                        child: child,
-                      );
-                    },
-                    animation: _animationController,
-                    child: IconButton(
-                      onPressed: () => {
-                        _animationController
-                            .forward()
-                            .whenComplete(() => _animationController.reset()),
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  MainSettingsScreen(manager: manager)),
-                        )
-                      },
-                      icon: const Icon(Icons.settings),
-                    ))
+                IconButton(
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MainSettingsScreen(manager: manager)),
+                    )
+                  },
+                  icon: const Icon(Icons.settings),
+                )
               ],
               automaticallyImplyLeading: false,
               bottom: TabBar(
@@ -276,5 +265,28 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                   ));
       },
     );
+  }
+
+  Widget? _getAppBarStatus(man.ConnectionStatus connectionStatus) {
+    if (connectionStatus.isConnected) {
+      return null; //TODO: Reconnecting Symbol
+    } else if (connectionStatus == man.ConnectionStatus.loggingIn) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(
+          Icons.login,
+          color: Colors.orange,
+        ),
+      );
+    } else {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined,
+            color: Colors.red),
+
+      );
+    }
+
+    return null;
   }
 }
