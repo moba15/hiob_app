@@ -240,8 +240,8 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                   color: Colors.red,
                   alignment: Alignment.centerRight,
                   child: Container(
-                    child: const Icon(Icons.delete_forever),
                     margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
                   ),
                 ),
                 direction: DismissDirection.endToStart,
