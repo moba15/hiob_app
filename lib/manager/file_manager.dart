@@ -90,10 +90,7 @@ class FileManager {
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text("Exporting...")));
     try {
-      File myFile = File(result +
-          "/exportHioB" +
-          DateFormat("y_M_d_mm_ss_a").format(DateTime.now()) +
-          ".json");
+      File myFile = File("$result/exportHioB${DateFormat("y_M_d_mm_ss_a").format(DateTime.now())}.json");
       Map<String, dynamic> data = {
         "devices": jsonEncode(manager.deviceManager.devicesList),
         "widgets": jsonEncode(manager.customWidgetManager.templates),
@@ -103,31 +100,37 @@ class FileManager {
       await myFile.writeAsString(t, mode: FileMode.write);
     } on Exception catch (e) {
       dev.log(e.toString(), name: "error exporting");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Error exporting!")));
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text("Error details:"),
-              content: Column(
-                children: [
-                  const Text(
-                    "Please try to export into the Download folder",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Container(
-                    height: 5,
-                  ),
-                  Text(
-                    e.toString(),
-                    style: const TextStyle(fontSize: 12),
-                  )
-                ],
-              ),
-              scrollable: true,
-            );
-          });
+      if(Manager.navigatorKey.currentContext != null) {
+
+        ScaffoldMessenger.of(Manager.navigatorKey.currentContext!)
+            .showSnackBar(const SnackBar(content: Text("Error exporting!")));
+        showDialog(
+            context: Manager.navigatorKey.currentContext!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text("Error details:"),
+                content: Column(
+                  children: [
+                    const Text(
+                      "Please try to export into the Download folder",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Container(
+                      height: 5,
+                    ),
+                    Text(
+                      e.toString(),
+                      style: const TextStyle(fontSize: 12),
+                    )
+                  ],
+                ),
+                scrollable: true,
+              );
+            });
+
+      }
+
+
       return;
     }
     ScaffoldMessenger.of(context)

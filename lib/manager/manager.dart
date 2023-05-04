@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
@@ -17,6 +18,7 @@ import 'package:smart_home/manager/settings_sync_manager.dart';
 
 class Manager {
   static final Manager instance = Manager._internal(versionNumber: "1.3", buildNumber: "100");
+  static final navigatorKey = GlobalKey<NavigatorState>();
 
   factory Manager() {
     return instance;
