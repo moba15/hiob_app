@@ -91,19 +91,19 @@ class DeviceView extends StatelessWidget {
               return Dismissible(
                 background: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 secondaryBackground: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 direction: DismissDirection.endToStart,
                 key: ValueKey<Device>(devices[index]),
@@ -230,19 +230,19 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                 },
                 background: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 secondaryBackground: Container(
                   color: Colors.red,
+                  alignment: Alignment.centerRight,
                   child: Container(
                     child: const Icon(Icons.delete_forever),
                     margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                   ),
-                  alignment: Alignment.centerRight,
                 ),
                 direction: DismissDirection.endToStart,
                 child: Container(
