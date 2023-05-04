@@ -123,13 +123,12 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                   controller: nameController,
                   decoration: const InputDecoration(
                     labelText: "Name",
-                    border: UnderlineInputBorder(),
                   ),
                   keyboardType: TextInputType.text,
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
                   child: IconPickerTemplate(
                     onChange: (IconData? iconData) {
                       currentIconData = iconData;

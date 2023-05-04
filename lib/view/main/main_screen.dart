@@ -10,6 +10,8 @@ import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
+import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/blinking_widget.dart';
 import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
@@ -85,6 +87,8 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   late StreamSubscription<man.ConnectionStatus> _ioConnectionSub;
   bool ioConnected = false;
 
+  late TabController _tabController;
+
   @override
   void initState() {
     _controller = StreamController.broadcast();
@@ -97,26 +101,14 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
         .listen((event) {
       showDialog(context: context, builder: event);
     });
+
+    _tabController = TabController(
+      initialIndex: 0,
+      length: 1,
+      vsync: this,
+    );
+
     super.initState();
-    _ioConnectionSub = context
-        .read<Manager>()
-        .connectionManager
-        .connectionStatusStreamController
-        .stream
-        .listen((event) {
-      if (man.ConnectionStatus.error != event &&
-          man.ConnectionStatus.disconnected != event &&
-          man.ConnectionStatus.loginDeclined != event) {
-        setState(() {
-          print(ioConnected);
-          ioConnected = true;
-        });
-      } else {
-        setState(() {
-          ioConnected = false;
-        });
-      }
-    });
   }
 
   int currentTab = 0;
@@ -147,14 +139,14 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
       numberOfRows = 1;
     }
     Manager manager = context.read<Manager>();
-    ScreenManager screenManager = manager.screenManager;
+
     return BlocBuilder<MainViewCubit, MainViewState>(
       bloc: MainViewCubit(),
       builder: (context, state) {
         List<Screen> screens =
             state.screens.where((element) => element.enabled).toList();
-        TabController _tabController = TabController(
-          initialIndex: 0,
+        _tabController = TabController(
+          initialIndex: _tabController.index,
           length: screens.length,
           vsync: this,
         );
@@ -268,8 +260,11 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   }
 
   Widget? _getAppBarStatus(man.ConnectionStatus connectionStatus) {
+    debugPrint("AppBar Status: ${connectionStatus.name}");
+    //TODO: Reconnecting Symbol
     if (connectionStatus.isConnected) {
-      return null; //TODO: Reconnecting Symbol
+      return BlinkingWidget( 
+          vsync: this, disablerAfter: const Duration(seconds: 3), invisibleAfter: true, child: const Icon(Icons.done, color: Colors.green),);
     } else if (connectionStatus == man.ConnectionStatus.loggingIn) {
       return BlinkingWidget(
         vsync: this,
@@ -278,12 +273,18 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
           color: Colors.orange,
         ),
       );
+    } else if (connectionStatus == man.ConnectionStatus.loginDeclined) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(Icons.login, color: Colors.orange),
+      );
     } else {
       return BlinkingWidget(
         vsync: this,
-        child: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined,
-            color: Colors.red),
-
+        child: IconButton(
+          icon: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined, color: Colors.red),
+          onPressed: () => {Navigator.of(context).push(MaterialPageRoute(builder: (c) =>  const IoBrokerSettingsPage())) }
+        ),
       );
     }
 

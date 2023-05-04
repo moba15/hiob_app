@@ -9,18 +9,19 @@ import '../../../screen/screen.dart';
 part 'main_view_state.dart';
 
 class MainViewCubit extends Cubit<MainViewState> {
-  MainViewCubit() : super(const MainViewStateInitial()) {
+  MainViewCubit() : super( MainViewStateInitial(connectionStatus: Manager.instance.connectionManager.connectionStatus)) {
     _fetchList();
   }
 
   void _fetchList() async {
     List<Screen> screens = await Manager().screenManager.loadScreens();
-    emit(MainViewStateLoaded(screens: screens));
+    emit(MainViewStateLoaded(screens: screens, connectionStatus: Manager.instance.connectionManager.connectionStatus));
     _listenToConnectionChanges();
   }
 
   void _listenToConnectionChanges() {
-    Manager().connectionManager.connectionStatusStreamController.stream.listen((event) {
+    Manager.instance.connectionManager.connectionStatusStreamController.stream.listen((event) {
+      print("Event: " + event.name);
       emit(MainViewStateLoaded(screens: state.screens, connectionStatus: event));
     });
   }

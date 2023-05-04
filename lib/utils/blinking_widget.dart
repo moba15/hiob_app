@@ -24,6 +24,7 @@ class _BlinkingWidgetState extends State<BlinkingWidget>
 
     if(widget.disablerAfter != null) {
       _timer = Timer(widget.disablerAfter!, () {
+        debugPrint("finish");
         _animationController.reset();
         _animationController.value = widget.invisibleAfter ? 0: 1;
       });

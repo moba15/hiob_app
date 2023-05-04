@@ -38,7 +38,7 @@ class IoBrokerSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    IoBrokerManager ioBrokerManager = context.read<Manager>().ioBrokerManager;
+    IoBrokerManager ioBrokerManager = Manager().ioBrokerManager;
     ipController.value = TextEditingValue(text: ioBrokerManager.mainIp);
     portController.value =
         TextEditingValue(text: ioBrokerManager.port.toString());
@@ -84,7 +84,7 @@ class IoBrokerSettingsView extends StatelessWidget {
                         TextStyle(color: Theme.of(context).colorScheme.error));
                 break;
               case ConnectionStatus.disconnected:
-                text = Text("Disconnected",
+                text = Text("Disconnected", 
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.error));
                 break;

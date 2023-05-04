@@ -29,7 +29,7 @@ enum ConnectionStatus {
 
 extension ConnectionStatusExtension on ConnectionStatus {
   bool get isConnected {
-    return this == ConnectionStatus.connected;
+    return this == ConnectionStatus.connected || this == ConnectionStatus.loggedIn;
   }
 }
 
@@ -158,6 +158,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void close() async {
+    debugPrint("Close");
     await _webSocketStreamSub?.cancel();
     await _webSocket?.sink.close();
     connectionStatusStreamController.add(ConnectionStatus.disconnected);
@@ -165,6 +166,9 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void onDone() async {
+
+    debugPrint("Done");
+
     ioBrokerManager.connected = false;
     connectionStatusStreamController.add(ConnectionStatus.disconnected);
 

@@ -6,7 +6,10 @@ import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/view/main/main_screen.dart';
 import 'package:smart_home/utils/theme.dart';
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class App extends MaterialApp {
+
   App(
       {Key? key,
       required Manager manager,
@@ -18,6 +21,7 @@ class App extends MaterialApp {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
+            navigatorKey: navigatorKey,
             supportedLocales: [
 
               const Locale('en', ''),

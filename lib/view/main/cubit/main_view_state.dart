@@ -7,8 +7,8 @@ abstract class MainViewState  {
 }
 
 class MainViewStateInitial extends MainViewState {
-  const MainViewStateInitial(): super(connectionStatus: ConnectionStatus.disconnected, screens:  const []);
+  const MainViewStateInitial({ required ConnectionStatus connectionStatus}): super(connectionStatus: connectionStatus, screens:  const []);
 }
 class MainViewStateLoaded extends MainViewState{
-  const MainViewStateLoaded({required List<Screen> screens, ConnectionStatus connectionStatus = ConnectionStatus.disconnected}) : super(connectionStatus: connectionStatus, screens: screens );
+  const MainViewStateLoaded({required List<Screen> screens, required ConnectionStatus connectionStatus}) : super(connectionStatus: connectionStatus, screens: screens );
 }
