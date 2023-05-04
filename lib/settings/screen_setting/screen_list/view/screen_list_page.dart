@@ -5,7 +5,7 @@ import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/screen/view/screen_tile.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../utils/list_status.dart';
 
 class ScreenListPage extends StatelessWidget {
@@ -134,7 +134,7 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Screen"),
+        title: Text(AppLocalizations.of(context)!.screenSettings),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: save,
