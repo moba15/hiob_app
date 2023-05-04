@@ -49,10 +49,10 @@ class IoBrokerSettingsView extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                margin: const EdgeInsets.only(left: 20.0, right: 10.0, top:15),
                 child: TextField(
                   onChanged: (v) => {ioBrokerManager.changeIp(v)},
-                  decoration: const InputDecoration(labelText: "IP"),
+                  decoration: const InputDecoration(labelText: "IP"), 
                   controller: ipController,
                 ),
               ),
@@ -60,7 +60,7 @@ class IoBrokerSettingsView extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                margin: const EdgeInsets.only(right: 20.0, top:15),
                 child: TextField(
                   decoration: const InputDecoration(labelText: "Port"),
                   onChanged: (v) => {ioBrokerManager.changePort(int.parse(v))},

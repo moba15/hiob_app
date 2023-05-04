@@ -6,7 +6,7 @@ import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/view/main/main_screen.dart';
 import 'package:smart_home/utils/theme.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class App extends MaterialApp {
   App(
       {Key? key,
@@ -15,6 +15,7 @@ class App extends MaterialApp {
       : super(
             key: key,
             localizationsDelegates: [
+              AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
@@ -25,7 +26,9 @@ class App extends MaterialApp {
             ],
             navigatorKey: Manager.navigatorKey,
 
+
             theme: ThemeData.light(useMaterial3: true),
+
             darkTheme: Material3Theme.darkMaterial3Theme,
             home: RepositoryProvider<Manager>.value(
                 value: manager,

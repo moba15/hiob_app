@@ -12,6 +12,9 @@ import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import '../../../../customwidgets/custom_widget.dart';
 import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
 
@@ -118,7 +121,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
                 child: TextField(
                   controller: nameController,
                   decoration: const InputDecoration(
@@ -128,7 +131,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+                  margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10, bottom: 5),
                   child: IconPickerTemplate(
                     onChange: (IconData? iconData) {
                       currentIconData = iconData;
@@ -142,10 +145,10 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                   });
                 },
                 value: enabled ?? true,
-                title: Text("Enabled"),
+                title: Text(AppLocalizations.of(context)!.enabled),
                 secondary: enabled == true || enabled == null
-                    ? Icon(Icons.visibility)
-                    : Icon(Icons.visibility_off),
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
               ),
               Expanded(
                   child: Padding(
@@ -237,20 +240,20 @@ class _SaveDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Changes not saved"),
+      title: Text(getAppLocalizations(context).not_saved_alert_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          Text("Do you want exit without exit!"),
+        children: [
+          Text(getAppLocalizations(context).want_to_exit_alert),
         ],
       ),
       actions: [
         TextButton(
             onPressed: () => {Navigator.pop(context), cancel()},
-            child: const Text("Exit")),
+            child: Text(getAppLocalizations(context).exit)),
         TextButton(
             onPressed: () => {Navigator.pop(context), onSave()},
-            child: const Text("Save")),
+            child: Text(getAppLocalizations(context).save)),
       ],
     );
   }
@@ -279,10 +282,10 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
     templates.removeWhere(
         (element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
-      title: const Text("Select Widget Template"),
+      title: Text(AppLocalizations.of(context)!.select_widget_template_alert_title),
       actions: [
-        TextButton(onPressed: cancel, child: const Text("Cancel")),
-        TextButton(onPressed: add, child: const Text("Add")),
+        TextButton(onPressed: cancel, child: Text(getAppLocalizations(context).cancel)),
+        TextButton(onPressed: add, child: Text(getAppLocalizations(context).add)),
       ],
       content: SizedBox(
         child: Column(
@@ -350,14 +353,14 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: const Text("Select Widget Template"),
+        title:  Text(getAppLocalizations(context).add_group_alert_title),
         actions: [
-          TextButton(onPressed: cancel, child: const Text("Cancel")),
-          TextButton(onPressed: add, child: const Text("Add")),
+          TextButton(onPressed: cancel, child: Text(getAppLocalizations(context).cancel)),
+          TextButton(onPressed: add, child: Text(getAppLocalizations(context).add)),
         ],
         content: TextField(
           controller: _nameController,
-          decoration: const InputDecoration(labelText: "Group Name"),
+          decoration: InputDecoration(labelText: getAppLocalizations(context).group_name),
         ));
   }
 
@@ -399,19 +402,19 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
             return Dismissible(
                 background: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 secondaryBackground: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 direction: DismissDirection.endToStart,
                 onDismissed: (d) => screen.removeWidgetTemplate(
@@ -443,11 +446,11 @@ class _AddDivisionLineTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Add Divider"),
+      title:  Text(getAppLocalizations(context).add_divider_alert_title),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
+          child:  Text(getAppLocalizations(context).cancel),
         ),
         TextButton(
           onPressed: () {
@@ -455,13 +458,13 @@ class _AddDivisionLineTemplate extends StatelessWidget {
                 thickness: thickness,
                 name: 'Line (t: ' + thickness.toString() + ")"));
           },
-          child: const Text("Add"),
+          child: Text(getAppLocalizations(context).add),
         )
       ],
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text("Thickness"),
+          Text(getAppLocalizations(context).thickness),
           StatefulBuilder(
             builder: (context, setState) {
               int value = thickness;

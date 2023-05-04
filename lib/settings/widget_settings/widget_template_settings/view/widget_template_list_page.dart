@@ -5,6 +5,7 @@ import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/widget_template_list_cubit.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
+import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 import '../../../../customwidgets/templates/custom_widget_template.dart';
 import '../../../../customwidgets/view/custom_widget_tile.dart';
@@ -20,7 +21,7 @@ class WidgetTemplateListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Widget Templates"),
+        title: Text(getAppLocalizations(context).template_widget_settings_page_title),
         actions: [
           IconButton(
               onPressed: () {
@@ -80,8 +81,8 @@ class TemplatesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return templates.isEmpty
-        ? const Center(
-            child: Text("Es konnten keine Widget Templates gefunden werden"),
+        ? Center(
+            child: Text(getAppLocalizations(context).no_templates_found),
           )
         : ListView(
             children: [
@@ -90,35 +91,31 @@ class TemplatesView extends StatelessWidget {
                 if (templates
                     .any((element) => element.customWidget.type == type))
                   ExpansionTile(
-                    title: Text(type.name +
-                        " (" +
-                        templates
+                    title: Text("${type.name} (${templates
                             .where(
                                 (element) => element.customWidget.type == type)
-                            .length
-                            .toString() +
-                        ")"),
+                            .length})"),
                     children: [
                       for (CustomWidgetTemplate t in templates.where(
                           (element) => element.customWidget.type == type))
                         Dismissible(
                           background: Container(
                             color: Colors.red,
+                            alignment: Alignment.centerLeft,
                             child: Container(
-                              child: const Icon(Icons.delete_forever),
                               margin: const EdgeInsets.only(
                                   left: 10.0, right: 20.0),
+                              child: const Icon(Icons.delete_forever),
                             ),
-                            alignment: Alignment.centerLeft,
                           ),
                           secondaryBackground: Container(
                             color: Colors.red,
+                            alignment: Alignment.centerRight,
                             child: Container(
-                              child: const Icon(Icons.delete_forever),
                               margin: const EdgeInsets.only(
                                   left: 10.0, right: 20.0),
+                              child: const Icon(Icons.delete_forever),
                             ),
-                            alignment: Alignment.centerRight,
                           ),
                           direction: DismissDirection.endToStart,
                           key: ValueKey(t),

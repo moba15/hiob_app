@@ -8,7 +8,7 @@ import 'package:smart_home/settings/view/screen_setting_screen.dart';
 
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
 import 'device_setting_screen.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MainSettingsScreen extends StatelessWidget {
   final Manager manager;
 
@@ -17,13 +17,14 @@ class MainSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: const Text("Settings"),
       ),
       body: ListView(
         children: [
           ListTile(
-            title: const Text("Screen Settings"),
+            title: Text(AppLocalizations.of(context)!.settings_page_screen_setting),
             leading: const Icon(Icons.add_to_home_screen_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -36,7 +37,7 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("Widget Settings"),
+            title: Text(AppLocalizations.of(context)!.settings_page_widget_setting),
             leading: const Icon(Icons.widgets_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -49,7 +50,7 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("Device Settings"),
+            title: Text(AppLocalizations.of(context)!.settings_page_device_setting),
             leading: const Icon(Icons.device_unknown),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -62,7 +63,7 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("IoBroker Settings"),
+            title: Text(AppLocalizations.of(context)!.settings_page_iobroker_settings),
             leading: const Icon(Icons.stream),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -77,7 +78,7 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("General Settings"),
+            title: Text(AppLocalizations.of(context)!.settings_page_general_settings),
             leading: const Icon(Icons.settings_rounded),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -92,7 +93,7 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("Config Sync (WORK IN PROGRESS)"),
+            title: Text(AppLocalizations.of(context)!.settings_page_config_sync),
             leading: const Icon(Icons.cloud),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -110,7 +111,7 @@ class MainSettingsScreen extends StatelessWidget {
               showLicensePage(
                   context: context,
                   applicationName: "HIoB",
-                  applicationVersion: "0.1",
+                  applicationVersion: "0.4",
                   applicationLegalese: "LICENCE MIT",
                   applicationIcon: const Icon(Icons.smartphone_sharp))
             },

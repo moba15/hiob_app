@@ -15,7 +15,7 @@ class ScreenListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Screen Settings"),
+        title: Text(AppLocalizations.of(context)!.screenSettingsPageTitle),
         actions: [
           IconButton(
               onPressed: () {
@@ -83,19 +83,19 @@ class ScreensView extends StatelessWidget {
             itemBuilder: (BuildContext c, int index) => Dismissible(
               background: Container(
                 color: Colors.red,
-                child: Container(
-                  child: const Icon(Icons.delete_forever),
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                ),
                 alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
               ),
               secondaryBackground: Container(
                 color: Colors.red,
-                child: Container(
-                  child: const Icon(Icons.delete_forever),
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                ),
                 alignment: Alignment.centerRight,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
               ),
               direction: DismissDirection.endToStart,
               onDismissed: (d) =>
@@ -134,7 +134,7 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.screenSettings),
+        title: Text(AppLocalizations.of(context)!.screenAddPageTitle),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: save,

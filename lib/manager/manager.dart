@@ -66,7 +66,7 @@ class Manager {
   var random = Random();
 
   Future<void> load() async {
-    deviceInfo.androidInfo.then((value) => androidInfo = value);
+    androidInfo = await deviceInfo.androidInfo!;
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref, manager: this);

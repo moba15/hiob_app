@@ -7,6 +7,7 @@ import 'package:smart_home/ioBroker/enum/enum.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 import '../../../../device/device.dart';
 import '../../../../device/iobroker_device.dart';
@@ -21,7 +22,7 @@ class DeviceListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Device Settings"),
+        title: Text(getAppLocalizations(context).settings_page_device_setting),
         actions: [
           IconButton(
               onPressed: () {
@@ -82,8 +83,8 @@ class DeviceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return devices.isEmpty
-        ? const Center(
-            child: Text("No Device yet"),
+        ? Center(
+            child: Text(getAppLocalizations(context).no_device_found),
           )
         : ListView.builder(
             itemCount: devices.length,
@@ -107,7 +108,6 @@ class DeviceView extends StatelessWidget {
                 ),
                 direction: DismissDirection.endToStart,
                 key: ValueKey<Device>(devices[index]),
-                child: DeviceTileApp(device: devices[index]),
                 dragStartBehavior: DragStartBehavior.down,
                 onDismissed: (direction) => {
                   context
@@ -115,6 +115,7 @@ class DeviceView extends StatelessWidget {
                       .deviceManager
                       .removeDevice(devices[index])
                 },
+                child: DeviceTileApp(device: devices[index]),
               );
             },
           );
@@ -186,7 +187,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Device"),
+        title: Text(getAppLocalizations(context).device_add_page_title),
         actions: [
           IconButton(
               onPressed: () {
@@ -203,7 +204,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
         child: ListView(
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0, top:10),
               child: TextField(
                 controller: nameController,
                 decoration: const InputDecoration(labelText: "Name"),

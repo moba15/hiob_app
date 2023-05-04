@@ -7,6 +7,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 import '../../../../manager/customise_manager.dart';
 
@@ -55,10 +56,10 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   Widget mainScreen(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Edit Template"),
+          title: Text(getAppLocalizations(context).edit_template_page_title),
           actions: [
             IconButton(
-                tooltip: "Help: " + (_selectedType?.name ?? ""),
+                tooltip: "Help: ${_selectedType?.name ?? ""}",
                 onPressed: () {
                   if (_customWidgetSettingWidget != null) {
                     ShowCaseWidget.of(context)
@@ -96,7 +97,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         body: ListView(
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 20, right: 20),
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: DropdownButtonFormField<CustomWidgetType>(
                 items: [
                   for (CustomWidgetType c in CustomWidgetType.values.where(
@@ -104,8 +105,8 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                           value != CustomWidgetType.group &&
                           value != CustomWidgetType.alertDialog))
                     DropdownMenuItem(
-                      child: Text(c.name),
                       value: c,
+                      child: Text(c.name),
                     )
                 ],
                 value: _selectedType,
@@ -258,20 +259,20 @@ class _SaveDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Changes not saved"),
+      title: Text(getAppLocalizations(context).not_saved_alert_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          Text("Do you want exit without saving!"),
+        children: [
+          Text(getAppLocalizations(context).want_to_exit_alert),
         ],
       ),
       actions: [
         TextButton(
             onPressed: () => {Navigator.pop(context), cancel()},
-            child: const Text("Exit")),
+            child: Text(getAppLocalizations(context).exit)),
         TextButton(
             onPressed: () => {Navigator.pop(context), onSave()},
-            child: const Text("Save")),
+            child: Text(getAppLocalizations(context).save)),
       ],
     );
   }
