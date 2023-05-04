@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
-
+import 'package:smart_home/utils/app_locallization_shortcut.dart';
+/*
+Translation status: 100%
+ */
 class GeneralSettingsPage extends StatelessWidget {
   const GeneralSettingsPage({Key? key}) : super(key: key);
 
@@ -9,7 +12,7 @@ class GeneralSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("General Settings"),
+        title: Text(getAppLocalizations(context).settings_page_general_settings),
         actions: [
           IconButton(
             onPressed: () =>
@@ -32,7 +35,7 @@ class _GeneralSettingsView extends StatelessWidget {
     return ListView(
       children: [
         ListTile(
-          title: const Text("Export"),
+          title: Text(getAppLocalizations(context).export),
           trailing: IconButton(
             icon: const Icon(Icons.import_export),
             onPressed: () => {
@@ -44,7 +47,7 @@ class _GeneralSettingsView extends StatelessWidget {
           },
         ),
         ListTile(
-          title: const Text("Import"),
+          title: Text(getAppLocalizations(context).import),
           trailing: IconButton(
             icon: const Icon(Icons.import_export),
             onPressed: () => {
@@ -64,11 +67,11 @@ class _GeneralSettingsView extends StatelessWidget {
                   manager.generalManager.updateVibrateEnabled(v);
                 });
               },
-              title: const Text("Extra Vibration"),
+              title: Text(getAppLocalizations(context).vibration),
             );
           },
         ),
-        _DeviceInfo()
+        const _DeviceInfo()
       ],
     );
   }
@@ -80,7 +83,7 @@ class _DeviceInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20),
+      margin: const EdgeInsets.only(left: 5, right: 5, top: 10),
       child: Column(
         children: [
           Row(
@@ -88,19 +91,20 @@ class _DeviceInfo extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: TextFormField(
+                  enabled: false,
                   initialValue: Manager.instance!.androidInfo.model,
-                  decoration: const InputDecoration(labelText: "Device Name"),
+                  decoration: InputDecoration(labelText: getAppLocalizations(context).device_name),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 10, right: 10),
+                margin: const EdgeInsets.only(left: 10, right: 5),
               ),
               Expanded(
                 flex: 1,
                 child: TextFormField(
                   enabled: false,
                   initialValue: Manager.instance!.androidInfo.id,
-                  decoration: const InputDecoration(labelText: "Device ID"),
+                  decoration: InputDecoration(labelText: getAppLocalizations(context).device_id),
                 ),
               )
             ],

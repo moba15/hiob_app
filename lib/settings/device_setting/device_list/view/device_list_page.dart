@@ -14,7 +14,9 @@ import '../../../../device/iobroker_device.dart';
 import '../../../../device/view/device_tile.dart';
 import '../../../../utils/list_status.dart';
 import '../cubit/device_list_cubit.dart';
-
+/*
+  Translation status: 100%
+ */
 class DeviceListPage extends StatelessWidget {
   const DeviceListPage({Key? key}) : super(key: key);
 
@@ -219,7 +221,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
-              child: const Text("Data Points:", style: TextStyle(fontSize: 17)),
+              child: Text(getAppLocalizations(context).data_points, style: const TextStyle(fontSize: 17)),
             ),
             for (DataPoint dataPoint in dataPoints)
               Dismissible(
@@ -261,7 +263,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                         .add(DataPoint(name: "name", device: null, id: "id"));
                   });
                 },
-                child: const Text("Add Data Point Man."),
+                child: Text(getAppLocalizations(context).add_data_point),
               ),
             ),
             Center(
@@ -278,7 +280,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                                 onSelected: onSelected,
                               )));
                 },
-                child: const Text("Add Enum from IoB."),
+                child: Text(getAppLocalizations(context).add_enum),
               ),
             ),
           ],

@@ -18,7 +18,9 @@
 
   "edit_template_page_title": "Edit Template",
   "@_TEMPLATE_SETTINGS": {},
-  "no_templates_found": "There are no Widget Templates",
+  "no_templates_found": "There are no Widget templates",
+  "add_data_point": "Add data point man.",
+  "add_enum": "Add Enum",
 
 
 
@@ -29,6 +31,15 @@
   "settings_page_general_settings": "General Settings",
   "settings_page_config_sync": "Config Sync",
 
+
+
+  "@_GENERAL_SETTINGS": {},
+  "general_settings_page_title": "General settings",
+  "export": "Export",
+  "import": "Import",
+  "vibration": "Vibration",
+  "device_name": "Device name",
+  "device_id": "device_id",
 
 
   "@_ALERTS": {},
@@ -49,7 +60,8 @@
   "cancel": "Cancel",
   "thickness": "Thickness",
   "exit": "Exit",
-  "save": "Save"
+  "save": "Save",
+  "data_points": "Data points"
 
 
 
