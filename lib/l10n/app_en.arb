@@ -1,3 +1,10 @@
 {
-  "screenSettings": "Screen Settings"
+  "screenSettingsPageTitle": "Screen Settings",
+  "@screenSettingsPageTitle": {
+    "description": "Title of the Screen (listing) Settings Page"
+  },
+  "screenAddPageTitle": "Add Screen",
+  "@screenAddPageTitle": {
+    "description": "Title of the Screen Add Page"
+  }
 }
