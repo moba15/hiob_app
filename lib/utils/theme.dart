@@ -5,12 +5,30 @@ extension Material3Theme on ThemeData {
     ThemeData themeData = ThemeData.dark(useMaterial3: true).copyWith(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.dark),
+      
       inputDecorationTheme: const InputDecorationTheme(
         contentPadding: EdgeInsets.all(20),
         border: OutlineInputBorder(
 
         )
       )
+
+    );
+
+    return themeData;
+  }
+
+
+  static ThemeData get lightMaterial3Theme {
+    ThemeData themeData = ThemeData.light(useMaterial3: true).copyWith(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.light),
+        inputDecorationTheme: const InputDecorationTheme(
+            contentPadding: EdgeInsets.all(20),
+            border: OutlineInputBorder(
+
+            )
+        )
 
     );
 

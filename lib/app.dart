@@ -27,7 +27,7 @@ class App extends MaterialApp {
             navigatorKey: Manager.navigatorKey,
 
 
-            theme: ThemeData.light(useMaterial3: true),
+            theme: Material3Theme.lightMaterial3Theme,
 
             darkTheme: Material3Theme.darkMaterial3Theme,
             home: RepositoryProvider<Manager>.value(

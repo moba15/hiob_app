@@ -68,7 +68,11 @@ class FileManager {
   }
 
   Future<Map<String, dynamic>?> getMap(String key) async {
-    return jsonDecode(pref.getString(key)!);
+    if(pref.getString(key) != null) {
+
+      return jsonDecode(pref.getString(key)!);
+    }
+    return null;
   }
 
   Future<List<dynamic>?> getList(String key) async {

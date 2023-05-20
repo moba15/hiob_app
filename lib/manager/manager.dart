@@ -15,14 +15,13 @@ import 'package:smart_home/manager/history/history_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
+import 'package:smart_home/manager/theme/theme_manager.dart';
 
 class Manager {
   static final Manager instance = Manager._internal(versionNumber: "1.3", buildNumber: "100");
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  factory Manager() {
-    return instance;
-  }
+  factory Manager() => instance;
 
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   late AndroidDeviceInfo androidInfo;
@@ -51,6 +50,8 @@ class Manager {
   StreamSubscription? subscription7;
 
   late SettingsSyncManager settingsSyncManager;
+
+  late ThemeManager themeManager;
 
   ManagerStatus status = ManagerStatus.loading;
 
@@ -94,6 +95,8 @@ class Manager {
     settingsSyncManager = SettingsSyncManager(
         connectionManager: connectionManager, fileManager: fileManager)
       ..loadSettings();
+
+    themeManager = ThemeManager(manager: this)..loadTheme();
 
     subscription1 =
         customWidgetManager.templatesStreamController.stream.listen((event) {

@@ -53,7 +53,6 @@
   "group_name": "Group Name",
 
 
-
   "@_COMMON": {},
   "enabled": "Enabled",
   "add": "Add",
@@ -61,14 +60,9 @@
   "thickness": "Thickness",
   "exit": "Exit",
   "save": "Save",
-  "data_points": "Data points"
+  "data_points": "Data points",
 
 
 
-
-
-
-
-
-
+  "custom_theme_settings_page_title": "Custom Theme Settings"
 }
