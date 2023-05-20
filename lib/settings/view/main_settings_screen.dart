@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/custom_theme/settings/custom_theme_settings_page.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
 import 'package:smart_home/settings/general_settings/view/general_settings_page.dart';
@@ -100,6 +101,17 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ConfigSettingsPage()),
+              )
+            },
+          ),
+          ListTile(
+            title: Text(AppLocalizations.of(context)!.custom_theme_settings_page_title),
+            leading: const Icon(Icons.color_lens),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CustomThemeSettingsPage()),
               )
             },
           ),
