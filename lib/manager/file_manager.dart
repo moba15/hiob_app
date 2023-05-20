@@ -55,14 +55,6 @@ class FileManager {
     return pref.getString(key);
   }
 
-  Future<bool?> getBool(String key) async {
-    return pref.getBool(key);
-  }
-
-  Future<double?> getDouble(String key) async {
-    return pref.getDouble(key);
-  }
-
   Future<int?> getInt(String key) async {
     return pref.getInt(key);
   }
