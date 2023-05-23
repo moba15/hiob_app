@@ -20,6 +20,9 @@ class ThemeManager {
 
   }
 
+
+
+
   Future<bool> changeTheme({required CustomTheme customTheme}) async {
     _loadedCustomTheme = customTheme;
     manager.fileManager.writeJSON("customTheme", _loadedCustomTheme.toJson());

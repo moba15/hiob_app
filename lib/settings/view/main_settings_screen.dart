@@ -111,7 +111,10 @@ class MainSettingsScreen extends StatelessWidget {
             onTap: () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CustomThemeSettingsPage()),
+                MaterialPageRoute(builder: (context) =>  RepositoryProvider<Manager>.value(
+                  value: Manager(),
+                  child: const CustomThemeSettingsPage(),
+                )),
               )
             },
           ),
