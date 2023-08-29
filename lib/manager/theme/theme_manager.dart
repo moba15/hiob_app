@@ -5,7 +5,7 @@ import 'package:smart_home/manager/manager.dart';
 
 class ThemeManager {
   final Manager manager;
-  CustomTheme _loadedCustomTheme = Material3DarkCustomTheme();
+  CustomTheme _loadedCustomTheme = CustomTheme(customThemeBrightness: CustomThemeBrightness.system, customThemeMaterialVersion: CustomThemeMaterialVersion.material3);
   final StreamController<CustomTheme> _themeStreamSubscription = StreamController<CustomTheme>.broadcast();
 
   ThemeManager({required this.manager});
@@ -19,6 +19,9 @@ class ThemeManager {
 
 
   }
+
+
+
 
   Future<bool> changeTheme({required CustomTheme customTheme}) async {
     _loadedCustomTheme = customTheme;

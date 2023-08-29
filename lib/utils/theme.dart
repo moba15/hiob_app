@@ -20,13 +20,13 @@ extension Material3Theme on ThemeData {
 
 
   static ThemeData get lightMaterial3Theme {
-    ThemeData themeData = ThemeData.dark(useMaterial3: true).copyWith(
+    ThemeData themeData = ThemeData.light(useMaterial3: true).copyWith(
         useMaterial3: true,
         appBarTheme: AppBarTheme(
           elevation: 10,
 
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.dark),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.light),
         inputDecorationTheme: const InputDecorationTheme(
             contentPadding: EdgeInsets.all(20),
             border: OutlineInputBorder(
