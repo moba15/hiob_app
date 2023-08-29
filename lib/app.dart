@@ -20,8 +20,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CustomThemeCubit, CustomThemeState>(
-      bloc: CustomThemeCubit(manager),
+      bloc: CustomThemeCubit(manager: manager)..loadTheme(),
       builder: (context, state) {
+        debugPrint("Change Theme");
         return MaterialApp(
             key: key,
             localizationsDelegates: const [
@@ -35,9 +36,9 @@ class App extends StatelessWidget {
             ],
             navigatorKey: Manager.navigatorKey,
 
-            theme: Material3Theme.lightMaterial3Theme,
+            theme: state.customTheme.themeDataLight,
             themeMode: state.customTheme.customThemeBrightness.themeMode,
-            darkTheme: Material3Theme.darkMaterial3Theme,
+            darkTheme: state.customTheme.themeDataDark,
             home: RepositoryProvider<Manager>.value(
                 value: manager,
                 child: BlocProvider(

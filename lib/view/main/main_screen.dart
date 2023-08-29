@@ -205,7 +205,8 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            body: screens.length == 0
+
+            body: screens.isEmpty
                 ? const Text("null")
                 : TabBarView(
                     controller: _tabController,

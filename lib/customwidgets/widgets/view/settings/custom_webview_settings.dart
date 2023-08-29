@@ -92,9 +92,9 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
                 Expanded(
                   child: Slider(
                     value: widget.customWebViewWidget.height.toDouble(),
-                    max: 1000,
+                    max: 2000,
                     min: 100,
-                    divisions: 18,
+                    divisions: 76,
                     onChanged: (d) {
                       setState(() {
                         widget.customWebViewWidget.height = d.round();

@@ -6,7 +6,7 @@ import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list
 
 import '../screen.dart';
 
-class ScreenTabBarPage extends StatelessWidget with PreferredSizeWidget {
+class ScreenTabBarPage extends StatelessWidget {
   final Manager manager;
 
   const ScreenTabBarPage({Key? key, required this.manager}) : super(key: key);
