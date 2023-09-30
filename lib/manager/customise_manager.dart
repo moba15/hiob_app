@@ -86,7 +86,6 @@ class CustomWidgetManager {
           break;
         case CustomWidgetType.group:
         case CustomWidgetType.alertDialog:
-
           continue;
         case CustomWidgetType.simpleValue:
           customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);

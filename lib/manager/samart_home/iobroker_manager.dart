@@ -33,6 +33,8 @@ class IoBrokerManager {
   String knownNetwork = "";
   String secondaryAddress = "";
 
+  bool usePwd = true;
+
 
   DateTime? lastEnumUpdate;
   List<Enum> enums = [];
@@ -53,6 +55,8 @@ class IoBrokerManager {
       knownNetwork = settings?["knownNetwork"] ?? "";
       secondaryAddress = settings?["secondaryAddress"] ?? "";
       useSecondaryAddress = settings?["useSecondaryAddress"] ?? false;
+
+      usePwd = settings?["usePWD"] ?? true;
 
     } else {
       mainIp =  "10.0.2.2";
@@ -79,19 +83,15 @@ class IoBrokerManager {
 
   void changeIp(String ip) async {
     this.mainIp = ip;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress
-    });
+    _save();
   }
 
   void changePort(int port) async {
     this.port = port;
+    await _save();
+  }
+
+  Future<void> _save() async {
     await fileManager.writeJSON(key, {
       "ip": mainIp,
       "port": port,
@@ -99,75 +99,44 @@ class IoBrokerManager {
       "password": password,
       "knownNetwork": knownNetwork,
       "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress
+      "useSecondaryAddress": useSecondaryAddress,
+      "usePWD": usePwd
     });
   }
 
 
   void changeUser(String user) async {
     this.user = user;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress
-    });
+    _save();
   }
 
   void changePassword(String password) async {
     this.password = password;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress":useSecondaryAddress
-    });
+    _save();
   }
 
   void changeKnownNetwork(String knownNetwork) async {
     this.knownNetwork = knownNetwork;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-    });
+    _save();
   }
 
   void changeSecondaryAddress(String secondaryAddress) async {
     this.secondaryAddress = secondaryAddress;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-    });
+    _save();
   }
 
 
   void changeUseSecondaryAddress(bool useSecondaryAddress) async {
     this.useSecondaryAddress = useSecondaryAddress;
-    await fileManager.writeJSON(key, {
-      "ip": mainIp,
-      "port": port,
-      "user": user,
-      "password": password,
-      "knownNetwork": knownNetwork,
-      "secondaryAddress": secondaryAddress,
-      "useSecondaryAddress": useSecondaryAddress,
-    });
+    _save();
+  }
+
+  void changeUsePWD(bool usePwd) async {
+    print("Change " + usePwd.toString());
+    this.usePwd = usePwd;
+    _save();
+
+    print("MAP: ${jsonEncode(await fileManager.getMap(key))}");
   }
 
 
@@ -193,6 +162,7 @@ class IoBrokerManager {
 
 
       List<dynamic> enumsListRaw = rawData["enums"];
+      print("Enums raw:" + enumsListRaw.toString());
      // FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"].toString());
       FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "enumsListRaw: " + encoder.convert(enumsListRaw));
       for (Map<String, dynamic> enumRaw in enumsListRaw) {
@@ -233,6 +203,10 @@ class IoBrokerManager {
       if(e.dataPointMembers.isNotEmpty) {
         if(!deviceManager.devicesList.any((element) => element.name == e.name)) {
           IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
+          print("Add new Device: ");
+          for(DataPoint e in e.dataPointMembers.toList()) {
+            print(e.otherDetails.toString());
+          }
           device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
 
@@ -245,11 +219,13 @@ class IoBrokerManager {
                 device.dataPoints?.add(d..device = device);
                 deviceManager.editDevice(device);
               } else {
+
                 DataPoint dataPoint = device.dataPoints!.firstWhere((element) => element.id == d.id);
                 dataPoint.otherDetails = d.otherDetails;
                 dataPoint.name = d.name;
                 dataPoint.type = d.type;
                 dataPoint.role = d.role;
+
                 deviceManager.editDevice(device);
 
               }
@@ -289,5 +265,9 @@ class IoBrokerManager {
     }
 
     deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
+
+    for(Device d   in deviceManager.devicesList) {
+      print((d as IoBrokerDevice).toJson());
+    }
   }
 }

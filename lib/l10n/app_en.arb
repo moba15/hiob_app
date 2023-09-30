@@ -1,3 +1,68 @@
 {
-  "screenSettings": "Screen Settings"
+  "screenSettingsPageTitle": "Screen Settings",
+  "@screenSettingsPageTitle": {
+    "description": "Title of the Screen (listing) Settings Page"
+  },
+  "screenAddPageTitle": "Add Screen",
+  "@screenAddPageTitle": {
+    "description": "Title of the Screen Add Page"
+  },
+
+  "template_widget_settings_page_title": "Widget Templates",
+
+
+  "@_DEVICE_SETTINGS": {},
+  "device_settings_page_title": "Device Settings",
+  "device_add_page_title": "Add Device",
+  "no_device_found": "There are no Devices",
+
+  "edit_template_page_title": "Edit Template",
+  "@_TEMPLATE_SETTINGS": {},
+  "no_templates_found": "There are no Widget templates",
+  "add_data_point": "Add data point man.",
+  "add_enum": "Add Enum",
+
+
+
+  "settings_page_screen_setting": "Screen Settings",
+  "settings_page_widget_setting": "Template Settings",
+  "settings_page_device_setting": "Device Settings",
+  "settings_page_iobroker_settings": "IoBroker Settings",
+  "settings_page_general_settings": "General Settings",
+  "settings_page_config_sync": "Config Sync",
+
+
+
+  "@_GENERAL_SETTINGS": {},
+  "general_settings_page_title": "General settings",
+  "export": "Export",
+  "import": "Import",
+  "vibration": "Vibration",
+  "device_name": "Device name",
+  "device_id": "device_id",
+
+
+  "@_ALERTS": {},
+  "select_widget_template_alert_title": "Select Widget Template",
+  "add_group_alert_title": "Add Group",
+  "add_divider_alert_title": "Add Divider",
+  "not_saved_alert_title": "Changes not saved",
+  "want_to_exit_alert": "Do you want to exit without save",
+
+  "@_INPUT_FIELD": {},
+  "group_name": "Group Name",
+
+
+  "@_COMMON": {},
+  "enabled": "Enabled",
+  "add": "Add",
+  "cancel": "Cancel",
+  "thickness": "Thickness",
+  "exit": "Exit",
+  "save": "Save",
+  "data_points": "Data points",
+
+
+
+  "custom_theme_settings_page_title": "Custom Theme Settings"
 }

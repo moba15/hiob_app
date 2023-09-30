@@ -2,10 +2,10 @@ part of 'device_bloc.dart';
 
 abstract class DeviceEvent extends Equatable {
   const DeviceEvent();
+
   @override
   List<Object?> get props => [];
 }
-
 
 class DeviceValueUpdate extends DeviceEvent {
   final dynamic value;
@@ -21,5 +21,6 @@ class DeviceValueUpdateRequest extends DeviceEvent {
 
 class DeviceIdle extends DeviceEvent {
   final DateTime lastUpdated;
+
   const DeviceIdle({required this.lastUpdated});
 }

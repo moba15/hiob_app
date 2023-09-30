@@ -1,6 +1,6 @@
 part of 'manager_cubit.dart';
 
-enum ManagerStatus { finished, loading , changeLog}
+enum ManagerStatus { finished, loading, changeLog }
 
 class ManagerState extends Equatable {
   ManagerStatus status;

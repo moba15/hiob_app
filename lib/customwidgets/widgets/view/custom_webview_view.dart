@@ -13,10 +13,29 @@ class CustomWebViewView extends StatefulWidget {
 
 class _CustomWebViewViewState extends State<CustomWebViewView> {
   late BlocListener _blocListener;
-  WebViewController? _webViewController;
+  late WebViewController _webViewController;
   
   @override
   void initState() {
+    if(widget.customWebViewWidget.dataPoint != null) {
+      _webViewController = WebViewController()
+      ..setJavaScriptMode(widget.customWebViewWidget.javaScript ? JavaScriptMode.unrestricted : JavaScriptMode.disabled)
+      ..loadRequest(Uri.parse(widget.customWebViewWidget.dataPoint!.value.toString()));
+    } else {
+      if(widget.customWebViewWidget.url.toString().startsWith("https://") || widget.customWebViewWidget.url.toString().startsWith("http://")) {
+        _webViewController = WebViewController()
+          ..setJavaScriptMode(
+              widget.customWebViewWidget.javaScript ? JavaScriptMode
+                  .unrestricted : JavaScriptMode.disabled)
+          ..loadRequest(Uri.parse(widget.customWebViewWidget.url ?? ""));
+      } else {
+        _webViewController = WebViewController()
+          ..setJavaScriptMode(
+              widget.customWebViewWidget.javaScript ? JavaScriptMode
+                  .unrestricted : JavaScriptMode.disabled)
+          ..loadRequest(Uri.parse("https://${widget.customWebViewWidget.url ?? ""}"));
+      }
+    }
 
     super.initState();
   }
@@ -24,7 +43,7 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () => _webViewController?.reload() ,
+      onLongPress: () => _webViewController.reload() ,
       child: Column(
         children: [
           if(widget.customWebViewWidget.dataPoint != null)
@@ -32,13 +51,8 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
               bloc: DataPointBloc(widget.customWebViewWidget.dataPoint!),
               child: SizedBox(
                 height: widget.customWebViewWidget.height.toDouble(),
-                child: WebView(
-                  gestureNavigationEnabled: true,
-                  javascriptMode: widget.customWebViewWidget.javaScript ? JavascriptMode.unrestricted : JavascriptMode.disabled,
-                  initialUrl: widget.customWebViewWidget.dataPoint!.value.toString(),
-                  onWebViewCreated: (controller) => {
-                    _webViewController = controller
-                  },
+                child: WebViewWidget(
+                  controller: _webViewController,
 
 
                 ),
@@ -46,22 +60,17 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
               ),
               listener: (context, state)  {
                 if(state.value.toString().startsWith("https://") || state.value.toString().startsWith("http://")) {
-                  _webViewController?.loadUrl(state.value.toString());
+                  _webViewController.loadRequest(Uri.parse(state.value.toString()));
                 } else {
-                  _webViewController?.loadUrl("https://" + state.value.toString());
+                  _webViewController.loadRequest(Uri.parse("https://" + state.value.toString()));
                 }
               },
             ),
           if(widget.customWebViewWidget.dataPoint == null)
             SizedBox(
               height: widget.customWebViewWidget.height.toDouble(),
-              child: WebView(
-                gestureNavigationEnabled: true,
-                javascriptMode: widget.customWebViewWidget.javaScript ? JavascriptMode.unrestricted : JavascriptMode.disabled,
-                initialUrl: widget.customWebViewWidget.url,
-                onWebViewCreated: (controller) => {
-                  _webViewController = controller
-                },
+              child: WebViewWidget(
+                controller: _webViewController,
 
 
               ),

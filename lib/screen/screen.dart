@@ -13,6 +13,7 @@ class Screen {
   final String name;
   final String iconID;
   final int index;
+  final bool enabled;
   List<dynamic> widgetTemplates;
 
   Screen(
@@ -20,21 +21,30 @@ class Screen {
       required this.name,
       required this.iconID,
       required this.index,
-      required this.widgetTemplates});
+      required this.widgetTemplates,
+      required this.enabled});
 
   factory Screen.fromJSON(Map<String, dynamic> json) {
     List<dynamic> widgetTemplates = [];
-    for(Map<String, dynamic> templateRaw in json["widgetIds"] is String ? jsonDecode(json["widgetIds"]) : json["widgetIds"]) {
-      if(templateRaw.containsKey("widget")) {
-        if(!Manager.instance!.customWidgetManager.templates.any((element) => element.id == templateRaw["id"])) {
+    for (Map<String, dynamic> templateRaw in json["widgetIds"] is String
+        ? jsonDecode(json["widgetIds"])
+        : json["widgetIds"]) {
+      if (templateRaw.containsKey("widget")) {
+        if (!Manager.instance!.customWidgetManager.templates
+            .any((element) => element.id == templateRaw["id"])) {
           continue;
         }
-        widgetTemplates.add(Manager.instance?.customWidgetManager.templates.firstWhere((element) => element.id == templateRaw["id"]));
+        widgetTemplates.add(Manager.instance?.customWidgetManager.templates
+            .firstWhere((element) => element.id == templateRaw["id"]));
       } else {
-        if(templateRaw["type"] == CustomWidgetType.line.toString() ) {
-          widgetTemplates.add(CustomWidgetTemplate(id: Manager.instance!.getRandString(12), name: "Line", customWidget: CustomDivisionLineWidget.fromJson(templateRaw)));
+        if (templateRaw["type"] == CustomWidgetType.line.toString()) {
+          widgetTemplates.add(CustomWidgetTemplate(
+              id: Manager.instance!.getRandString(12),
+              name: "Line",
+              customWidget: CustomDivisionLineWidget.fromJson(templateRaw)));
         } else {
-          widgetTemplates.add(CustomGroupWidget.fromJSON(templateRaw, Manager.instance!.customWidgetManager.templates ));
+          widgetTemplates.add(CustomGroupWidget.fromJSON(
+              templateRaw, Manager.instance!.customWidgetManager.templates));
         }
       }
     }
@@ -44,98 +54,103 @@ class Screen {
       name: json["name"],
       index: json["index"],
       widgetTemplates: widgetTemplates,
+      enabled: json["enabled"] ?? true,
     );
   }
 
-  Map<String, dynamic> toJson()  {
-        Map<String, dynamic> map = {
-          "id": id,
-          "name": name,
-          "iconID": iconID,
-          "index": index,
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      "id": id,
+      "name": name,
+      "iconID": iconID,
+      "index": index,
+      "enabled": enabled,
+    };
+    List<Map<String, dynamic>> widgets = [];
+    for (dynamic w in widgetTemplates) {
+      if (w is CustomGroupWidget) {
+        widgets.add(w.toJson());
+      } else if (w is CustomWidgetTemplate &&
+          w.customWidget is CustomDivisionLineWidget) {
+        widgets.add(w.customWidget.toJson());
+      } else if (w is CustomWidgetTemplate) {
+        widgets.add({
+          "widget": w.name,
+          "id": w.id,
+        });
+      }
+    }
+    map["widgetIds"] = widgets;
 
-        };
-        List<Map<String, dynamic>> widgets = [];
-        for(dynamic w in widgetTemplates) {
-          if(w is CustomGroupWidget ) {
-            widgets.add(w.toJson());
-          } else if(w is CustomWidgetTemplate && w.customWidget is CustomDivisionLineWidget) {
-            widgets.add(w.customWidget.toJson());
-          } else if(w is CustomWidgetTemplate) {
-            widgets.add({
-              "widget": w.name,
-              "id": w.id,
-            });
-
-          }
-        }
-        map["widgetIds"] = widgets;
-
-
-
-        return map;
+    return map;
   }
 
-  void addWidgetTemplate(ScreenManager screenManager, CustomWidgetTemplate customWidgetTemplate) async {
+  void addWidgetTemplate(ScreenManager screenManager,
+      CustomWidgetTemplate customWidgetTemplate) async {
     widgetTemplates.add(customWidgetTemplate);
     screenManager.update();
   }
 
-  void addWidgetTemplates(ScreenManager screenManager, List<CustomWidgetTemplate> customWidgetTemplates) async {
+  void addWidgetTemplates(ScreenManager screenManager,
+      List<CustomWidgetTemplate> customWidgetTemplates) async {
     for (CustomWidgetTemplate t in customWidgetTemplates) {
-      if(!widgetTemplates.contains(t)) {
+      if (!widgetTemplates.contains(t)) {
         widgetTemplates.add(t);
       }
     }
     screenManager.update();
   }
 
-  void addGroup(CustomGroupWidget customGroupWidget, ScreenManager screenManager) {
-    if(!widgetTemplates.contains(customGroupWidget)) {
+  void addGroup(
+      CustomGroupWidget customGroupWidget, ScreenManager screenManager) {
+    if (!widgetTemplates.contains(customGroupWidget)) {
       widgetTemplates.add(customGroupWidget);
     }
     screenManager.update();
   }
 
-
-
   void removeWidgetTemplate(ScreenManager screenManager, dynamic template) {
-    if(template is CustomWidgetTemplate) {
-      widgetTemplates
-        .removeWhere((element) => (element is CustomWidgetTemplate)  && element.id == template.id);
+    if (template is CustomWidgetTemplate) {
+      widgetTemplates.removeWhere((element) =>
+          (element is CustomWidgetTemplate) && element.id == template.id);
     } else {
-      widgetTemplates
-          .removeWhere((element) => (element is CustomGroupWidget)  && element == template);
+      widgetTemplates.removeWhere(
+          (element) => (element is CustomGroupWidget) && element == template);
     }
   }
 
-  void reorderWidgetTemplates({required int oldIndex, required int newIndex, required ScreenManager screenManager}) {
+  void reorderWidgetTemplates(
+      {required int oldIndex,
+      required int newIndex,
+      required ScreenManager screenManager}) {
     dynamic widget = widgetTemplates[oldIndex];
     int length = widgetTemplates.length;
 
-    if(length <=newIndex) {
-
+    if (length <= newIndex) {
       widgetTemplates.add(widget);
     }
     widgetTemplates.insert(newIndex, widget);
-    if(newIndex<=oldIndex) {
-      widgetTemplates.removeAt(oldIndex+1);
+    if (newIndex <= oldIndex) {
+      widgetTemplates.removeAt(oldIndex + 1);
     } else {
       widgetTemplates.removeAt(oldIndex);
     }
 
-    if(length <=newIndex) {
-
+    if (length <= newIndex) {
       widgetTemplates.removeLast();
     }
     screenManager.update();
   }
 
-  void onTemplateRemove(CustomWidgetTemplate customWidgetTemplate) {
-
-  }
+  void onTemplateRemove(CustomWidgetTemplate customWidgetTemplate) {}
 
   Screen clone() {
-    return Screen(id: id, name: name, iconID: iconID, index: index, widgetTemplates: List.of(widgetTemplates) );
+    return Screen(
+        id: id,
+        name: name,
+        iconID: iconID,
+        index: index,
+        widgetTemplates: List.of(widgetTemplates),
+        enabled: enabled);
   }
 }

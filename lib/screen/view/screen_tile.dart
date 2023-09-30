@@ -8,7 +8,8 @@ class ScreenListTile extends StatelessWidget {
   final Screen screen;
   final ScreenManager screenManager;
 
-  const ScreenListTile({Key? key, required this.screen, required this.screenManager})
+  const ScreenListTile(
+      {Key? key, required this.screen, required this.screenManager})
       : super(key: key);
 
   @override
@@ -31,4 +32,3 @@ class ScreenListTile extends StatelessWidget {
     );
   }
 }
-

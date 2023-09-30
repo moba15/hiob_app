@@ -77,7 +77,6 @@ class GraphLine {
   factory GraphLine.fromJson(Map<String, dynamic> json, List<GraphAxis> xAxes, List<GraphAxis> yAxes) {
     DataPoint? dataPoint = Manager.instance!.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     if(!GraphLineType.values.any((element) => element.toString() == json["type"])) {
-      print(json["type"]);
       json["type"] = GraphLineType.normal.toString();
 
     }
@@ -101,10 +100,7 @@ class GraphLine {
       return {};
     }
 
-    print(name! + ":");
-    for(GraphAxis a in graphWidget.xAxes!)
-      print(a.id.toString());
-    print("ID: " + xAxisId.toString());
+
     GraphAxis xAxis = graphWidget.xAxes!.first;  //TODO: Does not find anything!!!!!!
     if(graphWidget.xAxes!.any((element) => element.id == xAxisId)) {
       xAxis = graphWidget.xAxes!.firstWhere((element) => element.id == xAxisId);

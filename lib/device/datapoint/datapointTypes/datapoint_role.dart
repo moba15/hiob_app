@@ -5,6 +5,5 @@ class IoBrokerStateRoles {
   static const String valueBattery = "value.battery";
   static const String valueBrightness = "value.brightness";
 
-
   static const String indicatorReachable = "indicator.reachable";
 }

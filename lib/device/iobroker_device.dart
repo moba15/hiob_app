@@ -4,24 +4,25 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 
 import 'device.dart';
 
-
-
-
-
-
-
 class IoBrokerDevice extends Device {
   IoBrokerDevice(
       {required String id,
       required String name,
       required String iconID,
       required DateTime lastUpdated,
-      required this.objectID, List<DataPoint>? dataPoints = const []})
-      : super(id: id, name: name, iconID: iconID, lastUpdated: lastUpdated, type: DeviceType.ioBroker, dataPoints: dataPoints);
+      required this.objectID,
+      List<DataPoint>? dataPoints = const []})
+      : super(
+            id: id,
+            name: name,
+            iconID: iconID,
+            lastUpdated: lastUpdated,
+            type: DeviceType.ioBroker,
+            dataPoints: dataPoints);
   String objectID;
-  factory IoBrokerDevice.fromJSON(Map<String, dynamic> json) {
 
-    IoBrokerDevice d =  IoBrokerDevice(
+  factory IoBrokerDevice.fromJSON(Map<String, dynamic> json) {
+    IoBrokerDevice d = IoBrokerDevice(
       id: json["id"],
       iconID: json["iconID"],
       name: json["name"],
@@ -31,7 +32,7 @@ class IoBrokerDevice extends Device {
     );
     List<dynamic>? dataPointsRaw = jsonDecode(json["dataPoints"]);
     List<DataPoint>? dataPoints = [];
-    if(dataPointsRaw != null) {
+    if (dataPointsRaw != null) {
       for (Map<String, dynamic> dataPointRaw in dataPointsRaw) {
         dataPoints.add(DataPoint.fromJSON(dataPointRaw, d));
       }
@@ -40,8 +41,7 @@ class IoBrokerDevice extends Device {
     return d;
   }
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "iconID": iconID,
@@ -50,12 +50,8 @@ class IoBrokerDevice extends Device {
         "dataPoints": jsonEncode(dataPoints),
       };
 
-
   @override
   String toString() {
     return "Device: " + toJson().toString();
   }
-
-
-
 }

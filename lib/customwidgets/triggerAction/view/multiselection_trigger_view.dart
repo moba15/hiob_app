@@ -28,8 +28,16 @@ class MultiSelectionTriggerActionView extends StatelessWidget {
         if(!items.any((element) => element == state.value.toString())) {
           items.add(state.value.toString());
         }
+
+        items = items.toSet().toList();
+        final ids = <dynamic>{};
+
+        var i = items.map((e) => DropdownMenuItem<String>(child: Text(e), value: multiSelectionTriggerAction.selections[e] ?? e.toString(),)).toSet().toList();
+        i.retainWhere((element) => ids.add(element.value));
+
+
         return DropdownButtonFormField<String>(
-          items: items.map((e) => DropdownMenuItem<String>(child: Text(e), value: multiSelectionTriggerAction.selections[e] ?? e.toString(),)).toList(),
+          items: i,
           onChanged: (d)  {
             if(multiSelectionTriggerAction.selections.containsValue(d)) {
               dynamic value = d;

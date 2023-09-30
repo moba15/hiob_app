@@ -56,14 +56,14 @@ class _DeviceSelectionState extends State<DeviceSelection> {
               isFilterOnline: false,
               searchDelay: const Duration(seconds: 0),
               modalBottomSheetProps: ModalBottomSheetProps(
-                backgroundColor: Theme.of(context).backgroundColor
+                backgroundColor: Theme.of(context).colorScheme.background
               )
 
               
             ),
             //popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
             items: widget.customWidgetManager.manager.deviceManager.devicesList,
-            itemAsString: (e) => e?.name ?? "Error",
+            itemAsString: (e) => e.name,
             onChanged: (e)  {
               if(e!=_currentDevice) {
                 setState(() {
@@ -106,7 +106,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             
             popupProps:  PopupProps.modalBottomSheet(
               modalBottomSheetProps: ModalBottomSheetProps(
-                  backgroundColor: Theme.of(context).backgroundColor
+                  backgroundColor: Theme.of(context).colorScheme.background
               ),
               showSelectedItems: true,
               searchDelay: const Duration(seconds: 0),

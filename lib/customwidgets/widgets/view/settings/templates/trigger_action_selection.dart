@@ -36,14 +36,14 @@ class _TriggerActionSelectionTemplateState extends State<TriggerActionSelectionT
           },
           popupProps:   PopupProps.modalBottomSheet(
             modalBottomSheetProps: ModalBottomSheetProps(
-                backgroundColor: Theme.of(context).backgroundColor
+                backgroundColor: Theme.of(context).colorScheme.background
             ),
             showSelectedItems: true,
 
           ),
           selectedItem: _selectedType,
           items: const [TriggerActionType.none, TriggerActionType.multiSelection, TriggerActionType.slider, TriggerActionType.handleSwitch, TriggerActionType.button],
-          itemAsString: (i) => i?.name ?? "",
+          itemAsString: (i) => i.name,
           compareFn: (d, d2) => d==d2,
 
 
@@ -52,7 +52,7 @@ class _TriggerActionSelectionTemplateState extends State<TriggerActionSelectionT
           title: const Text("Trigger Settings"),
           leading: const Icon(Icons.settings),
           initiallyExpanded: true,
-          childrenPadding: const EdgeInsets.only(left: 10),
+          childrenPadding: const EdgeInsets.only(left: 10,),
           expandedAlignment: Alignment.centerLeft,
           children: [
             _triggerActionSetting == null ? const Text("No Settings") : _triggerActionSetting as Widget

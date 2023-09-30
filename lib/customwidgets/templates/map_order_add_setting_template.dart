@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/utils/theme.dart';
 
 class MapOrderSettingTemplate<V> extends StatefulWidget {
   final Widget title;
@@ -125,23 +126,22 @@ class _MapOrderSettingTemplateState<V>
         String key = data.keys.elementAt(i);
         newMap[key] = data[key]!;
       }
-      print(newMap);
 
       for(int i = oldIndex+1; i<newIndex; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key]!;
       }
 
-      print(newMap);
+
 
       newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)]!;
-      print(newMap);
+
 
       for(int i = newIndex; i<data.length; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key]!;
       }
-      print(newMap);
+
     } else {
       newMap = data;
     }
@@ -185,10 +185,12 @@ class _AddAlertDialog extends StatelessWidget {
             decoration: InputDecoration(labelText: keyText),
             controller: keyController,
           ),
-          TextField(
-            decoration: InputDecoration(labelText: valueText),
-            controller: valueController,
-          ),
+          InputFieldContainer.inputContainer(
+            child: TextField(
+              decoration: InputDecoration(labelText: valueText),
+              controller: valueController,
+            ),
+          )
 
         ],
       ),

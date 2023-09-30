@@ -16,48 +16,61 @@ class CustomSimpleValueWidget extends CustomWidget {
   String? unit;
 
   CustomSimpleValueWidget(
-      {required name, required this.device, this.dataPoint, this.round, this.value, this.unit})
+      {required name,
+      required this.device,
+      this.dataPoint,
+      this.round,
+      this.value,
+      this.unit})
       : super(
             name: name,
             type: CustomWidgetType.simpleValue,
             settings: {"device": device?.id});
 
-  CustomSimpleValueWidget.edit() : super.edit(type: CustomWidgetType.simpleValue);
+  CustomSimpleValueWidget.edit()
+      : super.edit(type: CustomWidgetType.simpleValue);
 
   @override
   Map<String, dynamic> toJson() => {
-    "type": CustomWidgetType.simpleValue.toString(),
-    "device": device?.id, //Device ID
-    "dataPoint": dataPoint?.id, // DataPoint ID
-    "round": round,
-    "name": name,
-    "value": value,
-    "unit": unit,
-  };
+        "type": CustomWidgetType.simpleValue.toString(),
+        "device": device?.id, //Device ID
+        "dataPoint": dataPoint?.id, // DataPoint ID
+        "round": round,
+        "name": name,
+        "value": value,
+        "unit": unit,
+      };
 
   factory CustomSimpleValueWidget.fromJson(Map<String, dynamic> json) {
-    Device? device = Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
+    Device? device =
+        Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
     return CustomSimpleValueWidget(
-      name: json["name"],
-      round: json["round"],
-      device: device,
-      dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
-      value: json["value"],
-      unit: json["unit"]
+        name: json["name"],
+        round: json["round"],
+        device: device,
+        dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
+        value: json["value"],
+        unit: json["unit"]);
+  }
 
+  @override
+  CustomWidgetSettingWidget get settingWidget {
+    return CustomSimpleValueWidgetSettingWidget(
+      customSimpleValueWidget: this,
     );
   }
-  @override
-  CustomWidgetSettingWidget get settingWidget {return CustomSimpleValueWidgetSettingWidget(customSimpleValueWidget: this,);}
-
 
   @override
   Widget get widget => SimpleValueWidgetView(customSimpleValueWidget: this);
 
   @override
   CustomWidget clone() {
-    return CustomSimpleValueWidget(name: name, device: device, dataPoint: dataPoint, unit: unit, round: round, value: value);
+    return CustomSimpleValueWidget(
+        name: name,
+        device: device,
+        dataPoint: dataPoint,
+        unit: unit,
+        round: round,
+        value: value);
   }
 }
-
-

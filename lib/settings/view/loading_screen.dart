@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -15,14 +14,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
       appBar: AppBar(
         title: const Text("Loading"),
       ),
-
       body: const Center(
         child: Text("Loading"),
-
-
       ),
-
-
     );
   }
 }

@@ -1,8 +1,9 @@
 part of 'config_bloc.dart';
 
-@immutable
-abstract class ConfigState {
+class ConfigState {
+  final List<PreConfig> configs;
 
+  ConfigState({this.configs = const []});
 }
 
-class ConfigInitial extends ConfigState {}
+class ConfigStateLoading extends ConfigState {}

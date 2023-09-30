@@ -15,47 +15,59 @@ class CustomSimpleSwitchWidget extends CustomWidget {
   String? buttonText;
 
   CustomSimpleSwitchWidget(
-      {required this.value, required name, required this.device, this.dataPoint, this.buttonText})
+      {required this.value,
+      required name,
+      required this.device,
+      this.dataPoint,
+      this.buttonText})
       : super(
             name: name,
             type: CustomWidgetType.simpleSwitch,
             settings: {"text": value, "device": device?.id});
 
-  CustomSimpleSwitchWidget.edit() : super.edit(type:CustomWidgetType.simpleSwitch);
+  CustomSimpleSwitchWidget.edit()
+      : super.edit(type: CustomWidgetType.simpleSwitch);
 
   @override
   Map<String, dynamic> toJson() => {
-
-    "type": type.toString(),
-    "value": value,
-    "device": device?.id, //Device ID
-    "dataPoint": dataPoint?.id, // DataPoint ID
-    "name": name,
-    "buttonText": buttonText,
-  };
+        "type": type.toString(),
+        "value": value,
+        "device": device?.id, //Device ID
+        "dataPoint": dataPoint?.id, // DataPoint ID
+        "name": name,
+        "buttonText": buttonText,
+      };
 
   factory CustomSimpleSwitchWidget.fromJson(Map<String, dynamic> json) {
-    Device? device = Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
+    Device? device =
+        Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
     //DataPoint? onDataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"]);
     return CustomSimpleSwitchWidget(
-      value: json["value"],
-      name: json["name"],
-      device: device,
-      dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
-      buttonText: json["buttonText"]
+        value: json["value"],
+        name: json["name"],
+        device: device,
+        dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
+        buttonText: json["buttonText"]);
+  }
+
+  @override
+  CustomWidgetSettingWidget get settingWidget {
+    return CustomSwitchWidgetSettingWidget(
+      customSimpleSwitchWidget: this,
     );
   }
-  @override
-  CustomWidgetSettingWidget get settingWidget {return CustomSwitchWidgetSettingWidget(customSimpleSwitchWidget: this,);}
-
 
   @override
   Widget get widget => SimpleSwitchWidgetView(customSimpleSwitchWidget: this);
 
   @override
   CustomWidget clone() {
-    return CustomSimpleSwitchWidget(value: value, name: name, device: device, dataPoint: dataPoint, buttonText: buttonText,);
+    return CustomSimpleSwitchWidget(
+      value: value,
+      name: name,
+      device: device,
+      dataPoint: dataPoint,
+      buttonText: buttonText,
+    );
   }
 }
-
-

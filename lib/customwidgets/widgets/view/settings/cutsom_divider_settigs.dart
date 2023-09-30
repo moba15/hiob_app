@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
+import 'package:smart_home/utils/theme.dart';
 
 class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
   final CustomDivisionLineWidget customDivisionLineWidget;
@@ -13,7 +14,7 @@ class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
       margin: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
-          TextField(
+          InputFieldContainer.inputContainer(child: TextField(
             onChanged: (s) => {customDivisionLineWidget.thickness = int.tryParse(s) ?? 3},
             decoration: const InputDecoration(labelText: "Thickness"),
             controller: TextEditingController(text: customDivisionLineWidget.thickness.toString()),
@@ -21,7 +22,7 @@ class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
             ],
-          ),
+          ),)
 
         ],
       )

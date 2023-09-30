@@ -38,11 +38,19 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.advanced:
         return AdvancedCustomWidget.edit().settingWidget;
       case CustomWidgetType.webView:
-        return CustomWebViewWidget(name: null, url: null, dataPoint: null).settingWidget;
+        return CustomWebViewWidget(name: null, url: null, dataPoint: null)
+            .settingWidget;
       case CustomWidgetType.alertDialog:
         return CustomAlertDialogWidget(name: "").settingWidget;
       case CustomWidgetType.table:
-        return CustomTableWidget(name: "", header: "", sortAsc: true, initialSortColumn: 1, initialSortEnabled: false, elementsPerPage: 10, columns: {}).settingWidget;
+        return CustomTableWidget(
+            name: "",
+            header: "",
+            sortAsc: true,
+            initialSortColumn: 1,
+            initialSortEnabled: false,
+            elementsPerPage: 10,
+            columns: {}).settingWidget;
       case CustomWidgetType.graph:
         return GraphWidget(name: "name").settingWidget;
     }
@@ -96,26 +104,20 @@ abstract class CustomWidget {
   CustomWidget clone();
 }
 
-
-
 abstract class CustomWidgetSettingWidget {
   bool validate();
+
   CustomWidget get customWidget;
+
   List<GlobalKey> get showKeys;
-
-
 }
 
-abstract class CustomWidgetSettingStatelessWidget extends StatelessWidget implements CustomWidgetSettingWidget{
+abstract class CustomWidgetSettingStatelessWidget extends StatelessWidget
+    implements CustomWidgetSettingWidget {
   const CustomWidgetSettingStatelessWidget({Key? key}) : super(key: key);
-
-
-
-
 }
 
-abstract class CustomWidgetSettingStatefulWidget extends StatefulWidget implements CustomWidgetSettingWidget {
+abstract class CustomWidgetSettingStatefulWidget extends StatefulWidget
+    implements CustomWidgetSettingWidget {
   const CustomWidgetSettingStatefulWidget({Key? key}) : super(key: key);
-
-
 }

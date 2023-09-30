@@ -27,7 +27,7 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -96,7 +96,6 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
   @override
 
   List<GlobalKey<State<StatefulWidget>>> get showKeys {
-    print(advancedCustomWidget.bodyTriggerAction!.settings!.showKeys);
     return  [valueKey, mainBodyKey, ...?setting?.showKeys , popupKey];
   }
 
