@@ -17,24 +17,34 @@ class CustomLightWidget extends CustomWidget {
   String? value;
   String briDisplay = "Brightness";
   String reachableDisplay = "Reachable";
-  CustomLightWidget({
-    required String? name,
-    this.onDataPoint,
-    this.briDataPoint,
-    this.briMax = 100,
-    this.briMin = 0,
-    this.reachableDataPoint,
-    this.briSteps = 10,
-    this.value,
-    this.briDisplay = "Brightness"}) : super(name: name, type: TYPE, settings: {});
+
+  CustomLightWidget(
+      {required String? name,
+      this.onDataPoint,
+      this.briDataPoint,
+      this.briMax = 100,
+      this.briMin = 0,
+      this.reachableDataPoint,
+      this.briSteps = 10,
+      this.value,
+      this.briDisplay = "Brightness"})
+      : super(name: name, type: TYPE, settings: {});
 
   @override
-  CustomWidgetSettingWidget get settingWidget => CustomLightWidgetSettingWidget(customLightWidget: this);
+  CustomWidgetSettingWidget get settingWidget =>
+      CustomLightWidgetSettingWidget(customLightWidget: this);
 
   factory CustomLightWidget.fromJson(Map<String, dynamic> json) {
-    DataPoint? onDataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["onDataPointID"] ?? "");
-    DataPoint? briDataPoint = json["briDataPointID"] == null ? null : Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["briDataPointID"]);
-    DataPoint? reachableDataPoint = json["reachableDataPointID"] == null ? null : Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["reachableDataPointID"]);
+    DataPoint? onDataPoint = Manager.instance?.deviceManager
+        .getIoBrokerDataPointByObjectID(json["onDataPointID"] ?? "");
+    DataPoint? briDataPoint = json["briDataPointID"] == null
+        ? null
+        : Manager.instance?.deviceManager
+            .getIoBrokerDataPointByObjectID(json["briDataPointID"]);
+    DataPoint? reachableDataPoint = json["reachableDataPointID"] == null
+        ? null
+        : Manager.instance?.deviceManager
+            .getIoBrokerDataPointByObjectID(json["reachableDataPointID"]);
 
     return CustomLightWidget(
       name: json["name"],
@@ -46,31 +56,41 @@ class CustomLightWidget extends CustomWidget {
       briSteps: json["briSteps"],
       value: json["value"],
       briDisplay: json["briDisplay"],
-
     );
   }
 
   @override
   Map<String, dynamic> toJson() => {
-    "type": type.toString(),
-    "name": name,
-    "onDataPointID": onDataPoint?.id,
-    "briDataPointID": briDataPoint?.id,
-    "reachableDataPointID": reachableDataPoint?.id,
-    "briMax": briMax,
-    "briMin": briMin,
-    "briSteps": briSteps,
-    "briDisplay": briDisplay,
-    "reachableDisplay": reachableDisplay,
-    "value": value,
-  };
+        "type": type.toString(),
+        "name": name,
+        "onDataPointID": onDataPoint?.id,
+        "briDataPointID": briDataPoint?.id,
+        "reachableDataPointID": reachableDataPoint?.id,
+        "briMax": briMax,
+        "briMin": briMin,
+        "briSteps": briSteps,
+        "briDisplay": briDisplay,
+        "reachableDisplay": reachableDisplay,
+        "value": value,
+      };
 
   @override
-  Widget get widget => CustomLightWidgetView(customLightWidget: this,);
+  Widget get widget => CustomLightWidgetView(
+        customLightWidget: this,
+      );
 
   @override
   CustomWidget clone() {
-    return CustomLightWidget(name: name, onDataPoint: onDataPoint, value: value, briSteps: briSteps, briMax: briMax, briDataPoint: briDataPoint, reachableDataPoint: reachableDataPoint, briMin: briMin, briDisplay: briDisplay,);
+    return CustomLightWidget(
+      name: name,
+      onDataPoint: onDataPoint,
+      value: value,
+      briSteps: briSteps,
+      briMax: briMax,
+      briDataPoint: briDataPoint,
+      reachableDataPoint: reachableDataPoint,
+      briMin: briMin,
+      briDisplay: briDisplay,
+    );
   }
-
 }

@@ -136,7 +136,7 @@ class IoBrokerManager {
     this.usePwd = usePwd;
     _save();
 
-    print("MAP: ${jsonEncode(await fileManager.getMap(key)!)}");
+    print("MAP: ${jsonEncode(await fileManager.getMap(key))}");
   }
 
 

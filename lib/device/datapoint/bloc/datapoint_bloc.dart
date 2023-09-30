@@ -9,8 +9,8 @@ import 'package:smart_home/manager/manager.dart';
 import '../../../dataPackages/data_package.dart';
 
 part 'datapoint_event.dart';
-part 'datapoint_state.dart';
 
+part 'datapoint_state.dart';
 
 class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   StreamSubscription<dynamic>? _deviceValueSubscription;
@@ -32,9 +32,9 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     return super.close();
   }
 
-  void _onValueUpdated(DataPointValueUpdate event, Emitter<DataPointState> emit) {
-    emit(DataPointState(
-        value: event.value, oldValue: event.oldValue));
+  void _onValueUpdated(
+      DataPointValueUpdate event, Emitter<DataPointState> emit) {
+    emit(DataPointState(value: event.value, oldValue: event.oldValue));
     dataPoint.value = event.value;
   }
 

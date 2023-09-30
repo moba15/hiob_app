@@ -14,29 +14,30 @@ class Device {
   bool _firstUpdateFromServer = false;
   DeviceType type;
   List<DataPoint>? dataPoints;
+
   Device(
-      { required this.id,
-        required this.name,
-        required this.iconID,
-        this.value,
-        required this.lastUpdated,
-        required this.type,
-        this.dataPoints = const []});
+      {required this.id,
+      required this.name,
+      required this.iconID,
+      this.value,
+      required this.lastUpdated,
+      required this.type,
+      this.dataPoints = const []});
 
   StreamController<dynamic> valueStreamController =
       StreamController.broadcast();
   StreamController<DateTime> lastUpdatedStreamController =
       StreamController.broadcast();
-  StreamController<DeviceStatus> statusStreamController = StreamController.broadcast();
+  StreamController<DeviceStatus> statusStreamController =
+      StreamController.broadcast();
 
   set setValue(dynamic value) {
     this.value = value;
     valueStreamController.add(value);
   }
 
-
   set setFirstUpdate(bool firstUpdateFromServer) {
-    if(_firstUpdateFromServer) {
+    if (_firstUpdateFromServer) {
       return;
     }
     _firstUpdateFromServer = firstUpdateFromServer;
@@ -47,73 +48,71 @@ class Device {
     this.lastUpdated = lastUpdated;
     lastUpdatedStreamController.add(lastUpdated);
   }
+
   void idle() {
-    lastUpdatedStreamController.add(DateTime.fromMillisecondsSinceEpoch(lastUpdated.millisecondsSinceEpoch));
+    lastUpdatedStreamController.add(DateTime.fromMillisecondsSinceEpoch(
+        lastUpdated.millisecondsSinceEpoch));
   }
+
   void addDataPoint(DataPoint dataPoint) {
     dataPoints?.add(dataPoint);
   }
+
   void removeDataPoint(DataPoint dataPoint) {
     dataPoints?.remove(dataPoint);
   }
+
   void removeDataPointById(String id) {
     dataPoints?.removeWhere((element) => element.id == id);
   }
 
   DeviceStatus getDeviceStatus() {
-    if(!_firstUpdateFromServer) {
+    if (!_firstUpdateFromServer) {
       return DeviceStatus.error;
     }
-    for(DataPoint dataPoint in dataPoints ?? []) {
-      if(dataPoint.role == IoBrokerStateRoles.indicatorReachable) {
-        if(dataPoint.value == true) {
+    for (DataPoint dataPoint in dataPoints ?? []) {
+      if (dataPoint.role == IoBrokerStateRoles.indicatorReachable) {
+        if (dataPoint.value == true) {
           return DeviceStatus.ready;
         } else {
           return DeviceStatus.unavailable;
         }
-
-
       }
     }
-    if(!_firstUpdateFromServer) {
+    if (!_firstUpdateFromServer) {
       return DeviceStatus.error;
     }
     return DeviceStatus.ready;
   }
 
   int? getBatteryLevel() {
-    for(DataPoint dataPoint in dataPoints ?? []) {
-      if(dataPoint.role == IoBrokerStateRoles.valueBattery) {
-        if(dataPoint.value is int ) {
+    for (DataPoint dataPoint in dataPoints ?? []) {
+      if (dataPoint.role == IoBrokerStateRoles.valueBattery) {
+        if (dataPoint.value is int) {
           return dataPoint.value;
-        } else if(dataPoint.value is double) {
+        } else if (dataPoint.value is double) {
           return dataPoint.value.round();
         } else {
           return null;
         }
-
-
       }
     }
     return null;
   }
 
   DataPoint? getDataPoint({required String id}) {
-    for(DataPoint dataPoint in dataPoints ?? []) {
-      if(dataPoint.id == id) {
+    for (DataPoint dataPoint in dataPoints ?? []) {
+      if (dataPoint.id == id) {
         return dataPoint;
       }
     }
-      return null;
+    return null;
   }
 }
-enum DeviceType {
-  httpDevice,
-  ioBroker
 
-}
+enum DeviceType { httpDevice, ioBroker }
+
 extension DeviceExtension on DeviceType {
-
   String get name {
     switch (this) {
       case DeviceType.ioBroker:
@@ -123,10 +122,7 @@ extension DeviceExtension on DeviceType {
       default:
         return "Unknown, you fucked up";
     }
-
-
   }
-
 
   Widget setupWidget(TextEditingController controller) {
     switch (this) {
@@ -153,11 +149,8 @@ extension DeviceExtension on DeviceType {
               margin: const EdgeInsets.only(right: 20.0),
             ),
             Expanded(
-
               child: TextField(
-                onChanged: (value) {
-
-                },
+                onChanged: (value) {},
                 controller: controller,
                 decoration: const InputDecoration(hintText: "Address"),
               ),
@@ -168,6 +161,4 @@ extension DeviceExtension on DeviceType {
         return const Text("LOL");
     }
   }
-
-
 }

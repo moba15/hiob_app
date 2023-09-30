@@ -150,7 +150,7 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
       ),
       popupProps:  PopupProps.modalBottomSheet(
         modalBottomSheetProps: ModalBottomSheetProps(
-            backgroundColor: Theme.of(context).backgroundColor
+            backgroundColor: Theme.of(context).colorScheme.background
         ),
         showSelectedItems: true,
         searchDelay: const Duration(seconds: 0),

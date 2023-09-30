@@ -13,7 +13,6 @@ import '../device/device.dart';
 import 'manager.dart';
 
 class DeviceManager {
-
   FileManager fileManager;
   Manager manager;
   List<Device> devicesList;
@@ -38,18 +37,19 @@ class DeviceManager {
       "device",
       "loadedBootup",
       encoder.convert(l),
-
     );
-    developer.log("Devices Raw Loaded " + l.toString(), name: "de.bachmaiers/device_manager.dart", time: DateTime.now(), zone: Zone.current);
-    if(l== null) {
+    developer.log("Devices Raw Loaded " + l.toString(),
+        name: "de.bachmaiers/device_manager.dart",
+        time: DateTime.now(),
+        zone: Zone.current);
+    if (l == null) {
       loaded = true;
       devicesList = [];
-    } else  {
-      for(dynamic rawDevice in l) {
-
+    } else {
+      for (dynamic rawDevice in l) {
         Map<String, dynamic> rawMap = rawDevice;
         int? typeInt = rawMap["type"];
-        if(typeInt == null) {
+        if (typeInt == null) {
           throw Exception("Dumm?");
         }
 
@@ -67,24 +67,25 @@ class DeviceManager {
     sort();
     deviceListStreamController.add(devicesList);
     return devicesList;
-
   }
+
   void sort() {
-    devicesList.sort((a, b) => a.name.compareTo(b.name),);
+    devicesList.sort(
+      (a, b) => a.name.compareTo(b.name),
+    );
   }
 
   void reload() async {
     devicesList.clear();
     List<dynamic>? l = await fileManager.getList(key);
-    if(l== null) {
+    if (l == null) {
       loaded = true;
       devicesList = [];
-    } else  {
-      for(dynamic rawDevice in l) {
-
+    } else {
+      for (dynamic rawDevice in l) {
         Map<String, dynamic> rawMap = rawDevice;
         int? typeInt = rawMap["type"];
-        if(typeInt == null) {
+        if (typeInt == null) {
           throw Exception("Dumm?");
         }
 
@@ -113,16 +114,18 @@ class DeviceManager {
   }
 
   void loadPossibleDataPoints(Map<String, dynamic> data) {}
+
   bool _containsID(String id) {
-    for(Device device in devicesList) {
-      if(device.id == id) {
+    for (Device device in devicesList) {
+      if (device.id == id) {
         return true;
       }
     }
     return false;
   }
+
   Future<bool> addDevice(Device device) async {
-    while(_containsID(device.id)) {
+    while (_containsID(device.id)) {
       device.id = Manager.instance!.getRandString(14);
     }
     devicesList.add(device);
@@ -132,15 +135,15 @@ class DeviceManager {
       devicesList.remove(device);
     }
     deviceListStreamController.add(devicesList);
-    if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
-      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+    if (device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
+          dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     FlutterLogs.logInfo(
       "device",
       "added",
       encoder.convert(await fileManager.getList(key)),
-
     );
     return suc;
   }
@@ -149,24 +152,23 @@ class DeviceManager {
     sort();
     bool suc = await fileManager.writeJSONList(key, devicesList);
     deviceListStreamController.add(devicesList);
-    if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
-      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+    if (device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
+          dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     FlutterLogs.logInfo(
       "device",
       "edit",
       encoder.convert(await fileManager.getList(key)),
-
     );
     return suc;
-
   }
 
-  Future<bool> removeDevice(Device device) async{
+  Future<bool> removeDevice(Device device) async {
     devicesList.remove(device);
     bool suc = await fileManager.writeJSONList(key, devicesList);
-    if(!suc) {
+    if (!suc) {
       devicesList.add(device);
     }
     deviceListStreamController.add(devicesList);
@@ -175,12 +177,11 @@ class DeviceManager {
       "device",
       "removed",
       encoder.convert(await fileManager.getList(key)),
-
     );
     return suc;
   }
 
-  Future<bool> update() async{
+  Future<bool> update() async {
     bool suc = await fileManager.writeJSONList(key, devicesList);
     deviceListStreamController.add(devicesList);
     return suc;
@@ -189,26 +190,25 @@ class DeviceManager {
   Future<bool> addDataPointToDevice(Device device, DataPoint dataPoint) async {
     device.addDataPoint(dataPoint);
     bool suc = await fileManager.writeJSONList(key, devicesList);
-    if(!suc) {
+    if (!suc) {
       device.removeDataPoint(dataPoint);
     }
     deviceListStreamController.add(devicesList);
-    if(device.dataPoints != null && device.dataPoints!.isNotEmpty) {
-      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+    if (device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
+          dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     FlutterLogs.logInfo(
       "device",
       "addDataPoint",
       encoder.convert(await fileManager.getList(key)),
-
     );
     return suc;
   }
 
-
   bool existsDevice(String id) {
-    return devicesList.indexWhere((element) => element.id == id) != -1 ;
+    return devicesList.indexWhere((element) => element.id == id) != -1;
   }
 
   Device? getDevice(String id) {
@@ -235,13 +235,10 @@ class DeviceManager {
   DataPoint? getIoBrokerDataPointByObjectID(String objectID) {
     for (Device d in devicesList) {
       for (DataPoint dataPoint in d.dataPoints ?? []) {
-
-        if(dataPoint.id == objectID) {
+        if (dataPoint.id == objectID) {
           return dataPoint;
         }
-
       }
-
     }
     return null;
   }
@@ -250,19 +247,15 @@ class DeviceManager {
     List<DataPoint> dataPoints = [];
     for (Device d in devicesList) {
       for (DataPoint dataPoint in d.dataPoints ?? []) {
-
-        if(dataPoint.id == objectID) {
+        if (dataPoint.id == objectID) {
           dataPoints.add(dataPoint);
         }
-
       }
-
     }
     return dataPoints;
   }
 
   void valueChange(DataPoint? dataPoint, dynamic value) {
-
     if (dataPoint == null) {
       return;
     }
@@ -272,21 +265,16 @@ class DeviceManager {
     dataPoint.device?.setFirstUpdate = true;
   }
 
-
   void subscribeToDataPointsIoB(ConnectionManager connectionManager) {
-
     List<String> dataPoints = [];
-    for(Device device in devicesList) {
-      if(device is IoBrokerDevice) {
-        for(DataPoint dataPoint in device.dataPoints ?? []) {
+    for (Device device in devicesList) {
+      if (device is IoBrokerDevice) {
+        for (DataPoint dataPoint in device.dataPoints ?? []) {
           dataPoints.add(dataPoint.id);
         }
       }
     }
-    connectionManager.sendMsg(SubscribeToDataPointsIobPackage(dataPoints: dataPoints));
+    connectionManager
+        .sendMsg(SubscribeToDataPointsIobPackage(dataPoints: dataPoints));
   }
-
-
-
-
 }

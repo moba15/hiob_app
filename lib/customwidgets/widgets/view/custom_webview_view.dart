@@ -60,9 +60,9 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
               ),
               listener: (context, state)  {
                 if(state.value.toString().startsWith("https://") || state.value.toString().startsWith("http://")) {
-                  _webViewController?.loadRequest(Uri.parse(state.value.toString()));
+                  _webViewController.loadRequest(Uri.parse(state.value.toString()));
                 } else {
-                  _webViewController?.loadRequest(Uri.parse("https://" + state.value.toString()));
+                  _webViewController.loadRequest(Uri.parse("https://" + state.value.toString()));
                 }
               },
             ),

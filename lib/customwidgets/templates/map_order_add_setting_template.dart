@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/utils/theme.dart';
 
 class MapOrderSettingTemplate<V> extends StatefulWidget {
   final Widget title;
@@ -184,10 +185,12 @@ class _AddAlertDialog extends StatelessWidget {
             decoration: InputDecoration(labelText: keyText),
             controller: keyController,
           ),
-          TextField(
-            decoration: InputDecoration(labelText: valueText),
-            controller: valueController,
-          ),
+          InputFieldContainer.inputContainer(
+            child: TextField(
+              decoration: InputDecoration(labelText: valueText),
+              controller: valueController,
+            ),
+          )
 
         ],
       ),

@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/triggerAction/none_trigger_action.dart'
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/utils/theme.dart';
 
 class NoneTriggerActionSettings extends TriggerActionSetting {
   final NoneTriggerAction noneTriggerAction;
@@ -34,7 +35,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           key: roundToKey,
           title: "Round",
           description: "If the value of the datapoint is a number it will be round to x decimals",
-          child: TextField(
+          child: InputFieldContainer.inputContainer(child: TextField(
             controller: TextEditingController.fromValue(TextEditingValue(text: noneTriggerAction.round.toString())),
             decoration: const InputDecoration(labelText: "Round to"),
             keyboardType: TextInputType.number,
@@ -42,28 +43,30 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
               FilteringTextInputFormatter.digitsOnly
             ],
             onChanged: (v) => noneTriggerAction.round = int.tryParse(v) ?? 2,
-          ),
+          ),)
         ),
         Showcase(
           key: unitKey,
           title: "Unit",
           description: "If set this will be written behind the actual value of the datapoint",
-          child: TextField(
+          child: InputFieldContainer.inputContainer(child: TextField(
               controller: TextEditingController.fromValue(TextEditingValue(text: noneTriggerAction.unit ?? "")),
               decoration: const InputDecoration(labelText: "Unit (optional)"),
               maxLength: 10,
               onChanged: (v) => {noneTriggerAction.unit = v, if(v.isEmpty) noneTriggerAction.unit = null}
-          ),
+          ),)
         ),
         Showcase(
           key: textRulesKey,
           title: "Text Rules",
           description: "Here you can map one value to an other",
-          child: _RulesSettings(noneTriggerAction: noneTriggerAction),
+          child: InputFieldContainer.inputContainer(child: _RulesSettings(noneTriggerAction: noneTriggerAction)),
         )
       ],
     );
   }
+
+
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys => [dataPointKey, roundToKey, unitKey, textRulesKey];
@@ -163,15 +166,13 @@ class _RuleAddAlertDialog extends StatelessWidget {
             decoration: const InputDecoration(labelText: "Old Value"),
             controller: keyController,
           ),
-          TextField(
-            decoration: const InputDecoration(labelText: "New Value"),
-            controller: valueController,
+          InputFieldContainer.inputContainer(
+            child: TextField(
+              decoration: const InputDecoration(labelText: "New Value"),
+              controller: valueController,
+            ),
           ),
-          DropdownButtonFormField<int>(
-            items: const [],
-            onChanged: (int? value) {  },
 
-          )
 
         ],
       ),
