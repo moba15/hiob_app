@@ -35,6 +35,8 @@ class IoBrokerManager {
 
   bool usePwd = true;
 
+  bool useSecureConnection = false;
+
 
   DateTime? lastEnumUpdate;
   List<Enum> enums = [];
@@ -55,6 +57,7 @@ class IoBrokerManager {
       knownNetwork = settings?["knownNetwork"] ?? "";
       secondaryAddress = settings?["secondaryAddress"] ?? "";
       useSecondaryAddress = settings?["useSecondaryAddress"] ?? false;
+      useSecureConnection = settings?["useSecureConnection"] ?? false;
 
       usePwd = settings?["usePWD"] ?? true;
 
@@ -100,7 +103,8 @@ class IoBrokerManager {
       "knownNetwork": knownNetwork,
       "secondaryAddress": secondaryAddress,
       "useSecondaryAddress": useSecondaryAddress,
-      "usePWD": usePwd
+      "usePWD": usePwd,
+      "useSecureConnection": useSecureConnection
     });
   }
 
@@ -137,6 +141,11 @@ class IoBrokerManager {
     _save();
 
     print("MAP: ${jsonEncode(await fileManager.getMap(key))}");
+  }
+
+  void changeUseSecureCon(bool useSecCon) {
+    useSecureConnection = useSecCon;
+    _save();
   }
 
 

@@ -138,6 +138,13 @@ class IoBrokerSettingsView extends StatelessWidget {
             return Column(
               children: [
                 CheckboxListTile(
+                  value: ioBrokerManager.useSecureConnection,
+                  onChanged: (b) {
+                    setState(() => {ioBrokerManager.changeUseSecureCon(b ?? true)});
+                  },
+                  title: const Text("Use secure Connection"),
+                ),
+                CheckboxListTile(
                   value: ioBrokerManager.usePwd,
                   onChanged: (b) {
                     setState(() => {ioBrokerManager.changeUsePWD(b ?? true)});

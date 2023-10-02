@@ -41,6 +41,7 @@ class ConnectionManager with WidgetsBindingObserver {
   final networkInfo = NetworkInfo();
   Socket? socket;
   WebSocketChannel? _webSocket;
+
   StreamSubscription? _webSocketStreamSub;
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
@@ -63,6 +64,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   Future<void> connectIoB() async {
+    print("Connect to: " + Uri.parse("${ioBrokerManager.useSecureConnection ? "ws://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}").toString());
     try {
       if (ioBrokerManager.useSecondaryAddress &&
           (await networkInfo.getWifiName()) != ioBrokerManager.knownNetwork) {
@@ -72,11 +74,11 @@ class ConnectionManager with WidgetsBindingObserver {
         _webSocketStreamSub =
             _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
       } else {
+
+
+
         _webSocket = IOWebSocketChannel.connect(
-            Uri.parse("ws://" +
-                ioBrokerManager.mainIp +
-                ":" +
-                ioBrokerManager.port.toString()),
+            Uri.parse("${ioBrokerManager.useSecureConnection ? "ws://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}"),
             pingInterval: const Duration(minutes: 5));
         _webSocketStreamSub =
             _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
@@ -115,6 +117,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
+    print("Connect to: " + Uri.parse("${ioBrokerManager.useSecureConnection ? "wss://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}").toString());
     connectionStatusStreamController.add(ConnectionStatus.tryAgain);
     if (_webSocketStreamSub != null) {
       _webSocketStreamSub!.cancel();
@@ -136,10 +139,9 @@ class ConnectionManager with WidgetsBindingObserver {
         _webSocketStreamSub =
             _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
       } else {
-        _webSocket = IOWebSocketChannel.connect(Uri.parse("ws://" +
-            ioBrokerManager.mainIp +
-            ":" +
-            ioBrokerManager.port.toString()));
+        _webSocket = IOWebSocketChannel.connect(
+            Uri.parse("${ioBrokerManager.useSecureConnection ? "wss://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}"),
+            pingInterval: const Duration(minutes: 5));
         _webSocketStreamSub =
             _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
       }
@@ -206,7 +208,6 @@ class ConnectionManager with WidgetsBindingObserver {
         _onFirstPing();
         break;
       case DataPackageType.historyDataUpdate:
-        print("asdjasdjshbdf");
         Manager.instance!.historyManager
             .onHistoryUpdate(data: jsonDecode(rawMap["data"]));
         break;
