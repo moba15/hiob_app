@@ -51,6 +51,7 @@ class ConnectionManager with WidgetsBindingObserver {
   final StreamController<ConnectionStatus> connectionStatusStreamController =
       StreamController.broadcast(); //TODO: Kein Broadcast
   int tries = 0;
+  bool useSecureConnection = true;
 
   ConnectionManager(
       {required this.deviceManager,
@@ -72,12 +73,12 @@ class ConnectionManager with WidgetsBindingObserver {
         _webSocketStreamSub =
             _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
       } else {
-        _webSocket = IOWebSocketChannel.connect(
-            Uri.parse("ws://" +
-                ioBrokerManager.mainIp +
-                ":" +
-                ioBrokerManager.port.toString()),
-            pingInterval: const Duration(minutes: 5));
+        String uri = useSecureConnection ? "wss://${ioBrokerManager.mainIp}:${ioBrokerManager.port}" : "ws://${ioBrokerManager.mainIp}:${ioBrokerManager.port}";
+        print(uri);
+        _webSocket = WebSocketChannel.connect(
+
+            Uri.parse(uri),
+            );
         _webSocketStreamSub =
             _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
       }
@@ -206,7 +207,6 @@ class ConnectionManager with WidgetsBindingObserver {
         _onFirstPing();
         break;
       case DataPackageType.historyDataUpdate:
-        print("asdjasdjshbdf");
         Manager.instance!.historyManager
             .onHistoryUpdate(data: jsonDecode(rawMap["data"]));
         break;

@@ -32,10 +32,12 @@ class DataPoint {
       this.otherDetails});
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device) {
-    print("Name: " + json["name"]);
+
+
+
 
     return DataPoint(
-        name: json["name"],
+        name: json["name"].toString(),
         device: device,
         id: json["id"],
         role: json["role"],
@@ -44,7 +46,6 @@ class DataPoint {
   }
 
   Map<String, dynamic> toJson() {
-    print("TOJSON: " + name);
 
     return {
       "id": id,
