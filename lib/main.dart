@@ -6,7 +6,6 @@ import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import 'app.dart';
-
 class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext? context){
@@ -14,9 +13,10 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
-
 void main() async {
+  //TODO Fix this bug and run in zoned
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
 
   //Initialize Logging
   await FlutterLogs.initLogs(
@@ -45,12 +45,10 @@ void main() async {
   String version = "1.3";
   String buildNumber = "100";
   Manager manager = Manager();
-  HttpOverrides.global = MyHttpOverrides();
-
   await manager.load();
   //TODO:
-  BlocOverrides.runZoned(() => runApp(App(
-        manager: manager,
-        screenManager: manager.screenManager,
-      )));
+  runApp(App(
+    manager: manager,
+    screenManager: manager.screenManager,
+  ));
 }
