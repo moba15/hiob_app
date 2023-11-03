@@ -25,7 +25,7 @@ class CustomWebViewWidgetSettingWidget extends CustomWidgetSettingStatefulWidget
 
   @override
   bool validate() {
-    return customWebViewWidget.url != null;
+    return customWebViewWidget.url != null || customWebViewWidget.dataPoint != null;
   }
 
   @override
