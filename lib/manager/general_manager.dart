@@ -21,6 +21,7 @@ class GeneralManager {
   String? deviceName;
   String? deviceID;
   String? loginKey;
+  bool useBottomSheet = true;
 
   GeneralManager({required this.manager, required this.fileManager});
 

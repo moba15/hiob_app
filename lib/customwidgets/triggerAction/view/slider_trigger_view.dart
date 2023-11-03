@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,11 +65,6 @@ class _SliderState extends State<_Slider> {
     double value = widget.value is double ? widget.value : (widget.value is int
             ? widget.value.toDouble()
             : widget.sliderTriggerAction.min.toDouble());
-    if (value > widget.sliderTriggerAction.max ||
-        value < widget.sliderTriggerAction.min) {
-      return Text(
-          "Error: " + value.toString() + " smaller/greater than min/max");
-    }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.sliderTriggerAction.max, min: widget.sliderTriggerAction.min),
@@ -77,8 +74,8 @@ class _SliderState extends State<_Slider> {
       child: Slider(
 
         value: vTemp ?? value,
-        min: widget.sliderTriggerAction.min.toDouble(),
-        max: widget.sliderTriggerAction.max.toDouble(),
+        min: min( widget.sliderTriggerAction.min.toDouble(), value),
+        max: max(widget.sliderTriggerAction.max.toDouble(), value),
         divisions: widget.sliderTriggerAction.steps,
         onChanged: (d) {
           setState(() {
