@@ -50,12 +50,12 @@ class SettingsSyncManager {
       {required bool device, required bool widget, required bool screen}) {
     String? devicesJSON = !device
         ? null
-        : jsonEncode(Manager.instance!.deviceManager.devicesList);
+        : jsonEncode(Manager.instance.deviceManager.devicesList);
     String? widgetsJSON = !widget
         ? null
-        : jsonEncode(Manager.instance!.customWidgetManager.templates);
+        : jsonEncode(Manager.instance.customWidgetManager.templates);
     String? screensJSON =
-        !screen ? null : jsonEncode(Manager.instance!.screenManager.screens);
+        !screen ? null : jsonEncode(Manager.instance.screenManager.screens);
 
     connectionManager.sendMsg(UploadTemplateSetting(
         name: preConfig.name,
@@ -97,7 +97,7 @@ class SettingsSyncManager {
   }
 
   void loadGotTemplate(String? devices, String? screens, String? widgets) {
-    Manager manager = Manager.instance!;
+    Manager manager = Manager.instance;
 
     if (devices != null) {
       fileManager.pref.setString(manager.deviceManager.key, devices);

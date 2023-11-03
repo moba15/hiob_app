@@ -8,6 +8,7 @@ import 'package:smart_home/customwidgets/triggerAction/switch_trigger_action.dar
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
+import 'package:smart_home/manager/manager.dart';
 
 import '../../../device/bloc/device_bloc.dart';
 
@@ -58,7 +59,14 @@ class AdvancedWidgetView extends StatelessWidget {
     if(advancedCustomWidget.customAlertDialogWidget == null) {
       return;
     }
-    showDialog(context: context, builder: (_) => advancedCustomWidget.customAlertDialogWidget!.widget);
+    if(Manager().generalManager.useBottomSheet) {
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) => advancedCustomWidget.customAlertDialogWidget!.widget);
+
+    } else {
+      showDialog(context: context, builder: (_) => advancedCustomWidget.customAlertDialogWidget!.widget);
+
+    }
+
   }
 }
 

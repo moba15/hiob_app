@@ -207,11 +207,11 @@ class IoBrokerManager {
   }
 
   void syncEnumsToDevice() {
-    DeviceManager deviceManager = Manager.instance!.deviceManager;
+    DeviceManager deviceManager = Manager.instance.deviceManager;
     for(Enum e in enums) {
       if(e.dataPointMembers.isNotEmpty) {
         if(!deviceManager.devicesList.any((element) => element.name == e.name)) {
-          IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
+          IoBrokerDevice device = IoBrokerDevice(id: Manager.instance.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
           print("Add new Device: ");
           for(DataPoint e in e.dataPointMembers.toList()) {
             print(e.otherDetails.toString());
@@ -273,7 +273,7 @@ class IoBrokerManager {
       }
     }
 
-    deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
+    deviceManager.subscribeToDataPointsIoB(Manager.instance.connectionManager);
 
     for(Device d   in deviceManager.devicesList) {
       print((d as IoBrokerDevice).toJson());
