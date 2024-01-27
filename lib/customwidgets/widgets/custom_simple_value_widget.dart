@@ -43,7 +43,7 @@ class CustomSimpleValueWidget extends CustomWidget {
 
   factory CustomSimpleValueWidget.fromJson(Map<String, dynamic> json) {
     Device? device =
-        Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
+        Manager.instance.deviceManager.getDevice(json["device"] ?? "");
     return CustomSimpleValueWidget(
         name: json["name"],
         round: json["round"],

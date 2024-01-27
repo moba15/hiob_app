@@ -10,7 +10,7 @@ class AlterDialogWidgetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: Manager.instance!,
+      value: Manager.instance,
       child: AlertDialog(
         
         contentPadding: const EdgeInsets.fromLTRB(0, 10, 0, 0),

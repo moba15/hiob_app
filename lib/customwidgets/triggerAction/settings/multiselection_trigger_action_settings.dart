@@ -24,7 +24,7 @@ class MultiSelectionTriggerActionSettings extends TriggerActionSetting {
           title: "Datapoint",
           description: "The Datapoint which will be controlled by the Widget",
           child: DeviceSelection(
-            customWidgetManager: Manager.instance!.customWidgetManager,
+            customWidgetManager: Manager.instance.customWidgetManager,
             onDataPointSelected: (d) =>
                 {multiSelectionTriggerAction.dataPoint = d},
             onDeviceSelected: (d) =>
@@ -113,30 +113,28 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
                   });
                 },
                 key: ValueKey(selectionKey),
-                child: ListTile(
-                  title: Text("View: " + selectionKey),
-                  subtitle: Text("Value: " +
-                      widget
-                          .multiSelectionTriggerAction.selections[selectionKey]
-                          .toString()),
-                ),
                 background: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 secondaryBackground: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 direction: DismissDirection.endToStart,
+                child: ListTile(
+                  title: Text("View: $selectionKey"),
+                  subtitle: Text("Value: ${widget
+                          .multiSelectionTriggerAction.selections[selectionKey]}"),
+                ),
               );
             },
             itemCount:

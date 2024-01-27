@@ -1,56 +1,64 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_logs/flutter_logs.dart';
+import 'package:smart_home/background/background_runner.dart';
+
 import 'package:smart_home/manager/manager.dart';
 
 import 'app.dart';
 
-class MyHttpOverrides extends HttpOverrides{
+const notificationChannelId = 'my_foreground';
+const notificationChannelId2 = 'my_foreground';
+
+// this will be used for notification id, So you can update your custom notification with this id.
+const notificationId = 888;
+const notificationId2 = 999;
+
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
+void registerBackgroundIsolate() {
+  const MethodChannel backgroundChannel =
+      MethodChannel('com.example.backgroundIsolate');
+  backgroundChannel.setMethodCallHandler((MethodCall methodCall) async {
+    if (methodCall.method == 'handleBackgroundMessage') {
+      final dynamic args = methodCall.arguments;
+      log("Background");
+    }
+  });
+}
+
+
+
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
 
-  //Initialize Logging
-  await FlutterLogs.initLogs(
-      logLevelsEnabled: [
-        LogLevel.INFO,
-        LogLevel.WARNING,
-        LogLevel.ERROR,
-        LogLevel.SEVERE,
-      ],
-      timeStampFormat: TimeStampFormat.TIME_FORMAT_READABLE,
-      directoryStructure: DirectoryStructure.FOR_DATE,
-      logTypesEnabled: [
-        "device",
-        "customise",
-        "connection",
-        "screen",
-        "iobrokerManager",
-        "error"
-      ],
-      logFileExtension: LogFileExtension.LOG,
-      logsWriteDirectoryName: "logs",
-      logsExportDirectoryName: "logs/Exported",
-      debugFileOperations: false,
-      attachTimeStamp: true,
-      isDebuggable: false);
   String version = "1.3";
   String buildNumber = "100";
   Manager manager = Manager();
   HttpOverrides.global = MyHttpOverrides();
 
   await manager.load();
+
+
+
   //TODO:
-  BlocOverrides.runZoned(() => runApp(App(
-        manager: manager,
-        screenManager: manager.screenManager,
-      )));
+  runApp(App(
+    manager: manager,
+    screenManager: manager.screenManager,
+  ));
 }
+

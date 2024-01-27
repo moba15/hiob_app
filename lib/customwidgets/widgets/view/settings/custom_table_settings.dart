@@ -156,7 +156,7 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
                   widget.customTableWidget.dataPoint = null;
                 }
               },
-              customWidgetManager: Manager.instance!.customWidgetManager,
+              customWidgetManager: Manager.instance.customWidgetManager,
             ),
           ),
           Showcase(

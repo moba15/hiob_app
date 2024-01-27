@@ -142,11 +142,11 @@ extension DeviceExtension on DeviceType {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
+              margin: const EdgeInsets.only(right: 20.0),
               child: const SizedBox(
                 width: 50,
                 child: Text("Adr.:"),
               ),
-              margin: const EdgeInsets.only(right: 20.0),
             ),
             Expanded(
               child: TextField(

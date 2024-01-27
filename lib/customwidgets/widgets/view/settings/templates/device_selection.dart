@@ -126,13 +126,10 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             ),
             items: _currentDevice?.dataPoints ?? [],
             itemAsString: (e) {
-              if(e == null) {
-                return "Error";
-              }
               String name = e.name;
               String? sName = e.getInformation("name");
               if(sName != null) {
-                name+=" (" + sName + ")";
+                name+=" ($sName)";
               }
               return name;
             },

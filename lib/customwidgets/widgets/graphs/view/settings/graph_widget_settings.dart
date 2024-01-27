@@ -92,19 +92,19 @@ class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {
             },
             background: Container(
               color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
               alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
             ),
             secondaryBackground: Container(
               color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
               alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
             ),
             direction: DismissDirection.endToStart,
             key: ValueKey(a),
@@ -117,15 +117,14 @@ class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {
           ),
 
         ElevatedButton(
-          child: const Text("Add Y Axis") ,
           onPressed:  widget.graphWidget.yAxes == null || widget.graphWidget.yAxes!.length < 2 ?()  {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>  AxisSettingsPage(graphWidget: widget.graphWidget, graphAxis: GraphAxis(dataType: AxisDataType.numbers), onSave: (axis)  {
-                String id = Manager.instance!.getRandString(6);
+                String id = Manager.instance.getRandString(6);
                 widget.graphWidget.yAxes ??= [];
                 while(widget.graphWidget.yAxes!.any((element) => element.id == id)) {
-                  id = Manager.instance!.getRandString(6);
+                  id = Manager.instance.getRandString(6);
                 }
                 axis.id = id;
 
@@ -137,6 +136,7 @@ class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {
               })),
             );
           } : null,
+          child: const Text("Add Y Axis") ,
         )
       ],
     );
@@ -156,19 +156,19 @@ class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {
             },
             background: Container(
               color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
               alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
             ),
             secondaryBackground: Container(
               color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
               alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
             ),
             direction: DismissDirection.endToStart,
             key: ValueKey(a),
@@ -183,15 +183,14 @@ class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {
           ),
 
         ElevatedButton(
-          child: const Text("Add X Axis") ,
           onPressed: widget.graphWidget.xAxes == null || widget.graphWidget.xAxes!.length < 2 ? ()  {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>  AxisSettingsPage(graphWidget: widget.graphWidget, graphAxis: GraphAxis(dataType: AxisDataType.time), onSave: (axis)  {
-                String id = Manager.instance!.getRandString(6);
+                String id = Manager.instance.getRandString(6);
                 widget.graphWidget.xAxes ??= [];
                 while(widget.graphWidget.xAxes!.any((element) => element.id == id)) {
-                  id = Manager.instance!.getRandString(6);
+                  id = Manager.instance.getRandString(6);
                 }
                 axis.id = id;
 
@@ -203,6 +202,7 @@ class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {
               })),
             );
           } : null,
+          child: const Text("Add X Axis") ,
         )
       ],
     );

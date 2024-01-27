@@ -26,7 +26,7 @@ class ButtonTriggerActionSettings extends TriggerActionSetting {
             onDeviceSelected: (d) =>
                 {if (d == null) buttonTriggerAction.dataPoint = null},
             onDataPointSelected: (d) => buttonTriggerAction.dataPoint = d,
-            customWidgetManager: Manager.instance!.customWidgetManager,
+            customWidgetManager: Manager.instance.customWidgetManager,
             deviceLabel: "Device",
             dataPointLabel: "Datapoint",
             selectedDevice: buttonTriggerAction.dataPoint?.device,

@@ -44,7 +44,7 @@ class DataPoint {
   }
 
   Map<String, dynamic> toJson() {
-    print("TOJSON: " + name);
+    print("TOJSON: $name");
 
     return {
       "id": id,

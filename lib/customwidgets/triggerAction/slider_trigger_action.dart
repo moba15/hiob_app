@@ -14,7 +14,7 @@ class SliderTriggerAction extends TriggerAction {
   SliderTriggerAction({required this.dataPoint, this.min = 0, this.max = 100, this.steps = 1});
 
   factory SliderTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+    DataPoint? dataPoint = Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     return SliderTriggerAction(dataPoint: dataPoint, min: json["min"], max: json["max"], steps: json["steps"]  );
   }
 

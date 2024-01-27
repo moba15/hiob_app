@@ -40,7 +40,7 @@ class CustomSimpleSwitchWidget extends CustomWidget {
 
   factory CustomSimpleSwitchWidget.fromJson(Map<String, dynamic> json) {
     Device? device =
-        Manager.instance?.deviceManager.getDevice(json["device"] ?? "");
+        Manager.instance.deviceManager.getDevice(json["device"] ?? "");
     //DataPoint? onDataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"]);
     return CustomSimpleSwitchWidget(
         value: json["value"],

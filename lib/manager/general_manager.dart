@@ -33,8 +33,11 @@ class GeneralManager {
     vibrateEnabled = settings["vibrateEnabled"] ?? false;
     deviceName = settings["deviceName"] ?? manager.androidInfo.model;
     loginKey = settings["loginKey"]; //TODO: Exclude in Backup
+
     deviceID = settings["id"] ?? uuid.v4();
     settings["id"] = deviceID;
+    print("Ol Id" + settings["id"]);
+    _save();
     statusStreamController.add(true);
     if (!await fileManager.containsKey(buildKey) ||
         (await fileManager.getString(buildKey)) != manager.buildNumber) {

@@ -35,15 +35,15 @@ class CustomLightWidget extends CustomWidget {
       CustomLightWidgetSettingWidget(customLightWidget: this);
 
   factory CustomLightWidget.fromJson(Map<String, dynamic> json) {
-    DataPoint? onDataPoint = Manager.instance?.deviceManager
+    DataPoint? onDataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["onDataPointID"] ?? "");
     DataPoint? briDataPoint = json["briDataPointID"] == null
         ? null
-        : Manager.instance?.deviceManager
+        : Manager.instance.deviceManager
             .getIoBrokerDataPointByObjectID(json["briDataPointID"]);
     DataPoint? reachableDataPoint = json["reachableDataPointID"] == null
         ? null
-        : Manager.instance?.deviceManager
+        : Manager.instance.deviceManager
             .getIoBrokerDataPointByObjectID(json["reachableDataPointID"]);
 
     return CustomLightWidget(

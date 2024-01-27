@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_logs/flutter_logs.dart';
+
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/iobroker_device.dart';
@@ -85,7 +85,7 @@ class IoBrokerManager {
 
 
   void changeIp(String ip) async {
-    this.mainIp = ip;
+    mainIp = ip;
     _save();
   }
 
@@ -135,12 +135,12 @@ class IoBrokerManager {
     _save();
   }
 
-  void changeUsePWD(bool usePwd) async {
-    print("Change " + usePwd.toString());
+  void changeUsePWD(bool usePwd)  {
+
     this.usePwd = usePwd;
     _save();
 
-    print("MAP: ${jsonEncode(await fileManager.getMap(key))}");
+
   }
 
   void changeUseSecureCon(bool useSecCon) {
@@ -151,15 +151,11 @@ class IoBrokerManager {
 
 
   void updateEnums() {
-    FlutterLogs.logInfo(
-      "ioBrokerManager",
-      "updateEnums",
-      "Update Enums started",
 
-    );
+
     enumsUpdateStateStreamController.add(EnumUpdateState.loading);
     isUpdating = true;
-    Manager.instance?.connectionManager.sendMsg(EnumUpdateRequestIobPackage());
+    Manager.instance.connectionManager.sendMsg(EnumUpdateRequestIobPackage());
 
   }
 
@@ -167,24 +163,20 @@ class IoBrokerManager {
       enums.clear();
       const JsonEncoder encoder = JsonEncoder.withIndent('  ');
       //log("Enum Update " + encoder.convert(rawData));
-      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "Starting enumUpdate \n" + encoder.convert(rawData));
 
 
       List<dynamic> enumsListRaw = rawData["enums"];
-      print("Enums raw:" + enumsListRaw.toString());
+      print("Enums raw:$enumsListRaw");
      // FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"].toString());
-      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "enumsListRaw: " + encoder.convert(enumsListRaw));
       for (Map<String, dynamic> enumRaw in enumsListRaw) {
         enums.add(Enum.fromJSON(enumRaw));
       }
-      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "added ");
       lastEnumUpdate = DateTime.now();
 
       fileManager.writeJSON(enumKey, {
         "lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch,
         "enums": enums
       });
-      FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "writeJSON");
       enumsUpdateStateStreamController.add(EnumUpdateState.finished);
       isUpdating = false;
 
@@ -207,11 +199,11 @@ class IoBrokerManager {
   }
 
   void syncEnumsToDevice() {
-    DeviceManager deviceManager = Manager.instance!.deviceManager;
+    DeviceManager deviceManager = Manager.instance.deviceManager;
     for(Enum e in enums) {
       if(e.dataPointMembers.isNotEmpty) {
         if(!deviceManager.devicesList.any((element) => element.name == e.name)) {
-          IoBrokerDevice device = IoBrokerDevice(id: Manager.instance!.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
+          IoBrokerDevice device = IoBrokerDevice(id: Manager.instance.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
           print("Add new Device: ");
           for(DataPoint e in e.dataPointMembers.toList()) {
             print(e.otherDetails.toString());
@@ -273,7 +265,7 @@ class IoBrokerManager {
       }
     }
 
-    deviceManager.subscribeToDataPointsIoB(Manager.instance!.connectionManager);
+    deviceManager.subscribeToDataPointsIoB(Manager.instance.connectionManager);
 
     for(Device d   in deviceManager.devicesList) {
       print((d as IoBrokerDevice).toJson());

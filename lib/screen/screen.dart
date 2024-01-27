@@ -30,21 +30,21 @@ class Screen {
         ? jsonDecode(json["widgetIds"])
         : json["widgetIds"]) {
       if (templateRaw.containsKey("widget")) {
-        if (!Manager.instance!.customWidgetManager.templates
+        if (!Manager.instance.customWidgetManager.templates
             .any((element) => element.id == templateRaw["id"])) {
           continue;
         }
-        widgetTemplates.add(Manager.instance?.customWidgetManager.templates
+        widgetTemplates.add(Manager.instance.customWidgetManager.templates
             .firstWhere((element) => element.id == templateRaw["id"]));
       } else {
         if (templateRaw["type"] == CustomWidgetType.line.toString()) {
           widgetTemplates.add(CustomWidgetTemplate(
-              id: Manager.instance!.getRandString(12),
+              id: Manager.instance.getRandString(12),
               name: "Line",
               customWidget: CustomDivisionLineWidget.fromJson(templateRaw)));
         } else {
           widgetTemplates.add(CustomGroupWidget.fromJSON(
-              templateRaw, Manager.instance!.customWidgetManager.templates));
+              templateRaw, Manager.instance.customWidgetManager.templates));
         }
       }
     }

@@ -66,7 +66,7 @@ class _SliderState extends State<_Slider> {
     if (value > widget.sliderTriggerAction.max ||
         value < widget.sliderTriggerAction.min) {
       return Text(
-          "Error: " + value.toString() + " smaller/greater than min/max");
+          "Error: $value smaller/greater than min/max");
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(

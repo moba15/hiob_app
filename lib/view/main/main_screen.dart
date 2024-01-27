@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +8,7 @@ import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart'
 import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
-import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
-import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/blinking_widget.dart';
 import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
 

@@ -92,7 +92,7 @@ class _DeviceInfo extends StatelessWidget {
                 flex: 2,
                 child: TextFormField(
                   enabled: false,
-                  initialValue: Manager.instance!.androidInfo.model,
+                  initialValue: Manager.instance.androidInfo.model,
                   decoration: InputDecoration(labelText: getAppLocalizations(context).device_name),
                 ),
               ),
@@ -103,7 +103,7 @@ class _DeviceInfo extends StatelessWidget {
                 flex: 1,
                 child: TextFormField(
                   enabled: false,
-                  initialValue: Manager.instance!.androidInfo.id,
+                  initialValue: Manager.instance.androidInfo.id,
                   decoration: InputDecoration(labelText: getAppLocalizations(context).device_id),
                 ),
               )
