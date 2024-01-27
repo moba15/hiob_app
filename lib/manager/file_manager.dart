@@ -15,6 +15,7 @@ class FileManager {
   final Manager manager;
 
   FileManager({required this.pref, required this.manager}) {
+
     //_init();
   }
 
@@ -24,6 +25,7 @@ class FileManager {
   }*/
 
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {
+
     return await pref.setString(key, jsonEncode(content));
   }
 
@@ -174,7 +176,7 @@ class FileManager {
         manager.screenManager.reload();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error importing! " + e.toString())));
+            SnackBar(content: Text("Error importing! $e")));
         showDialog(
             context: context,
             builder: (context) {

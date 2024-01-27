@@ -14,7 +14,7 @@ class SwitchTriggerAction extends TriggerAction {
   SwitchTriggerAction({required this.dataPoint, this.switchFalse = false, this.switchTrue = true});
 
   factory SwitchTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+    DataPoint? dataPoint = Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     return SwitchTriggerAction(dataPoint: dataPoint, switchFalse: json["switchFalse"], switchTrue: json["switchTrue"]);
   }
 

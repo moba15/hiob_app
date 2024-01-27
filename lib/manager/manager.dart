@@ -17,6 +17,8 @@ import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
 
+import '../background/background_runner.dart';
+
 class Manager {
   static final Manager instance = Manager._internal(versionNumber: "1.3", buildNumber: "100");
   static final navigatorKey = GlobalKey<NavigatorState>();
@@ -67,7 +69,7 @@ class Manager {
   var random = Random();
 
   Future<void> load() async {
-    androidInfo = await deviceInfo.androidInfo!;
+    androidInfo = await deviceInfo.androidInfo;
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref, manager: this);
@@ -141,6 +143,7 @@ class Manager {
     }
     if (loadingState >= maxLoadingState - 1) {
       status = ManagerStatus.finished;
+      BackgroundRunner(generalManager: generalManager, ioBrokerManager: ioBrokerManager).init();
       managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();
       subscription2?.cancel();

@@ -49,7 +49,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
                           AddTemplateAlertDialog(
                             customGroupWidget: clone,
                             onAdded: (template) => {_addedController.add(template)},
-                            screenManager: Manager.instance!.screenManager,));
+                            screenManager: Manager.instance.screenManager,));
                     },
                     child: const Icon(Icons.add),
                   ),
@@ -115,7 +115,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     customGroupWidget.templates = clone.templates;
     customGroupWidget.isExtended = clone.isExtended;
     customGroupWidget.iconID = clone.iconID;
-    Manager.instance!.screenManager.update();
+    Manager.instance.screenManager.update();
     
   }
 }
@@ -227,10 +227,6 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
             itemBuilder: (BuildContext context, int index) {
               if(widget.customGroupWidget.templates[index] is CustomWidgetTemplate) {
                 return Dismissible(
-                  child: CustomWidgetTemplateTile(
-                      customWidget: widget.customGroupWidget.templates[index],
-                      customWidgetManager: Manager.instance!
-                          .customWidgetManager),
                   onDismissed: (d) {
                     setState(() {
                       widget.customGroupWidget.removeTemplate(widget
@@ -239,40 +235,44 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   },
                   background: Container(
                     color: Colors.red,
-                    child: Container(
-                      child: const Icon(Icons.delete_forever),
-                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    ),
                     alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      child: const Icon(Icons.delete_forever),
+                    ),
                   ),
                   secondaryBackground: Container(
                     color: Colors.red,
-                    child: Container(
-                      child: const Icon(Icons.delete_forever),
-                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    ),
                     alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      child: const Icon(Icons.delete_forever),
+                    ),
                   ),
                   direction: DismissDirection.endToStart,
                   key: ValueKey(widget.customGroupWidget.templates[index].id),
+                  child: CustomWidgetTemplateTile(
+                      customWidget: widget.customGroupWidget.templates[index],
+                      customWidgetManager: Manager.instance
+                          .customWidgetManager),
                 );
               } else {
                 return  Dismissible(
                   background: Container(
                     color: Colors.red,
-                    child: Container(
-                      child: const Icon(Icons.delete_forever),
-                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    ),
                     alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      child: const Icon(Icons.delete_forever),
+                    ),
                   ),
                   secondaryBackground: Container(
                     color: Colors.red,
-                    child: Container(
-                      child: const Icon(Icons.delete_forever),
-                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    ),
                     alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      child: const Icon(Icons.delete_forever),
+                    ),
                   ),
                   direction: DismissDirection.endToStart,
                   onDismissed: (d) {
@@ -284,7 +284,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   key: ValueKey(widget.customGroupWidget.templates[index]),
                   child: ListTile(
                     title: const Text("Line"),
-                    subtitle: Text("Thickness: " + (widget.customGroupWidget.templates[index] as CustomDivisionLineWidget).thickness.toString()),
+                    subtitle: Text("Thickness: ${(widget.customGroupWidget.templates[index] as CustomDivisionLineWidget).thickness}"),
                   ),
                 );
               }
@@ -335,7 +335,7 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
 
               if(templates.any((element) => element.customWidget.type == type))
                 ExpansionTile(
-                  title: Text(type.name + " (" + templates.where((element) => element.customWidget.type == type).length.toString() + ")"),
+                  title: Text("${type.name} (${templates.where((element) => element.customWidget.type == type).length})"),
                   children: [
                     for(CustomWidgetTemplate t in templates.where((element) => element.customWidget.type == type))
                       ListTile(
@@ -426,9 +426,9 @@ class _SaveDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text("Changes not saved"),
-      content: Column(
+      content: const Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children: [
           Text("Do you want exit without exit!"),
         ],
       ),

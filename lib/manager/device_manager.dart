@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/iobroker_device.dart';
@@ -33,12 +32,8 @@ class DeviceManager {
 
     List<dynamic>? l = await fileManager.getList(key);
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "device",
-      "loadedBootup",
-      encoder.convert(l),
-    );
-    developer.log("Devices Raw Loaded " + l.toString(),
+
+    developer.log("Devices Raw Loaded $l",
         name: "de.bachmaiers/device_manager.dart",
         time: DateTime.now(),
         zone: Zone.current);
@@ -126,7 +121,7 @@ class DeviceManager {
 
   Future<bool> addDevice(Device device) async {
     while (_containsID(device.id)) {
-      device.id = Manager.instance!.getRandString(14);
+      device.id = Manager.instance.getRandString(14);
     }
     devicesList.add(device);
     sort();
@@ -140,11 +135,7 @@ class DeviceManager {
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "device",
-      "added",
-      encoder.convert(await fileManager.getList(key)),
-    );
+
     return suc;
   }
 
@@ -157,11 +148,7 @@ class DeviceManager {
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "device",
-      "edit",
-      encoder.convert(await fileManager.getList(key)),
-    );
+
     return suc;
   }
 
@@ -173,11 +160,7 @@ class DeviceManager {
     }
     deviceListStreamController.add(devicesList);
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "device",
-      "removed",
-      encoder.convert(await fileManager.getList(key)),
-    );
+
     return suc;
   }
 
@@ -199,11 +182,7 @@ class DeviceManager {
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "device",
-      "addDataPoint",
-      encoder.convert(await fileManager.getList(key)),
-    );
+
     return suc;
   }
 

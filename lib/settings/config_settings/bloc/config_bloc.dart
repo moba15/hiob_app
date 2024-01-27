@@ -24,14 +24,14 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
 
   void _fetch() async {
     List<PreConfig> list =
-        await Manager.instance!.settingsSyncManager.fetchTemplatesFromAdapter();
+        await Manager.instance.settingsSyncManager.fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));
   }
 
   void _onConfigAdded(emit) async {
     List<PreConfig> list =
-        await Manager.instance!.settingsSyncManager.fetchTemplatesFromAdapter();
+        await Manager.instance.settingsSyncManager.fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));
   }

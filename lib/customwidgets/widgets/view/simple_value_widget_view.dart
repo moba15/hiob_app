@@ -59,13 +59,13 @@ class SimpleValueWidgetView extends StatelessWidget {
             //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
             trailing: state.value is double
                 ? Text(
-                    (state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) + (customSimpleValueWidget.unit == null ? "": " " + customSimpleValueWidget.unit!),
+                    (state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) + (customSimpleValueWidget.unit == null ? "": " ${customSimpleValueWidget.unit!}"),
                     style: const TextStyle(fontSize: 16), overflow: TextOverflow.fade,
                   )
                 : Container(
                     constraints: const BoxConstraints(maxWidth: 200),
                     child: Text(
-                      state.value.toString() +  (customSimpleValueWidget.unit == null ? "": " " + customSimpleValueWidget.unit!),
+                      state.value.toString() +  (customSimpleValueWidget.unit == null ? "": " ${customSimpleValueWidget.unit!}"),
                       style: const TextStyle(fontSize: 16),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,

@@ -72,30 +72,30 @@ class _MapOrderSettingTemplateState<V>
             String key = data.keys.elementAt(i);
             return Dismissible(
               key: ValueKey(key),
-              child: ListTile(
-                title: Text(widget.valueTileText + widget.toStr(data[key] )),
-                subtitle: Text(widget.keyTileText + key),
-              ),
               onDismissed: (d) {setState(() {
                 data.remove(key);
               }); widget.onChange(data); },
               background: Container(
                 color: Colors.red,
-                child: Container(
-                  child: const Icon(Icons.delete_forever),
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                ),
                 alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
               ),
               secondaryBackground: Container(
                 color: Colors.red,
-                child: Container(
-                  child: const Icon(Icons.delete_forever),
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                ),
                 alignment: Alignment.centerRight,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
               ),
               direction: DismissDirection.endToStart,
+              child: ListTile(
+                title: Text(widget.valueTileText + widget.toStr(data[key] )),
+                subtitle: Text(widget.keyTileText + key),
+              ),
             );
           }, onReorder: reorder, itemCount: data.length,
         )
@@ -107,39 +107,39 @@ class _MapOrderSettingTemplateState<V>
     if(oldIndex>newIndex) {
       for(int i = 0; i<newIndex; i++) {
         String key = data.keys.elementAt(i);
-        newMap[key] = data[key]!;
+        newMap[key] = data[key] as V;
 
       }
-      newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)]!;
+      newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)] as V;
       for(int i = newIndex; i<oldIndex; i++) {
         String key = data.keys.elementAt(i);
-        newMap[key] = data[key]!;
+        newMap[key] = data[key] as V;
       }
       for(int i = oldIndex+1; i<data.length; i++) {
         String key = data.keys.elementAt(i);
-        newMap[key] = data[key]!;
+        newMap[key] = data[key] as V;
       }
 
 
     } else if(oldIndex<newIndex) {
       for(int i = 0; i<oldIndex; i++) {
         String key = data.keys.elementAt(i);
-        newMap[key] = data[key]!;
+        newMap[key] = data[key] as V;
       }
 
       for(int i = oldIndex+1; i<newIndex; i++) {
         String key = data.keys.elementAt(i);
-        newMap[key] = data[key]!;
+        newMap[key] = data[key] as V;
       }
 
 
 
-      newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)]!;
+      newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)] as V;
 
 
       for(int i = newIndex; i<data.length; i++) {
         String key = data.keys.elementAt(i);
-        newMap[key] = data[key]!;
+        newMap[key] = data[key] as V;
       }
 
     } else {

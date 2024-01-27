@@ -104,6 +104,14 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
           ),
           //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
           trailing: AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child)  {
+                return Transform.scale(
+                  scale: 1 - _animationController.value,
+                  child: child,
+
+                );
+              },
               child: OutlinedButton(
                 child: Text(widget.buttonText),
                 onPressed: () async {
@@ -115,15 +123,7 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
 
 
                 },
-              ),
-              animation: _animationController,
-              builder: (context, child)  {
-                return Transform.scale(
-                  child: child,
-                  scale: 1 - _animationController.value,
-
-                );
-              }
+              )
           )
       ),
     );

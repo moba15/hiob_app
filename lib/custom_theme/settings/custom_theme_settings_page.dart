@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +36,7 @@ class _CustomThemeSettingsBody extends StatelessWidget {
       TODO: Bloc Pattern etc.
      */
     return Container(
-      margin: EdgeInsets.only(left:15, right: 15),
+      margin: const EdgeInsets.only(left:15, right: 15),
       child: ListView(
 
 
@@ -58,7 +57,7 @@ class _CustomThemeSettingsBody extends StatelessWidget {
   Widget _selectBrightnessMode() {
     return InputFieldContainer.inputContainer(
       child: DropdownButtonFormField<CustomThemeBrightness>(
-        decoration: InputDecoration(border: OutlineInputBorder()),
+        decoration: const InputDecoration(border: OutlineInputBorder()),
         value: themeManager.loadedCustomTheme.customThemeBrightness,
         items: [
           DropdownMenuItem(
@@ -97,7 +96,7 @@ class _CustomThemeSettingsBody extends StatelessWidget {
           if(bri == null) {
 
           } else {
-            themeManager.changeTheme(customTheme: themeManager.loadedCustomTheme.copyOf(customThemeBrightness: bri!));
+            themeManager.changeTheme(customTheme: themeManager.loadedCustomTheme.copyOf(customThemeBrightness: bri));
           }
         },
       )
