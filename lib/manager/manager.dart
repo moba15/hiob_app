@@ -20,9 +20,10 @@ import 'package:smart_home/manager/theme/theme_manager.dart';
 import '../background/background_runner.dart';
 
 class Manager {
+  @Deprecated("Please use the Context")
   static final Manager instance = Manager._internal(versionNumber: "1.3", buildNumber: "100");
   static final navigatorKey = GlobalKey<NavigatorState>();
-
+  @Deprecated("Please use the Context")
   factory Manager() => instance;
 
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
