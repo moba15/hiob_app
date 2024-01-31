@@ -109,7 +109,7 @@ class _GraphViewState extends State<GraphView>{
 
       for(int time in state.historyData.loadedHistory.keys) {
         double val = state.historyData.loadedHistory[time];
-        mainSeries.first.dataSource.add(_ChartData(DateTime.fromMillisecondsSinceEpoch(time), val));
+        mainSeries.first.dataSource!.add(_ChartData(DateTime.fromMillisecondsSinceEpoch(time), val));
 
 
 
