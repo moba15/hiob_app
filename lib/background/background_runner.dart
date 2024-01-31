@@ -24,8 +24,8 @@ class BackgroundRunner {
 
   BackgroundRunner({required this.generalManager, required this.ioBrokerManager});
   init(){
-    NotificationManager.init();
-    print("Init");
+    //NotificationManager.init();
+
     service = FlutterBackgroundService();
     final ios = IosConfiguration();
     final android = AndroidConfiguration(
