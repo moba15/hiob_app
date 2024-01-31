@@ -69,7 +69,7 @@ class SettingsSyncManager {
   }
 
   Future<List<PreConfig>> fetchTemplatesFromAdapter() async {
-    Manager.instance?.connectionManager.sendMsg(RequestTemplateSettings());
+    Manager.instance.connectionManager.sendMsg(RequestTemplateSettings());
     List rawData = await fetchedConfigListStreamController.stream.first;
     List<PreConfig> configs = [];
     for (String name in rawData) {

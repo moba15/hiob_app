@@ -13,7 +13,7 @@ class ButtonTriggerAction extends TriggerAction {
   ButtonTriggerAction({required this.label , required this.dataPoint});
 
   factory ButtonTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+    DataPoint? dataPoint = Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     return ButtonTriggerAction(dataPoint: dataPoint, label: json["label"] ?? "No Label Set");
   }
 

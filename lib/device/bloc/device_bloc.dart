@@ -57,7 +57,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
         status: DeviceStatus.ready));
     device.value = event.value;
     if (device is IoBrokerDevice) {
-      Manager.instance?.connectionManager.sendMsg(StateChangeRequestIobPackage(
+      Manager.instance.connectionManager.sendMsg(StateChangeRequestIobPackage(
           stateID: (device as IoBrokerDevice).objectID, value: event.value));
     }
   }

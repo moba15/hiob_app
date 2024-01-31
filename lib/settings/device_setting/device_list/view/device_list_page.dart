@@ -48,8 +48,8 @@ class DeviceListPage extends StatelessWidget {
                         deviceManager: context.read<DeviceManager>(),
                       )));
         },
-        child: const Icon(Icons.add),
         tooltip: "Neues Gerät Hinzufügen",
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -274,7 +274,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                       MaterialPageRoute(
                           builder: (c) => EnumNavigationPage(
                                 ioBrokerManager:
-                                    Manager.instance!.ioBrokerManager,
+                                    Manager.instance.ioBrokerManager,
                                 id: "enum.app",
                                 depth: 1,
                                 onSelected: onSelected,
@@ -401,19 +401,19 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
               Dismissible(
                 background: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 secondaryBackground: Container(
                   color: Colors.red,
-                  child: Container(
-                    child: const Icon(Icons.delete_forever),
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  ),
                   alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: const Icon(Icons.delete_forever),
+                  ),
                 ),
                 direction: DismissDirection.endToStart,
                 key: ValueKey(dataPoint),
@@ -448,7 +448,7 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
                       MaterialPageRoute(
                           builder: (c) => EnumNavigationPage(
                                 ioBrokerManager:
-                                    Manager.instance!.ioBrokerManager,
+                                    Manager.instance.ioBrokerManager,
                                 id: "enum.app",
                                 depth: 1,
                                 onSelected: onSelected,
@@ -486,7 +486,9 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
       ioBrokerDevice.iconID =
           currentSelectedIconData!.codePoint.toRadixString(16);
       ioBrokerDevice.dataPoints = dataPoints;
-      dataPoints.forEach((element) => {element.device = ioBrokerDevice});
+      for (var element in dataPoints) {
+        element.device = ioBrokerDevice;
+      }
       widget.deviceManager.editDevice(ioBrokerDevice);
       Navigator.pop(context);
     }
@@ -547,7 +549,7 @@ class _DataPointInfoDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(dataPoint.name + ": " + dataPoint.id),
+      title: Text("${dataPoint.name}: ${dataPoint.id}"),
       scrollable: true,
       content: Column(
         children: [
@@ -672,7 +674,7 @@ class EnumNavigationView extends StatelessWidget {
               children: <TextSpan>[
                 for (String s in id.split("."))
                   TextSpan(
-                    text: s + ">",
+                    text: "$s>",
                   )
               ]),
         ),

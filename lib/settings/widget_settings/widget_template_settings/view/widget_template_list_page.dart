@@ -45,8 +45,8 @@ class WidgetTemplateListPage extends StatelessWidget {
                         customWidgetManager: customWidgetManager,
                       )));
         },
-        child: const Icon(Icons.add),
         tooltip: "Neues Template hinzufügen",
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -134,6 +134,6 @@ class TemplatesView extends StatelessWidget {
   }
 
   void _delete(CustomWidgetTemplate template) {
-    Manager.instance?.customWidgetManager.removeTemplate(template);
+    Manager.instance.customWidgetManager.removeTemplate(template);
   }
 }

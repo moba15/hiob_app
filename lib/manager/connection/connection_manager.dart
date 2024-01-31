@@ -29,7 +29,8 @@ enum ConnectionStatus {
 
 extension ConnectionStatusExtension on ConnectionStatus {
   bool get isConnected {
-    return this == ConnectionStatus.connected || this == ConnectionStatus.loggedIn;
+    return this == ConnectionStatus.connected ||
+        this == ConnectionStatus.loggedIn;
   }
 }
 
@@ -41,6 +42,7 @@ class ConnectionManager with WidgetsBindingObserver {
   final networkInfo = NetworkInfo();
   Socket? socket;
   WebSocketChannel? _webSocket;
+
   StreamSubscription? _webSocketStreamSub;
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
@@ -51,7 +53,6 @@ class ConnectionManager with WidgetsBindingObserver {
   final StreamController<ConnectionStatus> connectionStatusStreamController =
       StreamController.broadcast(); //TODO: Kein Broadcast
   int tries = 0;
-  bool useSecureConnection = false;
 
   ConnectionManager(
       {required this.deviceManager,
@@ -63,25 +64,24 @@ class ConnectionManager with WidgetsBindingObserver {
     });
   }
 
-  Future<void> connectIoB() async {
-    try {
-      if (ioBrokerManager.useSecondaryAddress &&
-          (await networkInfo.getWifiName()) != ioBrokerManager.knownNetwork) {
-        _webSocket = IOWebSocketChannel.connect(
-            Uri.parse(ioBrokerManager.secondaryAddress),
-            pingInterval: const Duration(minutes: 5));
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      } else {
-        String uri = ioBrokerManager.useSecureConnection ? "wss://${ioBrokerManager.mainIp}:${ioBrokerManager.port}" : "ws://${ioBrokerManager.mainIp}:${ioBrokerManager.port}";
-        print(uri);
-        _webSocket = WebSocketChannel.connect(
+  Future<Uri> _getUrl() async {
+    if (ioBrokerManager.useSecondaryAddress &&
+        (await networkInfo.getWifiName()).toString().trim() !=
+            ("\"${ioBrokerManager.knownNetwork.trim()}\"")) {
+      return Uri.parse(ioBrokerManager.secondaryAddress);
+    }
+    return Uri.parse(
+        "${ioBrokerManager.useSecureConnection ? "ws://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}");
+  }
 
-            Uri.parse(uri),
-            );
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      }
+  Future<void> connectIoB() async {
+    Uri url = await _getUrl();
+    print("Connect to: ${url.toString()}");
+    try {
+      _webSocket = IOWebSocketChannel.connect(url,
+          pingInterval: const Duration(minutes: 5));
+      _webSocketStreamSub =
+          _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
     } catch (e) {
       connectionStatusStreamController.addError("Connection failed");
     } finally {
@@ -116,6 +116,9 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
+
+    Uri url = await _getUrl();
+    print("Connect to: ${url.toString()}");
     connectionStatusStreamController.add(ConnectionStatus.tryAgain);
     if (_webSocketStreamSub != null) {
       _webSocketStreamSub!.cancel();
@@ -128,23 +131,10 @@ class ConnectionManager with WidgetsBindingObserver {
     ioBrokerManager.connected = false;
 
     try {
-      if (ioBrokerManager.useSecondaryAddress &&
-          (await networkInfo.getWifiName()).toString().trim() !=
-              ("\"" + ioBrokerManager.knownNetwork.trim() + "\"")) {
-        _webSocket = IOWebSocketChannel.connect(
-            Uri.parse(ioBrokerManager.secondaryAddress),
-            pingInterval: const Duration(minutes: 5));
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      } else {
-        String uri = ioBrokerManager.useSecureConnection ? "wss://${ioBrokerManager.mainIp}:${ioBrokerManager.port}" : "ws://${ioBrokerManager.mainIp}:${ioBrokerManager.port}";
-        _webSocket = WebSocketChannel.connect(
-
-          Uri.parse(uri),
-        );
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      }
+      _webSocket = IOWebSocketChannel.connect(url,
+          pingInterval: const Duration(minutes: 5));
+      _webSocketStreamSub =
+          _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
     } catch (e) {
       ioBrokerManager.connected = false;
 
@@ -168,7 +158,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void onDone() async {
-
     debugPrint("Done");
 
     ioBrokerManager.connected = false;
@@ -184,6 +173,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void readPackage(String msg) {
+    print("MSG" + msg);
     //TODO Error Handling
     Map<String, dynamic> rawMap = jsonDecode(msg);
     DataPackageType packageType = DataPackageType.values
@@ -235,7 +225,7 @@ class ConnectionManager with WidgetsBindingObserver {
         break;
       case DataPackageType.getTemplatesSetting:
         Manager.instance!.settingsSyncManager.loadGotTemplate(
-            rawMap["devices"], rawMap["screens"], rawMap["widg"]);
+            rawMap["devices"], rawMap["screens"], rawMap["widget"]);
         break;
 
       default:
@@ -284,6 +274,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onLoginKey(String? key) {
+    print("KEY: " + key.toString());
     if (key == null) {
       return;
     }

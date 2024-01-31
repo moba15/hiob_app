@@ -79,7 +79,7 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
                 }
 
               },
-              customWidgetManager: Manager.instance!.customWidgetManager,
+              customWidgetManager: Manager.instance.customWidgetManager,
             ),)
           ),
           Showcase(

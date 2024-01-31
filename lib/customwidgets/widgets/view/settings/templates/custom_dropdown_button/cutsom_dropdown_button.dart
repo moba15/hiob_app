@@ -60,8 +60,8 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
 
           items: w.mode == DropdownMenuMode.bottomSheet ? [] : w.items.map((e) {
             return DropdownMenuItem<T>(
-              child: itemBuilder(context, e),
               value: e,
+              child: itemBuilder(context, e),
             );
           }).toList(),
         ),

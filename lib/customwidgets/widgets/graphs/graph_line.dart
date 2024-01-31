@@ -75,7 +75,7 @@ class GraphLine {
   }
 
   factory GraphLine.fromJson(Map<String, dynamic> json, List<GraphAxis> xAxes, List<GraphAxis> yAxes) {
-    DataPoint? dataPoint = Manager.instance!.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+    DataPoint? dataPoint = Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     if(!GraphLineType.values.any((element) => element.toString() == json["type"])) {
       json["type"] = GraphLineType.normal.toString();
 
@@ -119,7 +119,7 @@ class GraphLine {
       Map startEndMap = getStartEnd(graphWidget);
       DateTime start = startEndMap["start"];
       DateTime end = startEndMap["end"];
-      Manager.instance!.historyManager.subscribeToHistorySmart(dataPoint!, start.millisecondsSinceEpoch, end.millisecondsSinceEpoch, minInterval ?? 0);
+      Manager.instance.historyManager.subscribeToHistorySmart(dataPoint!, start.millisecondsSinceEpoch, end.millisecondsSinceEpoch, minInterval ?? 0);
 
 
     }
