@@ -49,3 +49,6 @@ app.*.map.json
 /android/app/release
 
 .jsk
+
+
+*.cmake
