@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/history/history_data.dart';
 

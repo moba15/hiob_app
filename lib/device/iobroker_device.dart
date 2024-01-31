@@ -52,6 +52,6 @@ class IoBrokerDevice extends Device {
 
   @override
   String toString() {
-    return "Device: " + toJson().toString();
+    return "Device: ${toJson()}";
   }
 }

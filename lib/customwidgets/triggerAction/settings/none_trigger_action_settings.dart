@@ -24,7 +24,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           title: "Datapoint",
           description: "The Datapoint which value will be shown",
           child: DeviceSelection(
-            customWidgetManager: Manager.instance!.customWidgetManager,
+            customWidgetManager: Manager.instance.customWidgetManager,
             onDataPointSelected: (d) => {noneTriggerAction.dataPoint =d},
             onDeviceSelected: (d)=> {noneTriggerAction.dataPoint == null},
             selectedDataPoint: noneTriggerAction.dataPoint,
@@ -115,29 +115,29 @@ class _RulesSettingsState extends State<_RulesSettings> {
               });
             },
             key: ValueKey(keyRule),
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
+            ),
+            direction: DismissDirection.endToStart,
             child: ListTile(
               title: Text(widget.noneTriggerAction.displayRules![keyRule] ?? "Not Found"),
               subtitle: Text(keyRule),
 
 
             ),
-            background: Container(
-              color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
-              alignment: Alignment.centerLeft,
-            ),
-            secondaryBackground: Container(
-              color: Colors.red,
-              child: Container(
-                child: const Icon(Icons.delete_forever),
-                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              ),
-              alignment: Alignment.centerRight,
-            ),
-            direction: DismissDirection.endToStart,
           )
       ],
 

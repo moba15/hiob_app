@@ -34,7 +34,7 @@ class Screen {
             .any((element) => element.id == templateRaw["id"])) {
           continue;
         }
-        widgetTemplates.add(Manager.instance?.customWidgetManager.templates
+        widgetTemplates.add(Manager.instance.customWidgetManager.templates
             .firstWhere((element) => element.id == templateRaw["id"]));
       } else {
         if (templateRaw["type"] == CustomWidgetType.line.toString()) {

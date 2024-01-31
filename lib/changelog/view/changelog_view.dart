@@ -18,7 +18,7 @@ class ChangeLogScreen extends StatelessWidget {
 
       ),
       appBar: AppBar(
-        title: Text("What's new? " + manager.versionNumber + "(" + manager.buildNumber + ")"),
+        title: Text("What's new? ${manager.versionNumber}(${manager.buildNumber})"),
       ),
       body: ListView(
 
@@ -35,9 +35,9 @@ class ChangeLogScreen extends StatelessWidget {
           const Text("Bugs", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
           Container(
             margin: const EdgeInsets.only(top: 3, left: 10),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text("- After the next sync in the IoBroker Setting you now should see the Name of the Datapoint again"),
                 Text("- A removed data point should not cause a crash"),
                 Text("- Known Bugs: Graph Widget does not work anymore"),

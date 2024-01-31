@@ -100,7 +100,7 @@ class _NoneTriggerActionView extends StatelessWidget {
             leading = (state.value as double).toStringAsFixed(noneTriggerAction.round);
           }
           if(noneTriggerAction.unit != null) {
-            leading = leading + " " + noneTriggerAction.unit!;
+            leading = "$leading ${noneTriggerAction.unit!}";
           }
           return Container(
             constraints: const BoxConstraints(maxWidth: 200),
@@ -296,6 +296,14 @@ class _ButtonTriggerViewState extends State<_ButtonTriggerView> with SingleTicke
           bloc: bloc,
           builder: (_, state) =>
               AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child)  {
+                    return Transform.scale(
+                      scale: 1 - _animationController.value,
+                      child: child,
+
+                    );
+                  },
                   child: OutlinedButton(
                     child: Text(widget.buttonTriggerAction.label ?? "No Lable Set"),
                     onPressed: () async {
@@ -304,15 +312,7 @@ class _ButtonTriggerViewState extends State<_ButtonTriggerView> with SingleTicke
 
 
                     },
-                  ),
-                  animation: _animationController,
-                  builder: (context, child)  {
-                    return Transform.scale(
-                      child: child,
-                      scale: 1 - _animationController.value,
-
-                    );
-                  }
+                  )
               )
 
       ),

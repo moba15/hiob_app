@@ -69,7 +69,7 @@ class _LineSettingsBody extends StatelessWidget {
                   setState(() =>  graphLine.dataPoint = null);
                 },
                 onDataPointSelected: (d) => graphLine.dataPoint = d,
-                customWidgetManager: Manager.instance!.customWidgetManager,
+                customWidgetManager: Manager.instance.customWidgetManager,
 
 
               );
@@ -101,9 +101,8 @@ class _LineSettingsBody extends StatelessWidget {
                 title: const Text("Show Datapoints"),
                 value: graphLine.showDataDots ?? false,
                 onChanged: (v) {
-                  setState(() => {
-                    graphLine.showDataDots = v
-                  });
+                  setState(() => graphLine.showDataDots = v
+                  );
                 } ,
 
               );

@@ -44,7 +44,7 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     dataPoint.value = event.value;
     dataPoint.device?.lastUpdated = DateTime.now();
     if (dataPoint.device is IoBrokerDevice) {
-      Manager.instance?.connectionManager.sendMsg(StateChangeRequestIobPackage(
+      Manager.instance.connectionManager.sendMsg(StateChangeRequestIobPackage(
           stateID: dataPoint.id, value: event.value));
     }
   }

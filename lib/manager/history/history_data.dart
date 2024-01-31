@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:smart_home/dataPackages/subscribe_history_package.dart';
 import 'package:smart_home/manager/history/history_subscription.dart';
-import 'package:smart_home/manager/manager.dart';
 
 class HistoryData {
   StreamController<Map<String, dynamic>> streamController =

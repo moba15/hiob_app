@@ -221,7 +221,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                   screen.addWidgetTemplate(
                       widget.screenManager,
                       CustomWidgetTemplate(
-                          id: Manager.instance!.getRandString(12),
+                          id: Manager.instance.getRandString(12),
                           name: "Line",
                           customWidget: c));
                 });

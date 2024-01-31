@@ -39,8 +39,8 @@ class ScreenListPage extends StatelessWidget {
                         screenManager: context.read<ScreenManager>(),
                       )));
         },
-        child: const Icon(Icons.add),
         tooltip: "Neues Gerät Hinzufügen",
+        child: const Icon(Icons.add),
       ),
     );
   }
