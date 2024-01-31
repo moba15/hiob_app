@@ -1,4 +1,6 @@
 # smart_home 
-Ein dummes etwas zu groáes Projekt lol
+This module is distributor under the MIT License (MIT.
+
+The MIT License (MIT) 
 
 
