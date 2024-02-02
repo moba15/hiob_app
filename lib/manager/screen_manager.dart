@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
@@ -32,7 +31,7 @@ class ScreenManager {
     await manager.customWidgetManager.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+
 
     developer.log("Screens Raw Loaded $l",
         name: "de.bachmaiers/screen_manager.dart",
@@ -67,7 +66,6 @@ class ScreenManager {
     await manager.customWidgetManager.reload();
 
     List<dynamic>? l = await fileManager.getList(key);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     if (l == null) {
       screens = [];
@@ -100,7 +98,6 @@ class ScreenManager {
       screenStreamController.add(screens);
     }
 
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
   }
 
@@ -121,7 +118,6 @@ class ScreenManager {
       screens.add(screen);
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
   }
 
@@ -138,7 +134,6 @@ class ScreenManager {
       screens.insert(oldIndex, tmp);
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
   }
 
@@ -168,7 +163,6 @@ class ScreenManager {
       screens[z] = screen;
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
   }
 
@@ -177,7 +171,6 @@ class ScreenManager {
     if (suc) {
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
   }
 

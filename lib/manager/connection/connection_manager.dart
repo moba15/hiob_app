@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -107,6 +106,7 @@ class ConnectionManager with WidgetsBindingObserver {
           reconnect();
         }
         break;
+      default: break;
     }
   }
 
@@ -173,7 +173,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void readPackage(String msg) {
-    print("MSG" + msg);
+    print("MSG$msg");
     //TODO Error Handling
     Map<String, dynamic> rawMap = jsonDecode(msg);
     DataPackageType packageType = DataPackageType.values
@@ -198,7 +198,7 @@ class ConnectionManager with WidgetsBindingObserver {
         _onFirstPing();
         break;
       case DataPackageType.historyDataUpdate:
-        Manager.instance!.historyManager
+        Manager.instance.historyManager
             .onHistoryUpdate(data: jsonDecode(rawMap["data"]));
         break;
       case DataPackageType.loginDeclined:
@@ -214,17 +214,17 @@ class ConnectionManager with WidgetsBindingObserver {
         _onTemplateSettingCreate();
         break;
       case DataPackageType.requestTemplatesSettings:
-        Manager.instance!.settingsSyncManager.fetchedConfigListStreamController
+        Manager.instance.settingsSyncManager.fetchedConfigListStreamController
             .sink
             .add(List<String>.from(rawMap["settings"]));
         break;
 
       case DataPackageType.uploadTemplateSettingSuccess:
-        Manager.instance!.settingsSyncManager.uploadSuccessStreamController.sink
+        Manager.instance.settingsSyncManager.uploadSuccessStreamController.sink
             .add(true);
         break;
       case DataPackageType.getTemplatesSetting:
-        Manager.instance!.settingsSyncManager.loadGotTemplate(
+        Manager.instance.settingsSyncManager.loadGotTemplate(
             rawMap["devices"], rawMap["screens"], rawMap["widget"]);
         break;
 
@@ -274,7 +274,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onLoginKey(String? key) {
-    print("KEY: " + key.toString());
+    print("KEY: $key");
     if (key == null) {
       return;
     }
@@ -295,6 +295,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onTemplateSettingCreate() {
-    Manager.instance!.settingsSyncManager.onTemplateCreate();
+    Manager.instance.settingsSyncManager.onTemplateCreate();
   }
 }

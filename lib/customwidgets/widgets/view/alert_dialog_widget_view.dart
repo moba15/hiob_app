@@ -39,7 +39,7 @@ class BottomSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: Manager.instance!,
+      value: Manager.instance,
       child: DraggableScrollableSheet(
         expand: false,
         maxChildSize: 0.9,
