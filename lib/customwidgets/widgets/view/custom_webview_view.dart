@@ -12,7 +12,6 @@ class CustomWebViewView extends StatefulWidget {
 }
 
 class _CustomWebViewViewState extends State<CustomWebViewView> {
-  late BlocListener _blocListener;
   late WebViewController _webViewController;
   
   @override

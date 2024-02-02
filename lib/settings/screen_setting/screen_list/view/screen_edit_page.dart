@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -385,7 +387,7 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ScreenListCubit>().state;
+
     List<dynamic> templates = screen.widgetTemplates;
 
     return ReorderableListView.builder(

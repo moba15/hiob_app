@@ -284,7 +284,5 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
         ),
       );
     }
-
-    return null;
   }
 }

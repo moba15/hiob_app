@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -161,7 +160,6 @@ class IoBrokerManager {
 
   void enumUpdate({required Map<String, dynamic> rawData}) {
       enums.clear();
-      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
       //log("Enum Update " + encoder.convert(rawData));
 
 

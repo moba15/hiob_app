@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/custom_widget.dart';
@@ -44,7 +43,6 @@ class CustomWidgetManager {
         name: "de.bachmaiers/customise_manager.dart",
         time: DateTime.now(),
         zone: Zone.current);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
 
     if (listRaw == null) {
@@ -153,7 +151,6 @@ class CustomWidgetManager {
       templatesStreamController.add(templates);
     }
 
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
   }
 
@@ -167,7 +164,6 @@ class CustomWidgetManager {
     }
 
     manager.screenManager.templateEdited(template);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
 
     return true;
@@ -182,7 +178,6 @@ class CustomWidgetManager {
     } else {
       manager.screenManager.templateRemoved(template);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
   }
 }
