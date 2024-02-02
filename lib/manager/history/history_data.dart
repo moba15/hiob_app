@@ -17,7 +17,6 @@ class HistoryData {
   }
 
   void startSub(HistorySubscription historySubscription) {
-    print("startSub");
     if (subs.any((element) => element == historySubscription)) {
       return;
     }
@@ -26,7 +25,6 @@ class HistoryData {
   }
 
   void addData(int time, dynamic value) {
-    print("add Data");
     streamController.sink.add({"time": time, "value": value});
     loadedHistory[time] = value;
 

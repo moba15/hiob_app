@@ -55,7 +55,6 @@ class HistoryManager {
   }
 
   void onHistoryUpdate({required List data}) {
-    print("Update");
     for (Map rawDate in data) {
       String id = rawDate["id"];
       DataPoint dataPoint =

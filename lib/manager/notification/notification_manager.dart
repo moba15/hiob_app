@@ -44,7 +44,6 @@ class NotificationManager {
   
   
   static void showNotification(String contentraw) {
-    print("Show notification");
     ioBrokerNotificationId++;
     AwesomeNotifications().createNotification(
         content: NotificationContent(
