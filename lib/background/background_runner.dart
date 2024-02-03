@@ -1,12 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';

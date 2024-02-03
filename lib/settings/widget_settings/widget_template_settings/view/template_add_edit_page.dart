@@ -203,13 +203,13 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         if (widget.onSave == null) {
           widget.customWidgetManager.save(
               template: CustomWidgetTemplate(
-            id: Manager.instance.getRandString(22) ?? "",
+            id: Manager.instance.getRandString(22),
             name: _nameController.text,
             customWidget: _customWidgetSettingWidget!.customWidget,
           ));
         } else {
           widget.onSave!(CustomWidgetTemplate(
-            id: Manager.instance.getRandString(22) ?? "",
+            id: Manager.instance.getRandString(22),
             name: _nameController.text,
             customWidget: _customWidgetSettingWidget!.customWidget,
           ));

@@ -37,7 +37,6 @@ class GeneralManager {
 
     deviceID = settings["id"] ?? uuid.v4();
     settings["id"] = deviceID;
-    print("Ol Id" + settings["id"]);
     _save();
     statusStreamController.add(true);
     if (!await fileManager.containsKey(buildKey) ||

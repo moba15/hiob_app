@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -31,7 +30,6 @@ class DeviceManager {
     }
 
     List<dynamic>? l = await fileManager.getList(key);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     developer.log("Devices Raw Loaded $l",
         name: "de.bachmaiers/device_manager.dart",
@@ -134,7 +132,6 @@ class DeviceManager {
       manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     return suc;
   }
@@ -147,7 +144,6 @@ class DeviceManager {
       manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     return suc;
   }
@@ -159,7 +155,6 @@ class DeviceManager {
       devicesList.add(device);
     }
     deviceListStreamController.add(devicesList);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     return suc;
   }
@@ -181,7 +176,6 @@ class DeviceManager {
       manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
     return suc;
   }

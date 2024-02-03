@@ -19,7 +19,6 @@ class MainViewCubit extends Cubit<MainViewState> {
 
   void _listenToConnectionChanges() {
     Manager.instance.connectionManager.connectionStatusStreamController.stream.listen((event) {
-      print("Event: ${event.name}");
       emit(MainViewStateLoaded(screens: state.screens, connectionStatus: event));
     });
   }
