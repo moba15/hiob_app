@@ -261,8 +261,8 @@ class _GraphLineListTile extends StatelessWidget {
 
 class _LineExpansionTile extends StatefulWidget {
   final GraphWidget graphWidget;
-  final GraphLine? graphLine;
-  const _LineExpansionTile({Key? key, required this.graphWidget, this.graphLine}) : super(key: key);
+  GraphLine? graphLine;
+  _LineExpansionTile({Key? key, required this.graphWidget}) : super(key: key);
 
   @override
   State<_LineExpansionTile> createState() => _LineExpansionTileState();

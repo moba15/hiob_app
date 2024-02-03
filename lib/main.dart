@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:smart_home/manager/manager.dart';
 
@@ -20,8 +19,8 @@ void main() async {
 
   //Initialize Logging
 
+  // ignore: unused_local_variable
   String version = "1.3";
-  String buildNumber = "100";
   Manager manager = Manager();
   await manager.load();
   //TODO:

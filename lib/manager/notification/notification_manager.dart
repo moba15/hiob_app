@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:ui';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
@@ -46,8 +44,6 @@ class NotificationManager {
   
   
   static void showNotification(String contentraw) {
-    Map<String, dynamic> content = jsonDecode(contentraw);
-    print("Show notification");
     ioBrokerNotificationId++;
     AwesomeNotifications().createNotification(
         content: NotificationContent(

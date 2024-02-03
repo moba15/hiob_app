@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -161,12 +160,10 @@ class IoBrokerManager {
 
   void enumUpdate({required Map<String, dynamic> rawData}) {
       enums.clear();
-      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
       //log("Enum Update " + encoder.convert(rawData));
 
 
       List<dynamic> enumsListRaw = rawData["enums"];
-      print("Enums raw:$enumsListRaw");
      // FlutterLogs.logInfo("iobrokerManager", "enumUpdate", "rawData: " + rawData["enums"].toString());
       for (Map<String, dynamic> enumRaw in enumsListRaw) {
         enums.add(Enum.fromJSON(enumRaw));
@@ -204,9 +201,7 @@ class IoBrokerManager {
       if(e.dataPointMembers.isNotEmpty) {
         if(!deviceManager.devicesList.any((element) => element.name == e.name)) {
           IoBrokerDevice device = IoBrokerDevice(id: Manager.instance.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
-          print("Add new Device: ");
           for(DataPoint e in e.dataPointMembers.toList()) {
-            print(e.otherDetails.toString());
           }
           device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
@@ -268,7 +263,6 @@ class IoBrokerManager {
     deviceManager.subscribeToDataPointsIoB(Manager.instance.connectionManager);
 
     for(Device d   in deviceManager.devicesList) {
-      print((d as IoBrokerDevice).toJson());
     }
   }
 }
