@@ -172,6 +172,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void readPackage(String msg) {
 
+
     //TODO Error Handling
     Map<String, dynamic> rawMap = jsonDecode(msg);
     DataPackageType packageType = DataPackageType.values

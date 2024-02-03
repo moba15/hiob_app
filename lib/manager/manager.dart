@@ -16,6 +16,7 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
+import 'package:smart_home/utils/deviceInfo/device_info_wrapper.dart';
 
 import '../background/background_runner.dart';
 
@@ -27,7 +28,7 @@ class Manager {
   factory Manager() => instance;
 
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  late AndroidDeviceInfo androidInfo;
+
 
   late FileManager fileManager;
 
@@ -70,7 +71,8 @@ class Manager {
   var random = Random();
 
   Future<void> load() async {
-    androidInfo = await deviceInfo.androidInfo;
+
+
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref, manager: this);
