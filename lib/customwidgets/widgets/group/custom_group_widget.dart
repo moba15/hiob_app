@@ -7,14 +7,11 @@ import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
 
 class CustomGroupWidget extends CustomWidget {
-  static const CustomWidgetType TYPE = CustomWidgetType.group;
-
-
   List<dynamic> templates;
   bool isExtended;
   String? iconID;
 
-  CustomGroupWidget({required String? name, this.templates = const [], this.isExtended = true, this.iconID}) : super(name: name, type: TYPE, settings: {});
+  CustomGroupWidget({required String? name, this.templates = const [], this.isExtended = true, this.iconID}) : super(name: name, type: CustomWidgetType.group, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();

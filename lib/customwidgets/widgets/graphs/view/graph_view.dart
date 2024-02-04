@@ -104,20 +104,6 @@ class _GraphViewState extends State<GraphView>{
     return series;
   }
 
-  void _updateMainLineSeries(HistoryDataState state) {
-    setState(() {
-
-      for(int time in state.historyData.loadedHistory.keys) {
-        double val = state.historyData.loadedHistory[time];
-        mainSeries.first.dataSource!.add(_ChartData(DateTime.fromMillisecondsSinceEpoch(time), val));
-
-
-
-      }
-    });
-
-
-  }
 
   NumericAxis _getPrimaryYAxis() {
     GraphAxis primaryYAxis = widget.graphWidget.yAxes!.first;
@@ -156,10 +142,6 @@ class _GraphViewState extends State<GraphView>{
 
       name: primaryXAxis.description
     );
-
-  }
-
-  void _subToPrimary(DataPoint dataPoint, DateTime start, DateTime end) {
 
   }
 

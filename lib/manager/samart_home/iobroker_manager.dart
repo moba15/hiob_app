@@ -201,8 +201,6 @@ class IoBrokerManager {
       if(e.dataPointMembers.isNotEmpty) {
         if(!deviceManager.devicesList.any((element) => element.name == e.name)) {
           IoBrokerDevice device = IoBrokerDevice(id: Manager.instance.getRandString(12), name: e.name, iconID: "ee98", lastUpdated: DateTime.now(), objectID: "");
-          for(DataPoint e in e.dataPointMembers.toList()) {
-          }
           device.dataPoints = e.dataPointMembers..forEach((element) {element.device = device;});
           deviceManager.addDevice(device);
 
@@ -261,8 +259,5 @@ class IoBrokerManager {
     }
 
     deviceManager.subscribeToDataPointsIoB(Manager.instance.connectionManager);
-
-    for(Device d   in deviceManager.devicesList) {
-    }
   }
 }

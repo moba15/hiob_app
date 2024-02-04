@@ -76,7 +76,7 @@ class DataPoint {
   }
 
   @override
-  bool operator ==(Object o) {
-    return identical(o, this) || o is DataPoint && o.type == type && o.id == id;
+  bool operator ==(Object other) {
+    return identical(other, this) || other is DataPoint && other.type == type && other.id == id;
   }
 }
