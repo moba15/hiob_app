@@ -16,19 +16,18 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
-import 'package:smart_home/utils/deviceInfo/device_info_wrapper.dart';
 
 import '../background/background_runner.dart';
 
 class Manager {
   @Deprecated("Please use the Context")
-  static final Manager instance = Manager._internal(versionNumber: "1.3", buildNumber: "100");
+  static final Manager instance =
+      Manager._internal(versionNumber: "1.3", buildNumber: "100");
   static final navigatorKey = GlobalKey<NavigatorState>();
   @Deprecated("Please use the Context")
   factory Manager() => instance;
 
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
 
   late FileManager fileManager;
 
@@ -71,8 +70,6 @@ class Manager {
   var random = Random();
 
   Future<void> load() async {
-
-
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref, manager: this);
@@ -146,7 +143,9 @@ class Manager {
     }
     if (loadingState >= maxLoadingState - 1) {
       status = ManagerStatus.finished;
-      BackgroundRunner(generalManager: generalManager, ioBrokerManager: ioBrokerManager).init();
+      BackgroundRunner(
+              generalManager: generalManager, ioBrokerManager: ioBrokerManager)
+          .init();
       managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();
       subscription2?.cancel();
