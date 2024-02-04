@@ -1,0 +1,69 @@
+name: Build Releases
+on: workflow_dispatch
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'keystore/your_signing_keystore.jks'
+          fileDir: "/home/runner/work/hiob_app_test2/hiob_app_test2/android/app/"
+          encodedString: ${{ secrets.KEYSTORE }}
+      - run: flutter pub get
+      - name: Build apk
+        run: flutter build apk --no-tree-shake-icons
+        env:
+          KEYALIAS: ${{ secrets.KEYALIAS }}
+          KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
+          STOREPASSWORD: ${{ secrets.STOREPASSWORD }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-apks
+          path: build/app/outputs/apk/release/app-release.apk
+          compression-level: 1
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install build tools
+        run: sudo apt-get install -y clang cmake git ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter create --platforms=linux .
+      - name: Build linux
+        run: flutter build linux --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-release
+          path: build/linux/x64/release/bundle/
+          compression-level: 6
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+      - run: flutter pub get
+      - run: flutter create --platforms=windows .
+      - name: Build windows
+        run: flutter build windows --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: build/windows/runner/Release/
+          compression-level: 6
+            
