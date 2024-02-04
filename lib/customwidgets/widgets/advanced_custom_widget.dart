@@ -11,7 +11,6 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/manager.dart';
 
 class AdvancedCustomWidget extends CustomWidget {
-  static const CustomWidgetType TYPE = CustomWidgetType.advanced;
   String? value;
   TriggerAction? bodyTriggerAction;
   String? bodyIconID;
@@ -24,9 +23,9 @@ class AdvancedCustomWidget extends CustomWidget {
   AdvancedCustomWidget(
       {required name, this.value, this.bodyTriggerAction, this.subTitle, this.subTitleDataPoint, this.bodyIconID,
         this.customAlertDialogWidget})
-      : super(name: name, type: TYPE, settings: {});
+      : super(name: name, type: CustomWidgetType.advanced, settings: {});
 
-  AdvancedCustomWidget.edit() : super.edit(type:TYPE);
+  AdvancedCustomWidget.edit() : super.edit(type: CustomWidgetType.advanced);
 
   @override
   Map<String, dynamic> toJson() => {

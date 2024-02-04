@@ -3,13 +3,12 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/cutsom_divider_settigs.dart';
 
 class CustomDivisionLineWidget extends CustomWidget {
-  static const CustomWidgetType TYPE = CustomWidgetType.line;
   Color color;
   int thickness;
 
   CustomDivisionLineWidget(
       {required String? name, this.color = Colors.black, this.thickness = 3})
-      : super(name: name, type: TYPE, settings: {});
+      : super(name: name, type: CustomWidgetType.line, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>

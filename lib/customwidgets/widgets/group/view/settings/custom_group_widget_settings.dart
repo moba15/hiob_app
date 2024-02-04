@@ -388,7 +388,7 @@ class _AddDivisionLineTemplate extends StatelessWidget {
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel"),),
         TextButton(onPressed: () {
-          onAdd(CustomDivisionLineWidget(thickness: thickness, name: 'Line (t: ' + thickness.toString() + ")"));
+          onAdd(CustomDivisionLineWidget(thickness: thickness, name: "Line (t: ${ thickness.toString()}  )"));
         }, child: const Text("Add"),)
       ],
       content: Column(
