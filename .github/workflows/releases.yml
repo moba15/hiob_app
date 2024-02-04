@@ -16,7 +16,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           fileName: 'keystore/your_signing_keystore.jks'
-          fileDir: "/home/runner/work/hiob_app_test2/hiob_app_test2/android/app/"
+          fileDir: "/home/runner/work/hiob_app/hiob_app/android/app/"
           encodedString: ${{ secrets.KEYSTORE }}
       - run: flutter pub get
       - name: Build apk
