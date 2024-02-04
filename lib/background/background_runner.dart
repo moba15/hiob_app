@@ -37,7 +37,9 @@ class BackgroundRunner {
 
 
     );
-    service.configure(iosConfiguration: ios, androidConfiguration: android);
+    if(Platform.isAndroid) {
+      service.configure(iosConfiguration: ios, androidConfiguration: android);
+    }
     //service.startService();
 
    /* Future.delayed(const Duration(seconds: 10)).then((value) => service.invoke("start",
