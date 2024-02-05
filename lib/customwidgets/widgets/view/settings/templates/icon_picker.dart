@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 Map<String, IconData> icons = {
   "import export": Icons.import_export,
   "home": Icons.home,
@@ -32,7 +33,8 @@ Map<String, IconData> icons = {
   "adf scanner": Icons.adf_scanner,
   "ad scanner outlined": Icons.adf_scanner_outlined,
   "air": Icons.air,
-  "airline seat recline normal rounded": Icons.airline_seat_recline_normal_rounded,
+  "airline seat recline normal rounded":
+      Icons.airline_seat_recline_normal_rounded,
   "all inbox": Icons.all_inbox,
   "analytics outlined": Icons.analytics_outlined,
   "analytics": Icons.analytics,
@@ -117,11 +119,17 @@ Map<String, IconData> icons = {
   "floor home g": CommunityMaterialIcons.home_floor_g,
   "floor home l": CommunityMaterialIcons.home_floor_l,*/
 };
+
 class IconPickerTemplate extends StatefulWidget {
   final Function(IconData? iconData) onChange;
   final IconData selected;
   final bool reset;
-  const IconPickerTemplate({Key? key, required this.onChange, this.selected = Icons.home, this.reset = false}) : super(key: key);
+  const IconPickerTemplate(
+      {Key? key,
+      required this.onChange,
+      this.selected = Icons.home,
+      this.reset = false})
+      : super(key: key);
 
   @override
   State<IconPickerTemplate> createState() => _IconPickerTemplateState();
@@ -130,38 +138,38 @@ class IconPickerTemplate extends StatefulWidget {
 class _IconPickerTemplateState extends State<IconPickerTemplate> {
   @override
   Widget build(BuildContext context) {
-
     return DropdownSearch<String>(
       dropdownDecoratorProps: const DropDownDecoratorProps(
-
         dropdownSearchDecoration: InputDecoration(
           labelText: "Icon",
         ),
       ),
       onChanged: (s) => widget.onChange(icons[s]),
       items: icons.keys.toList()..sort(),
-      selectedItem: icons.keys.firstWhere((element) => icons[element]?.codePoint == widget.selected.codePoint, orElse: () => "home"),
+      selectedItem: icons.keys.firstWhere(
+          (element) => icons[element]?.codePoint == widget.selected.codePoint,
+          orElse: () => "home"),
       dropdownBuilder: (context, iconKey) {
         return iconKey != null ? Icon(icons[iconKey]) : const Text("");
       },
       clearButtonProps: ClearButtonProps(
         isVisible: widget.reset,
-
       ),
-      popupProps:  PopupProps.modalBottomSheet(
+      popupProps: PopupProps.modalBottomSheet(
         modalBottomSheetProps: ModalBottomSheetProps(
-            backgroundColor: Theme.of(context).colorScheme.background
-        ),
+            backgroundColor: Theme.of(context).colorScheme.background),
         showSelectedItems: true,
         searchDelay: const Duration(seconds: 0),
         showSearchBox: true,
-        title: const Text("Icon", style: TextStyle(fontSize: 17.5),),
+        title: const Text(
+          "Icon",
+          style: TextStyle(fontSize: 17.5),
+        ),
         itemBuilder: (context, iconKey, b) {
           return ListTile(
-            title: Icon(icons[iconKey]?? icons["home"]),
+            title: Icon(icons[iconKey] ?? icons["home"]),
           );
         },
-
       ),
     );
   }

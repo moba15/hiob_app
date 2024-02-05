@@ -15,7 +15,6 @@ class FileManager {
   final Manager manager;
 
   FileManager({required this.pref, required this.manager}) {
-
     //_init();
   }
 
@@ -25,7 +24,6 @@ class FileManager {
   }*/
 
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {
-
     return await pref.setString(key, jsonEncode(content));
   }
 
@@ -62,8 +60,7 @@ class FileManager {
   }
 
   Future<Map<String, dynamic>?> getMap(String key) async {
-    if(pref.getString(key) != null) {
-
+    if (pref.getString(key) != null) {
       return jsonDecode(pref.getString(key)!);
     }
     return null;
@@ -88,7 +85,8 @@ class FileManager {
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text("Exporting...")));
     try {
-      File myFile = File("$result/exportHioB${DateFormat("y_M_d_mm_ss_a").format(DateTime.now())}.json");
+      File myFile = File(
+          "$result/exportHioB${DateFormat("y_M_d_mm_ss_a").format(DateTime.now())}.json");
       Map<String, dynamic> data = {
         "devices": jsonEncode(manager.deviceManager.devicesList),
         "widgets": jsonEncode(manager.customWidgetManager.templates),
@@ -98,8 +96,7 @@ class FileManager {
       await myFile.writeAsString(t, mode: FileMode.write);
     } on Exception catch (e) {
       dev.log(e.toString(), name: "error exporting");
-      if(Manager.navigatorKey.currentContext != null) {
-
+      if (Manager.navigatorKey.currentContext != null) {
         ScaffoldMessenger.of(Manager.navigatorKey.currentContext!)
             .showSnackBar(const SnackBar(content: Text("Error exporting!")));
         showDialog(
@@ -125,9 +122,7 @@ class FileManager {
                 scrollable: true,
               );
             });
-
       }
-
 
       return;
     }
@@ -175,8 +170,8 @@ class FileManager {
         manager.deviceManager.reload();
         manager.screenManager.reload();
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error importing! $e")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Error importing! $e")));
         showDialog(
             context: context,
             builder: (context) {

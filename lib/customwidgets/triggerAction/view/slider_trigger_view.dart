@@ -15,7 +15,6 @@ class SliderTriggerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (sliderTriggerAction.dataPoint == null) {
       return const Text("Device not found");
     }
@@ -60,22 +59,23 @@ class _SliderState extends State<_Slider> {
 
   @override
   Widget build(BuildContext context) {
-    double value = widget.value is double ? widget.value : (widget.value is int
+    double value = widget.value is double
+        ? widget.value
+        : (widget.value is int
             ? widget.value.toDouble()
             : widget.sliderTriggerAction.min.toDouble());
     if (value > widget.sliderTriggerAction.max ||
         value < widget.sliderTriggerAction.min) {
-      return Text(
-          "Error: $value smaller/greater than min/max");
+      return Text("Error: $value smaller/greater than min/max");
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        thumbShape: CustomSliderThumbValueCircle(thumbRadius: 16, max: widget.sliderTriggerAction.max, min: widget.sliderTriggerAction.min),
-
-
+        thumbShape: CustomSliderThumbValueCircle(
+            thumbRadius: 16,
+            max: widget.sliderTriggerAction.max,
+            min: widget.sliderTriggerAction.min),
       ),
       child: Slider(
-
         value: vTemp ?? value,
         min: widget.sliderTriggerAction.min.toDouble(),
         max: widget.sliderTriggerAction.max.toDouble(),
@@ -84,7 +84,7 @@ class _SliderState extends State<_Slider> {
           setState(() {
             vTemp = d;
           });
-          if(context.read<Manager>().generalManager.vibrateEnabled) {
+          if (context.read<Manager>().generalManager.vibrateEnabled) {
             HapticFeedback.lightImpact();
           }
         },
@@ -95,8 +95,8 @@ class _SliderState extends State<_Slider> {
           setState(() {
             vTemp = null;
           });
-          widget.dataPointBloc
-              .add(DataPointValueUpdateRequest(value: d.round(), oldValue: widget.dataPointBloc.state.value));
+          widget.dataPointBloc.add(DataPointValueUpdateRequest(
+              value: d.round(), oldValue: widget.dataPointBloc.state.value));
         },
       ),
     );

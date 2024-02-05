@@ -105,7 +105,8 @@ class ConnectionManager with WidgetsBindingObserver {
           reconnect();
         }
         break;
-      default: break;
+      default:
+        break;
     }
   }
 
@@ -115,7 +116,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
-
     Uri url = await _getUrl();
     connectionStatusStreamController.add(ConnectionStatus.tryAgain);
     if (_webSocketStreamSub != null) {
@@ -171,7 +171,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void readPackage(String msg) {
-
     //TODO Error Handling
     Map<String, dynamic> rawMap = jsonDecode(msg);
     DataPackageType packageType = DataPackageType.values
@@ -212,8 +211,8 @@ class ConnectionManager with WidgetsBindingObserver {
         _onTemplateSettingCreate();
         break;
       case DataPackageType.requestTemplatesSettings:
-        Manager.instance.settingsSyncManager.fetchedConfigListStreamController
-            .sink
+        Manager
+            .instance.settingsSyncManager.fetchedConfigListStreamController.sink
             .add(List<String>.from(rawMap["settings"]));
         break;
 
