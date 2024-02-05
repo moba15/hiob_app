@@ -48,10 +48,10 @@ class GeneralManager {
     }
   }
 
-  Future<void> setDeviceNameBasedOnSettingAndOS(Map<String, dynamic> settings) async {
+  Future<void> setDeviceNameBasedOnSettingAndOS(
+      Map<String, dynamic> settings) async {
     deviceName = settings["deviceName"];
     deviceName ??= (await manager.deviceInfo.deviceInfo).data["name"];
-
   }
 
   Map<String, dynamic> _loadDefaultSettings() => {
