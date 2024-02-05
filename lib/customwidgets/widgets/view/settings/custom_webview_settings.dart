@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
@@ -7,32 +6,37 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/theme.dart';
 
-
-
-class CustomWebViewWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
+class CustomWebViewWidgetSettingWidget
+    extends CustomWidgetSettingStatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
   final GlobalKey urlKey = GlobalKey();
   final GlobalKey datapointKey = GlobalKey();
   final GlobalKey heightKey = GlobalKey();
   final GlobalKey javascriptKey = GlobalKey();
-  CustomWebViewWidgetSettingWidget({Key? key, required this.customWebViewWidget}) : super(key: key);
+  CustomWebViewWidgetSettingWidget(
+      {Key? key, required this.customWebViewWidget})
+      : super(key: key);
 
   @override
-  State<CustomWebViewWidgetSettingWidget> createState() => _CustomSimpleValueWidgetSettingWidgetState();
+  State<CustomWebViewWidgetSettingWidget> createState() =>
+      _CustomSimpleValueWidgetSettingWidgetState();
 
   @override
   CustomWidget get customWidget => customWebViewWidget;
 
   @override
   bool validate() {
-    return customWebViewWidget.url != null || customWebViewWidget.dataPoint != null;
+    return customWebViewWidget.url != null ||
+        customWebViewWidget.dataPoint != null;
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys => [urlKey, datapointKey, heightKey, javascriptKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
+      [urlKey, datapointKey, heightKey, javascriptKey];
 }
 
-class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidgetSettingWidget> {
+class _CustomSimpleValueWidgetSettingWidgetState
+    extends State<CustomWebViewWidgetSettingWidget> {
   final TextEditingController _urlController = TextEditingController();
 
   @override
@@ -49,46 +53,53 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
           Showcase(
-            key: widget.urlKey,
-            title: "Url",
-            description: "The url you want to load into this widget",
-            child: InputFieldContainer.inputContainer(child: TextField(
-
-              decoration: const InputDecoration(labelText: "Url"),
-              onChanged: (s) =>  {widget.customWebViewWidget.url = s, if(s.isEmpty) widget.customWebViewWidget.url = null},
-              controller: _urlController,
-            ),)
-          ),
+              key: widget.urlKey,
+              title: "Url",
+              description: "The url you want to load into this widget",
+              child: InputFieldContainer.inputContainer(
+                child: TextField(
+                  decoration: const InputDecoration(labelText: "Url"),
+                  onChanged: (s) => {
+                    widget.customWebViewWidget.url = s,
+                    if (s.isEmpty) widget.customWebViewWidget.url = null
+                  },
+                  controller: _urlController,
+                ),
+              )),
           Showcase(
-            key: widget.datapointKey,
-            title: "Datapoint",
-            description: "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
-            child: InputFieldContainer.inputContainer(child: DeviceSelection(
-              onDataPointSelected: (d) => widget.customWebViewWidget.dataPoint = d,
-              selectedDataPoint: widget.customWebViewWidget.dataPoint,
-              selectedDevice: widget.customWebViewWidget.dataPoint?.device,
-              onDeviceSelected:  (d) {
-                if(d == null) {
-                  widget.customWebViewWidget.dataPoint = null;
-                }
-
-              },
-              customWidgetManager: Manager.instance.customWidgetManager,
-            ),)
-          ),
+              key: widget.datapointKey,
+              title: "Datapoint",
+              description:
+                  "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
+              child: InputFieldContainer.inputContainer(
+                child: DeviceSelection(
+                  onDataPointSelected: (d) =>
+                      widget.customWebViewWidget.dataPoint = d,
+                  selectedDataPoint: widget.customWebViewWidget.dataPoint,
+                  selectedDevice: widget.customWebViewWidget.dataPoint?.device,
+                  onDeviceSelected: (d) {
+                    if (d == null) {
+                      widget.customWebViewWidget.dataPoint = null;
+                    }
+                  },
+                  customWidgetManager: Manager.instance.customWidgetManager,
+                ),
+              )),
           Showcase(
             key: widget.heightKey,
             title: "Height",
             description: "Height of the Web View",
             child: Row(
               children: [
-                const Text("Height: ", style: TextStyle(fontSize: 17),),
+                const Text(
+                  "Height: ",
+                  style: TextStyle(fontSize: 17),
+                ),
                 Expanded(
                   child: Slider(
                     value: widget.customWebViewWidget.height.toDouble(),
@@ -112,15 +123,17 @@ class _CustomSimpleValueWidgetSettingWidgetState extends State<CustomWebViewWidg
             description: "Some websites need javascript to work probably",
             child: Row(
               children: [
-                const Text("Javascript enabled: ", style: TextStyle(fontSize: 17),),
+                const Text(
+                  "Javascript enabled: ",
+                  style: TextStyle(fontSize: 17),
+                ),
                 Checkbox(
                     value: widget.customWebViewWidget.javaScript,
                     onChanged: (d) {
                       setState(() {
                         widget.customWebViewWidget.javaScript = d ?? false;
                       });
-                    }
-                ),
+                    }),
               ],
             ),
           ),

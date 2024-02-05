@@ -132,8 +132,8 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
                 direction: DismissDirection.endToStart,
                 child: ListTile(
                   title: Text("View: $selectionKey"),
-                  subtitle: Text("Value: ${widget
-                          .multiSelectionTriggerAction.selections[selectionKey]}"),
+                  subtitle: Text(
+                      "Value: ${widget.multiSelectionTriggerAction.selections[selectionKey]}"),
                 ),
               );
             },

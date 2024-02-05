@@ -15,10 +15,12 @@ class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
   final GlobalKey valueKey = GlobalKey();
   final GlobalKey switchDatapoint = GlobalKey();
   final GlobalKey sliderKey = GlobalKey();
-  CustomLightWidgetSettingWidget({Key? key, required this.customLightWidget}) : super(key: key);
+  CustomLightWidgetSettingWidget({Key? key, required this.customLightWidget})
+      : super(key: key);
 
   @override
-  State<CustomLightWidgetSettingWidget> createState() => _CustomLightWidgetSettingWidgetState();
+  State<CustomLightWidgetSettingWidget> createState() =>
+      _CustomLightWidgetSettingWidgetState();
 
   @override
   CustomWidget get customWidget => customLightWidget;
@@ -29,15 +31,16 @@ class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys => [valueKey, switchDatapoint, sliderKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
+      [valueKey, switchDatapoint, sliderKey];
 }
 
-class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettingWidget> {
+class _CustomLightWidgetSettingWidgetState
+    extends State<CustomLightWidgetSettingWidget> {
   DataPoint? _onDataPoint;
 
   bool _briSelected = false;
-  
-  
+
   bool _reachableSelected = false;
   final TextEditingController _valueController = TextEditingController();
   final TextEditingController _briDisplayController = TextEditingController();
@@ -45,7 +48,7 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
   final TextEditingController _minController = TextEditingController();
   final TextEditingController _maxController = TextEditingController();
   final TextEditingController _stepController = TextEditingController();
-  
+
   @override
   void initState() {
     _valueController.text = widget.customLightWidget.value ?? "";
@@ -62,26 +65,34 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
 
   @override
   Widget build(BuildContext context) {
-    CustomWidgetManager customWidgetManager = context.read<CustomWidgetManager>();
+    CustomWidgetManager customWidgetManager =
+        context.read<CustomWidgetManager>();
     return Container(
       margin: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
         children: [
-          Container(height: 20,),
+          Container(
+            height: 20,
+          ),
           Showcase(
             key: widget.valueKey,
             title: "Value",
             description: "Text next to the button (if not set it is the Name)",
             child: TextField(
-              onChanged: (s) => { widget.customLightWidget.value = s, if(s.isEmpty) widget.customLightWidget.value = null},
-              decoration: const InputDecoration(labelText: "Value (optional)", hintText: "Value"),
+              onChanged: (s) => {
+                widget.customLightWidget.value = s,
+                if (s.isEmpty) widget.customLightWidget.value = null
+              },
+              decoration: const InputDecoration(
+                  labelText: "Value (optional)", hintText: "Value"),
               controller: _valueController,
             ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10),
             alignment: Alignment.centerLeft,
-            child: const Text("Switch Datapoint:", style: TextStyle(fontSize: 16.5)),
+            child: const Text("Switch Datapoint:",
+                style: TextStyle(fontSize: 16.5)),
           ),
           Showcase(
             key: widget.switchDatapoint,
@@ -89,7 +100,8 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             description: "The Datapoint which will be controlled by the Button",
             child: DeviceSelection(
               onDeviceSelected: (device) => {},
-              onDataPointSelected: (dataPoint) => {widget.customLightWidget.onDataPoint = dataPoint},
+              onDataPointSelected: (dataPoint) =>
+                  {widget.customLightWidget.onDataPoint = dataPoint},
               customWidgetManager: customWidgetManager,
               deviceLabel: "Switch Device",
               dataPointLabel: "Switch Datapoint",
@@ -99,19 +111,21 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             ),
           ),
 
-          Container(height: 20,),
-
+          Container(
+            height: 20,
+          ),
 
           //Brightness
           Showcase(
             key: widget.sliderKey,
             title: "Slider",
-            description: "If enabled you can setup a Slider which you can then open by pressing long enough on the Widget",
+            description:
+                "If enabled you can setup a Slider which you can then open by pressing long enough on the Widget",
             child: BoolSelectionTemplate(
-              onChange: (v)  {
+              onChange: (v) {
                 setState(() {
                   _briSelected = v;
-                  if(!v) {
+                  if (!v) {
                     widget.customLightWidget.briDataPoint = null;
                   }
                 });
@@ -120,25 +134,26 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
               startValue: _briSelected,
             ),
           ),
-          if(_briSelected) ...[
+          if (_briSelected) ...[
             TextField(
-              onChanged: (v)=> {widget.customLightWidget.briDisplay = v},
+              onChanged: (v) => {widget.customLightWidget.briDisplay = v},
               decoration: const InputDecoration(labelText: "Slider Display"),
               controller: _briDisplayController,
             ),
             Container(
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                  "Brightness Datapoint:",
-                  style: TextStyle(fontSize: 16.5)
-              ),
+              child: const Text("Brightness Datapoint:",
+                  style: TextStyle(fontSize: 16.5)),
             ),
             Row(
               children: [
                 Expanded(
                   child: TextField(
-                    onChanged: (v)=> {widget.customLightWidget.briMin = int.tryParse(v) ?? widget.customLightWidget.briMin},
+                    onChanged: (v) => {
+                      widget.customLightWidget.briMin =
+                          int.tryParse(v) ?? widget.customLightWidget.briMin
+                    },
                     decoration: const InputDecoration(labelText: "Min"),
                     controller: _minController,
                     keyboardType: TextInputType.number,
@@ -147,10 +162,15 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
                     ],
                   ),
                 ),
-                Container(width: 10,),
+                Container(
+                  width: 10,
+                ),
                 Expanded(
                   child: TextField(
-                    onChanged: (v)=> {widget.customLightWidget.briMax = int.tryParse(v) ?? widget.customLightWidget.briMax},
+                    onChanged: (v) => {
+                      widget.customLightWidget.briMax =
+                          int.tryParse(v) ?? widget.customLightWidget.briMax
+                    },
                     decoration: const InputDecoration(labelText: "Max"),
                     keyboardType: TextInputType.number,
                     controller: _maxController,
@@ -159,10 +179,15 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
                     ],
                   ),
                 ),
-                Container(width: 10,),
+                Container(
+                  width: 10,
+                ),
                 Expanded(
                   child: TextField(
-                    onChanged: (v)=> {widget.customLightWidget.briSteps = int.tryParse(v) ?? widget.customLightWidget.briSteps},
+                    onChanged: (v) => {
+                      widget.customLightWidget.briSteps =
+                          int.tryParse(v) ?? widget.customLightWidget.briSteps
+                    },
                     decoration: const InputDecoration(labelText: "Steps"),
                     controller: _stepController,
                     keyboardType: TextInputType.number,
@@ -175,24 +200,26 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             ),
             DeviceSelection(
               onDeviceSelected: (device) => {},
-              onDataPointSelected: (dataPoint) => {widget.customLightWidget.briDataPoint = dataPoint},
+              onDataPointSelected: (dataPoint) =>
+                  {widget.customLightWidget.briDataPoint = dataPoint},
               customWidgetManager: customWidgetManager,
               deviceLabel: "Device",
               dataPointLabel: "Datapoint",
-
               selectedDataPoint: widget.customLightWidget.briDataPoint,
-              selectedDevice: widget.customLightWidget.briDataPoint?.device ?? widget.customLightWidget.onDataPoint?.device,
+              selectedDevice: widget.customLightWidget.briDataPoint?.device ??
+                  widget.customLightWidget.onDataPoint?.device,
             ),
           ],
 
-
-          Container(height: 20,),
+          Container(
+            height: 20,
+          ),
           //Reachable
           BoolSelectionTemplate(
-            onChange: (v)  {
+            onChange: (v) {
               setState(() {
                 _reachableSelected = v;
-                if(!v) {
+                if (!v) {
                   widget.customLightWidget.reachableDataPoint = null;
                 }
               });
@@ -200,27 +227,29 @@ class _CustomLightWidgetSettingWidgetState extends State<CustomLightWidgetSettin
             startValue: _reachableSelected,
             title: "Reachable:",
           ),
-          if(_reachableSelected) ...[
+          if (_reachableSelected) ...[
             TextField(
-              onChanged: (v)=> {widget.customLightWidget.reachableDisplay = v},
+              onChanged: (v) => {widget.customLightWidget.reachableDisplay = v},
               decoration: const InputDecoration(labelText: "Reachable Display"),
               controller: _reachDisplayController,
             ),
             Container(
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                  "Reachable Datapoint:", style: TextStyle(fontSize: 16.5)),
+              child: const Text("Reachable Datapoint:",
+                  style: TextStyle(fontSize: 16.5)),
             ),
             DeviceSelection(
               onDeviceSelected: (device) => {},
-              onDataPointSelected: (dataPoint) => {widget.customLightWidget.reachableDataPoint = dataPoint},
+              onDataPointSelected: (dataPoint) =>
+                  {widget.customLightWidget.reachableDataPoint = dataPoint},
               customWidgetManager: customWidgetManager,
               deviceLabel: "Reachable Device",
               dataPointLabel: "Reachable Datapoint",
-
               selectedDataPoint: widget.customLightWidget.reachableDataPoint,
-              selectedDevice: widget.customLightWidget.reachableDataPoint?.device ?? widget.customLightWidget.onDataPoint?.device,
+              selectedDevice:
+                  widget.customLightWidget.reachableDataPoint?.device ??
+                      widget.customLightWidget.onDataPoint?.device,
             ),
           ]
         ],

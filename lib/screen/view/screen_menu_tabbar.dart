@@ -66,7 +66,6 @@ class _ScreenTabBarState extends State<ScreenTabBar>
 
   @override
   Widget build(BuildContext context) {
-
     return TabBar(
       isScrollable: true,
       controller: _tabController,

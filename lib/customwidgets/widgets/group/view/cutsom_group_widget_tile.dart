@@ -4,26 +4,23 @@ import 'package:smart_home/customwidgets/widgets/group/view/settings/custom_grou
 
 class CustomGroupWidgetTile extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
-  const CustomGroupWidgetTile({Key? key, required this.customGroupWidget}) : super(key: key);
+  const CustomGroupWidgetTile({Key? key, required this.customGroupWidget})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(customGroupWidget.name ?? "No Name Set for Group"),
-      onTap: ()  {
-        Navigator.push(context,
+      onTap: () {
+        Navigator.push(
+            context,
             MaterialPageRoute(
                 builder: (c) => CustomGroupWidgetSettingsPage(
-                  customGroupWidget: customGroupWidget,
-                )));
-
+                      customGroupWidget: customGroupWidget,
+                    )));
       },
       subtitle: const Text("Group"),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
-
     );
   }
 }
-
-
-

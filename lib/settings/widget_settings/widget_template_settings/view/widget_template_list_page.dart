@@ -21,7 +21,8 @@ class WidgetTemplateListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(getAppLocalizations(context).template_widget_settings_page_title),
+        title: Text(
+            getAppLocalizations(context).template_widget_settings_page_title),
         actions: [
           IconButton(
               onPressed: () {
@@ -91,10 +92,8 @@ class TemplatesView extends StatelessWidget {
                 if (templates
                     .any((element) => element.customWidget.type == type))
                   ExpansionTile(
-                    title: Text("${type.name} (${templates
-                            .where(
-                                (element) => element.customWidget.type == type)
-                            .length})"),
+                    title: Text(
+                        "${type.name} (${templates.where((element) => element.customWidget.type == type).length})"),
                     children: [
                       for (CustomWidgetTemplate t in templates.where(
                           (element) => element.customWidget.type == type))

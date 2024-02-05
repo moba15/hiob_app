@@ -6,27 +6,31 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
   final CustomDivisionLineWidget customDivisionLineWidget;
-  const CustomDividerSettings({Key? key, required this.customDivisionLineWidget}) : super(key: key);
+  const CustomDividerSettings(
+      {Key? key, required this.customDivisionLineWidget})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        children: [
-          InputFieldContainer.inputContainer(child: TextField(
-            onChanged: (s) => {customDivisionLineWidget.thickness = int.tryParse(s) ?? 3},
-            decoration: const InputDecoration(labelText: "Thickness"),
-            controller: TextEditingController(text: customDivisionLineWidget.thickness.toString()),
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
-            ],
-          ),)
-
-        ],
-      )
-    );
+        margin: const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          children: [
+            InputFieldContainer.inputContainer(
+              child: TextField(
+                onChanged: (s) =>
+                    {customDivisionLineWidget.thickness = int.tryParse(s) ?? 3},
+                decoration: const InputDecoration(labelText: "Thickness"),
+                controller: TextEditingController(
+                    text: customDivisionLineWidget.thickness.toString()),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
   @override
@@ -39,6 +43,6 @@ class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
 
   @override
   // TODO: implement showKeys
-  List<GlobalKey<State<StatefulWidget>>> get showKeys => throw UnimplementedError();
-
+  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
+      throw UnimplementedError();
 }

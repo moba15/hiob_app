@@ -39,7 +39,6 @@ class SimpleValueWidgetView extends StatelessWidget {
       bloc: DataPointBloc(dataPoint),
       builder: (context, state) {
         return SizedBox.fromSize(
-
           child: ListTile(
             visualDensity: VisualDensity.compact,
             onLongPress: () => onTab(context),
@@ -47,25 +46,44 @@ class SimpleValueWidgetView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Flexible(
-                  child: Text(customSimpleValueWidget.value ??
-                      customSimpleValueWidget.name ?? "No Name Found", overflow: TextOverflow.ellipsis, softWrap: false,),
+                  child: Text(
+                    customSimpleValueWidget.value ??
+                        customSimpleValueWidget.name ??
+                        "No Name Found",
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                  ),
                 ),
-                if(dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
+                if (dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
                   const Flexible(
-                    child: Text(" U/A", style: TextStyle(color: Colors.red), overflow: TextOverflow.clip, softWrap: false, maxLines: 1,),
+                    child: Text(
+                      " U/A",
+                      style: TextStyle(color: Colors.red),
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
+                      maxLines: 1,
+                    ),
                   )
               ],
             ),
             //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
             trailing: state.value is double
                 ? Text(
-                    (state.value as double).toStringAsFixed(customSimpleValueWidget.round ?? 800) + (customSimpleValueWidget.unit == null ? "": " ${customSimpleValueWidget.unit!}"),
-                    style: const TextStyle(fontSize: 16), overflow: TextOverflow.fade,
+                    (state.value as double).toStringAsFixed(
+                            customSimpleValueWidget.round ?? 800) +
+                        (customSimpleValueWidget.unit == null
+                            ? ""
+                            : " ${customSimpleValueWidget.unit!}"),
+                    style: const TextStyle(fontSize: 16),
+                    overflow: TextOverflow.fade,
                   )
                 : Container(
                     constraints: const BoxConstraints(maxWidth: 200),
                     child: Text(
-                      state.value.toString() +  (customSimpleValueWidget.unit == null ? "": " ${customSimpleValueWidget.unit!}"),
+                      state.value.toString() +
+                          (customSimpleValueWidget.unit == null
+                              ? ""
+                              : " ${customSimpleValueWidget.unit!}"),
                       style: const TextStyle(fontSize: 16),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -78,27 +96,36 @@ class SimpleValueWidgetView extends StatelessWidget {
   }
 
   void onTab(BuildContext context) {
-    showDialog(context: context, builder:(c) => _ValueDialog(title: customSimpleValueWidget.value ?? customSimpleValueWidget.name ?? "No Name Found",dataPoint: customSimpleValueWidget.dataPoint!,) );
+    showDialog(
+        context: context,
+        builder: (c) => _ValueDialog(
+              title: customSimpleValueWidget.value ??
+                  customSimpleValueWidget.name ??
+                  "No Name Found",
+              dataPoint: customSimpleValueWidget.dataPoint!,
+            ));
   }
 }
-
 
 class _ValueDialog extends StatelessWidget {
   final DataPoint dataPoint;
   final String title;
-  const _ValueDialog({Key? key, required this.dataPoint, required this.title}) : super(key: key);
+  const _ValueDialog({Key? key, required this.dataPoint, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text("Back"))
+        TextButton(
+            onPressed: () => Navigator.pop(context), child: const Text("Back"))
       ],
       title: Text(title),
-      content: Text(dataPoint.value.toString(), style: const TextStyle(fontSize: 17),),
-
+      content: Text(
+        dataPoint.value.toString(),
+        style: const TextStyle(fontSize: 17),
+      ),
     );
   }
 }
-

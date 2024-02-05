@@ -11,32 +11,36 @@ class CustomGroupWidget extends CustomWidget {
   bool isExtended;
   String? iconID;
 
-  CustomGroupWidget({required String? name, this.templates = const [], this.isExtended = true, this.iconID}) : super(name: name, type: CustomWidgetType.group, settings: {});
+  CustomGroupWidget(
+      {required String? name,
+      this.templates = const [],
+      this.isExtended = true,
+      this.iconID})
+      : super(name: name, type: CustomWidgetType.group, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();
 
   @override
-  Map<String, dynamic> toJson()  {
+  Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      "name":  name,
+      "name": name,
       "isExtended": isExtended,
       "iconID": iconID,
     };
     List<Map<String, dynamic>> widgets = [];
-    for(dynamic t in templates) {
-      if(t is CustomWidgetTemplate) {
+    for (dynamic t in templates) {
+      if (t is CustomWidgetTemplate) {
         widgets.add({
           "widget": t.name,
           "id": t.id,
         });
-      } else if(t is CustomDivisionLineWidget) {
+      } else if (t is CustomDivisionLineWidget) {
         widgets.add(t.toJson());
       }
     }
     map["templates"] = widgets;
     return map;
-
   }
 
   void addTemplate(CustomWidgetTemplate template) {
@@ -44,37 +48,46 @@ class CustomGroupWidget extends CustomWidget {
     //TODO: Update
   }
 
-  factory CustomGroupWidget.fromJSON(Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
+  factory CustomGroupWidget.fromJSON(
+      Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
     List<dynamic> templates = [];
-    for(Map<String, dynamic> templatesRaw in json["templates"] is String ? jsonDecode(json["templates"]) : json["templates"]) {
-      if(templatesRaw.containsKey("widget")) {
+    for (Map<String, dynamic> templatesRaw in json["templates"] is String
+        ? jsonDecode(json["templates"])
+        : json["templates"]) {
+      if (templatesRaw.containsKey("widget")) {
         if (!allTemplates.any((element) => element.id == templatesRaw["id"])) {
           continue; //TODO: Delete From file
         }
-        templates.add(allTemplates.firstWhere((element) => element.id == templatesRaw["id"]));
+        templates.add(allTemplates
+            .firstWhere((element) => element.id == templatesRaw["id"]));
       } else {
         //Is a Line Widget
         templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
       }
-
-
     }
-    return CustomGroupWidget(name: json["name"], templates: templates, isExtended: json["isExtended"] ?? true, iconID: json["iconID"]);
+    return CustomGroupWidget(
+        name: json["name"],
+        templates: templates,
+        isExtended: json["isExtended"] ?? true,
+        iconID: json["iconID"]);
   }
 
   @override
   CustomGroupWidget clone() {
-    return CustomGroupWidget(name: name, templates: List.from(templates), isExtended: isExtended, iconID: iconID);
+    return CustomGroupWidget(
+        name: name,
+        templates: List.from(templates),
+        isExtended: isExtended,
+        iconID: iconID);
   }
 
   void addTemplates(List<CustomWidgetTemplate> templates) {
-    if(this.templates.isEmpty) {
+    if (this.templates.isEmpty) {
       this.templates = [];
     }
 
-    for(CustomWidgetTemplate t in templates) {
-      if(!this.templates.contains(t)) {
-
+    for (CustomWidgetTemplate t in templates) {
+      if (!this.templates.contains(t)) {
         this.templates.add(t);
       }
     }
@@ -90,19 +103,16 @@ class CustomGroupWidget extends CustomWidget {
 
   void reorder({required int oldIndex, required int newIndex}) {
     dynamic tmp = templates[oldIndex];
-    if(newIndex>=templates.length) {
+    if (newIndex >= templates.length) {
       templates.add(tmp);
     }
     templates.removeAt(oldIndex);
     templates.insert(newIndex, tmp);
-    if(newIndex>=templates.length-1) {
+    if (newIndex >= templates.length - 1) {
       templates.removeLast();
     }
-
-
   }
 
   @override
   Widget get widget => CustomGroupWidgetView(customGroupWidget: this);
-
 }

@@ -43,11 +43,10 @@ class CustomAlertDialogWidget extends CustomWidget {
   @override
   // TODO: implement widget
   Widget get widget {
-    if(!Manager().generalManager.useBottomSheet) {
+    if (!Manager().generalManager.useBottomSheet) {
       return AlterDialogWidgetView(customAlertDialogWidget: this);
     } else {
       return BottomSheetWidget(customAlertDialogWidget: this);
     }
-
   }
 }
