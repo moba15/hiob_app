@@ -28,7 +28,6 @@ class Manager {
   factory Manager() => instance;
 
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  late AndroidDeviceInfo androidInfo;
 
   late FileManager fileManager;
 
@@ -71,7 +70,6 @@ class Manager {
   var random = Random();
 
   Future<void> load() async {
-    androidInfo = await deviceInfo.androidInfo;
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref, manager: this);

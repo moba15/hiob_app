@@ -26,16 +26,18 @@ class BackgroundRunner {
     service = FlutterBackgroundService();
     final ios = IosConfiguration();
     final android = AndroidConfiguration(
-        onStart: onStart,
-        autoStart: false,
-        autoStartOnBoot: false,
-        isForegroundMode: true,
-        foregroundServiceNotificationId: 999,
-        notificationChannelId:
-            NotificationManager.ioBrokerNotificationChannelKey,
-        initialNotificationContent: "T",
-        initialNotificationTitle: "T");
-    service.configure(iosConfiguration: ios, androidConfiguration: android);
+      onStart: onStart,
+      autoStart: false,
+      autoStartOnBoot: false,
+      isForegroundMode: true,
+      foregroundServiceNotificationId: 999,
+      notificationChannelId: NotificationManager.ioBrokerNotificationChannelKey,
+      initialNotificationContent: "T",
+      initialNotificationTitle: "T"
+    );
+    if(Platform.isAndroid) {
+      service.configure(iosConfiguration: ios, androidConfiguration: android);
+    }
     //service.startService();
 
     /* Future.delayed(const Duration(seconds: 10)).then((value) => service.invoke("start",
