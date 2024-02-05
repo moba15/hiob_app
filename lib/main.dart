@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import 'app.dart';
-class MyHttpOverrides extends HttpOverrides{
+
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
+
 void main() async {
   //TODO Fix this bug and run in zoned
   WidgetsFlutterBinding.ensureInitialized();

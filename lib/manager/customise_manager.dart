@@ -44,7 +44,6 @@ class CustomWidgetManager {
         time: DateTime.now(),
         zone: Zone.current);
 
-
     if (listRaw == null) {
       loaded = true;
       templatesStreamController.add(templates);
@@ -150,8 +149,6 @@ class CustomWidgetManager {
       templates.remove(template);
       templatesStreamController.add(templates);
     }
-
-
   }
 
   Future<bool> edit({required CustomWidgetTemplate template}) async {
@@ -165,7 +162,6 @@ class CustomWidgetManager {
 
     manager.screenManager.templateEdited(template);
 
-
     return true;
   }
 
@@ -178,6 +174,5 @@ class CustomWidgetManager {
     } else {
       manager.screenManager.templateRemoved(template);
     }
-
   }
 }

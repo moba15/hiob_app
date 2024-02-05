@@ -15,18 +15,16 @@ class DeviceSelection extends StatefulWidget {
   final DataPoint? selectedDataPoint;
   final String? preferredRole;
   const DeviceSelection(
-      {
-        Key? key,
-        required this.onDeviceSelected,
-        required this.onDataPointSelected,
-        required this.customWidgetManager,
-        this.deviceLabel = "Device",
-        this.dataPointLabel = "Datapoint",
-        this.selectedDataPoint,
-        this.selectedDevice,
-        this.preferredRole
-
-      }) : super(key: key);
+      {Key? key,
+      required this.onDeviceSelected,
+      required this.onDataPointSelected,
+      required this.customWidgetManager,
+      this.deviceLabel = "Device",
+      this.dataPointLabel = "Datapoint",
+      this.selectedDataPoint,
+      this.selectedDevice,
+      this.preferredRole})
+      : super(key: key);
 
   @override
   State<DeviceSelection> createState() => _DeviceSelectionState();
@@ -50,22 +48,21 @@ class _DeviceSelectionState extends State<DeviceSelection> {
         Expanded(
           child: DropdownSearch<Device>(
             popupProps: PopupProps.modalBottomSheet(
-              showSelectedItems: true,
-              title: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
-              showSearchBox: true,
-              isFilterOnline: false,
-              searchDelay: const Duration(seconds: 0),
-              modalBottomSheetProps: ModalBottomSheetProps(
-                backgroundColor: Theme.of(context).colorScheme.background
-              )
-
-              
-            ),
+                showSelectedItems: true,
+                title: Text(
+                  widget.deviceLabel,
+                  style: const TextStyle(fontSize: 17.5),
+                ),
+                showSearchBox: true,
+                isFilterOnline: false,
+                searchDelay: const Duration(seconds: 0),
+                modalBottomSheetProps: ModalBottomSheetProps(
+                    backgroundColor: Theme.of(context).colorScheme.background)),
             //popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
             items: widget.customWidgetManager.manager.deviceManager.devicesList,
             itemAsString: (e) => e.name,
-            onChanged: (e)  {
-              if(e!=_currentDevice) {
+            onChanged: (e) {
+              if (e != _currentDevice) {
                 setState(() {
                   _currentDevice = e;
                   _currentDataPoint = selectPrefDataPoint(e);
@@ -73,21 +70,19 @@ class _DeviceSelectionState extends State<DeviceSelection> {
                   widget.onDeviceSelected(_currentDevice);
                 });
               }
-
             },
             filterFn: (d, s) {
-              return d.id.toLowerCase().contains(s.toLowerCase()) || d.name.toLowerCase().contains(s.toLowerCase()) ;
+              return d.id.toLowerCase().contains(s.toLowerCase()) ||
+                  d.name.toLowerCase().contains(s.toLowerCase());
             },
             compareFn: (d, d1) {
               return d.id == d1.id;
             },
             dropdownDecoratorProps: DropDownDecoratorProps(
-
               dropdownSearchDecoration: InputDecoration(
                 labelText: widget.deviceLabel,
               ),
             ),
-
 
             /*searchDelay: const Duration(seconds: 0),
             showClearButton: true,
@@ -100,27 +95,24 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             selectedItem: _currentDevice,
           ),
         ),
-        Container(width: 10,),
+        Container(
+          width: 10,
+        ),
         Expanded(
           child: DropdownSearch<DataPoint>(
-            
-            popupProps:  PopupProps.modalBottomSheet(
+            popupProps: PopupProps.modalBottomSheet(
               modalBottomSheetProps: ModalBottomSheetProps(
-                  backgroundColor: Theme.of(context).colorScheme.background
-              ),
+                  backgroundColor: Theme.of(context).colorScheme.background),
               showSelectedItems: true,
               searchDelay: const Duration(seconds: 0),
               showSearchBox: true,
-
-
-              title: Text(widget.dataPointLabel, style: const TextStyle(fontSize: 17.5),),
-
+              title: Text(
+                widget.dataPointLabel,
+                style: const TextStyle(fontSize: 17.5),
+              ),
             ),
-
             dropdownDecoratorProps: DropDownDecoratorProps(
-              
               dropdownSearchDecoration: InputDecoration(
-                
                 labelText: widget.dataPointLabel,
               ),
             ),
@@ -128,22 +120,19 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             itemAsString: (e) {
               String name = e.name;
               String? sName = e.getInformation("name");
-              if(sName != null) {
-                name+=" ($sName)";
+              if (sName != null) {
+                name += " ($sName)";
               }
               return name;
             },
-            
-            onChanged: (e) =>{
+            onChanged: (e) => {
               _currentDataPoint = e,
               widget.onDataPointSelected(_currentDataPoint)
             },
-            clearButtonProps: const ClearButtonProps(
-              isVisible: true
-            ),
-
+            clearButtonProps: const ClearButtonProps(isVisible: true),
             filterFn: (d, s) {
-              return d.id.toLowerCase().contains(s.toLowerCase()) || d.name.toLowerCase().contains(s.toLowerCase()) ;
+              return d.id.toLowerCase().contains(s.toLowerCase()) ||
+                  d.name.toLowerCase().contains(s.toLowerCase());
             },
             compareFn: (d, d1) {
               return d.id == d1.id;
@@ -161,12 +150,11 @@ class _DeviceSelectionState extends State<DeviceSelection> {
   }
 
   DataPoint? selectPrefDataPoint(Device? device) {
-    if(widget.preferredRole == null) {
+    if (widget.preferredRole == null) {
       return null;
     }
-    for(DataPoint d in device?.dataPoints ?? []) {
-      if(d.role == widget.preferredRole) {
-
+    for (DataPoint d in device?.dataPoints ?? []) {
+      if (d.role == widget.preferredRole) {
         return d;
       }
     }

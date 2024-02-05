@@ -28,16 +28,17 @@ enum CustomColorSchemeMode {
 class CustomTheme {
   CustomThemeBrightness customThemeBrightness;
   CustomThemeMaterialVersion customThemeMaterialVersion;
-  double appBarElevation ;
+  double appBarElevation;
   CustomColorScheme customColorScheme = const CustomColorScheme(
-      customColorSchemeMode: CustomColorSchemeMode.fromSeed,);
+    customColorSchemeMode: CustomColorSchemeMode.fromSeed,
+  );
 
   CustomTheme(
       {required this.customThemeBrightness,
       required this.customThemeMaterialVersion,
       this.customColorScheme = const CustomColorScheme(
-          customColorSchemeMode: CustomColorSchemeMode.fromSeed), this.appBarElevation = 5});
-
+          customColorSchemeMode: CustomColorSchemeMode.fromSeed),
+      this.appBarElevation = 5});
 
   ThemeData get themeDataLight => ThemeData(
       useMaterial3:
@@ -46,49 +47,57 @@ class CustomTheme {
         elevation: appBarElevation,
         //backgroundColor: Colors.green[300]
       ),
-      inputDecorationTheme: const InputDecorationTheme(
-        border: OutlineInputBorder()
-      ),
+      inputDecorationTheme:
+          const InputDecorationTheme(border: OutlineInputBorder()),
       dividerColor: Colors.transparent,
       colorScheme: customColorScheme.colorScheme(Brightness.light),
       brightness: Brightness.light);
 
-  ThemeData get themeDataDark => ThemeData.dark(useMaterial3:
-  customThemeMaterialVersion == CustomThemeMaterialVersion.material3).copyWith(
-    appBarTheme: AppBarTheme(
-      elevation: appBarElevation,
-    ),
-    dividerColor: Colors.transparent,
-    inputDecorationTheme: const InputDecorationTheme(
-        border: OutlineInputBorder()
-    ),
-    brightness: Brightness.dark,
-    colorScheme: customColorScheme.colorScheme(Brightness.dark),
-  );
+  ThemeData get themeDataDark => ThemeData.dark(
+              useMaterial3: customThemeMaterialVersion ==
+                  CustomThemeMaterialVersion.material3)
+          .copyWith(
+        appBarTheme: AppBarTheme(
+          elevation: appBarElevation,
+        ),
+        dividerColor: Colors.transparent,
+        inputDecorationTheme:
+            const InputDecorationTheme(border: OutlineInputBorder()),
+        brightness: Brightness.dark,
+        colorScheme: customColorScheme.colorScheme(Brightness.dark),
+      );
 
   Map<String, dynamic> toJson() => {
-    "brightness": customThemeBrightness.index,
-    "materialVersion": customThemeMaterialVersion.index,
-    "appBarElevation": appBarElevation,
-    "colorScheme": customColorScheme.toJson(),
-  };
+        "brightness": customThemeBrightness.index,
+        "materialVersion": customThemeMaterialVersion.index,
+        "appBarElevation": appBarElevation,
+        "colorScheme": customColorScheme.toJson(),
+      };
 
   factory CustomTheme.fromJson(Map<String, dynamic> json) {
     CustomThemeBrightness customThemeBrightness =
         CustomThemeBrightness.values[json["brightness"] ?? 0];
     CustomThemeMaterialVersion customThemeMaterialVersion =
         CustomThemeMaterialVersion.values[json["materialVersion"] ?? 0];
-    CustomColorScheme customColorScheme = CustomColorScheme.fromJson(json["colorScheme"]);
+    CustomColorScheme customColorScheme =
+        CustomColorScheme.fromJson(json["colorScheme"]);
     return CustomTheme(
         customThemeBrightness: customThemeBrightness,
         customThemeMaterialVersion: customThemeMaterialVersion,
-        customColorScheme: customColorScheme, appBarElevation: json["appBarElevation"] ?? 5);
+        customColorScheme: customColorScheme,
+        appBarElevation: json["appBarElevation"] ?? 5);
   }
 
-  CustomTheme copyOf({CustomThemeBrightness? customThemeBrightness, CustomThemeMaterialVersion? customThemeMaterialVersion, double? appBarElevation, CustomColorScheme? customColorScheme}) {
+  CustomTheme copyOf(
+      {CustomThemeBrightness? customThemeBrightness,
+      CustomThemeMaterialVersion? customThemeMaterialVersion,
+      double? appBarElevation,
+      CustomColorScheme? customColorScheme}) {
     return CustomTheme(
-      customThemeBrightness: customThemeBrightness ?? this.customThemeBrightness,
-      customThemeMaterialVersion: customThemeMaterialVersion ?? this.customThemeMaterialVersion,
+      customThemeBrightness:
+          customThemeBrightness ?? this.customThemeBrightness,
+      customThemeMaterialVersion:
+          customThemeMaterialVersion ?? this.customThemeMaterialVersion,
       appBarElevation: appBarElevation ?? this.appBarElevation,
       customColorScheme: customColorScheme ?? this.customColorScheme,
     );
@@ -97,32 +106,31 @@ class CustomTheme {
 
 class CustomColorScheme {
   final CustomColorSchemeMode customColorSchemeMode;
-  final Color color ;
+  final Color color;
 
-  const CustomColorScheme({required this.customColorSchemeMode, this.color = Colors.green});
+  const CustomColorScheme(
+      {required this.customColorSchemeMode, this.color = Colors.green});
 
-  factory CustomColorScheme.fromJson(Map<String, dynamic> json) { 
+  factory CustomColorScheme.fromJson(Map<String, dynamic> json) {
     return CustomColorScheme(
-      customColorSchemeMode: CustomColorSchemeMode.values[json["customColorSchemeMode"]],
+      customColorSchemeMode:
+          CustomColorSchemeMode.values[json["customColorSchemeMode"]],
       color: Color(json["color"] ?? 255),
-
     );
   }
 
   ColorScheme colorScheme(Brightness brightness) {
     switch (customColorSchemeMode) {
       case CustomColorSchemeMode.fromSeed:
-        return ColorScheme.fromSeed(
-            seedColor: color, brightness: brightness);
+        return ColorScheme.fromSeed(seedColor: color, brightness: brightness);
       case CustomColorSchemeMode.fromSwatch:
-        return ColorScheme.fromSwatch(primarySwatch: Colors.green, brightness: brightness);
+        return ColorScheme.fromSwatch(
+            primarySwatch: Colors.green, brightness: brightness);
     }
   }
 
   Map<String, dynamic> toJson() => {
-    "customColorSchemeMode": customColorSchemeMode.index,
-    "color": color.value,
-  };
-
-
+        "customColorSchemeMode": customColorSchemeMode.index,
+        "color": color.value,
+      };
 }

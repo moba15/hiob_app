@@ -32,7 +32,6 @@ class ScreenManager {
 
     List<dynamic>? l = await fileManager.getList(key);
 
-
     developer.log("Screens Raw Loaded $l",
         name: "de.bachmaiers/screen_manager.dart",
         time: DateTime.now(),
@@ -97,8 +96,6 @@ class ScreenManager {
       screens.remove(screen);
       screenStreamController.add(screens);
     }
-
-
   }
 
   void removeScreen(Screen screen) async {
@@ -118,7 +115,6 @@ class ScreenManager {
       screens.add(screen);
       screenStreamController.add(screens);
     }
-
   }
 
   void reorderScreen({required int oldIndex, required int newIndex}) async {
@@ -134,7 +130,6 @@ class ScreenManager {
       screens.insert(oldIndex, tmp);
       screenStreamController.add(screens);
     }
-
   }
 
   void editScreen(
@@ -163,7 +158,6 @@ class ScreenManager {
       screens[z] = screen;
       screenStreamController.add(screens);
     }
-
   }
 
   void update() async {
@@ -171,7 +165,6 @@ class ScreenManager {
     if (suc) {
       screenStreamController.add(screens);
     }
-
   }
 
   void templateRemoved(CustomWidgetTemplate template) async {

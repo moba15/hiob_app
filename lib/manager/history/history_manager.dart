@@ -28,7 +28,6 @@ class HistoryManager {
   }
 
   bool _isIntervalIsLoaded(HistoryData historyData, int start, int end) {
-
     return false;
   }
 

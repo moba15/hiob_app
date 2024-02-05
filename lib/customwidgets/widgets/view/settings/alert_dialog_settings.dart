@@ -9,7 +9,8 @@ import '../../../custom_widget.dart';
 
 class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   final CustomAlertDialogWidget customAlertDialogWidget;
-  const AlertDialogSettings({Key? key, required this.customAlertDialogWidget}) : super(key: key);
+  const AlertDialogSettings({Key? key, required this.customAlertDialogWidget})
+      : super(key: key);
 
   @override
   State<AlertDialogSettings> createState() => _AlertDialogSettingsState();
@@ -25,7 +26,8 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
 
   @override
   // TODO: implement showKeys
-  List<GlobalKey<State<StatefulWidget>>> get showKeys => throw UnimplementedError();
+  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
+      throw UnimplementedError();
 }
 
 class _AlertDialogSettingsState extends State<AlertDialogSettings> {
@@ -34,36 +36,32 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
     return Column(
       children: [
         TextFormField(
-          decoration: const InputDecoration(hintText: "Title", labelText: "Title"),
+          decoration:
+              const InputDecoration(hintText: "Title", labelText: "Title"),
           initialValue: widget.customAlertDialogWidget.name,
           onChanged: (v) => {
             widget.customAlertDialogWidget.name = v,
-            if(v.isEmpty)
-              widget.customAlertDialogWidget.name = null,
+            if (v.isEmpty) widget.customAlertDialogWidget.name = null,
           },
         ),
         ReorderableListView(
           onReorder: (int oldIndex, int newIndex) {
-            if(oldIndex<newIndex) {
+            if (oldIndex < newIndex) {
               newIndex--;
             }
-            CustomWidgetTemplate tmp = widget.customAlertDialogWidget.templates![oldIndex];
+            CustomWidgetTemplate tmp =
+                widget.customAlertDialogWidget.templates![oldIndex];
             widget.customAlertDialogWidget.templates!.removeAt(oldIndex);
             widget.customAlertDialogWidget.templates!.add(tmp);
             widget.customAlertDialogWidget.templates!.insert(newIndex, tmp);
             widget.customAlertDialogWidget.templates!.removeLast();
-            setState(() {
-
-            });
-
-
-
-
+            setState(() {});
           },
-          physics : const NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
-            for(CustomWidgetTemplate template in  widget.customAlertDialogWidget.templates ?? [])
+            for (CustomWidgetTemplate template
+                in widget.customAlertDialogWidget.templates ?? [])
               Dismissible(
                 background: Container(
                   color: Colors.red,
@@ -86,13 +84,11 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
                 child: CustomWidgetTemplateTile(
                   customWidget: template,
                   customWidgetManager: Manager.instance.customWidgetManager,
-                  onSave: (_)  {
-                    setState(() {
-
-                    });
+                  onSave: (_) {
+                    setState(() {});
                   },
                 ),
-                onDismissed: (d)  {
+                onDismissed: (d) {
                   setState(() {
                     widget.customAlertDialogWidget.templates?.remove(template);
                   });
@@ -100,30 +96,30 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
               ),
           ],
         ),
-
         ElevatedButton(
-            onPressed: ()  {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (c) => TemplateAddPage(
-                      customWidgetManager:Manager.instance.customWidgetManager ,
-                      onSave: (template) {
-                        setState(() {
-                          if(widget.customAlertDialogWidget.templates == null) {
-                            widget.customAlertDialogWidget.templates = [
-                              template
-                            ];
-                          }
-                          else {
-                            widget.customAlertDialogWidget.templates!.add(template);
-                          }
-                        });
-                      },
-                    )));
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => TemplateAddPage(
+                            customWidgetManager:
+                                Manager.instance.customWidgetManager,
+                            onSave: (template) {
+                              setState(() {
+                                if (widget.customAlertDialogWidget.templates ==
+                                    null) {
+                                  widget.customAlertDialogWidget.templates = [
+                                    template
+                                  ];
+                                } else {
+                                  widget.customAlertDialogWidget.templates!
+                                      .add(template);
+                                }
+                              });
+                            },
+                          )));
             },
-            child: const Text("Add Widget to Dialog")
-        )
+            child: const Text("Add Widget to Dialog"))
       ],
     );
   }

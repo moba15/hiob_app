@@ -13,12 +13,18 @@ class MapOrderSettingTemplate<V> extends StatefulWidget {
   final String keyTileText;
   final String valueTileText;
 
-  const MapOrderSettingTemplate({Key? key,
-    required this.title,
-    required this.data,
-    required this.onChange,
-    required this.toStr,
-  required this.fromStr, required this.alertTitle, required this.alertKeyText, required this.alertValueText, required this.keyTileText, required this.valueTileText})
+  const MapOrderSettingTemplate(
+      {Key? key,
+      required this.title,
+      required this.data,
+      required this.onChange,
+      required this.toStr,
+      required this.fromStr,
+      required this.alertTitle,
+      required this.alertKeyText,
+      required this.alertValueText,
+      required this.keyTileText,
+      required this.valueTileText})
       : super(key: key);
 
   @override
@@ -46,35 +52,37 @@ class _MapOrderSettingTemplateState<V>
           widget.title,
           TextButton(
               onPressed: () {
-                showDialog(context: context, builder: (context)=>
-                    _AddAlertDialog(
-                      title: widget.alertTitle,
-                      valueText: widget.alertValueText,
-                      keyText: widget.alertKeyText,
-                      onAdd: (key, value)  {
-                        setState(() {
-                          data[key] = widget.fromStr(value);
-                        });
-                        widget.onChange(data);
-                      },
-
-                    ));
+                showDialog(
+                    context: context,
+                    builder: (context) => _AddAlertDialog(
+                          title: widget.alertTitle,
+                          valueText: widget.alertValueText,
+                          keyText: widget.alertKeyText,
+                          onAdd: (key, value) {
+                            setState(() {
+                              data[key] = widget.fromStr(value);
+                            });
+                            widget.onChange(data);
+                          },
+                        ));
               },
-              child: const Text("Add")
-          ),
+              child: const Text("Add")),
         ],
       ),
       children: [
         ReorderableListView.builder(
-          physics : const NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (c, i) {
             String key = data.keys.elementAt(i);
             return Dismissible(
               key: ValueKey(key),
-              onDismissed: (d) {setState(() {
-                data.remove(key);
-              }); widget.onChange(data); },
+              onDismissed: (d) {
+                setState(() {
+                  data.remove(key);
+                });
+                widget.onChange(data);
+              },
               background: Container(
                 color: Colors.red,
                 alignment: Alignment.centerLeft,
@@ -93,59 +101,56 @@ class _MapOrderSettingTemplateState<V>
               ),
               direction: DismissDirection.endToStart,
               child: ListTile(
-                title: Text(widget.valueTileText + widget.toStr(data[key] )),
+                title: Text(widget.valueTileText + widget.toStr(data[key])),
                 subtitle: Text(widget.keyTileText + key),
               ),
             );
-          }, onReorder: reorder, itemCount: data.length,
+          },
+          onReorder: reorder,
+          itemCount: data.length,
         )
       ],
     );
   }
+
   void reorder(int oldIndex, int newIndex) {
     Map<String, V> newMap = {};
-    if(oldIndex>newIndex) {
-      for(int i = 0; i<newIndex; i++) {
-        String key = data.keys.elementAt(i);
-        newMap[key] = data[key] as V;
-
-      }
-      newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)] as V;
-      for(int i = newIndex; i<oldIndex; i++) {
+    if (oldIndex > newIndex) {
+      for (int i = 0; i < newIndex; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key] as V;
       }
-      for(int i = oldIndex+1; i<data.length; i++) {
+      newMap[data.keys.elementAt(oldIndex)] =
+          data[data.keys.elementAt(oldIndex)] as V;
+      for (int i = newIndex; i < oldIndex; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key] as V;
       }
-
-
-    } else if(oldIndex<newIndex) {
-      for(int i = 0; i<oldIndex; i++) {
+      for (int i = oldIndex + 1; i < data.length; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key] as V;
       }
-
-      for(int i = oldIndex+1; i<newIndex; i++) {
+    } else if (oldIndex < newIndex) {
+      for (int i = 0; i < oldIndex; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key] as V;
       }
 
-
-
-      newMap[data.keys.elementAt(oldIndex)] = data[data.keys.elementAt(oldIndex)] as V;
-
-
-      for(int i = newIndex; i<data.length; i++) {
+      for (int i = oldIndex + 1; i < newIndex; i++) {
         String key = data.keys.elementAt(i);
         newMap[key] = data[key] as V;
       }
 
+      newMap[data.keys.elementAt(oldIndex)] =
+          data[data.keys.elementAt(oldIndex)] as V;
+
+      for (int i = newIndex; i < data.length; i++) {
+        String key = data.keys.elementAt(i);
+        newMap[key] = data[key] as V;
+      }
     } else {
       newMap = data;
     }
-
 
     setState(() {
       data = newMap;
@@ -162,7 +167,11 @@ class _AddAlertDialog extends StatelessWidget {
   final TextEditingController valueController = TextEditingController();
 
   _AddAlertDialog(
-      {Key? key, required this.title, required this.onAdd, required this.valueText, required this.keyText})
+      {Key? key,
+      required this.title,
+      required this.onAdd,
+      required this.valueText,
+      required this.keyText})
       : super(key: key);
 
   @override
@@ -170,12 +179,14 @@ class _AddAlertDialog extends StatelessWidget {
     return AlertDialog(
       title: title,
       actions: [
-        TextButton(onPressed: () =>
-        {
-          onAdd(keyController.text, valueController.text),
-          Navigator.pop(context)
-        }, child: const Text("Add")),
-        TextButton(onPressed: () => Navigator.pop(context),
+        TextButton(
+            onPressed: () => {
+                  onAdd(keyController.text, valueController.text),
+                  Navigator.pop(context)
+                },
+            child: const Text("Add")),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"))
       ],
       content: Column(
@@ -191,10 +202,8 @@ class _AddAlertDialog extends StatelessWidget {
               controller: valueController,
             ),
           )
-
         ],
       ),
     );
   }
 }
-

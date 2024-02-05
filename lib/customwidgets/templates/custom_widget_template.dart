@@ -13,6 +13,4 @@ class CustomWidgetTemplate {
         "name": name,
         "widget": customWidget.toJson(),
       };
-
-
 }

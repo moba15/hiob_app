@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -278,7 +277,9 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               widget.upload ? const Text("Upload") : const Text("Load"),
-              widget.upload ? const Icon(Icons.upload) : const Icon(Icons.download)
+              widget.upload
+                  ? const Icon(Icons.upload)
+                  : const Icon(Icons.download)
             ],
           ),
         ),
@@ -335,8 +336,8 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
 
   void load() {
     Navigator.pop(context);
-    Manager.instance.settingsSyncManager.loadedSuccessStreamController.stream
-        .first
+    Manager
+        .instance.settingsSyncManager.loadedSuccessStreamController.stream.first
         .then((value) => showSuccessSnackBar(context, "Loaded"));
     Manager.instance.settingsSyncManager.getTemplateSettings(widget.preConfig,
         device: device, screen: screens, widget: widgets);
@@ -344,8 +345,8 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
 
   void upload() {
     Navigator.pop(context);
-    Manager.instance.settingsSyncManager.uploadSuccessStreamController.stream
-        .first
+    Manager
+        .instance.settingsSyncManager.uploadSuccessStreamController.stream.first
         .then((value) => showSuccessSnackBar(context, "Uploaded"));
     Manager.instance.settingsSyncManager.uploadSettings(widget.preConfig,
         device: device, screen: screens, widget: widgets);

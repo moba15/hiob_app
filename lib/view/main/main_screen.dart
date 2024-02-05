@@ -201,7 +201,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 ],
               ),
             ),
-
             body: screens.isEmpty
                 ? const Text("null")
                 : TabBarView(
@@ -260,8 +259,12 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
     debugPrint("AppBar Status: ${connectionStatus.name}");
     //TODO: Reconnecting Symbol
     if (connectionStatus.isConnected) {
-      return BlinkingWidget( 
-          vsync: this, disablerAfter: const Duration(seconds: 3), invisibleAfter: true, child: const Icon(Icons.done, color: Colors.green),);
+      return BlinkingWidget(
+        vsync: this,
+        disablerAfter: const Duration(seconds: 3),
+        invisibleAfter: true,
+        child: const Icon(Icons.done, color: Colors.green),
+      );
     } else if (connectionStatus == man.ConnectionStatus.loggingIn) {
       return BlinkingWidget(
         vsync: this,
@@ -279,9 +282,12 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
       return BlinkingWidget(
         vsync: this,
         child: IconButton(
-          icon: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined, color: Colors.red),
-          onPressed: () => {Navigator.of(context).push(MaterialPageRoute(builder: (c) =>  const IoBrokerSettingsPage())) }
-        ),
+            icon: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined,
+                color: Colors.red),
+            onPressed: () => {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (c) => const IoBrokerSettingsPage()))
+                }),
       );
     }
   }
