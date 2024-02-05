@@ -70,7 +70,7 @@ class ConnectionManager with WidgetsBindingObserver {
       return Uri.parse(ioBrokerManager.secondaryAddress);
     }
     return Uri.parse(
-        "${ioBrokerManager.useSecureConnection ? "ws://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}");
+        "${ioBrokerManager.useSecureConnection ? "wss://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}");
   }
 
   Future<void> connectIoB() async {
