@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
+
 /*
 Translation status: 100%
  */
@@ -12,7 +13,8 @@ class GeneralSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(getAppLocalizations(context).settings_page_general_settings),
+        title:
+            Text(getAppLocalizations(context).settings_page_general_settings),
         actions: [
           IconButton(
             onPressed: () =>
@@ -92,8 +94,9 @@ class _DeviceInfo extends StatelessWidget {
                 flex: 2,
                 child: TextFormField(
                   enabled: false,
-                  initialValue: Manager.instance.generalManager.deviceName,
-                  decoration: InputDecoration(labelText: getAppLocalizations(context).device_name),
+                  initialValue: Manager.instance.androidInfo.model,
+                  decoration: InputDecoration(
+                      labelText: getAppLocalizations(context).device_name),
                 ),
               ),
               Container(
@@ -103,8 +106,9 @@ class _DeviceInfo extends StatelessWidget {
                 flex: 1,
                 child: TextFormField(
                   enabled: false,
-                  initialValue: Manager.instance.generalManager.deviceID,
-                  decoration: InputDecoration(labelText: getAppLocalizations(context).device_id),
+                  initialValue: Manager.instance.androidInfo.id,
+                  decoration: InputDecoration(
+                      labelText: getAppLocalizations(context).device_id),
                 ),
               )
             ],

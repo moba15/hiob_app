@@ -11,13 +11,11 @@ enum TriggerActionType {
   slider,
   multiSelection,
   none,
-
-
 }
 
 extension TriggerActionTypeExtension on TriggerActionType {
   String get name {
-    switch(this) {
+    switch (this) {
       case TriggerActionType.button:
         return "Button";
       case TriggerActionType.handleSwitch:
@@ -32,14 +30,15 @@ extension TriggerActionTypeExtension on TriggerActionType {
   }
 
   TriggerAction get triggerAction {
-    switch(this) {
+    switch (this) {
       case TriggerActionType.button:
         return ButtonTriggerAction(label: "", dataPoint: null);
 
       case TriggerActionType.handleSwitch:
         return SwitchTriggerAction(dataPoint: null);
       case TriggerActionType.multiSelection:
-        return MultiSelectionTriggerAction(dataPoint: null, selections: Map.from({}));
+        return MultiSelectionTriggerAction(
+            dataPoint: null, selections: Map.from({}));
       case TriggerActionType.slider:
         return SliderTriggerAction(dataPoint: null);
       case TriggerActionType.none:
@@ -47,7 +46,6 @@ extension TriggerActionTypeExtension on TriggerActionType {
     }
   }
 }
-
 
 abstract class TriggerAction {
   TriggerAction();
@@ -62,13 +60,15 @@ abstract class TriggerAction {
 
   static TriggerAction fromJSON(Map<String, dynamic> map) {
     String? typeRaw = map["type"];
-    if(typeRaw == null) {
+    if (typeRaw == null) {
       return NoneTriggerAction(dataPoint: null, displayRules: null);
     }
-    TriggerActionType type = TriggerActionType.values.firstWhere((element) => element.toString() == typeRaw, orElse: () => TriggerActionType.none);
+    TriggerActionType type = TriggerActionType.values.firstWhere(
+        (element) => element.toString() == typeRaw,
+        orElse: () => TriggerActionType.none);
     switch (type) {
       case TriggerActionType.none:
-        return  NoneTriggerAction.fromJSON(map);
+        return NoneTriggerAction.fromJSON(map);
       case TriggerActionType.multiSelection:
         return MultiSelectionTriggerAction.fromJSON(map);
       case TriggerActionType.slider:
@@ -81,7 +81,6 @@ abstract class TriggerAction {
         throw UnimplementedError("No Trigger Action found");
     }
   }
-
 }
 
 abstract class TriggerActionSetting extends StatelessWidget {

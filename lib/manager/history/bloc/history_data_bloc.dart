@@ -8,14 +8,13 @@ part 'history_data_event.dart';
 part 'history_data_state.dart';
 
 class HistoryDataBloc extends Bloc<HistoryDataEvent, HistoryDataState> {
-
   StreamSubscription<Map<String, dynamic>>? _historyUpdateSubscription;
-  HistoryDataBloc({required DataPoint dataPoint}) : super(HistoryDataState(historyData: dataPoint.historyData)) {
-
-    _historyUpdateSubscription = dataPoint.historyData.streamController.stream.listen((event) {
+  HistoryDataBloc({required DataPoint dataPoint})
+      : super(HistoryDataState(historyData: dataPoint.historyData)) {
+    _historyUpdateSubscription =
+        dataPoint.historyData.streamController.stream.listen((event) {
       add(HistoryAddDataEvent(event["time"], event["value"]));
     });
-
 
     on<HistoryDataEvent>((event, emit) {
       emit(HistoryDataState(historyData: dataPoint.historyData));

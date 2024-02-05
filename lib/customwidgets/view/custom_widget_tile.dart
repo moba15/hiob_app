@@ -9,7 +9,11 @@ class CustomWidgetTemplateTile extends StatelessWidget {
   final CustomWidgetTemplate customWidget;
   final CustomWidgetManager customWidgetManager;
   final Function(CustomWidgetTemplate)? onSave;
-  const CustomWidgetTemplateTile({Key? key, required this.customWidget, required this.customWidgetManager, this.onSave})
+  const CustomWidgetTemplateTile(
+      {Key? key,
+      required this.customWidget,
+      required this.customWidgetManager,
+      this.onSave})
       : super(key: key);
 
   @override
@@ -19,15 +23,15 @@ class CustomWidgetTemplateTile extends StatelessWidget {
       title: Text(customWidget.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
       subtitle: Text(type?.name ?? "Error"),
-      onTap: ()  {
+      onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (c) => TemplateAddPage(
-                  customWidgetManager: customWidgetManager,
-                  preSelectedTemplate: customWidget,
-                  onSave: onSave,
-                )));
+                      customWidgetManager: customWidgetManager,
+                      preSelectedTemplate: customWidget,
+                      onSave: onSave,
+                    )));
       },
     );
   }

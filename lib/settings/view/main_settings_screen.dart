@@ -10,6 +10,7 @@ import 'package:smart_home/settings/view/screen_setting_screen.dart';
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
 import 'device_setting_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class MainSettingsScreen extends StatelessWidget {
   final Manager manager;
 
@@ -18,14 +19,14 @@ class MainSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: const Text("Settings"),
       ),
       body: ListView(
         children: [
           ListTile(
-            title: Text(AppLocalizations.of(context)!.settings_page_screen_setting),
+            title: Text(
+                AppLocalizations.of(context)!.settings_page_screen_setting),
             leading: const Icon(Icons.add_to_home_screen_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -38,7 +39,8 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context)!.settings_page_widget_setting),
+            title: Text(
+                AppLocalizations.of(context)!.settings_page_widget_setting),
             leading: const Icon(Icons.widgets_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -51,7 +53,8 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context)!.settings_page_device_setting),
+            title: Text(
+                AppLocalizations.of(context)!.settings_page_device_setting),
             leading: const Icon(Icons.device_unknown),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -64,7 +67,8 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context)!.settings_page_iobroker_settings),
+            title: Text(
+                AppLocalizations.of(context)!.settings_page_iobroker_settings),
             leading: const Icon(Icons.stream),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -79,7 +83,8 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context)!.settings_page_general_settings),
+            title: Text(
+                AppLocalizations.of(context)!.settings_page_general_settings),
             leading: const Icon(Icons.settings_rounded),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -94,7 +99,8 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context)!.settings_page_config_sync),
+            title:
+                Text(AppLocalizations.of(context)!.settings_page_config_sync),
             leading: const Icon(Icons.cloud),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
@@ -105,16 +111,18 @@ class MainSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context)!.custom_theme_settings_page_title),
+            title: Text(
+                AppLocalizations.of(context)!.custom_theme_settings_page_title),
             leading: const Icon(Icons.color_lens),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  RepositoryProvider<Manager>.value(
-                  value: Manager(),
-                  child: const CustomThemeSettingsPage(),
-                )),
+                MaterialPageRoute(
+                    builder: (context) => RepositoryProvider<Manager>.value(
+                          value: Manager(),
+                          child: const CustomThemeSettingsPage(),
+                        )),
               )
             },
           ),

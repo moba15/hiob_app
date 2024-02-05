@@ -5,7 +5,12 @@ class BoolSelectionTemplate extends StatefulWidget {
   final bool startValue;
   final String title;
 
-  const BoolSelectionTemplate({Key? key, required this.onChange, this.startValue = false, this.title = "No titlle"}) : super(key: key);
+  const BoolSelectionTemplate(
+      {Key? key,
+      required this.onChange,
+      this.startValue = false,
+      this.title = "No titlle"})
+      : super(key: key);
 
   @override
   State<BoolSelectionTemplate> createState() => _BoolSelectionTemplateState();
@@ -18,6 +23,7 @@ class _BoolSelectionTemplateState extends State<BoolSelectionTemplate> {
     value = widget.startValue;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,15 +31,14 @@ class _BoolSelectionTemplateState extends State<BoolSelectionTemplate> {
         Text(widget.title, style: const TextStyle(fontSize: 16.5)),
         Checkbox(
           value: value,
-          onChanged: (v)  {
-            if(v==null) {
+          onChanged: (v) {
+            if (v == null) {
               return;
             }
             setState(() {
               value = v;
             });
             widget.onChange(v);
-
           },
         ),
       ],

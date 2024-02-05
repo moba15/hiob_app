@@ -16,6 +16,7 @@ import '../../../../device/iobroker_device.dart';
 import '../../../../device/view/device_tile.dart';
 import '../../../../utils/list_status.dart';
 import '../cubit/device_list_cubit.dart';
+
 /*
   Translation status: 100%
  */
@@ -208,7 +209,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
         child: ListView(
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0, top:10),
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
               child: TextField(
                 controller: nameController,
                 decoration: const InputDecoration(labelText: "Name"),
@@ -223,7 +224,8 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
-              child: Text(getAppLocalizations(context).data_points, style: const TextStyle(fontSize: 17)),
+              child: Text(getAppLocalizations(context).data_points,
+                  style: const TextStyle(fontSize: 17)),
             ),
             for (DataPoint dataPoint in dataPoints)
               Dismissible(
@@ -251,7 +253,8 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
                 ),
                 direction: DismissDirection.endToStart,
                 child: Container(
-                  margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+                  margin:
+                      const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
                   child: DataPointInputField(
                     dataPoint: dataPoint,
                   ),

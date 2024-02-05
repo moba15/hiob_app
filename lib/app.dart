@@ -13,10 +13,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class App extends StatelessWidget {
   final Manager manager;
   final ScreenManager screenManager;
-  const App({Key? key, required this.manager,
-    required this.screenManager}) : super(key: key);
-
-
+  const App({Key? key, required this.manager, required this.screenManager})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,6 @@ class App extends StatelessWidget {
               Locale('en'), // English
             ],
             navigatorKey: Manager.navigatorKey,
-
             theme: state.customTheme.themeDataLight,
             themeMode: state.customTheme.customThemeBrightness.themeMode,
             darkTheme: state.customTheme.themeDataDark,
@@ -44,8 +41,7 @@ class App extends StatelessWidget {
                 value: manager,
                 child: BlocProvider(
                     child: const MainPage(),
-                    create: (_) => ManagerCubit(manager: manager)))
-        );
+                    create: (_) => ManagerCubit(manager: manager))));
       },
     );
   }

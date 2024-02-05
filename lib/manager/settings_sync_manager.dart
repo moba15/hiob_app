@@ -48,9 +48,8 @@ class SettingsSyncManager {
 
   void uploadSettings(PreConfig preConfig,
       {required bool device, required bool widget, required bool screen}) {
-    String? devicesJSON = !device
-        ? null
-        : jsonEncode(Manager.instance.deviceManager.devicesList);
+    String? devicesJSON =
+        !device ? null : jsonEncode(Manager.instance.deviceManager.devicesList);
     String? widgetsJSON = !widget
         ? null
         : jsonEncode(Manager.instance.customWidgetManager.templates);
