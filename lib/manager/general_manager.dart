@@ -52,6 +52,7 @@ class GeneralManager {
       Map<String, dynamic> settings) async {
     deviceName = settings["deviceName"];
     deviceName ??= (await manager.deviceInfo.deviceInfo).data["name"];
+    deviceName ??= "No Name found";
   }
 
   Map<String, dynamic> _loadDefaultSettings() => {
