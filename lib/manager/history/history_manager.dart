@@ -28,8 +28,6 @@ class HistoryManager {
   }
 
   bool _isIntervalIsLoaded(HistoryData historyData, int start, int end) {
-    HistoryInterval historyInterval;
-
     return false;
   }
 
@@ -56,7 +54,6 @@ class HistoryManager {
   }
 
   void onHistoryUpdate({required List data}) {
-    print("Update");
     for (Map rawDate in data) {
       String id = rawDate["id"];
       DataPoint dataPoint =

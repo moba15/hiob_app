@@ -7,7 +7,6 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 import '../../manager/manager.dart';
 
 class CustomLightWidget extends CustomWidget {
-  static const CustomWidgetType TYPE = CustomWidgetType.light;
   DataPoint? onDataPoint;
   DataPoint? briDataPoint;
   int briMax;
@@ -28,22 +27,22 @@ class CustomLightWidget extends CustomWidget {
       this.briSteps = 10,
       this.value,
       this.briDisplay = "Brightness"})
-      : super(name: name, type: TYPE, settings: {});
+      : super(name: name, type: CustomWidgetType.light, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
       CustomLightWidgetSettingWidget(customLightWidget: this);
 
   factory CustomLightWidget.fromJson(Map<String, dynamic> json) {
-    DataPoint? onDataPoint = Manager.instance?.deviceManager
+    DataPoint? onDataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["onDataPointID"] ?? "");
     DataPoint? briDataPoint = json["briDataPointID"] == null
         ? null
-        : Manager.instance?.deviceManager
+        : Manager.instance.deviceManager
             .getIoBrokerDataPointByObjectID(json["briDataPointID"]);
     DataPoint? reachableDataPoint = json["reachableDataPointID"] == null
         ? null
-        : Manager.instance?.deviceManager
+        : Manager.instance.deviceManager
             .getIoBrokerDataPointByObjectID(json["reachableDataPointID"]);
 
     return CustomLightWidget(

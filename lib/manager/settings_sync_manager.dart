@@ -48,14 +48,13 @@ class SettingsSyncManager {
 
   void uploadSettings(PreConfig preConfig,
       {required bool device, required bool widget, required bool screen}) {
-    String? devicesJSON = !device
-        ? null
-        : jsonEncode(Manager.instance!.deviceManager.devicesList);
+    String? devicesJSON =
+        !device ? null : jsonEncode(Manager.instance.deviceManager.devicesList);
     String? widgetsJSON = !widget
         ? null
-        : jsonEncode(Manager.instance!.customWidgetManager.templates);
+        : jsonEncode(Manager.instance.customWidgetManager.templates);
     String? screensJSON =
-        !screen ? null : jsonEncode(Manager.instance!.screenManager.screens);
+        !screen ? null : jsonEncode(Manager.instance.screenManager.screens);
 
     connectionManager.sendMsg(UploadTemplateSetting(
         name: preConfig.name,
@@ -69,7 +68,7 @@ class SettingsSyncManager {
   }
 
   Future<List<PreConfig>> fetchTemplatesFromAdapter() async {
-    Manager.instance?.connectionManager.sendMsg(RequestTemplateSettings());
+    Manager.instance.connectionManager.sendMsg(RequestTemplateSettings());
     List rawData = await fetchedConfigListStreamController.stream.first;
     List<PreConfig> configs = [];
     for (String name in rawData) {
@@ -97,7 +96,7 @@ class SettingsSyncManager {
   }
 
   void loadGotTemplate(String? devices, String? screens, String? widgets) {
-    Manager manager = Manager.instance!;
+    Manager manager = Manager.instance;
 
     if (devices != null) {
       fileManager.pref.setString(manager.deviceManager.key, devices);

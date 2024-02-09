@@ -38,7 +38,7 @@ class CustomWebViewWidget extends CustomWidget {
   factory CustomWebViewWidget.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint;
     if (json["dataPoint"] != null) {
-      dataPoint = Manager.instance?.deviceManager
+      dataPoint = Manager.instance.deviceManager
           .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     } else {
       dataPoint = null;

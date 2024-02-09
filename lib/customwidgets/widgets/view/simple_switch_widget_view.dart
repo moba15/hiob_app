@@ -11,19 +11,22 @@ import '../../../manager/manager.dart';
 class SimpleSwitchWidgetView extends StatelessWidget {
   final CustomSimpleSwitchWidget customSimpleSwitchWidget;
 
-  const SimpleSwitchWidgetView({Key? key, required this.customSimpleSwitchWidget})
+  const SimpleSwitchWidgetView(
+      {Key? key, required this.customSimpleSwitchWidget})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if(customSimpleSwitchWidget.dataPoint == null) {
+    if (customSimpleSwitchWidget.dataPoint == null) {
       return ListTile(
         visualDensity: VisualDensity.compact,
-        title: Text(customSimpleSwitchWidget.value ??  customSimpleSwitchWidget.name ?? "No Text Found"),
-        onTap: ()  {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error Device Not Found")));
+        title: Text(customSimpleSwitchWidget.value ??
+            customSimpleSwitchWidget.name ??
+            "No Text Found"),
+        onTap: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Error Device Not Found")));
         },
-
       );
     }
     DataPoint? dataPoint = customSimpleSwitchWidget.dataPoint;
@@ -33,40 +36,47 @@ class SimpleSwitchWidgetView extends StatelessWidget {
         visualDensity: VisualDensity.compact,
         value: false,
         onChanged: (v) => {},
-        title: Text(customSimpleSwitchWidget.value ??  customSimpleSwitchWidget.name ?? "No Text Found"),
-        subtitle:  const Text("No Data Point found"),
+        title: Text(customSimpleSwitchWidget.value ??
+            customSimpleSwitchWidget.name ??
+            "No Text Found"),
+        subtitle: const Text("No Data Point found"),
       );
     }
     return BlocProvider(
       create: (_) => DataPointBloc(dataPoint),
       child: SimpleSwitchWidgetDeviceView(
-        text: customSimpleSwitchWidget.value ??  customSimpleSwitchWidget.name ?? "No Text Found",
+        text: customSimpleSwitchWidget.value ??
+            customSimpleSwitchWidget.name ??
+            "No Text Found",
         buttonText: customSimpleSwitchWidget.buttonText ?? "Press",
       ),
     );
   }
 }
 
-
 class SimpleSwitchWidgetDeviceView extends StatefulWidget {
   final String text;
   final String buttonText;
-  const SimpleSwitchWidgetDeviceView({Key? key, required this.text, required this.buttonText}) : super(key: key);
+  const SimpleSwitchWidgetDeviceView(
+      {Key? key, required this.text, required this.buttonText})
+      : super(key: key);
 
   @override
-  State<SimpleSwitchWidgetDeviceView> createState() => _SimpleSwitchWidgetDeviceViewState();
+  State<SimpleSwitchWidgetDeviceView> createState() =>
+      _SimpleSwitchWidgetDeviceViewState();
 }
 
-class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceView> with SingleTickerProviderStateMixin{
+class _SimpleSwitchWidgetDeviceViewState
+    extends State<SimpleSwitchWidgetDeviceView>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   @override
   void initState() {
     _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 80),
-      lowerBound: 0,
-      upperBound: 0.15
-    );
+        vsync: this,
+        duration: const Duration(milliseconds: 80),
+        lowerBound: 0,
+        upperBound: 0.15);
     super.initState();
   }
 
@@ -75,66 +85,70 @@ class _SimpleSwitchWidgetDeviceViewState extends State<SimpleSwitchWidgetDeviceV
     _animationController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<DataPointBloc>();
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTapDown: (details) => startAnimation(),
-      onTapCancel: () =>startAnimationRev(),
+      onTapCancel: () => startAnimationRev(),
       child: ListTile(
           visualDensity: VisualDensity.compact,
           onTap: () {
-
-            bloc.add(DataPointValueUpdateRequest(value: !(bloc.state.value == true), oldValue: bloc.state.value));
-            if(context.read<Manager>().generalManager.vibrateEnabled) {
+            bloc.add(DataPointValueUpdateRequest(
+                value: !(bloc.state.value == true),
+                oldValue: bloc.state.value));
+            if (context.read<Manager>().generalManager.vibrateEnabled) {
               Vibrate.feedback(FeedbackType.light);
             }
           },
           title: Row(
             children: [
               Flexible(
-                child: Text(widget.text, overflow: TextOverflow.clip,),
+                child: Text(
+                  widget.text,
+                  overflow: TextOverflow.clip,
+                ),
               ),
-              if(bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready)
+              if (bloc.dataPoint.device?.getDeviceStatus() !=
+                  DeviceStatus.ready)
                 const Flexible(
-                  child: Text(" U/A", style: TextStyle(color: Colors.red),overflow: TextOverflow.clip,),
+                  child: Text(
+                    " U/A",
+                    style: TextStyle(color: Colors.red),
+                    overflow: TextOverflow.clip,
+                  ),
                 )
             ],
           ),
           //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
           trailing: AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: 1 - _animationController.value,
+                  child: child,
+                );
+              },
               child: OutlinedButton(
                 child: Text(widget.buttonText),
                 onPressed: () async {
-
-                  bloc.add( DataPointValueUpdateRequest(value: true, oldValue: bloc.state.value == true));
-                  if(context.read<Manager>().generalManager.vibrateEnabled) {
+                  bloc.add(DataPointValueUpdateRequest(
+                      value: true, oldValue: bloc.state.value == true));
+                  if (context.read<Manager>().generalManager.vibrateEnabled) {
                     Vibrate.feedback(FeedbackType.light);
                   }
-
-
                 },
-              ),
-              animation: _animationController,
-              builder: (context, child)  {
-                return Transform.scale(
-                  child: child,
-                  scale: 1 - _animationController.value,
-
-                );
-              }
-          )
-      ),
+              ))),
     );
   }
 
   void startAnimation() {
-
     _animationController.forward();
   }
+
   void startAnimationRev() {
-      _animationController.reverse();
+    _animationController.reverse();
   }
 }
-

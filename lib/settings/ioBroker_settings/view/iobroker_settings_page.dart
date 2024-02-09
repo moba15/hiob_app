@@ -49,10 +49,10 @@ class IoBrokerSettingsView extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 10.0, top:15),
+                margin: const EdgeInsets.only(left: 20.0, right: 10.0, top: 15),
                 child: TextField(
                   onChanged: (v) => {ioBrokerManager.changeIp(v)},
-                  decoration: const InputDecoration(labelText: "IP"), 
+                  decoration: const InputDecoration(labelText: "IP"),
                   controller: ipController,
                 ),
               ),
@@ -60,7 +60,7 @@ class IoBrokerSettingsView extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                margin: const EdgeInsets.only(right: 20.0, top:15),
+                margin: const EdgeInsets.only(right: 20.0, top: 15),
                 child: TextField(
                   decoration: const InputDecoration(labelText: "Port"),
                   onChanged: (v) => {ioBrokerManager.changePort(int.parse(v))},
@@ -84,7 +84,7 @@ class IoBrokerSettingsView extends StatelessWidget {
                         TextStyle(color: Theme.of(context).colorScheme.error));
                 break;
               case ConnectionStatus.disconnected:
-                text = Text("Disconnected", 
+                text = Text("Disconnected",
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.error));
                 break;
@@ -114,7 +114,7 @@ class IoBrokerSettingsView extends StatelessWidget {
                 break;
               default:
                 text = Text(
-                  "Unknown: " + state.name,
+                  "Unknown: ${state.name}",
                   style: const TextStyle(color: Colors.grey),
                 );
             }
@@ -124,7 +124,7 @@ class IoBrokerSettingsView extends StatelessWidget {
                 child: text);
           },
           bloc: ConnectionCubit(
-              status: Manager.instance!.connectionManager.connectionStatus),
+              status: Manager.instance.connectionManager.connectionStatus),
         ),
         Center(
           child: ElevatedButton(
@@ -138,9 +138,17 @@ class IoBrokerSettingsView extends StatelessWidget {
             return Column(
               children: [
                 CheckboxListTile(
+                  value: ioBrokerManager.useSecureConnection,
+                  onChanged: (b) {
+                    setState(
+                        () => ioBrokerManager.changeUseSecureCon(b ?? true));
+                  },
+                  title: const Text("Use secure Connection"),
+                ),
+                CheckboxListTile(
                   value: ioBrokerManager.usePwd,
                   onChanged: (b) {
-                    setState(() => {ioBrokerManager.changeUsePWD(b ?? true)});
+                    setState(() => ioBrokerManager.changeUsePWD(b ?? true));
                   },
                   title: const Text("Use Password Login"),
                 ),
@@ -155,7 +163,8 @@ class IoBrokerSettingsView extends StatelessWidget {
                   ),
                 if (ioBrokerManager.usePwd)
                   Container(
-                    margin: const EdgeInsets.only(left: 30.0, right: 20.0, top:10),
+                    margin:
+                        const EdgeInsets.only(left: 30.0, right: 20.0, top: 10),
                     child: TextFormField(
                       initialValue: ioBrokerManager.password,
                       decoration: const InputDecoration(labelText: "Password"),
@@ -185,11 +194,8 @@ class IoBrokerSettingsView extends StatelessWidget {
                   return ListTile(
                     leading: const Icon(Icons.extension),
                     title: const Text("Enums"),
-                    subtitle: Text("Last updated: " +
-                        (ioBrokerManager.lastEnumUpdate == null
-                            ? "None"
-                            : DateFormat("dd.MM.yyyy hh:mm a")
-                                .format(ioBrokerManager.lastEnumUpdate!))),
+                    subtitle: Text(
+                        "Last updated: ${ioBrokerManager.lastEnumUpdate == null ? "None" : DateFormat("dd.MM.yyyy hh:mm a").format(ioBrokerManager.lastEnumUpdate!)}"),
                     trailing: TextButton(
                         onPressed: ioBrokerManager.updateEnums,
                         child: const Text("Update")),

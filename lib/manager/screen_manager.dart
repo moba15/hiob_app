@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
@@ -33,13 +31,8 @@ class ScreenManager {
     await manager.customWidgetManager.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "secreen",
-      "loadedBootup",
-      encoder.convert(l),
-    );
-    developer.log("Screens Raw Loaded " + l.toString(),
+
+    developer.log("Screens Raw Loaded $l",
         name: "de.bachmaiers/screen_manager.dart",
         time: DateTime.now(),
         zone: Zone.current);
@@ -55,7 +48,7 @@ class ScreenManager {
     loaded = true;
     if (screens.isEmpty) {
       screens.add(Screen(
-          id: Manager.instance!.getRandString(15),
+          id: Manager.instance.getRandString(15),
           name: "Template",
           iconID: "ee98",
           index: 1,
@@ -72,12 +65,7 @@ class ScreenManager {
     await manager.customWidgetManager.reload();
 
     List<dynamic>? l = await fileManager.getList(key);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "screen",
-      "loaded reload",
-      encoder.convert(l),
-    );
+
     if (l == null) {
       screens = [];
     } else {
@@ -108,13 +96,6 @@ class ScreenManager {
       screens.remove(screen);
       screenStreamController.add(screens);
     }
-
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "screen",
-      "added",
-      encoder.convert(await fileManager.getList(key)),
-    );
   }
 
   void removeScreen(Screen screen) async {
@@ -134,12 +115,6 @@ class ScreenManager {
       screens.add(screen);
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "screen",
-      "removed",
-      encoder.convert(await fileManager.getList(key)),
-    );
   }
 
   void reorderScreen({required int oldIndex, required int newIndex}) async {
@@ -155,12 +130,6 @@ class ScreenManager {
       screens.insert(oldIndex, tmp);
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "screen",
-      "reordered",
-      encoder.convert(await fileManager.getList(key)),
-    );
   }
 
   void editScreen(
@@ -189,12 +158,6 @@ class ScreenManager {
       screens[z] = screen;
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "screen",
-      "edit",
-      encoder.convert(await fileManager.getList(key)),
-    );
   }
 
   void update() async {
@@ -202,12 +165,6 @@ class ScreenManager {
     if (suc) {
       screenStreamController.add(screens);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "screen",
-      "update",
-      encoder.convert(await fileManager.getList(key)),
-    );
   }
 
   void templateRemoved(CustomWidgetTemplate template) async {

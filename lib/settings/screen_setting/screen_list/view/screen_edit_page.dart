@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -11,7 +13,6 @@ import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
-
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
@@ -131,7 +132,8 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10, bottom: 5),
+                  margin: const EdgeInsets.only(
+                      left: 20.0, right: 20.0, top: 10, bottom: 5),
                   child: IconPickerTemplate(
                     onChange: (IconData? iconData) {
                       currentIconData = iconData;
@@ -221,7 +223,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                   screen.addWidgetTemplate(
                       widget.screenManager,
                       CustomWidgetTemplate(
-                          id: Manager.instance!.getRandString(12),
+                          id: Manager.instance.getRandString(12),
                           name: "Line",
                           customWidget: c));
                 });
@@ -282,10 +284,14 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
     templates.removeWhere(
         (element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
-      title: Text(AppLocalizations.of(context)!.select_widget_template_alert_title),
+      title: Text(
+          AppLocalizations.of(context)!.select_widget_template_alert_title),
       actions: [
-        TextButton(onPressed: cancel, child: Text(getAppLocalizations(context).cancel)),
-        TextButton(onPressed: add, child: Text(getAppLocalizations(context).add)),
+        TextButton(
+            onPressed: cancel,
+            child: Text(getAppLocalizations(context).cancel)),
+        TextButton(
+            onPressed: add, child: Text(getAppLocalizations(context).add)),
       ],
       content: SizedBox(
         child: Column(
@@ -353,14 +359,18 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title:  Text(getAppLocalizations(context).add_group_alert_title),
+        title: Text(getAppLocalizations(context).add_group_alert_title),
         actions: [
-          TextButton(onPressed: cancel, child: Text(getAppLocalizations(context).cancel)),
-          TextButton(onPressed: add, child: Text(getAppLocalizations(context).add)),
+          TextButton(
+              onPressed: cancel,
+              child: Text(getAppLocalizations(context).cancel)),
+          TextButton(
+              onPressed: add, child: Text(getAppLocalizations(context).add)),
         ],
         content: TextField(
           controller: _nameController,
-          decoration: InputDecoration(labelText: getAppLocalizations(context).group_name),
+          decoration: InputDecoration(
+              labelText: getAppLocalizations(context).group_name),
         ));
   }
 
@@ -385,7 +395,6 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ScreenListCubit>().state;
     List<dynamic> templates = screen.widgetTemplates;
 
     return ReorderableListView.builder(
@@ -446,11 +455,11 @@ class _AddDivisionLineTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title:  Text(getAppLocalizations(context).add_divider_alert_title),
+      title: Text(getAppLocalizations(context).add_divider_alert_title),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child:  Text(getAppLocalizations(context).cancel),
+          child: Text(getAppLocalizations(context).cancel),
         ),
         TextButton(
           onPressed: () {

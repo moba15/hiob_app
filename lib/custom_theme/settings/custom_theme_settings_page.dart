@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/custom_theme/cubit/custom_theme_cubit.dart';
@@ -16,16 +14,14 @@ class CustomThemeSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-        title: Text(getAppLocalizations(context).custom_theme_settings_page_title),
+        title:
+            Text(getAppLocalizations(context).custom_theme_settings_page_title),
       ),
-
       body: _CustomThemeSettingsBody(),
     );
   }
 }
-
 
 class _CustomThemeSettingsBody extends StatelessWidget {
   final ThemeManager themeManager = Manager().themeManager;
@@ -37,89 +33,86 @@ class _CustomThemeSettingsBody extends StatelessWidget {
       TODO: Bloc Pattern etc.
      */
     return Container(
-      margin: EdgeInsets.only(left:15, right: 15),
+      margin: const EdgeInsets.only(left: 15, right: 15),
       child: ListView(
-
-
         children: [
           _selectBrightnessMode(),
           const Divider(),
           const Text("App Bar Elevation"),
-
           _appBarElevationSlider(),
           _seedColorPicker(),
         ],
-
       ),
     );
   }
 
-
   Widget _selectBrightnessMode() {
     return InputFieldContainer.inputContainer(
-      child: DropdownButtonFormField<CustomThemeBrightness>(
-        decoration: InputDecoration(border: OutlineInputBorder()),
-        value: themeManager.loadedCustomTheme.customThemeBrightness,
-        items: [
-          DropdownMenuItem(
-            value: CustomThemeBrightness.light,
-            child: Row(
-              children: [
-                const Icon(Icons.light_mode),
-                Container(margin: const EdgeInsets.only(left: 10)),
-                const Text("Light"),
-              ],
-            ),
+        child: DropdownButtonFormField<CustomThemeBrightness>(
+      decoration: const InputDecoration(border: OutlineInputBorder()),
+      value: themeManager.loadedCustomTheme.customThemeBrightness,
+      items: [
+        DropdownMenuItem(
+          value: CustomThemeBrightness.light,
+          child: Row(
+            children: [
+              const Icon(Icons.light_mode),
+              Container(margin: const EdgeInsets.only(left: 10)),
+              const Text("Light"),
+            ],
           ),
-          DropdownMenuItem(
-            value: CustomThemeBrightness.dark,
-            child: Row(
-              children: [
-                const Icon(Icons.dark_mode),
-                Container(margin: const EdgeInsets.only(left: 10)),
-                const Text("Dark"),
-              ],
-            ),
+        ),
+        DropdownMenuItem(
+          value: CustomThemeBrightness.dark,
+          child: Row(
+            children: [
+              const Icon(Icons.dark_mode),
+              Container(margin: const EdgeInsets.only(left: 10)),
+              const Text("Dark"),
+            ],
           ),
-          DropdownMenuItem(
-            value: CustomThemeBrightness.system,
-            child: Row(
-              children: [
-                const Icon(Icons.sync),
-                Container(margin: const EdgeInsets.only(left: 10)),
-                const Text("System"),
-              ],
-            ),
-
-          )
-        ],
-        onChanged: (bri) {
-          if(bri == null) {
-
-          } else {
-            themeManager.changeTheme(customTheme: themeManager.loadedCustomTheme.copyOf(customThemeBrightness: bri!));
-          }
-        },
-      )
-    );
+        ),
+        DropdownMenuItem(
+          value: CustomThemeBrightness.system,
+          child: Row(
+            children: [
+              const Icon(Icons.sync),
+              Container(margin: const EdgeInsets.only(left: 10)),
+              const Text("System"),
+            ],
+          ),
+        )
+      ],
+      onChanged: (bri) {
+        if (bri == null) {
+        } else {
+          themeManager.changeTheme(
+              customTheme: themeManager.loadedCustomTheme
+                  .copyOf(customThemeBrightness: bri));
+        }
+      },
+    ));
   }
 
   Widget _appBarElevationSlider() {
     return StatefulBuilder(
-        builder: (context, setState) {
-          return Slider(
-            value: themeManager.loadedCustomTheme.appBarElevation,
-            min: 0,
-            max: 100,
-
-            label: themeManager.loadedCustomTheme.appBarElevation.round().toString(),
-            divisions: 20,
-            onChanged: (d) {
-              setState(() { themeManager.changeTheme(customTheme: themeManager.loadedCustomTheme.copyOf(appBarElevation: d));}
-              );
-            },
-          );
-        },
+      builder: (context, setState) {
+        return Slider(
+          value: themeManager.loadedCustomTheme.appBarElevation,
+          min: 0,
+          max: 100,
+          label:
+              themeManager.loadedCustomTheme.appBarElevation.round().toString(),
+          divisions: 20,
+          onChanged: (d) {
+            setState(() {
+              themeManager.changeTheme(
+                  customTheme: themeManager.loadedCustomTheme
+                      .copyOf(appBarElevation: d));
+            });
+          },
+        );
+      },
     );
   }
 
@@ -127,8 +120,6 @@ class _CustomThemeSettingsBody extends StatelessWidget {
     return const _ColorPickerListTile();
   }
 }
-
-
 
 class _ColorPickerListTile extends StatefulWidget {
   const _ColorPickerListTile({Key? key}) : super(key: key);
@@ -141,22 +132,18 @@ class _ColorPickerListTileState extends State<_ColorPickerListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.color_lens),
-      title: const Text("Seed color"),
-      
-      trailing: BlocBuilder<CustomThemeCubit, CustomThemeState>(
-        bloc: CustomThemeCubit(manager: Manager())..loadTheme(),
-        builder: (context, state) {
-          return ColorIndicator(
-            color: state.customTheme.customColorScheme.color,
-            onSelect: () => _colorPicker(state.customTheme.customColorScheme.color)
-          );
-        },
-      )
-
-    );
+        leading: const Icon(Icons.color_lens),
+        title: const Text("Seed color"),
+        trailing: BlocBuilder<CustomThemeCubit, CustomThemeState>(
+          bloc: CustomThemeCubit(manager: Manager())..loadTheme(),
+          builder: (context, state) {
+            return ColorIndicator(
+                color: state.customTheme.customColorScheme.color,
+                onSelect: () =>
+                    _colorPicker(state.customTheme.customColorScheme.color));
+          },
+        ));
   }
-
 
   void _colorPicker(Color color) {
     ColorPicker(
@@ -170,13 +157,14 @@ class _ColorPickerListTileState extends State<_ColorPickerListTile> {
         ColorPickerType.bw: false,
         ColorPickerType.custom: false,
         ColorPickerType.wheel: false,
-
       },
       onColorChanged: (value) {
-        Manager().themeManager.changeTheme(customTheme: Manager().themeManager.loadedCustomTheme.copyOf(customColorScheme: CustomColorScheme(customColorSchemeMode: CustomColorSchemeMode.fromSeed, color: value)));
-        
+        Manager().themeManager.changeTheme(
+            customTheme: Manager().themeManager.loadedCustomTheme.copyOf(
+                customColorScheme: CustomColorScheme(
+                    customColorSchemeMode: CustomColorSchemeMode.fromSeed,
+                    color: value)));
       },
     ).showPickerDialog(context);
   }
 }
-

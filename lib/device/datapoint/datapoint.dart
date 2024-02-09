@@ -32,10 +32,8 @@ class DataPoint {
       this.otherDetails});
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device) {
-    print("Name: " + json["name"]);
-
     return DataPoint(
-        name: json["name"],
+        name: json["name"].toString(),
         device: device,
         id: json["id"],
         role: json["role"],
@@ -44,8 +42,6 @@ class DataPoint {
   }
 
   Map<String, dynamic> toJson() {
-    print("TOJSON: " + name);
-
     return {
       "id": id,
       "name": name,
@@ -75,7 +71,8 @@ class DataPoint {
   }
 
   @override
-  bool operator ==(Object o) {
-    return identical(o, this) || o is DataPoint && o.type == type && o.id == id;
+  bool operator ==(Object other) {
+    return identical(other, this) ||
+        other is DataPoint && other.type == type && other.id == id;
   }
 }

@@ -12,8 +12,8 @@ class MultiSelectionTriggerAction extends TriggerAction {
   DataPoint? dataPoint;
   Map<String, String> selections;
 
-  MultiSelectionTriggerAction({required this.dataPoint, required this.selections});
-
+  MultiSelectionTriggerAction(
+      {required this.dataPoint, required this.selections});
 
   @override
   bool isTypeAllowed(value) {
@@ -21,24 +21,26 @@ class MultiSelectionTriggerAction extends TriggerAction {
   }
 
   factory MultiSelectionTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
-    return MultiSelectionTriggerAction(dataPoint: dataPoint, selections: Map.from(jsonDecode(json["selections"])));
+    DataPoint? dataPoint = Manager.instance.deviceManager
+        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+    return MultiSelectionTriggerAction(
+        dataPoint: dataPoint,
+        selections: Map.from(jsonDecode(json["selections"])));
   }
 
   @override
-  TriggerActionSetting? get settings => MultiSelectionTriggerActionSettings(multiSelectionTriggerAction: this);
+  TriggerActionSetting? get settings =>
+      MultiSelectionTriggerActionSettings(multiSelectionTriggerAction: this);
 
   @override
   Map<String, dynamic> toJson() => {
-    "type": type.toString(),
-    "dataPoint": dataPoint?.id,
-    "selections": jsonEncode(selections),
-  };
+        "type": type.toString(),
+        "dataPoint": dataPoint?.id,
+        "selections": jsonEncode(selections),
+      };
 
   @override
-  void trigger() {
-  }
-
+  void trigger() {}
 
   @override
   TriggerActionType get type => TriggerActionType.multiSelection;
@@ -50,33 +52,36 @@ class MultiSelectionTriggerAction extends TriggerAction {
 
   void reorderSelection(int oldIndex, int newIndex) {
     String? toReorder = selections[selections.keys.elementAt(oldIndex)];
-    if(toReorder == null) {
+    if (toReorder == null) {
       return;
     }
-    Map<String,String> orderedMap = {};
-    if(oldIndex<newIndex) {
+    Map<String, String> orderedMap = {};
+    if (oldIndex < newIndex) {
       for (int i = 0; i < newIndex; i++) {
-        if(i == oldIndex) {
+        if (i == oldIndex) {
           continue;
         }
-        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+        orderedMap[selections.keys.elementAt(i)] =
+            selections[selections.keys.elementAt(i)]!;
       }
 
       orderedMap[selections.keys.elementAt(oldIndex)] = toReorder;
       for (int i = newIndex; i < selections.keys.length; i++) {
-        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+        orderedMap[selections.keys.elementAt(i)] =
+            selections[selections.keys.elementAt(i)]!;
       }
-    } else if(oldIndex>newIndex){
+    } else if (oldIndex > newIndex) {
       for (int i = 0; i < newIndex; i++) {
-
-        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+        orderedMap[selections.keys.elementAt(i)] =
+            selections[selections.keys.elementAt(i)]!;
       }
       orderedMap[selections.keys.elementAt(oldIndex)] = toReorder;
       for (int i = newIndex; i < selections.keys.length; i++) {
-        if(i==oldIndex) {
+        if (i == oldIndex) {
           continue;
         }
-        orderedMap[selections.keys.elementAt(i)] = selections[selections.keys.elementAt(i)]!;
+        orderedMap[selections.keys.elementAt(i)] =
+            selections[selections.keys.elementAt(i)]!;
       }
     }
 
@@ -84,6 +89,6 @@ class MultiSelectionTriggerAction extends TriggerAction {
   }
 
   @override
-  Widget getWidget({VoidCallback? onLongTab}) => MultiSelectionTriggerActionView(multiSelectionTriggerAction: this);
-  
+  Widget getWidget({VoidCallback? onLongTab}) =>
+      MultiSelectionTriggerActionView(multiSelectionTriggerAction: this);
 }

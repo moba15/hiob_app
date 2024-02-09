@@ -39,8 +39,8 @@ class ScreenListPage extends StatelessWidget {
                         screenManager: context.read<ScreenManager>(),
                       )));
         },
-        child: const Icon(Icons.add),
         tooltip: "Neues Gerät Hinzufügen",
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -153,7 +153,7 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
               ),
             ),
             Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0,top: 10),
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
                 child: IconPickerTemplate(
                   onChange: (IconData? iconData) {
                     currentIconData = iconData;

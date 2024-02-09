@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -29,7 +28,8 @@ enum ConnectionStatus {
 
 extension ConnectionStatusExtension on ConnectionStatus {
   bool get isConnected {
-    return this == ConnectionStatus.connected || this == ConnectionStatus.loggedIn;
+    return this == ConnectionStatus.connected ||
+        this == ConnectionStatus.loggedIn;
   }
 }
 
@@ -41,6 +41,7 @@ class ConnectionManager with WidgetsBindingObserver {
   final networkInfo = NetworkInfo();
   Socket? socket;
   WebSocketChannel? _webSocket;
+
   StreamSubscription? _webSocketStreamSub;
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
@@ -62,25 +63,23 @@ class ConnectionManager with WidgetsBindingObserver {
     });
   }
 
+  Future<Uri> _getUrl() async {
+    if (ioBrokerManager.useSecondaryAddress &&
+        (await networkInfo.getWifiName()).toString().trim() !=
+            ("\"${ioBrokerManager.knownNetwork.trim()}\"")) {
+      return Uri.parse(ioBrokerManager.secondaryAddress);
+    }
+    return Uri.parse(
+        "${ioBrokerManager.useSecureConnection ? "wss://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}");
+  }
+
   Future<void> connectIoB() async {
+    Uri url = await _getUrl();
     try {
-      if (ioBrokerManager.useSecondaryAddress &&
-          (await networkInfo.getWifiName()) != ioBrokerManager.knownNetwork) {
-        _webSocket = IOWebSocketChannel.connect(
-            Uri.parse(ioBrokerManager.secondaryAddress),
-            pingInterval: const Duration(minutes: 5));
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      } else {
-        _webSocket = IOWebSocketChannel.connect(
-            Uri.parse("ws://" +
-                ioBrokerManager.mainIp +
-                ":" +
-                ioBrokerManager.port.toString()),
-            pingInterval: const Duration(minutes: 5));
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      }
+      _webSocket = IOWebSocketChannel.connect(url,
+          pingInterval: const Duration(minutes: 5));
+      _webSocketStreamSub =
+          _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
     } catch (e) {
       connectionStatusStreamController.addError("Connection failed");
     } finally {
@@ -106,6 +105,8 @@ class ConnectionManager with WidgetsBindingObserver {
           reconnect();
         }
         break;
+      default:
+        break;
     }
   }
 
@@ -115,6 +116,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
+    Uri url = await _getUrl();
     connectionStatusStreamController.add(ConnectionStatus.tryAgain);
     if (_webSocketStreamSub != null) {
       _webSocketStreamSub!.cancel();
@@ -127,22 +129,10 @@ class ConnectionManager with WidgetsBindingObserver {
     ioBrokerManager.connected = false;
 
     try {
-      if (ioBrokerManager.useSecondaryAddress &&
-          (await networkInfo.getWifiName()).toString().trim() !=
-              ("\"" + ioBrokerManager.knownNetwork.trim() + "\"")) {
-        _webSocket = IOWebSocketChannel.connect(
-            Uri.parse(ioBrokerManager.secondaryAddress),
-            pingInterval: const Duration(minutes: 5));
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      } else {
-        _webSocket = IOWebSocketChannel.connect(Uri.parse("ws://" +
-            ioBrokerManager.mainIp +
-            ":" +
-            ioBrokerManager.port.toString()));
-        _webSocketStreamSub =
-            _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-      }
+      _webSocket = IOWebSocketChannel.connect(url,
+          pingInterval: const Duration(minutes: 5));
+      _webSocketStreamSub =
+          _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
     } catch (e) {
       ioBrokerManager.connected = false;
 
@@ -166,7 +156,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void onDone() async {
-
     debugPrint("Done");
 
     ioBrokerManager.connected = false;
@@ -206,8 +195,7 @@ class ConnectionManager with WidgetsBindingObserver {
         _onFirstPing();
         break;
       case DataPackageType.historyDataUpdate:
-        print("asdjasdjshbdf");
-        Manager.instance!.historyManager
+        Manager.instance.historyManager
             .onHistoryUpdate(data: jsonDecode(rawMap["data"]));
         break;
       case DataPackageType.loginDeclined:
@@ -223,18 +211,18 @@ class ConnectionManager with WidgetsBindingObserver {
         _onTemplateSettingCreate();
         break;
       case DataPackageType.requestTemplatesSettings:
-        Manager.instance!.settingsSyncManager.fetchedConfigListStreamController
-            .sink
+        Manager
+            .instance.settingsSyncManager.fetchedConfigListStreamController.sink
             .add(List<String>.from(rawMap["settings"]));
         break;
 
       case DataPackageType.uploadTemplateSettingSuccess:
-        Manager.instance!.settingsSyncManager.uploadSuccessStreamController.sink
+        Manager.instance.settingsSyncManager.uploadSuccessStreamController.sink
             .add(true);
         break;
       case DataPackageType.getTemplatesSetting:
-        Manager.instance!.settingsSyncManager.loadGotTemplate(
-            rawMap["devices"], rawMap["screens"], rawMap["widg"]);
+        Manager.instance.settingsSyncManager.loadGotTemplate(
+            rawMap["devices"], rawMap["screens"], rawMap["widget"]);
         break;
 
       default:
@@ -303,6 +291,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onTemplateSettingCreate() {
-    Manager.instance!.settingsSyncManager.onTemplateCreate();
+    Manager.instance.settingsSyncManager.onTemplateCreate();
   }
 }

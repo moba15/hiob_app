@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -19,7 +17,7 @@ class ConfigSettingsPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () => _configBloc.add(ConfigReloadEvent()),
-            icon: Icon(
+            icon: const Icon(
               Icons.update,
               size: 30,
             ),
@@ -46,7 +44,7 @@ class ConfigSettingsPage extends StatelessWidget {
     if (name.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 2),
+        duration: Duration(seconds: 2),
         content: Text(
           "Name can't be empty",
           style: TextStyle(color: Colors.red),
@@ -55,9 +53,9 @@ class ConfigSettingsPage extends StatelessWidget {
 
       return;
     }
-    Manager.instance!.settingsSyncManager.createNewSettingsTemplate(name);
+    Manager.instance.settingsSyncManager.createNewSettingsTemplate(name);
     Manager
-        .instance!.settingsSyncManager.configAddedStreamController.stream.first
+        .instance.settingsSyncManager.configAddedStreamController.stream.first
         .then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         duration: Duration(milliseconds: 700),
@@ -93,7 +91,7 @@ class _AddSettingTemplateDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Add Config"),
+      title: const Text("Add Config"),
       content: TextFormField(
         controller: textEditingController,
         decoration: const InputDecoration(labelText: "Name"),
@@ -101,11 +99,11 @@ class _AddSettingTemplateDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => {Navigator.pop(context)},
-          child: Text("Cancle"),
+          child: const Text("Cancle"),
         ),
         TextButton(
           onPressed: () => onAdd(textEditingController.text, context),
-          child: Text("Add"),
+          child: const Text("Add"),
         ),
       ],
     );
@@ -201,11 +199,11 @@ class _ConfigCard extends StatelessWidget {
 
   void showSuccessSnackBar(context, text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 700),
       behavior: SnackBarBehavior.floating,
       content: Text(
         text,
-        style: TextStyle(color: Colors.green),
+        style: const TextStyle(color: Colors.green),
       ),
     ));
   }
@@ -278,8 +276,10 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              widget.upload ? Text("Upload") : Text("Load"),
-              widget.upload ? Icon(Icons.upload) : Icon(Icons.download)
+              widget.upload ? const Text("Upload") : const Text("Load"),
+              widget.upload
+                  ? const Icon(Icons.upload)
+                  : const Icon(Icons.download)
             ],
           ),
         ),
@@ -336,19 +336,19 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
 
   void load() {
     Navigator.pop(context);
-    Manager.instance!.settingsSyncManager.loadedSuccessStreamController.stream
-        .first
+    Manager
+        .instance.settingsSyncManager.loadedSuccessStreamController.stream.first
         .then((value) => showSuccessSnackBar(context, "Loaded"));
-    Manager.instance!.settingsSyncManager.getTemplateSettings(widget.preConfig,
+    Manager.instance.settingsSyncManager.getTemplateSettings(widget.preConfig,
         device: device, screen: screens, widget: widgets);
   }
 
   void upload() {
     Navigator.pop(context);
-    Manager.instance!.settingsSyncManager.uploadSuccessStreamController.stream
-        .first
+    Manager
+        .instance.settingsSyncManager.uploadSuccessStreamController.stream.first
         .then((value) => showSuccessSnackBar(context, "Uploaded"));
-    Manager.instance!.settingsSyncManager.uploadSettings(widget.preConfig,
+    Manager.instance.settingsSyncManager.uploadSettings(widget.preConfig,
         device: device, screen: screens, widget: widgets);
   }
 

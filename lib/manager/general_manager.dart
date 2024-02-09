@@ -21,6 +21,7 @@ class GeneralManager {
   String? deviceName;
   String? deviceID;
   String? loginKey;
+  bool useBottomSheet = true;
 
   GeneralManager({required this.manager, required this.fileManager});
 
@@ -31,10 +32,12 @@ class GeneralManager {
     Map<String, dynamic> settings =
         (await fileManager.getMap(key)) ?? _loadDefaultSettings();
     vibrateEnabled = settings["vibrateEnabled"] ?? false;
-    deviceName = settings["deviceName"] ?? manager.androidInfo.model;
+    await setDeviceNameBasedOnSettingAndOS(settings);
     loginKey = settings["loginKey"]; //TODO: Exclude in Backup
+
     deviceID = settings["id"] ?? uuid.v4();
     settings["id"] = deviceID;
+    _save();
     statusStreamController.add(true);
     if (!await fileManager.containsKey(buildKey) ||
         (await fileManager.getString(buildKey)) != manager.buildNumber) {
@@ -43,6 +46,13 @@ class GeneralManager {
       manager.managerStatusStreamController.sink.add(ManagerStatus.changeLog);
       fileManager.writeString(buildKey, manager.buildNumber);
     }
+  }
+
+  Future<void> setDeviceNameBasedOnSettingAndOS(
+      Map<String, dynamic> settings) async {
+    deviceName = settings["deviceName"];
+    deviceName ??= (await manager.deviceInfo.deviceInfo).data["name"];
+    deviceName ??= "No Name found";
   }
 
   Map<String, dynamic> _loadDefaultSettings() => {

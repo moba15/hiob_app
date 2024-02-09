@@ -20,7 +20,6 @@ class ScreenTabBarPage extends StatelessWidget {
         ));
   }
 
-  @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.zero;
 }
@@ -67,7 +66,6 @@ class _ScreenTabBarState extends State<ScreenTabBar>
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ScreenListCubit>().state;
     return TabBar(
       isScrollable: true,
       controller: _tabController,

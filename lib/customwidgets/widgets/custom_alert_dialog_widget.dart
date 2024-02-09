@@ -16,7 +16,7 @@ class CustomAlertDialogWidget extends CustomWidget {
     List<Map<String, dynamic>> rawTemplates =
         List.from(json["templates"] ?? []);
     List<CustomWidgetTemplate> t =
-        Manager.instance?.customWidgetManager.loadTemplate(rawTemplates) ?? [];
+        Manager.instance.customWidgetManager.loadTemplate(rawTemplates);
     return CustomAlertDialogWidget(
         name: json["name"], templates: t, title: json["title"]);
   }
@@ -42,5 +42,11 @@ class CustomAlertDialogWidget extends CustomWidget {
 
   @override
   // TODO: implement widget
-  Widget get widget => AlterDialogWidgetView(customAlertDialogWidget: this);
+  Widget get widget {
+    if (!Manager().generalManager.useBottomSheet) {
+      return AlterDialogWidgetView(customAlertDialogWidget: this);
+    } else {
+      return BottomSheetWidget(customAlertDialogWidget: this);
+    }
+  }
 }

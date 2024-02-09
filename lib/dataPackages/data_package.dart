@@ -20,6 +20,7 @@ enum DataPackageType {
   uploadTemplateSetting,
   uploadTemplateSettingSuccess,
   getTemplatesSetting,
+  notification
 }
 
 class DataPackage {
@@ -128,6 +129,15 @@ class GetTemplateSetting extends DataPackage {
       required bool device,
       required bool screen,
       required bool widget})
-      : super(
-            type: DataPackageType.getTemplatesSetting, content: {"name": name, "device": device, "screen": screen, "widget": widget});
+      : super(type: DataPackageType.getTemplatesSetting, content: {
+          "name": name,
+          "device": device,
+          "screen": screen,
+          "widget": widget
+        });
+}
+
+class SubscribeOnlyToNotifications extends DataPackage {
+  SubscribeOnlyToNotifications()
+      : super(type: DataPackageType.notification, content: {});
 }

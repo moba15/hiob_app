@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_table_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_table_settings.dart';
@@ -62,7 +61,7 @@ class CustomTableWidget extends CustomWidget {
         initialSortColumn: json["initialSortColumn"],
         initialSortEnabled: json["initialSortEnabled"],
         elementsPerPage: json["elementsPerPage"],
-        dataPoint: Manager.instance!.deviceManager
+        dataPoint: Manager.instance.deviceManager
             .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? ""),
         columns: Map<String, String>.from(json["columns"]));
   }

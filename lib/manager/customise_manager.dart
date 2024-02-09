@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:flutter_logs/flutter_logs.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
@@ -41,16 +39,10 @@ class CustomWidgetManager {
     }
 
     List? listRaw = await fileManager.getList(templateKey);
-    developer.log("Widgets Raw Loaded " + listRaw.toString(),
+    developer.log("Widgets Raw Loaded $listRaw",
         name: "de.bachmaiers/customise_manager.dart",
         time: DateTime.now(),
         zone: Zone.current);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "customise",
-      "loadedBootup",
-      encoder.convert(listRaw),
-    );
 
     if (listRaw == null) {
       loaded = true;
@@ -157,13 +149,6 @@ class CustomWidgetManager {
       templates.remove(template);
       templatesStreamController.add(templates);
     }
-
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "customise",
-      "save",
-      encoder.convert(await fileManager.getList(templateKey)),
-    );
   }
 
   Future<bool> edit({required CustomWidgetTemplate template}) async {
@@ -176,12 +161,6 @@ class CustomWidgetManager {
     }
 
     manager.screenManager.templateEdited(template);
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "customise",
-      "edit",
-      encoder.convert(await fileManager.getList(templateKey)),
-    );
 
     return true;
   }
@@ -195,11 +174,5 @@ class CustomWidgetManager {
     } else {
       manager.screenManager.templateRemoved(template);
     }
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    FlutterLogs.logInfo(
-      "customise",
-      "removed",
-      encoder.convert(await fileManager.getList(templateKey)),
-    );
   }
 }
