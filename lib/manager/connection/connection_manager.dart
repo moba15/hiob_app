@@ -11,10 +11,10 @@ import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/utils/cryptojs_aes_encryption_helper.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:aescryptojs/aescryptojs.dart';
 
 enum ConnectionStatus {
   disconnected,
