@@ -278,6 +278,16 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
         vsync: this,
         child: const Icon(Icons.login, color: Colors.orange),
       );
+    } else if (connectionStatus == man.ConnectionStatus.newAesKey) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(Icons.add_moderator , color: Colors.yellow),
+      );
+    } else if (connectionStatus == man.ConnectionStatus.emptyAES) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(Icons.add_moderator_outlined, color: Colors.red),
+      );
     } else {
       return BlinkingWidget(
         vsync: this,

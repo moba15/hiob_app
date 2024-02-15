@@ -200,6 +200,7 @@ class ConnectionManager with WidgetsBindingObserver {
         connectionStatusStreamController.add(ConnectionStatus.emptyAES);
       }
     }
+    //print(rawMap["content"]);
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
     rawMap = rawMap["content"];
@@ -258,7 +259,9 @@ class ConnectionManager with WidgetsBindingObserver {
         Manager.instance.settingsSyncManager.loadGotTemplate(
             rawMap["devices"], rawMap["screens"], rawMap["widget"]);
         break;
-
+      case DataPackageType.notification:
+            print("under construction!");
+        break;
       default:
         throw UnimplementedError("Error");
     }
