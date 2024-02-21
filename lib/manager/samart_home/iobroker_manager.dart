@@ -210,7 +210,7 @@ class IoBrokerManager {
             ..forEach((element) {
               element.device = device;
             });
-          deviceManager.addDevice(device);
+          deviceManager.addDevice(device, false);
         } else {
           Device device = deviceManager.devicesList
               .firstWhere((element) => element.name == e.name);
@@ -219,7 +219,7 @@ class IoBrokerManager {
             for (DataPoint d in e.dataPointMembers) {
               if (!device.dataPoints!.any((element) => element.id == d.id)) {
                 device.dataPoints?.add(d..device = device);
-                deviceManager.editDevice(device);
+                deviceManager.editDevice(device, false);
               } else {
                 DataPoint dataPoint = device.dataPoints!
                     .firstWhere((element) => element.id == d.id);
@@ -228,7 +228,7 @@ class IoBrokerManager {
                 dataPoint.type = d.type;
                 dataPoint.role = d.role;
 
-                deviceManager.editDevice(device);
+                deviceManager.editDevice(device, false);
               }
             }
           }
