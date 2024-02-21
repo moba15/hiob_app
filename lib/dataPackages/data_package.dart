@@ -6,6 +6,7 @@ enum DataPackageType {
   enumUpdateRequest,
   enumUpdate,
   subscribeToDataPoints,
+  answerSubscribeToDataPoints,
   firstPingFromIob,
   firstPingFromIob2,
   subscribeHistory,

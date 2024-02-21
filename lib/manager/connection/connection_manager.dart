@@ -259,6 +259,9 @@ class ConnectionManager with WidgetsBindingObserver {
         Manager.instance.settingsSyncManager.loadGotTemplate(
             rawMap["devices"], rawMap["screens"], rawMap["widget"]);
         break;
+      case DataPackageType.answerSubscribeToDataPoints:
+        _onAnswerSubscribeToDataPoints(rawMap["value"]);
+        break;
       case DataPackageType.notification:
             print("under construction!");
         break;
@@ -272,6 +275,15 @@ class ConnectionManager with WidgetsBindingObserver {
         deviceManager.getIoBrokerDataPointsByObjectID(objectID);
     for (DataPoint dataPoint in iobDataPoints ?? []) {
       deviceManager.valueChange(dataPoint, value);
+    }
+  }
+
+  void _onAnswerSubscribeToDataPoints(List<dynamic>? dataValues) {
+    if (dataValues != null) {
+      for (Map<String, dynamic> dataValue in dataValues) {
+        stateChangedPackage(
+            objectID: dataValue["objectID"], value: dataValue["value"]);
+      }
     }
   }
 
