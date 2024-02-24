@@ -36,8 +36,8 @@ class DeviceListCubit extends Cubit<DeviceListState> {
     }
   }
 
-  void addDevice(Device device) async {
-    deviceManager.addDevice(device);
+  void addDevice(Device device, bool send) async {
+    deviceManager.addDevice(device, send);
   }
 
   @override

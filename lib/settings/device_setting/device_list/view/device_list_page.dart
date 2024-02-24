@@ -321,7 +321,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
       for (var element in dataPoints) {
         element.device = ioBrokerDevice;
       }
-      widget.deviceManager.addDevice(ioBrokerDevice);
+      widget.deviceManager.addDevice(ioBrokerDevice, true);
       Navigator.pop(context);
     }
   }
@@ -494,7 +494,7 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
       for (var element in dataPoints) {
         element.device = ioBrokerDevice;
       }
-      widget.deviceManager.editDevice(ioBrokerDevice);
+      widget.deviceManager.editDevice(ioBrokerDevice, true);
       Navigator.pop(context);
     }
   }

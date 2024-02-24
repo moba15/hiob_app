@@ -6,6 +6,7 @@ enum DataPackageType {
   enumUpdateRequest,
   enumUpdate,
   subscribeToDataPoints,
+  answerSubscribeToDataPoints,
   firstPingFromIob,
   firstPingFromIob2,
   subscribeHistory,
@@ -13,6 +14,8 @@ enum DataPackageType {
   requestLogin,
   answerLogin,
   loginDeclined,
+  wrongAesKey,
+  setNewAes,
   loginApproved,
   loginKey,
   requestTemplatesSettings,
@@ -77,11 +80,13 @@ class RequestLoginPackage extends DataPackage {
       required String? deviceID,
       required String? key,
       required String? user,
+      required String? version,
       required String? password})
       : super(type: DataPackageType.requestLogin, content: {
           "deviceName": deviceName,
           "deviceID": deviceID,
           "key": key,
+          "version": version,
           "user": user,
           "password": password
         });
