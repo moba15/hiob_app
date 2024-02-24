@@ -222,7 +222,7 @@ class ConnectionManager with WidgetsBindingObserver {
         break;
       case DataPackageType.getTemplatesSetting:
         Manager.instance.settingsSyncManager.loadGotTemplate(
-            rawMap["devices"], rawMap["screens"], rawMap["widget"]);
+            rawMap["devices"], rawMap["screens"], rawMap["widgets"]);
         break;
 
       default:
