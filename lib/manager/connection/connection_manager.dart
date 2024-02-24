@@ -263,7 +263,7 @@ class ConnectionManager with WidgetsBindingObserver {
         _onAnswerSubscribeToDataPoints(rawMap["value"]);
         break;
       case DataPackageType.notification:
-            print("under construction!");
+        print("under construction!");
         break;
       default:
         throw UnimplementedError("Error");
