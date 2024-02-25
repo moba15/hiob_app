@@ -206,6 +206,13 @@ class ConnectionManager with WidgetsBindingObserver {
       _onWrongAdapterVersion();
       return;
     }
+    //!Dirty quickfix for login error
+    //Fix on Adapater side next time
+    if (packageType == DataPackageType.loginKey &&
+        rawMap["content"] is String) {
+      _onLoginKey(rawMap["content"]);
+      return;
+    }
     rawMap = rawMap["content"];
     switch (packageType) {
       case DataPackageType.iobStateChanged:
