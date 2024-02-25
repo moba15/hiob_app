@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -38,22 +39,7 @@ class ChangeLogScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Text(
-            "Bugs",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 3, left: 10),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                    "- After the next sync in the IoBroker Setting you now should see the Name of the Datapoint again"),
-                Text("- A removed data point should not cause a crash"),
-                Text("- Known Bugs: Graph Widget does not work anymore"),
-              ],
-            ),
-          ),
+
           /*const Text("Widgets", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
           Container(
             margin: const EdgeInsets.only(top: 3, left: 10),
@@ -84,30 +70,26 @@ class ChangeLogScreen extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(left: 15),
                   child: const Text(
-                      "-You can now set up a device so that it can log in without a password"),
+                      "-You can now choose between wss or AES encryption"),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 15),
                   child: const Text(
-                      "-After the first connection you need to approve the device in hiob.x.device.<device>.approved"),
-                ),
-                const Text("- Config Sync:"),
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "-For this feature you need the new Adapater version",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    "-For this feature you need the new Adapater version (0.0.60-1)",
+                    style: TextStyle(color: Colors.yellow),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                      "-You can now upload/load your settings from/to ioBroker"),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child: const Text("-Location: hiob.x.settings..."),
-                ),
+                    margin: const EdgeInsets.only(left: 15),
+                    child: RichText(
+                      text: const TextSpan(children: [
+                        TextSpan(text: "- For better explaination look at "),
+                        TextSpan(
+                          text: "https://github.com/moba15/ioBroker.hiob",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ]),
+                    )),
               ],
             ),
           ),

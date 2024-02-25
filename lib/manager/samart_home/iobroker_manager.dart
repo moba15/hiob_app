@@ -23,7 +23,8 @@ class IoBrokerManager {
   int port = 8090;
   String user = "user";
   String password = "password";
-
+  bool secureBox = false;
+  String secureKey = "";
   bool useSecondaryAddress = false;
   String knownNetwork = "";
   String secondaryAddress = "";
@@ -48,6 +49,8 @@ class IoBrokerManager {
       port = settings?["port"] ?? 8090;
       user = settings?["user"] ?? "user";
       password = settings?["password"] ?? "password";
+      secureBox = settings?["secureBox"] ?? false;
+      secureKey = settings?["secureKey"] ?? "";
       knownNetwork = settings?["knownNetwork"] ?? "";
       secondaryAddress = settings?["secondaryAddress"] ?? "";
       useSecondaryAddress = settings?["useSecondaryAddress"] ?? false;
@@ -76,8 +79,18 @@ class IoBrokerManager {
     statusStreamController.close();
   }
 
-  void changeIp(String ip) async {
-    mainIp = ip;
+  void changeSecurebox(bool secureBox) async {
+    this.secureBox = secureBox;
+    await _save();
+  }
+
+  void changeSecurekey(String secureKey) async {
+    this.secureKey = secureKey;
+    await _save();
+  }
+
+  void changeIp(String mainIp) async {
+    this.mainIp = mainIp;
     _save();
   }
 
@@ -92,6 +105,8 @@ class IoBrokerManager {
       "port": port,
       "user": user,
       "password": password,
+      "secureBox": secureBox,
+      "secureKey": secureKey,
       "knownNetwork": knownNetwork,
       "secondaryAddress": secondaryAddress,
       "useSecondaryAddress": useSecondaryAddress,
@@ -195,7 +210,7 @@ class IoBrokerManager {
             ..forEach((element) {
               element.device = device;
             });
-          deviceManager.addDevice(device);
+          deviceManager.addDevice(device, false);
         } else {
           Device device = deviceManager.devicesList
               .firstWhere((element) => element.name == e.name);
@@ -204,7 +219,7 @@ class IoBrokerManager {
             for (DataPoint d in e.dataPointMembers) {
               if (!device.dataPoints!.any((element) => element.id == d.id)) {
                 device.dataPoints?.add(d..device = device);
-                deviceManager.editDevice(device);
+                deviceManager.editDevice(device, false);
               } else {
                 DataPoint dataPoint = device.dataPoints!
                     .firstWhere((element) => element.id == d.id);
@@ -213,7 +228,7 @@ class IoBrokerManager {
                 dataPoint.type = d.type;
                 dataPoint.role = d.role;
 
-                deviceManager.editDevice(device);
+                deviceManager.editDevice(device, false);
               }
             }
           }

@@ -9,6 +9,8 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 
 import '../../../manager/manager.dart';
 
+bool _isObscure = true;
+
 class IoBrokerSettingsPage extends StatelessWidget {
   const IoBrokerSettingsPage({Key? key}) : super(key: key);
 
@@ -108,9 +110,23 @@ class IoBrokerSettingsView extends StatelessWidget {
                 text = const Text("Login declined (need approval)",
                     style: TextStyle(color: Colors.redAccent));
                 break;
+              case ConnectionStatus.newAesKey:
+                text = const Text("New AES key available",
+                    style: TextStyle(color: Colors.redAccent));
+                break;
+              case ConnectionStatus.emptyAES:
+                text = const Text("Missing or wrong AES Key",
+                    style: TextStyle(color: Colors.redAccent));
+                break;
               case ConnectionStatus.tryAgain:
                 text = const Text("Trying again...",
                     style: TextStyle(color: Colors.orange));
+                break;
+              case ConnectionStatus.wrongAdapterVersion:
+                text = const Text(
+                  "Please update your adapter (find newest version on npm)",
+                  style: TextStyle(color: Colors.yellow),
+                );
                 break;
               default:
                 text = Text(
@@ -146,9 +162,55 @@ class IoBrokerSettingsView extends StatelessWidget {
                   title: const Text("Use secure Connection"),
                 ),
                 CheckboxListTile(
+                  value: ioBrokerManager.secureBox,
+                  onChanged: (b) {
+                    setState(() {
+                      ioBrokerManager.changeSecurebox(b ?? true);
+                    });
+                  },
+                  title: const Text("Use AES encryption"),
+                ),
+                if (ioBrokerManager.secureBox)
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, right: 20.0),
+                    child: TextFormField(
+                      initialValue: ioBrokerManager.secureKey,
+                      decoration: InputDecoration(
+                        labelText: "Key from ioBroker Datapoint",
+                        filled: true,
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: Color(0xfff28800),
+                        ),
+                        suffix: IconButton(
+                          padding: const EdgeInsets.all(0),
+                          iconSize: 20.0,
+                          icon: _isObscure
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.grey,
+                                )
+                              : const Icon(
+                                  Icons.visibility,
+                                  color: Colors.black,
+                                ),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          },
+                        ),
+                      ),
+                      obscureText: _isObscure,
+                      onChanged: (v) => ioBrokerManager.changeSecurekey(v),
+                    ),
+                  ),
+                CheckboxListTile(
                   value: ioBrokerManager.usePwd,
                   onChanged: (b) {
-                    setState(() => ioBrokerManager.changeUsePWD(b ?? true));
+                    setState(() {
+                      ioBrokerManager.changeUsePWD(b ?? true);
+                    });
                   },
                   title: const Text("Use Password Login"),
                 ),

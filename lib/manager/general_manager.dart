@@ -21,6 +21,7 @@ class GeneralManager {
   String? deviceName;
   String? deviceID;
   String? loginKey;
+  String? ioBVersion;
   bool useBottomSheet = true;
 
   GeneralManager({required this.manager, required this.fileManager});
@@ -34,8 +35,8 @@ class GeneralManager {
     vibrateEnabled = settings["vibrateEnabled"] ?? false;
     await setDeviceNameBasedOnSettingAndOS(settings);
     loginKey = settings["loginKey"]; //TODO: Exclude in Backup
-
     deviceID = settings["id"] ?? uuid.v4();
+    ioBVersion = settings["ioBVersion"] ?? "";
     settings["id"] = deviceID;
     _save();
     statusStreamController.add(true);
@@ -66,6 +67,7 @@ class GeneralManager {
       "vibrateEnabled": vibrateEnabled,
       "loginKey": loginKey,
       "id": deviceID,
+      "ioBVersion": ioBVersion,
     };
 
     await fileManager.writeJSON(key, settings);
@@ -78,6 +80,11 @@ class GeneralManager {
 
   void updateLoginKey(String key) {
     loginKey = key;
+    _save();
+  }
+
+  void updateIobVersion(String version) {
+    ioBVersion = version;
     _save();
   }
 }

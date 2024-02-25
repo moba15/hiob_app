@@ -117,7 +117,7 @@ class DeviceManager {
     return false;
   }
 
-  Future<bool> addDevice(Device device) async {
+  Future<bool> addDevice(Device device, bool send) async {
     while (_containsID(device.id)) {
       device.id = Manager.instance.getRandString(14);
     }
@@ -128,7 +128,7 @@ class DeviceManager {
       devicesList.remove(device);
     }
     deviceListStreamController.add(devicesList);
-    if (device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+    if (device.dataPoints != null && device.dataPoints!.isNotEmpty && send) {
       manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }
@@ -136,11 +136,11 @@ class DeviceManager {
     return suc;
   }
 
-  Future<bool> editDevice(Device device) async {
+  Future<bool> editDevice(Device device, bool send) async {
     sort();
     bool suc = await fileManager.writeJSONList(key, devicesList);
     deviceListStreamController.add(devicesList);
-    if (device.dataPoints != null && device.dataPoints!.isNotEmpty) {
+    if (device.dataPoints != null && device.dataPoints!.isNotEmpty && send) {
       manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
           dataPoints: device.dataPoints!.map((e) => e.id).toList()));
     }

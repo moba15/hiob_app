@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -10,6 +11,7 @@ import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/utils/cryptojs_aes_encryption_helper.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -18,12 +20,16 @@ enum ConnectionStatus {
   disconnected,
   connected,
   loggedIn,
+  emptyAES,
   waiting,
   loggingIn,
   connecting,
   tryAgain,
   error,
-  loginDeclined
+  loginDeclined,
+  newAesKey,
+  wrongAesKey,
+  wrongAdapterVersion
 }
 
 extension ConnectionStatusExtension on ConnectionStatus {
@@ -41,7 +47,6 @@ class ConnectionManager with WidgetsBindingObserver {
   final networkInfo = NetworkInfo();
   Socket? socket;
   WebSocketChannel? _webSocket;
-
   StreamSubscription? _webSocketStreamSub;
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
@@ -105,7 +110,8 @@ class ConnectionManager with WidgetsBindingObserver {
           reconnect();
         }
         break;
-      default:
+      case AppLifecycleState.hidden:
+        // TODO: Handle this case.
         break;
     }
   }
@@ -148,7 +154,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void close() async {
-    debugPrint("Close");
     await _webSocketStreamSub?.cancel();
     await _webSocket?.sink.close();
     connectionStatusStreamController.add(ConnectionStatus.disconnected);
@@ -156,8 +161,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void onDone() async {
-    debugPrint("Done");
-
     ioBrokerManager.connected = false;
     connectionStatusStreamController.add(ConnectionStatus.disconnected);
 
@@ -173,8 +176,44 @@ class ConnectionManager with WidgetsBindingObserver {
   void readPackage(String msg) {
     //TODO Error Handling
     Map<String, dynamic> rawMap = jsonDecode(msg);
+    if (ioBrokerManager.secureBox) {
+      String pass = rawMap["type"];
+      if (ioBrokerManager.secureKey.isNotEmpty &&
+          rawMap["content"].runtimeType == String) {
+        pass = ioBrokerManager.secureKey + pass;
+        try {
+          rawMap["content"] =
+              jsonDecode(decryptAESCryptoJS(rawMap["content"], pass));
+        } catch (e) {
+          connectionStatusStreamController.add(ConnectionStatus.emptyAES);
+          generalManager.dialogStreamController.sink
+              .add((p0) => const AlertDialog(
+                    title: Text("Error"),
+                    content: Text("Parse Error - Please check the AES Key!"),
+                  ));
+        } finally {
+          print("Decrypt done!");
+        }
+      } else {
+        connectionStatusStreamController.add(ConnectionStatus.emptyAES);
+      }
+    }
+    //print(rawMap["content"]);
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
+    if (rawMap["content"] == null) {
+      //Give the user information that they need a new version (comp. with older vesions)
+      _onWrongAdapterVersion();
+      return;
+    }
+    //!Dirty quickfix for login error
+    //Fix on Adapater side next time
+    if (packageType == DataPackageType.loginKey &&
+        rawMap["content"] is String) {
+      _onLoginKey(rawMap["content"]);
+      return;
+    }
+    rawMap = rawMap["content"];
     switch (packageType) {
       case DataPackageType.iobStateChanged:
         stateChangedPackage(
@@ -194,6 +233,12 @@ class ConnectionManager with WidgetsBindingObserver {
       case DataPackageType.firstPingFromIob2:
         _onFirstPing();
         break;
+      case DataPackageType.setNewAes:
+        _onNewAes();
+        break;
+      case DataPackageType.wrongAesKey:
+        _onWrongAesKey();
+        break;
       case DataPackageType.historyDataUpdate:
         Manager.instance.historyManager
             .onHistoryUpdate(data: jsonDecode(rawMap["data"]));
@@ -202,7 +247,7 @@ class ConnectionManager with WidgetsBindingObserver {
         _onLoginDeclined();
         break;
       case DataPackageType.loginApproved:
-        _onLoginApproved();
+        _onLoginApproved(rawMap["version"]);
         break;
       case DataPackageType.loginKey:
         _onLoginKey(rawMap["key"]);
@@ -224,7 +269,12 @@ class ConnectionManager with WidgetsBindingObserver {
         Manager.instance.settingsSyncManager.loadGotTemplate(
             rawMap["devices"], rawMap["screens"], rawMap["widget"]);
         break;
-
+      case DataPackageType.answerSubscribeToDataPoints:
+        _onAnswerSubscribeToDataPoints(rawMap["value"]);
+        break;
+      case DataPackageType.notification:
+        print("under construction!");
+        break;
       default:
         throw UnimplementedError("Error");
     }
@@ -236,6 +286,21 @@ class ConnectionManager with WidgetsBindingObserver {
     for (DataPoint dataPoint in iobDataPoints ?? []) {
       deviceManager.valueChange(dataPoint, value);
     }
+  }
+
+  void _onAnswerSubscribeToDataPoints(List<dynamic>? dataValues) {
+    if (dataValues != null) {
+      for (Map<String, dynamic> dataValue in dataValues) {
+        stateChangedPackage(
+            objectID: dataValue["objectID"], value: dataValue["value"]);
+      }
+    }
+  }
+
+  void _onWrongAdapterVersion() {
+    ioBConnected = true;
+    ioBrokerManager.connected = true;
+    connectionStatusStreamController.add(ConnectionStatus.wrongAdapterVersion);
   }
 
   void _onFirstPing() {
@@ -257,6 +322,7 @@ class ConnectionManager with WidgetsBindingObserver {
         deviceName: generalManager.deviceName,
         deviceID: generalManager.deviceID,
         key: generalManager.loginKey,
+        version: deviceManager.manager.versionNumber,
         password: ioBrokerManager.usePwd ? ioBrokerManager.password : null,
         user: ioBrokerManager.user));
   }
@@ -265,12 +331,21 @@ class ConnectionManager with WidgetsBindingObserver {
     connectionStatusStreamController.add(ConnectionStatus.loginDeclined);
   }
 
-  void _onLoginApproved() {
+  void _onNewAes() {
+    connectionStatusStreamController.add(ConnectionStatus.newAesKey);
+  }
+
+  void _onWrongAesKey() {
+    connectionStatusStreamController.add(ConnectionStatus.emptyAES);
+  }
+
+  void _onLoginApproved(String? version) {
     connectionStatusStreamController.add(ConnectionStatus.loggedIn);
     deviceManager.subscribeToDataPointsIoB(this);
   }
 
   void _onLoginKey(String? key) {
+    print(key);
     if (key == null) {
       return;
     }
@@ -286,8 +361,23 @@ class ConnectionManager with WidgetsBindingObserver {
       }
       return;
     }
-    _webSocket?.sink.add(jsonEncode(
-        {"type": dataPackage.type.name, "content": dataPackage.content}));
+    String pass = dataPackage.type.name;
+    dynamic sendContent = dataPackage.content;
+    if (ioBrokerManager.secureBox) {
+      if (ioBrokerManager.secureKey.isNotEmpty) {
+        if (dataPackage.type.name != "requestLogin") {
+          pass = ioBrokerManager.secureKey + pass;
+        } else {
+          pass = "tH8Lm-$pass";
+        }
+        sendContent = encryptAESCryptoJS(jsonEncode(dataPackage.content), pass);
+      } else {
+        connectionStatusStreamController.add(ConnectionStatus.emptyAES);
+        return;
+      }
+    }
+    _webSocket?.sink.add(
+        jsonEncode({"type": dataPackage.type.name, "content": sendContent}));
   }
 
   void _onTemplateSettingCreate() {
