@@ -28,7 +28,8 @@ enum ConnectionStatus {
   error,
   loginDeclined,
   newAesKey,
-  wrongAesKey
+  wrongAesKey,
+  wrongAdapterVersion
 }
 
 extension ConnectionStatusExtension on ConnectionStatus {
@@ -153,7 +154,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void close() async {
-    debugPrint("Close");
     await _webSocketStreamSub?.cancel();
     await _webSocket?.sink.close();
     connectionStatusStreamController.add(ConnectionStatus.disconnected);
@@ -161,8 +161,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void onDone() async {
-    debugPrint("Done");
-
     ioBrokerManager.connected = false;
     connectionStatusStreamController.add(ConnectionStatus.disconnected);
 
@@ -203,6 +201,11 @@ class ConnectionManager with WidgetsBindingObserver {
     //print(rawMap["content"]);
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
+    if (rawMap["content"] == null) {
+      //Give the user information that they need a new version (comp. with older vesions)
+      _onWrongAdapterVersion();
+      return;
+    }
     rawMap = rawMap["content"];
     switch (packageType) {
       case DataPackageType.iobStateChanged:
@@ -287,6 +290,12 @@ class ConnectionManager with WidgetsBindingObserver {
     }
   }
 
+  void _onWrongAdapterVersion() {
+    ioBConnected = true;
+    ioBrokerManager.connected = true;
+    connectionStatusStreamController.add(ConnectionStatus.wrongAdapterVersion);
+  }
+
   void _onFirstPing() {
     ioBConnected = true;
 
@@ -329,6 +338,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onLoginKey(String? key) {
+    print(key);
     if (key == null) {
       return;
     }

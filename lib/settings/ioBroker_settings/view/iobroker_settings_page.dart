@@ -122,6 +122,12 @@ class IoBrokerSettingsView extends StatelessWidget {
                 text = const Text("Trying again...",
                     style: TextStyle(color: Colors.orange));
                 break;
+              case ConnectionStatus.wrongAdapterVersion:
+                text = const Text(
+                  "Please update your adapter (find newest version on npm)",
+                  style: TextStyle(color: Colors.yellow),
+                );
+                break;
               default:
                 text = Text(
                   "Unknown: ${state.name}",

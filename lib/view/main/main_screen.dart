@@ -257,8 +257,67 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
 
   Widget? _getAppBarStatus(man.ConnectionStatus connectionStatus) {
     debugPrint("AppBar Status: ${connectionStatus.name}");
-    //TODO: Reconnecting Symbol
-    if (connectionStatus.isConnected) {
+    int n = 0;
+    BlinkingWidget blinkingWidget;
+    switch (connectionStatus) {
+      case man.ConnectionStatus.connected:
+      case man.ConnectionStatus.loggedIn:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          disablerAfter: const Duration(seconds: 3),
+          invisibleAfter: true,
+          child: const Icon(Icons.done, color: Colors.green),
+        );
+        break;
+      case man.ConnectionStatus.loggingIn:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(
+            Icons.login,
+            color: Colors.orange,
+          ),
+        );
+        break;
+      case man.ConnectionStatus.loginDeclined:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.login, color: Colors.orange),
+        );
+        break;
+      case man.ConnectionStatus.newAesKey:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.add_moderator, color: Colors.yellow),
+        );
+        break;
+      case man.ConnectionStatus.wrongAdapterVersion:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.update, color: Colors.yellow),
+        );
+        break;
+      case man.ConnectionStatus.emptyAES:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.add_moderator_outlined, color: Colors.red),
+        );
+        break;
+
+      default:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: IconButton(
+              icon: const Icon(
+                  Icons.signal_wifi_connected_no_internet_4_outlined,
+                  color: Colors.red),
+              onPressed: () => {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => const IoBrokerSettingsPage()))
+                  }),
+        );
+    }
+    return blinkingWidget;
+    /* if (connectionStatus.isConnected) {
       return BlinkingWidget(
         vsync: this,
         disablerAfter: const Duration(seconds: 3),
@@ -299,6 +358,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                       builder: (c) => const IoBrokerSettingsPage()))
                 }),
       );
-    }
+    }*/
   }
 }
