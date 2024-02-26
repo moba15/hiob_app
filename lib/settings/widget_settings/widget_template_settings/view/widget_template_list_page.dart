@@ -7,7 +7,7 @@ import 'package:smart_home/settings/widget_settings/widget_template_settings/cub
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
-import '../../../../customwidgets/templates/custom_widget_template.dart';
+import '../../../../customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import '../../../../customwidgets/view/custom_widget_tile.dart';
 import '../../../../utils/list_status.dart';
 
