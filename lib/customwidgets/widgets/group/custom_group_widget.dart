@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
 

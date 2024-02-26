@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
-import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/view/alert_dialog_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/alert_dialog_settings.dart';
 import 'package:smart_home/manager/manager.dart';

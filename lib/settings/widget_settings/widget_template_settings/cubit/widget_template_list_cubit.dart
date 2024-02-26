@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/utils/list_status.dart';
 

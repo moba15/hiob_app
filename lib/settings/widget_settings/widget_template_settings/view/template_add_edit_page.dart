@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
