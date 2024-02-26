@@ -63,6 +63,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
       reorderTemplate: _reorderTemplate,
       screenManager: widget.screenManager,
       templates: screen.widgetTemplates,
+      iconDataChange: _iconChange,
     );
     // return WillPopScope(
     //   child: Scaffold(
@@ -274,6 +275,10 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
 
   void _removeTemplate(int index) {
     screen.removeWidgetTemplateAtIndex(widget.screenManager, index);
+  }
+
+  void _iconChange(IconData? iconData) {
+    currentIconData = iconData;
   }
 }
 

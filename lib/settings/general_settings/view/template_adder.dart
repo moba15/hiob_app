@@ -23,21 +23,23 @@ class TemplateAdder extends StatefulWidget {
   final Function(CustomGroupWidget) addGroup;
   final Function(int oldIndex, int newIndex) reorderTemplate;
   final Function(int index) removeTemplate;
+  final Function(IconData? newIconData) iconDataChange;
   final ScreenManager screenManager;
   //!Change to call by refernce for better performance
   final List<dynamic> templates;
-  const TemplateAdder(
-      {Key? key,
-      required this.isSaved,
-      required this.save,
-      required this.addGroup,
-      required this.addLine,
-      required this.addTemplates,
-      required this.screenManager,
-      required this.reorderTemplate,
-      required this.removeTemplate,
-      required this.templates})
-      : super(key: key);
+  const TemplateAdder({
+    Key? key,
+    required this.isSaved,
+    required this.save,
+    required this.addGroup,
+    required this.addLine,
+    required this.addTemplates,
+    required this.screenManager,
+    required this.reorderTemplate,
+    required this.removeTemplate,
+    required this.templates,
+    required this.iconDataChange,
+  }) : super(key: key);
 
   @override
   State<TemplateAdder> createState() => _TemplateAdderState();
@@ -141,7 +143,7 @@ class _TemplateAdderState extends State<TemplateAdder> {
                       left: 20.0, right: 20.0, top: 10, bottom: 5),
                   child: IconPickerTemplate(
                     onChange: (IconData? iconData) {
-                      currentIconData = iconData;
+                      widget.iconDataChange(iconData);
                     },
                     selected: currentIconData ?? Icons.home,
                   )),

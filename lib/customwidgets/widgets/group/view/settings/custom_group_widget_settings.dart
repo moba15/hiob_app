@@ -27,15 +27,17 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TemplateAdder(
-        isSaved: _isSaved,
-        save: _save,
-        addGroup: _addGroup,
-        addLine: _addLine,
-        addTemplates: _addTemplates,
-        screenManager: Manager.instance.screenManager,
-        reorderTemplate: _reorderTemplate,
-        removeTemplate: _removeTemplate,
-        templates: clone.templates);
+      isSaved: _isSaved,
+      save: _save,
+      addGroup: _addGroup,
+      addLine: _addLine,
+      addTemplates: _addTemplates,
+      screenManager: Manager.instance.screenManager,
+      reorderTemplate: _reorderTemplate,
+      removeTemplate: _removeTemplate,
+      templates: clone.templates,
+      iconDataChange: _iconChange,
+    );
     // return WillPopScope(
     //   child: Scaffold(
     //     appBar: AppBar(
@@ -178,6 +180,10 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
 
   void _removeTemplate(int index) {
     clone.removeTemplateAtIndex(index);
+  }
+
+  void _iconChange(IconData? iconData) {
+    clone.iconID = iconData?.codePoint.toRadixString(16);
   }
 }
 
