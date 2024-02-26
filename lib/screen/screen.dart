@@ -119,6 +119,11 @@ class Screen {
     }
   }
 
+  void removeWidgetTemplateAtIndex(ScreenManager screenManager, int index) {
+    widgetTemplates.removeAt(index);
+    screenManager.update();
+  }
+
   void reorderWidgetTemplates(
       {required int oldIndex,
       required int newIndex,

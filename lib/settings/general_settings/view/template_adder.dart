@@ -1,211 +1,201 @@
-// ignore_for_file: must_be_immutable
-
-import 'dart:convert';
+//TODO: Better name
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
-import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
-import '../../../../customwidgets/custom_widget.dart';
-import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
 
-class ScreenEditPage extends StatefulWidget {
-  final Screen screen;
+class TemplateAdder extends StatefulWidget {
+  final bool Function() isSaved;
+  final Function() save;
+  final Function(List<CustomWidgetTemplate>) addTemplates;
+  final Function(CustomWidgetTemplate) addLine;
+  final Function(CustomGroupWidget) addGroup;
+  final Function(int oldIndex, int newIndex) reorderTemplate;
+  final Function(int index) removeTemplate;
   final ScreenManager screenManager;
-
-  const ScreenEditPage(
-      {Key? key, required this.screen, required this.screenManager})
+  //!Change to call by refernce for better performance
+  final List<dynamic> templates;
+  const TemplateAdder(
+      {Key? key,
+      required this.isSaved,
+      required this.save,
+      required this.addGroup,
+      required this.addLine,
+      required this.addTemplates,
+      required this.screenManager,
+      required this.reorderTemplate,
+      required this.removeTemplate,
+      required this.templates})
       : super(key: key);
 
   @override
-  State<ScreenEditPage> createState() => _ScreenEditPageState();
+  State<TemplateAdder> createState() => _TemplateAdderState();
 }
 
-class _ScreenEditPageState extends State<ScreenEditPage> {
+class _TemplateAdderState extends State<TemplateAdder> {
   TextEditingController nameController = TextEditingController();
   IconData? currentIconData;
   bool? enabled;
-
-  late Screen screen;
+  List<dynamic> _tempTemplates = [];
 
   @override
   void initState() {
-    enabled = widget.screen.enabled;
-    screen = widget.screen.clone();
-    nameController.text = screen.name;
-    currentIconData = IconData(int.parse(screen.iconID, radix: 16));
     super.initState();
   }
 
-  Icon icon = const Icon(Icons.insert_emoticon);
-
   @override
   Widget build(BuildContext context) {
-    return TemplateAdder(
-      isSaved: _isSaved,
-      addGroup: _addGroup,
-      addLine: _addLine,
-      addTemplates: _addTemplates,
-      save: _save,
-      removeTemplate: _removeTemplate,
-      reorderTemplate: _reorderTemplate,
-      screenManager: widget.screenManager,
-      templates: screen.widgetTemplates,
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Edit Screen"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  if (!_isSaved()) {
+                    showDialog(
+                        context: context,
+                        builder: (_) => _SaveDialog(
+                              onSave: () => {
+                                _save(),
+                                Navigator.popUntil(
+                                    context, (route) => route.isFirst)
+                              },
+                              cancel: () => Navigator.popUntil(
+                                  context, (route) => route.isFirst),
+                            ));
+                    return;
+                  }
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
+                icon: const Icon(Icons.home)),
+          ],
+        ),
+        floatingActionButton: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 31),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: FloatingActionButton(
+                  onPressed: addTemplate,
+                  child: const Icon(Icons.add),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 90),
+              alignment: Alignment.bottomLeft,
+              child: FloatingActionButton(
+                heroTag: "d",
+                onPressed: addGroup,
+                child: const Icon(Icons.group_add),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 149),
+              alignment: Alignment.bottomLeft,
+              child: FloatingActionButton(
+                heroTag: "dasd",
+                onPressed: addLine,
+                child: const Icon(Icons.splitscreen),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                heroTag: "tag",
+                onPressed: () => {_save(), Navigator.pop(context)},
+                child: const Icon(Icons.save),
+              ),
+            ),
+          ],
+        ),
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
+                child: TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: "Name",
+                  ),
+                  keyboardType: TextInputType.text,
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(
+                      left: 20.0, right: 20.0, top: 10, bottom: 5),
+                  child: IconPickerTemplate(
+                    onChange: (IconData? iconData) {
+                      currentIconData = iconData;
+                    },
+                    selected: currentIconData ?? Icons.home,
+                  )),
+              CheckboxListTile(
+                onChanged: (value) {
+                  setState(() {
+                    enabled = value ?? true;
+                  });
+                },
+                value: enabled ?? true,
+                title: Text(getAppLocalizations(context).enabled),
+                secondary: enabled == true || enabled == null
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: BlocProvider(
+                  create: (_) =>
+                      ScreenListCubit(screenManager: widget.screenManager),
+                  child: WidgetTemplateListPage(
+                    screenManager: widget.screenManager,
+                    widgetTemplates: widget.templates,
+                    onReorder: widget.reorderTemplate,
+                    removeTemplate: widget.removeTemplate,
+                  ),
+                ),
+              )),
+            ],
+          ),
+        ),
+      ),
+      onWillPop: () async {
+        if (!_isSaved()) {
+          showDialog(
+              context: context,
+              builder: (_) => _SaveDialog(
+                    onSave: () => {_save(), Navigator.pop(context)},
+                    cancel: () => Navigator.pop(context),
+                  ));
+          return false;
+        }
+        return true;
+      },
     );
-    // return WillPopScope(
-    //   child: Scaffold(
-    //     appBar: AppBar(
-    //       title: const Text("Edit Screen"),
-    //       actions: [
-    //         IconButton(
-    //             onPressed: () {
-    //               if (!_isSaved()) {
-    //                 showDialog(
-    //                     context: context,
-    //                     builder: (_) => _SaveDialog(
-    //                           onSave: () => {
-    //                             _save(),
-    //                             Navigator.popUntil(
-    //                                 context, (route) => route.isFirst)
-    //                           },
-    //                           cancel: () => Navigator.popUntil(
-    //                               context, (route) => route.isFirst),
-    //                         ));
-    //                 return;
-    //               }
-    //               Navigator.popUntil(context, (route) => route.isFirst);
-    //             },
-    //             icon: const Icon(Icons.home)),
-    //       ],
-    //     ),
-    //     floatingActionButton: Stack(
-    //       children: [
-    //         Padding(
-    //           padding: const EdgeInsets.only(left: 31),
-    //           child: Align(
-    //             alignment: Alignment.bottomLeft,
-    //             child: FloatingActionButton(
-    //               onPressed: addTemplate,
-    //               child: const Icon(Icons.add),
-    //             ),
-    //           ),
-    //         ),
-    //         Container(
-    //           padding: const EdgeInsets.only(left: 90),
-    //           alignment: Alignment.bottomLeft,
-    //           child: FloatingActionButton(
-    //             heroTag: "d",
-    //             onPressed: addGroup,
-    //             child: const Icon(Icons.group_add),
-    //           ),
-    //         ),
-    //         Container(
-    //           padding: const EdgeInsets.only(left: 149),
-    //           alignment: Alignment.bottomLeft,
-    //           child: FloatingActionButton(
-    //             heroTag: "dasd",
-    //             onPressed: addLine,
-    //             child: const Icon(Icons.splitscreen),
-    //           ),
-    //         ),
-    //         Align(
-    //           alignment: Alignment.bottomRight,
-    //           child: FloatingActionButton(
-    //             heroTag: "tag",
-    //             onPressed: () => {_save(), Navigator.pop(context)},
-    //             child: const Icon(Icons.save),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     body: Center(
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.center,
-    //         children: [
-    //           Container(
-    //             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
-    //             child: TextField(
-    //               controller: nameController,
-    //               decoration: const InputDecoration(
-    //                 labelText: "Name",
-    //               ),
-    //               keyboardType: TextInputType.text,
-    //             ),
-    //           ),
-    //           Container(
-    //               margin: const EdgeInsets.only(
-    //                   left: 20.0, right: 20.0, top: 10, bottom: 5),
-    //               child: IconPickerTemplate(
-    //                 onChange: (IconData? iconData) {
-    //                   currentIconData = iconData;
-    //                 },
-    //                 selected: currentIconData ?? Icons.home,
-    //               )),
-    //           CheckboxListTile(
-    //             onChanged: (value) {
-    //               setState(() {
-    //                 enabled = value ?? true;
-    //               });
-    //             },
-    //             value: enabled ?? true,
-    //             title: Text(AppLocalizations.of(context)!.enabled),
-    //             secondary: enabled == true || enabled == null
-    //                 ? const Icon(Icons.visibility)
-    //                 : const Icon(Icons.visibility_off),
-    //           ),
-    //           Expanded(
-    //               child: Padding(
-    //             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-    //             child: BlocProvider(
-    //               create: (_) =>
-    //                   ScreenListCubit(screenManager: widget.screenManager),
-    //               child: ScreenWidgetTemplateListPage(
-    //                   screen: screen, screenManager: widget.screenManager),
-    //             ),
-    //           )),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    //   onWillPop: () async {
-    //     if (!_isSaved()) {
-    //       showDialog(
-    //           context: context,
-    //           builder: (_) => _SaveDialog(
-    //                 onSave: () => {_save(), Navigator.pop(context)},
-    //                 cancel: () => Navigator.pop(context),
-    //               ));
-    //       return false;
-    //     }
-    //     return true;
-    //   },
-    // );
   }
 
   bool _isSaved() {
-    return jsonEncode(screen.toJson()) == jsonEncode(widget.screen.toJson());
+    return widget.isSaved();
   }
 
   void _save() {
-    widget.screen.widgetTemplates = screen.widgetTemplates;
-    widget.screenManager.editScreen(
-        screen: widget.screen,
-        name: nameController.text,
-        iconID: currentIconData?.codePoint.toRadixString(16) ?? "ee98",
-        index: 1,
-        enabled: enabled ?? true);
+    widget.save();
   }
 
   void addTemplate() {
@@ -213,18 +203,13 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     showDialog(
         context: context,
         builder: (context) => _AddTemplateAlertDialog(
-              screen: screen,
               screenManager: widget.screenManager,
               onAdd: (List<CustomWidgetTemplate> templates) {
                 setState(() {
-                  screen.addWidgetTemplates(widget.screenManager, templates);
+                  widget.addTemplates(templates);
                 });
               },
             ));
-  }
-
-  void _addTemplates(List<CustomWidgetTemplate> templates) {
-    screen.addWidgetTemplates(widget.screenManager, templates);
   }
 
   //TODO In future: Use the Bloc pattern
@@ -234,14 +219,10 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
         builder: (context) => AddGroupAlertDialog(
               onAdd: (CustomGroupWidget customGroupWidget) {
                 setState(() {
-                  screen.addGroup(customGroupWidget, widget.screenManager);
+                  widget.addGroup(customGroupWidget);
                 });
               },
             ));
-  }
-
-  void _addGroup(CustomGroupWidget customGroupWidget) {
-    screen.addGroup(customGroupWidget, widget.screenManager);
   }
 
   void addLine() {
@@ -250,30 +231,13 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
         builder: (context) => _AddDivisionLineTemplate(
               onAdd: (CustomDivisionLineWidget c) {
                 setState(() {
-                  screen.addWidgetTemplate(
-                      widget.screenManager,
-                      CustomWidgetTemplate(
-                          id: Manager.instance.getRandString(12),
-                          name: "Line",
-                          customWidget: c));
+                  widget.addLine(CustomWidgetTemplate(
+                      id: Manager.instance.getRandString(12),
+                      name: "Line",
+                      customWidget: c));
                 });
               },
             ));
-  }
-
-  void _addLine(CustomWidgetTemplate customWidgetTemplate) {
-    screen.addWidgetTemplate(widget.screenManager, customWidgetTemplate);
-  }
-
-  void _reorderTemplate(int oldIndex, int newIndex) {
-    screen.reorderWidgetTemplates(
-        oldIndex: oldIndex,
-        newIndex: newIndex,
-        screenManager: widget.screenManager);
-  }
-
-  void _removeTemplate(int index) {
-    screen.removeWidgetTemplateAtIndex(widget.screenManager, index);
   }
 }
 
@@ -307,15 +271,11 @@ class _SaveDialog extends StatelessWidget {
 }
 
 class _AddTemplateAlertDialog extends StatefulWidget {
-  final Screen screen;
   final ScreenManager screenManager;
   final Function(List<CustomWidgetTemplate>) onAdd;
 
   const _AddTemplateAlertDialog(
-      {Key? key,
-      required this.screen,
-      required this.screenManager,
-      required this.onAdd})
+      {Key? key, required this.screenManager, required this.onAdd})
       : super(key: key);
 
   @override
@@ -330,11 +290,12 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
   Widget build(BuildContext context) {
     List<CustomWidgetTemplate> templates =
         List.of(widget.screenManager.manager.customWidgetManager.templates);
-    templates.removeWhere(
-        (element) => widget.screen.widgetTemplates.contains(element));
+    //!Remove
+    // templates.removeWhere(
+    //     (element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
-      title: Text(
-          AppLocalizations.of(context)!.select_widget_template_alert_title),
+      title:
+          Text(getAppLocalizations(context).select_widget_template_alert_title),
       actions: [
         TextButton(
             onPressed: cancel,
@@ -430,29 +391,30 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
   }
 }
 
-class ScreenWidgetTemplateListPage extends StatelessWidget {
-  final Screen screen;
+class WidgetTemplateListPage extends StatelessWidget {
   final ScreenManager screenManager;
+  final List<dynamic> widgetTemplates;
+  final Function(int oldIndex, int newIndex) onReorder;
+  final Function(int index) removeTemplate;
 
-  const ScreenWidgetTemplateListPage(
-      {Key? key, required this.screen, required this.screenManager})
+  const WidgetTemplateListPage(
+      {Key? key,
+      required this.screenManager,
+      required this.widgetTemplates,
+      required this.onReorder,
+      required this.removeTemplate})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> templates = screen.widgetTemplates;
-
     return ReorderableListView.builder(
-        itemCount: templates.length,
+        itemCount: widgetTemplates.length,
         onReorder: (int oldIndex, int newIndex) {
-          screen.reorderWidgetTemplates(
-              oldIndex: oldIndex,
-              newIndex: newIndex,
-              screenManager: screenManager);
+          onReorder(oldIndex, newIndex);
         },
         itemBuilder: (BuildContext context, int index) {
-          if (templates.length > index &&
-              templates[index] is CustomWidgetTemplate) {
+          if (widgetTemplates.length > index &&
+              widgetTemplates[index] is CustomWidgetTemplate) {
             return Dismissible(
                 background: Container(
                   color: Colors.red,
@@ -471,20 +433,35 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
                   ),
                 ),
                 direction: DismissDirection.endToStart,
-                onDismissed: (d) => screen.removeWidgetTemplate(
-                    screenManager, templates[index]),
-                key: ValueKey(templates[index]),
+                onDismissed: (d) => removeTemplate(index),
+                key: ValueKey(widgetTemplates[index]),
                 child: CustomWidgetTemplateTile(
-                  customWidget: templates[index],
+                  customWidget: widgetTemplates[index],
                   customWidgetManager:
                       screenManager.manager.customWidgetManager,
                 ));
           } else {
             return Dismissible(
-              key: ValueKey(templates[index]),
-              onDismissed: (d) =>
-                  screen.removeWidgetTemplate(screenManager, templates[index]),
-              child: CustomGroupWidgetTile(customGroupWidget: templates[index]),
+              key: ValueKey(widgetTemplates[index]),
+              onDismissed: (d) => removeTemplate(index),
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
+              ),
+              secondaryBackground: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
+              ),
+              child: CustomGroupWidgetTile(
+                  customGroupWidget: widgetTemplates[index]),
             );
           }
         });

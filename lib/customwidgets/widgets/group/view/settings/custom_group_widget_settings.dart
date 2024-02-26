@@ -12,116 +12,124 @@ import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart'
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 
 class CustomGroupWidgetSettingsPage extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
   final StreamController<dynamic> _addedController =
       StreamController.broadcast();
+  late CustomGroupWidget clone;
   CustomGroupWidgetSettingsPage({Key? key, required this.customGroupWidget})
-      : super(key: key);
+      : super(key: key) {
+    clone = customGroupWidget.clone();
+  }
 
   @override
   Widget build(BuildContext context) {
-    CustomGroupWidget clone = customGroupWidget.clone();
-    CustomGroupWidgetSettings customGroupWidgetSettings =
-        CustomGroupWidgetSettings(
-      customGroupWidget: clone,
-      stream: _addedController.stream,
-    );
-    return WillPopScope(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Edit Group"),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  if (!_saved(clone)) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => _SaveDialog(
-                              onSave: () => {
-                                save(context, clone),
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst)
-                              },
-                              cancel: () => Navigator.popUntil(
-                                  context, (route) => route.isFirst),
-                            ));
-                    return;
-                  }
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                },
-                icon: const Icon(Icons.home)),
-          ],
-        ),
-        floatingActionButton: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 31),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AddTemplateAlertDialog(
-                              customGroupWidget: clone,
-                              onAdded: (template) =>
-                                  {_addedController.add(template)},
-                              screenManager: Manager.instance.screenManager,
-                            ));
-                  },
-                  child: const Icon(Icons.add),
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 90),
-              alignment: Alignment.bottomLeft,
-              child: FloatingActionButton(
-                heroTag: "d",
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) => _AddDivisionLineTemplate(
-                            onAdd: (widget) => {
-                              {_addedController.add(widget)},
-                            },
-                          ));
-                },
-                child: const Icon(Icons.splitscreen),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                heroTag: "tag",
-                onPressed: () => {
-                  if (customGroupWidgetSettings.validate())
-                    {save(context, clone), Navigator.pop(context)}
-                },
-                child: const Icon(Icons.save),
-              ),
-            ),
-          ],
-        ),
-        body: Container(
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          child: customGroupWidgetSettings,
-        ),
-      ),
-      onWillPop: () async {
-        if (!_saved(clone)) {
-          showDialog(
-              context: context,
-              builder: (_) => _SaveDialog(
-                  onSave: () => {save(context, clone), Navigator.pop(context)},
-                  cancel: () => Navigator.pop(context)));
-          return false;
-        }
-        return true;
-      },
-    );
+    return TemplateAdder(
+        isSaved: _isSaved,
+        save: _save,
+        addGroup: _addGroup,
+        addLine: _addLine,
+        addTemplates: _addTemplates,
+        screenManager: Manager.instance.screenManager,
+        reorderTemplate: _reorderTemplate,
+        removeTemplate: _removeTemplate,
+        templates: clone.templates);
+    // return WillPopScope(
+    //   child: Scaffold(
+    //     appBar: AppBar(
+    //       title: const Text("Edit Group"),
+    //       actions: [
+    //         IconButton(
+    //             onPressed: () {
+    //               if (!_saved(clone)) {
+    //                 showDialog(
+    //                     context: context,
+    //                     builder: (_) => _SaveDialog(
+    //                           onSave: () => {
+    //                             save(context, clone),
+    //                             Navigator.popUntil(
+    //                                 context, (route) => route.isFirst)
+    //                           },
+    //                           cancel: () => Navigator.popUntil(
+    //                               context, (route) => route.isFirst),
+    //                         ));
+    //                 return;
+    //               }
+    //               Navigator.popUntil(context, (route) => route.isFirst);
+    //             },
+    //             icon: const Icon(Icons.home)),
+    //       ],
+    //     ),
+    //     floatingActionButton: Stack(
+    //       children: [
+    //         Padding(
+    //           padding: const EdgeInsets.only(left: 31),
+    //           child: Align(
+    //             alignment: Alignment.bottomLeft,
+    //             child: FloatingActionButton(
+    //               onPressed: () {
+    //                 showDialog(
+    //                     context: context,
+    //                     builder: (context) => AddTemplateAlertDialog(
+    //                           customGroupWidget: clone,
+    //                           onAdded: (template) =>
+    //                               {_addedController.add(template)},
+    //                           screenManager: Manager.instance.screenManager,
+    //                         ));
+    //               },
+    //               child: const Icon(Icons.add),
+    //             ),
+    //           ),
+    //         ),
+    //         Container(
+    //           padding: const EdgeInsets.only(left: 90),
+    //           alignment: Alignment.bottomLeft,
+    //           child: FloatingActionButton(
+    //             heroTag: "d",
+    //             onPressed: () {
+    //               showDialog(
+    //                   context: context,
+    //                   builder: (context) => _AddDivisionLineTemplate(
+    //                         onAdd: (widget) => {
+    //                           {_addedController.add(widget)},
+    //                         },
+    //                       ));
+    //             },
+    //             child: const Icon(Icons.splitscreen),
+    //           ),
+    //         ),
+    //         Align(
+    //           alignment: Alignment.bottomRight,
+    //           child: FloatingActionButton(
+    //             heroTag: "tag",
+    //             onPressed: () => {
+    //               if (customGroupWidgetSettings.validate())
+    //                 {save(context, clone), Navigator.pop(context)}
+    //             },
+    //             child: const Icon(Icons.save),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //     body: Container(
+    //       margin: const EdgeInsets.only(left: 20, right: 20),
+    //       child: customGroupWidgetSettings,
+    //     ),
+    //   ),
+    //   onWillPop: () async {
+    //     if (!_saved(clone)) {
+    //       showDialog(
+    //           context: context,
+    //           builder: (_) => _SaveDialog(
+    //               onSave: () => {save(context, clone), Navigator.pop(context)},
+    //               cancel: () => Navigator.pop(context)));
+    //       return false;
+    //     }
+    //     return true;
+    //   },
+    // );
   }
 
   bool _saved(CustomGroupWidget clone) {
@@ -131,12 +139,45 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     return true;
   }
 
-  void save(BuildContext context, CustomGroupWidget clone) {
+  bool _isSaved() {
+    if (jsonEncode(clone.toJson()) != jsonEncode(customGroupWidget.toJson())) {
+      return false;
+    }
+    return true;
+  }
+
+  void save(BuildContext context) {
     customGroupWidget.name = clone.name;
     customGroupWidget.templates = clone.templates;
     customGroupWidget.isExtended = clone.isExtended;
     customGroupWidget.iconID = clone.iconID;
     Manager.instance.screenManager.update();
+  }
+
+  void _save() {
+    customGroupWidget.name = clone.name;
+    customGroupWidget.templates = clone.templates;
+    customGroupWidget.isExtended = clone.isExtended;
+    customGroupWidget.iconID = clone.iconID;
+    Manager.instance.screenManager.update();
+  }
+
+  void _addTemplates(List<CustomWidgetTemplate> templates) {
+    clone.addTemplates(templates);
+  }
+
+  void _addGroup(CustomGroupWidget customGroupWidget) {
+    clone.addGroup(customGroupWidget);
+  }
+
+  void _addLine(CustomWidgetTemplate line) {
+    clone.addTemplates([line]);
+  }
+
+  void _reorderTemplate(int oldIndex, int newIndex) {}
+
+  void _removeTemplate(int index) {
+    clone.removeTemplateAtIndex(index);
   }
 }
 
@@ -160,7 +201,6 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
   }
 
   @override
-  // TODO: implement showKeys
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
 }
@@ -178,7 +218,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
           widget.customGroupWidget
               .addTemplates(List<CustomWidgetTemplate>.from(e));
         } else {
-          widget.customGroupWidget.addLine(event);
+          // widget.customGroupWidget.addLine(event);
         }
       });
     });

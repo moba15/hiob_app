@@ -37,6 +37,8 @@ class CustomGroupWidget extends CustomWidget {
         });
       } else if (t is CustomDivisionLineWidget) {
         widgets.add(t.toJson());
+      } else if (t is CustomGroupWidget) {
+        widgets.add(t.toJson());
       }
     }
     map["templates"] = widgets;
@@ -46,6 +48,13 @@ class CustomGroupWidget extends CustomWidget {
   void addTemplate(CustomWidgetTemplate template) {
     templates.add(template);
     //TODO: Update
+  }
+
+  void addGroup(CustomGroupWidget customGroupWidget) {
+    if (!templates.contains(customGroupWidget)) {
+      templates.add(customGroupWidget);
+    }
+    //TODO Update
   }
 
   factory CustomGroupWidget.fromJSON(
@@ -60,6 +69,8 @@ class CustomGroupWidget extends CustomWidget {
         }
         templates.add(allTemplates
             .firstWhere((element) => element.id == templatesRaw["id"]));
+      } else if (templatesRaw.containsKey("isExtended")) {
+        templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
       } else {
         //Is a Line Widget
         templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
@@ -93,10 +104,6 @@ class CustomGroupWidget extends CustomWidget {
     }
   }
 
-  void addLine(CustomDivisionLineWidget customDivisionLineWidget) {
-    templates.add(customDivisionLineWidget);
-  }
-
   void removeTemplate(dynamic template) {
     templates.remove(template);
   }
@@ -115,4 +122,8 @@ class CustomGroupWidget extends CustomWidget {
 
   @override
   Widget get widget => CustomGroupWidgetView(customGroupWidget: this);
+
+  void removeTemplateAtIndex(int index) {
+    templates.removeAt(index);
+  }
 }
