@@ -6,6 +6,7 @@ import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/screen/view/screen_tile.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../utils/list_status.dart';
 
 class ScreenListPage extends StatelessWidget {
@@ -128,7 +129,8 @@ class ScreenAddPage extends StatefulWidget {
 class _ScreenAddPageState extends State<ScreenAddPage> {
   TextEditingController nameController = TextEditingController();
 
-  IconData? currentIconData = Icons.home;
+  IconWrapper? currentIconWrapper = const IconWrapper(
+      iconDataType: IconDataType.flutterIcons, iconData: Icons.home);
 
   @override
   Widget build(BuildContext context) {
@@ -155,10 +157,13 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
             Container(
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
                 child: IconPickerTemplate(
-                  onChange: (IconData? iconData) {
-                    currentIconData = iconData;
+                  onChange: (IconWrapper? iconWrapper) {
+                    currentIconWrapper = iconWrapper;
                   },
-                  selected: currentIconData ?? Icons.home,
+                  selected: currentIconWrapper ??
+                      const IconWrapper(
+                          iconDataType: IconDataType.flutterIcons,
+                          iconData: Icons.home),
                 )),
           ],
         ),
@@ -168,11 +173,13 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
 
   void save() {
     String name = nameController.text;
-    String iconID = currentIconData?.codePoint.toRadixString(16) ?? "ee98";
+
     widget.screenManager.addScreen(Screen(
         id: widget.screenManager.manager.getRandString(12),
         name: name,
-        iconID: iconID,
+        iconWrapper: currentIconWrapper ??
+            const IconWrapper(
+                iconDataType: IconDataType.flutterIcons, iconData: Icons.home),
         index: 1,
         widgetTemplates: [],
         enabled: true));

@@ -1,16 +1,17 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../../utils/icon_picker_map.dart';
+import '../../../../../utils/icon_data_wrapper.dart';
 
 class IconPickerTemplate extends StatefulWidget {
-  final Function(IconData? iconData) onChange;
-  final IconData selected;
+  final Function(IconWrapper? iconWrapper) onChange;
+  final IconWrapper selected;
   final bool reset;
   const IconPickerTemplate(
       {Key? key,
       required this.onChange,
-      this.selected = Icons.home,
+      this.selected = const IconWrapper(
+          iconData: Icons.home, iconDataType: IconDataType.flutterIcons),
       this.reset = false})
       : super(key: key);
 
@@ -30,10 +31,14 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
       onChanged: (s) => widget.onChange(icons[s]),
       items: icons.keys.toList()..sort(),
       selectedItem: icons.keys.firstWhere(
-          (element) => icons[element]?.codePoint == widget.selected.codePoint,
+          (element) =>
+              icons[element]?.iconData.codePoint ==
+              widget.selected.iconData.codePoint,
           orElse: () => "home"),
       dropdownBuilder: (context, iconKey) {
-        return iconKey != null ? Icon(icons[iconKey]) : const Text("");
+        return iconKey != null
+            ? (icons[iconKey]?.icon ?? const Icon(Icons.home))
+            : const Text("");
       },
       clearButtonProps: ClearButtonProps(
         isVisible: widget.reset,
@@ -50,7 +55,7 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
         ),
         itemBuilder: (context, iconKey, b) {
           return ListTile(
-            title: Icon(icons[iconKey] ?? icons["home"]),
+            title: icons[iconKey]?.icon ?? const Icon(Icons.home),
           );
         },
       ),

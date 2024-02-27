@@ -10,6 +10,7 @@ import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 import '../../../../device/device.dart';
 import '../../../../device/iobroker_device.dart';
@@ -183,7 +184,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
 
   List<DataPoint> dataPoints = [];
 
-  IconData? currentSelectedIconData = Icons.home;
+  IconWrapper? currentSelectedIconWrapper;
 
   final TextEditingController idController = TextEditingController();
   Icon icon = const Icon(Icons.insert_emoticon);
@@ -219,7 +220,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
               child: IconPickerTemplate(
-                onChange: (d) => {currentSelectedIconData = d},
+                onChange: (d) => {currentSelectedIconWrapper = d},
               ),
             ),
             Container(
@@ -305,14 +306,17 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
   }
 
   void save() {
-    if (currentSelectedIconData == null || nameController.text.isEmpty) {
+    if (currentSelectedIconWrapper == null || nameController.text.isEmpty) {
       return;
     }
     if (_deviceType == DeviceType.ioBroker) {
       dataPoints.removeWhere((element) =>
           element.name.trim().isEmpty || element.id.trim().isEmpty);
       IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
-          iconID: currentSelectedIconData!.codePoint.toRadixString(16),
+          //!EDIT for new icons
+          //TODO
+          iconID:
+              currentSelectedIconWrapper!.iconData!.codePoint.toRadixString(16),
           name: nameController.text,
           objectID: idController.text,
           dataPoints: dataPoints,
@@ -394,7 +398,9 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
               child: IconPickerTemplate(
-                selected: currentSelectedIconData ?? Icons.home,
+                //!EDIT
+                //TODO
+                selected: currenSelectedIconData ?? Icons.home,
                 onChange: (d) => {currentSelectedIconData = d},
               ),
             ),

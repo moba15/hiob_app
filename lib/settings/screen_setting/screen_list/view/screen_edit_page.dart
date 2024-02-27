@@ -16,6 +16,7 @@ import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../customwidgets/custom_widget.dart';
 import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
 
@@ -33,7 +34,7 @@ class ScreenEditPage extends StatefulWidget {
 
 class _ScreenEditPageState extends State<ScreenEditPage> {
   TextEditingController nameController = TextEditingController();
-  IconData? currentIconData;
+  IconWrapper? currentIconWrapper;
   bool? enabled;
 
   late Screen screen;
@@ -43,7 +44,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     enabled = widget.screen.enabled;
     screen = widget.screen.clone();
     nameController.text = screen.name;
-    currentIconData = IconData(int.parse(screen.iconID, radix: 16));
+    currentIconWrapper = screen.iconWrapper;
     super.initState();
   }
 
@@ -135,10 +136,13 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
                   margin: const EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 10, bottom: 5),
                   child: IconPickerTemplate(
-                    onChange: (IconData? iconData) {
-                      currentIconData = iconData;
+                    onChange: (IconWrapper? iconWrapper) {
+                      currentIconWrapper = iconWrapper;
                     },
-                    selected: currentIconData ?? Icons.home,
+                    selected: currentIconWrapper ??
+                        const IconWrapper(
+                            iconDataType: IconDataType.flutterIcons,
+                            iconData: Icons.home),
                   )),
               CheckboxListTile(
                 onChanged: (value) {
@@ -190,7 +194,9 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     widget.screenManager.editScreen(
         screen: widget.screen,
         name: nameController.text,
-        iconID: currentIconData?.codePoint.toRadixString(16) ?? "ee98",
+        iconWrapper: currentIconWrapper ??
+            const IconWrapper(
+                iconDataType: IconDataType.flutterIcons, iconData: Icons.home),
         index: 1,
         enabled: enabled ?? true);
   }
