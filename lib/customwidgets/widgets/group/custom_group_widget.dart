@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
+import 'package:smart_home/manager/manager.dart';
 
 class CustomGroupWidget extends CustomWidget {
   List<dynamic> templates;
@@ -29,16 +30,17 @@ class CustomGroupWidget extends CustomWidget {
       "iconID": iconID,
     };
     List<Map<String, dynamic>> widgets = [];
-    for (dynamic t in templates) {
-      if (t is CustomWidgetTemplate) {
+    for (dynamic w in templates) {
+      if (w is CustomGroupWidget) {
+        widgets.add(w.toJson());
+      } else if (w is CustomWidgetTemplate &&
+          w.customWidget is CustomDivisionLineWidget) {
+        widgets.add(w.customWidget.toJson());
+      } else if (w is CustomWidgetTemplate) {
         widgets.add({
-          "widget": t.name,
-          "id": t.id,
+          "widget": w.name,
+          "id": w.id,
         });
-      } else if (t is CustomDivisionLineWidget) {
-        widgets.add(t.toJson());
-      } else if (t is CustomGroupWidget) {
-        widgets.add(t.toJson());
       }
     }
     map["templates"] = widgets;
@@ -60,20 +62,33 @@ class CustomGroupWidget extends CustomWidget {
   factory CustomGroupWidget.fromJSON(
       Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
     List<dynamic> templates = [];
-    for (Map<String, dynamic> templatesRaw in json["templates"] is String
-        ? jsonDecode(json["templates"])
-        : json["templates"]) {
-      if (templatesRaw.containsKey("widget")) {
-        if (!allTemplates.any((element) => element.id == templatesRaw["id"])) {
-          continue; //TODO: Delete From file
+    if (json["templates"] != null) {
+      for (Map<String, dynamic> templatesRaw in json["templates"] is String
+          ? jsonDecode(json["templates"])
+          : json["templates"]) {
+        if (templatesRaw.containsKey("widget")) {
+          if (!allTemplates
+              .any((element) => element.id == templatesRaw["id"])) {
+            continue; //TODO: Delete From file
+          }
+          templates.add(allTemplates
+              .firstWhere((element) => element.id == templatesRaw["id"]));
+        } else if (templatesRaw.containsKey("isExtended")) {
+          templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
+        } else if (templatesRaw["type"] == CustomWidgetType.line.toString()) {
+          templates.add(CustomWidgetTemplate(
+              id: Manager.instance.getRandString(12),
+              name: "Line",
+              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw)));
+        } else {
+          //!maintain for downward compatibility
+          templates.add(CustomWidgetTemplate(
+              id: Manager.instance.getRandString(12),
+              name: "Line",
+              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw)));
+          //Is a Line Widget
+          //templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
         }
-        templates.add(allTemplates
-            .firstWhere((element) => element.id == templatesRaw["id"]));
-      } else if (templatesRaw.containsKey("isExtended")) {
-        templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
-      } else {
-        //Is a Line Widget
-        templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
       }
     }
     return CustomGroupWidget(
