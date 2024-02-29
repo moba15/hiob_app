@@ -31,8 +31,7 @@ class DeviceTile extends StatelessWidget {
     final device = context.select((DeviceBloc bloc) => bloc.device);
 
     return ListTile(
-      leading: Icon(IconData(int.parse(device.iconID, radix: 16),
-          fontFamily: "MaterialIcons")),
+      leading: device.iconWrapper.icon,
       title: (device is IoBrokerDevice)
           ? Text("${device.name} (IoBroker)")
           : Text("${device.name} "),

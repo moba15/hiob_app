@@ -1,21 +1,23 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class CustomGroupWidget extends CustomWidget {
   List<dynamic> templates;
   bool isExtended;
-  String? iconID;
+  IconWrapper? iconWrapper;
 
   CustomGroupWidget(
       {required String? name,
       this.templates = const [],
       this.isExtended = true,
-      this.iconID})
+      this.iconWrapper})
       : super(name: name, type: CustomWidgetType.group, settings: {});
 
   @override
@@ -26,7 +28,7 @@ class CustomGroupWidget extends CustomWidget {
     Map<String, dynamic> map = {
       "name": name,
       "isExtended": isExtended,
-      "iconID": iconID,
+      "iconWrapper": iconWrapper,
     };
     List<Map<String, dynamic>> widgets = [];
     for (dynamic t in templates) {
@@ -65,11 +67,21 @@ class CustomGroupWidget extends CustomWidget {
         templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
       }
     }
+    //!Support for older versions
+    IconWrapper iconWrapper = const IconWrapper();
+    if (json["iconID"] != null) {
+      iconWrapper = IconWrapper(
+          iconDataType: IconDataType.flutterIcons,
+          iconData: IconData(int.parse(json["iconID"], radix: 16),
+              fontFamily: "MaterialIcons"));
+    } else if (json["iconWrapper"] != null) {
+      iconWrapper = IconWrapper.fromJSON(json["iconWrapper"]);
+    }
     return CustomGroupWidget(
         name: json["name"],
         templates: templates,
         isExtended: json["isExtended"] ?? true,
-        iconID: json["iconID"]);
+        iconWrapper: iconWrapper);
   }
 
   @override
@@ -78,7 +90,7 @@ class CustomGroupWidget extends CustomWidget {
         name: name,
         templates: List.from(templates),
         isExtended: isExtended,
-        iconID: iconID);
+        iconWrapper: iconWrapper);
   }
 
   void addTemplates(List<CustomWidgetTemplate> templates) {

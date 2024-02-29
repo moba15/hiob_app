@@ -16,8 +16,7 @@ class ScreenListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       key: ValueKey(screen.name),
-      leading: Icon(IconData(int.parse(screen.iconID, radix: 16),
-          fontFamily: 'MaterialIcons')),
+      leading: screen.iconWrapper.icon,
       title: Text(screen.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
       onTap: () => {
