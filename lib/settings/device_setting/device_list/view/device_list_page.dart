@@ -313,10 +313,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
       dataPoints.removeWhere((element) =>
           element.name.trim().isEmpty || element.id.trim().isEmpty);
       IoBrokerDevice ioBrokerDevice = IoBrokerDevice(
-          //!EDIT for new icons
-          //TODO
-          iconID:
-              currentSelectedIconWrapper!.iconData!.codePoint.toRadixString(16),
+          iconWrapper: currentSelectedIconWrapper!,
           name: nameController.text,
           objectID: idController.text,
           dataPoints: dataPoints,
@@ -349,15 +346,14 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
 
   List<DataPoint> dataPoints = [];
 
-  IconData? currentSelectedIconData;
+  IconWrapper? currentSelectedIconWrapper;
   Icon icon = const Icon(Icons.insert_emoticon);
 
   @override
   void initState() {
     dataPoints = widget.device.dataPoints ?? [];
     nameController.text = widget.device.name;
-    currentSelectedIconData =
-        IconData(int.tryParse(widget.device.iconID, radix: 16) ?? 0);
+    currentSelectedIconWrapper = widget.device.iconWrapper;
     super.initState();
   }
 
@@ -400,8 +396,11 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
               child: IconPickerTemplate(
                 //!EDIT
                 //TODO
-                selected: currenSelectedIconData ?? Icons.home,
-                onChange: (d) => {currentSelectedIconData = d},
+                selected: currentSelectedIconWrapper ??
+                    const IconWrapper(
+                        iconDataType: IconDataType.flutterIcons,
+                        iconData: Icons.home),
+                onChange: (d) => {currentSelectedIconWrapper = d},
               ),
             ),
             Container(
@@ -485,7 +484,7 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
   }
 
   void save() {
-    if (currentSelectedIconData == null || nameController.text.isEmpty) {
+    if (currentSelectedIconWrapper == null || nameController.text.isEmpty) {
       return;
     }
     if (_deviceType == DeviceType.ioBroker) {
@@ -494,8 +493,7 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
 
       IoBrokerDevice ioBrokerDevice = widget.device as IoBrokerDevice;
       ioBrokerDevice.name = nameController.text;
-      ioBrokerDevice.iconID =
-          currentSelectedIconData!.codePoint.toRadixString(16);
+      ioBrokerDevice.iconWrapper = currentSelectedIconWrapper!;
       ioBrokerDevice.dataPoints = dataPoints;
       for (var element in dataPoints) {
         element.device = ioBrokerDevice;

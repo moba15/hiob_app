@@ -55,7 +55,7 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
         ),
         itemBuilder: (context, iconKey, b) {
           return ListTile(
-            title: icons[iconKey]?.icon ?? const Icon(Icons.home),
+            title: icons[iconKey]?.icon ?? const Icon(Icons.question_answer),
           );
         },
       ),

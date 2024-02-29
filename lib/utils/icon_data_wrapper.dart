@@ -8,10 +8,10 @@ enum IconDataType {
 }
 
 extension IconDataTypeExtension on IconDataType {
-  String get fontPackage {
+  String? get fontPackage {
     switch (this) {
       case IconDataType.flutterIcons:
-        return "materialicons";
+        return null;
       case IconDataType.ionIcons:
         return "ionicons";
     }
@@ -30,7 +30,9 @@ extension IconDataTypeExtension on IconDataType {
 class IconWrapper {
   final IconDataType iconDataType;
   final IconData iconData;
-  const IconWrapper({required this.iconDataType, required this.iconData});
+  const IconWrapper(
+      {this.iconDataType = IconDataType.flutterIcons,
+      this.iconData = Icons.home});
 
   Icon get icon {
     return Icon(iconData);
@@ -43,15 +45,24 @@ class IconWrapper {
     return IconWrapper(
         iconDataType: iconDataType,
         iconData: IconData(int.parse(json["iconDataId"], radix: 16),
-            fontFamily: "Ionicons", fontPackage: "ionicons"));
+            fontFamily: iconDataType.fontFamily,
+            fontPackage: iconDataType.fontPackage));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "iconDataType": iconDataType.name,
+      "iconDataId": iconData.codePoint.toRadixString(16),
+    };
   }
 }
 
 Map<String, IconWrapper> icons = {
-  "flutter": IconWrapper(
-      iconData: Icons.home, iconDataType: IconDataType.flutterIcons),
-  "ionicons":
-      IconWrapper(iconData: Icons.home, iconDataType: IconDataType.ionIcons),
+  "flutter": const IconWrapper(
+      iconData: Icons.access_time_filled_rounded,
+      iconDataType: IconDataType.flutterIcons),
+  "ionicons": const IconWrapper(
+      iconData: Ionicons.accessibility, iconDataType: IconDataType.ionIcons),
 
   /*"floor home 0 zero ground ": CommunityMaterialIcons.home_floor_0,
   "floor home 1 first ": CommunityMaterialIcons.home_floor_1,

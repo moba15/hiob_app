@@ -90,7 +90,7 @@ class ScreenTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tab(
-      text: Ionicons.accessibility.fontPackage,
+      text: Icons.accessibility.fontFamily,
       icon: screen.iconWrapper.icon,
     );
   }

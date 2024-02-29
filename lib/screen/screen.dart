@@ -51,18 +51,17 @@ class Screen {
         }
       }
     }
+    //!Support for older versions
     IconWrapper iconWrapper;
-    if (json["iconID"]) {
+    if (json["iconID"] != null) {
       iconWrapper = IconWrapper(
           iconDataType: IconDataType.flutterIcons,
           iconData: IconData(int.parse(json["iconID"], radix: 16),
               fontFamily: "MaterialIcons"));
-    } else if (json["iconWrapper"]) {
+    } else if (json["iconWrapper"] != null) {
       iconWrapper = IconWrapper.fromJSON(json["iconWrapper"]);
     } else {
-      iconWrapper = IconWrapper(
-          iconDataType: IconDataType.flutterIcons,
-          iconData: Icons.question_answer);
+      iconWrapper = const IconWrapper();
     }
     return Screen(
       id: json["id"],

@@ -21,11 +21,7 @@ class CustomGroupWidgetView extends StatelessWidget {
             HapticFeedback.lightImpact();
           }
         },
-        leading: customGroupWidget.iconID != null
-            ? Icon(IconData(
-                int.tryParse(customGroupWidget.iconID!, radix: 16) ?? 0,
-                fontFamily: "MaterialIcons"))
-            : null,
+        leading: customGroupWidget.iconWrapper?.icon,
         initiallyExpanded: customGroupWidget.isExtended,
         textColor: Theme.of(context).colorScheme.onSurface,
         title: Text(
