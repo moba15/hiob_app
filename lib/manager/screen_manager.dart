@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
+import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screen/screen.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class ScreenManager {
   final FileManager fileManager;
@@ -50,7 +52,8 @@ class ScreenManager {
       screens.add(Screen(
           id: Manager.instance.getRandString(15),
           name: "Template",
-          iconID: "ee98",
+          iconWrapper: const IconWrapper(
+              iconData: Icons.abc, iconDataType: IconDataType.flutterIcons),
           index: 1,
           widgetTemplates: [],
           enabled: true));
@@ -80,7 +83,8 @@ class ScreenManager {
       screens.add(Screen(
           id: "testID11&",
           name: "Template",
-          iconID: "ee98",
+          iconWrapper: const IconWrapper(
+              iconData: Icons.abc, iconDataType: IconDataType.flutterIcons),
           index: 1,
           widgetTemplates: [],
           enabled: true));
@@ -104,7 +108,8 @@ class ScreenManager {
       screens.add(Screen(
           id: "testID11&",
           name: "Template",
-          iconID: "ee98",
+          iconWrapper: const IconWrapper(
+              iconData: Icons.abc, iconDataType: IconDataType.flutterIcons),
           index: 1,
           widgetTemplates: [],
           enabled: true));
@@ -135,7 +140,7 @@ class ScreenManager {
   void editScreen(
       {required Screen screen,
       required String name,
-      required String iconID,
+      required IconWrapper iconWrapper,
       required int index,
       required bool enabled}) async {
     int z = -1;
@@ -145,7 +150,7 @@ class ScreenManager {
         screens[i] = Screen(
             id: screen.id,
             name: name,
-            iconID: iconID,
+            iconWrapper: iconWrapper,
             index: index,
             widgetTemplates: screen.widgetTemplates,
             enabled: enabled);

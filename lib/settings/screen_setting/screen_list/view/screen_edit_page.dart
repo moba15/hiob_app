@@ -3,21 +3,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/general_settings/view/template_adder.dart';
-import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../customwidgets/custom_widget.dart';
 import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
 
@@ -35,7 +31,7 @@ class ScreenEditPage extends StatefulWidget {
 
 class _ScreenEditPageState extends State<ScreenEditPage> {
   TextEditingController nameController = TextEditingController();
-  IconData? currentIconData;
+  IconWrapper? currentIconWrapper;
   bool? enabled;
 
   late Screen screen;
@@ -45,7 +41,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     enabled = widget.screen.enabled;
     screen = widget.screen.clone();
     nameController.text = screen.name;
-    currentIconData = IconData(int.parse(screen.iconID, radix: 16));
+    currentIconWrapper = screen.iconWrapper;
     super.initState();
   }
 
@@ -204,7 +200,9 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     widget.screenManager.editScreen(
         screen: widget.screen,
         name: nameController.text,
-        iconID: currentIconData?.codePoint.toRadixString(16) ?? "ee98",
+        iconWrapper: currentIconWrapper ??
+            const IconWrapper(
+                iconDataType: IconDataType.flutterIcons, iconData: Icons.home),
         index: 1,
         enabled: enabled ?? true);
   }
@@ -277,8 +275,8 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     screen.removeWidgetTemplateAtIndex(widget.screenManager, index);
   }
 
-  void _iconChange(IconData? iconData) {
-    currentIconData = iconData;
+  void _iconChange(IconWrapper? iconWrapper) {
+    currentIconWrapper = iconWrapper;
   }
 }
 
@@ -339,7 +337,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
         (element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
       title: Text(
-          AppLocalizations.of(context)!.select_widget_template_alert_title),
+          getAppLocalizations(context)!.select_widget_template_alert_title),
       actions: [
         TextButton(
             onPressed: cancel,

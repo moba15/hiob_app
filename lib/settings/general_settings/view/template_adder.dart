@@ -14,6 +14,7 @@ import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class TemplateAdder extends StatefulWidget {
   final bool Function() isSaved;
@@ -23,7 +24,7 @@ class TemplateAdder extends StatefulWidget {
   final Function(CustomGroupWidget) addGroup;
   final Function(int oldIndex, int newIndex) reorderTemplate;
   final Function(int index) removeTemplate;
-  final Function(IconData? newIconData) iconDataChange;
+  final Function(IconWrapper? newIconWrapper) iconDataChange;
   final ScreenManager screenManager;
   //!Change to call by refernce for better performance
   final List<dynamic> templates;
@@ -47,7 +48,7 @@ class TemplateAdder extends StatefulWidget {
 
 class _TemplateAdderState extends State<TemplateAdder> {
   TextEditingController nameController = TextEditingController();
-  IconData? currentIconData;
+  IconWrapper? currentIconWrapper;
   bool? enabled;
   List<dynamic> _tempTemplates = [];
 
@@ -142,10 +143,10 @@ class _TemplateAdderState extends State<TemplateAdder> {
                   margin: const EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 10, bottom: 5),
                   child: IconPickerTemplate(
-                    onChange: (IconData? iconData) {
-                      widget.iconDataChange(iconData);
+                    onChange: (IconWrapper? iconWrapper) {
+                      widget.iconDataChange(iconWrapper);
                     },
-                    selected: currentIconData ?? Icons.home,
+                    selected: currentIconWrapper ?? IconWrapper(),
                   )),
               CheckboxListTile(
                 onChanged: (value) {

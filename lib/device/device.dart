@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/datapoint/datapointTypes/datapoint_role.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class Device {
   String id;
   String name;
-  String iconID;
+  IconWrapper iconWrapper;
   dynamic value;
   DateTime lastUpdated;
   bool _firstUpdateFromServer = false;
@@ -18,7 +19,7 @@ class Device {
   Device(
       {required this.id,
       required this.name,
-      required this.iconID,
+      required this.iconWrapper,
       this.value,
       required this.lastUpdated,
       required this.type,
