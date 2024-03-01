@@ -176,7 +176,9 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     clone.addTemplates([line]);
   }
 
-  void _reorderTemplate(int oldIndex, int newIndex) {}
+  void _reorderTemplate(int oldIndex, int newIndex) {
+    clone.reorder(oldIndex: oldIndex, newIndex: newIndex);
+  }
 
   void _removeTemplate(int index) {
     clone.removeTemplateAtIndex(index);

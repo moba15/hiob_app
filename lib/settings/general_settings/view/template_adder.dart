@@ -442,7 +442,8 @@ class WidgetTemplateListPage extends StatelessWidget {
                   customWidgetManager:
                       screenManager.manager.customWidgetManager,
                 ));
-          } else {
+          } else if (widgetTemplates.length > index &&
+              widgetTemplates[index] is CustomGroupWidget) {
             return Dismissible(
               key: ValueKey(widgetTemplates[index]),
               onDismissed: (d) => removeTemplate(index),
@@ -464,6 +465,35 @@ class WidgetTemplateListPage extends StatelessWidget {
               ),
               child: CustomGroupWidgetTile(
                   customGroupWidget: widgetTemplates[index]),
+            );
+          } else {
+            return Dismissible(
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
+              ),
+              secondaryBackground: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
+              ),
+              direction: DismissDirection.endToStart,
+              onDismissed: (d) {
+                removeTemplate(index);
+              },
+              key: ValueKey(widgetTemplates[index]),
+              child: ListTile(
+                title: const Text("Line"),
+                subtitle: Text(
+                    "Thickness: ${(widgetTemplates[index] as CustomDivisionLineWidget).thickness}"),
+              ),
             );
           }
         });
