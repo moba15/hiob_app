@@ -15,7 +15,7 @@
 *.iws
 .idea/
 
-./linux/
+/linux/
 .metadata
 *.cc
 # The .vscode folder contains launch configuration and tasks you configure in
