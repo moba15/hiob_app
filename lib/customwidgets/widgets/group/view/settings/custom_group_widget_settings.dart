@@ -12,6 +12,7 @@ import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart'
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 
@@ -28,6 +29,9 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TemplateAdder(
+      title: getAppLocalizations(context).group_edit_page_title,
+      name: clone.name ?? "",
+      toggle: toggleWidget(context),
       isSaved: _isSaved,
       save: _save,
       addGroup: _addGroup,
@@ -37,6 +41,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
       reorderTemplate: _reorderTemplate,
       removeTemplate: _removeTemplate,
       templates: clone.templates,
+      currentIconWrapper: clone.iconWrapper,
       iconDataChange: _iconChange,
     );
     // return WillPopScope(
@@ -135,11 +140,21 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     // );
   }
 
-  bool _saved(CustomGroupWidget clone) {
-    if (jsonEncode(clone.toJson()) != jsonEncode(customGroupWidget.toJson())) {
-      return false;
-    }
-    return true;
+  Widget toggleWidget(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return CheckboxListTile(
+          onChanged: (value) {
+            setState(() {
+              clone.isExtended = value ?? true;
+            });
+          },
+          value: clone.isExtended,
+          title: Text(getAppLocalizations(context).expanded),
+          secondary: const Icon(Icons.expand),
+        );
+      },
+    );
   }
 
   bool _isSaved() {
@@ -149,16 +164,8 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     return true;
   }
 
-  void save(BuildContext context) {
-    customGroupWidget.name = clone.name;
-    customGroupWidget.templates = clone.templates;
-    customGroupWidget.isExtended = clone.isExtended;
-    customGroupWidget.iconWrapper = clone.iconWrapper;
-    Manager.instance.screenManager.update();
-  }
-
-  void _save() {
-    customGroupWidget.name = clone.name;
+  void _save(String name) {
+    customGroupWidget.name = name;
     customGroupWidget.templates = clone.templates;
     customGroupWidget.isExtended = clone.isExtended;
     customGroupWidget.iconWrapper = clone.iconWrapper;

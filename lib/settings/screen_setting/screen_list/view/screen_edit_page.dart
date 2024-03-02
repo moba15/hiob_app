@@ -30,7 +30,6 @@ class ScreenEditPage extends StatefulWidget {
 }
 
 class _ScreenEditPageState extends State<ScreenEditPage> {
-  TextEditingController nameController = TextEditingController();
   IconWrapper? currentIconWrapper;
   bool? enabled;
 
@@ -40,7 +39,6 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   void initState() {
     enabled = widget.screen.enabled;
     screen = widget.screen.clone();
-    nameController.text = screen.name;
     currentIconWrapper = screen.iconWrapper;
     super.initState();
   }
@@ -50,6 +48,9 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   @override
   Widget build(BuildContext context) {
     return TemplateAdder(
+      title: getAppLocalizations(context).screen_edit_page_title,
+      name: screen.name,
+      toggle: toggleWidget(context),
       isSaved: _isSaved,
       addGroup: _addGroup,
       addLine: _addLine,
@@ -59,6 +60,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
       reorderTemplate: _reorderTemplate,
       screenManager: widget.screenManager,
       templates: screen.widgetTemplates,
+      currentIconWrapper: screen.iconWrapper,
       iconDataChange: _iconChange,
     );
     // return WillPopScope(
@@ -195,11 +197,11 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     return jsonEncode(screen.toJson()) == jsonEncode(widget.screen.toJson());
   }
 
-  void _save() {
+  void _save(String name) {
     widget.screen.widgetTemplates = screen.widgetTemplates;
     widget.screenManager.editScreen(
         screen: widget.screen,
-        name: nameController.text,
+        name: name,
         iconWrapper: currentIconWrapper ??
             const IconWrapper(
                 iconDataType: IconDataType.flutterIcons, iconData: Icons.home),
@@ -207,57 +209,12 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
         enabled: enabled ?? true);
   }
 
-  void addTemplate() {
-    //widget.screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: "id", name: "name", customWidget: CustomTextWidget(name: "", text: CustomTextAttribute(data: ""))));
-    showDialog(
-        context: context,
-        builder: (context) => _AddTemplateAlertDialog(
-              screen: screen,
-              screenManager: widget.screenManager,
-              onAdd: (List<CustomWidgetTemplate> templates) {
-                setState(() {
-                  screen.addWidgetTemplates(widget.screenManager, templates);
-                });
-              },
-            ));
-  }
-
   void _addTemplates(List<CustomWidgetTemplate> templates) {
     screen.addWidgetTemplates(widget.screenManager, templates);
   }
 
-  //TODO In future: Use the Bloc pattern
-  void addGroup() {
-    showDialog(
-        context: context,
-        builder: (context) => AddGroupAlertDialog(
-              onAdd: (CustomGroupWidget customGroupWidget) {
-                setState(() {
-                  screen.addGroup(customGroupWidget, widget.screenManager);
-                });
-              },
-            ));
-  }
-
   void _addGroup(CustomGroupWidget customGroupWidget) {
     screen.addGroup(customGroupWidget, widget.screenManager);
-  }
-
-  void addLine() {
-    showDialog(
-        context: context,
-        builder: (context) => _AddDivisionLineTemplate(
-              onAdd: (CustomDivisionLineWidget c) {
-                setState(() {
-                  screen.addWidgetTemplate(
-                      widget.screenManager,
-                      CustomWidgetTemplate(
-                          id: Manager.instance.getRandString(12),
-                          name: "Line",
-                          customWidget: c));
-                });
-              },
-            ));
   }
 
   void _addLine(CustomWidgetTemplate customWidgetTemplate) {
@@ -277,6 +234,25 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
 
   void _iconChange(IconWrapper? iconWrapper) {
     currentIconWrapper = iconWrapper;
+  }
+
+  Widget toggleWidget(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return CheckboxListTile(
+          onChanged: (value) {
+            setState(() {
+              screen.enabled = value ?? true;
+            });
+          },
+          value: screen.enabled,
+          title: Text(getAppLocalizations(context).enabled),
+          secondary: screen.enabled == true
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        );
+      },
+    );
   }
 }
 

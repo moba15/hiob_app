@@ -17,9 +17,13 @@ import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class TemplateAdder extends StatefulWidget {
+  final String title;
+  final String name;
+  final Widget? toggle;
   final bool Function() isSaved;
-  final Function() save;
+  final Function(String name) save;
   final Function(List<CustomWidgetTemplate>) addTemplates;
+  final IconWrapper? currentIconWrapper;
   final Function(CustomWidgetTemplate) addLine;
   final Function(CustomGroupWidget) addGroup;
   final Function(int oldIndex, int newIndex) reorderTemplate;
@@ -30,11 +34,15 @@ class TemplateAdder extends StatefulWidget {
   final List<dynamic> templates;
   const TemplateAdder({
     Key? key,
+    required this.title,
+    required this.name,
+    required this.toggle,
     required this.isSaved,
     required this.save,
     required this.addGroup,
     required this.addLine,
     required this.addTemplates,
+    required this.currentIconWrapper,
     required this.screenManager,
     required this.reorderTemplate,
     required this.removeTemplate,
@@ -50,10 +58,11 @@ class _TemplateAdderState extends State<TemplateAdder> {
   TextEditingController nameController = TextEditingController();
   IconWrapper? currentIconWrapper;
   bool? enabled;
-  List<dynamic> _tempTemplates = [];
 
   @override
   void initState() {
+    nameController.text = widget.name;
+    currentIconWrapper = widget.currentIconWrapper;
     super.initState();
   }
 
@@ -62,7 +71,7 @@ class _TemplateAdderState extends State<TemplateAdder> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Edit Screen"),
+          title: Text(widget.title),
           actions: [
             IconButton(
                 onPressed: () {
@@ -146,20 +155,9 @@ class _TemplateAdderState extends State<TemplateAdder> {
                     onChange: (IconWrapper? iconWrapper) {
                       widget.iconDataChange(iconWrapper);
                     },
-                    selected: currentIconWrapper ?? IconWrapper(),
+                    selected: currentIconWrapper ?? const IconWrapper(),
                   )),
-              CheckboxListTile(
-                onChanged: (value) {
-                  setState(() {
-                    enabled = value ?? true;
-                  });
-                },
-                value: enabled ?? true,
-                title: Text(getAppLocalizations(context).enabled),
-                secondary: enabled == true || enabled == null
-                    ? const Icon(Icons.visibility)
-                    : const Icon(Icons.visibility_off),
-              ),
+              if (widget.toggle != null) widget.toggle!,
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -198,7 +196,7 @@ class _TemplateAdderState extends State<TemplateAdder> {
   }
 
   void _save() {
-    widget.save();
+    widget.save(nameController.text);
   }
 
   void addTemplate() {

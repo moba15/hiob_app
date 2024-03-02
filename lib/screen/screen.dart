@@ -16,7 +16,7 @@ class Screen {
   final String name;
   final IconWrapper iconWrapper;
   final int index;
-  final bool enabled;
+  bool enabled;
   List<dynamic> widgetTemplates;
 
   Screen(
