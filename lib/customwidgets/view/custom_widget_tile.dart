@@ -3,7 +3,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 
 import '../../settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
-import '../templates/custom_widget_template.dart';
+import '../widgets/view/settings/templates/custom_widget_template.dart';
 
 class CustomWidgetTemplateTile extends StatelessWidget {
   final CustomWidgetTemplate customWidget;

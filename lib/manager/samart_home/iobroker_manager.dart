@@ -7,6 +7,7 @@ import 'package:smart_home/ioBroker/enum/enum.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 import '../../device/device.dart';
 
@@ -203,7 +204,7 @@ class IoBrokerManager {
           IoBrokerDevice device = IoBrokerDevice(
               id: Manager.instance.getRandString(12),
               name: e.name,
-              iconID: "ee98",
+              iconWrapper: const IconWrapper(),
               lastUpdated: DateTime.now(),
               objectID: "");
           device.dataPoints = e.dataPointMembers

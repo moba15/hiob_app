@@ -5,13 +5,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class CustomGroupWidgetSettingsPage extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
@@ -135,7 +136,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     customGroupWidget.name = clone.name;
     customGroupWidget.templates = clone.templates;
     customGroupWidget.isExtended = clone.isExtended;
-    customGroupWidget.iconID = clone.iconID;
+    customGroupWidget.iconWrapper = clone.iconWrapper;
     Manager.instance.screenManager.update();
   }
 }
@@ -205,18 +206,13 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
           height: 15,
         ),
         IconPickerTemplate(
-          onChange: (d) => {
-            if (d == null) widget.customGroupWidget.iconID == null,
-            if (d != null)
-              widget.customGroupWidget.iconID = d.codePoint.toRadixString(16),
-          },
-          reset: true,
-          selected: widget.customGroupWidget.iconID != null
-              ? IconData(
-                  int.tryParse(widget.customGroupWidget.iconID!, radix: 16) ??
-                      0)
-              : Icons.home,
-        ),
+            onChange: (d) => {
+                  if (d == null) widget.customGroupWidget.iconWrapper == null,
+                  if (d != null) widget.customGroupWidget.iconWrapper = d
+                },
+            reset: true,
+            selected:
+                widget.customGroupWidget.iconWrapper ?? const IconWrapper()),
         Row(
           children: [
             const Text(

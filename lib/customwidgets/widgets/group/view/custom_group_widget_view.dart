@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 
@@ -21,11 +21,7 @@ class CustomGroupWidgetView extends StatelessWidget {
             HapticFeedback.lightImpact();
           }
         },
-        leading: customGroupWidget.iconID != null
-            ? Icon(IconData(
-                int.tryParse(customGroupWidget.iconID!, radix: 16) ?? 0,
-                fontFamily: "MaterialIcons"))
-            : null,
+        leading: customGroupWidget.iconWrapper?.icon,
         initiallyExpanded: customGroupWidget.isExtended,
         textColor: Theme.of(context).colorScheme.onSurface,
         title: Text(
