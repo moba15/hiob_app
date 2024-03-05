@@ -74,61 +74,76 @@ class WidgetTemplateListView extends StatelessWidget {
   }
 }
 
-class TemplatesView extends StatelessWidget {
+class TemplatesView extends StatefulWidget {
   final List<CustomWidgetTemplate> templates;
 
   const TemplatesView({Key? key, required this.templates}) : super(key: key);
 
   @override
+  State<TemplatesView> createState() => _TemplatesViewState();
+}
+
+class _TemplatesViewState extends State<TemplatesView> {
+  List<CustomWidgetType> types = [];
+
+  @override
+  void initState() {
+    types.addAll(CustomWidgetType.values);
+    types.removeWhere((type) => !widget.templates
+        .any((template) => template.customWidget.type == type));
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return templates.isEmpty
+    return widget.templates.isEmpty
         ? Center(
             child: Text(getAppLocalizations(context).no_templates_found),
           )
-        : ListView(
-            children: [
-              for (CustomWidgetType type in CustomWidgetType.values
-                  .where((element) => element != CustomWidgetType.group))
-                if (templates
-                    .any((element) => element.customWidget.type == type))
-                  ExpansionTile(
-                    title: Text(
-                        "${type.name} (${templates.where((element) => element.customWidget.type == type).length})"),
-                    children: [
-                      for (CustomWidgetTemplate t in templates.where(
-                          (element) => element.customWidget.type == type))
-                        Dismissible(
-                          background: Container(
-                            color: Colors.red,
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: 10.0, right: 20.0),
-                              child: const Icon(Icons.delete_forever),
-                            ),
-                          ),
-                          secondaryBackground: Container(
-                            color: Colors.red,
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: 10.0, right: 20.0),
-                              child: const Icon(Icons.delete_forever),
-                            ),
-                          ),
-                          direction: DismissDirection.endToStart,
-                          key: ValueKey(t),
-                          onDismissed: (d) => {_delete(t)},
-                          child: CustomWidgetTemplateTile(
-                            customWidget: t,
-                            customWidgetManager: context
-                                .read<WidgetTemplateListCubit>()
-                                .customWidgetManager,
-                          ),
-                        ),
-                    ],
+        : ListView.builder(
+            itemCount: types.length,
+            itemBuilder: (context, index) {
+              CustomWidgetType type = types[index];
+              List<Dismissible> children = [];
+              for (CustomWidgetTemplate t in widget.templates
+                  .where((element) => element.customWidget.type == type)) {
+                children.add(
+                  Dismissible(
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                        child: const Icon(Icons.delete_forever),
+                      ),
+                    ),
+                    secondaryBackground: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                        child: const Icon(Icons.delete_forever),
+                      ),
+                    ),
+                    direction: DismissDirection.endToStart,
+                    key: ValueKey(t),
+                    onDismissed: (d) => {_delete(t)},
+                    child: CustomWidgetTemplateTile(
+                      customWidget: t,
+                      customWidgetManager: context
+                          .read<WidgetTemplateListCubit>()
+                          .customWidgetManager,
+                    ),
                   ),
-            ],
+                );
+              }
+              return ExpansionTile(
+                title: Text(
+                    "${type.name} (${widget.templates.where((element) => element.customWidget.type == type).length})"),
+                children: children,
+              );
+            },
           );
   }
 
