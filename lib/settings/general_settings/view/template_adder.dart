@@ -205,6 +205,7 @@ class _TemplateAdderState extends State<TemplateAdder> {
         context: context,
         builder: (context) => _AddTemplateAlertDialog(
               screenManager: widget.screenManager,
+              selected: widget.templates,
               onAdd: (List<CustomWidgetTemplate> templates) {
                 setState(() {
                   widget.addTemplates(templates);
@@ -273,10 +274,14 @@ class _SaveDialog extends StatelessWidget {
 
 class _AddTemplateAlertDialog extends StatefulWidget {
   final ScreenManager screenManager;
+  final List<dynamic> selected;
   final Function(List<CustomWidgetTemplate>) onAdd;
 
   const _AddTemplateAlertDialog(
-      {Key? key, required this.screenManager, required this.onAdd})
+      {Key? key,
+      required this.screenManager,
+      required this.onAdd,
+      required this.selected})
       : super(key: key);
 
   @override
@@ -291,9 +296,8 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
   Widget build(BuildContext context) {
     List<CustomWidgetTemplate> templates =
         List.of(widget.screenManager.manager.customWidgetManager.templates);
-    //!Remove
-    // templates.removeWhere(
-    //     (element) => widget.screen.widgetTemplates.contains(element));
+
+    templates.removeWhere((element) => widget.selected.contains(element));
     return AlertDialog(
       title:
           Text(getAppLocalizations(context).select_widget_template_alert_title),
