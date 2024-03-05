@@ -120,10 +120,6 @@ class CustomGroupWidget extends CustomWidget {
   }
 
   void addTemplates(List<CustomWidgetTemplate> templates) {
-    if (this.templates.isEmpty) {
-      this.templates = [];
-    }
-
     for (CustomWidgetTemplate t in templates) {
       if (!this.templates.contains(t)) {
         this.templates.add(t);
