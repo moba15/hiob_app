@@ -16,7 +16,7 @@ class Screen {
   final String name;
   final IconWrapper iconWrapper;
   final int index;
-  final bool enabled;
+  bool enabled;
   List<dynamic> widgetTemplates;
 
   Screen(
@@ -132,6 +132,11 @@ class Screen {
       widgetTemplates.removeWhere(
           (element) => (element is CustomGroupWidget) && element == template);
     }
+  }
+
+  void removeWidgetTemplateAtIndex(ScreenManager screenManager, int index) {
+    widgetTemplates.removeAt(index);
+    screenManager.update();
   }
 
   void reorderWidgetTemplates(

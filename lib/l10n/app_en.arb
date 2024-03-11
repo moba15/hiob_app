@@ -31,6 +31,9 @@
   "settings_page_general_settings": "General Settings",
   "settings_page_config_sync": "Config Sync",
 
+  "group_edit_page_title": "Edit group",
+  "screen_edit_page_title": "Edit screen",
+
 
 
   "@_GENERAL_SETTINGS": {},
@@ -55,6 +58,7 @@
 
   "@_COMMON": {},
   "enabled": "Enabled",
+  "expanded": "Expanded",
   "add": "Add",
   "cancel": "Cancel",
   "thickness": "Thickness",

@@ -33,6 +33,8 @@ class CustomGroupWidgetView extends StatelessWidget {
             return e.customWidget.widget;
           } else if (e is CustomDivisionLineWidget) {
             return e.widget;
+          } else if (e is CustomGroupWidget) {
+            return CustomGroupWidgetView(customGroupWidget: e);
           } else {
             return const Text("Error 404");
           }
