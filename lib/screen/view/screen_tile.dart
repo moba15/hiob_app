@@ -7,15 +7,20 @@ import '../screen.dart';
 class ScreenListTile extends StatelessWidget {
   final Screen screen;
   final ScreenManager screenManager;
+  final bool selected;
 
   const ScreenListTile(
-      {Key? key, required this.screen, required this.screenManager})
+      {Key? key,
+      required this.screen,
+      required this.screenManager,
+      this.selected = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       key: ValueKey(screen.name),
+      selected: selected,
       leading: screen.iconWrapper.icon,
       title: Text(screen.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),

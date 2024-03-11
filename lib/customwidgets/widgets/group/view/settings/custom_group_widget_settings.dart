@@ -334,6 +334,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   direction: DismissDirection.endToStart,
                   key: ValueKey(widget.customGroupWidget.templates[index].id),
                   child: CustomWidgetTemplateTile(
+                      toggleSelect: () => {},
                       customWidget: widget.customGroupWidget.templates[index],
                       customWidgetManager:
                           Manager.instance.customWidgetManager),

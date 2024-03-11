@@ -454,6 +454,7 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
                     screenManager, templates[index]),
                 key: ValueKey(templates[index]),
                 child: CustomWidgetTemplateTile(
+                  toggleSelect: () => {}, //TODO
                   customWidget: templates[index],
                   customWidgetManager:
                       screenManager.manager.customWidgetManager,

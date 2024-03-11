@@ -9,10 +9,16 @@ class CustomWidgetTemplateTile extends StatelessWidget {
   final CustomWidgetTemplate customWidget;
   final CustomWidgetManager customWidgetManager;
   final Function(CustomWidgetTemplate)? onSave;
+  final bool selectedMode;
+  final bool selected;
+  final Function() toggleSelect;
   const CustomWidgetTemplateTile(
       {Key? key,
       required this.customWidget,
       required this.customWidgetManager,
+      required this.toggleSelect,
+      this.selectedMode = false,
+      this.selected = false,
       this.onSave})
       : super(key: key);
 
@@ -23,8 +29,16 @@ class CustomWidgetTemplateTile extends StatelessWidget {
       title: Text(customWidget.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
       subtitle: Text(type?.name ?? "Error"),
-      selected: true,
+      selected: selected,
+      leading: selectedMode
+          ? Checkbox(value: selected, onChanged: (_) => toggleSelect())
+          : null,
+      onLongPress: toggleSelect,
       onTap: () {
+        if (selectedMode) {
+          toggleSelect();
+          return;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
