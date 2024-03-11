@@ -3,18 +3,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
-import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
+import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../customwidgets/custom_widget.dart';
@@ -33,7 +30,6 @@ class ScreenEditPage extends StatefulWidget {
 }
 
 class _ScreenEditPageState extends State<ScreenEditPage> {
-  TextEditingController nameController = TextEditingController();
   IconWrapper? currentIconWrapper;
   bool? enabled;
 
@@ -43,7 +39,6 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   void initState() {
     enabled = widget.screen.enabled;
     screen = widget.screen.clone();
-    nameController.text = screen.name;
     currentIconWrapper = screen.iconWrapper;
     super.initState();
   }
@@ -52,148 +47,161 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Edit Screen"),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  if (!_isSaved()) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => _SaveDialog(
-                              onSave: () => {
-                                _save(),
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst)
-                              },
-                              cancel: () => Navigator.popUntil(
-                                  context, (route) => route.isFirst),
-                            ));
-                    return;
-                  }
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                },
-                icon: const Icon(Icons.home)),
-          ],
-        ),
-        floatingActionButton: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 31),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: FloatingActionButton(
-                  onPressed: addTemplate,
-                  child: const Icon(Icons.add),
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 90),
-              alignment: Alignment.bottomLeft,
-              child: FloatingActionButton(
-                heroTag: "d",
-                onPressed: addGroup,
-                child: const Icon(Icons.group_add),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 149),
-              alignment: Alignment.bottomLeft,
-              child: FloatingActionButton(
-                heroTag: "dasd",
-                onPressed: addLine,
-                child: const Icon(Icons.splitscreen),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                heroTag: "tag",
-                onPressed: () => {_save(), Navigator.pop(context)},
-                child: const Icon(Icons.save),
-              ),
-            ),
-          ],
-        ),
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
-                child: TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: "Name",
-                  ),
-                  keyboardType: TextInputType.text,
-                ),
-              ),
-              Container(
-                  margin: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, top: 10, bottom: 5),
-                  child: IconPickerTemplate(
-                    onChange: (IconWrapper? iconWrapper) {
-                      currentIconWrapper = iconWrapper;
-                    },
-                    selected: currentIconWrapper ??
-                        const IconWrapper(
-                            iconDataType: IconDataType.flutterIcons,
-                            iconData: Icons.home),
-                  )),
-              CheckboxListTile(
-                onChanged: (value) {
-                  setState(() {
-                    enabled = value ?? true;
-                  });
-                },
-                value: enabled ?? true,
-                title: Text(AppLocalizations.of(context)!.enabled),
-                secondary: enabled == true || enabled == null
-                    ? const Icon(Icons.visibility)
-                    : const Icon(Icons.visibility_off),
-              ),
-              Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: BlocProvider(
-                  create: (_) =>
-                      ScreenListCubit(screenManager: widget.screenManager),
-                  child: ScreenWidgetTemplateListPage(
-                      screen: screen, screenManager: widget.screenManager),
-                ),
-              )),
-            ],
-          ),
-        ),
-      ),
-      onWillPop: () async {
-        if (!_isSaved()) {
-          showDialog(
-              context: context,
-              builder: (_) => _SaveDialog(
-                    onSave: () => {_save(), Navigator.pop(context)},
-                    cancel: () => Navigator.pop(context),
-                  ));
-          return false;
-        }
-        return true;
-      },
+    return TemplateAdder(
+      title: getAppLocalizations(context).screen_edit_page_title,
+      name: screen.name,
+      toggle: toggleWidget(context),
+      isSaved: _isSaved,
+      addGroup: _addGroup,
+      addLine: _addLine,
+      addTemplates: _addTemplates,
+      save: _save,
+      removeTemplate: _removeTemplate,
+      reorderTemplate: _reorderTemplate,
+      screenManager: widget.screenManager,
+      templates: screen.widgetTemplates,
+      currentIconWrapper: screen.iconWrapper,
+      iconDataChange: _iconChange,
     );
+    // return WillPopScope(
+    //   child: Scaffold(
+    //     appBar: AppBar(
+    //       title: const Text("Edit Screen"),
+    //       actions: [
+    //         IconButton(
+    //             onPressed: () {
+    //               if (!_isSaved()) {
+    //                 showDialog(
+    //                     context: context,
+    //                     builder: (_) => _SaveDialog(
+    //                           onSave: () => {
+    //                             _save(),
+    //                             Navigator.popUntil(
+    //                                 context, (route) => route.isFirst)
+    //                           },
+    //                           cancel: () => Navigator.popUntil(
+    //                               context, (route) => route.isFirst),
+    //                         ));
+    //                 return;
+    //               }
+    //               Navigator.popUntil(context, (route) => route.isFirst);
+    //             },
+    //             icon: const Icon(Icons.home)),
+    //       ],
+    //     ),
+    //     floatingActionButton: Stack(
+    //       children: [
+    //         Padding(
+    //           padding: const EdgeInsets.only(left: 31),
+    //           child: Align(
+    //             alignment: Alignment.bottomLeft,
+    //             child: FloatingActionButton(
+    //               onPressed: addTemplate,
+    //               child: const Icon(Icons.add),
+    //             ),
+    //           ),
+    //         ),
+    //         Container(
+    //           padding: const EdgeInsets.only(left: 90),
+    //           alignment: Alignment.bottomLeft,
+    //           child: FloatingActionButton(
+    //             heroTag: "d",
+    //             onPressed: addGroup,
+    //             child: const Icon(Icons.group_add),
+    //           ),
+    //         ),
+    //         Container(
+    //           padding: const EdgeInsets.only(left: 149),
+    //           alignment: Alignment.bottomLeft,
+    //           child: FloatingActionButton(
+    //             heroTag: "dasd",
+    //             onPressed: addLine,
+    //             child: const Icon(Icons.splitscreen),
+    //           ),
+    //         ),
+    //         Align(
+    //           alignment: Alignment.bottomRight,
+    //           child: FloatingActionButton(
+    //             heroTag: "tag",
+    //             onPressed: () => {_save(), Navigator.pop(context)},
+    //             child: const Icon(Icons.save),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //     body: Center(
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.center,
+    //         children: [
+    //           Container(
+    //             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
+    //             child: TextField(
+    //               controller: nameController,
+    //               decoration: const InputDecoration(
+    //                 labelText: "Name",
+    //               ),
+    //               keyboardType: TextInputType.text,
+    //             ),
+    //           ),
+    //           Container(
+    //               margin: const EdgeInsets.only(
+    //                   left: 20.0, right: 20.0, top: 10, bottom: 5),
+    //               child: IconPickerTemplate(
+    //                 onChange: (IconData? iconData) {
+    //                   currentIconData = iconData;
+    //                 },
+    //                 selected: currentIconData ?? Icons.home,
+    //               )),
+    //           CheckboxListTile(
+    //             onChanged: (value) {
+    //               setState(() {
+    //                 enabled = value ?? true;
+    //               });
+    //             },
+    //             value: enabled ?? true,
+    //             title: Text(AppLocalizations.of(context)!.enabled),
+    //             secondary: enabled == true || enabled == null
+    //                 ? const Icon(Icons.visibility)
+    //                 : const Icon(Icons.visibility_off),
+    //           ),
+    //           Expanded(
+    //               child: Padding(
+    //             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+    //             child: BlocProvider(
+    //               create: (_) =>
+    //                   ScreenListCubit(screenManager: widget.screenManager),
+    //               child: ScreenWidgetTemplateListPage(
+    //                   screen: screen, screenManager: widget.screenManager),
+    //             ),
+    //           )),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    //   onWillPop: () async {
+    //     if (!_isSaved()) {
+    //       showDialog(
+    //           context: context,
+    //           builder: (_) => _SaveDialog(
+    //                 onSave: () => {_save(), Navigator.pop(context)},
+    //                 cancel: () => Navigator.pop(context),
+    //               ));
+    //       return false;
+    //     }
+    //     return true;
+    //   },
+    // );
   }
 
   bool _isSaved() {
     return jsonEncode(screen.toJson()) == jsonEncode(widget.screen.toJson());
   }
 
-  void _save() {
+  void _save(String name) {
     widget.screen.widgetTemplates = screen.widgetTemplates;
     widget.screenManager.editScreen(
         screen: widget.screen,
-        name: nameController.text,
+        name: name,
         iconWrapper: currentIconWrapper ??
             const IconWrapper(
                 iconDataType: IconDataType.flutterIcons, iconData: Icons.home),
@@ -201,40 +209,50 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
         enabled: enabled ?? true);
   }
 
-  void addTemplate() {
-    //widget.screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: "id", name: "name", customWidget: CustomTextWidget(name: "", text: CustomTextAttribute(data: ""))));
-    showDialog(
-        context: context,
-        builder: (context) => _AddTemplateAlertDialog(
-              screen: screen,
-              screenManager: widget.screenManager,
-            ));
+  void _addTemplates(List<CustomWidgetTemplate> templates) {
+    screen.addWidgetTemplates(widget.screenManager, templates);
   }
 
-  void addGroup() {
-    showDialog(
-        context: context,
-        builder: (context) => AddGroupAlertDialog(
-              screen: screen,
-              screenManager: widget.screenManager,
-            ));
+  void _addGroup(CustomGroupWidget customGroupWidget) {
+    screen.addGroup(customGroupWidget, widget.screenManager);
   }
 
-  void addLine() {
-    showDialog(
-        context: context,
-        builder: (context) => _AddDivisionLineTemplate(
-              onAdd: (CustomDivisionLineWidget c) {
-                setState(() {
-                  screen.addWidgetTemplate(
-                      widget.screenManager,
-                      CustomWidgetTemplate(
-                          id: Manager.instance.getRandString(12),
-                          name: "Line",
-                          customWidget: c));
-                });
-              },
-            ));
+  void _addLine(CustomWidgetTemplate customWidgetTemplate) {
+    screen.addWidgetTemplate(widget.screenManager, customWidgetTemplate);
+  }
+
+  void _reorderTemplate(int oldIndex, int newIndex) {
+    screen.reorderWidgetTemplates(
+        oldIndex: oldIndex,
+        newIndex: newIndex,
+        screenManager: widget.screenManager);
+  }
+
+  void _removeTemplate(int index) {
+    screen.removeWidgetTemplateAtIndex(widget.screenManager, index);
+  }
+
+  void _iconChange(IconWrapper? iconWrapper) {
+    currentIconWrapper = iconWrapper;
+  }
+
+  Widget toggleWidget(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return CheckboxListTile(
+          onChanged: (value) {
+            setState(() {
+              screen.enabled = value ?? true;
+            });
+          },
+          value: screen.enabled,
+          title: Text(getAppLocalizations(context).enabled),
+          secondary: screen.enabled == true
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        );
+      },
+    );
   }
 }
 
@@ -270,9 +288,13 @@ class _SaveDialog extends StatelessWidget {
 class _AddTemplateAlertDialog extends StatefulWidget {
   final Screen screen;
   final ScreenManager screenManager;
+  final Function(List<CustomWidgetTemplate>) onAdd;
 
   const _AddTemplateAlertDialog(
-      {Key? key, required this.screen, required this.screenManager})
+      {Key? key,
+      required this.screen,
+      required this.screenManager,
+      required this.onAdd})
       : super(key: key);
 
   @override
@@ -291,7 +313,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
         (element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
       title: Text(
-          AppLocalizations.of(context)!.select_widget_template_alert_title),
+          getAppLocalizations(context)!.select_widget_template_alert_title),
       actions: [
         TextButton(
             onPressed: cancel,
@@ -338,7 +360,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
   }
 
   void add() {
-    widget.screen.addWidgetTemplates(widget.screenManager, selected);
+    widget.onAdd(selected);
     Navigator.pop(context);
   }
 
@@ -348,12 +370,9 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
 }
 
 class AddGroupAlertDialog extends StatefulWidget {
-  final Screen screen;
-  final ScreenManager screenManager;
+  final Function(CustomGroupWidget) onAdd;
 
-  const AddGroupAlertDialog(
-      {Key? key, required this.screen, required this.screenManager})
-      : super(key: key);
+  const AddGroupAlertDialog({Key? key, required this.onAdd}) : super(key: key);
 
   @override
   State<AddGroupAlertDialog> createState() => _AddGroupAlertDialogState();
@@ -381,8 +400,7 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
   }
 
   void add() {
-    widget.screen.addGroup(
-        CustomGroupWidget(name: _nameController.text), widget.screenManager);
+    widget.onAdd(CustomGroupWidget(name: _nameController.text));
     Navigator.pop(context);
   }
 
