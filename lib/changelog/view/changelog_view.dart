@@ -58,7 +58,7 @@ class ChangeLogScreen extends StatelessWidget {
           ),*/
 
           const Text(
-            "Other",
+            "Widget settings",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Container(
@@ -66,30 +66,16 @@ class ChangeLogScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("- Connection to IoBroker:"),
+                const Text("- You can copy templates:"),
                 Container(
                   margin: const EdgeInsets.only(left: 15),
                   child: const Text(
-                      "-You can now choose between wss or AES encryption"),
+                      "- Press longer on a widget and 2 action buttons will appear in the top right corner"),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "-For this feature you need the new Adapater version (0.0.60-1)",
-                    style: TextStyle(color: Colors.yellow),
-                  ),
+                  child: const Text("- Fixed some bugs"),
                 ),
-                Container(
-                    margin: const EdgeInsets.only(left: 15),
-                    child: RichText(
-                      text: const TextSpan(children: [
-                        TextSpan(text: "- For better explaination look at "),
-                        TextSpan(
-                          text: "https://github.com/moba15/ioBroker.hiob",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ]),
-                    )),
               ],
             ),
           ),
