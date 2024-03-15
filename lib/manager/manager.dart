@@ -142,10 +142,10 @@ class Manager {
       connectionManager.connectIoB();
     }
     if (loadingState >= maxLoadingState - 1) {
-      status = ManagerStatus.finished;
       BackgroundRunner(
               generalManager: generalManager, ioBrokerManager: ioBrokerManager)
           .init();
+      status = ManagerStatus.finished;
       managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();
       subscription2?.cancel();

@@ -68,7 +68,7 @@ class ConnectionManager with WidgetsBindingObserver {
     });
   }
 
-  Future<Uri> _getUrl() async {
+  Future<Uri> getUrl() async {
     if (ioBrokerManager.useSecondaryAddress &&
         (await networkInfo.getWifiName()).toString().trim() !=
             ("\"${ioBrokerManager.knownNetwork.trim()}\"")) {
@@ -79,7 +79,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   Future<void> connectIoB() async {
-    Uri url = await _getUrl();
+    Uri url = await getUrl();
     try {
       _webSocket = IOWebSocketChannel.connect(url,
           pingInterval: const Duration(minutes: 5));
@@ -122,7 +122,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
-    Uri url = await _getUrl();
+    Uri url = await getUrl();
     connectionStatusStreamController.add(ConnectionStatus.tryAgain);
     if (_webSocketStreamSub != null) {
       _webSocketStreamSub!.cancel();
