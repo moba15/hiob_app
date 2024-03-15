@@ -82,6 +82,7 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
                 direction: DismissDirection.endToStart,
                 key: ValueKey(template),
                 child: CustomWidgetTemplateTile(
+                  toggleSelect: () => {},
                   customWidget: template,
                   customWidgetManager: Manager.instance.customWidgetManager,
                   onSave: (_) {

@@ -20,6 +20,7 @@ class MainViewCubit extends Cubit<MainViewState> {
         screens: screens,
         connectionStatus: Manager.instance.connectionManager.connectionStatus));
     _listenToConnectionChanges();
+    _listenToScreenChanges();
   }
 
   void _listenToConnectionChanges() {
@@ -27,6 +28,22 @@ class MainViewCubit extends Cubit<MainViewState> {
         .listen((event) {
       emit(
           MainViewStateLoaded(screens: state.screens, connectionStatus: event));
+    });
+  }
+
+  void _listenToScreenChanges() {
+    Manager.instance.screenManager.screenStreamController.stream
+        .listen((event) {
+      emit(MainViewStateLoaded(
+          screens: event, connectionStatus: state.connectionStatus));
+    });
+  }
+
+  void listenToTemplateChanges() {
+    Manager.instance.customWidgetManager.templatesStreamController.stream
+        .listen((event) {
+      emit(MainViewStateLoaded(
+          screens: state.screens, connectionStatus: state.connectionStatus));
     });
   }
 }

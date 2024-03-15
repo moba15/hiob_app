@@ -23,7 +23,7 @@ void main() async {
   //Initialize Logging
 
   // ignore: unused_local_variable
-  String version = "1.3";
+  String version = "1.31";
   Manager manager = Manager();
   await manager.load();
   //TODO:
