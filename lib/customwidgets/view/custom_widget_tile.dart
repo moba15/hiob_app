@@ -11,7 +11,8 @@ class CustomWidgetTemplateTile extends StatelessWidget {
   final Function(CustomWidgetTemplate)? onSave;
   final bool selectedMode;
   final bool selected;
-  final Function() toggleSelect;
+  //Set null if no selection should be supported
+  final Function()? toggleSelect;
   const CustomWidgetTemplateTile(
       {Key? key,
       required this.customWidget,
@@ -31,12 +32,20 @@ class CustomWidgetTemplateTile extends StatelessWidget {
       subtitle: Text(type?.name ?? "Error"),
       selected: selected,
       leading: selectedMode
-          ? Checkbox(value: selected, onChanged: (_) => toggleSelect())
+          ? Checkbox(
+              value: selected,
+              onChanged: (_) {
+                if (toggleSelect != null) {
+                  toggleSelect!();
+                }
+              })
           : null,
       onLongPress: toggleSelect,
       onTap: () {
         if (selectedMode) {
-          toggleSelect();
+          if (toggleSelect != null) {
+            toggleSelect!();
+          }
           return;
         }
         Navigator.push(
