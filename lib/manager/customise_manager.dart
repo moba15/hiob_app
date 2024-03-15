@@ -175,4 +175,26 @@ class CustomWidgetManager {
       manager.screenManager.templateRemoved(template);
     }
   }
+
+  void removeTemplates(List<CustomWidgetTemplate> templatesToRemove) {
+    templates.removeWhere((element) => templatesToRemove.contains(element));
+    for (CustomWidgetTemplate c in templatesToRemove) {
+      manager.screenManager.templateRemoved(c);
+    }
+    fileManager.writeJSONList(templateKey, templates);
+  }
+
+  void copyTemplates(List<CustomWidgetTemplate> templatesToCopy) {
+    List<CustomWidgetTemplate> renamedTemplates = templatesToCopy
+        .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
+            id: Manager.instance!.getRandString(12),
+            name: "${e.name}_copy",
+            customWidget: e.customWidget.clone()
+              ..name = ("${e.customWidget.name!}_copy")))
+        .toList();
+    templates.addAll(renamedTemplates);
+    sort();
+
+    fileManager.writeJSONList(templateKey, templates);
+  }
 }
