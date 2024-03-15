@@ -76,6 +76,7 @@ class ChangeLogScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 15),
                   child: const Text("- Fixed some bugs"),
                 ),
+                const Text("- You can now edit selection rules:"),
               ],
             ),
           ),
