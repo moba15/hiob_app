@@ -20,19 +20,20 @@ class MultiSelectionTriggerActionSettings extends TriggerActionSetting {
     return Column(
       children: [
         Showcase(
-          key: datapointKey,
-          title: "Datapoint",
-          description: "The Datapoint which will be controlled by the Widget",
-          child: DeviceSelection(
-            customWidgetManager: Manager.instance.customWidgetManager,
-            onDataPointSelected: (d) =>
-                {multiSelectionTriggerAction.dataPoint = d},
-            onDeviceSelected: (d) =>
-                {multiSelectionTriggerAction.dataPoint == null},
-            selectedDataPoint: multiSelectionTriggerAction.dataPoint,
-            selectedDevice: multiSelectionTriggerAction.dataPoint?.device,
-          ),
-        ),
+            key: datapointKey,
+            title: "Datapoint",
+            description: "The Datapoint which will be controlled by the Widget",
+            child: InputFieldContainer.inputContainer(
+              child: DeviceSelection(
+                customWidgetManager: Manager.instance.customWidgetManager,
+                onDataPointSelected: (d) =>
+                    {multiSelectionTriggerAction.dataPoint = d},
+                onDeviceSelected: (d) =>
+                    {multiSelectionTriggerAction.dataPoint == null},
+                selectedDataPoint: multiSelectionTriggerAction.dataPoint,
+                selectedDevice: multiSelectionTriggerAction.dataPoint?.device,
+              ),
+            )),
         Showcase(
           key: selectionsKey,
           title: "Selection",

@@ -198,7 +198,7 @@ class _RuleAddEditAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Add New Rule"),
+      title: const Text("Rule"),
       actions: [
         TextButton(
             onPressed: () => {
