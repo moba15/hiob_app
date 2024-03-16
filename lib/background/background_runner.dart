@@ -13,11 +13,13 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../dataPackages/data_package.dart';
 
 class BackgroundRunner {
+  static int i = 0;
+  static WebSocketChannel? webSocketChannel;
+
   GeneralManager generalManager;
   IoBrokerManager ioBrokerManager;
   late FlutterBackgroundService service;
-  static int i = 0;
-  static WebSocketChannel? webSocketChannel;
+  bool isServiceRunning = false;
 
   BackgroundRunner(
       {required this.generalManager, required this.ioBrokerManager});
@@ -41,12 +43,22 @@ class BackgroundRunner {
     if (Platform.isAndroid) {
       service.configure(iosConfiguration: ios, androidConfiguration: android);
     }
-    service.startService();
     log("init");
-    startService();
+  }
+
+  stopService() {
+    isServiceRunning = false;
+    log("Stop Background service");
+    service.invoke("stop");
   }
 
   startService() async {
+    if (isServiceRunning) {
+      return;
+    }
+    log("Start Background service");
+    service.startService();
+    isServiceRunning = true;
     final Uri url = await Manager.instance.connectionManager.getUrl();
     NotificationManager.showConnectionNotification(
         "Starting Background service");
@@ -65,6 +77,12 @@ class BackgroundRunner {
                       version: Manager.instance.versionNumber)
                   .content
             }));
+  }
+
+  static void onStop(ServiceInstance s) {
+    s.on("stop").listen((event) {
+      s.stopSelf();
+    });
   }
 
   @pragma('vm:entry-point')
@@ -94,6 +112,7 @@ class BackgroundRunner {
   }
 
   static void onData(event, Map<String, dynamic> requestLoginPackage) {
+    log("onData");
     Map<String, dynamic> rawMap = jsonDecode(event);
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
@@ -114,7 +133,7 @@ class BackgroundRunner {
       NotificationManager.showConnectionNotification(
           "Failed to login please open the app");
     } else if (packageType == DataPackageType.notification) {
-      NotificationManager.showIoBNotification(event);
+      NotificationManager.showIoBNotification(jsonDecode(event)["content"]);
     }
   }
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -69,17 +71,35 @@ class NotificationManager {
       actionType: ActionType.KeepOnTop,
       title: 'HioB Connection Status!',
       body: contentraw,
+      locked: true,
     ));
   }
 
   static void showIoBNotification(String contentraw) {
+    try {
+      Map<String, dynamic> content = jsonDecode(contentraw);
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+        id: ioBrokerNotificationId,
+        channelKey: ioBrokerNotificationChannelKey,
+        actionType: ActionType.Default,
+        title: content["title"],
+        body: content["body"],
+        color: Colors.red,
+      ));
+    } on FormatException catch (e) {
+      _showIoBNotificationSimple(contentraw);
+    }
+  }
+
+  static void _showIoBNotificationSimple(String body) {
     AwesomeNotifications().createNotification(
         content: NotificationContent(
       id: ioBrokerNotificationId,
       channelKey: ioBrokerNotificationChannelKey,
       actionType: ActionType.Default,
       title: 'Notification',
-      body: contentraw,
+      body: body,
       color: Colors.red,
     ));
   }

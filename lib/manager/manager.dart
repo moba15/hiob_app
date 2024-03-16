@@ -56,6 +56,8 @@ class Manager {
 
   late ThemeManager themeManager;
 
+  late BackgroundRunner backgroundRunner;
+
   ManagerStatus status = ManagerStatus.loading;
 
   String versionNumber;
@@ -142,9 +144,9 @@ class Manager {
       connectionManager.connectIoB();
     }
     if (loadingState >= maxLoadingState - 1) {
-      BackgroundRunner(
-              generalManager: generalManager, ioBrokerManager: ioBrokerManager)
-          .init();
+      backgroundRunner = BackgroundRunner(
+          generalManager: generalManager, ioBrokerManager: ioBrokerManager)
+        ..init();
       status = ManagerStatus.finished;
       managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();

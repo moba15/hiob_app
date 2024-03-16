@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -98,20 +99,25 @@ class ConnectionManager with WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.detached:
         break;
+        print("detached");
       case AppLifecycleState.inactive:
         break;
+        print("inactive");
       case AppLifecycleState.paused:
         close();
+        print("paused");
+        Manager.instance.backgroundRunner.startService();
         break;
       case AppLifecycleState.resumed:
         if (!ioBConnected) {
           tries = 0;
-
           reconnect();
         }
+        Manager.instance.backgroundRunner.stopService();
         break;
       case AppLifecycleState.hidden:
         // TODO: Handle this case.
+        print("hidden");
         break;
     }
   }
