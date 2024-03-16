@@ -64,6 +64,8 @@ class _SelectionSettings extends StatefulWidget {
 class _SelectionSettingsState extends State<_SelectionSettings> {
   @override
   Widget build(BuildContext context) {
+    final keys = widget.multiSelectionTriggerAction.selections.keys.toList();
+    keys.sort();
     return ExpansionTile(
       childrenPadding: const EdgeInsets.only(left: 10),
       title: Row(
@@ -102,9 +104,7 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              String selectionKey = widget
-                  .multiSelectionTriggerAction.selections.keys
-                  .elementAt(index);
+              String selectionKey = keys.elementAt(index);
               return Dismissible(
                 onDismissed: (d) {
                   setState(() {
@@ -132,6 +132,23 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
                 direction: DismissDirection.endToStart,
                 child: ListTile(
                   title: Text("View: $selectionKey"),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (c) => _SelectionAddAlertDialog(
+                              onAdd: (key, value) {
+                                setState(() {
+                                  widget.multiSelectionTriggerAction.selections
+                                      .remove(selectionKey);
+                                  widget.multiSelectionTriggerAction
+                                      .selections[key] = value;
+                                });
+                              },
+                              newValue: widget.multiSelectionTriggerAction
+                                  .selections[selectionKey]!,
+                              oldValue: selectionKey,
+                            ));
+                  },
                   subtitle: Text(
                       "Value: ${widget.multiSelectionTriggerAction.selections[selectionKey]}"),
                 ),
@@ -154,20 +171,26 @@ class _SelectionAddAlertDialog extends StatelessWidget {
   final Function(String, String) onAdd;
   final TextEditingController keyController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
+  final String oldValue, newValue;
 
-  _SelectionAddAlertDialog({Key? key, required this.onAdd}) : super(key: key);
+  _SelectionAddAlertDialog(
+      {Key? key, required this.onAdd, this.oldValue = "", this.newValue = ""})
+      : super(key: key) {
+    keyController.text = oldValue;
+    valueController.text = newValue;
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Add new Selection"),
+      title: const Text("Selection"),
       actions: [
         TextButton(
             onPressed: () => {
                   onAdd(keyController.text, valueController.text),
                   Navigator.pop(context)
                 },
-            child: const Text("Add")),
+            child: const Text("Save")),
         TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"))
