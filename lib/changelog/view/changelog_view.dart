@@ -56,27 +56,17 @@ class ChangeLogScreen extends StatelessWidget {
               ],
             ),
           ),*/
-
+          const Text("Fixed scneen settings bug"),
           const Text(
             "Widget settings",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Container(
             margin: const EdgeInsets.only(top: 3, left: 10),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("- You can copy templates:"),
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                      "- Press longer on a widget and 2 action buttons will appear in the top right corner"),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child: const Text("- Fixed some bugs"),
-                ),
-                const Text("- You can now edit selection rules:"),
+                Text("- You can now edit selection rules:"),
               ],
             ),
           ),
