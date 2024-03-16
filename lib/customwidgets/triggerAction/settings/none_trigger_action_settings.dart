@@ -93,6 +93,8 @@ class _RulesSettings extends StatefulWidget {
 class _RulesSettingsState extends State<_RulesSettings> {
   @override
   Widget build(BuildContext context) {
+    final keys = widget.noneTriggerAction.displayRules?.keys.toList();
+    keys?.sort();
     return ExpansionTile(
       childrenPadding: const EdgeInsets.only(left: 10),
       title: Row(
@@ -107,7 +109,7 @@ class _RulesSettingsState extends State<_RulesSettings> {
               onPressed: () {
                 showDialog(
                     context: context,
-                    builder: (context) => _RuleAddAlertDialog(
+                    builder: (context) => _RuleAddEditAlertDialog(
                           onAdd: (key, value) {
                             if (widget.noneTriggerAction.displayRules
                                     ?.containsKey(key) ??
@@ -128,8 +130,7 @@ class _RulesSettingsState extends State<_RulesSettings> {
         ],
       ),
       children: [
-        for (String keyRule
-            in widget.noneTriggerAction.displayRules?.keys ?? [])
+        for (String keyRule in keys ?? [])
           Dismissible(
             onDismissed: (d) {
               setState(() {
@@ -155,6 +156,23 @@ class _RulesSettingsState extends State<_RulesSettings> {
             ),
             direction: DismissDirection.endToStart,
             child: ListTile(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (c) => _RuleAddEditAlertDialog(
+                          onAdd: (key, value) {
+                            setState(() {
+                              widget.noneTriggerAction.displayRules
+                                  ?.remove(keyRule);
+                              widget.noneTriggerAction.displayRules?[key] =
+                                  value;
+                            });
+                          },
+                          newValue:
+                              widget.noneTriggerAction.displayRules![keyRule]!,
+                          oldValue: keyRule,
+                        ));
+              },
               title: Text(widget.noneTriggerAction.displayRules![keyRule] ??
                   "Not Found"),
               subtitle: Text(keyRule),
@@ -165,20 +183,29 @@ class _RulesSettingsState extends State<_RulesSettings> {
   }
 }
 
-class _RuleAddAlertDialog extends StatelessWidget {
+class _RuleAddEditAlertDialog extends StatelessWidget {
   final Function(String, String) onAdd;
   final TextEditingController keyController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
-  _RuleAddAlertDialog({Key? key, required this.onAdd}) : super(key: key);
-
+  final String oldValue;
+  final String newValue;
+  _RuleAddEditAlertDialog(
+      {Key? key, required this.onAdd, this.oldValue = "", this.newValue = ""})
+      : super(key: key) {
+    keyController.text = oldValue;
+    valueController.text = newValue;
+  }
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text("Add New Rule"),
       actions: [
         TextButton(
-            onPressed: () => {onAdd(keyController.text, valueController.text)},
-            child: const Text("Add")),
+            onPressed: () => {
+                  onAdd(keyController.text, valueController.text),
+                  Navigator.pop(context)
+                },
+            child: const Text("Save")),
         TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"))
