@@ -134,7 +134,7 @@ class MainSettingsScreen extends StatelessWidget {
               showLicensePage(
                   context: context,
                   applicationName: "HIoB",
-                  applicationVersion: "0.4",
+                  applicationVersion: Manager.instance.versionNumber,
                   applicationLegalese: "LICENCE MIT",
                   applicationIcon: const Icon(Icons.smartphone_sharp))
             },

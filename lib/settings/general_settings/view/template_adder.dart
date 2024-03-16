@@ -441,7 +441,7 @@ class WidgetTemplateListPage extends StatelessWidget {
                 onDismissed: (d) => removeTemplate(index),
                 key: ValueKey(widgetTemplates[index]),
                 child: CustomWidgetTemplateTile(
-                  toggleSelect: () => {},
+                  toggleSelect: null,
                   customWidget: widgetTemplates[index],
                   customWidgetManager:
                       screenManager.manager.customWidgetManager,
