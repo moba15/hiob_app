@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/manager/notification/custom_notification.dart';
 
 class NotificationManager {
   static const String ioBrokerConnectionNotificationChannelKey =
@@ -21,6 +23,41 @@ class NotificationManager {
       "IoBroker Notification Group";
   static const String ioBrokerNotificationChannelName = "IoBroker Notification";
   static int ioBrokerNotificationId = 1;
+
+  bool backgroundNotificationsEnabled = false;
+  final FileManager fileManager;
+  final String notificationSettingsKey = "notificationsettings";
+  NotificationManager({required this.fileManager}) {
+    readSettings();
+  }
+
+  void readSettings() async {
+    Map<String, dynamic>? loadedSettings =
+        await fileManager.getMap(notificationSettingsKey);
+    if (loadedSettings == null) {
+      _loadDefaultSettings();
+    } else {
+      backgroundNotificationsEnabled =
+          loadedSettings["backgroundNotificationsEnabled"];
+    }
+  }
+
+  void _loadDefaultSettings() {
+    _save();
+  }
+
+  void _save() {
+    Map<String, dynamic> settings = {
+      "backgroundNotificationsEnabled": backgroundNotificationsEnabled
+    };
+    fileManager.writeJSON(notificationSettingsKey, settings);
+  }
+
+  void changeBackgroundNotificationsEnabled(
+      bool backgroundNotificationsEnabled) {
+    this.backgroundNotificationsEnabled = backgroundNotificationsEnabled;
+    _save();
+  }
 
   static void init() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
@@ -76,20 +113,23 @@ class NotificationManager {
   }
 
   static void showIoBNotification(String contentraw) {
+    ioBrokerNotificationId += 1;
+    ioBrokerNotificationId %= 500;
     try {
       Map<String, dynamic> content = jsonDecode(contentraw);
-      AwesomeNotifications().createNotification(
-          content: NotificationContent(
-        id: ioBrokerNotificationId,
-        channelKey: ioBrokerNotificationChannelKey,
-        actionType: ActionType.Default,
-        title: content["title"],
-        body: content["body"],
-        color: Colors.red,
-      ));
+      _showIoBNotificationMap(content);
     } on FormatException catch (e) {
       _showIoBNotificationSimple(contentraw);
     }
+  }
+
+  static void _showIoBNotificationMap(Map<String, dynamic> content) {
+    AwesomeNotifications().createNotification(
+        content: CustomNotification.fromJSON(content).getNotificationContent(
+      id: ioBrokerNotificationId,
+      channelKey: ioBrokerNotificationChannelKey,
+      groupKey: ioBrokerNotificationChannelGroupKey,
+    ));
   }
 
   static void _showIoBNotificationSimple(String body) {
@@ -101,6 +141,7 @@ class NotificationManager {
       title: 'Notification',
       body: body,
       color: Colors.red,
+      groupKey: ioBrokerNotificationChannelGroupKey,
     ));
   }
 }

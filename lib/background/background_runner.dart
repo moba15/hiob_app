@@ -133,7 +133,9 @@ class BackgroundRunner {
       NotificationManager.showConnectionNotification(
           "Failed to login please open the app");
     } else if (packageType == DataPackageType.notification) {
-      NotificationManager.showIoBNotification(jsonDecode(event)["content"]);
+      //TODO Create class
+      NotificationManager.showIoBNotification(
+          jsonDecode(event)["content"]["content"]);
     }
   }
 
