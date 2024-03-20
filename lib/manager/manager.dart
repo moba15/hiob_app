@@ -12,6 +12,7 @@ import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/history/history_manager.dart';
+import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
@@ -57,6 +58,8 @@ class Manager {
   late ThemeManager themeManager;
 
   late BackgroundRunner backgroundRunner;
+
+  late NotificationManager notificationManager;
 
   ManagerStatus status = ManagerStatus.loading;
 
@@ -144,9 +147,7 @@ class Manager {
       connectionManager.connectIoB();
     }
     if (loadingState >= maxLoadingState - 1) {
-      backgroundRunner = BackgroundRunner(
-          generalManager: generalManager, ioBrokerManager: ioBrokerManager)
-        ..init();
+      _initManagerAfter();
       status = ManagerStatus.finished;
       managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();
@@ -156,5 +157,12 @@ class Manager {
       subscription5?.cancel();
       subscription6?.cancel();
     }
+  }
+
+  void _initManagerAfter() {
+    notificationManager = NotificationManager(fileManager: fileManager);
+    backgroundRunner = BackgroundRunner(
+        generalManager: generalManager, ioBrokerManager: ioBrokerManager)
+      ..init();
   }
 }

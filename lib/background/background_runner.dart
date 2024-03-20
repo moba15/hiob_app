@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -49,7 +51,15 @@ class BackgroundRunner {
   stopService() {
     isServiceRunning = false;
     log("Stop Background service");
+
+    NotificationManager.awesomeNotifications
+        .dismiss(NotificationManager.ioBrokerConnectionNotificationId);
+    NotificationManager.awesomeNotifications.dismissNotificationsByChannelKey(
+        NotificationManager.ioBrokerConnectionNotificationChannelKey);
+    NotificationManager.awesomeNotifications.dismissAllNotifications();
     service.invoke("stop");
+
+    log("Dismiss");
   }
 
   startService() async {
@@ -63,7 +73,7 @@ class BackgroundRunner {
     NotificationManager.showConnectionNotification(
         "Starting Background service");
 
-    Future.delayed(const Duration(seconds: 10))
+    Future.delayed(const Duration(milliseconds: 10))
         .then((value) => service.invoke("start", {
               "url": url.toString(),
               "loginPackage": RequestLoginPackage(
@@ -87,7 +97,7 @@ class BackgroundRunner {
 
   @pragma('vm:entry-point')
   static void onStart(ServiceInstance s) {
-    //DartPluginRegistrant.ensureInitialized();
+    DartPluginRegistrant.ensureInitialized();
 
     s.on("start").listen((event) async {
       log("Connecting");
@@ -96,12 +106,6 @@ class BackgroundRunner {
           pingInterval: const Duration(minutes: 5)); //TODO Generic
       webSocketChannel!.stream.listen((e) => onData(e, event["loginPackage"]),
           onError: (e) => onError(s), onDone: onDone);
-      int i = 0;
-      /* while (true) {
-        NotificationManager.showConnectionNotification("Min: $i");
-        i++;
-        await Future.delayed(const Duration(minutes: 1));
-      } */
     });
   }
 

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
 
-class NotificationManager {
+class NotificationManager with WidgetsBindingObserver {
+  static AwesomeNotifications awesomeNotifications = AwesomeNotifications();
   static const String ioBrokerConnectionNotificationChannelKey =
       "ioBroker_connection_notification";
   static const String ioBrokerConnectionNotificationChannelGroupKey =
@@ -24,39 +26,13 @@ class NotificationManager {
   static const String ioBrokerNotificationChannelName = "IoBroker Notification";
   static int ioBrokerNotificationId = 1;
 
-  bool backgroundNotificationsEnabled = false;
+  static bool backgroundNotificationsEnabled = false;
+
   final FileManager fileManager;
   final String notificationSettingsKey = "notificationsettings";
   NotificationManager({required this.fileManager}) {
     readSettings();
-  }
-
-  void readSettings() async {
-    Map<String, dynamic>? loadedSettings =
-        await fileManager.getMap(notificationSettingsKey);
-    if (loadedSettings == null) {
-      _loadDefaultSettings();
-    } else {
-      backgroundNotificationsEnabled =
-          loadedSettings["backgroundNotificationsEnabled"];
-    }
-  }
-
-  void _loadDefaultSettings() {
-    _save();
-  }
-
-  void _save() {
-    Map<String, dynamic> settings = {
-      "backgroundNotificationsEnabled": backgroundNotificationsEnabled
-    };
-    fileManager.writeJSON(notificationSettingsKey, settings);
-  }
-
-  void changeBackgroundNotificationsEnabled(
-      bool backgroundNotificationsEnabled) {
-    this.backgroundNotificationsEnabled = backgroundNotificationsEnabled;
-    _save();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   static void init() {
@@ -68,7 +44,7 @@ class NotificationManager {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    AwesomeNotifications().initialize(
+    awesomeNotifications.initialize(
         null,
         [
           NotificationChannel(
@@ -101,7 +77,7 @@ class NotificationManager {
   ///Must be all static because of Isolate
 
   static void showConnectionNotification(String contentraw) {
-    AwesomeNotifications().createNotification(
+    awesomeNotifications.createNotification(
         content: NotificationContent(
       id: ioBrokerConnectionNotificationId,
       channelKey: ioBrokerConnectionNotificationChannelKey,
@@ -124,7 +100,7 @@ class NotificationManager {
   }
 
   static void _showIoBNotificationMap(Map<String, dynamic> content) {
-    AwesomeNotifications().createNotification(
+    awesomeNotifications.createNotification(
         content: CustomNotification.fromJSON(content).getNotificationContent(
       id: ioBrokerNotificationId,
       channelKey: ioBrokerNotificationChannelKey,
@@ -133,7 +109,7 @@ class NotificationManager {
   }
 
   static void _showIoBNotificationSimple(String body) {
-    AwesomeNotifications().createNotification(
+    awesomeNotifications.createNotification(
         content: NotificationContent(
       id: ioBrokerNotificationId,
       channelKey: ioBrokerNotificationChannelKey,
@@ -143,5 +119,58 @@ class NotificationManager {
       color: Colors.red,
       groupKey: ioBrokerNotificationChannelGroupKey,
     ));
+  }
+
+  void readSettings() async {
+    Map<String, dynamic>? loadedSettings =
+        await fileManager.getMap(notificationSettingsKey);
+    if (loadedSettings == null) {
+      _loadDefaultSettings();
+    } else {
+      backgroundNotificationsEnabled =
+          loadedSettings["backgroundNotificationsEnabled"];
+    }
+  }
+
+  void _loadDefaultSettings() {
+    _save();
+  }
+
+  void _save() {
+    Map<String, dynamic> settings = {
+      "backgroundNotificationsEnabled": backgroundNotificationsEnabled
+    };
+    fileManager.writeJSON(notificationSettingsKey, settings);
+  }
+
+  void changeBackgroundNotificationsEnabled(
+      bool backgroundNotificationsEnabled) {
+    NotificationManager.backgroundNotificationsEnabled =
+        backgroundNotificationsEnabled;
+    _save();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.detached:
+        print("detached");
+        break;
+      case AppLifecycleState.inactive:
+        print("inactive");
+        break;
+      case AppLifecycleState.paused:
+        print("paused");
+        if (backgroundNotificationsEnabled) {
+          Manager.instance.backgroundRunner.startService();
+        }
+        break;
+      case AppLifecycleState.resumed:
+        Manager.instance.backgroundRunner.stopService();
+        break;
+      case AppLifecycleState.hidden:
+        print("hidden");
+        break;
+    }
   }
 }
