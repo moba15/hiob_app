@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -27,14 +26,17 @@ class BackgroundRunner {
       {required this.generalManager, required this.ioBrokerManager});
   init() {
     NotificationManager.init();
-
+    if (!Platform.isAndroid) {
+      log("Platfrom is not Android -> disabled Background runner", level: 1);
+      return;
+    }
     service = FlutterBackgroundService();
     final ios = IosConfiguration();
     final android = AndroidConfiguration(
       onStart: onStart,
       autoStart: false,
       autoStartOnBoot: true,
-      isForegroundMode: true,
+      isForegroundMode: false,
       foregroundServiceNotificationId:
           NotificationManager.ioBrokerConnectionNotificationId,
       notificationChannelId:
@@ -49,6 +51,9 @@ class BackgroundRunner {
   }
 
   stopService() {
+    if (!Platform.isAndroid) {
+      return;
+    }
     isServiceRunning = false;
     log("Stop Background service");
 
@@ -63,6 +68,9 @@ class BackgroundRunner {
   }
 
   startService() async {
+    if (!Platform.isAndroid) {
+      return;
+    }
     if (isServiceRunning) {
       return;
     }
