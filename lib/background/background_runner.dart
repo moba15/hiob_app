@@ -61,7 +61,6 @@ class BackgroundRunner {
         .dismiss(NotificationManager.ioBrokerConnectionNotificationId);
     NotificationManager.awesomeNotifications.dismissNotificationsByChannelKey(
         NotificationManager.ioBrokerConnectionNotificationChannelKey);
-    NotificationManager.awesomeNotifications.dismissAllNotifications();
     service.invoke("stop");
 
     log("Dismiss");
@@ -98,9 +97,9 @@ class BackgroundRunner {
   }
 
   static void onStop(ServiceInstance s) {
-    s.on("stop").listen((event) {
-      s.stopSelf();
-    });
+    log((webSocketChannel != null).toString());
+    webSocketChannel?.sink.close();
+    s.stopSelf();
   }
 
   @pragma('vm:entry-point')
@@ -115,6 +114,10 @@ class BackgroundRunner {
       webSocketChannel!.stream.listen((e) => onData(e, event["loginPackage"]),
           onError: (e) => onError(s), onDone: onDone);
     });
+
+    s.on("stop").listen((event) {
+      onStop(s);
+    });
   }
 
   static void onError(ServiceInstance s) async {
@@ -124,7 +127,7 @@ class BackgroundRunner {
   }
 
   static void onData(event, Map<String, dynamic> requestLoginPackage) {
-    log("onData");
+    log("onData2");
     Map<String, dynamic> rawMap = jsonDecode(event);
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);

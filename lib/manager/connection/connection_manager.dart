@@ -11,6 +11,7 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/utils/cryptojs_aes_encryption_helper.dart';
 import 'package:web_socket_channel/io.dart';
@@ -277,7 +278,7 @@ class ConnectionManager with WidgetsBindingObserver {
         _onAnswerSubscribeToDataPoints(rawMap["value"]);
         break;
       case DataPackageType.notification:
-        print("under construction!");
+        NotificationManager.showIoBNotification(rawMap["content"]);
         break;
       default:
         throw UnimplementedError("Error");
