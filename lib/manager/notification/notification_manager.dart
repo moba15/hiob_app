@@ -45,7 +45,7 @@ class NotificationManager with WidgetsBindingObserver {
       }
     });
     awesomeNotifications.initialize(
-        null,
+        'resource://drawable/ic_launcher',
         [
           NotificationChannel(
             channelKey: ioBrokerConnectionNotificationChannelKey,
