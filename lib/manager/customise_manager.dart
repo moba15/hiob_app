@@ -189,8 +189,7 @@ class CustomWidgetManager {
         .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
             id: Manager.instance!.getRandString(12),
             name: "${e.name}_copy",
-            customWidget: e.customWidget.clone()
-              ..name = ("${e.customWidget.name!}_copy")))
+            customWidget: e.customWidget.clone()..name = ("${e.name}_copy")))
         .toList();
     templates.addAll(renamedTemplates);
     sort();

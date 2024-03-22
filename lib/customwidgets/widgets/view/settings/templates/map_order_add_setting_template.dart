@@ -44,6 +44,7 @@ class _MapOrderSettingTemplateState<V>
 
   @override
   Widget build(BuildContext context) {
+    final keys = data.keys.toList()..sort();
     return ExpansionTile(
       title: Row(
         mainAxisSize: MainAxisSize.min,
@@ -56,8 +57,8 @@ class _MapOrderSettingTemplateState<V>
                     context: context,
                     builder: (context) => _AddAlertDialog(
                           title: widget.alertTitle,
-                          valueText: widget.alertValueText,
-                          keyText: widget.alertKeyText,
+                          valueLabelText: widget.alertValueText,
+                          keyLabelText: widget.alertKeyText,
                           onAdd: (key, value) {
                             setState(() {
                               data[key] = widget.fromStr(value);
@@ -74,7 +75,7 @@ class _MapOrderSettingTemplateState<V>
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (c, i) {
-            String key = data.keys.elementAt(i);
+            String key = keys.elementAt(i);
             return Dismissible(
               key: ValueKey(key),
               onDismissed: (d) {
@@ -101,6 +102,25 @@ class _MapOrderSettingTemplateState<V>
               ),
               direction: DismissDirection.endToStart,
               child: ListTile(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => _AddAlertDialog(
+                      title: const Text("Edit"),
+                      onAdd: (p0, p1) {
+                        setState(() {
+                          data.remove(key);
+                          data[p0] = widget.fromStr(p1);
+                        });
+                        widget.onChange(data);
+                      },
+                      valueLabelText: widget.alertValueText,
+                      keyLabelText: widget.alertKeyText,
+                      keyValue: key,
+                      valueValue: widget.toStr(data[key]),
+                    ),
+                  );
+                },
                 title: Text(widget.valueTileText + widget.toStr(data[key])),
                 subtitle: Text(widget.keyTileText + key),
               ),
@@ -160,8 +180,10 @@ class _MapOrderSettingTemplateState<V>
 
 class _AddAlertDialog extends StatelessWidget {
   final Widget title;
-  final String keyText;
-  final String valueText;
+  final String keyLabelText;
+  final String valueLabelText;
+  final String keyValue;
+  final String valueValue;
   final void Function(String, String) onAdd;
   final TextEditingController keyController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
@@ -170,9 +192,14 @@ class _AddAlertDialog extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.onAdd,
-      required this.valueText,
-      required this.keyText})
-      : super(key: key);
+      required this.valueLabelText,
+      required this.keyLabelText,
+      this.keyValue = "",
+      this.valueValue = ""})
+      : super(key: key) {
+    keyController.text = keyValue;
+    valueController.text = valueValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +211,7 @@ class _AddAlertDialog extends StatelessWidget {
                   onAdd(keyController.text, valueController.text),
                   Navigator.pop(context)
                 },
-            child: const Text("Add")),
+            child: const Text("Save")),
         TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"))
@@ -193,12 +220,12 @@ class _AddAlertDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
-            decoration: InputDecoration(labelText: keyText),
+            decoration: InputDecoration(labelText: keyLabelText),
             controller: keyController,
           ),
           InputFieldContainer.inputContainer(
             child: TextField(
-              decoration: InputDecoration(labelText: valueText),
+              decoration: InputDecoration(labelText: valueLabelText),
               controller: valueController,
             ),
           )
