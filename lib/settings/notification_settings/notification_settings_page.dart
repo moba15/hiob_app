@@ -89,11 +89,22 @@ class _InfoAlertDialog extends StatelessWidget {
                     decoration: TextDecoration.underline),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    print("asd");
                     launchUrl(Uri.https("github.com",
                         "/moba15/ioBroker.hiob/tree/development/docs"));
                   }),
             const TextSpan(text: "."),
+            TextSpan(
+                text:
+                    "\nhttps://github.com/moba15/ioBroker.hiob/tree/development/docs\n\n",
+                style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    launchUrl(Uri.https("github.com",
+                        "/moba15/ioBroker.hiob/tree/development/docs"));
+                  }),
             const TextSpan(
                 text: "\nYou need minimum Adapter version:\n",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),

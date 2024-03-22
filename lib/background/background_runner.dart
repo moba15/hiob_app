@@ -34,14 +34,14 @@ class BackgroundRunner {
     final ios = IosConfiguration();
     final android = AndroidConfiguration(
       onStart: onStart,
-      autoStart: false,
+      autoStart: true,
       autoStartOnBoot: true,
-      isForegroundMode: false,
+      isForegroundMode: true,
       foregroundServiceNotificationId:
           NotificationManager.ioBrokerConnectionNotificationId,
       notificationChannelId:
           NotificationManager.ioBrokerConnectionNotificationChannelKey,
-      initialNotificationContent: "Not connected",
+      initialNotificationContent: "Paused",
       initialNotificationTitle: "Connection Status",
     );
     if (Platform.isAndroid) {
@@ -80,20 +80,18 @@ class BackgroundRunner {
     NotificationManager.showConnectionNotification(
         "Starting Background service");
 
-    Future.delayed(const Duration(milliseconds: 10))
-        .then((value) => service.invoke("start", {
-              "url": url.toString(),
-              "loginPackage": RequestLoginPackage(
-                      deviceName: generalManager.deviceName,
-                      deviceID: generalManager.deviceID,
-                      key: generalManager.loginKey,
-                      password: ioBrokerManager.usePwd
-                          ? ioBrokerManager.password
-                          : null,
-                      user: ioBrokerManager.user,
-                      version: Manager.instance.versionNumber)
-                  .content
-            }));
+    service.invoke("start", {
+      "url": url.toString(),
+      "loginPackage": RequestLoginPackage(
+              deviceName: generalManager.deviceName,
+              deviceID: generalManager.deviceID,
+              key: generalManager.loginKey,
+              password:
+                  ioBrokerManager.usePwd ? ioBrokerManager.password : null,
+              user: ioBrokerManager.user,
+              version: Manager.instance.versionNumber)
+          .content
+    });
   }
 
   static void onStop(ServiceInstance s) {
