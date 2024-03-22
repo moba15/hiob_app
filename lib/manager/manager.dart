@@ -12,6 +12,7 @@ import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/history/history_manager.dart';
+import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
@@ -22,7 +23,7 @@ import '../background/background_runner.dart';
 class Manager {
   //@Deprecated("Please use the Context")
   static final Manager instance =
-      Manager._internal(versionNumber: "0.0.604", buildNumber: "126");
+      Manager._internal(versionNumber: "0.0.610", buildNumber: "131");
   static final navigatorKey = GlobalKey<NavigatorState>();
   //@Deprecated("Please use the Context")
   factory Manager() => instance;
@@ -55,6 +56,10 @@ class Manager {
   late SettingsSyncManager settingsSyncManager;
 
   late ThemeManager themeManager;
+
+  late BackgroundRunner backgroundRunner;
+
+  late NotificationManager notificationManager;
 
   ManagerStatus status = ManagerStatus.loading;
 
@@ -142,10 +147,8 @@ class Manager {
       connectionManager.connectIoB();
     }
     if (loadingState >= maxLoadingState - 1) {
+      _initManagerAfter();
       status = ManagerStatus.finished;
-      BackgroundRunner(
-              generalManager: generalManager, ioBrokerManager: ioBrokerManager)
-          .init();
       managerStatusStreamController.sink.add(ManagerStatus.finished);
       subscription1?.cancel();
       subscription2?.cancel();
@@ -154,5 +157,12 @@ class Manager {
       subscription5?.cancel();
       subscription6?.cancel();
     }
+  }
+
+  void _initManagerAfter() {
+    notificationManager = NotificationManager(fileManager: fileManager);
+    backgroundRunner = BackgroundRunner(
+        generalManager: generalManager, ioBrokerManager: ioBrokerManager)
+      ..init();
   }
 }

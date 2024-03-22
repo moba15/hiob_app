@@ -56,9 +56,9 @@ class ChangeLogScreen extends StatelessWidget {
               ],
             ),
           ),*/
-          const Text("Fixed scneen settings bug"),
+
           const Text(
-            "Widget settings",
+            "Notifications",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Container(
@@ -66,7 +66,7 @@ class ChangeLogScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("- You can now edit selection rules:"),
+                Text("- You can enable notifications in the settings (beta):"),
               ],
             ),
           ),
