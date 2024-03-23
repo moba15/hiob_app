@@ -74,7 +74,7 @@ class BackgroundRunner {
       return;
     }
     log("Start Background service");
-    service.startService();
+    await service.startService();
     isServiceRunning = true;
     final Uri url = await Manager.instance.connectionManager.getUrl();
     NotificationManager.showConnectionNotification(
