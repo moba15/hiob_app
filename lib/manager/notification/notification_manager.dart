@@ -71,7 +71,7 @@ class NotificationManager with WidgetsBindingObserver {
               channelGroupKey: ioBrokerConnectionNotificationChannelGroupKey,
               channelGroupName: ioBrokerConnectionNotificationChannelGroupName)
         ],
-        debug: true);
+        debug: false);
   }
 
   ///Must be all static because of Isolate
