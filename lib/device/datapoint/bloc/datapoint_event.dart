@@ -10,8 +10,13 @@ abstract class DataPointEvent extends Equatable {
 class DataPointValueUpdate extends DataPointEvent {
   final dynamic value;
   final dynamic oldValue;
+  final int ts, lc;
 
-  const DataPointValueUpdate({required this.value, required this.oldValue});
+  const DataPointValueUpdate(
+      {required this.value,
+      required this.oldValue,
+      required this.ts,
+      required this.lc});
 }
 
 class DataPointValueUpdateRequest extends DataPointEvent {

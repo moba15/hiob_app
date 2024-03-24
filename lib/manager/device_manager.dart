@@ -228,13 +228,16 @@ class DeviceManager {
     return dataPoints;
   }
 
-  void valueChange(DataPoint? dataPoint, dynamic value) {
+  void valueChange(DataPoint? dataPoint, dynamic value, int ts, int lc) {
     if (dataPoint == null) {
       return;
     }
 
     dataPoint.value = value;
-    dataPoint.valueStreamController.add(value);
+    dataPoint.ts = ts;
+    dataPoint.lc = lc;
+    dataPoint.valueStreamController
+        .add(DataPointValueChangeEvent(value: value, lc: lc, ts: ts));
     dataPoint.device?.setFirstUpdate = true;
   }
 

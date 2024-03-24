@@ -17,12 +17,17 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   DataPoint dataPoint;
 
   DataPointBloc(this.dataPoint)
-      : super(DataPointInitial(value: dataPoint.value)) {
+      : super(DataPointInitial(
+            value: dataPoint.value, ts: dataPoint.ts, lc: dataPoint.lc)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
     _deviceValueSubscription =
         dataPoint.valueStreamController.stream.listen((event) {
-      add(DataPointValueUpdate(value: event, oldValue: dataPoint.olderValue));
+      add(DataPointValueUpdate(
+          value: event.value,
+          oldValue: dataPoint.olderValue,
+          lc: event.lc,
+          ts: event.ts));
     });
   }
 
@@ -34,13 +39,23 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
 
   void _onValueUpdated(
       DataPointValueUpdate event, Emitter<DataPointState> emit) {
-    emit(DataPointState(value: event.value, oldValue: event.oldValue));
+    emit(DataPointState(
+        value: event.value,
+        oldValue: event.oldValue,
+        lc: event.lc,
+        ts: event.ts));
     dataPoint.value = event.value;
+    dataPoint.ts = event.ts;
+    dataPoint.lc = event.lc;
   }
 
   void _onValueUpdateRequest(
       DataPointValueUpdateRequest event, Emitter<DataPointState> emit) {
-    emit(DataPointState(value: event.value, oldValue: event.oldValue));
+    emit(DataPointState(
+        value: event.value,
+        oldValue: event.oldValue,
+        ts: dataPoint.ts,
+        lc: dataPoint.lc));
     dataPoint.value = event.value;
     dataPoint.device?.lastUpdated = DateTime.now();
     if (dataPoint.device is IoBrokerDevice) {

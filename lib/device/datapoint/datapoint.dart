@@ -7,9 +7,18 @@ import 'package:smart_home/manager/history/history_data.dart';
 
 import '../device.dart';
 
+class DataPointValueChangeEvent {
+  final dynamic value;
+  final int ts;
+  final int lc;
+  DataPointValueChangeEvent(
+      {required this.value, required this.lc, required this.ts});
+}
+
 class DataPoint {
   dynamic value;
   dynamic olderValue;
+  int ts = 0, lc = 0;
   String name;
   String id;
   Device? device;
@@ -21,15 +30,17 @@ class DataPoint {
 
   HistoryData historyData = HistoryData();
 
-  StreamController valueStreamController = StreamController.broadcast();
+  StreamController<DataPointValueChangeEvent> valueStreamController =
+      StreamController.broadcast();
 
-  DataPoint(
-      {required this.name,
-      required this.device,
-      required this.id,
-      this.role,
-      this.type,
-      this.otherDetails});
+  DataPoint({
+    required this.name,
+    required this.device,
+    required this.id,
+    this.role,
+    this.type,
+    this.otherDetails,
+  });
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device) {
     return DataPoint(
@@ -52,7 +63,7 @@ class DataPoint {
     };
   }
 
-  set setValue(dynamic value) {
+  void setValue({required dynamic value, required int ts, required int lc}) {
     if (value != this.value) {
       if (this.value != null) {
         olderValue = this.value;
@@ -60,7 +71,8 @@ class DataPoint {
         olderValue = value;
       }
       this.value = value;
-      valueStreamController.add(value);
+      valueStreamController
+          .add(DataPointValueChangeEvent(value: value, lc: lc, ts: ts));
     }
   }
 

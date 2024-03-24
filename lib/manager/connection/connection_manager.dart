@@ -217,7 +217,10 @@ class ConnectionManager with WidgetsBindingObserver {
     switch (packageType) {
       case DataPackageType.iobStateChanged:
         stateChangedPackage(
-            objectID: rawMap["objectID"], value: rawMap["value"]);
+            objectID: rawMap["objectID"],
+            value: rawMap["value"],
+            ts: rawMap["ts"],
+            lc: rawMap["lc"]);
         break;
       case DataPackageType.enumUpdate:
         ioBrokerManager.enumUpdate(rawData: rawMap);
@@ -280,11 +283,15 @@ class ConnectionManager with WidgetsBindingObserver {
     }
   }
 
-  void stateChangedPackage({required String objectID, required dynamic value}) {
+  void stateChangedPackage(
+      {required String objectID,
+      required dynamic value,
+      required int ts,
+      required int lc}) {
     List<DataPoint>? iobDataPoints =
         deviceManager.getIoBrokerDataPointsByObjectID(objectID);
     for (DataPoint dataPoint in iobDataPoints ?? []) {
-      deviceManager.valueChange(dataPoint, value);
+      deviceManager.valueChange(dataPoint, value, ts, lc);
     }
   }
 
@@ -292,7 +299,10 @@ class ConnectionManager with WidgetsBindingObserver {
     if (dataValues != null) {
       for (Map<String, dynamic> dataValue in dataValues) {
         stateChangedPackage(
-            objectID: dataValue["objectID"], value: dataValue["value"]);
+            objectID: dataValue["objectID"],
+            value: dataValue["value"],
+            ts: dataValue["ts"],
+            lc: dataValue["lc"]);
       }
     }
   }
