@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/widgets/view/simple_switch_widget_view.
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/manager.dart';
 
-import '../../device/device.dart';
+import '../../../device/device.dart';
 
 class CustomSimpleSwitchWidget extends CustomWidget {
   String? value;

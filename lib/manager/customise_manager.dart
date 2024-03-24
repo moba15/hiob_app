@@ -3,12 +3,12 @@ import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
-import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
+import 'package:smart_home/customwidgets/widgets/advanced/advanced_custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/divisionline/custom_divisionline_widget.dart';
+import 'package:smart_home/customwidgets/widgets/switch_with_slider/custom_switch_with_slider_widget.dart';
+import 'package:smart_home/customwidgets/widgets/simple_value/custom_simple_value_widget.dart';
+import 'package:smart_home/customwidgets/widgets/switch/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
@@ -71,7 +71,7 @@ class CustomWidgetManager {
           customWidget = CustomSimpleSwitchWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.light:
-          customWidget = CustomLightWidget.fromJson(widgetRaw);
+          customWidget = CustomSwicthWithSliderWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.line:
           customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);

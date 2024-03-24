@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/widgets/view/simple_value_widget_view.d
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/manager.dart';
 
-import '../../device/device.dart';
+import '../../../device/device.dart';
 
 class CustomSimpleValueWidget extends CustomWidget {
   Device? device;

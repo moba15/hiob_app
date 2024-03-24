@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/switch/custom_switch_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 

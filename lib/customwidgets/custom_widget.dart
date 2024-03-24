@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/advanced/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
+import 'package:smart_home/customwidgets/widgets/divisionline/custom_divisionline_widget.dart';
+import 'package:smart_home/customwidgets/widgets/switch_with_slider/custom_switch_with_slider_widget.dart';
+import 'package:smart_home/customwidgets/widgets/simple_value/custom_simple_value_widget.dart';
+import 'package:smart_home/customwidgets/widgets/switch/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/widgets/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 
@@ -28,7 +28,7 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.simpleSwitch:
         return CustomSimpleSwitchWidget.edit().settingWidget;
       case CustomWidgetType.light:
-        return CustomLightWidget(name: "").settingWidget;
+        return CustomSwicthWithSliderWidget(name: "").settingWidget;
       case CustomWidgetType.group:
         throw UnimplementedError("Error 12");
       case CustomWidgetType.line:

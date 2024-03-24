@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
+import 'package:smart_home/customwidgets/widgets/simple_value/custom_simple_value_widget.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';

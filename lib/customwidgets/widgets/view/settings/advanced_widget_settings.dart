@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
-import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/advanced/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/trigger_action_selection.dart';
 
 class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {

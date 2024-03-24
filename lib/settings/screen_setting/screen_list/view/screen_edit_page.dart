@@ -15,7 +15,7 @@ import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../customwidgets/custom_widget.dart';
-import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
+import '../../../../customwidgets/widgets/divisionline/custom_divisionline_widget.dart';
 
 class ScreenEditPage extends StatefulWidget {
   final Screen screen;

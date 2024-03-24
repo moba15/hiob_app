@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
+import 'package:smart_home/customwidgets/widgets/switch_with_slider/custom_switch_with_slider_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/bool_selection.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
@@ -11,7 +11,7 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 import '../../../../manager/customise_manager.dart';
 
 class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
-  final CustomLightWidget customLightWidget;
+  final CustomSwicthWithSliderWidget customLightWidget;
   final GlobalKey valueKey = GlobalKey();
   final GlobalKey switchDatapoint = GlobalKey();
   final GlobalKey sliderKey = GlobalKey();

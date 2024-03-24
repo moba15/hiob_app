@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
+import 'package:smart_home/customwidgets/widgets/switch_with_slider/custom_switch_with_slider_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 
 import '../../../device/bloc/device_bloc.dart';
@@ -9,7 +9,7 @@ import '../../../manager/manager.dart';
 import '../../../shapes/sldier/custom_slider_thumb_value.dart';
 
 class CustomLightWidgetView extends StatefulWidget {
-  final CustomLightWidget customLightWidget;
+  final CustomSwicthWithSliderWidget customLightWidget;
   const CustomLightWidgetView({Key? key, required this.customLightWidget})
       : super(key: key);
 
@@ -96,7 +96,7 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
 }
 
 class _CustomLightWidgetAlert extends StatefulWidget {
-  final CustomLightWidget customLightWidget;
+  final CustomSwicthWithSliderWidget customLightWidget;
   const _CustomLightWidgetAlert({Key? key, required this.customLightWidget})
       : super(key: key);
 

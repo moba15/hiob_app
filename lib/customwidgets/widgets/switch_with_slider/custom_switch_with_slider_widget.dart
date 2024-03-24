@@ -4,9 +4,9 @@ import 'package:smart_home/customwidgets/widgets/view/custom_light_widget_view.d
 import 'package:smart_home/customwidgets/widgets/view/settings/light_widget_settings.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 
-import '../../manager/manager.dart';
+import '../../../manager/manager.dart';
 
-class CustomLightWidget extends CustomWidget {
+class CustomSwicthWithSliderWidget extends CustomWidget {
   DataPoint? onDataPoint;
   DataPoint? briDataPoint;
   int briMax;
@@ -17,7 +17,7 @@ class CustomLightWidget extends CustomWidget {
   String briDisplay = "Brightness";
   String reachableDisplay = "Reachable";
 
-  CustomLightWidget(
+  CustomSwicthWithSliderWidget(
       {required String? name,
       this.onDataPoint,
       this.briDataPoint,
@@ -33,7 +33,7 @@ class CustomLightWidget extends CustomWidget {
   CustomWidgetSettingWidget get settingWidget =>
       CustomLightWidgetSettingWidget(customLightWidget: this);
 
-  factory CustomLightWidget.fromJson(Map<String, dynamic> json) {
+  factory CustomSwicthWithSliderWidget.fromJson(Map<String, dynamic> json) {
     DataPoint? onDataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["onDataPointID"] ?? "");
     DataPoint? briDataPoint = json["briDataPointID"] == null
@@ -45,7 +45,7 @@ class CustomLightWidget extends CustomWidget {
         : Manager.instance.deviceManager
             .getIoBrokerDataPointByObjectID(json["reachableDataPointID"]);
 
-    return CustomLightWidget(
+    return CustomSwicthWithSliderWidget(
       name: json["name"],
       briMax: json["briMax"],
       briMin: json["briMin"],
@@ -80,7 +80,7 @@ class CustomLightWidget extends CustomWidget {
 
   @override
   CustomWidget clone() {
-    return CustomLightWidget(
+    return CustomSwicthWithSliderWidget(
       name: name,
       onDataPoint: onDataPoint,
       value: value,
