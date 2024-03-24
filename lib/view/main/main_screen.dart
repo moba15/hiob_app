@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -190,7 +191,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 onTap: (i) {
                   _controller.add(i);
                 },
-                indicatorWeight: 3,
                 isScrollable: true,
                 controller: _tabController,
                 tabs: [
@@ -201,6 +201,7 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 ],
               ),
             ),
+            bottomNavigationBar: _CustomButtomNavBar(),
             body: screens.isEmpty
                 ? const Text("null")
                 : TabBarView(
@@ -359,5 +360,31 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 }),
       );
     }*/
+  }
+}
+
+class _CustomButtomNavBar extends StatefulWidget {
+  const _CustomButtomNavBar({Key? key}) : super(key: key);
+
+  @override
+  State<_CustomButtomNavBar> createState() => _CustomButtomNavBarState();
+}
+
+class _CustomButtomNavBarState extends State<_CustomButtomNavBar>
+    with TickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      tabAlignment: TabAlignment.start,
+      isScrollable: true,
+      tabs: [
+        for (int i = 0; i < 10; i++)
+          Tab(
+            text: "Home",
+            icon: Icon(Icons.home),
+          )
+      ],
+      controller: TabController(length: 10, vsync: this),
+    );
   }
 }
