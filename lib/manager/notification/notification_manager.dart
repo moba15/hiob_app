@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
+import 'package:smart_home/utils/logger/cutsom_logger.dart';
 
 class NotificationManager with WidgetsBindingObserver {
   static AwesomeNotifications awesomeNotifications = AwesomeNotifications();
@@ -35,16 +36,18 @@ class NotificationManager with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
-  static void init() {
+  static void init() async {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
-        // This is just a basic example. For real apps, you must show some
-        // friendly dialog box before call the request method.
-        // This is very important to not harm the user experience
+        CustomLogger.logInfoNotification(
+            methodname: "permission",
+            logMessage: "no permession: asking for permission");
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    awesomeNotifications.initialize(
+    CustomLogger.logInfoNotification(
+        methodname: "init", logMessage: "before init awesomeNotifications");
+    bool init = await awesomeNotifications.initialize(
         'resource://drawable/ic_launcher',
         [
           NotificationChannel(
@@ -72,25 +75,40 @@ class NotificationManager with WidgetsBindingObserver {
               channelGroupName: ioBrokerConnectionNotificationChannelGroupName)
         ],
         debug: false);
+    CustomLogger.logInfoNotification(
+        methodname: "init",
+        logMessage: "after init awesomeNotifications ({init})");
   }
 
   ///Must be all static because of Isolate
 
   static void showConnectionNotification(String contentraw) {
-    awesomeNotifications.createNotification(
-        content: NotificationContent(
+    CustomLogger.logInfoNotification(
+        methodname: "showConnectionNotification",
+        logMessage: "before showConnectionNotification");
+    awesomeNotifications
+        .createNotification(
+            content: NotificationContent(
       id: ioBrokerConnectionNotificationId,
       channelKey: ioBrokerConnectionNotificationChannelKey,
       actionType: ActionType.KeepOnTop,
       title: 'HioB Connection Status!',
       body: contentraw,
       locked: true,
-    ));
+    ))
+        .then((value) {
+      CustomLogger.logInfoNotification(
+          methodname: "showConnectionNotification",
+          logMessage: "after showConnectionNotification ($value)");
+    });
   }
 
   static void showIoBNotification(String contentraw) {
     ioBrokerNotificationId += 1;
     ioBrokerNotificationId %= 500;
+    CustomLogger.logInfoNotification(
+        methodname: "showIoBNotification",
+        logMessage: "before showIoBNotification");
     try {
       Map<String, dynamic> content = jsonDecode(contentraw);
       _showIoBNotificationMap(content);
@@ -100,17 +118,31 @@ class NotificationManager with WidgetsBindingObserver {
   }
 
   static void _showIoBNotificationMap(Map<String, dynamic> content) {
-    awesomeNotifications.createNotification(
-        content: CustomNotification.fromJSON(content).getNotificationContent(
+    CustomLogger.logInfoNotification(
+        methodname: "_showIoBNotificationMap",
+        logMessage: "before _showIoBNotificationMap");
+    awesomeNotifications
+        .createNotification(
+            content:
+                CustomNotification.fromJSON(content).getNotificationContent(
       id: ioBrokerNotificationId,
       channelKey: ioBrokerNotificationChannelKey,
       groupKey: ioBrokerNotificationChannelGroupKey,
-    ));
+    ))
+        .then((value) {
+      CustomLogger.logInfoNotification(
+          methodname: "_showIoBNotificationMap",
+          logMessage: "after _showIoBNotificationMap ($value)");
+    });
   }
 
   static void _showIoBNotificationSimple(String body) {
-    awesomeNotifications.createNotification(
-        content: NotificationContent(
+    CustomLogger.logInfoNotification(
+        methodname: "_showIoBNotificationSimple",
+        logMessage: "before _showIoBNotificationSimple");
+    awesomeNotifications
+        .createNotification(
+            content: NotificationContent(
       id: ioBrokerNotificationId,
       channelKey: ioBrokerNotificationChannelKey,
       actionType: ActionType.Default,
@@ -118,7 +150,12 @@ class NotificationManager with WidgetsBindingObserver {
       body: body,
       color: Colors.red,
       groupKey: ioBrokerNotificationChannelGroupKey,
-    ));
+    ))
+        .then((value) {
+      CustomLogger.logInfoNotification(
+          methodname: "_showIoBNotificationSimple",
+          logMessage: "after _showIoBNotificationSimple ($value)");
+    });
   }
 
   void readSettings() async {

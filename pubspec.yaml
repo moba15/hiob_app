@@ -68,6 +68,8 @@ dependencies:
   flutter_markdown: ^0.6.21
   gap: ^3.0.1
   url_launcher: ^6.2.5
+  my_logger: ^1.0.1
+ 
 
 
 dev_dependencies:

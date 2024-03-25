@@ -8,6 +8,7 @@ import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/utils/logger/cutsom_logger.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -28,8 +29,11 @@ class BackgroundRunner {
     NotificationManager.init();
     if (!Platform.isAndroid) {
       log("Platfrom is not Android -> disabled Background runner", level: 1);
+      CustomLogger.logInfoBackgroundRunner(
+          methodname: "init", logMessage: "Is not Android");
       return;
     }
+
     service = FlutterBackgroundService();
     final ios = IosConfiguration();
     final android = AndroidConfiguration(
@@ -44,9 +48,9 @@ class BackgroundRunner {
       initialNotificationContent: "Paused",
       initialNotificationTitle: "Connection Status",
     );
-    if (Platform.isAndroid) {
-      service.configure(iosConfiguration: ios, androidConfiguration: android);
-    }
+    service.configure(iosConfiguration: ios, androidConfiguration: android);
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "init", logMessage: "Service configurated");
     log("init");
   }
 
@@ -73,6 +77,8 @@ class BackgroundRunner {
     if (isServiceRunning) {
       return;
     }
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "startService", logMessage: "Service is starting...");
     log("Start Background service");
     await service.startService();
     isServiceRunning = true;
@@ -105,7 +111,8 @@ class BackgroundRunner {
     DartPluginRegistrant.ensureInitialized();
 
     s.on("start").listen((event) async {
-      log("Connecting");
+      CustomLogger.logInfoBackgroundRunner(
+          methodname: "onStart", logMessage: "Service is connecting to server");
       //TODO: Maybe only try in correct wifi to save BatteryLife
       webSocketChannel = IOWebSocketChannel.connect(event!["url"],
           pingInterval: const Duration(minutes: 5)); //TODO Generic
@@ -126,6 +133,8 @@ class BackgroundRunner {
 
   static void onData(event, Map<String, dynamic> requestLoginPackage) {
     log("onData2");
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onStart", logMessage: "Service got data" + event);
     Map<String, dynamic> rawMap = jsonDecode(event);
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
