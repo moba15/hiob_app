@@ -20,7 +20,6 @@ class CustomLogger {
         type: LogLevel.INFO,
         methodName: methodname,
         className: "Notifications");
-    MyLogger.logs.deleteLastHour();
   }
 
   static void logInfoBackgroundRunner(
@@ -30,7 +29,6 @@ class CustomLogger {
         type: LogLevel.INFO,
         methodName: methodname,
         className: "Backgroundrunner");
-    MyLogger.logs.deleteLastHour();
   }
 
   static void exportInfoLogs() async {

@@ -78,6 +78,7 @@ class _GeneralSettingsView extends StatelessWidget {
         ListTile(
           title: Text("Export logs"),
           leading: Icon(Icons.note),
+          trailing: Icon(Icons.import_export),
           onTap: () {
             CustomLogger.exportInfoLogs();
           },
