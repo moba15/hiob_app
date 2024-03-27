@@ -77,7 +77,7 @@ class NotificationManager with WidgetsBindingObserver {
         debug: false);
     CustomLogger.logInfoNotification(
         methodname: "init",
-        logMessage: "after init awesomeNotifications ({init})");
+        logMessage: "after init awesomeNotifications ($init)");
   }
 
   ///Must be all static because of Isolate
@@ -191,22 +191,39 @@ class NotificationManager with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.detached:
-        print("detached");
+        CustomLogger.logInfoNotification(
+            methodname: "didChangeAppLifecycleState",
+            logMessage: "App is detached");
+        if (backgroundNotificationsEnabled) {
+          Manager.instance.backgroundRunner.startService();
+        }
         break;
       case AppLifecycleState.inactive:
-        print("inactive");
+        CustomLogger.logInfoNotification(
+            methodname: "didChangeAppLifecycleState",
+            logMessage: "App is inactive");
+        if (backgroundNotificationsEnabled) {
+          Manager.instance.backgroundRunner.startService();
+        }
         break;
       case AppLifecycleState.paused:
-        print("paused");
+        CustomLogger.logInfoNotification(
+            methodname: "didChangeAppLifecycleState",
+            logMessage: "App is paused $backgroundNotificationsEnabled");
         if (backgroundNotificationsEnabled) {
           Manager.instance.backgroundRunner.startService();
         }
         break;
       case AppLifecycleState.resumed:
+        CustomLogger.logInfoNotification(
+            methodname: "didChangeAppLifecycleState",
+            logMessage: "App is resumed");
         Manager.instance.backgroundRunner.stopService();
         break;
       case AppLifecycleState.hidden:
-        print("hidden");
+        if (backgroundNotificationsEnabled) {
+          Manager.instance.backgroundRunner.startService();
+        }
         break;
     }
   }

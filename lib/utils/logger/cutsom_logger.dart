@@ -45,4 +45,8 @@ class CustomLogger {
     File file = await fileExport.copy("$result/export-all-logs.txt");
     file.createSync();
   }
+
+  static void deletAll() {
+    MyLogger.logs.deleteAll();
+  }
 }

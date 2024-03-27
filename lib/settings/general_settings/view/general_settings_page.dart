@@ -82,7 +82,15 @@ class _GeneralSettingsView extends StatelessWidget {
           onTap: () {
             CustomLogger.exportInfoLogs();
           },
-        )
+        ),
+        ListTile(
+          title: Text("Delete all logs"),
+          leading: Icon(Icons.note),
+          trailing: Icon(Icons.delete),
+          onTap: () {
+            CustomLogger.deletAll();
+          },
+        ),
       ],
     );
   }

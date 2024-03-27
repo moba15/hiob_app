@@ -65,9 +65,9 @@ class BackgroundRunner {
         .dismiss(NotificationManager.ioBrokerConnectionNotificationId);
     NotificationManager.awesomeNotifications.dismissNotificationsByChannelKey(
         NotificationManager.ioBrokerConnectionNotificationChannelKey);
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "stopService", logMessage: "Invoking stop");
     service.invoke("stop");
-
-    log("Dismiss");
   }
 
   startService() async {
@@ -101,7 +101,8 @@ class BackgroundRunner {
   }
 
   static void onStop(ServiceInstance s) {
-    log((webSocketChannel != null).toString());
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onStop", logMessage: "Stop invoked");
     webSocketChannel?.sink.close();
     s.stopSelf();
   }
@@ -113,11 +114,10 @@ class BackgroundRunner {
     s.on("start").listen((event) async {
       CustomLogger.logInfoBackgroundRunner(
           methodname: "onStart", logMessage: "Service is connecting to server");
-      //TODO: Maybe only try in correct wifi to save BatteryLife
       webSocketChannel = IOWebSocketChannel.connect(event!["url"],
-          pingInterval: const Duration(minutes: 5)); //TODO Generic
+          pingInterval: const Duration(seconds: 10));
       webSocketChannel!.stream.listen((e) => onData(e, event["loginPackage"]),
-          onError: (e) => onError(s), onDone: onDone);
+          onError: (e) => onError(s, e), onDone: onDone);
     });
 
     s.on("stop").listen((event) {
@@ -125,7 +125,7 @@ class BackgroundRunner {
     });
   }
 
-  static void onError(ServiceInstance s) async {
+  static void onError(ServiceInstance s, dynamic e) async {
     NotificationManager.showConnectionNotification("Reconnecting...");
     await Future.delayed(const Duration(seconds: 20));
     s.invoke("start");
@@ -134,7 +134,9 @@ class BackgroundRunner {
   static void onData(event, Map<String, dynamic> requestLoginPackage) {
     log("onData2");
     CustomLogger.logInfoBackgroundRunner(
-        methodname: "onStart", logMessage: "Service got data" + event);
+        methodname: "onStart", logMessage: "Service got data");
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onStart", logMessage: "Service got data $event");
     Map<String, dynamic> rawMap = jsonDecode(event);
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
@@ -162,6 +164,8 @@ class BackgroundRunner {
   }
 
   static void onDone() {
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onDone", logMessage: "Done connection");
     NotificationManager.showConnectionNotification(
         "Disconnected please open app to connect");
   }
