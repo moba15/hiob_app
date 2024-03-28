@@ -112,7 +112,7 @@ class NotificationManager with WidgetsBindingObserver {
     try {
       Map<String, dynamic> content = jsonDecode(contentraw);
       _showIoBNotificationMap(content);
-    } on FormatException catch (e) {
+    } catch (e) {
       _showIoBNotificationSimple(contentraw);
     }
   }

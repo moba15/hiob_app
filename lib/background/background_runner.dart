@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
@@ -96,7 +97,9 @@ class BackgroundRunner {
                   ioBrokerManager.usePwd ? ioBrokerManager.password : null,
               user: ioBrokerManager.user,
               version: Manager.instance.versionNumber)
-          .content
+          .content,
+      "secureKey": ioBrokerManager.secureKey,
+      "aes_enabled": ioBrokerManager.secureBox,
     });
   }
 
@@ -112,12 +115,17 @@ class BackgroundRunner {
     DartPluginRegistrant.ensureInitialized();
 
     s.on("start").listen((event) async {
+      log("event: " + jsonEncode(event));
       CustomLogger.logInfoBackgroundRunner(
           methodname: "onStart", logMessage: "Service is connecting to server");
       webSocketChannel = IOWebSocketChannel.connect(event!["url"],
           pingInterval: const Duration(seconds: 10));
-      webSocketChannel!.stream.listen((e) => onData(e, event["loginPackage"]),
-          onError: (e) => onError(s, e), onDone: onDone);
+
+      webSocketChannel!.stream.listen(
+          (e) => onData(e, event["loginPackage"], event!["aes_enabled"],
+              event!["secureKey"]),
+          onError: (e) => onError(s, e),
+          onDone: onDone);
     });
 
     s.on("stop").listen((event) {
@@ -131,13 +139,20 @@ class BackgroundRunner {
     s.invoke("start");
   }
 
-  static void onData(event, Map<String, dynamic> requestLoginPackage) {
-    log("onData2");
+  static void onData(event, Map<String, dynamic> requestLoginPackage,
+      bool aes_enabled, String secureKey) {
     CustomLogger.logInfoBackgroundRunner(
-        methodname: "onStart", logMessage: "Service got data");
+        methodname: "onData", logMessage: "Service got data");
     CustomLogger.logInfoBackgroundRunner(
-        methodname: "onStart", logMessage: "Service got data $event");
+        methodname: "onData", logMessage: "Service got data $event");
     Map<String, dynamic> rawMap = jsonDecode(event);
+    if (aes_enabled) {
+      event =
+          ConnectionManager.decryptAes(rawMap: rawMap, secureKey: secureKey);
+      CustomLogger.logInfoBackgroundRunner(
+          methodname: "onData", logMessage: "Decrypt data");
+    }
+
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
 
@@ -158,8 +173,7 @@ class BackgroundRunner {
           "Failed to login please open the app");
     } else if (packageType == DataPackageType.notification) {
       //TODO Create class
-      NotificationManager.showIoBNotification(
-          jsonDecode(event)["content"]["content"]);
+      NotificationManager.showIoBNotification((rawMap["content"]["content"]));
     }
   }
 
