@@ -210,6 +210,9 @@ class NotificationManager with WidgetsBindingObserver {
         CustomLogger.logInfoNotification(
             methodname: "didChangeAppLifecycleState",
             logMessage: "App is inactive");
+        if (backgroundNotificationsEnabled) {
+          Manager.instance.backgroundRunner.startService();
+        }
 
         break;
       case AppLifecycleState.paused:
