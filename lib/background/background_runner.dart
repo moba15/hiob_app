@@ -4,10 +4,12 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/utils/logger/cutsom_logger.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -28,8 +30,11 @@ class BackgroundRunner {
     NotificationManager.init();
     if (!Platform.isAndroid) {
       log("Platfrom is not Android -> disabled Background runner", level: 1);
+      CustomLogger.logInfoBackgroundRunner(
+          methodname: "init", logMessage: "Is not Android");
       return;
     }
+
     service = FlutterBackgroundService();
     final ios = IosConfiguration();
     final android = AndroidConfiguration(
@@ -44,9 +49,9 @@ class BackgroundRunner {
       initialNotificationContent: "Paused",
       initialNotificationTitle: "Connection Status",
     );
-    if (Platform.isAndroid) {
-      service.configure(iosConfiguration: ios, androidConfiguration: android);
-    }
+    service.configure(iosConfiguration: ios, androidConfiguration: android);
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "init", logMessage: "Service configurated");
     log("init");
   }
 
@@ -61,9 +66,9 @@ class BackgroundRunner {
         .dismiss(NotificationManager.ioBrokerConnectionNotificationId);
     NotificationManager.awesomeNotifications.dismissNotificationsByChannelKey(
         NotificationManager.ioBrokerConnectionNotificationChannelKey);
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "stopService", logMessage: "Invoking stop");
     service.invoke("stop");
-
-    log("Dismiss");
   }
 
   startService() async {
@@ -73,6 +78,8 @@ class BackgroundRunner {
     if (isServiceRunning) {
       return;
     }
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "startService", logMessage: "Service is starting...");
     log("Start Background service");
     await service.startService();
     isServiceRunning = true;
@@ -90,12 +97,15 @@ class BackgroundRunner {
                   ioBrokerManager.usePwd ? ioBrokerManager.password : null,
               user: ioBrokerManager.user,
               version: Manager.instance.versionNumber)
-          .content
+          .content,
+      "secureKey": ioBrokerManager.secureKey,
+      "aes_enabled": ioBrokerManager.secureBox,
     });
   }
 
   static void onStop(ServiceInstance s) {
-    log((webSocketChannel != null).toString());
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onStop", logMessage: "Stop invoked");
     webSocketChannel?.sink.close();
     s.stopSelf();
   }
@@ -105,12 +115,17 @@ class BackgroundRunner {
     DartPluginRegistrant.ensureInitialized();
 
     s.on("start").listen((event) async {
-      log("Connecting");
-      //TODO: Maybe only try in correct wifi to save BatteryLife
+      log("event: " + jsonEncode(event));
+      CustomLogger.logInfoBackgroundRunner(
+          methodname: "onStart", logMessage: "Service is connecting to server");
       webSocketChannel = IOWebSocketChannel.connect(event!["url"],
-          pingInterval: const Duration(minutes: 5)); //TODO Generic
-      webSocketChannel!.stream.listen((e) => onData(e, event["loginPackage"]),
-          onError: (e) => onError(s), onDone: onDone);
+          pingInterval: const Duration(seconds: 10));
+
+      webSocketChannel!.stream.listen(
+          (e) => onData(e, event["loginPackage"], event!["aes_enabled"],
+              event!["secureKey"]),
+          onError: (e) => onError(s, e),
+          onDone: onDone);
     });
 
     s.on("stop").listen((event) {
@@ -118,15 +133,26 @@ class BackgroundRunner {
     });
   }
 
-  static void onError(ServiceInstance s) async {
+  static void onError(ServiceInstance s, dynamic e) async {
     NotificationManager.showConnectionNotification("Reconnecting...");
     await Future.delayed(const Duration(seconds: 20));
     s.invoke("start");
   }
 
-  static void onData(event, Map<String, dynamic> requestLoginPackage) {
-    log("onData2");
+  static void onData(event, Map<String, dynamic> requestLoginPackage,
+      bool aes_enabled, String secureKey) {
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onData", logMessage: "Service got data");
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onData", logMessage: "Service got data $event");
     Map<String, dynamic> rawMap = jsonDecode(event);
+    if (aes_enabled) {
+      event =
+          ConnectionManager.decryptAes(rawMap: rawMap, secureKey: secureKey);
+      CustomLogger.logInfoBackgroundRunner(
+          methodname: "onData", logMessage: "Decrypt data");
+    }
+
     DataPackageType packageType = DataPackageType.values
         .firstWhere((element) => element.name == rawMap["type"]);
 
@@ -147,12 +173,13 @@ class BackgroundRunner {
           "Failed to login please open the app");
     } else if (packageType == DataPackageType.notification) {
       //TODO Create class
-      NotificationManager.showIoBNotification(
-          jsonDecode(event)["content"]["content"]);
+      NotificationManager.showIoBNotification((rawMap["content"]["content"]));
     }
   }
 
   static void onDone() {
+    CustomLogger.logInfoBackgroundRunner(
+        methodname: "onDone", logMessage: "Done connection");
     NotificationManager.showConnectionNotification(
         "Disconnected please open app to connect");
   }

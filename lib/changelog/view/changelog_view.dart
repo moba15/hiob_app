@@ -66,7 +66,8 @@ class ChangeLogScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("- You can enable notifications in the settings (beta):"),
+                Text(
+                    "- Logging for notification bug finding, see general settings"),
               ],
             ),
           ),

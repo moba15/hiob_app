@@ -42,6 +42,32 @@ extension ConnectionStatusExtension on ConnectionStatus {
 }
 
 class ConnectionManager with WidgetsBindingObserver {
+  /// Static so it can be used by the background runner
+  static Map<String, dynamic> decryptAes(
+      {required Map<String, dynamic> rawMap,
+      required String secureKey,
+      StreamController<ConnectionStatus>? connectionStatusStreamController,
+      Function? onError}) {
+    String pass = rawMap["type"];
+    if (secureKey.isNotEmpty && rawMap["content"].runtimeType == String) {
+      pass = secureKey + pass;
+      try {
+        rawMap["content"] =
+            jsonDecode(decryptAESCryptoJS(rawMap["content"], pass));
+      } catch (e) {
+        connectionStatusStreamController?.add(ConnectionStatus.emptyAES);
+        if (onError != null) {
+          onError();
+        }
+      } finally {
+        print("Decrypt done!");
+      }
+    } else {
+      connectionStatusStreamController?.add(ConnectionStatus.emptyAES);
+    }
+    return rawMap;
+  }
+
   bool ioBConnected = false;
 
   ConnectionStatus connectionStatus = ConnectionStatus.disconnected;
@@ -179,29 +205,19 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void readPackage(String msg) {
-    //TODO Error Handling
     Map<String, dynamic> rawMap = jsonDecode(msg);
     if (ioBrokerManager.secureBox) {
-      String pass = rawMap["type"];
-      if (ioBrokerManager.secureKey.isNotEmpty &&
-          rawMap["content"].runtimeType == String) {
-        pass = ioBrokerManager.secureKey + pass;
-        try {
-          rawMap["content"] =
-              jsonDecode(decryptAESCryptoJS(rawMap["content"], pass));
-        } catch (e) {
-          connectionStatusStreamController.add(ConnectionStatus.emptyAES);
-          generalManager.dialogStreamController.sink
-              .add((p0) => const AlertDialog(
-                    title: Text("Error"),
-                    content: Text("Parse Error - Please check the AES Key!"),
-                  ));
-        } finally {
-          print("Decrypt done!");
-        }
-      } else {
-        connectionStatusStreamController.add(ConnectionStatus.emptyAES);
-      }
+      rawMap = decryptAes(
+          rawMap: rawMap,
+          secureKey: ioBrokerManager.secureKey,
+          connectionStatusStreamController: connectionStatusStreamController,
+          onError: () {
+            generalManager.dialogStreamController.sink
+                .add((p0) => const AlertDialog(
+                      title: Text("Error"),
+                      content: Text("Parse Error - Please check the AES Key!"),
+                    ));
+          });
     }
     //print(rawMap["content"]);
     DataPackageType packageType = DataPackageType.values
