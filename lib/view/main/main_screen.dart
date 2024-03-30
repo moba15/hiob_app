@@ -187,6 +187,7 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
               ],
               automaticallyImplyLeading: false,
               bottom: TabBar(
+                tabAlignment: TabAlignment.start,
                 onTap: (i) {
                   _controller.add(i);
                 },

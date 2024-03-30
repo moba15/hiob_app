@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/utils/cryptojs_aes_encryption_helper.dart';
 import 'package:web_socket_channel/io.dart';
@@ -40,6 +42,32 @@ extension ConnectionStatusExtension on ConnectionStatus {
 }
 
 class ConnectionManager with WidgetsBindingObserver {
+  /// Static so it can be used by the background runner
+  static Map<String, dynamic> decryptAes(
+      {required Map<String, dynamic> rawMap,
+      required String secureKey,
+      StreamController<ConnectionStatus>? connectionStatusStreamController,
+      Function? onError}) {
+    String pass = rawMap["type"];
+    if (secureKey.isNotEmpty && rawMap["content"].runtimeType == String) {
+      pass = secureKey + pass;
+      try {
+        rawMap["content"] =
+            jsonDecode(decryptAESCryptoJS(rawMap["content"], pass));
+      } catch (e) {
+        connectionStatusStreamController?.add(ConnectionStatus.emptyAES);
+        if (onError != null) {
+          onError();
+        }
+      } finally {
+        print("Decrypt done!");
+      }
+    } else {
+      connectionStatusStreamController?.add(ConnectionStatus.emptyAES);
+    }
+    return rawMap;
+  }
+
   bool ioBConnected = false;
 
   ConnectionStatus connectionStatus = ConnectionStatus.disconnected;
@@ -68,7 +96,7 @@ class ConnectionManager with WidgetsBindingObserver {
     });
   }
 
-  Future<Uri> _getUrl() async {
+  Future<Uri> getUrl() async {
     if (ioBrokerManager.useSecondaryAddress &&
         (await networkInfo.getWifiName()).toString().trim() !=
             ("\"${ioBrokerManager.knownNetwork.trim()}\"")) {
@@ -79,7 +107,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   Future<void> connectIoB() async {
-    Uri url = await _getUrl();
+    Uri url = await getUrl();
     try {
       _webSocket = IOWebSocketChannel.connect(url,
           pingInterval: const Duration(minutes: 5));
@@ -98,20 +126,23 @@ class ConnectionManager with WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.detached:
         break;
+
       case AppLifecycleState.inactive:
         break;
+
       case AppLifecycleState.paused:
         close();
+
         break;
       case AppLifecycleState.resumed:
         if (!ioBConnected) {
           tries = 0;
-
           reconnect();
         }
         break;
       case AppLifecycleState.hidden:
         // TODO: Handle this case.
+
         break;
     }
   }
@@ -122,7 +153,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
-    Uri url = await _getUrl();
+    Uri url = await getUrl();
     connectionStatusStreamController.add(ConnectionStatus.tryAgain);
     if (_webSocketStreamSub != null) {
       _webSocketStreamSub!.cancel();
@@ -174,29 +205,19 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void readPackage(String msg) {
-    //TODO Error Handling
     Map<String, dynamic> rawMap = jsonDecode(msg);
     if (ioBrokerManager.secureBox) {
-      String pass = rawMap["type"];
-      if (ioBrokerManager.secureKey.isNotEmpty &&
-          rawMap["content"].runtimeType == String) {
-        pass = ioBrokerManager.secureKey + pass;
-        try {
-          rawMap["content"] =
-              jsonDecode(decryptAESCryptoJS(rawMap["content"], pass));
-        } catch (e) {
-          connectionStatusStreamController.add(ConnectionStatus.emptyAES);
-          generalManager.dialogStreamController.sink
-              .add((p0) => const AlertDialog(
-                    title: Text("Error"),
-                    content: Text("Parse Error - Please check the AES Key!"),
-                  ));
-        } finally {
-          print("Decrypt done!");
-        }
-      } else {
-        connectionStatusStreamController.add(ConnectionStatus.emptyAES);
-      }
+      rawMap = decryptAes(
+          rawMap: rawMap,
+          secureKey: ioBrokerManager.secureKey,
+          connectionStatusStreamController: connectionStatusStreamController,
+          onError: () {
+            generalManager.dialogStreamController.sink
+                .add((p0) => const AlertDialog(
+                      title: Text("Error"),
+                      content: Text("Parse Error - Please check the AES Key!"),
+                    ));
+          });
     }
     //print(rawMap["content"]);
     DataPackageType packageType = DataPackageType.values
@@ -273,7 +294,7 @@ class ConnectionManager with WidgetsBindingObserver {
         _onAnswerSubscribeToDataPoints(rawMap["value"]);
         break;
       case DataPackageType.notification:
-        print("under construction!");
+        NotificationManager.showIoBNotification(rawMap["content"]);
         break;
       default:
         throw UnimplementedError("Error");

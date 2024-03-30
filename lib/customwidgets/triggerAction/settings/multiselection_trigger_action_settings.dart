@@ -66,7 +66,7 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
   @override
   Widget build(BuildContext context) {
     final keys = widget.multiSelectionTriggerAction.selections.keys.toList();
-    keys.sort();
+
     return ExpansionTile(
       childrenPadding: const EdgeInsets.only(left: 10),
       title: Row(
@@ -143,6 +143,12 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
                                       .remove(selectionKey);
                                   widget.multiSelectionTriggerAction
                                       .selections[key] = value;
+                                  widget.multiSelectionTriggerAction
+                                      .reorderSelection(
+                                          widget.multiSelectionTriggerAction
+                                                  .selections.length -
+                                              1,
+                                          index);
                                 });
                               },
                               newValue: widget.multiSelectionTriggerAction
