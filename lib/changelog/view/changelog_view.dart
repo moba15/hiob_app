@@ -68,6 +68,22 @@ class ChangeLogScreen extends StatelessWidget {
               children: [
                 Text(
                     "- Logging for notification bug finding, see general settings"),
+                Text("- Clicking on Conncetion Status now will open the app"),
+                Text("- AES support added"),
+              ],
+            ),
+          ),
+          const Text(
+            "General",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 3, left: 10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("- Fixed bug with multiselection, value rules and tables"),
+                Text("- Updated dependecies"),
               ],
             ),
           ),
