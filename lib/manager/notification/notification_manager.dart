@@ -51,13 +51,13 @@ class NotificationManager with WidgetsBindingObserver {
         'resource://drawable/ic_launcher',
         [
           NotificationChannel(
-            channelKey: ioBrokerConnectionNotificationChannelKey,
-            channelGroupKey: ioBrokerConnectionNotificationChannelGroupKey,
-            channelName: ioBrokerConnectionNotificationChannelName,
-            channelDescription: "Displays your connections status",
-            defaultColor: const Color(0xffffffff),
-            ledColor: Colors.blue,
-          ),
+              channelKey: ioBrokerConnectionNotificationChannelKey,
+              channelGroupKey: ioBrokerConnectionNotificationChannelGroupKey,
+              channelName: ioBrokerConnectionNotificationChannelName,
+              channelDescription: "Displays your connections status",
+              defaultColor: const Color(0xffffffff),
+              ledColor: Colors.blue,
+              playSound: false),
           NotificationChannel(
             channelKey: ioBrokerNotificationChannelKey,
             channelGroupKey: ioBrokerNotificationChannelGroupKey,
@@ -72,12 +72,20 @@ class NotificationManager with WidgetsBindingObserver {
         channelGroups: [
           NotificationChannelGroup(
               channelGroupKey: ioBrokerConnectionNotificationChannelGroupKey,
-              channelGroupName: ioBrokerConnectionNotificationChannelGroupName)
+              channelGroupName: ioBrokerConnectionNotificationChannelGroupName),
+          NotificationChannelGroup(
+              channelGroupKey: ioBrokerNotificationChannelGroupKey,
+              channelGroupName: ioBrokerNotificationChannelGroupName)
         ],
         debug: false);
     CustomLogger.logInfoNotification(
         methodname: "init",
         logMessage: "after init awesomeNotifications ($init)");
+    awesomeNotifications.setListeners(onActionReceivedMethod: test);
+  }
+
+  static Future<void> test(ReceivedAction action) async {
+    print("asdijasd");
   }
 
   ///Must be all static because of Isolate
@@ -89,13 +97,13 @@ class NotificationManager with WidgetsBindingObserver {
     awesomeNotifications
         .createNotification(
             content: NotificationContent(
-      id: ioBrokerConnectionNotificationId,
-      channelKey: ioBrokerConnectionNotificationChannelKey,
-      actionType: ActionType.KeepOnTop,
-      title: 'HioB Connection Status!',
-      body: contentraw,
-      locked: true,
-    ))
+                id: ioBrokerConnectionNotificationId,
+                channelKey: ioBrokerConnectionNotificationChannelKey,
+                actionType: ActionType.Default,
+                title: 'HioB Connection Status!',
+                body: contentraw,
+                locked: true,
+                criticalAlert: false))
         .then((value) {
       CustomLogger.logInfoNotification(
           methodname: "showConnectionNotification",
@@ -202,9 +210,7 @@ class NotificationManager with WidgetsBindingObserver {
         CustomLogger.logInfoNotification(
             methodname: "didChangeAppLifecycleState",
             logMessage: "App is inactive");
-        if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.startService();
-        }
+
         break;
       case AppLifecycleState.paused:
         CustomLogger.logInfoNotification(
@@ -221,9 +227,6 @@ class NotificationManager with WidgetsBindingObserver {
         Manager.instance.backgroundRunner.stopService();
         break;
       case AppLifecycleState.hidden:
-        if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.startService();
-        }
         break;
     }
   }
