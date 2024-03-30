@@ -44,7 +44,7 @@ class _MapOrderSettingTemplateState<V>
 
   @override
   Widget build(BuildContext context) {
-    final keys = data.keys.toList()..sort();
+    final keys = data.keys.toList();
     return ExpansionTile(
       title: Row(
         mainAxisSize: MainAxisSize.min,
@@ -111,6 +111,7 @@ class _MapOrderSettingTemplateState<V>
                         setState(() {
                           data.remove(key);
                           data[p0] = widget.fromStr(p1);
+                          this.reorder(data.length - 1, i);
                         });
                         widget.onChange(data);
                       },
