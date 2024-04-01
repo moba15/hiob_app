@@ -125,8 +125,11 @@ class NotificationManager with WidgetsBindingObserver {
     try {
       Map<String, dynamic> content = jsonDecode(contentraw);
       _showIoBCustomNotification(CustomNotification.fromJSON(content));
+      addNotificationToLogInBackground(CustomNotification.fromJSON(content));
     } catch (e) {
       _showIoBNotificationSimple(contentraw);
+      addNotificationToLogInBackground(
+          CustomNotification(title: "Notification", bodyText: contentraw));
     }
   }
 
@@ -147,7 +150,6 @@ class NotificationManager with WidgetsBindingObserver {
           methodname: "_showIoBNotificationMap",
           logMessage: "after _showIoBNotificationMap ($value)");
     });
-    addNotificationToLogInForeground(customNotification);
   }
 
   static void _showIoBNotificationSimple(String body) {
@@ -170,29 +172,34 @@ class NotificationManager with WidgetsBindingObserver {
           methodname: "_showIoBNotificationSimple",
           logMessage: "after _showIoBNotificationSimple ($value)");
     });
-
-    addNotificationToLogInForeground(
-        CustomNotification(title: "Notification", bodyText: body));
   }
 
   static void addNotificationToLogInBackground(
       CustomNotification customNotification) async {
-    notificationsLog.add(customNotification);
-    if (notificationsLog.length >= 20) {
-      //Save to file
-      /*  staticSharedPreferences ??= await SharedPreferences.getInstance();
-      List<dynamic> logs = (staticSharedPreferences?.get("notificationsettings")
-          as Map<String, dynamic>)["notificationsLog"];
-      logs.addAll(notificationsLog); */
-    }
+    //Save to file
+    staticSharedPreferences ??= await SharedPreferences.getInstance();
+    List<dynamic> logs = (jsonDecode(
+            staticSharedPreferences?.getString("notificationsettings") ?? "{}")
+        as Map<String, dynamic>)["notificationsLog"];
+    logs.add(customNotification.toJson());
+    Map<String, dynamic> settings = {
+      "backgroundNotificationsEnabled": true,
+      "notificationsLog": logs
+    };
+    notificationsLog.clear();
+    await staticSharedPreferences?.setString(
+        "notificationsettings", jsonEncode(settings));
   }
 
   void readSettings() async {
     Map<String, dynamic>? loadedSettings =
         await fileManager.getMap(notificationSettingsKey);
+
     if (loadedSettings == null) {
       _loadDefaultSettings();
     } else {
+      await fileManager.reload();
+      notificationsLog.clear();
       backgroundNotificationsEnabled =
           loadedSettings["backgroundNotificationsEnabled"];
       for (Map<String, dynamic> customNotificationRaw
@@ -237,8 +244,11 @@ class NotificationManager with WidgetsBindingObserver {
       CustomNotification customNotification =
           CustomNotification.fromJSON(content);
       _showIoBCustomNotification(customNotification);
+      addNotificationToLogInForeground(customNotification);
     } catch (e) {
       _showIoBNotificationSimple(contentraw);
+      addNotificationToLogInForeground(
+          CustomNotification(title: "Notification", bodyText: contentraw));
     }
   }
 
@@ -283,6 +293,7 @@ class NotificationManager with WidgetsBindingObserver {
             methodname: "didChangeAppLifecycleState",
             logMessage: "App is resumed");
         Manager.instance.backgroundRunner.stopService();
+        readSettings();
         break;
       case AppLifecycleState.hidden:
         break;

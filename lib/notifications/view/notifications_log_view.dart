@@ -20,6 +20,13 @@ class NotificationLogViewScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Notifications"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  bloc.add(NotificationsDeleteAllEvent());
+                },
+                icon: Icon(Icons.delete_forever))
+          ],
         ),
         body: BlocProvider<NotificationsBloc>(
           create: (context) {
@@ -53,11 +60,12 @@ class _NotificationLogBody extends StatelessWidget {
         itemBuilder: (context, index) {
           return Dismissible(
               onDismissed: (direction) {
-                bloc.add(NotificationsRemoveEvent(index: index));
+                bloc.add(NotificationsRemoveEvent(
+                    index: notifications.length - index - 1));
               },
               key: ValueKey(notifications[index]),
               background: Container(
-                color: Colors.red,
+                color: const Color.fromARGB(255, 239, 235, 235),
                 alignment: Alignment.centerLeft,
                 child: Container(
                   margin: const EdgeInsets.only(left: 10.0, right: 20.0),

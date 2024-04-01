@@ -75,6 +75,7 @@ class BackgroundRunner {
     if (!Platform.isAndroid) {
       return;
     }
+
     if (isServiceRunning) {
       return;
     }

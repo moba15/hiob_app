@@ -23,6 +23,10 @@ class FileManager {
     isLoaded = true;
   }*/
 
+  Future<void> reload() async {
+    await pref.reload();
+  }
+
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {
     return await pref.setString(key, jsonEncode(content));
   }
