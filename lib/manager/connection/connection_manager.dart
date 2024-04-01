@@ -294,7 +294,8 @@ class ConnectionManager with WidgetsBindingObserver {
         _onAnswerSubscribeToDataPoints(rawMap["value"]);
         break;
       case DataPackageType.notification:
-        NotificationManager.showIoBNotification(rawMap["content"]);
+        Manager.instance.notificationManager
+            .showIoBNotificationInForeground(rawMap["content"]);
         break;
       default:
         throw UnimplementedError("Error");

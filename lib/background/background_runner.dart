@@ -173,7 +173,8 @@ class BackgroundRunner {
           "Failed to login please open the app");
     } else if (packageType == DataPackageType.notification) {
       //TODO Create class
-      NotificationManager.showIoBNotification((rawMap["content"]["content"]));
+      NotificationManager.showIoBNotificationInBackground(
+          (rawMap["content"]["content"]));
     }
   }
 
