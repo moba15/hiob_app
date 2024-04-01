@@ -1,13 +1,19 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
 
+/**
+ * TODO Implement Implenation pattern to differnetiate between Background and Foreground (possible?)
+ */
 class NotificationManager with WidgetsBindingObserver {
+  static SharedPreferences? staticSharedPreferences;
   static AwesomeNotifications awesomeNotifications = AwesomeNotifications();
   static const String ioBrokerConnectionNotificationChannelKey =
       "ioBroker_connection_notification";
@@ -29,8 +35,12 @@ class NotificationManager with WidgetsBindingObserver {
 
   static bool backgroundNotificationsEnabled = false;
 
+  static List<CustomNotification> notificationsLog = [];
+
   final FileManager fileManager;
   final String notificationSettingsKey = "notificationsettings";
+  final StreamController _notificationStreamController =
+      StreamController.broadcast();
   NotificationManager({required this.fileManager}) {
     readSettings();
     WidgetsBinding.instance.addObserver(this);
@@ -81,11 +91,6 @@ class NotificationManager with WidgetsBindingObserver {
     CustomLogger.logInfoNotification(
         methodname: "init",
         logMessage: "after init awesomeNotifications ($init)");
-    awesomeNotifications.setListeners(onActionReceivedMethod: test);
-  }
-
-  static Future<void> test(ReceivedAction action) async {
-    print("asdijasd");
   }
 
   ///Must be all static because of Isolate
@@ -111,7 +116,7 @@ class NotificationManager with WidgetsBindingObserver {
     });
   }
 
-  static void showIoBNotification(String contentraw) {
+  static void showIoBNotificationInBackground(String contentraw) {
     ioBrokerNotificationId += 1;
     ioBrokerNotificationId %= 500;
     CustomLogger.logInfoNotification(
@@ -119,20 +124,20 @@ class NotificationManager with WidgetsBindingObserver {
         logMessage: "before showIoBNotification");
     try {
       Map<String, dynamic> content = jsonDecode(contentraw);
-      _showIoBNotificationMap(content);
+      _showIoBCustomNotification(CustomNotification.fromJSON(content));
     } catch (e) {
       _showIoBNotificationSimple(contentraw);
     }
   }
 
-  static void _showIoBNotificationMap(Map<String, dynamic> content) {
+  static void _showIoBCustomNotification(
+      CustomNotification customNotification) {
     CustomLogger.logInfoNotification(
         methodname: "_showIoBNotificationMap",
         logMessage: "before _showIoBNotificationMap");
     awesomeNotifications
         .createNotification(
-            content:
-                CustomNotification.fromJSON(content).getNotificationContent(
+            content: customNotification.getNotificationContent(
       id: ioBrokerNotificationId,
       channelKey: ioBrokerNotificationChannelKey,
       groupKey: ioBrokerNotificationChannelGroupKey,
@@ -142,6 +147,7 @@ class NotificationManager with WidgetsBindingObserver {
           methodname: "_showIoBNotificationMap",
           logMessage: "after _showIoBNotificationMap ($value)");
     });
+    addNotificationToLogInForeground(customNotification);
   }
 
   static void _showIoBNotificationSimple(String body) {
@@ -164,6 +170,21 @@ class NotificationManager with WidgetsBindingObserver {
           methodname: "_showIoBNotificationSimple",
           logMessage: "after _showIoBNotificationSimple ($value)");
     });
+
+    addNotificationToLogInForeground(
+        CustomNotification(title: "Notification", bodyText: body));
+  }
+
+  static void addNotificationToLogInBackground(
+      CustomNotification customNotification) async {
+    notificationsLog.add(customNotification);
+    if (notificationsLog.length >= 20) {
+      //Save to file
+      /*  staticSharedPreferences ??= await SharedPreferences.getInstance();
+      List<dynamic> logs = (staticSharedPreferences?.get("notificationsettings")
+          as Map<String, dynamic>)["notificationsLog"];
+      logs.addAll(notificationsLog); */
+    }
   }
 
   void readSettings() async {
@@ -174,6 +195,11 @@ class NotificationManager with WidgetsBindingObserver {
     } else {
       backgroundNotificationsEnabled =
           loadedSettings["backgroundNotificationsEnabled"];
+      for (Map<String, dynamic> customNotificationRaw
+          in loadedSettings["notificationsLog"]) {
+        notificationsLog
+            .add(CustomNotification.fromJSON(customNotificationRaw));
+      }
     }
   }
 
@@ -183,7 +209,8 @@ class NotificationManager with WidgetsBindingObserver {
 
   void _save() {
     Map<String, dynamic> settings = {
-      "backgroundNotificationsEnabled": backgroundNotificationsEnabled
+      "backgroundNotificationsEnabled": backgroundNotificationsEnabled,
+      "notificationsLog": notificationsLog
     };
     fileManager.writeJSON(notificationSettingsKey, settings);
   }
@@ -193,6 +220,34 @@ class NotificationManager with WidgetsBindingObserver {
     NotificationManager.backgroundNotificationsEnabled =
         backgroundNotificationsEnabled;
     _save();
+  }
+
+  Stream get notificationStream {
+    return _notificationStreamController.stream;
+  }
+
+  void showIoBNotificationInForeground(String contentraw) {
+    ioBrokerNotificationId += 1;
+    ioBrokerNotificationId %= 500;
+    CustomLogger.logInfoNotification(
+        methodname: "showIoBNotification",
+        logMessage: "before showIoBNotification");
+    try {
+      Map<String, dynamic> content = jsonDecode(contentraw);
+      CustomNotification customNotification =
+          CustomNotification.fromJSON(content);
+      _showIoBCustomNotification(customNotification);
+    } catch (e) {
+      _showIoBNotificationSimple(contentraw);
+    }
+  }
+
+  static void addNotificationToLogInForeground(
+      CustomNotification customNotification) {
+    notificationsLog.add(customNotification);
+    Manager.instance.notificationManager._save();
+    Manager.instance.notificationManager._notificationStreamController
+        .add(customNotification);
   }
 
   @override
@@ -232,5 +287,27 @@ class NotificationManager with WidgetsBindingObserver {
       case AppLifecycleState.hidden:
         break;
     }
+  }
+
+  void removeNotificationLog({required int index}) {
+    notificationsLog.removeAt(index);
+    _save();
+  }
+
+  void readAllNotifications() {
+    for (var element in notificationsLog) {
+      element.read = true;
+    }
+    _save();
+    _notificationStreamController.add(0);
+  }
+
+  void deletAllNotifications() {
+    notificationsLog.clear();
+    _save();
+  }
+
+  int get unreadNotifications {
+    return notificationsLog.where((element) => !element.read).length;
   }
 }

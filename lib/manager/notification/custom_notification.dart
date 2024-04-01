@@ -9,13 +9,21 @@ class CustomNotification {
   final bool group;
   final bool locked;
 
+  bool read;
+
+  DateTime? dateTime;
+
   CustomNotification(
       {this.title,
       this.bodyText,
       this.color,
       this.id,
       this.group = false,
-      this.locked = false});
+      this.locked = false,
+      this.dateTime,
+      this.read = false}) {
+    dateTime ??= DateTime.now();
+  }
 
   factory CustomNotification.fromJSON(Map<String, dynamic> content) {
     Color? color;
@@ -26,13 +34,29 @@ class CustomNotification {
     if (id != null) {
       id += 500;
     }
+    DateTime? dateTime;
+    if (content["dateTime"] != null) {
+      dateTime = DateTime.fromMillisecondsSinceEpoch(content["dateTime"]);
+    }
     return CustomNotification(
         title: content["title"],
         bodyText: content["body"],
         color: color,
         id: id,
         group: content["group"] ?? false,
-        locked: content["locked"] ?? false);
+        locked: content["locked"] ?? false,
+        dateTime: dateTime,
+        read: content["read"] ?? false);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "title": title,
+      "body": bodyText,
+      "group": group,
+      "dateTime": dateTime?.millisecondsSinceEpoch,
+      "read": read,
+    };
   }
 
   NotificationContent getNotificationContent(
@@ -46,5 +70,35 @@ class CustomNotification {
         color: color,
         locked: locked,
         icon: "");
+  }
+
+  Widget getDateWidget() {
+    if (dateTime == null) {
+      return const Text("No Time");
+    }
+
+    DateTime today = DateTime.now();
+    if (today.year != dateTime!.year ||
+        today.day != dateTime!.day ||
+        today.month != dateTime!.month) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "${dateTime!.day}.${dateTime!.month}.${dateTime!.year}",
+            style: const TextStyle(fontSize: 18),
+          ),
+          Text(
+            "${dateTime!.hour}:${dateTime!.minute < 10 ? ('0${dateTime!.minute}') : dateTime!.minute}:${dateTime!.second < 10 ? ('0${dateTime!.second}') : dateTime!.second}",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          )
+        ],
+      );
+    }
+
+    return Text(
+      "${dateTime!.hour}:${dateTime!.minute < 10 ? ('0${dateTime!.minute}') : dateTime!.minute}:${dateTime!.second < 10 ? ('0${dateTime!.second}') : dateTime!.second}",
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+    );
   }
 }

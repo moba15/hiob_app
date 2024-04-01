@@ -32,13 +32,15 @@ class CustomTheme {
   CustomColorScheme customColorScheme = const CustomColorScheme(
     customColorSchemeMode: CustomColorSchemeMode.fromSeed,
   );
+  double textScale = 1;
 
   CustomTheme(
       {required this.customThemeBrightness,
       required this.customThemeMaterialVersion,
       this.customColorScheme = const CustomColorScheme(
           customColorSchemeMode: CustomColorSchemeMode.fromSeed),
-      this.appBarElevation = 5});
+      this.appBarElevation = 5,
+      this.textScale = 1});
 
   ThemeData get themeDataLight => ThemeData(
       useMaterial3:
@@ -54,24 +56,25 @@ class CustomTheme {
       brightness: Brightness.light);
 
   ThemeData get themeDataDark => ThemeData.dark(
-              useMaterial3: customThemeMaterialVersion ==
-                  CustomThemeMaterialVersion.material3)
-          .copyWith(
-        appBarTheme: AppBarTheme(
-          elevation: appBarElevation,
-        ),
-        dividerColor: Colors.transparent,
-        inputDecorationTheme:
-            const InputDecorationTheme(border: OutlineInputBorder()),
-        brightness: Brightness.dark,
-        colorScheme: customColorScheme.colorScheme(Brightness.dark),
-      );
+          useMaterial3: customThemeMaterialVersion ==
+              CustomThemeMaterialVersion.material3)
+      .copyWith(
+          appBarTheme: AppBarTheme(
+            elevation: appBarElevation,
+          ),
+          dividerColor: Colors.transparent,
+          inputDecorationTheme:
+              const InputDecorationTheme(border: OutlineInputBorder()),
+          brightness: Brightness.dark,
+          colorScheme: customColorScheme.colorScheme(Brightness.dark),
+          primaryTextTheme: TextTheme());
 
   Map<String, dynamic> toJson() => {
         "brightness": customThemeBrightness.index,
         "materialVersion": customThemeMaterialVersion.index,
         "appBarElevation": appBarElevation,
         "colorScheme": customColorScheme.toJson(),
+        "textScale": textScale,
       };
 
   factory CustomTheme.fromJson(Map<String, dynamic> json) {
@@ -85,14 +88,16 @@ class CustomTheme {
         customThemeBrightness: customThemeBrightness,
         customThemeMaterialVersion: customThemeMaterialVersion,
         customColorScheme: customColorScheme,
-        appBarElevation: json["appBarElevation"] ?? 5);
+        appBarElevation: json["appBarElevation"] ?? 5,
+        textScale: json["textScale"] ?? 1);
   }
 
   CustomTheme copyOf(
       {CustomThemeBrightness? customThemeBrightness,
       CustomThemeMaterialVersion? customThemeMaterialVersion,
       double? appBarElevation,
-      CustomColorScheme? customColorScheme}) {
+      CustomColorScheme? customColorScheme,
+      double? textScale}) {
     return CustomTheme(
       customThemeBrightness:
           customThemeBrightness ?? this.customThemeBrightness,
@@ -100,6 +105,7 @@ class CustomTheme {
           customThemeMaterialVersion ?? this.customThemeMaterialVersion,
       appBarElevation: appBarElevation ?? this.appBarElevation,
       customColorScheme: customColorScheme ?? this.customColorScheme,
+      textScale: textScale ?? this.textScale,
     );
   }
 }
