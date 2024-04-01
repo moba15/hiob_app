@@ -70,6 +70,7 @@ class ChangeLogScreen extends StatelessWidget {
                     "- Logging for notification bug finding, see general settings"),
                 Text("- Clicking on Conncetion Status now will open the app"),
                 Text("- AES support added"),
+                Text("- Notification log now available (beta)"),
               ],
             ),
           ),
@@ -84,6 +85,8 @@ class ChangeLogScreen extends StatelessWidget {
               children: [
                 Text("- Fixed bug with multiselection, value rules and tables"),
                 Text("- Updated dependecies"),
+                Text(
+                    "- Textscale (beta) now available. could destroy your design. See Custom Theme Settings")
               ],
             ),
           ),

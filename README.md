@@ -2,7 +2,9 @@
 Please note this [repository](https://github.com/moba15/ioBroker.hiob) and releases for changes and explainations
 ## Download
 [PlayStore](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
-
+## 0.0.615-beta.0
+- Added notifications log
+- Added Textscale
 ## 0.0.612
 - Fixed Tabbar alignment
 - Fixed #46
