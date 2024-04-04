@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:smart_home/main.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -116,6 +117,7 @@ class BackgroundRunner {
     DartPluginRegistrant.ensureInitialized();
 
     s.on("start").listen((event) async {
+      HttpOverrides.global = MyHttpOverrides();
       log("event: ${jsonEncode(event)}");
       CustomLogger.logInfoBackgroundRunner(
           methodname: "onStart", logMessage: "Service is connecting to server");
