@@ -192,19 +192,21 @@ class NotificationManager with WidgetsBindingObserver {
   }
 
   void readSettings() async {
+    await fileManager.reload();
     Map<String, dynamic>? loadedSettings =
         await fileManager.getMap(notificationSettingsKey);
 
     if (loadedSettings == null) {
       _loadDefaultSettings();
     } else {
-      await fileManager.reload();
       notificationsLog.clear();
       backgroundNotificationsEnabled =
           loadedSettings["backgroundNotificationsEnabled"];
       for (Map<String, dynamic> customNotificationRaw
           in loadedSettings["notificationsLog"]) {
         notificationsLog
+            .add(CustomNotification.fromJSON(customNotificationRaw));
+        _notificationStreamController
             .add(CustomNotification.fromJSON(customNotificationRaw));
       }
     }

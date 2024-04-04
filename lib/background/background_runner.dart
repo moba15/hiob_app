@@ -116,7 +116,7 @@ class BackgroundRunner {
     DartPluginRegistrant.ensureInitialized();
 
     s.on("start").listen((event) async {
-      log("event: " + jsonEncode(event));
+      log("event: ${jsonEncode(event)}");
       CustomLogger.logInfoBackgroundRunner(
           methodname: "onStart", logMessage: "Service is connecting to server");
       webSocketChannel = IOWebSocketChannel.connect(event!["url"],
@@ -124,7 +124,7 @@ class BackgroundRunner {
 
       webSocketChannel!.stream.listen(
           (e) => onData(e, event["loginPackage"], event!["aes_enabled"],
-              event!["secureKey"]),
+              event["secureKey"]),
           onError: (e) => onError(s, e),
           onDone: onDone);
     });
