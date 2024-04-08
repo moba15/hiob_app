@@ -22,7 +22,7 @@ class BackgroundRunner {
 
   GeneralManager generalManager;
   IoBrokerManager ioBrokerManager;
-  late FlutterBackgroundService service;
+  static late FlutterBackgroundService service;
   bool isServiceRunning = false;
 
   BackgroundRunner(
@@ -109,7 +109,6 @@ class BackgroundRunner {
     CustomLogger.logInfoBackgroundRunner(
         methodname: "onStop", logMessage: "Stop invoked");
     webSocketChannel?.sink.close();
-    s.stopSelf();
   }
 
   @pragma('vm:entry-point')
@@ -128,7 +127,7 @@ class BackgroundRunner {
           (e) => onData(e, event["loginPackage"], event!["aes_enabled"],
               event["secureKey"]),
           onError: (e) => onError(s, e),
-          onDone: onDone);
+          onDone: () => onDone(s));
     });
 
     s.on("stop").listen((event) {
@@ -181,10 +180,12 @@ class BackgroundRunner {
     }
   }
 
-  static void onDone() {
+  static void onDone(ServiceInstance s) {
     CustomLogger.logInfoBackgroundRunner(
         methodname: "onDone", logMessage: "Done connection");
     NotificationManager.showConnectionNotification(
         "Disconnected please open app to connect");
+    s.stopSelf();
+    s.invoke("stop");
   }
 }
