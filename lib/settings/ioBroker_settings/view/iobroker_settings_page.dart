@@ -159,7 +159,7 @@ class IoBrokerSettingsView extends StatelessWidget {
                     setState(
                         () => ioBrokerManager.changeUseSecureCon(b ?? true));
                   },
-                  title: const Text("Use secure Connection"),
+                  title: const Text("Use wss Connection"),
                 ),
                 CheckboxListTile(
                   value: ioBrokerManager.secureBox,

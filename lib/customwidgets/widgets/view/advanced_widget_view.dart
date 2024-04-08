@@ -101,40 +101,41 @@ class _NoneTriggerActionView extends StatelessWidget {
       );
     }
 
-    return ListTile(
-      onLongPress: onLongTab,
-      title: advancedCustomWidget.value == null
-          ? Text(
-              advancedCustomWidget.name ?? "No Name Found",
-              overflow: TextOverflow.clip,
-            )
-          : Text(
-              advancedCustomWidget.value!,
-              overflow: TextOverflow.ellipsis,
-            ),
-      subtitle: noneTriggerAction.dataPoint?.device?.getDeviceStatus() !=
-              DeviceStatus.ready
-          ? const Text(
-              "U/A",
-              style: TextStyle(color: Colors.red),
-              overflow: TextOverflow.ellipsis,
-            )
-          : null,
-      trailing: BlocBuilder<DataPointBloc, DataPointState>(
-        bloc: DataPointBloc(noneTriggerAction.dataPoint!),
-        builder: (context, state) {
-          String leading = state.value.toString();
-          if (noneTriggerAction.displayRules?.containsKey(leading) ?? false) {
-            leading =
-                noneTriggerAction.displayRules?[leading] ?? "Error in Filter";
-          } else if (state.value is double) {
-            leading = (state.value as double)
-                .toStringAsFixed(noneTriggerAction.round);
-          }
-          if (noneTriggerAction.unit != null) {
-            leading = "$leading ${noneTriggerAction.unit!}";
-          }
-          return Container(
+    return BlocBuilder<DataPointBloc, DataPointState>(
+      bloc: DataPointBloc(noneTriggerAction.dataPoint!),
+      builder: (context, state) {
+        String leading = state.value.toString();
+        if (noneTriggerAction.displayRules?.containsKey(leading) ?? false) {
+          leading =
+              noneTriggerAction.displayRules?[leading] ?? "Error in Filter";
+        } else if (state.value is double) {
+          leading =
+              (state.value as double).toStringAsFixed(noneTriggerAction.round);
+        }
+        if (noneTriggerAction.unit != null) {
+          leading = "$leading ${noneTriggerAction.unit!}";
+        }
+
+        return ListTile(
+          onLongPress: onLongTab,
+          title: advancedCustomWidget.value == null
+              ? Text(
+                  advancedCustomWidget.name ?? "No Name Found",
+                  overflow: TextOverflow.clip,
+                )
+              : Text(
+                  advancedCustomWidget.value!,
+                  overflow: TextOverflow.ellipsis,
+                ),
+          subtitle: noneTriggerAction.dataPoint?.device?.getDeviceStatus() !=
+                  DeviceStatus.ready
+              ? const Text(
+                  "U/A",
+                  style: TextStyle(color: Colors.red),
+                  overflow: TextOverflow.ellipsis,
+                )
+              : null,
+          trailing: Container(
             constraints: const BoxConstraints(maxWidth: 200),
             child: Text(
               leading,
@@ -142,9 +143,9 @@ class _NoneTriggerActionView extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

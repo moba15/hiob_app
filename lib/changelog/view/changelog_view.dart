@@ -71,6 +71,7 @@ class ChangeLogScreen extends StatelessWidget {
                 Text("- Clicking on Conncetion Status now will open the app"),
                 Text("- AES support added"),
                 Text("- Notification log now available (beta)"),
+                Text("- Fixed some bugs"),
               ],
             ),
           ),
