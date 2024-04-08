@@ -40,6 +40,11 @@ class _CustomThemeSettingsBody extends StatelessWidget {
           const Divider(),
           const Text("App Bar Elevation"),
           _appBarElevationSlider(),
+          const Text(
+            "Textscale (beta)",
+            style: TextStyle(color: Colors.green),
+          ),
+          _scaleSlider(),
           _seedColorPicker(),
         ],
       ),
@@ -109,6 +114,27 @@ class _CustomThemeSettingsBody extends StatelessWidget {
               themeManager.changeTheme(
                   customTheme: themeManager.loadedCustomTheme
                       .copyOf(appBarElevation: d));
+            });
+          },
+        );
+      },
+    );
+  }
+
+  Widget _scaleSlider() {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Slider(
+          value: themeManager.loadedCustomTheme.textScale,
+          min: 0.5,
+          max: 1.9,
+          label: themeManager.loadedCustomTheme.textScale.toStringAsFixed(1),
+          divisions: 14,
+          onChanged: (d) {
+            setState(() {
+              themeManager.changeTheme(
+                  customTheme:
+                      themeManager.loadedCustomTheme.copyOf(textScale: d));
             });
           },
         );

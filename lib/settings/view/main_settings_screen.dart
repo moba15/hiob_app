@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:smart_home/custom_theme/settings/custom_theme_settings_page.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
 import 'package:smart_home/settings/general_settings/view/general_settings_page.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
+import 'package:smart_home/settings/notification_settings/notification_settings_page.dart';
 import 'package:smart_home/settings/view/screen_setting_screen.dart';
 
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
@@ -122,6 +124,35 @@ class MainSettingsScreen extends StatelessWidget {
                     builder: (context) => RepositoryProvider<Manager>.value(
                           value: Manager(),
                           child: const CustomThemeSettingsPage(),
+                        )),
+              )
+            },
+          ),
+          ListTile(
+            title: const Row(
+              children: [
+                Text("Notifications"),
+                Gap(10),
+                Chip(
+                  label: Text(
+                    "beta",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                  visualDensity: VisualDensity(horizontal: -2, vertical: -4),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                )
+              ],
+            ),
+            leading: const Icon(Icons.notifications),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RepositoryProvider<Manager>.value(
+                          value: Manager(),
+                          child: const NotificationSettingsPage(),
                         )),
               )
             },

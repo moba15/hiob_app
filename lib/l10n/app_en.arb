@@ -44,6 +44,8 @@
   "device_name": "Device name",
   "device_id": "device_id",
 
+  "@_DEVICE_SETTINGS": {},
+  "background_notifications": "Background notifications",
 
   "@_ALERTS": {},
   "select_widget_template_alert_title": "Select Widget Template",

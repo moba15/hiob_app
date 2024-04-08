@@ -56,9 +56,9 @@ class ChangeLogScreen extends StatelessWidget {
               ],
             ),
           ),*/
-          const Text("Fixed scneen settings bug"),
+
           const Text(
-            "Widget settings",
+            "Notifications",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Container(
@@ -66,7 +66,28 @@ class ChangeLogScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("- You can now edit selection rules:"),
+                Text(
+                    "- Logging for notification bug finding, see general settings"),
+                Text("- Clicking on Conncetion Status now will open the app"),
+                Text("- AES support added"),
+                Text("- Notification log now available (beta)"),
+                Text("- Fixed some bugs"),
+              ],
+            ),
+          ),
+          const Text(
+            "General",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 3, left: 10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("- Fixed bug with multiselection, value rules and tables"),
+                Text("- Updated dependecies"),
+                Text(
+                    "- Textscale (beta) now available. could destroy your design. See Custom Theme Settings")
               ],
             ),
           ),

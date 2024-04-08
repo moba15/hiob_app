@@ -94,7 +94,6 @@ class _RulesSettingsState extends State<_RulesSettings> {
   @override
   Widget build(BuildContext context) {
     final keys = widget.noneTriggerAction.displayRules?.keys.toList();
-    keys?.sort();
     return ExpansionTile(
       childrenPadding: const EdgeInsets.only(left: 10),
       title: Row(

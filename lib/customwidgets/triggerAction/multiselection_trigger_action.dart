@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/triggerAction/settings/multiselection_t
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/triggerAction/view/multiselection_trigger_view.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/utils/pair.dart';
 
 import '../../manager/manager.dart';
 
@@ -84,8 +85,9 @@ class MultiSelectionTriggerAction extends TriggerAction {
             selections[selections.keys.elementAt(i)]!;
       }
     }
-
-    selections = orderedMap;
+    if (oldIndex != newIndex) {
+      selections = orderedMap;
+    }
   }
 
   @override

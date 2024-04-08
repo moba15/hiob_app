@@ -593,8 +593,8 @@ class _DataPointInfoDialog extends StatelessWidget {
               dataPoint.role = s;
             },
             decoration: const InputDecoration(labelText: "Name"),
-            controller:
-                TextEditingController(text: dataPoint.otherDetails?["name"]),
+            controller: TextEditingController(
+                text: dataPoint.otherDetails?["name"].toString()),
           ),
           ExpansionTile(
             title: const Text("More Information"),
