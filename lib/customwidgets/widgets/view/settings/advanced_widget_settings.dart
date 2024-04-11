@@ -22,8 +22,8 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
 
   @override
   bool validate() {
-    return advancedCustomWidget.bodyTriggerAction != null &&
-        advancedCustomWidget.bodyTriggerAction!.validate() &&
+    return advancedCustomWidget.mainBody != null &&
+        advancedCustomWidget.mainBody!.validate() &&
         advancedCustomWidget.customAlertDialogWidget != null;
   }
 
@@ -64,11 +64,9 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
             description:
                 "Here you can setup the main body of this widget, you can choose between a lot different widget types",
             child: TriggerActionSelectionTemplate(
-              onChange: (trigger, settings) => {
-                advancedCustomWidget.bodyTriggerAction = trigger,
-                setting = settings
-              },
-              preSelectedTriggerAction: advancedCustomWidget.bodyTriggerAction,
+              onChange: (trigger, settings) =>
+                  {advancedCustomWidget.mainBody = trigger, setting = settings},
+              preSelectedTriggerAction: advancedCustomWidget.mainBody,
             ),
           ),
           Container(

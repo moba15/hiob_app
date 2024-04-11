@@ -12,7 +12,7 @@ import 'package:smart_home/manager/manager.dart';
 
 class AdvancedCustomWidget extends CustomWidget {
   String? value;
-  TriggerAction? bodyTriggerAction;
+  TriggerAction? mainBody;
   String? bodyIconID;
 
   String? subTitle;
@@ -24,7 +24,7 @@ class AdvancedCustomWidget extends CustomWidget {
   AdvancedCustomWidget(
       {required name,
       this.value,
-      this.bodyTriggerAction,
+      this.mainBody,
       this.subTitle,
       this.subTitleDataPoint,
       this.bodyIconID,
@@ -36,7 +36,7 @@ class AdvancedCustomWidget extends CustomWidget {
   @override
   Map<String, dynamic> toJson() => {
         "type": CustomWidgetType.advanced.toString(),
-        "bodyTriggerAction": jsonEncode(bodyTriggerAction?.toJson()),
+        "mainBody": jsonEncode(mainBody?.toJson()),
         "subTitle": subTitle,
         "subTitleDataPoint": subTitleDataPoint?.id,
         "name": name,
@@ -48,13 +48,13 @@ class AdvancedCustomWidget extends CustomWidget {
   factory AdvancedCustomWidget.fromJson(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["subTitleDataPoint"].toString());
-    TriggerAction triggerAction =
-        TriggerAction.fromJSON(jsonDecode(json["bodyTriggerAction"] ?? "{}"));
+    TriggerAction triggerAction = TriggerAction.fromJSON(
+        jsonDecode(json["bodyTriggerAction"] ?? (json["mainBody"] ?? "{}")));
     return AdvancedCustomWidget(
       name: json["name"],
       subTitle: json["subTitle"],
       subTitleDataPoint: dataPoint,
-      bodyTriggerAction: triggerAction, //TODO:
+      mainBody: triggerAction, //TODO:
       value: json["value"],
       bodyIconID: json["bodyIconID"],
       customAlertDialogWidget: json["customAlertDialogWidget"] == null
@@ -81,7 +81,7 @@ class AdvancedCustomWidget extends CustomWidget {
     return AdvancedCustomWidget(
         name: name,
         value: value,
-        bodyTriggerAction: bodyTriggerAction,
+        mainBody: mainBody,
         subTitle: subTitle,
         subTitleDataPoint: subTitleDataPoint,
         bodyIconID: bodyIconID,

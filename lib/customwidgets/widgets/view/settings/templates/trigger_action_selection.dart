@@ -59,7 +59,7 @@ class _TriggerActionSelectionTemplateState
           compareFn: (d, d2) => d == d2,
         ),
         ExpansionTile(
-          title: const Text("Trigger Settings"),
+          title: const Text("Main Body Settings"),
           leading: const Icon(Icons.settings),
           initiallyExpanded: true,
           childrenPadding: const EdgeInsets.only(
