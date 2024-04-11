@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
+import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
@@ -86,14 +87,19 @@ class CustomWidgetManager {
           customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.webView:
-          customWidget = CustomWebViewWidget.fromJSON(widgetRaw);
+          customWidget = CustomWebViewWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.table:
           customWidget = CustomTableWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.graph:
-          customWidget = GraphWidget.fromJSON(widgetRaw);
+          customWidget = GraphWidget.fromJson(widgetRaw);
           break;
+        case CustomWidgetType.colorPallete:
+          customWidget = CustomColorPalleteWidget.fromJson(widgetRaw);
+          break;
+        default:
+          throw UnimplementedError();
       }
 
       CustomWidgetTemplate template =

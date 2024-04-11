@@ -67,7 +67,7 @@ class GraphWidget extends CustomWidget {
   @override
   Widget get widget => GraphView(graphWidget: this);
 
-  factory GraphWidget.fromJSON(Map<String, dynamic> json) {
+  factory GraphWidget.fromJson(Map<String, dynamic> json) {
     List<GraphAxis> xAxes = List.of(json["xAxes"])
         .map((v) => GraphAxis.fromJson(Map.of(v)))
         .toList();
