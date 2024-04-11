@@ -1,3 +1,4 @@
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_color_pallete_widget_view.dart';
@@ -5,7 +6,10 @@ import 'package:smart_home/customwidgets/widgets/view/settings/custom_color_pall
 
 class CustomColorPalleteWidget extends CustomWidget {
   final String? value;
-  CustomColorPalleteWidget({required String? name, this.value})
+  final Map<ColorPickerType, bool> pickersEnabled;
+
+  CustomColorPalleteWidget(
+      {required String? name, this.value, this.pickersEnabled = const {}})
       : super(name: name, type: CustomWidgetType.colorPallete, settings: {});
 
   @override
