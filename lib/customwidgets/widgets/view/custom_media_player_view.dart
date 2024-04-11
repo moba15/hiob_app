@@ -38,9 +38,9 @@ class _CustomMediaPlayerWidgetViewState
     }
     return VlcPlayer(
       controller: _vlcPlayerController,
-      aspectRatio: widget.customMediaPlayerWidget.height *
+      aspectRatio: widget.customMediaPlayerWidget.width *
           1.0 /
-          widget.customMediaPlayerWidget.width,
+          widget.customMediaPlayerWidget.height,
       placeholder: const Center(child: CircularProgressIndicator()),
     );
   }
