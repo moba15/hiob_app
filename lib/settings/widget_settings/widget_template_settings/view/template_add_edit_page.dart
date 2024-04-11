@@ -138,7 +138,8 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
                 child: TextField(
                   controller: _nameController,
-                  onChanged: (value) => {},
+                  onChanged: (value) =>
+                      {_customWidgetSettingWidget?.customWidget.name = value},
                   decoration: const InputDecoration(labelText: "Name"),
                 ),
               ),
