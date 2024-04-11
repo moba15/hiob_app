@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -94,6 +95,8 @@ class CustomWidgetManager {
         case CustomWidgetType.graph:
           customWidget = GraphWidget.fromJSON(widgetRaw);
           break;
+        case CustomWidgetType.mediaPlayer:
+          customWidget = CustomMediaPlayerWidget.fromJSON(widgetRaw);
       }
 
       CustomWidgetTemplate template =

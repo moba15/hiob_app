@@ -71,6 +71,7 @@ dependencies:
   gap: ^3.0.1
   url_launcher: ^6.2.5
   my_logger: ^1.0.1
+  flutter_vlc_player_platform_interface: ^2.0.3
  
 
 

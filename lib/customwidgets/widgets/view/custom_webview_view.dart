@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -16,7 +15,6 @@ class CustomWebViewView extends StatefulWidget {
 
 class _CustomWebViewViewState extends State<CustomWebViewView> {
   late WebViewController _webViewController;
-  late VlcPlayerController _videoPlayerController;
 
   @override
   void initState() {
@@ -46,32 +44,42 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
     }
 
     super.initState();
-
-    _videoPlayerController = VlcPlayerController.network(
-      'https://media.w3.org/2010/05/sintel/trailer.mp4',
-      hwAcc: HwAcc.full,
-      autoPlay: true,
-      options: VlcPlayerOptions(),
-    );
-  }
-
-  Future<void> initializePlayer() async {}
-
-  @override
-  void dispose() async {
-    super.dispose();
-    await _videoPlayerController.stopRendererScanning();
-    await _videoPlayerController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: VlcPlayer(
-        controller: _videoPlayerController,
-        aspectRatio: 16 / 9,
-        placeholder: Center(child: CircularProgressIndicator()),
-      ),
-    );
+    return GestureDetector(
+        onLongPress: () => _webViewController.reload(),
+        child: Column(
+          children: [
+            if (widget.customWebViewWidget.dataPoint != null)
+              BlocListener<DataPointBloc, DataPointState>(
+                bloc: DataPointBloc(widget.customWebViewWidget.dataPoint!),
+                child: SizedBox(
+                  height: widget.customWebViewWidget.height.toDouble(),
+                  child: WebViewWidget(
+                    controller: _webViewController,
+                  ),
+                ),
+                listener: (context, state) {
+                  if (state.value.toString().startsWith("https://") ||
+                      state.value.toString().startsWith("http://")) {
+                    _webViewController
+                        .loadRequest(Uri.parse(state.value.toString()));
+                  } else {
+                    _webViewController
+                        .loadRequest(Uri.parse("https://${state.value}"));
+                  }
+                },
+              ),
+            if (widget.customWebViewWidget.dataPoint == null)
+              SizedBox(
+                height: widget.customWebViewWidget.height.toDouble(),
+                child: WebViewWidget(
+                  controller: _webViewController,
+                ),
+              ),
+          ],
+        ));
   }
 }
