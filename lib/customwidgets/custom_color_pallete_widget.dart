@@ -3,18 +3,46 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_color_pallete_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_color_pallete_widget_settings.dart';
+import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/device.dart';
+import 'package:smart_home/manager/manager.dart';
 
 class CustomColorPalleteWidget extends CustomWidget {
-  final String? value;
-  final Map<ColorPickerType, bool> pickersEnabled;
+  String? value;
+  Map<ColorPickerType, bool> pickersEnabled;
+  DataPoint? dataPoint;
+  Device? device;
+  String prefix;
+  bool? alpha;
 
   CustomColorPalleteWidget(
-      {required String? name, this.value, this.pickersEnabled = const {}})
-      : super(name: name, type: CustomWidgetType.colorPallete, settings: {});
+      {required String? name,
+      this.value,
+      required this.pickersEnabled,
+      this.dataPoint,
+      this.device,
+      this.prefix = "0x",
+      this.alpha = false})
+      : super(name: name, type: CustomWidgetType.colorPallete, settings: {}) {
+    for (ColorPickerType type in ColorPickerType.values) {
+      if (!pickersEnabled.containsKey(type) &&
+          type != ColorPickerType.custom &&
+          type != ColorPickerType.customSecondary) {
+        pickersEnabled[type] = false;
+      }
+    }
+  }
 
   @override
   CustomWidget clone() {
-    return CustomColorPalleteWidget(name: name, value: value);
+    return CustomColorPalleteWidget(
+        name: name,
+        value: value,
+        pickersEnabled: pickersEnabled,
+        dataPoint: dataPoint,
+        device: device,
+        prefix: prefix,
+        alpha: alpha);
   }
 
   @override
@@ -23,18 +51,37 @@ class CustomColorPalleteWidget extends CustomWidget {
 
   @override
   Map<String, dynamic> toJson() {
+    Map<String, bool> m =
+        pickersEnabled.map((key, value) => MapEntry(key.toString(), value));
     return {
       "type": type.toString(),
       "name": name,
       "value": value,
+      "pickersEnabled": m,
+      "dataPoint": dataPoint?.id,
+      "device": device?.id,
+      "prefix": prefix,
+      "alpha": alpha,
     };
   }
 
   @override
-  // TODO: implement widget
   Widget get widget => CustomColorPalleteWidgetView(colorPalleteWidget: this);
 
   factory CustomColorPalleteWidget.fromJson(Map<String, dynamic> json) {
-    return CustomColorPalleteWidget(name: json["name"], value: json["value"]);
+    Map<String, dynamic> pickersEnabledRaw = json["pickersEnabled"] ?? {};
+
+    return CustomColorPalleteWidget(
+        name: json["name"],
+        value: json["value"],
+        prefix: json["prefix"] ?? "0x",
+        alpha: json["alpha"] ?? false,
+        dataPoint: Manager.instance.deviceManager
+            .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? ""),
+        device: Manager.instance.deviceManager.getDevice(json["device"] ?? ""),
+        pickersEnabled: pickersEnabledRaw.map((key, value) => MapEntry(
+            ColorPickerType.values
+                .firstWhere((element) => element.toString() == key),
+            value)));
   }
 }

@@ -56,7 +56,8 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.graph:
         return GraphWidget(name: "name").settingWidget;
       case CustomWidgetType.colorPallete:
-        return CustomColorPalleteWidget(name: "").settingWidget;
+        return CustomColorPalleteWidget(name: "", pickersEnabled: {})
+            .settingWidget;
     }
   }
 
