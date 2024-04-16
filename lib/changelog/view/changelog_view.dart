@@ -76,7 +76,7 @@ class ChangeLogScreen extends StatelessWidget {
             ),
           ), */
           const Text(
-            "General",
+            "Templates",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Container(
@@ -85,7 +85,8 @@ class ChangeLogScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    "- Added network media player (only Android with google services)")
+                    "- Added network media player (only Android with google services)"),
+                Text("- Added color picker")
               ],
             ),
           ),

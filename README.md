@@ -3,6 +3,10 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [PlayStore](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 ## 0.0.615-beta.0
+- Added network media player widget
+- Added color picker widget
+- Fixed #56
+## 0.0.615-beta.0
 - Added notifications log
 - Added Textscale
 ## 0.0.612
