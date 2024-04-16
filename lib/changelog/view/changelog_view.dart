@@ -57,7 +57,7 @@ class ChangeLogScreen extends StatelessWidget {
             ),
           ),*/
 
-          const Text(
+          /* const Text(
             "Notifications",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
@@ -74,7 +74,7 @@ class ChangeLogScreen extends StatelessWidget {
                 Text("- Fixed some bugs"),
               ],
             ),
-          ),
+          ), */
           const Text(
             "General",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -84,10 +84,8 @@ class ChangeLogScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("- Fixed bug with multiselection, value rules and tables"),
-                Text("- Updated dependecies"),
                 Text(
-                    "- Textscale (beta) now available. could destroy your design. See Custom Theme Settings")
+                    "- Added network media player (only Android with google services)")
               ],
             ),
           ),
