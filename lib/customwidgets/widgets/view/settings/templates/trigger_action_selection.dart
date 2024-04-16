@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
+import 'package:smart_home/utils/theme.dart';
 
 class TriggerActionSelectionTemplate extends StatefulWidget {
   final Function(TriggerAction?, TriggerActionSetting?) onChange;
@@ -69,7 +70,8 @@ class _TriggerActionSelectionTemplateState
           children: [
             _triggerActionSetting == null
                 ? const Text("No Settings")
-                : _triggerActionSetting as Widget
+                : InputFieldContainer.inputContainer(
+                    child: _triggerActionSetting as Widget)
           ],
         ),
       ],

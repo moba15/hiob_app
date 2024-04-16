@@ -48,7 +48,17 @@ class SliderTriggerActionSettings extends TriggerActionSetting {
                               text: sliderTriggerAction.min.toString())),
                       decoration: const InputDecoration(labelText: "Min"),
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      inputFormatters: [
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          if (int.tryParse(newValue.text) == null &&
+                              newValue.text != "" &&
+                              newValue.text != "-") {
+                            return oldValue;
+                          } else {
+                            return newValue;
+                          }
+                        })
+                      ],
                       onChanged: (v) =>
                           sliderTriggerAction.min = int.tryParse(v) ?? 0,
                     ),
@@ -63,7 +73,17 @@ class SliderTriggerActionSettings extends TriggerActionSetting {
                               text: sliderTriggerAction.max.toString())),
                       decoration: const InputDecoration(labelText: "Max"),
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      inputFormatters: [
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          if (int.tryParse(newValue.text) == null &&
+                              newValue.text != "" &&
+                              newValue.text != "-") {
+                            return oldValue;
+                          } else {
+                            return newValue;
+                          }
+                        })
+                      ],
                       onChanged: (v) =>
                           sliderTriggerAction.max = int.tryParse(v) ?? 0,
                     ),
