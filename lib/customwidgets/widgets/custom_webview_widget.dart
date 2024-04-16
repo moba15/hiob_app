@@ -35,7 +35,7 @@ class CustomWebViewWidget extends CustomWidget {
         "dataPoint": dataPoint?.id,
       };
 
-  factory CustomWebViewWidget.fromJSON(Map<String, dynamic> json) {
+  factory CustomWebViewWidget.fromJson(Map<String, dynamic> json) {
     DataPoint? dataPoint;
     if (json["dataPoint"] != null) {
       dataPoint = Manager.instance.deviceManager

@@ -21,11 +21,16 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
   bool currentValue = false;
   @override
   Widget build(BuildContext context) {
+    String name = "No Name Found";
+    if (widget.customLightWidget.value != null &&
+        widget.customLightWidget.value!.replaceAll(" ", "").isNotEmpty) {
+      name = widget.customLightWidget.value!;
+    } else if (widget.customLightWidget.name != null) {
+      name = widget.customLightWidget.name!;
+    }
     if (widget.customLightWidget.onDataPoint == null) {
       return ListTile(
-        title: Text(widget.customLightWidget.value ??
-            widget.customLightWidget.name ??
-            "No Name Found"),
+        title: Text(name),
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Error Device Not Found")));
@@ -55,9 +60,7 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
             children: [
               Flexible(
                   child: Text(
-                widget.customLightWidget.value ??
-                    widget.customLightWidget.name ??
-                    "No Name Found",
+                name,
                 overflow: TextOverflow.clip,
               )),
               if (onBloc.dataPoint.device?.getDeviceStatus() !=
