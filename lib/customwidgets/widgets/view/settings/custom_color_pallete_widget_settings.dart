@@ -55,7 +55,7 @@ class _CustomColorPalleteWidgetSettingsState
                       widget.customColorPalleteWidget.dataPoint = d;
                       widget.customColorPalleteWidget.device = d?.device;
                     },
-                    dataPointLabel: "Datapoint (ARGB (or RGB) Hex Value)",
+                    dataPointLabel: "Datapoint (ARGB or RGB Hex Value)",
                     selectedDataPoint:
                         widget.customColorPalleteWidget.dataPoint,
                     selectedDevice: widget.customColorPalleteWidget.device,
@@ -77,7 +77,24 @@ class _CustomColorPalleteWidgetSettingsState
               value: widget.customColorPalleteWidget.alpha ?? false,
               title: Text("Include Alpha Value"),
             )),
+            InputFieldContainer.inputContainer(
+                child: CheckboxListTile(
+              onChanged: (s) {
+                setState(() {
+                  widget.customColorPalleteWidget.shadesSelection = s ?? false;
+                });
+              },
+              value: widget.customColorPalleteWidget.shadesSelection,
+              title: const Text("Shades selection"),
+            )),
             Gap(20),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                "Types",
+                style: TextStyle(fontSize: 23),
+              ),
+            ),
             ListView.builder(
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -93,10 +110,9 @@ class _CustomColorPalleteWidgetSettingsState
                           .elementAt(index)] = s ?? false;
                     });
                   },
-                  title: Text(widget
+                  title: Text(_mapTypeToName(widget
                       .customColorPalleteWidget.pickersEnabled.keys
-                      .elementAt(index)
-                      .name),
+                      .elementAt(index))),
                 );
               },
               itemCount:
@@ -104,5 +120,22 @@ class _CustomColorPalleteWidgetSettingsState
             )
           ],
         ));
+  }
+
+  String _mapTypeToName(ColorPickerType type) {
+    switch (type) {
+      case ColorPickerType.wheel:
+        return "Wheel";
+      case ColorPickerType.bw:
+        return "Black and White";
+      case ColorPickerType.accent:
+        return "Accent";
+      case ColorPickerType.primary:
+        return "Primary";
+      case ColorPickerType.both:
+        return "Primary & Accent";
+      default:
+        return type.name;
+    }
   }
 }

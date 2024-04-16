@@ -15,6 +15,8 @@ class CustomColorPalleteWidget extends CustomWidget {
   String prefix;
   bool? alpha;
 
+  bool shadesSelection;
+
   CustomColorPalleteWidget(
       {required String? name,
       this.value,
@@ -22,7 +24,8 @@ class CustomColorPalleteWidget extends CustomWidget {
       this.dataPoint,
       this.device,
       this.prefix = "0x",
-      this.alpha = false})
+      this.alpha = false,
+      this.shadesSelection = true})
       : super(name: name, type: CustomWidgetType.colorPallete, settings: {}) {
     for (ColorPickerType type in ColorPickerType.values) {
       if (!pickersEnabled.containsKey(type) &&
@@ -62,6 +65,7 @@ class CustomColorPalleteWidget extends CustomWidget {
       "device": device?.id,
       "prefix": prefix,
       "alpha": alpha,
+      "shadesSelection": shadesSelection,
     };
   }
 
@@ -76,6 +80,7 @@ class CustomColorPalleteWidget extends CustomWidget {
         value: json["value"],
         prefix: json["prefix"] ?? "0x",
         alpha: json["alpha"] ?? false,
+        shadesSelection: json["shadesSelection"] ?? true,
         dataPoint: Manager.instance.deviceManager
             .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? ""),
         device: Manager.instance.deviceManager.getDevice(json["device"] ?? ""),

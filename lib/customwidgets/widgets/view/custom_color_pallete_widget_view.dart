@@ -112,13 +112,14 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
             showMaterialName: false,
             showColorName: false,
             showColorCode: false,
+            enableTonalPalette: true,
+            enableShadesSelection: colorPalleteWidget.shadesSelection,
             materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
             colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
             colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
             pickersEnabled: colorPalleteWidget.pickersEnabled)
         .showPickerDialog(
       context,
-      // New in version 3.0.0 custom transitions support.
     );
   }
 }
