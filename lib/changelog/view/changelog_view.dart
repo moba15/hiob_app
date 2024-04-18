@@ -90,6 +90,22 @@ class ChangeLogScreen extends StatelessWidget {
               ],
             ),
           ),
+          const Text(
+            "General",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 3, left: 10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "There is currently running a poll on GitHub under: github.com/moba15/hiob_app/discussions",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
