@@ -64,11 +64,14 @@ android {
             keyPassword = keystoreProperties['keyPassword'] ?  keystoreProperties['keyPassword'] : System.getenv("KEYPASSWORD")
             storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : file("keystore/your_signing_keystore.jks")
             storePassword = keystoreProperties['storePassword'] ?  keystoreProperties['storePassword'] : System.getenv("STOREPASSWORD")
+            
         }
     }
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
         }
     }
 
