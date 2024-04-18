@@ -43,7 +43,10 @@ class IoBrokerDevice extends Device {
       dataPoints: [],
       lastUpdated: DateTime.now(),
     );
-    List<dynamic>? dataPointsRaw = jsonDecode(json["dataPoints"]);
+    //!Support for older versions
+    List<dynamic>? dataPointsRaw = json["dataPoints"] is String
+        ? jsonDecode(json["dataPoints"])
+        : json["dataPoints"];
     List<DataPoint>? dataPoints = [];
     if (dataPointsRaw != null) {
       for (Map<String, dynamic> dataPointRaw in dataPointsRaw) {
@@ -60,7 +63,7 @@ class IoBrokerDevice extends Device {
         "iconWrapper": iconWrapper,
         "objectID": objectID,
         "type": type.index,
-        "dataPoints": jsonEncode(dataPoints),
+        "dataPoints": dataPoints?.map((e) => e.toJson()).toList(),
       };
 
   @override
