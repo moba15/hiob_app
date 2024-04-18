@@ -124,7 +124,7 @@ class BackgroundRunner {
           pingInterval: const Duration(seconds: 10));
 
       webSocketChannel!.stream.listen(
-          (e) => onData(e, event["loginPackage"], event!["aes_enabled"],
+          (e) => onData(e, event["loginPackage"], event["aes_enabled"],
               event["secureKey"]),
           onError: (e) => onError(s, e),
           onDone: () => onDone(s));
@@ -142,13 +142,13 @@ class BackgroundRunner {
   }
 
   static void onData(event, Map<String, dynamic> requestLoginPackage,
-      bool aes_enabled, String secureKey) {
+      bool aesEnabled, String secureKey) {
     CustomLogger.logInfoBackgroundRunner(
         methodname: "onData", logMessage: "Service got data");
     CustomLogger.logInfoBackgroundRunner(
         methodname: "onData", logMessage: "Service got data $event");
     Map<String, dynamic> rawMap = jsonDecode(event);
-    if (aes_enabled) {
+    if (aesEnabled) {
       event =
           ConnectionManager.decryptAes(rawMap: rawMap, secureKey: secureKey);
       CustomLogger.logInfoBackgroundRunner(

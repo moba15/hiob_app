@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
@@ -21,7 +20,6 @@ class ScreenTabBarPage extends StatelessWidget {
         ));
   }
 
-  // TODO: implement preferredSize
   Size get preferredSize => Size.zero;
 }
 

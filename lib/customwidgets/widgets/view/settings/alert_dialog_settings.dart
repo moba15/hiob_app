@@ -16,7 +16,6 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   State<AlertDialogSettings> createState() => _AlertDialogSettingsState();
 
   @override
-  // TODO: implement customWidget
   CustomWidget get customWidget => customAlertDialogWidget;
 
   @override
@@ -25,9 +24,7 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   }
 
   @override
-  // TODO: implement showKeys
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      throw UnimplementedError();
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [];
 }
 
 class _AlertDialogSettingsState extends State<AlertDialogSettings> {

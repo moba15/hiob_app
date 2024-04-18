@@ -76,17 +76,17 @@ class _GeneralSettingsView extends StatelessWidget {
         ),
         const _DeviceInfo(),
         ListTile(
-          title: Text("Export logs"),
-          leading: Icon(Icons.note),
-          trailing: Icon(Icons.import_export),
+          title: const Text("Export logs"),
+          leading: const Icon(Icons.note),
+          trailing: const Icon(Icons.import_export),
           onTap: () {
             CustomLogger.exportInfoLogs();
           },
         ),
         ListTile(
-          title: Text("Delete all logs"),
-          leading: Icon(Icons.note),
-          trailing: Icon(Icons.delete),
+          title: const Text("Delete all logs"),
+          leading: const Icon(Icons.note),
+          trailing: const Icon(Icons.delete),
           onTap: () {
             CustomLogger.deletAll();
           },

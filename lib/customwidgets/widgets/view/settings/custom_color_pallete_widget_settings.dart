@@ -1,13 +1,10 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/settings/view/widget_template_setting_screen.dart';
-import 'package:smart_home/utils/reorder_helper.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomColorPalleteWidgetSettings
@@ -75,7 +72,7 @@ class _CustomColorPalleteWidgetSettingsState
                 });
               },
               value: widget.customColorPalleteWidget.alpha ?? false,
-              title: Text("Include Alpha Value"),
+              title: const Text("Include Alpha Value"),
             )),
             InputFieldContainer.inputContainer(
                 child: CheckboxListTile(
@@ -87,7 +84,7 @@ class _CustomColorPalleteWidgetSettingsState
               value: widget.customColorPalleteWidget.shadesSelection,
               title: const Text("Shades selection"),
             )),
-            Gap(20),
+            const Gap(20),
             Container(
               alignment: Alignment.centerLeft,
               child: const Text(

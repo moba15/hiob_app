@@ -9,9 +9,7 @@ import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
 
-/**
- * TODO Implement Implenation pattern to differnetiate between Background and Foreground (possible?)
- */
+/// TODO Implement Implenation pattern to differnetiate between Background and Foreground (possible?)
 class NotificationManager with WidgetsBindingObserver {
   static SharedPreferences? staticSharedPreferences;
   static AwesomeNotifications awesomeNotifications = AwesomeNotifications();

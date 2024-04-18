@@ -95,7 +95,6 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
 
 abstract class CustomWidget {
   static String typeID = "-1";
-  @Deprecated("Please don't use this")
   String? name;
   CustomWidgetType? type;
   Map<String, dynamic>? settings;

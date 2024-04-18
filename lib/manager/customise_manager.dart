@@ -197,7 +197,7 @@ class CustomWidgetManager {
   void copyTemplates(List<CustomWidgetTemplate> templatesToCopy) {
     List<CustomWidgetTemplate> renamedTemplates = templatesToCopy
         .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
-            id: Manager.instance!.getRandString(12),
+            id: Manager.instance.getRandString(12),
             name: "${e.name}_copy",
             customWidget: e.customWidget.clone()..name = ("${e.name}_copy")))
         .toList();

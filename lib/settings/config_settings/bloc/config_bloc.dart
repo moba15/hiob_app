@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import '../../../preconfigs/preconfig.dart';

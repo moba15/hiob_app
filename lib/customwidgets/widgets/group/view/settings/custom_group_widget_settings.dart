@@ -18,8 +18,7 @@ import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 
 class CustomGroupWidgetSettingsPage extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
-  final StreamController<dynamic> _addedController =
-      StreamController.broadcast();
+
   late CustomGroupWidget clone;
   CustomGroupWidgetSettingsPage({Key? key, required this.customGroupWidget})
       : super(key: key) {

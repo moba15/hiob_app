@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
 
 class CustomColorPalleteWidgetView extends StatelessWidget {
   final CustomColorPalleteWidget colorPalleteWidget;
@@ -40,8 +39,8 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
           return ListTile(
             title: Text(name),
             trailing: Text("Not supported value: $value"),
-            onTap: () =>
-                colorPickerDialog(context, bloc, Color.fromARGB(0, 0, 0, 0)),
+            onTap: () => colorPickerDialog(
+                context, bloc, const Color.fromARGB(0, 0, 0, 0)),
           );
         }
         int? alpha;

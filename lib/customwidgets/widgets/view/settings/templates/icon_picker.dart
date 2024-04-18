@@ -1,6 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../utils/icon_data_wrapper.dart';
 
 class IconPickerTemplate extends StatefulWidget {

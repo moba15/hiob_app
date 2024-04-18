@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_media_player_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_medial_player_settings.dart';
