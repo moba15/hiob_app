@@ -75,7 +75,7 @@ class ChangeLogScreen extends StatelessWidget {
             ),
           ), */
           const Text(
-            "Templates",
+            "Devices",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Container(
@@ -83,9 +83,20 @@ class ChangeLogScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                    "- Added network media player (only Android with google services)"),
-                Text("- Added color picker")
+                Text("- You can now override the status of the Device"),
+              ],
+            ),
+          ),
+          const Text(
+            "Color picker",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 3, left: 10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("- Now should work with all prefixes"),
               ],
             ),
           ),
