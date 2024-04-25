@@ -32,7 +32,9 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
         if (value.startsWith("0x")) {
           value = value.replaceFirst("0x", "");
         }
-        value.replaceFirst(colorPalleteWidget.prefix, "");
+        if (colorPalleteWidget.prefix.trim().isNotEmpty) {
+          value = value.replaceFirst(colorPalleteWidget.prefix, "");
+        }
         var regExp = RegExp(r'[A-F]|[0-9]');
         if (regExp.allMatches(value).isEmpty ||
             (regExp.allMatches(value).length != 6 &&
