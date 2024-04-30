@@ -28,9 +28,7 @@ class CustomColorPalleteWidget extends CustomWidget {
       this.shadesSelection = true})
       : super(name: name, type: CustomWidgetType.colorPallete, settings: {}) {
     for (ColorPickerType type in ColorPickerType.values) {
-      if (!pickersEnabled.containsKey(type) &&
-          type != ColorPickerType.custom &&
-          type != ColorPickerType.customSecondary) {
+      if (!pickersEnabled.containsKey(type) && type != ColorPickerType.custom) {
         pickersEnabled[type] = false;
       }
     }

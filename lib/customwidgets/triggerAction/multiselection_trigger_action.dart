@@ -47,7 +47,7 @@ class MultiSelectionTriggerAction extends TriggerAction {
 
   @override
   bool validate() {
-    return dataPoint != null && selections.length >= 2;
+    return dataPoint != null && selections.isNotEmpty;
   }
 
   void reorderSelection(int oldIndex, int newIndex) {
