@@ -241,6 +241,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
         return CheckboxListTile(
           onChanged: (value) {
             setState(() {
+              enabled = value;
               screen.enabled = value ?? true;
             });
           },
