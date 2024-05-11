@@ -63,65 +63,61 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
         }
 
         return ListTile(
-          title: Text(name),
-          trailing: alpha == null ||
-                  red == null ||
-                  blue == null ||
-                  green == null
-              ? Text("Currently only hex values are supported: ${state.value}")
-              : ColorIndicator(
-                  color: Color.fromARGB(alpha, red, green, blue),
-                ),
-          onTap: () => colorPickerDialog(context, bloc,
-              Color.fromARGB(alpha ?? 0, red ?? 0, green ?? 0, blue ?? 0)),
-        );
+            title: Text(name),
+            trailing: alpha == null ||
+                    red == null ||
+                    blue == null ||
+                    green == null
+                ? Text(
+                    "Currently only hex values are supported: ${state.value}")
+                : ColorIndicator(
+                    color: Color.fromARGB(alpha, red, green, blue),
+                  ),
+            onTap: () async {
+              Color newColor = await colorPickerDialog(context, bloc,
+                  Color.fromARGB(alpha ?? 0, red ?? 0, green ?? 0, blue ?? 0));
+              bloc.add(DataPointValueUpdateRequest(
+                  value: colorPalleteWidget.prefix +
+                      (colorPalleteWidget.alpha == true
+                          ? newColor.hexAlpha
+                          : newColor.hex),
+                  oldValue: newColor.hex));
+            });
       },
     );
   }
 
-  Future<bool> colorPickerDialog(
+  Future<Color> colorPickerDialog(
       BuildContext context, DataPointBloc bloc, Color selectedColor) async {
-    return ColorPicker(
-            color: Colors.red,
-            onColorChanged: (Color color) {
-              bloc.add(DataPointValueUpdateRequest(
-                  value: colorPalleteWidget.prefix +
-                      (colorPalleteWidget.alpha == true
-                          ? color.hexAlpha
-                          : color.hex),
-                  oldValue: color.hex));
-            },
-            width: 40,
-            height: 40,
-            borderRadius: 4,
-            spacing: 5,
-            runSpacing: 5,
-            wheelDiameter: 155,
-            heading: Text(
-              'Select color',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            subheading: Text(
-              'Select color shade',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            wheelSubheading: Text(
-              'Selected color and its shades',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            maxRecentColors: 2,
-            showRecentColors: false,
-            showMaterialName: false,
-            showColorName: false,
-            showColorCode: false,
-            enableTonalPalette: true,
-            enableShadesSelection: colorPalleteWidget.shadesSelection,
-            materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
-            colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
-            colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
-            pickersEnabled: colorPalleteWidget.pickersEnabled)
-        .showPickerDialog(
-      context,
-    );
+    return showColorPickerDialog(context, selectedColor,
+        width: 40,
+        height: 40,
+        borderRadius: 4,
+        spacing: 5,
+        runSpacing: 5,
+        wheelDiameter: 155,
+        heading: Text(
+          'Select color',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        subheading: Text(
+          'Select color shade',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        wheelSubheading: Text(
+          'Selected color and its shades',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        maxRecentColors: 2,
+        showRecentColors: false,
+        showMaterialName: false,
+        showColorName: false,
+        showColorCode: false,
+        enableTonalPalette: true,
+        enableShadesSelection: colorPalleteWidget.shadesSelection,
+        materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
+        colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
+        colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
+        pickersEnabled: colorPalleteWidget.pickersEnabled);
   }
 }
