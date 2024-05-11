@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install build tools
-        run: sudo apt-get install -y libgtk-3-0 libblkid1 liblzma5
+        run: sudo apt-get install -y libgtk-3-0 libblkid1 liblzma5 ninja-build
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
