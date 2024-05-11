@@ -29,11 +29,12 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
       bloc: bloc,
       builder: (context, state) {
         String value = state.value.toString();
-        if (value.startsWith("0x")) {
-          value = value.replaceFirst("0x", "");
-        }
+
         if (colorPalleteWidget.prefix.trim().isNotEmpty) {
           value = value.replaceFirst(colorPalleteWidget.prefix, "");
+        }
+        if (value.startsWith("0x")) {
+          value = value.replaceFirst("0x", "");
         }
         var regExp = RegExp(r'[A-F]|[0-9]');
         if (regExp.allMatches(value).isEmpty ||
