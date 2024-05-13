@@ -204,6 +204,7 @@ class IoBrokerManager {
           IoBrokerDevice device = IoBrokerDevice(
               id: Manager.instance.getRandString(12),
               name: e.name,
+              overrideDeviceStatus: false,
               iconWrapper: const IconWrapper(),
               lastUpdated: DateTime.now(),
               objectID: "");

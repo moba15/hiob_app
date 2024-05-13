@@ -11,7 +11,7 @@ part 'notifications_state.dart';
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   StreamSubscription? _streamSubscription;
-  NotificationsBloc() : super(NotificationsInitial()) {
+  NotificationsBloc() : super(const NotificationsInitial()) {
     on<NotificationsGetEvent>((event, emit) {
       loadNotifications(emit);
     });

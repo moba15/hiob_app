@@ -15,6 +15,7 @@ class Device {
   bool _firstUpdateFromServer = false;
   DeviceType type;
   List<DataPoint>? dataPoints;
+  bool overrideDeviceStatus;
 
   Device(
       {required this.id,
@@ -23,6 +24,7 @@ class Device {
       this.value,
       required this.lastUpdated,
       required this.type,
+      required this.overrideDeviceStatus,
       this.dataPoints = const []});
 
   StreamController<dynamic> valueStreamController =
@@ -68,6 +70,9 @@ class Device {
   }
 
   DeviceStatus getDeviceStatus() {
+    if (overrideDeviceStatus) {
+      return DeviceStatus.ready;
+    }
     if (!_firstUpdateFromServer) {
       return DeviceStatus.error;
     }

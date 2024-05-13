@@ -12,12 +12,14 @@ class IoBrokerDevice extends Device {
       required String name,
       required IconWrapper iconWrapper,
       required DateTime lastUpdated,
+      required bool overrideDeviceStatus,
       required this.objectID,
       List<DataPoint>? dataPoints = const []})
       : super(
             id: id,
             name: name,
             iconWrapper: iconWrapper,
+            overrideDeviceStatus: overrideDeviceStatus,
             lastUpdated: lastUpdated,
             type: DeviceType.ioBroker,
             dataPoints: dataPoints);
@@ -38,12 +40,16 @@ class IoBrokerDevice extends Device {
     IoBrokerDevice d = IoBrokerDevice(
       id: json["id"],
       iconWrapper: iconWrapper,
+      overrideDeviceStatus: json["overrideDeviceStatus"] ?? false,
       name: json["name"],
       objectID: json["objectID"],
       dataPoints: [],
       lastUpdated: DateTime.now(),
     );
-    List<dynamic>? dataPointsRaw = jsonDecode(json["dataPoints"]);
+    //!Support for older versions
+    List<dynamic>? dataPointsRaw = json["dataPoints"] is String
+        ? jsonDecode(json["dataPoints"])
+        : json["dataPoints"];
     List<DataPoint>? dataPoints = [];
     if (dataPointsRaw != null) {
       for (Map<String, dynamic> dataPointRaw in dataPointsRaw) {
@@ -60,7 +66,8 @@ class IoBrokerDevice extends Device {
         "iconWrapper": iconWrapper,
         "objectID": objectID,
         "type": type.index,
-        "dataPoints": jsonEncode(dataPoints),
+        "dataPoints": dataPoints?.map((e) => e.toJson()).toList(),
+        "overrideDeviceStatus": overrideDeviceStatus,
       };
 
   @override

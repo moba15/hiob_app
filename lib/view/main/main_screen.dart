@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
@@ -9,7 +8,6 @@ import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart'
 import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/notifications/bloc/notifications_bloc.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/utils/blinking_widget.dart';
@@ -54,7 +52,7 @@ class MainScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        NotificationLogViewScreen()),
+                                        const NotificationLogViewScreen()),
                               )
                             },
                         icon: const Icon(Icons.notifications)),
@@ -191,16 +189,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                       Manager.instance.notificationManager.notificationStream,
                   builder: (context, state) {
                     return Badge(
-                      child: IconButton(
-                        onPressed: () => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      NotificationLogViewScreen())),
-                        },
-                        icon: const Icon(Icons.notifications),
-                      ),
                       isLabelVisible: Manager.instance.notificationManager
                               .unreadNotifications >
                           0,
@@ -210,6 +198,16 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                           ? Text(
                               "${Manager.instance.notificationManager.unreadNotifications}")
                           : null,
+                      child: IconButton(
+                        onPressed: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const NotificationLogViewScreen())),
+                        },
+                        icon: const Icon(Icons.notifications),
+                      ),
                     );
                   },
                 ),

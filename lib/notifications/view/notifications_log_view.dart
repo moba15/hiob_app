@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
 import 'package:smart_home/notifications/bloc/notifications_bloc.dart';
 
@@ -25,7 +24,7 @@ class NotificationLogViewScreen extends StatelessWidget {
                 onPressed: () {
                   bloc.add(NotificationsDeleteAllEvent());
                 },
-                icon: Icon(Icons.delete_forever))
+                icon: const Icon(Icons.delete_forever))
           ],
         ),
         body: BlocProvider<NotificationsBloc>(

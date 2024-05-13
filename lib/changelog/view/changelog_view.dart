@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -57,7 +56,7 @@ class ChangeLogScreen extends StatelessWidget {
             ),
           ),*/
 
-          const Text(
+          /* const Text(
             "Notifications",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
@@ -74,6 +73,32 @@ class ChangeLogScreen extends StatelessWidget {
                 Text("- Fixed some bugs"),
               ],
             ),
+          ), */
+          const Text(
+            "Devices",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 3, left: 10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("- You can now override the status of the Device"),
+              ],
+            ),
+          ),
+          const Text(
+            "Color picker",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 3, left: 10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("- Now should work with all prefixes"),
+              ],
+            ),
           ),
           const Text(
             "General",
@@ -84,10 +109,10 @@ class ChangeLogScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("- Fixed bug with multiselection, value rules and tables"),
-                Text("- Updated dependecies"),
                 Text(
-                    "- Textscale (beta) now available. could destroy your design. See Custom Theme Settings")
+                  "There is currently running a poll on GitHub under: github.com/moba15/hiob_app/discussions",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),

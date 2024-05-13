@@ -316,6 +316,7 @@ class _DeviceAddPageState extends State<DeviceAddPage> {
           iconWrapper: currentSelectedIconWrapper!,
           name: nameController.text,
           objectID: idController.text,
+          overrideDeviceStatus: false,
           dataPoints: dataPoints,
           id: widget.deviceManager.manager.getRandString(12),
           lastUpdated: DateTime.now());
@@ -403,6 +404,19 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
                 onChange: (d) => {currentSelectedIconWrapper = d},
               ),
             ),
+            Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: CheckboxListTile(
+                  onChanged: (v) {
+                    setState(() {
+                      widget.device.overrideDeviceStatus = v ?? false;
+                    });
+                  },
+                  value: widget.device.overrideDeviceStatus,
+                  title: const Text("Ignore/Override Devicestatus"),
+                  subtitle: const Text("Always display Device as reachable"),
+                  isThreeLine: true,
+                )),
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
               child: const Text("Data Points:", style: TextStyle(fontSize: 17)),

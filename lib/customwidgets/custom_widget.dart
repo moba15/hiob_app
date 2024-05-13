@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
@@ -20,6 +22,8 @@ enum CustomWidgetType {
   alertDialog,
   table,
   graph,
+  colorPallete,
+  mediaPlayer,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetType {
@@ -53,6 +57,11 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
             columns: {}).settingWidget;
       case CustomWidgetType.graph:
         return GraphWidget(name: "name").settingWidget;
+      case CustomWidgetType.colorPallete:
+        return CustomColorPalleteWidget(name: "", pickersEnabled: {})
+            .settingWidget;
+      case CustomWidgetType.mediaPlayer:
+        return CustomMediaPlayerWidget(name: "", url: "").settingWidget;
     }
   }
 
@@ -74,15 +83,18 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
         return "Table";
       case CustomWidgetType.graph:
         return "Graph (only sql Adapter)";
+      case CustomWidgetType.colorPallete:
+        return "Color Pallete";
+      case CustomWidgetType.mediaPlayer:
+        return "Network Media Player";
       default:
-        return "Error";
+        return toString();
     }
   }
 }
 
 abstract class CustomWidget {
   static String typeID = "-1";
-  @Deprecated("Please don't use this")
   String? name;
   CustomWidgetType? type;
   Map<String, dynamic>? settings;

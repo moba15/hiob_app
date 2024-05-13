@@ -67,7 +67,7 @@ class CustomTheme {
               const InputDecorationTheme(border: OutlineInputBorder()),
           brightness: Brightness.dark,
           colorScheme: customColorScheme.colorScheme(Brightness.dark),
-          primaryTextTheme: TextTheme());
+          primaryTextTheme: const TextTheme());
 
   Map<String, dynamic> toJson() => {
         "brightness": customThemeBrightness.index,

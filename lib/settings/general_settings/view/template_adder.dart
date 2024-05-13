@@ -11,7 +11,6 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
-import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';

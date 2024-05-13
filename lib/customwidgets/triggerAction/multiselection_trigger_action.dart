@@ -5,7 +5,6 @@ import 'package:smart_home/customwidgets/triggerAction/settings/multiselection_t
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/triggerAction/view/multiselection_trigger_view.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
-import 'package:smart_home/utils/pair.dart';
 
 import '../../manager/manager.dart';
 
@@ -48,7 +47,7 @@ class MultiSelectionTriggerAction extends TriggerAction {
 
   @override
   bool validate() {
-    return dataPoint != null && selections.length >= 2;
+    return dataPoint != null && selections.isNotEmpty;
   }
 
   void reorderSelection(int oldIndex, int newIndex) {
