@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/bloc/widget_template_list_bloc.dart';
@@ -112,7 +113,7 @@ class _WidgetTemplateListView extends StatelessWidget {
 }
 
 class TemplatesView extends StatefulWidget {
-  final Map<CustomWidgetTemplate, bool> templates;
+  final Map<CustomWidgetWrapper, bool> templates;
 
   const TemplatesView({Key? key, required this.templates}) : super(key: key);
 
@@ -128,7 +129,7 @@ class _TemplatesViewState extends State<TemplatesView> {
   void initState() {
     types.addAll(CustomWidgetType.values);
     types.removeWhere((type) => !widget.templates.keys
-        .any((template) => template.customWidget.type == type));
+        .any((template) => template.type?.name == type.name));
 
     super.initState();
   }
@@ -145,8 +146,8 @@ class _TemplatesViewState extends State<TemplatesView> {
             itemBuilder: (context, index) {
               CustomWidgetType type = types[index];
               List<Dismissible> children = [];
-              for (CustomWidgetTemplate t in widget.templates.keys
-                  .where((element) => element.customWidget.type == type)) {
+              for (CustomWidgetWrapper t in widget.templates.keys
+                  .where((element) => element.type?.name == type.name)) {
                 children.add(
                   Dismissible(
                     background: Container(
@@ -179,18 +180,18 @@ class _TemplatesViewState extends State<TemplatesView> {
               }
               return ExpansionTile(
                 title: Text(
-                    "${type.name} (${widget.templates.keys.where((element) => element.customWidget.type == type).length})"),
+                    "${type.name} (${widget.templates.keys.where((element) => element.type?.name == type.name).length})"),
                 children: children,
               );
             },
           );
   }
 
-  void _delete(CustomWidgetTemplate template) {
+  void _delete(CustomWidgetWrapper template) {
     Manager.instance.customWidgetManager.removeTemplate(template);
   }
 
-  void toogleSelect(CustomWidgetTemplate t, WidgetTemplateListBloc bloc) {
+  void toogleSelect(CustomWidgetWrapper t, WidgetTemplateListBloc bloc) {
     if (!selectionMode) {
       bloc.add(const WidgetTemplateListToggleSelectionEvent(selection: true));
     }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
@@ -13,8 +14,8 @@ import '../../../../manager/customise_manager.dart';
 
 class TemplateAddPage extends StatefulWidget {
   final CustomWidgetManager customWidgetManager;
-  final CustomWidgetTemplate? preSelectedTemplate;
-  final Function(CustomWidgetTemplate)? onSave;
+  final CustomWidgetWrapper? preSelectedTemplate;
+  final Function(CustomWidgetWrapper)? onSave;
 
   const TemplateAddPage(
       {Key? key,
@@ -38,11 +39,13 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   void initState() {
     _nameController.value =
         TextEditingValue(text: widget.preSelectedTemplate?.name ?? "");
-    _selectedType = widget.preSelectedTemplate?.customWidget.type ??
-        CustomWidgetType.simpleSwitch;
-    _customWidgetSettingWidget =
-        widget.preSelectedTemplate?.customWidget.clone().settingWidget ??
-            _selectedType!.settingWidget;
+    //TODO Refactor Customwidget type
+    _selectedType = CustomWidgetType.values.firstWhere(
+      (element) => element.name == widget.preSelectedTemplate?.type?.name,
+      orElse: () => CustomWidgetType.simpleSwitch,
+    );
+    _customWidgetSettingWidget = widget.preSelectedTemplate?.settingWidget ??
+        _selectedType!.settingWidget;
     _oldJSON = jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
     super.initState();
   }
@@ -116,10 +119,10 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                     if (widget.preSelectedTemplate == null) {
                       _customWidgetSettingWidget = _selectedType!.settingWidget;
                     } else {
-                      if (_selectedType ==
-                          widget.preSelectedTemplate!.customWidget.type) {
-                        _customWidgetSettingWidget = widget
-                            .preSelectedTemplate!.customWidget.settingWidget;
+                      if (_selectedType?.name ==
+                          widget.preSelectedTemplate!.type?.name) {
+                        _customWidgetSettingWidget =
+                            widget.preSelectedTemplate!.settingWidget;
                       } else {
                         _customWidgetSettingWidget =
                             _selectedType!.settingWidget;
@@ -187,9 +190,11 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
 
     if (_customWidgetSettingWidget != null &&
         _customWidgetSettingWidget!.validate()) {
-      if (widget.preSelectedTemplate != null) {
-        widget.preSelectedTemplate!.customWidget.name = _nameController.text;
-        widget.preSelectedTemplate!.customWidget =
+      if (widget.preSelectedTemplate != null &&
+          widget.preSelectedTemplate is CustomWidgetTemplate) {
+        //TODO Refector
+        widget.preSelectedTemplate!.name = _nameController.text;
+        (widget.preSelectedTemplate! as CustomWidgetTemplate).customWidget =
             _customWidgetSettingWidget!.customWidget;
 
         widget.preSelectedTemplate!.name = _nameController.text;

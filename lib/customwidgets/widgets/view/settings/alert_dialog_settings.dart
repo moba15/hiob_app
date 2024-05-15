@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
@@ -46,7 +47,7 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
             if (oldIndex < newIndex) {
               newIndex--;
             }
-            CustomWidgetTemplate tmp =
+            CustomWidgetWrapper tmp =
                 widget.customAlertDialogWidget.templates![oldIndex];
             widget.customAlertDialogWidget.templates!.removeAt(oldIndex);
             widget.customAlertDialogWidget.templates!.add(tmp);
@@ -57,7 +58,7 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
-            for (CustomWidgetTemplate template
+            for (CustomWidgetWrapper template
                 in widget.customAlertDialogWidget.templates ?? [])
               Dismissible(
                 background: Container(

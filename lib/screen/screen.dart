@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -107,8 +108,8 @@ class Screen {
   }
 
   void addWidgetTemplates(ScreenManager screenManager,
-      List<CustomWidgetTemplate> customWidgetTemplates) async {
-    for (CustomWidgetTemplate t in customWidgetTemplates) {
+      List<CustomWidgetWrapper> customWidgetTemplates) async {
+    for (CustomWidgetWrapper t in customWidgetTemplates) {
       if (!widgetTemplates.contains(t)) {
         widgetTemplates.add(t);
       }

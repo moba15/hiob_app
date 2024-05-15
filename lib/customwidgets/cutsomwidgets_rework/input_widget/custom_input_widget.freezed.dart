@@ -20,6 +20,10 @@ CustomInputWidget _$CustomInputWidgetFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CustomInputWidget {
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
+  CustomWidgetType get type => throw _privateConstructorUsedError;
+  set type(CustomWidgetType value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
   String get hintText => throw _privateConstructorUsedError;
@@ -44,7 +48,9 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       _$CustomInputWidgetCopyWithImpl<$Res, CustomInputWidget>;
   @useResult
   $Res call(
-      {String name,
+      {String id,
+      CustomWidgetType type,
+      String name,
       String hintText,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? suffix});
@@ -63,12 +69,22 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? type = null,
     Object? name = null,
     Object? hintText = null,
     Object? dataPoint = freezed,
     Object? suffix = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CustomWidgetType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -98,7 +114,9 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
+      {String id,
+      CustomWidgetType type,
+      String name,
       String hintText,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? suffix});
@@ -115,12 +133,22 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? type = null,
     Object? name = null,
     Object? hintText = null,
     Object? dataPoint = freezed,
     Object? suffix = freezed,
   }) {
     return _then(_$CustomInputWidgetImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CustomWidgetType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -145,7 +173,9 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomInputWidgetImpl extends _CustomInputWidget {
   _$CustomInputWidgetImpl(
-      {required this.name,
+      {required this.id,
+      required this.type,
+      required this.name,
       required this.hintText,
       @DataPointIdConverter() required this.dataPoint,
       required this.suffix})
@@ -154,6 +184,10 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   factory _$CustomInputWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomInputWidgetImplFromJson(json);
 
+  @override
+  String id;
+  @override
+  CustomWidgetType type;
   @override
   String name;
   @override
@@ -166,7 +200,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
 
   @override
   String toString() {
-    return 'CustomInputWidget(name: $name, hintText: $hintText, dataPoint: $dataPoint, suffix: $suffix)';
+    return 'CustomInputWidget(id: $id, type: $type, name: $name, hintText: $hintText, dataPoint: $dataPoint, suffix: $suffix)';
   }
 
   @JsonKey(ignore: true)
@@ -187,7 +221,9 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
 abstract class _CustomInputWidget extends CustomInputWidget
     implements CustomWidget {
   factory _CustomInputWidget(
-      {required String name,
+      {required String id,
+      required CustomWidgetType type,
+      required String name,
       required String hintText,
       @DataPointIdConverter() required DataPoint? dataPoint,
       required String? suffix}) = _$CustomInputWidgetImpl;
@@ -196,6 +232,12 @@ abstract class _CustomInputWidget extends CustomInputWidget
   factory _CustomInputWidget.fromJson(Map<String, dynamic> json) =
       _$CustomInputWidgetImpl.fromJson;
 
+  @override
+  String get id;
+  set id(String value);
+  @override
+  CustomWidgetType get type;
+  set type(CustomWidgetType value);
   @override
   String get name;
   set name(String value);

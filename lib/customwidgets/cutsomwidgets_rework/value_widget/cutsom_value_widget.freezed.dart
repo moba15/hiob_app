@@ -20,6 +20,10 @@ CustomValueWidget _$CustomValueWidgetFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CustomValueWidget {
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
+  CustomWidgetType get type => throw _privateConstructorUsedError;
+  set type(CustomWidgetType value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
@@ -42,7 +46,9 @@ abstract class $CustomValueWidgetCopyWith<$Res> {
       _$CustomValueWidgetCopyWithImpl<$Res, CustomValueWidget>;
   @useResult
   $Res call(
-      {String name,
+      {String id,
+      CustomWidgetType type,
+      String name,
       String displayName,
       @DataPointIdConverter() DataPoint? dataPoint});
 }
@@ -60,11 +66,21 @@ class _$CustomValueWidgetCopyWithImpl<$Res, $Val extends CustomValueWidget>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? type = null,
     Object? name = null,
     Object? displayName = null,
     Object? dataPoint = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CustomWidgetType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -90,7 +106,9 @@ abstract class _$$CustomValueWidgetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
+      {String id,
+      CustomWidgetType type,
+      String name,
       String displayName,
       @DataPointIdConverter() DataPoint? dataPoint});
 }
@@ -106,11 +124,21 @@ class __$$CustomValueWidgetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? type = null,
     Object? name = null,
     Object? displayName = null,
     Object? dataPoint = freezed,
   }) {
     return _then(_$CustomValueWidgetImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CustomWidgetType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -131,7 +159,9 @@ class __$$CustomValueWidgetImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomValueWidgetImpl extends _CustomValueWidget {
   _$CustomValueWidgetImpl(
-      {required this.name,
+      {required this.id,
+      required this.type,
+      required this.name,
       required this.displayName,
       @DataPointIdConverter() required this.dataPoint})
       : super._();
@@ -139,6 +169,10 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
   factory _$CustomValueWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomValueWidgetImplFromJson(json);
 
+  @override
+  String id;
+  @override
+  CustomWidgetType type;
   @override
   String name;
   @override
@@ -149,7 +183,7 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
 
   @override
   String toString() {
-    return 'CustomValueWidget(name: $name, displayName: $displayName, dataPoint: $dataPoint)';
+    return 'CustomValueWidget(id: $id, type: $type, name: $name, displayName: $displayName, dataPoint: $dataPoint)';
   }
 
   @JsonKey(ignore: true)
@@ -170,7 +204,9 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
 abstract class _CustomValueWidget extends CustomValueWidget
     implements CustomWidget {
   factory _CustomValueWidget(
-          {required String name,
+          {required String id,
+          required CustomWidgetType type,
+          required String name,
           required String displayName,
           @DataPointIdConverter() required DataPoint? dataPoint}) =
       _$CustomValueWidgetImpl;
@@ -179,6 +215,12 @@ abstract class _CustomValueWidget extends CustomValueWidget
   factory _CustomValueWidget.fromJson(Map<String, dynamic> json) =
       _$CustomValueWidgetImpl.fromJson;
 
+  @override
+  String get id;
+  set id(String value);
+  @override
+  CustomWidgetType get type;
+  set type(CustomWidgetType value);
   @override
   String get name;
   set name(String value);

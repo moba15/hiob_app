@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
@@ -23,8 +24,8 @@ class CustomWidgetManager {
   FileManager fileManager;
   DeviceManager deviceManager;
   Manager manager;
-  final List<CustomWidgetTemplate> templates = [];
-  final StreamController<List<CustomWidgetTemplate>> templatesStreamController =
+  final List<CustomWidgetWrapper> templates = [];
+  final StreamController<List<CustomWidgetWrapper>> templatesStreamController =
       StreamController.broadcast();
 
   CustomWidgetManager(
@@ -131,20 +132,18 @@ class CustomWidgetManager {
 
   void sort() {
     templates.sort((a, b) {
-      if (a.customWidget.type == b.customWidget.type) {
+      if (a.type == b.type) {
         return a.name.compareTo(b.name);
       } else {
-        return a.customWidget.type?.index
-                .compareTo(b.customWidget.type?.index ?? 0) ??
-            0;
+        return a.type?.index.compareTo(b.type?.index ?? 0) ?? 0;
       }
     });
   }
 
-  List<CustomWidgetTemplate> getTemplatesByType(CustomWidgetType type) {
-    List<CustomWidgetTemplate> tmps = [];
-    for (CustomWidgetTemplate t in templates) {
-      if (t.customWidget.type == type) {
+  List<CustomWidgetWrapper> getTemplatesByType(CustomWidgetType type) {
+    List<CustomWidgetWrapper> tmps = [];
+    for (CustomWidgetWrapper t in templates) {
+      if (t.type?.name == type.name) {
         tmps.add(t);
       }
     }
@@ -161,7 +160,7 @@ class CustomWidgetManager {
     }
   }
 
-  Future<bool> edit({required CustomWidgetTemplate template}) async {
+  Future<bool> edit({required CustomWidgetWrapper template}) async {
     sort();
     templatesStreamController.add(templates);
 
@@ -175,7 +174,7 @@ class CustomWidgetManager {
     return true;
   }
 
-  Future<void> removeTemplate(CustomWidgetTemplate template) async {
+  Future<void> removeTemplate(CustomWidgetWrapper template) async {
     templates.remove(template);
     templatesStreamController.add(templates);
     if (!await fileManager.writeJSONList(templateKey, templates)) {
@@ -186,16 +185,18 @@ class CustomWidgetManager {
     }
   }
 
-  void removeTemplates(List<CustomWidgetTemplate> templatesToRemove) {
+  void removeTemplates(List<CustomWidgetWrapper> templatesToRemove) {
     templates.removeWhere((element) => templatesToRemove.contains(element));
-    for (CustomWidgetTemplate c in templatesToRemove) {
+    for (CustomWidgetWrapper c in templatesToRemove) {
       manager.screenManager.templateRemoved(c);
     }
     fileManager.writeJSONList(templateKey, templates);
   }
 
-  void copyTemplates(List<CustomWidgetTemplate> templatesToCopy) {
-    List<CustomWidgetTemplate> renamedTemplates = templatesToCopy
+  void copyTemplates(List<CustomWidgetWrapper> templatesToCopy) {
+    List<CustomWidgetWrapper> renamedTemplates = templatesToCopy
+        .where((element) => element is CustomWidgetTemplate)
+        .map((e) => e as CustomWidgetTemplate)
         .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
             id: Manager.instance.getRandString(12),
             name: "${e.name}_copy",

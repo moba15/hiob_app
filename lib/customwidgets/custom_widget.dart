@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';

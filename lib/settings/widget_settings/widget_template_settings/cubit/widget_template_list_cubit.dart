@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/utils/list_status.dart';
@@ -31,7 +32,7 @@ class WidgetTemplateListCubit extends Cubit<WidgetTemplateListState> {
     await customWidgetManager.loadTemplates();
   }
 
-  void update(List<CustomWidgetTemplate> templates) {
+  void update(List<CustomWidgetWrapper> templates) {
     emit(WidgetTemplateListState(
         templates: templates, status: ListStatus.success));
   }

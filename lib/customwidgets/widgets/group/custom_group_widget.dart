@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
@@ -62,7 +64,7 @@ class CustomGroupWidget extends CustomWidget {
   }
 
   factory CustomGroupWidget.fromJSON(
-      Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
+      Map<String, dynamic> json, List<CustomWidgetWrapper> allTemplates) {
     List<dynamic> templates = [];
     if (json["templates"] != null) {
       for (Map<String, dynamic> templatesRaw in json["templates"] is String
@@ -119,8 +121,8 @@ class CustomGroupWidget extends CustomWidget {
         iconWrapper: iconWrapper);
   }
 
-  void addTemplates(List<CustomWidgetTemplate> templates) {
-    for (CustomWidgetTemplate t in templates) {
+  void addTemplates(List<CustomWidgetWrapper> templates) {
+    for (CustomWidgetWrapper t in templates) {
       if (!this.templates.contains(t)) {
         this.templates.add(t);
       }
