@@ -1,21 +1,21 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
+import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/theme.dart';
 
-class CustomColorPalleteWidgetSettings
+class CustomColorPaletteWidgetSettings
     extends CustomWidgetSettingStatefulWidget {
-  final CustomColorPalleteWidget customColorPalleteWidget;
-  const CustomColorPalleteWidgetSettings(
+  final CustomColorPaletteWidget customColorPalleteWidget;
+  const CustomColorPaletteWidgetSettings(
       {Key? key, required this.customColorPalleteWidget})
       : super(key: key);
 
   @override
-  State<CustomColorPalleteWidgetSettings> createState() =>
+  State<CustomColorPaletteWidgetSettings> createState() =>
       _CustomColorPalleteWidgetSettingsState();
 
   @override
@@ -31,7 +31,7 @@ class CustomColorPalleteWidgetSettings
 }
 
 class _CustomColorPalleteWidgetSettingsState
-    extends State<CustomColorPalleteWidgetSettings> {
+    extends State<CustomColorPaletteWidgetSettings> {
   @override
   Widget build(BuildContext context) {
     return Container(

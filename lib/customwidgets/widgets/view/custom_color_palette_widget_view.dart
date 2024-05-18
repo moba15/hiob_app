@@ -1,12 +1,12 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
+import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 
-class CustomColorPalleteWidgetView extends StatelessWidget {
-  final CustomColorPalleteWidget colorPalleteWidget;
-  const CustomColorPalleteWidgetView(
+class CustomColorPaletteWidgetView extends StatelessWidget {
+  final CustomColorPaletteWidget colorPalleteWidget;
+  const CustomColorPaletteWidgetView(
       {Key? key, required this.colorPalleteWidget})
       : super(key: key);
 
@@ -37,6 +37,7 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
           value = value.replaceFirst("0x", "");
         }
         var regExp = RegExp(r'[A-F]|[0-9]');
+        value = value.toUpperCase();
         if (regExp.allMatches(value).isEmpty ||
             (regExp.allMatches(value).length != 6 &&
                 regExp.allMatches(value).length != 8)) {
