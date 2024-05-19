@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
-import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
+import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
@@ -98,7 +98,7 @@ class CustomWidgetManager {
           customWidget = GraphWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.colorPallete:
-          customWidget = CustomColorPalleteWidget.fromJson(widgetRaw);
+          customWidget = CustomColorPaletteWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetType.mediaPlayer:
           customWidget = CustomMediaPlayerWidget.fromJSON(widgetRaw);

@@ -1,42 +1,43 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
+import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
 
-class CustomColorPalleteWidgetView extends StatelessWidget {
-  final CustomColorPalleteWidget colorPalleteWidget;
-  const CustomColorPalleteWidgetView(
-      {Key? key, required this.colorPalleteWidget})
+class CustomColorPaletteWidgetView extends StatelessWidget {
+  final CustomColorPaletteWidget colorPaletteWidget;
+  const CustomColorPaletteWidgetView(
+      {Key? key, required this.colorPaletteWidget})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String name = "No Name found";
-    if (colorPalleteWidget.value != null &&
-        colorPalleteWidget.value!.isNotEmpty) {
-      name = colorPalleteWidget.value!;
-    } else if (colorPalleteWidget.name != null) {
-      name = colorPalleteWidget.name!;
+    if (colorPaletteWidget.value != null &&
+        colorPaletteWidget.value!.isNotEmpty) {
+      name = colorPaletteWidget.value!;
+    } else if (colorPaletteWidget.name != null) {
+      name = colorPaletteWidget.name!;
     }
-    if (colorPalleteWidget.dataPoint == null) {
+    if (colorPaletteWidget.dataPoint == null) {
       return const ListTile(
         title: Text("Device not found"),
       );
     }
-    final bloc = DataPointBloc(colorPalleteWidget.dataPoint!);
+    final bloc = DataPointBloc(colorPaletteWidget.dataPoint!);
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: bloc,
       builder: (context, state) {
         String value = state.value.toString();
 
-        if (colorPalleteWidget.prefix.trim().isNotEmpty) {
-          value = value.replaceFirst(colorPalleteWidget.prefix, "");
+        if (colorPaletteWidget.prefix.trim().isNotEmpty) {
+          value = value.replaceFirst(colorPaletteWidget.prefix, "");
         }
         if (value.startsWith("0x")) {
           value = value.replaceFirst("0x", "");
         }
         var regExp = RegExp(r'[A-F]|[0-9]');
+        value = value.toUpperCase();
         if (regExp.allMatches(value).isEmpty ||
             (regExp.allMatches(value).length != 6 &&
                 regExp.allMatches(value).length != 8)) {
@@ -78,8 +79,8 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
               Color newColor = await colorPickerDialog(context, bloc,
                   Color.fromARGB(alpha ?? 0, red ?? 0, green ?? 0, blue ?? 0));
               bloc.add(DataPointValueUpdateRequest(
-                  value: colorPalleteWidget.prefix +
-                      (colorPalleteWidget.alpha == true
+                  value: colorPaletteWidget.prefix +
+                      (colorPaletteWidget.alpha == true
                           ? newColor.hexAlpha
                           : newColor.hex),
                   oldValue: newColor.hex));
@@ -115,10 +116,10 @@ class CustomColorPalleteWidgetView extends StatelessWidget {
         showColorName: false,
         showColorCode: false,
         enableTonalPalette: true,
-        enableShadesSelection: colorPalleteWidget.shadesSelection,
+        enableShadesSelection: colorPaletteWidget.shadesSelection,
         materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
         colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
         colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
-        pickersEnabled: colorPalleteWidget.pickersEnabled);
+        pickersEnabled: colorPaletteWidget.pickersEnabled);
   }
 }

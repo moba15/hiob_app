@@ -1,13 +1,13 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/custom_color_pallete_widget_view.dart';
+import 'package:smart_home/customwidgets/widgets/view/custom_color_palette_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_color_pallete_widget_settings.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/device/device.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class CustomColorPalleteWidget extends CustomWidget {
+class CustomColorPaletteWidget extends CustomWidget {
   String? value;
   Map<ColorPickerType, bool> pickersEnabled;
   DataPoint? dataPoint;
@@ -17,7 +17,7 @@ class CustomColorPalleteWidget extends CustomWidget {
 
   bool shadesSelection;
 
-  CustomColorPalleteWidget(
+  CustomColorPaletteWidget(
       {required String? name,
       this.value,
       required this.pickersEnabled,
@@ -36,7 +36,7 @@ class CustomColorPalleteWidget extends CustomWidget {
 
   @override
   CustomWidget clone() {
-    return CustomColorPalleteWidget(
+    return CustomColorPaletteWidget(
         name: name,
         value: value,
         pickersEnabled: pickersEnabled,
@@ -48,7 +48,7 @@ class CustomColorPalleteWidget extends CustomWidget {
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
-      CustomColorPalleteWidgetSettings(customColorPalleteWidget: this);
+      CustomColorPaletteWidgetSettings(customColorPaletteWidget: this);
 
   @override
   Map<String, dynamic> toJson() {
@@ -68,12 +68,12 @@ class CustomColorPalleteWidget extends CustomWidget {
   }
 
   @override
-  Widget get widget => CustomColorPalleteWidgetView(colorPalleteWidget: this);
+  Widget get widget => CustomColorPaletteWidgetView(colorPaletteWidget: this);
 
-  factory CustomColorPalleteWidget.fromJson(Map<String, dynamic> json) {
+  factory CustomColorPaletteWidget.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> pickersEnabledRaw = json["pickersEnabled"] ?? {};
 
-    return CustomColorPalleteWidget(
+    return CustomColorPaletteWidget(
         name: json["name"],
         value: json["value"],
         prefix: json["prefix"] ?? "0x",

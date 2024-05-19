@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_color_pallete_widget.dart';
+import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -59,7 +59,7 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.graph:
         return GraphWidget(name: "name").settingWidget;
       case CustomWidgetType.colorPallete:
-        return CustomColorPalleteWidget(name: "", pickersEnabled: {})
+        return CustomColorPaletteWidget(name: "", pickersEnabled: {})
             .settingWidget;
       case CustomWidgetType.mediaPlayer:
         return CustomMediaPlayerWidget(name: "", url: "").settingWidget;
@@ -85,7 +85,7 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.graph:
         return "Graph (only sql Adapter)";
       case CustomWidgetType.colorPallete:
-        return "Color Pallete";
+        return "Color Palette";
       case CustomWidgetType.mediaPlayer:
         return "Network Media Player";
       default:
