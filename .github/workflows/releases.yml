@@ -16,6 +16,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
+          flutter-version: 3.19.6
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
@@ -44,6 +45,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
+          flutter-version: 3.19.6
       - run: flutter pub get
       - run: flutter create --platforms=linux .
       - name: Build linux
@@ -60,6 +62,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
+          flutter-version: 3.19.6
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
       - run: flutter pub get
