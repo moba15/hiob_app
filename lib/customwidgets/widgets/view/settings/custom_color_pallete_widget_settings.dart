@@ -9,17 +9,17 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomColorPaletteWidgetSettings
     extends CustomWidgetSettingStatefulWidget {
-  final CustomColorPaletteWidget customColorPalleteWidget;
+  final CustomColorPaletteWidget customColorPaletteWidget;
   const CustomColorPaletteWidgetSettings(
-      {Key? key, required this.customColorPalleteWidget})
+      {Key? key, required this.customColorPaletteWidget})
       : super(key: key);
 
   @override
   State<CustomColorPaletteWidgetSettings> createState() =>
-      _CustomColorPalleteWidgetSettingsState();
+      _CustomColorPaletteWidgetSettingsState();
 
   @override
-  CustomWidget get customWidget => customColorPalleteWidget;
+  CustomWidget get customWidget => customColorPaletteWidget;
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys => [];
@@ -30,7 +30,7 @@ class CustomColorPaletteWidgetSettings
   }
 }
 
-class _CustomColorPalleteWidgetSettingsState
+class _CustomColorPaletteWidgetSettingsState
     extends State<CustomColorPaletteWidgetSettings> {
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,8 @@ class _CustomColorPalleteWidgetSettingsState
           children: [
             InputFieldContainer.inputContainer(
                 child: TextFormField(
-              onChanged: (s) => {widget.customColorPalleteWidget.value = s},
-              initialValue: widget.customColorPalleteWidget.value,
+              onChanged: (s) => {widget.customColorPaletteWidget.value = s},
+              initialValue: widget.customColorPaletteWidget.value,
               decoration:
                   const InputDecoration(label: Text("Value (optional)")),
             )),
@@ -49,18 +49,18 @@ class _CustomColorPalleteWidgetSettingsState
                 child: DeviceSelection(
                     onDeviceSelected: (d) => {},
                     onDataPointSelected: (d) {
-                      widget.customColorPalleteWidget.dataPoint = d;
-                      widget.customColorPalleteWidget.device = d?.device;
+                      widget.customColorPaletteWidget.dataPoint = d;
+                      widget.customColorPaletteWidget.device = d?.device;
                     },
                     dataPointLabel: "Datapoint (ARGB or RGB Hex Value)",
                     selectedDataPoint:
-                        widget.customColorPalleteWidget.dataPoint,
-                    selectedDevice: widget.customColorPalleteWidget.device,
+                        widget.customColorPaletteWidget.dataPoint,
+                    selectedDevice: widget.customColorPaletteWidget.device,
                     customWidgetManager: Manager().customWidgetManager)),
             InputFieldContainer.inputContainer(
                 child: TextFormField(
-              onChanged: (s) => {widget.customColorPalleteWidget.prefix = s},
-              initialValue: widget.customColorPalleteWidget.prefix,
+              onChanged: (s) => {widget.customColorPaletteWidget.prefix = s},
+              initialValue: widget.customColorPaletteWidget.prefix,
               decoration:
                   const InputDecoration(label: Text("Hex prefix (optional)")),
             )),
@@ -68,20 +68,20 @@ class _CustomColorPalleteWidgetSettingsState
                 child: CheckboxListTile(
               onChanged: (s) {
                 setState(() {
-                  widget.customColorPalleteWidget.alpha = s ?? false;
+                  widget.customColorPaletteWidget.alpha = s ?? false;
                 });
               },
-              value: widget.customColorPalleteWidget.alpha ?? false,
+              value: widget.customColorPaletteWidget.alpha ?? false,
               title: const Text("Include Alpha Value"),
             )),
             InputFieldContainer.inputContainer(
                 child: CheckboxListTile(
               onChanged: (s) {
                 setState(() {
-                  widget.customColorPalleteWidget.shadesSelection = s ?? false;
+                  widget.customColorPaletteWidget.shadesSelection = s ?? false;
                 });
               },
-              value: widget.customColorPalleteWidget.shadesSelection,
+              value: widget.customColorPaletteWidget.shadesSelection,
               title: const Text("Shades selection"),
             )),
             const Gap(20),
@@ -97,23 +97,23 @@ class _CustomColorPalleteWidgetSettingsState
               itemBuilder: (context, index) {
                 return CheckboxListTile(
                   key: ValueKey(ColorPickerType.values[index]),
-                  value: widget.customColorPalleteWidget.pickersEnabled[widget
-                      .customColorPalleteWidget.pickersEnabled.keys
+                  value: widget.customColorPaletteWidget.pickersEnabled[widget
+                      .customColorPaletteWidget.pickersEnabled.keys
                       .elementAt(index)],
                   onChanged: (s) {
                     setState(() {
-                      widget.customColorPalleteWidget.pickersEnabled[widget
-                          .customColorPalleteWidget.pickersEnabled.keys
+                      widget.customColorPaletteWidget.pickersEnabled[widget
+                          .customColorPaletteWidget.pickersEnabled.keys
                           .elementAt(index)] = s ?? false;
                     });
                   },
                   title: Text(_mapTypeToName(widget
-                      .customColorPalleteWidget.pickersEnabled.keys
+                      .customColorPaletteWidget.pickersEnabled.keys
                       .elementAt(index))),
                 );
               },
               itemCount:
-                  widget.customColorPalleteWidget.pickersEnabled.keys.length,
+                  widget.customColorPaletteWidget.pickersEnabled.keys.length,
             )
           ],
         ));

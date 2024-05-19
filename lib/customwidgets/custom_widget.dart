@@ -84,7 +84,7 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.graph:
         return "Graph (only sql Adapter)";
       case CustomWidgetType.colorPallete:
-        return "Color Pallete";
+        return "Color Palette";
       case CustomWidgetType.mediaPlayer:
         return "Network Media Player";
       default:

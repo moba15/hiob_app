@@ -48,7 +48,7 @@ class CustomColorPaletteWidget extends CustomWidget {
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
-      CustomColorPaletteWidgetSettings(customColorPalleteWidget: this);
+      CustomColorPaletteWidgetSettings(customColorPaletteWidget: this);
 
   @override
   Map<String, dynamic> toJson() {
@@ -68,7 +68,7 @@ class CustomColorPaletteWidget extends CustomWidget {
   }
 
   @override
-  Widget get widget => CustomColorPaletteWidgetView(colorPalleteWidget: this);
+  Widget get widget => CustomColorPaletteWidgetView(colorPaletteWidget: this);
 
   factory CustomColorPaletteWidget.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> pickersEnabledRaw = json["pickersEnabled"] ?? {};
