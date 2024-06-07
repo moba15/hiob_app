@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart' as man;
@@ -270,9 +271,9 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                                   Expanded(
                                     child: Column(
                                       children: t.map((e) {
-                                        if (e is CustomWidgetTemplate) {
+                                        if (e is CustomWidgetWrapper) {
                                           return Card(
-                                            child: e.customWidget.widget,
+                                            child: e.widget,
                                           );
                                         } else if (e is CustomGroupWidget) {
                                           return Card(

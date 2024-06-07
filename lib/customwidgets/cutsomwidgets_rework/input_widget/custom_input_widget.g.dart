@@ -9,39 +9,51 @@ part of 'custom_input_widget.dart';
 _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
         Map<String, dynamic> json) =>
     _$CustomInputWidgetImpl(
+      type: $enumDecodeNullable(
+              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+          CustomWidgetTypeDeprecated.input,
       id: json['id'] as String,
-      type: $enumDecode(_$CustomWidgetTypeEnumMap, json['type']),
       name: json['name'] as String,
-      hintText: json['hintText'] as String,
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
           json['dataPoint'], const DataPointIdConverter().fromJson),
+      hintText: json['hintText'] as String?,
       suffix: json['suffix'] as String?,
+      customInputSendMethod: $enumDecodeNullable(
+          _$CustomInputSendMethodEnumMap, json['customInputSendMethod']),
+      customInputDisplayConentType: $enumDecodeNullable(
+          _$CustomInputDisplayConentTypeEnumMap,
+          json['customInputDisplayConentType']),
     );
 
 Map<String, dynamic> _$$CustomInputWidgetImplToJson(
         _$CustomInputWidgetImpl instance) =>
     <String, dynamic>{
+      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
-      'type': _$CustomWidgetTypeEnumMap[instance.type]!,
       'name': instance.name,
-      'hintText': instance.hintText,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+      'hintText': instance.hintText,
       'suffix': instance.suffix,
+      'customInputSendMethod':
+          _$CustomInputSendMethodEnumMap[instance.customInputSendMethod],
+      'customInputDisplayConentType': _$CustomInputDisplayConentTypeEnumMap[
+          instance.customInputDisplayConentType],
     };
 
-const _$CustomWidgetTypeEnumMap = {
-  CustomWidgetType.simpleSwitch: 'simpleSwitch',
-  CustomWidgetType.simpleValue: 'simpleValue',
-  CustomWidgetType.advanced: 'advanced',
-  CustomWidgetType.light: 'light',
-  CustomWidgetType.group: 'group',
-  CustomWidgetType.line: 'line',
-  CustomWidgetType.webView: 'webView',
-  CustomWidgetType.alertDialog: 'alertDialog',
-  CustomWidgetType.table: 'table',
-  CustomWidgetType.graph: 'graph',
-  CustomWidgetType.colorPallete: 'colorPallete',
-  CustomWidgetType.mediaPlayer: 'mediaPlayer',
+const _$CustomWidgetTypeDeprecatedEnumMap = {
+  CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',
+  CustomWidgetTypeDeprecated.simpleValue: 'simpleValue',
+  CustomWidgetTypeDeprecated.advanced: 'advanced',
+  CustomWidgetTypeDeprecated.light: 'light',
+  CustomWidgetTypeDeprecated.group: 'group',
+  CustomWidgetTypeDeprecated.line: 'line',
+  CustomWidgetTypeDeprecated.webView: 'webView',
+  CustomWidgetTypeDeprecated.alertDialog: 'alertDialog',
+  CustomWidgetTypeDeprecated.table: 'table',
+  CustomWidgetTypeDeprecated.graph: 'graph',
+  CustomWidgetTypeDeprecated.colorPallete: 'colorPallete',
+  CustomWidgetTypeDeprecated.mediaPlayer: 'mediaPlayer',
+  CustomWidgetTypeDeprecated.input: 'input',
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(
@@ -49,3 +61,15 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) =>
     json == null ? null : fromJson(json as Json);
+
+const _$CustomInputSendMethodEnumMap = {
+  CustomInputSendMethod.onEnter: 'onEnter',
+  CustomInputSendMethod.onChange: 'onChange',
+  CustomInputSendMethod.onChangeFinish: 'onChangeFinish',
+};
+
+const _$CustomInputDisplayConentTypeEnumMap = {
+  CustomInputDisplayConentType.noShow: 'noShow',
+  CustomInputDisplayConentType.value: 'value',
+  CustomInputDisplayConentType.hintText: 'hintText',
+};

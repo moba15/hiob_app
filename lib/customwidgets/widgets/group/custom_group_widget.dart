@@ -11,7 +11,7 @@ import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class CustomGroupWidget extends CustomWidget {
+class CustomGroupWidget extends CustomWidgetDeprecated {
   List<dynamic> templates;
   bool isExtended;
   IconWrapper? iconWrapper;
@@ -21,7 +21,7 @@ class CustomGroupWidget extends CustomWidget {
       this.templates = const [],
       this.isExtended = true,
       this.iconWrapper})
-      : super(name: name, type: CustomWidgetType.group, settings: {});
+      : super(name: name, type: CustomWidgetTypeDeprecated.group, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();
@@ -79,7 +79,8 @@ class CustomGroupWidget extends CustomWidget {
               .firstWhere((element) => element.id == templatesRaw["id"]));
         } else if (templatesRaw.containsKey("isExtended")) {
           templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
-        } else if (templatesRaw["type"] == CustomWidgetType.line.toString()) {
+        } else if (templatesRaw["type"] ==
+            CustomWidgetTypeDeprecated.line.toString()) {
           templates.add(CustomWidgetTemplate(
               id: Manager.instance.getRandString(12),
               name: "Line",

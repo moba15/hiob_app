@@ -41,7 +41,7 @@ class Screen {
         widgetTemplates.add(Manager.instance.customWidgetManager.templates
             .firstWhere((element) => element.id == templateRaw["id"]));
       } else {
-        if (templateRaw["type"] == CustomWidgetType.line.toString()) {
+        if (templateRaw["type"] == CustomWidgetTypeDeprecated.line.toString()) {
           widgetTemplates.add(CustomWidgetTemplate(
               id: Manager.instance.getRandString(12),
               name: "Line",
@@ -83,13 +83,14 @@ class Screen {
       "enabled": enabled,
     };
     List<Map<String, dynamic>> widgets = [];
+    //! Old version Support
     for (dynamic w in widgetTemplates) {
       if (w is CustomGroupWidget) {
         widgets.add(w.toJson());
       } else if (w is CustomWidgetTemplate &&
           w.customWidget is CustomDivisionLineWidget) {
         widgets.add(w.customWidget.toJson());
-      } else if (w is CustomWidgetTemplate) {
+      } else if (w is CustomWidgetWrapper) {
         widgets.add({
           "widget": w.name,
           "id": w.id,

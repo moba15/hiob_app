@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/widgets/graphs/graph_update.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/view/graph_view.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/view/settings/graph_widget_settings.dart';
 
-class GraphWidget extends CustomWidget {
+class GraphWidget extends CustomWidgetDeprecated {
   String? title;
   List<GraphAxis>? yAxes;
   List<GraphAxis>? xAxes;
@@ -21,7 +21,8 @@ class GraphWidget extends CustomWidget {
       this.graphLines,
       this.updateType,
       this.trackBall})
-      : super(name: name, type: CustomWidgetType.graph, settings: {}) {
+      : super(
+            name: name, type: CustomWidgetTypeDeprecated.graph, settings: {}) {
     if (graphLines != null &&
         graphLines!.isNotEmpty &&
         yAxes != null &&
@@ -35,7 +36,7 @@ class GraphWidget extends CustomWidget {
   }
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return GraphWidget(
         name: name,
         title: title,

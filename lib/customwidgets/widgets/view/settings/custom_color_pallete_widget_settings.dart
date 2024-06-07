@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/theme.dart';
@@ -19,7 +20,10 @@ class CustomColorPaletteWidgetSettings
       _CustomColorPaletteWidgetSettingsState();
 
   @override
-  CustomWidget get customWidget => customColorPaletteWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customColorPaletteWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys => [];

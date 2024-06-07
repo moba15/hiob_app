@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/map_order_add_setting_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
@@ -24,7 +25,10 @@ class CustomTableSettings extends CustomWidgetSettingStatefulWidget {
   State<CustomTableSettings> createState() => _CustomTableSettingsState();
 
   @override
-  CustomWidget get customWidget => customTableWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customTableWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>

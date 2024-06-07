@@ -6,24 +6,27 @@ import 'package:smart_home/customwidgets/widgets/view/alert_dialog_widget_view.d
 import 'package:smart_home/customwidgets/widgets/view/settings/alert_dialog_settings.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class CustomAlertDialogWidget extends CustomWidget {
+class CustomAlertDialogWidget extends CustomWidgetDeprecated {
   List<CustomWidgetWrapper>? templates;
   String? title;
 
   CustomAlertDialogWidget({required String? name, this.templates, this.title})
-      : super(name: name, type: CustomWidgetType.alertDialog, settings: {});
+      : super(
+            name: name,
+            type: CustomWidgetTypeDeprecated.alertDialog,
+            settings: {});
 
   factory CustomAlertDialogWidget.fromJSON(Map<String, dynamic> json) {
     List<Map<String, dynamic>> rawTemplates =
         List.from(json["templates"] ?? []);
-    List<CustomWidgetTemplate> t =
+    List<CustomWidgetWrapper> t =
         Manager.instance.customWidgetManager.loadTemplate(rawTemplates);
     return CustomAlertDialogWidget(
         name: json["name"], templates: t, title: json["title"]);
   }
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomAlertDialogWidget(
         name: name, templates: List.from(templates ?? []));
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/utils/theme.dart';
 
@@ -34,7 +35,10 @@ class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
   }
 
   @override
-  CustomWidget get customWidget => customDivisionLineWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customDivisionLineWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {

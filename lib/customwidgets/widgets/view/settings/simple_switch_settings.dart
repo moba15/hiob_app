@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/device/datapoint/datapoint.dart';
@@ -24,7 +25,10 @@ class CustomSwitchWidgetSettingWidget
       _CustomSwitchWidgetSettingWidgetState();
 
   @override
-  CustomWidget get customWidget => customSimpleSwitchWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customSimpleSwitchWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {

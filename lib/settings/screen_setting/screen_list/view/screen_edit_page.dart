@@ -325,8 +325,9 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
       content: SizedBox(
         child: Column(
           children: [
-            for (CustomWidgetType type in CustomWidgetType.values
-                .where((element) => element != CustomWidgetType.group))
+            for (CustomWidgetTypeDeprecated type
+                in CustomWidgetTypeDeprecated.values.where(
+                    (element) => element != CustomWidgetTypeDeprecated.group))
               if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(

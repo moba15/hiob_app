@@ -311,8 +311,9 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
       content: SizedBox(
         child: Column(
           children: [
-            for (CustomWidgetType type in CustomWidgetType.values
-                .where((element) => element != CustomWidgetType.group))
+            for (CustomWidgetTypeDeprecated type
+                in CustomWidgetTypeDeprecated.values.where(
+                    (element) => element != CustomWidgetTypeDeprecated.group))
               if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(
@@ -419,7 +420,7 @@ class WidgetTemplateListPage extends StatelessWidget {
         },
         itemBuilder: (BuildContext context, int index) {
           if (widgetTemplates.length > index &&
-              widgetTemplates[index] is CustomWidgetTemplate) {
+              widgetTemplates[index] is CustomWidgetWrapper) {
             return Dismissible(
                 background: Container(
                   color: Colors.red,

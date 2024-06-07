@@ -20,20 +20,29 @@ CustomInputWidget _$CustomInputWidgetFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CustomInputWidget {
+  CustomWidgetTypeDeprecated get type => throw _privateConstructorUsedError;
+  set type(CustomWidgetTypeDeprecated value) =>
+      throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   set id(String value) => throw _privateConstructorUsedError;
-  CustomWidgetType get type => throw _privateConstructorUsedError;
-  set type(CustomWidgetType value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
-  String get hintText => throw _privateConstructorUsedError;
-  set hintText(String value) => throw _privateConstructorUsedError;
   @DataPointIdConverter()
   DataPoint? get dataPoint => throw _privateConstructorUsedError;
   @DataPointIdConverter()
   set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get hintText => throw _privateConstructorUsedError;
+  set hintText(String? value) => throw _privateConstructorUsedError;
   String? get suffix => throw _privateConstructorUsedError;
   set suffix(String? value) => throw _privateConstructorUsedError;
+  CustomInputSendMethod? get customInputSendMethod =>
+      throw _privateConstructorUsedError;
+  set customInputSendMethod(CustomInputSendMethod? value) =>
+      throw _privateConstructorUsedError;
+  CustomInputDisplayConentType? get customInputDisplayConentType =>
+      throw _privateConstructorUsedError;
+  set customInputDisplayConentType(CustomInputDisplayConentType? value) =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,12 +57,14 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       _$CustomInputWidgetCopyWithImpl<$Res, CustomInputWidget>;
   @useResult
   $Res call(
-      {String id,
-      CustomWidgetType type,
+      {CustomWidgetTypeDeprecated type,
+      String id,
       String name,
-      String hintText,
       @DataPointIdConverter() DataPoint? dataPoint,
-      String? suffix});
+      String? hintText,
+      String? suffix,
+      CustomInputSendMethod? customInputSendMethod,
+      CustomInputDisplayConentType? customInputDisplayConentType});
 }
 
 /// @nodoc
@@ -69,38 +80,48 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? type = null,
+    Object? id = null,
     Object? name = null,
-    Object? hintText = null,
     Object? dataPoint = freezed,
+    Object? hintText = freezed,
     Object? suffix = freezed,
+    Object? customInputSendMethod = freezed,
+    Object? customInputDisplayConentType = freezed,
   }) {
     return _then(_value.copyWith(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CustomWidgetTypeDeprecated,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      hintText: null == hintText
-          ? _value.hintText
-          : hintText // ignore: cast_nullable_to_non_nullable
               as String,
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
               as DataPoint?,
+      hintText: freezed == hintText
+          ? _value.hintText
+          : hintText // ignore: cast_nullable_to_non_nullable
+              as String?,
       suffix: freezed == suffix
           ? _value.suffix
           : suffix // ignore: cast_nullable_to_non_nullable
               as String?,
+      customInputSendMethod: freezed == customInputSendMethod
+          ? _value.customInputSendMethod
+          : customInputSendMethod // ignore: cast_nullable_to_non_nullable
+              as CustomInputSendMethod?,
+      customInputDisplayConentType: freezed == customInputDisplayConentType
+          ? _value.customInputDisplayConentType
+          : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
+              as CustomInputDisplayConentType?,
     ) as $Val);
   }
 }
@@ -114,12 +135,14 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      CustomWidgetType type,
+      {CustomWidgetTypeDeprecated type,
+      String id,
       String name,
-      String hintText,
       @DataPointIdConverter() DataPoint? dataPoint,
-      String? suffix});
+      String? hintText,
+      String? suffix,
+      CustomInputSendMethod? customInputSendMethod,
+      CustomInputDisplayConentType? customInputDisplayConentType});
 }
 
 /// @nodoc
@@ -133,38 +156,48 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? type = null,
+    Object? id = null,
     Object? name = null,
-    Object? hintText = null,
     Object? dataPoint = freezed,
+    Object? hintText = freezed,
     Object? suffix = freezed,
+    Object? customInputSendMethod = freezed,
+    Object? customInputDisplayConentType = freezed,
   }) {
     return _then(_$CustomInputWidgetImpl(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CustomWidgetTypeDeprecated,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      hintText: null == hintText
-          ? _value.hintText
-          : hintText // ignore: cast_nullable_to_non_nullable
               as String,
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
               as DataPoint?,
+      hintText: freezed == hintText
+          ? _value.hintText
+          : hintText // ignore: cast_nullable_to_non_nullable
+              as String?,
       suffix: freezed == suffix
           ? _value.suffix
           : suffix // ignore: cast_nullable_to_non_nullable
               as String?,
+      customInputSendMethod: freezed == customInputSendMethod
+          ? _value.customInputSendMethod
+          : customInputSendMethod // ignore: cast_nullable_to_non_nullable
+              as CustomInputSendMethod?,
+      customInputDisplayConentType: freezed == customInputDisplayConentType
+          ? _value.customInputDisplayConentType
+          : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
+              as CustomInputDisplayConentType?,
     ));
   }
 }
@@ -173,34 +206,41 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomInputWidgetImpl extends _CustomInputWidget {
   _$CustomInputWidgetImpl(
-      {required this.id,
-      required this.type,
+      {this.type = CustomWidgetTypeDeprecated.input,
+      required this.id,
       required this.name,
-      required this.hintText,
       @DataPointIdConverter() required this.dataPoint,
-      required this.suffix})
+      this.hintText,
+      this.suffix,
+      this.customInputSendMethod,
+      this.customInputDisplayConentType})
       : super._();
 
   factory _$CustomInputWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomInputWidgetImplFromJson(json);
 
   @override
+  @JsonKey()
+  CustomWidgetTypeDeprecated type;
+  @override
   String id;
   @override
-  CustomWidgetType type;
-  @override
   String name;
-  @override
-  String hintText;
   @override
   @DataPointIdConverter()
   DataPoint? dataPoint;
   @override
+  String? hintText;
+  @override
   String? suffix;
+  @override
+  CustomInputSendMethod? customInputSendMethod;
+  @override
+  CustomInputDisplayConentType? customInputDisplayConentType;
 
   @override
   String toString() {
-    return 'CustomInputWidget(id: $id, type: $type, name: $name, hintText: $hintText, dataPoint: $dataPoint, suffix: $suffix)';
+    return 'CustomInputWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType)';
   }
 
   @JsonKey(ignore: true)
@@ -221,37 +261,46 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
 abstract class _CustomInputWidget extends CustomInputWidget
     implements CustomWidget {
   factory _CustomInputWidget(
-      {required String id,
-      required CustomWidgetType type,
-      required String name,
-      required String hintText,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      required String? suffix}) = _$CustomInputWidgetImpl;
+          {CustomWidgetTypeDeprecated type,
+          required String id,
+          required String name,
+          @DataPointIdConverter() required DataPoint? dataPoint,
+          String? hintText,
+          String? suffix,
+          CustomInputSendMethod? customInputSendMethod,
+          CustomInputDisplayConentType? customInputDisplayConentType}) =
+      _$CustomInputWidgetImpl;
   _CustomInputWidget._() : super._();
 
   factory _CustomInputWidget.fromJson(Map<String, dynamic> json) =
       _$CustomInputWidgetImpl.fromJson;
 
   @override
+  CustomWidgetTypeDeprecated get type;
+  set type(CustomWidgetTypeDeprecated value);
+  @override
   String get id;
   set id(String value);
   @override
-  CustomWidgetType get type;
-  set type(CustomWidgetType value);
-  @override
   String get name;
   set name(String value);
-  @override
-  String get hintText;
-  set hintText(String value);
   @override
   @DataPointIdConverter()
   DataPoint? get dataPoint;
   @DataPointIdConverter()
   set dataPoint(DataPoint? value);
   @override
+  String? get hintText;
+  set hintText(String? value);
+  @override
   String? get suffix;
   set suffix(String? value);
+  @override
+  CustomInputSendMethod? get customInputSendMethod;
+  set customInputSendMethod(CustomInputSendMethod? value);
+  @override
+  CustomInputDisplayConentType? get customInputDisplayConentType;
+  set customInputDisplayConentType(CustomInputDisplayConentType? value);
   @override
   @JsonKey(ignore: true)
   _$$CustomInputWidgetImplCopyWith<_$CustomInputWidgetImpl> get copyWith =>

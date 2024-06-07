@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/utils/theme.dart';
 
@@ -14,7 +15,10 @@ class CustomMediaPlayerSettings extends CustomWidgetSettingStatefulWidget {
       _CustomMediaPlayerSettingsState();
 
   @override
-  CustomWidget get customWidget => customMediaPlayerWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customMediaPlayerWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys => [];

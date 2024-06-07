@@ -45,7 +45,7 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
       case CustomWidgetType.graph:
         return "Graph (only sql Adapter)";
       case CustomWidgetType.colorPallete:
-        return "Color Pallete";
+        return "Color Palette";
       case CustomWidgetType.mediaPlayer:
         return "Network Media Player";
       default:
@@ -55,10 +55,11 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
 }
 
 abstract class CustomWidget extends CustomWidgetWrapper {
-  final String id;
+  final CustomWidgetTypeDeprecated type;
+  String id;
   final String name;
-  final CustomWidgetType type;
-  CustomWidget({required this.id, required this.type, required this.name});
+
+  CustomWidget({required this.type, required this.id, required this.name});
 
   CustomWidgetSettingWidget get settingWidget;
   Widget get widget;

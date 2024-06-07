@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart
 
 class CustomWidgetTemplate extends CustomWidgetWrapper {
   String id;
-  CustomWidget customWidget;
+  CustomWidgetDeprecated customWidget;
   String name;
 
   CustomWidgetTemplate(
@@ -19,10 +19,8 @@ class CustomWidgetTemplate extends CustomWidgetWrapper {
       };
 
   @override
-  n.CustomWidgetType? get type {
-    print("Type:  " + customWidget.type!.name.toString());
-    return n.CustomWidgetType.values
-        .firstWhere((element) => element.name == customWidget.type?.name);
+  CustomWidgetTypeDeprecated? get type {
+    return customWidget.type;
   }
 
   @override

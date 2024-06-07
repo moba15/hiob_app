@@ -122,12 +122,12 @@ class TemplatesView extends StatefulWidget {
 }
 
 class _TemplatesViewState extends State<TemplatesView> {
-  List<CustomWidgetType> types = [];
+  List<CustomWidgetTypeDeprecated> types = [];
   bool selectionMode = false;
 
   @override
   void initState() {
-    types.addAll(CustomWidgetType.values);
+    types.addAll(CustomWidgetTypeDeprecated.values);
     types.removeWhere((type) => !widget.templates.keys
         .any((template) => template.type?.name == type.name));
 
@@ -144,7 +144,7 @@ class _TemplatesViewState extends State<TemplatesView> {
         : ListView.builder(
             itemCount: types.length,
             itemBuilder: (context, index) {
-              CustomWidgetType type = types[index];
+              CustomWidgetTypeDeprecated type = types[index];
               List<Dismissible> children = [];
               for (CustomWidgetWrapper t in widget.templates.keys
                   .where((element) => element.type?.name == type.name)) {

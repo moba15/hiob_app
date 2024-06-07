@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -22,7 +23,10 @@ class CustomWebViewWidgetSettingWidget
       _CustomSimpleValueWidgetSettingWidgetState();
 
   @override
-  CustomWidget get customWidget => customWebViewWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customWebViewWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {

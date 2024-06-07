@@ -5,7 +5,7 @@ import 'package:smart_home/customwidgets/widgets/view/settings/custom_table_sett
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class CustomTableWidget extends CustomWidget {
+class CustomTableWidget extends CustomWidgetDeprecated {
   DataPoint? dataPoint;
   String header;
   bool sortAsc;
@@ -23,10 +23,10 @@ class CustomTableWidget extends CustomWidget {
       required this.elementsPerPage,
       required this.columns,
       this.dataPoint})
-      : super(name: name, type: CustomWidgetType.table, settings: {});
+      : super(name: name, type: CustomWidgetTypeDeprecated.table, settings: {});
 
   @override
-  CustomWidget clone() => CustomTableWidget(
+  CustomWidgetDeprecated clone() => CustomTableWidget(
       name: name,
       header: header,
       sortAsc: sortAsc,

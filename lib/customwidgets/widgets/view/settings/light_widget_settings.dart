@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/bool_selection.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
@@ -23,7 +24,10 @@ class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
       _CustomLightWidgetSettingWidgetState();
 
   @override
-  CustomWidget get customWidget => customLightWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customLightWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {

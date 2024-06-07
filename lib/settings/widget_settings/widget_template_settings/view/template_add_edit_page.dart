@@ -30,7 +30,7 @@ class TemplateAddPage extends StatefulWidget {
 
 class _TemplateAddPageState extends State<TemplateAddPage> {
   final GlobalKey _nameKey = GlobalKey();
-  CustomWidgetType? _selectedType;
+  CustomWidgetTypeDeprecated? _selectedType;
   String? _oldJSON;
   final TextEditingController _nameController = TextEditingController();
   CustomWidgetSettingWidget? _customWidgetSettingWidget;
@@ -40,13 +40,14 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     _nameController.value =
         TextEditingValue(text: widget.preSelectedTemplate?.name ?? "");
     //TODO Refactor Customwidget type
-    _selectedType = CustomWidgetType.values.firstWhere(
+    _selectedType = CustomWidgetTypeDeprecated.values.firstWhere(
       (element) => element.name == widget.preSelectedTemplate?.type?.name,
-      orElse: () => CustomWidgetType.simpleSwitch,
+      orElse: () => CustomWidgetTypeDeprecated.simpleSwitch,
     );
     _customWidgetSettingWidget = widget.preSelectedTemplate?.settingWidget ??
         _selectedType!.settingWidget;
-    _oldJSON = jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
+    _oldJSON =
+        jsonEncode(_customWidgetSettingWidget!.customWidgetDeprecated.toJson());
     super.initState();
   }
 
@@ -101,19 +102,19 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: DropdownButtonFormField<CustomWidgetType>(
+              child: DropdownButtonFormField<CustomWidgetTypeDeprecated>(
                 items: [
-                  for (CustomWidgetType c in CustomWidgetType.values.where(
-                      (value) =>
-                          value != CustomWidgetType.group &&
-                          value != CustomWidgetType.alertDialog))
+                  for (CustomWidgetTypeDeprecated c
+                      in CustomWidgetTypeDeprecated.values.where((value) =>
+                          value != CustomWidgetTypeDeprecated.group &&
+                          value != CustomWidgetTypeDeprecated.alertDialog))
                     DropdownMenuItem(
                       value: c,
                       child: Text(c.name),
                     )
                 ],
                 value: _selectedType,
-                onChanged: (CustomWidgetType? type) {
+                onChanged: (CustomWidgetTypeDeprecated? type) {
                   setState(() {
                     _selectedType = type!;
                     if (widget.preSelectedTemplate == null) {
@@ -141,8 +142,14 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
                 child: TextField(
                   controller: _nameController,
-                  onChanged: (value) =>
-                      {_customWidgetSettingWidget?.customWidget.name = value},
+                  onChanged: (value) {
+                    try {
+                      _customWidgetSettingWidget?.customWidget.name = value;
+                    } catch (e) {
+                      _customWidgetSettingWidget?.customWidgetDeprecated.name =
+                          value;
+                    }
+                  },
                   decoration: const InputDecoration(labelText: "Name"),
                 ),
               ),
@@ -180,7 +187,9 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
 
   bool _isSaved() {
     return _oldJSON ==
-        jsonEncode(_customWidgetSettingWidget?.customWidget.toJson() ?? "[]");
+        jsonEncode(
+            _customWidgetSettingWidget?.customWidgetDeprecated.toJson() ??
+                "[]");
   }
 
   void _save() {
@@ -190,35 +199,56 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
 
     if (_customWidgetSettingWidget != null &&
         _customWidgetSettingWidget!.validate()) {
-      if (widget.preSelectedTemplate != null &&
-          widget.preSelectedTemplate is CustomWidgetTemplate) {
+      if (widget.preSelectedTemplate != null) {
         //TODO Refector
-        widget.preSelectedTemplate!.name = _nameController.text;
-        (widget.preSelectedTemplate! as CustomWidgetTemplate).customWidget =
-            _customWidgetSettingWidget!.customWidget;
+        if (widget.preSelectedTemplate is CustomWidgetTemplate) {
+          //!Support older versions
+          widget.preSelectedTemplate!.name = _nameController.text;
+          (widget.preSelectedTemplate! as CustomWidgetTemplate).customWidget =
+              _customWidgetSettingWidget!.customWidgetDeprecated;
 
-        widget.preSelectedTemplate!.name = _nameController.text;
-        if (widget.onSave == null) {
-          widget.customWidgetManager
-              .edit(template: widget.preSelectedTemplate!);
+          widget.preSelectedTemplate!.name = _nameController.text;
+          if (widget.onSave == null) {
+            widget.customWidgetManager
+                .edit(template: widget.preSelectedTemplate!);
+          } else {
+            widget.onSave!(widget.preSelectedTemplate!);
+          }
         } else {
-          widget.onSave!(widget.preSelectedTemplate!);
+          throw UnimplementedError(
+              "New Templates not supported to edit for now");
         }
       } else {
-        _customWidgetSettingWidget!.customWidget.name = _nameController.text;
-        if (widget.onSave == null) {
-          widget.customWidgetManager.save(
-              template: CustomWidgetTemplate(
-            id: Manager.instance.getRandString(22),
-            name: _nameController.text,
-            customWidget: _customWidgetSettingWidget!.customWidget,
-          ));
-        } else {
-          widget.onSave!(CustomWidgetTemplate(
-            id: Manager.instance.getRandString(22),
-            name: _nameController.text,
-            customWidget: _customWidgetSettingWidget!.customWidget,
-          ));
+        try {
+          //TODO
+          //!Old version support
+          _customWidgetSettingWidget!.customWidgetDeprecated.name =
+              _nameController.text;
+          if (widget.onSave == null) {
+            widget.customWidgetManager.save(
+                template: CustomWidgetTemplate(
+              id: Manager.instance.getRandString(22),
+              name: _nameController.text,
+              customWidget: _customWidgetSettingWidget!.customWidgetDeprecated,
+            ));
+          } else {
+            widget.onSave!(CustomWidgetTemplate(
+              id: Manager.instance.getRandString(22),
+              name: _nameController.text,
+              customWidget: _customWidgetSettingWidget!.customWidgetDeprecated,
+            ));
+          }
+        } catch (e) {
+          //Template is porbaly new one
+          _customWidgetSettingWidget!.customWidget.name = _nameController.text;
+          _customWidgetSettingWidget!.customWidget.id =
+              Manager.instance.getRandString(22);
+          if (widget.onSave == null) {
+            widget.customWidgetManager
+                .save(template: _customWidgetSettingWidget!.customWidget);
+          } else {
+            widget.onSave!(_customWidgetSettingWidget!.customWidget);
+          }
         }
       }
       Navigator.pop(context);

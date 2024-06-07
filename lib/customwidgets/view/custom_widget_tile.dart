@@ -26,7 +26,8 @@ class CustomWidgetTemplateTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CustomWidgetType? type = CustomWidgetType.values.firstWhere(
+    CustomWidgetTypeDeprecated? type =
+        CustomWidgetTypeDeprecated.values.firstWhere(
       (element) => element.name == customWidget.type?.name,
     );
     return ListTile(

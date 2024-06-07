@@ -10,7 +10,7 @@ import 'package:smart_home/customwidgets/widgets/view/settings/advanced_widget_s
 import 'package:smart_home/device/datapoint/datapoint.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class AdvancedCustomWidget extends CustomWidget {
+class AdvancedCustomWidget extends CustomWidgetDeprecated {
   String? value;
   TriggerAction? mainBody;
   String? bodyIconID;
@@ -29,13 +29,17 @@ class AdvancedCustomWidget extends CustomWidget {
       this.subTitleDataPoint,
       this.bodyIconID,
       this.customAlertDialogWidget})
-      : super(name: name, type: CustomWidgetType.advanced, settings: {});
+      : super(
+            name: name,
+            type: CustomWidgetTypeDeprecated.advanced,
+            settings: {});
 
-  AdvancedCustomWidget.edit() : super.edit(type: CustomWidgetType.advanced);
+  AdvancedCustomWidget.edit()
+      : super.edit(type: CustomWidgetTypeDeprecated.advanced);
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": CustomWidgetType.advanced.toString(),
+        "type": CustomWidgetTypeDeprecated.advanced.toString(),
         "mainBody": jsonEncode(mainBody?.toJson()),
         "subTitle": subTitle,
         "subTitleDataPoint": subTitleDataPoint?.id,
@@ -77,7 +81,7 @@ class AdvancedCustomWidget extends CustomWidget {
       );
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return AdvancedCustomWidget(
         name: name,
         value: value,

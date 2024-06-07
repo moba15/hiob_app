@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
@@ -17,7 +18,10 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   State<AlertDialogSettings> createState() => _AlertDialogSettingsState();
 
   @override
-  CustomWidget get customWidget => customAlertDialogWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customAlertDialogWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {

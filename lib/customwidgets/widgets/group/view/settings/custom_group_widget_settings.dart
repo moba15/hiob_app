@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -209,7 +210,10 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
       _CustomGroupWidgetSettingsState();
 
   @override
-  CustomWidget get customWidget => customGroupWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customGroupWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {
@@ -413,8 +417,9 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
       content: SizedBox(
         child: Column(
           children: [
-            for (CustomWidgetType type in CustomWidgetType.values
-                .where((element) => element != CustomWidgetType.group))
+            for (CustomWidgetTypeDeprecated type
+                in CustomWidgetTypeDeprecated.values.where(
+                    (element) => element.name != CustomWidgetType.group.name))
               if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(
