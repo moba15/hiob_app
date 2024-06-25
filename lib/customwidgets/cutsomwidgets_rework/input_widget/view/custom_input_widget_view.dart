@@ -11,13 +11,37 @@ class CustomInputWidgetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (customInputWidget.dataPoint == null) {
-      return Text("Device not found");
+      return const Text("Device not found");
     }
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: DataPointBloc(customInputWidget.dataPoint!),
       builder: (context, state) {
-        return Placeholder();
+        TextEditingController textEditingController = TextEditingController();
+        if (customInputWidget.customInputDisplayConentType ==
+            CustomInputDisplayConentType.value) {
+          textEditingController.text = state.value;
+        }
+        final onChanged = customInputWidget.customInputSendMethod ==
+                CustomInputSendMethod.onChanged
+            ? send
+            : null;
+        final onSubmitted = customInputWidget.customInputSendMethod ==
+                CustomInputSendMethod.onSubmitted
+            ? send
+            : null;
+        final hintText = customInputWidget.customInputDisplayConentType ==
+                CustomInputDisplayConentType.hintText
+            ? state.value.toString()
+            : null;
+        return TextField(
+          controller: textEditingController,
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          decoration: InputDecoration(hintText: hintText),
+        );
       },
     );
   }
+
+  void send(String value) {}
 }

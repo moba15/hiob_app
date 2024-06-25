@@ -9,7 +9,7 @@ import 'package:smart_home/device/datapoint/datapoint.dart';
 part 'custom_input_widget.freezed.dart';
 part 'custom_input_widget.g.dart';
 
-enum CustomInputSendMethod { onEnter, onChange, onChangeFinish }
+enum CustomInputSendMethod { onChanged, onSubmitted }
 
 enum CustomInputDisplayConentType { noShow, value, hintText }
 
