@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/manager.dart';
 

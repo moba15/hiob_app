@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
-import 'package:smart_home/device/datapoint/datapointTypes/datapoint_role.dart';
+import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/device/state/datapointTypes/datapoint_role.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class Device {

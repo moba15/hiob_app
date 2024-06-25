@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_webview_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_webview_settings.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 
 import '../../manager/manager.dart';
 import '../custom_widget.dart';

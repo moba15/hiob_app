@@ -2,7 +2,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
-import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomColorPaletteWidgetView extends StatelessWidget {
   final CustomColorPaletteWidget colorPaletteWidget;

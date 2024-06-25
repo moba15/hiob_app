@@ -1,5 +1,5 @@
 import 'package:smart_home/dataPackages/subscribe_history_package.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/history/history_data.dart';
 import 'package:smart_home/manager/history/history_subscription.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/triggerAction/settings/button_trigger_action_settings.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 
-import '../../device/datapoint/datapoint.dart';
+import '../../device/state/state.dart';
 import '../../manager/manager.dart';
 
 class ButtonTriggerAction extends TriggerAction {

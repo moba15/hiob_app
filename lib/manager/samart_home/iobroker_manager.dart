@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:smart_home/dataPackages/data_package.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/ioBroker/enum/enum.dart';
 import 'package:smart_home/manager/device_manager.dart';

@@ -19,7 +19,7 @@
   "edit_template_page_title": "Edit Template",
   "@_TEMPLATE_SETTINGS": {},
   "no_templates_found": "There are no Widget templates",
-  "add_data_point": "Add data point man.",
+  "add_data_point": "Add State man.",
   "add_enum": "Add Enum",
 
 
@@ -66,7 +66,7 @@
   "thickness": "Thickness",
   "exit": "Exit",
   "save": "Save",
-  "data_points": "Data points",
+  "data_points": "States",
 
 
 

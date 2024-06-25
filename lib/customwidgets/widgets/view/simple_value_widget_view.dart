@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
-import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/device/state/state.dart';
 
 class SimpleValueWidgetView extends StatelessWidget {
   final CustomSimpleValueWidget customSimpleValueWidget;
@@ -31,7 +31,7 @@ class SimpleValueWidgetView extends StatelessWidget {
         title: Text(customSimpleValueWidget.value ??
             customSimpleValueWidget.name ??
             "No Name Found"),
-        subtitle: const Text("No Data Point found"),
+        subtitle: const Text("No State found"),
       );
     }
 

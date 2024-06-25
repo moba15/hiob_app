@@ -7,7 +7,7 @@ import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/advanced_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/advanced_widget_settings.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
 class AdvancedCustomWidget extends CustomWidget {
