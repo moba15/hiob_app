@@ -168,11 +168,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           }
           return true;
         },
-        child: ShowCaseWidget(
-          builder: Builder(
-            builder: (c) => mainScreen(c),
-          ),
-        ));
+        child: ShowCaseWidget(builder: (c) => mainScreen(c)));
   }
 
   bool _isSaved() {
