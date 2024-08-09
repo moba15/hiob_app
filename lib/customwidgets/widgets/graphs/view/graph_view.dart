@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_axis.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_line.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/history/bloc/history_data_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

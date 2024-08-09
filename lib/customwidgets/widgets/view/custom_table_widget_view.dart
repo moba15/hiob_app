@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 
-import '../../../device/datapoint/bloc/datapoint_bloc.dart';
+import '../../../device/state/bloc/datapoint_bloc.dart';
 
 class CustomTableWidgetView extends StatefulWidget {
   final CustomTableWidget customTableWidget;

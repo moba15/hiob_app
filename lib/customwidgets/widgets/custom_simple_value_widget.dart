@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/simple_value_settings.dart';
 import 'package:smart_home/customwidgets/widgets/view/simple_value_widget_view.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import '../../device/device.dart';

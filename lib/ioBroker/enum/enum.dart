@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 
 class Enum {
   String name;

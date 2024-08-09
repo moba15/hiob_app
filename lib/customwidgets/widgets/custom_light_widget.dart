@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_light_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/light_widget_settings.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 
 import '../../manager/manager.dart';
 

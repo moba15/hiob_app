@@ -52,7 +52,7 @@ dependencies:
   community_material_icon: ^5.9.55
   webview_flutter: ^4.0.1
   permission_handler: ^11.2.0
-  showcaseview: ^2.1.1
+  showcaseview: ^3.0.0
   syncfusion_flutter_charts: ^24.2.3
   device_info_plus: ^9.0.3
   flutter_vibrate: ^1.3.0

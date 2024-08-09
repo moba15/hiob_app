@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/ioBroker/enum/enum.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -419,7 +419,7 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
                 )),
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
-              child: const Text("Data Points:", style: TextStyle(fontSize: 17)),
+              child: const Text("States:", style: TextStyle(fontSize: 17)),
             ),
             for (DataPoint dataPoint in dataPoints)
               Dismissible(
@@ -461,7 +461,7 @@ class _DeviceEditPageState extends State<DeviceEditPage> {
                         .add(DataPoint(name: "name", device: null, id: "id"));
                   });
                 },
-                child: const Text("Add Data Point Man."),
+                child: const Text("Add State man."),
               ),
             ),
             Center(

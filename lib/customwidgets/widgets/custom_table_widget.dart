@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_table_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_table_settings.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
 class CustomTableWidget extends CustomWidgetDeprecated {

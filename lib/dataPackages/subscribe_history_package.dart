@@ -1,5 +1,5 @@
 import 'package:smart_home/dataPackages/data_package.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 
 class SubscribeSmartHistoryPackage extends DataPackage {
   SubscribeSmartHistoryPackage(

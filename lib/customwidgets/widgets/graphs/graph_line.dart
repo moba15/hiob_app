@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_axis.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
 enum GraphLineType { normal, dotted, bar }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/triggerAction/settings/slider_trigger_action_settings.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/triggerAction/view/slider_trigger_view.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 
 import '../../manager/manager.dart';
 

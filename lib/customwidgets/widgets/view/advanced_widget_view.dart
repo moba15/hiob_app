@@ -7,7 +7,7 @@ import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dar
 import 'package:smart_home/customwidgets/triggerAction/switch_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
-import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
 
 import '../../../device/bloc/device_bloc.dart';

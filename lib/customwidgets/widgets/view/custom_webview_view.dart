@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
-import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CustomWebViewView extends StatefulWidget {

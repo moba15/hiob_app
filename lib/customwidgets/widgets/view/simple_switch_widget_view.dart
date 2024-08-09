@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/device/datapoint/bloc/datapoint_bloc.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/device/state/state.dart';
 
 import '../../../device/bloc/device_bloc.dart';
 import '../../../manager/manager.dart';
@@ -39,7 +39,7 @@ class SimpleSwitchWidgetView extends StatelessWidget {
         title: Text(customSimpleSwitchWidget.value ??
             customSimpleSwitchWidget.name ??
             "No Text Found"),
-        subtitle: const Text("No Data Point found"),
+        subtitle: const Text("No State found"),
       );
     }
     return BlocProvider(
