@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 
 class ColorPalleteTriggerAction extends TriggerAction {
   final DataPoint? dataPoint;

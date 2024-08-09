@@ -5,7 +5,8 @@ import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rewo
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/settings/custom_input_widget_settings_view.dart';
 import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
+
 part 'custom_input_widget.freezed.dart';
 part 'custom_input_widget.g.dart';
 
