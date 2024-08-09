@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/device/datapoint/datapoint.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
 class DataPointIdConverter implements JsonConverter<DataPoint?, String> {
