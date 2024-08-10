@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:mockito/annotations.dart';
 import 'package:smart_home/device/state/datapointTypes/datapoint_types.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/history/history_data.dart';

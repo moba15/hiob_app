@@ -37,6 +37,10 @@ class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       [valueKey, switchDatapoint, sliderKey];
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomLightWidgetSettingWidgetState

@@ -28,6 +28,9 @@ class CustomMediaPlayerSettings extends CustomWidgetSettingStatefulWidget {
     return customMediaPlayerWidget.url != null &&
         customMediaPlayerWidget.url != "";
   }
+
+  @override
+  bool get deprecated => true;
 }
 
 class _CustomMediaPlayerSettingsState extends State<CustomMediaPlayerSettings> {

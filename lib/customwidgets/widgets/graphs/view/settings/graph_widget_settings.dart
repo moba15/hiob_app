@@ -22,8 +22,8 @@ class GraphWidgetSettings extends CustomWidgetSettingStatefulWidget {
 
   @override
   CustomWidgetDeprecated get customWidgetDeprecated => graphWidget;
+
   @override
-  // TODO: implement customWidget
   CustomWidget get customWidget => throw UnimplementedError();
 
   @override
@@ -34,6 +34,9 @@ class GraphWidgetSettings extends CustomWidgetSettingStatefulWidget {
   bool validate() {
     return true;
   }
+
+  @override
+  bool get deprecated => true;
 }
 
 class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {

@@ -128,6 +128,8 @@ abstract class CustomWidgetDeprecated {
 abstract class CustomWidgetSettingWidget {
   bool validate();
 
+  final bool deprecated = true;
+
   CustomWidgetDeprecated get customWidgetDeprecated;
   CustomWidget get customWidget;
 

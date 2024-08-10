@@ -27,6 +27,8 @@ mixin _$CustomInputWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
+  String? get label => throw _privateConstructorUsedError;
+  set label(String? value) => throw _privateConstructorUsedError;
   @DataPointIdConverter()
   DataPoint? get dataPoint => throw _privateConstructorUsedError;
   @DataPointIdConverter()
@@ -60,6 +62,7 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       {CustomWidgetTypeDeprecated type,
       String id,
       String name,
+      String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? hintText,
       String? suffix,
@@ -83,6 +86,7 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? label = freezed,
     Object? dataPoint = freezed,
     Object? hintText = freezed,
     Object? suffix = freezed,
@@ -102,6 +106,10 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -138,6 +146,7 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
       {CustomWidgetTypeDeprecated type,
       String id,
       String name,
+      String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? hintText,
       String? suffix,
@@ -159,6 +168,7 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? label = freezed,
     Object? dataPoint = freezed,
     Object? hintText = freezed,
     Object? suffix = freezed,
@@ -178,6 +188,10 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -209,6 +223,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
       {this.type = CustomWidgetTypeDeprecated.input,
       required this.id,
       required this.name,
+      this.label,
       @DataPointIdConverter() required this.dataPoint,
       this.hintText,
       this.suffix,
@@ -227,6 +242,8 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   @override
   String name;
   @override
+  String? label;
+  @override
   @DataPointIdConverter()
   DataPoint? dataPoint;
   @override
@@ -240,7 +257,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
 
   @override
   String toString() {
-    return 'CustomInputWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType)';
+    return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType)';
   }
 
   @JsonKey(ignore: true)
@@ -264,6 +281,7 @@ abstract class _CustomInputWidget extends CustomInputWidget
           {CustomWidgetTypeDeprecated type,
           required String id,
           required String name,
+          String? label,
           @DataPointIdConverter() required DataPoint? dataPoint,
           String? hintText,
           String? suffix,
@@ -284,6 +302,9 @@ abstract class _CustomInputWidget extends CustomInputWidget
   @override
   String get name;
   set name(String value);
+  @override
+  String? get label;
+  set label(String? value);
   @override
   @DataPointIdConverter()
   DataPoint? get dataPoint;

@@ -39,6 +39,10 @@ class CustomTableSettings extends CustomWidgetSettingStatefulWidget {
     return customTableWidget.header.isNotEmpty &&
         customTableWidget.dataPoint != null;
   }
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomTableSettingsState extends State<CustomTableSettings> {

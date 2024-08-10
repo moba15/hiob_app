@@ -4,6 +4,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/settings/custom_input_widget_settings_view.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/view/custom_input_widget_view.dart';
 import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
 import 'package:smart_home/device/state/state.dart';
 
@@ -12,7 +13,7 @@ part 'custom_input_widget.g.dart';
 
 enum CustomInputSendMethod { onChanged, onSubmitted }
 
-enum CustomInputDisplayConentType { noShow, value, hintText }
+enum CustomInputDisplayConentType { noShow, value, hintText, labelText }
 
 @unfreezed
 class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
@@ -22,6 +23,7 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
     @Default(CustomWidgetTypeDeprecated.input) CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
+    String? label,
     @DataPointIdConverter() required DataPoint? dataPoint,
     String? hintText,
     String? suffix,
@@ -33,8 +35,9 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
     return CustomInputWidgetSettingsView(customInputWidget: this);
   }
 
+  @override
   Widget get widget {
-    return Placeholder();
+    return CustomInputWidgetView(customInputWidget: this);
   }
 
   factory CustomInputWidget.fromJson(Map<String, dynamic> json) =>

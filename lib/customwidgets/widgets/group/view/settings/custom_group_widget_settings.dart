@@ -223,6 +223,10 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {

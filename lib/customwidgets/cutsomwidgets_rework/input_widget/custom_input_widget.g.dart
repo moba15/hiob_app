@@ -14,6 +14,7 @@ _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
           CustomWidgetTypeDeprecated.input,
       id: json['id'] as String,
       name: json['name'] as String,
+      label: json['label'] as String?,
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
           json['dataPoint'], const DataPointIdConverter().fromJson),
       hintText: json['hintText'] as String?,
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$CustomInputWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
+      'label': instance.label,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'hintText': instance.hintText,
       'suffix': instance.suffix,
@@ -71,4 +73,5 @@ const _$CustomInputDisplayConentTypeEnumMap = {
   CustomInputDisplayConentType.noShow: 'noShow',
   CustomInputDisplayConentType.value: 'value',
   CustomInputDisplayConentType.hintText: 'hintText',
+  CustomInputDisplayConentType.labelText: 'labelText',
 };

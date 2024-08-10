@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
@@ -46,8 +47,9 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     );
     _customWidgetSettingWidget = widget.preSelectedTemplate?.settingWidget ??
         _selectedType!.settingWidget;
-    _oldJSON =
-        jsonEncode(_customWidgetSettingWidget!.customWidgetDeprecated.toJson());
+    _oldJSON = jsonEncode(_customWidgetSettingWidget!.deprecated
+        ? _customWidgetSettingWidget!.customWidgetDeprecated.toJson()
+        : _customWidgetSettingWidget!.customWidget.hashCode);
     super.initState();
   }
 
@@ -210,9 +212,16 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           } else {
             widget.onSave!(widget.preSelectedTemplate!);
           }
-        } else {
-          throw UnimplementedError(
-              "New Templates not supported to edit for now");
+        } else if (widget.preSelectedTemplate is CustomWidget) {
+          widget.preSelectedTemplate!.name = _nameController.text;
+
+          widget.preSelectedTemplate!.name = _nameController.text;
+          if (widget.onSave == null) {
+            widget.customWidgetManager
+                .edit(template: widget.preSelectedTemplate!);
+          } else {
+            widget.onSave!(widget.preSelectedTemplate!);
+          }
         }
       } else {
         try {

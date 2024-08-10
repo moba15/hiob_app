@@ -37,6 +37,10 @@ class CustomWebViewWidgetSettingWidget
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       [urlKey, datapointKey, heightKey, javascriptKey];
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomSimpleValueWidgetSettingWidgetState

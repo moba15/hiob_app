@@ -39,6 +39,10 @@ class CustomSwitchWidgetSettingWidget
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       [valueKey, buttonTextKey, deviceDatapointKey];
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomSwitchWidgetSettingWidgetState

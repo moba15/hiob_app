@@ -30,6 +30,10 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys => [];
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _AlertDialogSettingsState extends State<AlertDialogSettings> {

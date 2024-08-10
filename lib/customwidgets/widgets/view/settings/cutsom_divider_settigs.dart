@@ -49,4 +49,8 @@ class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
   // TODO: implement showKeys
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }

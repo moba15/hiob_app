@@ -43,6 +43,10 @@ class CustomSimpleValueWidgetSettingWidget
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       [valueKey, roundKey, unitKey, deviceDatapointKey];
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomSimpleValueWidgetSettingWidgetState

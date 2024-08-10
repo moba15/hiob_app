@@ -32,6 +32,10 @@ class CustomColorPaletteWidgetSettings
   bool validate() {
     return true;
   }
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomColorPaletteWidgetSettingsState

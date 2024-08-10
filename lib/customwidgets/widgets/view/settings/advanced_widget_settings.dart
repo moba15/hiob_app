@@ -106,4 +106,8 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
   List<GlobalKey<State<StatefulWidget>>> get showKeys {
     return [valueKey, mainBodyKey, ...?setting?.showKeys, popupKey];
   }
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
