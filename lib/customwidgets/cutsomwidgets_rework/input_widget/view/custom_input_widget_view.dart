@@ -14,8 +14,9 @@ class CustomInputWidgetView extends StatelessWidget {
     if (customInputWidget.dataPoint == null) {
       return const Text("Device not found");
     }
+    DataPointBloc bloc = DataPointBloc(customInputWidget.dataPoint!);
     return BlocBuilder<DataPointBloc, DataPointState>(
-      bloc: DataPointBloc(customInputWidget.dataPoint!),
+      bloc: bloc,
       builder: (context, state) {
         TextEditingController textEditingController = TextEditingController();
         if (customInputWidget.customInputDisplayConentType ==
@@ -42,13 +43,15 @@ class CustomInputWidgetView extends StatelessWidget {
                 : Text(customInputWidget.label!));
         return TextField(
           controller: textEditingController,
-          onChanged: onChanged,
-          onSubmitted: onSubmitted,
+          onChanged: (v) => onChanged != null ? onChanged(v, bloc) : null,
+          onSubmitted: (v) => onSubmitted != null ? onSubmitted(v, bloc) : null,
           decoration: InputDecoration(hintText: hintText, label: label),
         );
       },
     );
   }
 
-  void send(String value) {}
+  void send(String value, DataPointBloc bloc) {
+    bloc.add(DataPointValueUpdateRequest(oldValue: value, value: value));
+  }
 }
