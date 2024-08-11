@@ -313,8 +313,8 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
     templates.removeWhere(
         (element) => widget.screen.widgetTemplates.contains(element));
     return AlertDialog(
-      title: Text(
-          getAppLocalizations(context)!.select_widget_template_alert_title),
+      title:
+          Text(getAppLocalizations(context).select_widget_template_alert_title),
       actions: [
         TextButton(
             onPressed: cancel,

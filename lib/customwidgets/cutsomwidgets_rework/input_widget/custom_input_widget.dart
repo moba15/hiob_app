@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/settings/custom_input_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/view/custom_input_widget_view.dart';
@@ -31,6 +30,7 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
     CustomInputDisplayConentType? customInputDisplayConentType,
   }) = _CustomInputWidget;
 
+  @override
   CustomWidgetSettingWidget get settingWidget {
     return CustomInputWidgetSettingsView(customInputWidget: this);
   }

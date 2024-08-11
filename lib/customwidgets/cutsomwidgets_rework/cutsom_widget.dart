@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
-import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/device/state/state.dart';
 
 enum CustomWidgetType {
@@ -56,8 +48,11 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
 }
 
 abstract class CustomWidget extends CustomWidgetWrapper {
+  @override
   final CustomWidgetTypeDeprecated type;
+  @override
   String id;
+  @override
   final String name;
 
   CustomWidget({

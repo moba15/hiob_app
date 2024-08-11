@@ -4,7 +4,6 @@ import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rewo
 import 'package:smart_home/manager/customise_manager.dart';
 
 import '../../settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
-import '../widgets/view/settings/templates/custom_widget_template.dart';
 
 class CustomWidgetTemplateTile extends StatelessWidget {
   final CustomWidgetWrapper customWidget;
@@ -33,7 +32,7 @@ class CustomWidgetTemplateTile extends StatelessWidget {
     return ListTile(
       title: Text(customWidget.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
-      subtitle: Text(type?.name ?? "Error"),
+      subtitle: Text(type.name),
       selected: selected,
       leading: selectedMode
           ? Checkbox(
