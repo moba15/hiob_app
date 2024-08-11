@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
@@ -28,6 +29,7 @@ enum CustomWidgetTypeDeprecated {
   colorPallete,
   mediaPlayer,
   input,
+  button,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -69,6 +71,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.input:
         return CustomInputWidget(
                 id: "", name: "", hintText: "", dataPoint: null, suffix: "")
+            .settingWidget;
+      case CustomWidgetTypeDeprecated.button:
+        return CustomButtonWidget(id: "", name: "", dataPoint: null)
             .settingWidget;
     }
   }

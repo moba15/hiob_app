@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
@@ -119,6 +120,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetTypeDeprecated.input:
           customWidget = CustomInputWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.button:
+          customWidget = CustomButtonWidget.fromJson(widgetRaw);
           break;
         default:
           throw UnimplementedError();
