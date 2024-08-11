@@ -10,6 +10,7 @@ import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
+import 'package:smart_home/screen/view/screen_view.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/utils/blinking_widget.dart';
 import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
@@ -245,52 +246,10 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 ? const Text("null")
                 : TabBarView(
                     controller: _tabController,
-                    children: [
-                      for (int i = 0; i < screens.length; i++)
-                        ListView.builder(
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            Screen screen = screens[i];
-                            List<dynamic> templates = screen.widgetTemplates;
-                            List<List<dynamic>> rows =
-                                List.generate(numberOfRows, (index) {
-                              List<dynamic> row = [];
-                              for (int i = index;
-                                  i < templates.length;
-                                  i += numberOfRows) {
-                                row.add(templates[i]);
-                              }
-                              return row;
-                            });
-                            rows.removeWhere((element) => element.isEmpty);
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                for (List<dynamic> t in rows)
-                                  Expanded(
-                                    child: Column(
-                                      children: t.map((e) {
-                                        if (e is CustomWidgetWrapper) {
-                                          return Card(
-                                            child: e.widget,
-                                          );
-                                        } else if (e is CustomGroupWidget) {
-                                          return Card(
-                                            child: e.widget,
-                                          );
-                                        } else {
-                                          return const Text("Error 404");
-                                        }
-                                      }).toList(),
-                                    ),
-                                  )
-                              ],
-                            );
-                          },
-                        )
-                    ],
-                  ));
+                    children: screens
+                        .map((t) =>
+                            ScreenView(screen: t, numberOfRows: numberOfRows))
+                        .toList()));
       },
     );
   }
