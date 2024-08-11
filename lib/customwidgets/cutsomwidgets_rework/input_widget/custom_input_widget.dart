@@ -36,6 +36,11 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
   }
 
   @override
+  List<DataPoint> get dependentDataPoints {
+    return dataPoint == null ? [] : [dataPoint!];
+  }
+
+  @override
   Widget get widget {
     return CustomInputWidgetView(customInputWidget: this);
   }

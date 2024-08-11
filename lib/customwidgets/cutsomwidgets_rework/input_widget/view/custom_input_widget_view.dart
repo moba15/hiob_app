@@ -16,7 +16,12 @@ class CustomInputWidgetView extends StatelessWidget {
     }
     DataPointBloc bloc = DataPointBloc(customInputWidget.dataPoint!);
     return BlocBuilder<DataPointBloc, DataPointState>(
-      bloc: bloc,
+      bloc: context.select<DataPointBloc, DataPointBloc>((value) {
+        if (value.dataPoint == customInputWidget.dataPoint) {
+          return value;
+        }
+        throw ErrorDescription("No bloc found for dataPoint");
+      }),
       builder: (context, state) {
         TextEditingController textEditingController = TextEditingController();
         if (customInputWidget.customInputDisplayConentType ==
