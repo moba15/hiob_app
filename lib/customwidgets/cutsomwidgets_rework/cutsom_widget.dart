@@ -9,6 +9,7 @@ import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
+import 'package:smart_home/device/state/state.dart';
 
 enum CustomWidgetType {
   simpleSwitch,
@@ -59,8 +60,13 @@ abstract class CustomWidget extends CustomWidgetWrapper {
   String id;
   final String name;
 
-  CustomWidget({required this.type, required this.id, required this.name});
+  CustomWidget({
+    required this.type,
+    required this.id,
+    required this.name,
+  });
 
   CustomWidgetSettingWidget get settingWidget;
   Widget get widget;
+  List<DataPoint> get dependentDataPoints;
 }
