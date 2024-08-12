@@ -1,39 +1,57 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/view/custom_input_widget_view.dart';
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/state/state.dart';
 
 import 'custom_input_widget_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<DataPoint>()])
+@GenerateNiceMocks([
+  MockSpec<DataPoint>(),
+  MockSpec<DataPointBloc>(),
+  MockSpec<DataPointState>()
+])
 void main() {
   late CustomInputWidget customInputWidget;
   late MockDataPoint mockDataPoint;
+  late MockDataPointBloc mockDataPointBloc;
+  late MockDataPointState mockDataPointState;
+  setUp(() {
+    mockDataPoint = MockDataPoint();
+    customInputWidget = CustomInputWidget(
+        id: "id",
+        name: "name",
+        dataPoint: mockDataPoint,
+        customInputDisplayConentType: CustomInputDisplayConentType.hintText);
+    mockDataPointBloc = MockDataPointBloc();
+    mockDataPointState = MockDataPointState();
+
+    when(mockDataPointBloc.dataPoint).thenReturn(mockDataPoint);
+    when(mockDataPointBloc.state).thenReturn(mockDataPointState);
+    when(mockDataPoint.id).thenReturn("id");
+
+    when(mockDataPoint.valueStreamController)
+        .thenReturn(StreamController.broadcast());
+  });
 
   group("Test basic features", () {
-    setUp(() {
-      mockDataPoint = MockDataPoint();
-      customInputWidget = CustomInputWidget(
-          id: "id",
-          name: "name",
-          dataPoint: mockDataPoint,
-          customInputDisplayConentType: CustomInputDisplayConentType.hintText);
-    });
-
     testWidgets("Test null datapoint", (tester) async {
-      when(mockDataPoint.value).thenReturn("asdasd");
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn("asdasd");
+
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(
-              customInputWidget:
-                  CustomInputWidget(id: "id", name: "name", dataPoint: null)),
+          body: BlocProvider(
+            create: (c) => new DataPointBloc(mockDataPoint),
+            child: CustomInputWidgetView(
+                customInputWidget:
+                    CustomInputWidget(id: "id", name: "name", dataPoint: null)),
+          ),
         ),
       ));
       await tester.pump();
@@ -45,19 +63,20 @@ void main() {
     });
 
     testWidgets("Test nummber value", (tester) async {
-      when(mockDataPoint.value).thenReturn(1);
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn(1);
+
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(
               customInputWidget: CustomInputWidget(
             id: "id",
             name: "name",
             dataPoint: mockDataPoint,
             customInputDisplayConentType: CustomInputDisplayConentType.hintText,
           )),
-        ),
+        )),
       ));
       await tester.pump();
 
@@ -67,12 +86,13 @@ void main() {
     });
 
     testWidgets("Test label", (tester) async {
-      when(mockDataPoint.value).thenReturn("asdasd");
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn("asdasd");
+
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(
               customInputWidget: CustomInputWidget(
                   id: "id",
                   name: "name",
@@ -80,7 +100,7 @@ void main() {
                   customInputDisplayConentType:
                       CustomInputDisplayConentType.noShow,
                   label: "asd")),
-        ),
+        )),
       ));
       await tester.pump();
 
@@ -95,26 +115,18 @@ void main() {
     });
   });
   group("Test display types", () {
-    setUp(() {
-      mockDataPoint = MockDataPoint();
-      customInputWidget = CustomInputWidget(
-          id: "id",
-          name: "name",
-          dataPoint: mockDataPoint,
-          customInputDisplayConentType: CustomInputDisplayConentType.hintText);
-    });
-
     testWidgets("Test CustomInputSendMethod hintText", (tester) async {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.hintText;
       String value = "asdasd";
-      when(mockDataPoint.value).thenReturn(value);
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn(value);
+
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(customInputWidget: customInputWidget),
+        )),
       ));
       await tester.pump();
 
@@ -130,13 +142,14 @@ void main() {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.labelText;
       String value = "asdasd";
-      when(mockDataPoint.value).thenReturn(value);
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn(value);
+
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(customInputWidget: customInputWidget),
+        )),
       ));
       await tester.pump();
 
@@ -154,13 +167,14 @@ void main() {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.value;
       String value = "asdasd";
-      when(mockDataPoint.value).thenReturn(value);
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn(value);
+
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(customInputWidget: customInputWidget),
+        )),
       ));
       await tester.pump();
 
@@ -180,13 +194,13 @@ void main() {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.noShow;
       String value = "asdasd";
-      when(mockDataPoint.value).thenReturn(value);
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn(value);
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(customInputWidget: customInputWidget),
+        )),
       ));
       await tester.pump();
 
@@ -206,42 +220,36 @@ void main() {
     });
   });
   group("Test send types", () {
-    setUp(() {
-      mockDataPoint = MockDataPoint();
-      customInputWidget =
-          CustomInputWidget(id: "id", name: "name", dataPoint: mockDataPoint);
-    });
-
     testWidgets("Test onSubmitted", (tester) async {
       customInputWidget.customInputSendMethod =
           CustomInputSendMethod.onSubmitted;
-      when(mockDataPoint.value).thenReturn("home");
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn("home");
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(customInputWidget: customInputWidget),
+        )),
       ));
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();
       verifyNever(mockDataPoint.value = "text");
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pump();
-      verify(mockDataPoint.value = "text");
+      verify(mockDataPoint.value = "text").called(1);
     });
 
     testWidgets("Test onChange", (tester) async {
       customInputWidget.customInputSendMethod = CustomInputSendMethod.onChanged;
-      when(mockDataPoint.value).thenReturn("home");
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn("home");
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(customInputWidget: customInputWidget),
+        )),
       ));
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();
@@ -253,14 +261,14 @@ void main() {
 
     testWidgets("Test never", (tester) async {
       customInputWidget.customInputSendMethod = null;
-      when(mockDataPoint.value).thenReturn("home");
-      when(mockDataPoint.valueStreamController)
-          .thenReturn(StreamController.broadcast());
+      when(mockDataPointState.value).thenReturn("home");
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
+            body: BlocProvider<DataPointBloc>(
+          create: (c) => mockDataPointBloc,
+          child: CustomInputWidgetView(customInputWidget: customInputWidget),
+        )),
       ));
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();

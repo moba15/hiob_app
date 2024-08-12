@@ -5,11 +5,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
+import 'package:bloc/bloc.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
-import 'package:smart_home/device/device.dart' as _i6;
+import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:smart_home/device/device.dart' as _i7;
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart' as _i5;
 import 'package:smart_home/device/state/datapointTypes/datapoint_types.dart'
-    as _i7;
+    as _i8;
 import 'package:smart_home/device/state/state.dart' as _i4;
 import 'package:smart_home/manager/history/history_data.dart' as _i2;
 
@@ -47,6 +49,27 @@ class _FakeStreamController_1<T> extends _i1.SmartFake
         );
 }
 
+class _FakeDataPoint_2 extends _i1.SmartFake implements _i4.DataPoint {
+  _FakeDataPoint_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDataPointState_3 extends _i1.SmartFake
+    implements _i5.DataPointState {
+  _FakeDataPointState_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [DataPoint].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -72,11 +95,11 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
   @override
   String get name => (super.noSuchMethod(
         Invocation.getter(#name),
-        returnValue: _i5.dummyValue<String>(
+        returnValue: _i6.dummyValue<String>(
           this,
           Invocation.getter(#name),
         ),
-        returnValueForMissingStub: _i5.dummyValue<String>(
+        returnValueForMissingStub: _i6.dummyValue<String>(
           this,
           Invocation.getter(#name),
         ),
@@ -94,11 +117,11 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
   @override
   String get id => (super.noSuchMethod(
         Invocation.getter(#id),
-        returnValue: _i5.dummyValue<String>(
+        returnValue: _i6.dummyValue<String>(
           this,
           Invocation.getter(#id),
         ),
-        returnValueForMissingStub: _i5.dummyValue<String>(
+        returnValueForMissingStub: _i6.dummyValue<String>(
           this,
           Invocation.getter(#id),
         ),
@@ -114,7 +137,7 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
       );
 
   @override
-  set device(_i6.Device? _device) => super.noSuchMethod(
+  set device(_i7.Device? _device) => super.noSuchMethod(
         Invocation.setter(
           #device,
           _device,
@@ -123,7 +146,7 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
       );
 
   @override
-  set type(_i7.StateType? _type) => super.noSuchMethod(
+  set type(_i8.StateType? _type) => super.noSuchMethod(
         Invocation.setter(
           #type,
           _type,
@@ -232,4 +255,173 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [DataPointBloc].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
+  @override
+  _i4.DataPoint get dataPoint => (super.noSuchMethod(
+        Invocation.getter(#dataPoint),
+        returnValue: _FakeDataPoint_2(
+          this,
+          Invocation.getter(#dataPoint),
+        ),
+        returnValueForMissingStub: _FakeDataPoint_2(
+          this,
+          Invocation.getter(#dataPoint),
+        ),
+      ) as _i4.DataPoint);
+
+  @override
+  set dataPoint(_i4.DataPoint? _dataPoint) => super.noSuchMethod(
+        Invocation.setter(
+          #dataPoint,
+          _dataPoint,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i5.DataPointState get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _FakeDataPointState_3(
+          this,
+          Invocation.getter(#state),
+        ),
+        returnValueForMissingStub: _FakeDataPointState_3(
+          this,
+          Invocation.getter(#state),
+        ),
+      ) as _i5.DataPointState);
+
+  @override
+  _i3.Stream<_i5.DataPointState> get stream => (super.noSuchMethod(
+        Invocation.getter(#stream),
+        returnValue: _i3.Stream<_i5.DataPointState>.empty(),
+        returnValueForMissingStub: _i3.Stream<_i5.DataPointState>.empty(),
+      ) as _i3.Stream<_i5.DataPointState>);
+
+  @override
+  bool get isClosed => (super.noSuchMethod(
+        Invocation.getter(#isClosed),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  _i3.Future<void> close() => (super.noSuchMethod(
+        Invocation.method(
+          #close,
+          [],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  void add(_i5.DataPointEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onEvent(_i5.DataPointEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #onEvent,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void emit(_i5.DataPointState? state) => super.noSuchMethod(
+        Invocation.method(
+          #emit,
+          [state],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void on<E extends _i5.DataPointEvent>(
+    _i9.EventHandler<E, _i5.DataPointState>? handler, {
+    _i9.EventTransformer<E>? transformer,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #on,
+          [handler],
+          {#transformer: transformer},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onTransition(
+          _i9.Transition<_i5.DataPointEvent, _i5.DataPointState>? transition) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onTransition,
+          [transition],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onChange(_i9.Change<_i5.DataPointState>? change) => super.noSuchMethod(
+        Invocation.method(
+          #onChange,
+          [change],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addError(
+    Object? error, [
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #addError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onError(
+    Object? error,
+    StackTrace? stackTrace,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [DataPointState].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDataPointState extends _i1.Mock implements _i5.DataPointState {
+  @override
+  List<Object?> get props => (super.noSuchMethod(
+        Invocation.getter(#props),
+        returnValue: <Object?>[],
+        returnValueForMissingStub: <Object?>[],
+      ) as List<Object?>);
 }
