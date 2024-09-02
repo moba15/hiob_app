@@ -164,6 +164,9 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
             appBar: AppBar(),
           );
         }
+        List<ScreenView> screenViews = screens
+            .map((t) => ScreenView(screen: t, numberOfRows: numberOfRows))
+            .toList();
         return Scaffold(
             appBar: AppBar(
               toolbarHeight: 90,
@@ -239,14 +242,10 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            body: screens.isEmpty
+            body: screenViews.isEmpty
                 ? const Text("null")
                 : TabBarView(
-                    controller: _tabController,
-                    children: screens
-                        .map((t) =>
-                            ScreenView(screen: t, numberOfRows: numberOfRows))
-                        .toList()));
+                    controller: _tabController, children: screenViews));
       },
     );
   }
