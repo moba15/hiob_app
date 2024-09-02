@@ -176,6 +176,7 @@ class CustomWidgetManager {
   }
 
   Future<void> save({required CustomWidgetWrapper template}) async {
+    //TODO Random generator
     templates.add(template);
     sort();
     templatesStreamController.add(templates);
@@ -186,6 +187,8 @@ class CustomWidgetManager {
   }
 
   Future<bool> edit({required CustomWidgetWrapper template}) async {
+    templates.removeWhere((element) => element.id == template.id);
+    templates.add(template);
     sort();
     templatesStreamController.add(templates);
 
