@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
@@ -53,7 +54,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         _selectedType!.settingWidget;
     _oldJSON = jsonEncode(_customWidgetSettingWidget!.deprecated
         ? _customWidgetSettingWidget!.customWidgetDeprecated.toJson()
-        : _customWidgetSettingWidget!.customWidget.hashCode);
+        : _customWidgetSettingWidget!.customWidget.toJson());
 
     customWidgetBlocCubit =
         CustomWidgetBlocCubit(customWidget: widget.preSelectedTemplate);
@@ -114,23 +115,6 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           child: Stack(
             children: [
               _listView(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  SizedBox(
-                    width: double.infinity,
-                    height: 60,
-                    child: BlocBuilder<CustomWidgetBlocCubit, int>(
-                      buildWhen: (previous, current) {
-                        return true;
-                      },
-                      builder: (context, state) {
-                        return _preViewWidget();
-                      },
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ));
@@ -203,6 +187,38 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
               child: _customWidgetSettingWidget == null
                   ? const Text("Error")
                   : _customWidgetSettingWidget as Widget)*/
+        const Gap(10),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Divider(
+                indent: 20.0,
+                endIndent: 10.0,
+                thickness: 1,
+              ),
+            ),
+            Text(
+              "PREVIEW",
+              style: TextStyle(fontSize: 20),
+            ),
+            Expanded(
+              child: Divider(
+                indent: 10.0,
+                endIndent: 20.0,
+                thickness: 1,
+              ),
+            ),
+          ],
+        ),
+        BlocBuilder<CustomWidgetBlocCubit, int>(
+          buildWhen: (previous, current) {
+            return true;
+          },
+          builder: (context, state) {
+            return _preViewWidget();
+          },
+        ),
       ],
     );
   }
@@ -210,7 +226,6 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   Widget _preViewWidget() {
     if (_customWidgetSettingWidget != null &&
         !_customWidgetSettingWidget!.deprecated &&
-        widget.preSelectedTemplate != null &&
         _customWidgetSettingWidget!.validate()) {
       return _customWidgetSettingWidget!.customWidget.widget;
     }
@@ -236,10 +251,16 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   }
 
   bool _isSaved() {
-    return _oldJSON ==
-        jsonEncode(
-            _customWidgetSettingWidget?.customWidgetDeprecated.toJson() ??
-                "[]");
+    if (_customWidgetSettingWidget != null &&
+        _customWidgetSettingWidget!.deprecated) {
+      return _oldJSON ==
+          jsonEncode(
+              _customWidgetSettingWidget?.customWidgetDeprecated.toJson() ??
+                  "[]");
+    } else {
+      return _oldJSON ==
+          jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
+    }
   }
 
   void _save() {
@@ -260,7 +281,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           widget.preSelectedTemplate!.name = _nameController.text;
           if (widget.onSave == null) {
             widget.customWidgetManager
-                .edit(template: _customWidgetSettingWidget!.customWidget);
+                .edit(template: widget.preSelectedTemplate!);
           } else {
             widget.onSave!(widget.preSelectedTemplate!);
           }
