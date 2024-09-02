@@ -30,10 +30,7 @@ class CustomInputWidgetView extends StatelessWidget {
             CustomInputDisplayConentType.value) {
           textEditingController.text = state.value.toString();
         }
-        final onChanged = customInputWidget.customInputSendMethod ==
-                CustomInputSendMethod.onChanged
-            ? send
-            : null;
+        final onChanged = null;
         final onSubmitted = customInputWidget.customInputSendMethod ==
                 CustomInputSendMethod.onSubmitted
             ? send
@@ -42,17 +39,18 @@ class CustomInputWidgetView extends StatelessWidget {
                 CustomInputDisplayConentType.hintText
             ? state.value.toString()
             : null;
-        final Text? label = customInputWidget.customInputDisplayConentType ==
-                CustomInputDisplayConentType.labelText
-            ? Text(state.value.toString())
-            : (customInputWidget.label == null
-                ? null
-                : Text(customInputWidget.label!));
+        final Text? label =
+            customInputWidget.label == null || customInputWidget.label!.isEmpty
+                ? Text(customInputWidget.name)
+                : Text(customInputWidget.label!);
         return TextField(
           controller: textEditingController,
           onChanged: (v) => onChanged != null ? onChanged(v, bloc) : null,
           onSubmitted: (v) => onSubmitted != null ? onSubmitted(v, bloc) : null,
-          decoration: InputDecoration(hintText: hintText, label: label),
+          decoration: InputDecoration(
+              hintText: hintText,
+              label: label,
+              floatingLabelBehavior: FloatingLabelBehavior.always),
         );
       },
     );

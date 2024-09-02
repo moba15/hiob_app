@@ -71,7 +71,6 @@ Value? _$JsonConverterFromJson<Json, Value>(
     json == null ? null : fromJson(json as Json);
 
 const _$CustomInputSendMethodEnumMap = {
-  CustomInputSendMethod.onChanged: 'onChanged',
   CustomInputSendMethod.onSubmitted: 'onSubmitted',
 };
 
@@ -79,5 +78,4 @@ const _$CustomInputDisplayConentTypeEnumMap = {
   CustomInputDisplayConentType.noShow: 'noShow',
   CustomInputDisplayConentType.value: 'value',
   CustomInputDisplayConentType.hintText: 'hintText',
-  CustomInputDisplayConentType.labelText: 'labelText',
 };

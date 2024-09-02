@@ -11,9 +11,36 @@ import 'package:smart_home/device/state/state.dart';
 part 'custom_input_widget.freezed.dart';
 part 'custom_input_widget.g.dart';
 
-enum CustomInputSendMethod { onChanged, onSubmitted }
+enum CustomInputSendMethod { onSubmitted }
 
-enum CustomInputDisplayConentType { noShow, value, hintText, labelText }
+extension CustomInputSendMethodExtension on CustomInputSendMethod {
+  String get name {
+    switch (this) {
+      case CustomInputSendMethod.onSubmitted:
+        return "On enter";
+      default:
+        return "Not found";
+    }
+  }
+}
+
+enum CustomInputDisplayConentType { noShow, value, hintText }
+
+extension CustomInputDisplayConentTypeExtension
+    on CustomInputDisplayConentType {
+  String get name {
+    switch (this) {
+      case CustomInputDisplayConentType.hintText:
+        return "Hint";
+      case CustomInputDisplayConentType.noShow:
+        return "Do not show";
+      case CustomInputDisplayConentType.value:
+        return "Value";
+      default:
+        return "Error";
+    }
+  }
+}
 
 @unfreezed
 class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
