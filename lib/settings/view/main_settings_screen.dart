@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/custom_theme/settings/custom_theme_settings_page.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
@@ -168,6 +169,18 @@ class MainSettingsScreen extends StatelessWidget {
                   applicationVersion: Manager.instance.versionNumber,
                   applicationLegalese: "LICENCE MIT",
                   applicationIcon: const Icon(Icons.smartphone_sharp))
+            },
+          ),
+          ListTile(
+            title: const Text("Changelog"),
+            leading: const Icon(Icons.update),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return ChangeLogScreen(manager: manager);
+                },
+              ))
             },
           )
         ],
