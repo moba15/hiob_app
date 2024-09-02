@@ -39,7 +39,7 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
       } else if (w is CustomWidgetTemplate &&
           w.customWidget is CustomDivisionLineWidget) {
         widgets.add(w.customWidget.toJson());
-      } else if (w is CustomWidgetTemplate) {
+      } else if (w is CustomWidgetWrapper) {
         widgets.add({
           "widget": w.name,
           "id": w.id,
