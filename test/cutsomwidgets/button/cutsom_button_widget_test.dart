@@ -27,11 +27,13 @@ void main() {
   late MockDataPointBloc mockDataPointBloc;
   late MockManager mockManger;
   late MockGeneralManager mockGeneralManager;
+  late MockDataPointState mockDataPointState;
   setUp(() {
     mockDataPoint = MockDataPoint();
     mockDataPointBloc = MockDataPointBloc();
     mockManger = MockManager();
     mockGeneralManager = MockGeneralManager();
+    mockDataPointState = MockDataPointState();
     customButtonWidget = CustomButtonWidget(
         id: "id",
         name: "name",
@@ -41,7 +43,7 @@ void main() {
 
     when(mockDataPointBloc.dataPoint).thenReturn(mockDataPoint);
 
-    when(mockDataPointBloc.state).thenReturn(MockDataPointState());
+    when(mockDataPointBloc.state).thenReturn(mockDataPointState);
     when(mockDataPoint.id).thenReturn("expected");
     when(mockManger.generalManager).thenReturn(mockGeneralManager);
     when(mockGeneralManager.vibrateEnabled).thenReturn(false);
@@ -69,12 +71,10 @@ void main() {
     testWidgets("Test button label", (tester) async {
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomButtonWidgetView(
+          body: CustomButtonWidgetView(
             customButtonWidget: customButtonWidget,
           ),
-        )),
+        ),
       ));
 
       await tester.pump();
@@ -98,14 +98,15 @@ void main() {
     testWidgets("Test button press", (tester) async {
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-                create: (c) => DataPointBloc(mockDataPoint),
-                child: RepositoryProvider<Manager>(
-                  create: (context) => mockManger,
-                  child: CustomButtonWidgetView(
-                    customButtonWidget: customButtonWidget,
-                  ),
-                ))),
+          body: RepositoryProvider<Manager>(
+            create: (context) {
+              return mockManger;
+            },
+            child: CustomButtonWidgetView(
+              customButtonWidget: customButtonWidget,
+            ),
+          ),
+        ),
       ));
 
       await tester.pump();

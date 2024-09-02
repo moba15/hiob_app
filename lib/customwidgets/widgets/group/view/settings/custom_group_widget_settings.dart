@@ -422,8 +422,8 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
         child: Column(
           children: [
             for (CustomWidgetTypeDeprecated type
-                in CustomWidgetTypeDeprecated.values.where(
-                    (element) => element.name != CustomWidgetType.group.name))
+                in CustomWidgetTypeDeprecated.values.where((element) =>
+                    element.name != CustomWidgetTypeDeprecated.group.name))
               if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
+import 'package:smart_home/customwidgets/custompopup/view/settings/cutsom_popupmenu_settings_view.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
@@ -17,12 +20,13 @@ class TemplateAddPage extends StatefulWidget {
   final CustomWidgetManager customWidgetManager;
   final CustomWidgetWrapper? preSelectedTemplate;
   final Function(CustomWidgetWrapper)? onSave;
-
+  final bool Function(CustomWidgetTypeDeprecated)? filter;
   const TemplateAddPage(
       {Key? key,
       required this.customWidgetManager,
       this.preSelectedTemplate,
-      this.onSave})
+      this.onSave,
+      this.filter})
       : super(key: key);
 
   @override
@@ -35,7 +39,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   String? _oldJSON;
   final TextEditingController _nameController = TextEditingController();
   CustomWidgetSettingWidget? _customWidgetSettingWidget;
-
+  late CustomWidgetBlocCubit customWidgetBlocCubit;
   @override
   void initState() {
     _nameController.value =
@@ -43,13 +47,16 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     //TODO Refactor Customwidget type
     _selectedType = CustomWidgetTypeDeprecated.values.firstWhere(
       (element) => element.name == widget.preSelectedTemplate?.type?.name,
-      orElse: () => CustomWidgetTypeDeprecated.simpleSwitch,
+      orElse: () => CustomWidgetTypeDeprecated.button,
     );
     _customWidgetSettingWidget = widget.preSelectedTemplate?.settingWidget ??
         _selectedType!.settingWidget;
     _oldJSON = jsonEncode(_customWidgetSettingWidget!.deprecated
         ? _customWidgetSettingWidget!.customWidgetDeprecated.toJson()
         : _customWidgetSettingWidget!.customWidget.hashCode);
+
+    customWidgetBlocCubit =
+        CustomWidgetBlocCubit(customWidget: widget.preSelectedTemplate);
     super.initState();
   }
 
@@ -100,69 +107,114 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           onPressed: _save,
           child: const Icon(Icons.save),
         ),
-        body: ListView(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: DropdownButtonFormField<CustomWidgetTypeDeprecated>(
-                items: [
-                  for (CustomWidgetTypeDeprecated c
-                      in CustomWidgetTypeDeprecated.values.where((value) =>
-                          value != CustomWidgetTypeDeprecated.group &&
-                          value != CustomWidgetTypeDeprecated.alertDialog))
-                    DropdownMenuItem(
-                      value: c,
-                      child: Text(c.name),
-                    )
+        body: BlocProvider(
+          create: (_) {
+            return customWidgetBlocCubit;
+          },
+          child: Stack(
+            children: [
+              _listView(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  SizedBox(
+                    width: double.infinity,
+                    height: 60,
+                    child: BlocBuilder<CustomWidgetBlocCubit, int>(
+                      buildWhen: (previous, current) {
+                        return true;
+                      },
+                      builder: (context, state) {
+                        return _preViewWidget();
+                      },
+                    ),
+                  ),
                 ],
-                value: _selectedType,
-                onChanged: (CustomWidgetTypeDeprecated? type) {
-                  setState(() {
-                    _selectedType = type!;
-                    if (widget.preSelectedTemplate == null) {
-                      _customWidgetSettingWidget = _selectedType!.settingWidget;
-                    } else {
-                      if (_selectedType?.name ==
-                          widget.preSelectedTemplate!.type?.name) {
-                        _customWidgetSettingWidget =
-                            widget.preSelectedTemplate!.settingWidget;
-                      } else {
-                        _customWidgetSettingWidget =
-                            _selectedType!.settingWidget;
-                      }
-                    }
-                  });
-                },
-              ),
-            ),
-            Showcase(
-              key: _nameKey,
-              title: "Name",
-              description: "Der Name des Templates",
-              showArrow: true,
-              child: Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
-                child: TextField(
-                  controller: _nameController,
-                  onChanged: (value) {
-                    try {
-                      _customWidgetSettingWidget?.customWidget.name = value;
-                    } catch (e) {
-                      _customWidgetSettingWidget?.customWidgetDeprecated.name =
-                          value;
-                    }
-                  },
-                  decoration: const InputDecoration(labelText: "Name"),
-                ),
-              ),
-            ),
-            RepositoryProvider.value(
-                value: widget.customWidgetManager,
-                child: _customWidgetSettingWidget == null
-                    ? const Text("Error")
-                    : _customWidgetSettingWidget as Widget)
-          ],
+              )
+            ],
+          ),
         ));
+  }
+
+  ListView _listView() {
+    return ListView(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+          child: DropdownButtonFormField<CustomWidgetTypeDeprecated>(
+            items: [
+              for (CustomWidgetTypeDeprecated c
+                  in CustomWidgetTypeDeprecated.values.where((value) =>
+                      value != CustomWidgetTypeDeprecated.group &&
+                      value != CustomWidgetTypeDeprecated.alertDialog &&
+                      (widget.filter == null || widget.filter!(value))))
+                DropdownMenuItem(
+                  value: c,
+                  child: Text(c.name),
+                )
+            ],
+            value: _selectedType,
+            onChanged: (CustomWidgetTypeDeprecated? type) {
+              setState(() {
+                _selectedType = type!;
+                if (widget.preSelectedTemplate == null) {
+                  _customWidgetSettingWidget = _selectedType!.settingWidget;
+                } else {
+                  if (_selectedType?.name ==
+                      widget.preSelectedTemplate!.type?.name) {
+                    _customWidgetSettingWidget =
+                        widget.preSelectedTemplate!.settingWidget;
+                  } else {
+                    _customWidgetSettingWidget = _selectedType!.settingWidget;
+                  }
+                }
+              });
+            },
+          ),
+        ),
+        Showcase(
+          key: _nameKey,
+          title: "Name",
+          description: "Der Name des Templates",
+          showArrow: true,
+          child: Container(
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+            child: TextField(
+              controller: _nameController,
+              onChanged: (value) {
+                customWidgetBlocCubit
+                    .update(_customWidgetSettingWidget?.customWidget);
+                try {
+                  _customWidgetSettingWidget?.customWidget.name = value;
+                } catch (e) {
+                  _customWidgetSettingWidget?.customWidgetDeprecated.name =
+                      value;
+                }
+              },
+              decoration: const InputDecoration(labelText: "Name"),
+            ),
+          ),
+        ),
+        _TemplateTabBarView(
+            customWidgetSettingWidget: _customWidgetSettingWidget),
+
+        /*RepositoryProvider.value(
+              value: widget.customWidgetManager,
+              child: _customWidgetSettingWidget == null
+                  ? const Text("Error")
+                  : _customWidgetSettingWidget as Widget)*/
+      ],
+    );
+  }
+
+  Widget _preViewWidget() {
+    if (_customWidgetSettingWidget != null &&
+        !_customWidgetSettingWidget!.deprecated &&
+        widget.preSelectedTemplate != null &&
+        _customWidgetSettingWidget!.validate()) {
+      return _customWidgetSettingWidget!.customWidget.widget;
+    }
+    return Placeholder();
   }
 
   @override
@@ -199,7 +251,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         _customWidgetSettingWidget!.validate()) {
       if (widget.preSelectedTemplate != null) {
         //TODO Refector
-        if (widget.preSelectedTemplate is CustomWidgetTemplate) {
+        if (_customWidgetSettingWidget!.deprecated) {
           //!Support older versions
           widget.preSelectedTemplate!.name = _nameController.text;
           (widget.preSelectedTemplate! as CustomWidgetTemplate).customWidget =
@@ -208,17 +260,20 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           widget.preSelectedTemplate!.name = _nameController.text;
           if (widget.onSave == null) {
             widget.customWidgetManager
-                .edit(template: widget.preSelectedTemplate!);
+                .edit(template: _customWidgetSettingWidget!.customWidget);
           } else {
             widget.onSave!(widget.preSelectedTemplate!);
           }
-        } else if (widget.preSelectedTemplate is CustomWidget) {
-          widget.preSelectedTemplate!.name = _nameController.text;
+        } else if (!_customWidgetSettingWidget!.deprecated) {
+          _customWidgetSettingWidget!.customWidget.name = _nameController.text;
 
-          widget.preSelectedTemplate!.name = _nameController.text;
+          _customWidgetSettingWidget!.customWidget.name = _nameController.text;
+          _customWidgetSettingWidget!.customWidget.id =
+              widget.preSelectedTemplate!.id;
           if (widget.onSave == null) {
+            //TODO FIX
             widget.customWidgetManager
-                .edit(template: widget.preSelectedTemplate!);
+                .edit(template: _customWidgetSettingWidget!.customWidget);
           } else {
             widget.onSave!(widget.preSelectedTemplate!);
           }
@@ -261,32 +316,108 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   }
 }
 
-class TemplateEditPage extends StatefulWidget {
-  final CustomWidgetTemplate template;
-  final ScreenManager screenManager;
+class _TemplateTabBarView extends StatefulWidget {
+  final CustomWidgetSettingWidget? customWidgetSettingWidget;
 
-  const TemplateEditPage(
-      {Key? key, required this.template, required this.screenManager})
-      : super(key: key);
+  const _TemplateTabBarView({
+    Key? key,
+    required this.customWidgetSettingWidget,
+  }) : super(key: key);
 
   @override
-  State<TemplateEditPage> createState() => _TemplateEditPageState();
+  State<_TemplateTabBarView> createState() => __TemplateTabBarViewState();
 }
 
-class _TemplateEditPageState extends State<TemplateEditPage> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController iconController = TextEditingController();
-  TextEditingController indexController = TextEditingController();
+class __TemplateTabBarViewState extends State<_TemplateTabBarView>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  late bool hasPopupmenu = false;
+  int currentTab = 0;
+  @override
+  void initState() {
+    hasPopupmenu = !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
+        widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
+        (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
+            .isAbleToPopupMenu;
+    _tabController = TabController(length: hasPopupmenu ? 2 : 1, vsync: this);
+    _tabController.addListener(() {
+      changeTab(_tabController.index);
+    });
 
-  _TemplateEditPageState() {
-    nameController.text = widget.template.name;
+    super.initState();
   }
 
-  Icon icon = const Icon(Icons.insert_emoticon);
+  @override
+  void didUpdateWidget(covariant _TemplateTabBarView oldWidget) {
+    hasPopupmenu = !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
+        widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
+        (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
+            .isAbleToPopupMenu;
+    currentTab = 0;
+    _tabController.dispose();
+    _tabController = TabController(length: hasPopupmenu ? 2 : 1, vsync: this);
+    _tabController.addListener(() {
+      changeTab(_tabController.index);
+    });
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Text("ok");
+    return _tabView();
+  }
+
+  Widget _tabView() {
+    return Column(children: [_tabBar(), _tabBody()]);
+  }
+
+  TabBar _tabBar() {
+    return TabBar(controller: _tabController, tabs: [
+      const Tab(
+        text: "Main",
+      ),
+      if (hasPopupmenu)
+        const Tab(
+          text: "PopUpMenu",
+        )
+    ]);
+  }
+
+  Widget _tabBody() {
+    if (currentTab == 0) {
+      if (widget.customWidgetSettingWidget == null) {
+        return const Text("Error 404");
+      }
+      return RepositoryProvider.value(
+          value: Manager().customWidgetManager,
+          child: widget.customWidgetSettingWidget! as Widget);
+    } else if (currentTab == 1) {
+      if (widget.customWidgetSettingWidget!.customWidget.customPopupmenu ==
+          null) {
+        widget.customWidgetSettingWidget!.customWidget.customPopupmenu =
+            CustomPopupmenu(customWidgets: []);
+      }
+      return CustomPopupmenuSettingsView(
+          customWidget: widget.customWidgetSettingWidget!.customWidget,
+          customPopupmenu:
+              widget.customWidgetSettingWidget!.customWidget.customPopupmenu ??
+                  CustomPopupmenu(customWidgets: []));
+    }
+
+    return const Text("Error 404");
+  }
+
+  void changeTab(int index) {
+    setState(() {
+      currentTab = index;
+    });
   }
 }
 

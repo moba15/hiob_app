@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/state/state.dart';
@@ -18,7 +19,7 @@ class CustomButtonWidgetView extends StatelessWidget {
     if (customButtonWidget.dataPoint == null) {
       return ListTile(
         visualDensity: VisualDensity.compact,
-        title: Text(customButtonWidget.label ?? customButtonWidget.name),
+        title: Text(customButtonWidget.labelOrName),
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Error Device Not Found")));
@@ -36,18 +37,20 @@ class CustomButtonWidgetView extends StatelessWidget {
         subtitle: const Text("No State found"),
       );
     }
-    DataPointBloc dataPointBloc =
+    /*DataPointBloc dataPointBloc =
         context.select<DataPointBloc, DataPointBloc>((e) {
       if (e.dataPoint == customButtonWidget.dataPoint) return e;
       throw ErrorDescription("No datapoint bloc was found");
-    });
+    });*/
+    DataPointBloc dataPointBloc = DataPointBloc(dataPoint);
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: dataPointBloc,
       builder: (context, state) {
         return CustomButtonWidgetDeviceView(
-          text: customButtonWidget.label ?? customButtonWidget.name,
+          text: customButtonWidget.labelOrName,
           buttonLabel: customButtonWidget.buttonLabel ?? "Press",
           dataPointBloc: dataPointBloc,
+          tryOpenPopup: customButtonWidget.tryOpenPopupmenu,
         );
       },
     );
@@ -57,12 +60,14 @@ class CustomButtonWidgetView extends StatelessWidget {
 class CustomButtonWidgetDeviceView extends StatefulWidget {
   final String text;
   final String buttonLabel;
+  final bool Function(BuildContext) tryOpenPopup;
   final DataPointBloc dataPointBloc;
   const CustomButtonWidgetDeviceView(
       {Key? key,
       required this.text,
       required this.buttonLabel,
-      required this.dataPointBloc})
+      required this.dataPointBloc,
+      required this.tryOpenPopup})
       : super(key: key);
 
   @override
@@ -99,11 +104,13 @@ class _CustomButtonWidgetDeviceViewState
       child: ListTile(
           visualDensity: VisualDensity.compact,
           onTap: () {
-            widget.dataPointBloc.add(DataPointValueUpdateRequest(
-                value: !(widget.dataPointBloc.state.value == true),
-                oldValue: widget.dataPointBloc.state.value));
-            if (context.read<Manager>().generalManager.vibrateEnabled) {
-              Vibrate.feedback(FeedbackType.light);
+            if (!widget.tryOpenPopup(context)) {
+              widget.dataPointBloc.add(DataPointValueUpdateRequest(
+                  value: !(widget.dataPointBloc.state.value == true),
+                  oldValue: widget.dataPointBloc.state.value));
+              if (context.read<Manager>().generalManager.vibrateEnabled) {
+                Vibrate.feedback(FeedbackType.light);
+              }
             }
           },
           title: Row(

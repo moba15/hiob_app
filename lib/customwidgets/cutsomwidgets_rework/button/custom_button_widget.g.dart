@@ -14,6 +14,10 @@ _$CustomButtonWidgetImpl _$$CustomButtonWidgetImplFromJson(
           CustomWidgetTypeDeprecated.button,
       id: json['id'] as String,
       name: json['name'] as String,
+      customPopupmenu: json['customPopupmenu'] == null
+          ? null
+          : CustomPopupmenu.fromJson(
+              json['customPopupmenu'] as Map<String, dynamic>),
       label: json['label'] as String?,
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
           json['dataPoint'], const DataPointIdConverter().fromJson),
@@ -26,6 +30,7 @@ Map<String, dynamic> _$$CustomButtonWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
+      'customPopupmenu': instance.customPopupmenu,
       'label': instance.label,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'buttonLabel': instance.buttonLabel,

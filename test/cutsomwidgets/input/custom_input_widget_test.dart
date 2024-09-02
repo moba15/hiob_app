@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -36,6 +35,8 @@ void main() {
     when(mockDataPointBloc.state).thenReturn(mockDataPointState);
     when(mockDataPoint.id).thenReturn("id");
 
+    when(mockDataPoint.value).thenReturn("asdasd");
+
     when(mockDataPoint.valueStreamController)
         .thenReturn(StreamController.broadcast());
   });
@@ -46,13 +47,9 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: BlocProvider(
-            create: (c) => new DataPointBloc(mockDataPoint),
-            child: CustomInputWidgetView(
-                customInputWidget:
-                    CustomInputWidget(id: "id", name: "name", dataPoint: null)),
-          ),
-        ),
+            body: CustomInputWidgetView(
+                customInputWidget: CustomInputWidget(
+                    id: "id", name: "name", dataPoint: null))),
       ));
       await tester.pump();
 
@@ -66,18 +63,15 @@ void main() {
       when(mockDataPointState.value).thenReturn(1);
 
       await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(
-              customInputWidget: CustomInputWidget(
-            id: "id",
-            name: "name",
-            dataPoint: mockDataPoint,
-            customInputDisplayConentType: CustomInputDisplayConentType.hintText,
-          )),
+          home: Scaffold(
+        body: CustomInputWidgetView(
+            customInputWidget: CustomInputWidget(
+          id: "id",
+          name: "name",
+          dataPoint: mockDataPoint,
+          customInputDisplayConentType: CustomInputDisplayConentType.hintText,
         )),
-      ));
+      )));
       await tester.pump();
 
       expect(find.byType(TextField), findsOneWidget);
@@ -90,17 +84,14 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(
-              customInputWidget: CustomInputWidget(
-                  id: "id",
-                  name: "name",
-                  dataPoint: mockDataPoint,
-                  customInputDisplayConentType:
-                      CustomInputDisplayConentType.noShow,
-                  label: "asd")),
-        )),
+            body: CustomInputWidgetView(
+                customInputWidget: CustomInputWidget(
+                    id: "id",
+                    name: "name",
+                    dataPoint: mockDataPoint,
+                    customInputDisplayConentType:
+                        CustomInputDisplayConentType.noShow,
+                    label: "asd"))),
       ));
       await tester.pump();
 
@@ -119,14 +110,12 @@ void main() {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.hintText;
       String value = "asdasd";
-      when(mockDataPointState.value).thenReturn(value);
+      when(mockDataPoint.value).thenReturn(value);
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(customInputWidget: customInputWidget),
-        )),
+          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+        ),
       ));
       await tester.pump();
 
@@ -142,14 +131,12 @@ void main() {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.labelText;
       String value = "asdasd";
-      when(mockDataPointState.value).thenReturn(value);
+      when(mockDataPoint.value).thenReturn(value);
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(customInputWidget: customInputWidget),
-        )),
+          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+        ),
       ));
       await tester.pump();
 
@@ -167,14 +154,12 @@ void main() {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.value;
       String value = "asdasd";
-      when(mockDataPointState.value).thenReturn(value);
+      when(mockDataPoint.value).thenReturn(value);
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(customInputWidget: customInputWidget),
-        )),
+          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+        ),
       ));
       await tester.pump();
 
@@ -194,13 +179,11 @@ void main() {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.noShow;
       String value = "asdasd";
-      when(mockDataPointState.value).thenReturn(value);
+      when(mockDataPoint.value).thenReturn(value);
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(customInputWidget: customInputWidget),
-        )),
+          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+        ),
       ));
       await tester.pump();
 
@@ -227,10 +210,8 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(customInputWidget: customInputWidget),
-        )),
+          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+        ),
       ));
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();
@@ -246,10 +227,8 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(customInputWidget: customInputWidget),
-        )),
+          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+        ),
       ));
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();
@@ -265,10 +244,8 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: BlocProvider<DataPointBloc>(
-          create: (c) => mockDataPointBloc,
-          child: CustomInputWidgetView(customInputWidget: customInputWidget),
-        )),
+          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+        ),
       ));
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();

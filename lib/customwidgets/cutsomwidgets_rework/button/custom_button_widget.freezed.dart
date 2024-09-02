@@ -27,6 +27,9 @@ mixin _$CustomButtonWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
+  CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
+  set customPopupmenu(CustomPopupmenu? value) =>
+      throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
   @DataPointIdConverter()
@@ -52,9 +55,12 @@ abstract class $CustomButtonWidgetCopyWith<$Res> {
       {CustomWidgetTypeDeprecated type,
       String id,
       String name,
+      CustomPopupmenu? customPopupmenu,
       String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? buttonLabel});
+
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
 
 /// @nodoc
@@ -73,6 +79,7 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? customPopupmenu = freezed,
     Object? label = freezed,
     Object? dataPoint = freezed,
     Object? buttonLabel = freezed,
@@ -90,6 +97,10 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      customPopupmenu: freezed == customPopupmenu
+          ? _value.customPopupmenu
+          : customPopupmenu // ignore: cast_nullable_to_non_nullable
+              as CustomPopupmenu?,
       label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -103,6 +114,18 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
           : buttonLabel // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
+    if (_value.customPopupmenu == null) {
+      return null;
+    }
+
+    return $CustomPopupmenuCopyWith<$Res>(_value.customPopupmenu!, (value) {
+      return _then(_value.copyWith(customPopupmenu: value) as $Val);
+    });
   }
 }
 
@@ -118,9 +141,13 @@ abstract class _$$CustomButtonWidgetImplCopyWith<$Res>
       {CustomWidgetTypeDeprecated type,
       String id,
       String name,
+      CustomPopupmenu? customPopupmenu,
       String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? buttonLabel});
+
+  @override
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
 
 /// @nodoc
@@ -137,6 +164,7 @@ class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? customPopupmenu = freezed,
     Object? label = freezed,
     Object? dataPoint = freezed,
     Object? buttonLabel = freezed,
@@ -154,6 +182,10 @@ class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      customPopupmenu: freezed == customPopupmenu
+          ? _value.customPopupmenu
+          : customPopupmenu // ignore: cast_nullable_to_non_nullable
+              as CustomPopupmenu?,
       label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -177,6 +209,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
       {this.type = CustomWidgetTypeDeprecated.button,
       required this.id,
       required this.name,
+      this.customPopupmenu,
       this.label,
       @DataPointIdConverter() required this.dataPoint,
       this.buttonLabel})
@@ -193,6 +226,8 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
   @override
   String name;
   @override
+  CustomPopupmenu? customPopupmenu;
+  @override
   String? label;
   @override
   @DataPointIdConverter()
@@ -202,7 +237,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
 
   @override
   String toString() {
-    return 'CustomButtonWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, buttonLabel: $buttonLabel)';
+    return 'CustomButtonWidget(type: $type, id: $id, name: $name, customPopupmenu: $customPopupmenu, label: $label, dataPoint: $dataPoint, buttonLabel: $buttonLabel)';
   }
 
   @JsonKey(ignore: true)
@@ -226,6 +261,7 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
       {CustomWidgetTypeDeprecated type,
       required String id,
       required String name,
+      CustomPopupmenu? customPopupmenu,
       String? label,
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? buttonLabel}) = _$CustomButtonWidgetImpl;
@@ -243,6 +279,9 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
   @override
   String get name;
   set name(String value);
+  @override
+  CustomPopupmenu? get customPopupmenu;
+  set customPopupmenu(CustomPopupmenu? value);
   @override
   String? get label;
   set label(String? value);

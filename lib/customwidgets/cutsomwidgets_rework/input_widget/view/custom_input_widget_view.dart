@@ -14,13 +14,16 @@ class CustomInputWidgetView extends StatelessWidget {
       return const Text("Device not found");
     }
     DataPointBloc bloc = DataPointBloc(customInputWidget.dataPoint!);
+
+    /*DataPointBloc bloc context.select<DataPointBloc, DataPointBloc>((value) {
+      if (value.dataPoint == customInputWidget.dataPoint) {
+        return value;
+      }
+      throw ErrorDescription("No bloc found for dataPoint");
+    });*/
+
     return BlocBuilder<DataPointBloc, DataPointState>(
-      bloc: context.select<DataPointBloc, DataPointBloc>((value) {
-        if (value.dataPoint == customInputWidget.dataPoint) {
-          return value;
-        }
-        throw ErrorDescription("No bloc found for dataPoint");
-      }),
+      bloc: bloc,
       builder: (context, state) {
         TextEditingController textEditingController = TextEditingController();
         if (customInputWidget.customInputDisplayConentType ==

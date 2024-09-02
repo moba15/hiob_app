@@ -37,6 +37,9 @@ mixin _$CustomInputWidget {
   set hintText(String? value) => throw _privateConstructorUsedError;
   String? get suffix => throw _privateConstructorUsedError;
   set suffix(String? value) => throw _privateConstructorUsedError;
+  CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
+  set customPopupmenu(CustomPopupmenu? value) =>
+      throw _privateConstructorUsedError;
   CustomInputSendMethod? get customInputSendMethod =>
       throw _privateConstructorUsedError;
   set customInputSendMethod(CustomInputSendMethod? value) =>
@@ -66,8 +69,11 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       @DataPointIdConverter() DataPoint? dataPoint,
       String? hintText,
       String? suffix,
+      CustomPopupmenu? customPopupmenu,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType});
+
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
 
 /// @nodoc
@@ -90,6 +96,7 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
     Object? dataPoint = freezed,
     Object? hintText = freezed,
     Object? suffix = freezed,
+    Object? customPopupmenu = freezed,
     Object? customInputSendMethod = freezed,
     Object? customInputDisplayConentType = freezed,
   }) {
@@ -122,6 +129,10 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
           ? _value.suffix
           : suffix // ignore: cast_nullable_to_non_nullable
               as String?,
+      customPopupmenu: freezed == customPopupmenu
+          ? _value.customPopupmenu
+          : customPopupmenu // ignore: cast_nullable_to_non_nullable
+              as CustomPopupmenu?,
       customInputSendMethod: freezed == customInputSendMethod
           ? _value.customInputSendMethod
           : customInputSendMethod // ignore: cast_nullable_to_non_nullable
@@ -131,6 +142,18 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
           : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
               as CustomInputDisplayConentType?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
+    if (_value.customPopupmenu == null) {
+      return null;
+    }
+
+    return $CustomPopupmenuCopyWith<$Res>(_value.customPopupmenu!, (value) {
+      return _then(_value.copyWith(customPopupmenu: value) as $Val);
+    });
   }
 }
 
@@ -150,8 +173,12 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
       @DataPointIdConverter() DataPoint? dataPoint,
       String? hintText,
       String? suffix,
+      CustomPopupmenu? customPopupmenu,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType});
+
+  @override
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
 
 /// @nodoc
@@ -172,6 +199,7 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
     Object? dataPoint = freezed,
     Object? hintText = freezed,
     Object? suffix = freezed,
+    Object? customPopupmenu = freezed,
     Object? customInputSendMethod = freezed,
     Object? customInputDisplayConentType = freezed,
   }) {
@@ -204,6 +232,10 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
           ? _value.suffix
           : suffix // ignore: cast_nullable_to_non_nullable
               as String?,
+      customPopupmenu: freezed == customPopupmenu
+          ? _value.customPopupmenu
+          : customPopupmenu // ignore: cast_nullable_to_non_nullable
+              as CustomPopupmenu?,
       customInputSendMethod: freezed == customInputSendMethod
           ? _value.customInputSendMethod
           : customInputSendMethod // ignore: cast_nullable_to_non_nullable
@@ -227,6 +259,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
       @DataPointIdConverter() required this.dataPoint,
       this.hintText,
       this.suffix,
+      this.customPopupmenu,
       this.customInputSendMethod,
       this.customInputDisplayConentType})
       : super._();
@@ -251,13 +284,15 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   @override
   String? suffix;
   @override
+  CustomPopupmenu? customPopupmenu;
+  @override
   CustomInputSendMethod? customInputSendMethod;
   @override
   CustomInputDisplayConentType? customInputDisplayConentType;
 
   @override
   String toString() {
-    return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType)';
+    return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customPopupmenu: $customPopupmenu, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType)';
   }
 
   @JsonKey(ignore: true)
@@ -285,6 +320,7 @@ abstract class _CustomInputWidget extends CustomInputWidget
           @DataPointIdConverter() required DataPoint? dataPoint,
           String? hintText,
           String? suffix,
+          CustomPopupmenu? customPopupmenu,
           CustomInputSendMethod? customInputSendMethod,
           CustomInputDisplayConentType? customInputDisplayConentType}) =
       _$CustomInputWidgetImpl;
@@ -316,6 +352,9 @@ abstract class _CustomInputWidget extends CustomInputWidget
   @override
   String? get suffix;
   set suffix(String? value);
+  @override
+  CustomPopupmenu? get customPopupmenu;
+  set customPopupmenu(CustomPopupmenu? value);
   @override
   CustomInputSendMethod? get customInputSendMethod;
   set customInputSendMethod(CustomInputSendMethod? value);

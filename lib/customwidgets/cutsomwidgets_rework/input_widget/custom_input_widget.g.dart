@@ -19,6 +19,10 @@ _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
           json['dataPoint'], const DataPointIdConverter().fromJson),
       hintText: json['hintText'] as String?,
       suffix: json['suffix'] as String?,
+      customPopupmenu: json['customPopupmenu'] == null
+          ? null
+          : CustomPopupmenu.fromJson(
+              json['customPopupmenu'] as Map<String, dynamic>),
       customInputSendMethod: $enumDecodeNullable(
           _$CustomInputSendMethodEnumMap, json['customInputSendMethod']),
       customInputDisplayConentType: $enumDecodeNullable(
@@ -36,6 +40,7 @@ Map<String, dynamic> _$$CustomInputWidgetImplToJson(
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'hintText': instance.hintText,
       'suffix': instance.suffix,
+      'customPopupmenu': instance.customPopupmenu,
       'customInputSendMethod':
           _$CustomInputSendMethodEnumMap[instance.customInputSendMethod],
       'customInputDisplayConentType': _$CustomInputDisplayConentTypeEnumMap[

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
@@ -40,6 +42,7 @@ class _CustomButtonWidgetSettingsViewState
     extends State<CustomButtonWidgetSettingsView> {
   late final TextEditingController buttonLabelEditingController,
       valueTextEditingController;
+  late CustomWidgetBlocCubit c;
   @override
   void initState() {
     buttonLabelEditingController =
@@ -51,6 +54,7 @@ class _CustomButtonWidgetSettingsViewState
 
   @override
   Widget build(BuildContext context) {
+    c = context.read<CustomWidgetBlocCubit>();
     return Container(
         margin: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: Column(children: [
@@ -58,13 +62,18 @@ class _CustomButtonWidgetSettingsViewState
               child: TextField(
             controller: valueTextEditingController,
             decoration: const InputDecoration(label: Text("Label (optional)")),
-            onChanged: (s) => {widget.customButtonWidget.label = s},
+            onChanged: (s) => {
+              widget.customButtonWidget.label = s,
+              c.update(widget.customButtonWidget)
+            },
           )),
           InputFieldContainer.inputContainer(
               child: DeviceSelection(
-            onDeviceSelected: (d) => {},
-            onDataPointSelected: (d) =>
-                {widget.customButtonWidget.dataPoint = d},
+            onDeviceSelected: (d) => {c.update(widget.customButtonWidget)},
+            onDataPointSelected: (d) => {
+              widget.customButtonWidget.dataPoint = d,
+              c.update(widget.customButtonWidget)
+            },
             customWidgetManager: Manager().customWidgetManager,
             selectedDataPoint: widget.customButtonWidget.dataPoint,
             selectedDevice: widget.customButtonWidget.dataPoint?.device,
@@ -74,7 +83,10 @@ class _CustomButtonWidgetSettingsViewState
             controller: buttonLabelEditingController,
             decoration:
                 const InputDecoration(label: Text("Button label (optional)")),
-            onChanged: (s) => {widget.customButtonWidget.buttonLabel = s},
+            onChanged: (s) => {
+              widget.customButtonWidget.buttonLabel = s,
+              c.update(widget.customButtonWidget)
+            },
           ))
         ]));
   }

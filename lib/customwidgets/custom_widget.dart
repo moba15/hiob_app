@@ -72,15 +72,18 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
                 id: "", name: "", hintText: "", dataPoint: null, suffix: "")
             .settingWidget;
       case CustomWidgetTypeDeprecated.button:
-        return CustomButtonWidget(id: "", name: "", dataPoint: null)
-            .settingWidget;
+        return CustomButtonWidget(
+          id: "",
+          name: "",
+          dataPoint: null,
+        ).settingWidget;
     }
   }
 
   String get name {
     switch (this) {
       case CustomWidgetTypeDeprecated.simpleSwitch:
-        return "Button";
+        return "Button (Deprecated)";
       case CustomWidgetTypeDeprecated.light:
         return "Switch with Slider";
       case CustomWidgetTypeDeprecated.line:
@@ -99,6 +102,10 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         return "Color Palette";
       case CustomWidgetTypeDeprecated.mediaPlayer:
         return "Network Media Player";
+      case CustomWidgetTypeDeprecated.button:
+        return "Button (new)";
+      case CustomWidgetTypeDeprecated.input:
+        return "Input (new)";
       default:
         return toString();
     }

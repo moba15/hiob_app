@@ -1,6 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
@@ -41,15 +43,18 @@ class _CustomInputWidgetSettingsViewState
     extends State<CustomInputWidgetSettingsView> {
   @override
   Widget build(BuildContext context) {
+    CustomWidgetBlocCubit c = context.read<CustomWidgetBlocCubit>();
     return Container(
       margin: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
               child: DeviceSelection(
-            onDeviceSelected: (d) => {},
-            onDataPointSelected: (d) =>
-                {widget.customInputWidget.dataPoint = d},
+            onDeviceSelected: (d) => {c.update(widget.customInputWidget)},
+            onDataPointSelected: (d) => {
+              widget.customInputWidget.dataPoint = d,
+              c.update(widget.customInputWidget)
+            },
             customWidgetManager: Manager().customWidgetManager,
             selectedDataPoint: widget.customInputWidget.dataPoint,
             selectedDevice: widget.customInputWidget.dataPoint?.device,
@@ -58,15 +63,19 @@ class _CustomInputWidgetSettingsViewState
               child: DropdownSearch<CustomInputSendMethod>(
             items: CustomInputSendMethod.values,
             selectedItem: widget.customInputWidget.customInputSendMethod,
-            onChanged: (s) =>
-                {widget.customInputWidget.customInputSendMethod = s},
+            onChanged: (s) => {
+              widget.customInputWidget.customInputSendMethod = s,
+              c.update(widget.customInputWidget)
+            },
           )),
           InputFieldContainer.inputContainer(
               child: DropdownSearch<CustomInputDisplayConentType>(
             items: CustomInputDisplayConentType.values,
             selectedItem: widget.customInputWidget.customInputDisplayConentType,
-            onChanged: (s) =>
-                {widget.customInputWidget.customInputDisplayConentType = s},
+            onChanged: (s) => {
+              widget.customInputWidget.customInputDisplayConentType = s,
+              c.update(widget.customInputWidget)
+            },
           )),
         ],
       ),
