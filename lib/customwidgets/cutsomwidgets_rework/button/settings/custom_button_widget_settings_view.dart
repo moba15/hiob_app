@@ -30,7 +30,7 @@ class CustomButtonWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      throw UnimplementedError();
+      throw UnimplementedError("asdasd");
 
   @override
   bool validate() {

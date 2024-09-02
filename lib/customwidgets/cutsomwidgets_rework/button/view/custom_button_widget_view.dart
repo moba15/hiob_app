@@ -108,7 +108,7 @@ class _CustomButtonWidgetDeviceViewState
               widget.dataPointBloc.add(DataPointValueUpdateRequest(
                   value: !(widget.dataPointBloc.state.value == true),
                   oldValue: widget.dataPointBloc.state.value));
-              if (context.read<Manager>().generalManager.vibrateEnabled) {
+              if (Manager().generalManager.vibrateEnabled) {
                 Vibrate.feedback(FeedbackType.light);
               }
             }
@@ -147,7 +147,7 @@ class _CustomButtonWidgetDeviceViewState
                   widget.dataPointBloc.add(DataPointValueUpdateRequest(
                       value: true,
                       oldValue: widget.dataPointBloc.state.value == true));
-                  if (context.read<Manager>().generalManager.vibrateEnabled) {
+                  if (Manager().generalManager.vibrateEnabled) {
                     Vibrate.feedback(FeedbackType.light);
                   }
                 },
