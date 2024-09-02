@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
@@ -8,6 +9,7 @@ import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
+import 'package:smart_home/utils/theme.dart';
 
 class CustomPopupmenuSettingsView extends StatefulWidget {
   final CustomWidget customWidget;
@@ -29,9 +31,22 @@ class _CustomPopupmenuSettingsViewState
     c = context.read<CustomWidgetBlocCubit>();
     return Column(
       children: [
-        if (widget.customPopupmenu.customWidgets.isNotEmpty)
-          const Text("Widgets:"),
-        ..._widgetList(),
+        InputFieldContainer.inputContainer(
+            child: Text(
+          "Widgtes",
+          style: TextStyle(fontSize: 15),
+        )),
+        ReorderableListView(
+          shrinkWrap: true,
+          onReorder: (oldIndex, newIndex) {
+            setState(() {
+              widget.customPopupmenu.reorder(oldIndex, newIndex);
+            });
+          },
+          children: [
+            ..._widgetList(),
+          ],
+        ),
         _addWidgetButton()
       ],
     );
@@ -42,6 +57,22 @@ class _CustomPopupmenuSettingsViewState
     for (CustomWidget customWidget in widget.customPopupmenu.customWidgets) {
       list.add(Dismissible(
           key: ValueKey(customWidget.id),
+          background: Container(
+            color: Colors.red,
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              child: const Icon(Icons.delete_forever),
+            ),
+          ),
+          secondaryBackground: Container(
+            color: Colors.red,
+            alignment: Alignment.centerRight,
+            child: Container(
+              margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              child: const Icon(Icons.delete_forever),
+            ),
+          ),
           onDismissed: (d) {
             setState(() {
               c.update(widget.customWidget);

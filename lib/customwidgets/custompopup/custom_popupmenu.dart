@@ -6,6 +6,7 @@ import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/utils/reorder_helper.dart';
 
 part 'custom_popupmenu.freezed.dart';
 part 'custom_popupmenu.g.dart';
@@ -41,6 +42,11 @@ class CustomPopupmenu with _$CustomPopupmenu {
       dataPoints.addAll(customWidget.dependentDataPoints);
     }
     return dataPoints;
+  }
+
+  void reorder(int oldIndex, int newIndex) {
+    ReorderHelper.rorderList(customWidgets,
+        oldIndex: oldIndex, newIndex: newIndex);
   }
 }
 
