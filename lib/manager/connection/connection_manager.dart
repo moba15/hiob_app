@@ -150,7 +150,6 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
-    return;
     // ignore: dead_code
     Uri url = await getUrl();
     connectionStatusStreamController.add(ConnectionStatus.tryAgain);
