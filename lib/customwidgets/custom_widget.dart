@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';

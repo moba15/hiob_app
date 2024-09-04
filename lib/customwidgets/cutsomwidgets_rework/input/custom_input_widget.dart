@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/settings/custom_input_widget_settings_view.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/view/custom_input_widget_view.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/settings/custom_input_widget_settings_view.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/view/custom_input_widget_view.dart';
 import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
 import 'package:smart_home/device/state/state.dart';
 

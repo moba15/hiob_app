@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/theme.dart';
