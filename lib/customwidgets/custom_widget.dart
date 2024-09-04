@@ -3,6 +3,7 @@ import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -11,7 +12,8 @@ import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
+    as depc;
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 
 enum CustomWidgetTypeDeprecated {
@@ -29,6 +31,7 @@ enum CustomWidgetTypeDeprecated {
   mediaPlayer,
   input,
   button,
+  webViewNew,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -47,7 +50,7 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.advanced:
         return AdvancedCustomWidget.edit().settingWidget;
       case CustomWidgetTypeDeprecated.webView:
-        return CustomWebViewWidget(name: null, url: null, dataPoint: null)
+        return depc.CustomWebViewWidget(name: null, url: null, dataPoint: null)
             .settingWidget;
       case CustomWidgetTypeDeprecated.alertDialog:
         return CustomAlertDialogWidget(name: "").settingWidget;
@@ -77,6 +80,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
           name: "",
           dataPoint: null,
         ).settingWidget;
+      case CustomWidgetTypeDeprecated.webViewNew:
+        return CustomWebViewWidget(id: "id", name: "", dataPoint: null)
+            .settingWidget;
     }
   }
 
@@ -93,7 +99,7 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.advanced:
         return "Advanced/Flexible";
       case CustomWidgetTypeDeprecated.webView:
-        return "Web View";
+        return "Web View (Deprecated)";
       case CustomWidgetTypeDeprecated.table:
         return "Table";
       case CustomWidgetTypeDeprecated.graph:
@@ -106,6 +112,8 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         return "Button (new)";
       case CustomWidgetTypeDeprecated.input:
         return "Input (new)";
+      case CustomWidgetTypeDeprecated.webViewNew:
+        return "Web view (new)";
       default:
         return toString();
     }

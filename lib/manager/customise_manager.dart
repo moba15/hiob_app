@@ -7,6 +7,7 @@ import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
@@ -15,7 +16,8 @@ import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
+    as depc_web_view;
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
@@ -104,7 +106,7 @@ class CustomWidgetManager {
           customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.webView:
-          customWidget = CustomWebViewWidget.fromJson(widgetRaw);
+          customWidget = depc_web_view.CustomWebViewWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.table:
           customWidget = CustomTableWidget.fromJson(widgetRaw);
@@ -123,6 +125,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetTypeDeprecated.button:
           customWidget = CustomButtonWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.webViewNew:
+          customWidget = CustomWebViewWidget.fromJson(widgetRaw);
           break;
         default:
           throw UnimplementedError();
