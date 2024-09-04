@@ -7,7 +7,7 @@ class ColorPalleteTriggerAction extends TriggerAction {
   ColorPalleteTriggerAction({required this.dataPoint});
   @override
   Widget getWidget({VoidCallback? onLongTab}) {
-    return Text("");
+    return const Text("");
   }
 
   @override

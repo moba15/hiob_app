@@ -3,8 +3,10 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 
 class CustomWidgetTemplate extends CustomWidgetWrapper {
+  @override
   String id;
   CustomWidgetDeprecated customWidget;
+  @override
   String name;
 
   CustomWidgetTemplate(

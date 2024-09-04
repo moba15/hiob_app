@@ -132,7 +132,7 @@ class CustomWidgetManager {
             name: name, customWidget: customWidget, id: id);
         templates.add(template);
       } else if (customWidget is CustomWidget) {
-        templates.add(customWidget as CustomWidget);
+        templates.add(customWidget);
       }
     }
     return templates;
@@ -223,8 +223,8 @@ class CustomWidgetManager {
 
   void copyTemplates(List<CustomWidgetWrapper> templatesToCopy) {
     List<CustomWidgetWrapper> renamedTemplates = templatesToCopy
-        .where((element) => element is CustomWidgetTemplate)
-        .map((e) => e as CustomWidgetTemplate)
+        .whereType<CustomWidgetTemplate>()
+        .map((e) => e)
         .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
             id: Manager.instance.getRandString(12),
             name: "${e.name}_copy",

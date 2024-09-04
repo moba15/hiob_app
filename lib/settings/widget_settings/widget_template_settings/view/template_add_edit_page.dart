@@ -12,7 +12,6 @@ import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rewo
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 import '../../../../manager/customise_manager.dart';
@@ -229,7 +228,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         _customWidgetSettingWidget!.validate()) {
       return _customWidgetSettingWidget!.customWidget.widget;
     }
-    return Placeholder();
+    return const Placeholder();
   }
 
   @override

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/view/cutsom_popupmenu_view.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/utils/reorder_helper.dart';
 

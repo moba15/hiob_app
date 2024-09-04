@@ -170,10 +170,8 @@ class Screen {
 
   List<DataPoint> getDependentDataPoints() {
     List<DataPoint> dataPoints = [];
-    List<CustomWidget> customWidgtes = widgetTemplates
-        .where((t) => t is CustomWidget)
-        .map((t) => t as CustomWidget)
-        .toList();
+    List<CustomWidget> customWidgtes =
+        widgetTemplates.whereType<CustomWidget>().map((t) => t).toList();
     for (CustomWidget c in customWidgtes) {
       dataPoints.addAll(c.dependentDataPoints);
     }

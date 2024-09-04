@@ -45,7 +45,7 @@ class _TriggerActionSelectionTemplateState
           },
           popupProps: PopupProps.modalBottomSheet(
             modalBottomSheetProps: ModalBottomSheetProps(
-                backgroundColor: Theme.of(context).colorScheme.background),
+                backgroundColor: Theme.of(context).colorScheme.surface),
             showSelectedItems: true,
           ),
           selectedItem: _selectedType,

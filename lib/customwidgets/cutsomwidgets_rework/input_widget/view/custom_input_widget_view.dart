@@ -30,7 +30,7 @@ class CustomInputWidgetView extends StatelessWidget {
             CustomInputDisplayConentType.value) {
           textEditingController.text = state.value.toString();
         }
-        final onChanged = null;
+        const onChanged = null;
         final onSubmitted = customInputWidget.customInputSendMethod ==
                 CustomInputSendMethod.onSubmitted
             ? send
@@ -39,7 +39,7 @@ class CustomInputWidgetView extends StatelessWidget {
                 CustomInputDisplayConentType.hintText
             ? state.value.toString()
             : null;
-        final Text? label =
+        final Text label =
             customInputWidget.label == null || customInputWidget.label!.isEmpty
                 ? Text(customInputWidget.name)
                 : Text(customInputWidget.label!);

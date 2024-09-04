@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
@@ -24,7 +23,9 @@ abstract class CustomWidget extends CustomWidgetWrapper {
       required this.isAbleToPopupMenu,
       required this.customPopupmenu});
 
+  @override
   CustomWidgetSettingWidget get settingWidget;
+  @override
   Widget get widget;
 
   List<DataPoint> get dependentDataPoints;

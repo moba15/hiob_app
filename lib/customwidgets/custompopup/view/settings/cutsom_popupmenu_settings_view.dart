@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
@@ -32,7 +31,7 @@ class _CustomPopupmenuSettingsViewState
     return Column(
       children: [
         InputFieldContainer.inputContainer(
-            child: Text(
+            child: const Text(
           "Widgtes",
           style: TextStyle(fontSize: 15),
         )),

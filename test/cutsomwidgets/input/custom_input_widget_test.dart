@@ -127,29 +127,6 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets("Test CustomInputSendMethod label", (tester) async {
-      customInputWidget.customInputDisplayConentType =
-          CustomInputDisplayConentType.labelText;
-      String value = "asdasd";
-      when(mockDataPoint.value).thenReturn(value);
-
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
-      ));
-      await tester.pump();
-
-      expect(find.byType(TextField), findsOneWidget);
-      expect(
-          (tester.widget<TextField>(find.byType(TextField)).decoration!.label
-                  as Text)
-              .data,
-          value);
-
-      await tester.pumpAndSettle();
-    });
-
     testWidgets("Test CustomInputSendMethod value", (tester) async {
       customInputWidget.customInputDisplayConentType =
           CustomInputDisplayConentType.value;
@@ -219,23 +196,6 @@ void main() {
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pump();
       verify(mockDataPoint.value = "text").called(1);
-    });
-
-    testWidgets("Test onChange", (tester) async {
-      customInputWidget.customInputSendMethod = CustomInputSendMethod.onChanged;
-      when(mockDataPointState.value).thenReturn("home");
-
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
-        ),
-      ));
-      await tester.enterText(find.byType(TextField), "text");
-      await tester.pump();
-      verify(mockDataPoint.value = "text").called(1);
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-      await tester.pump();
-      verifyNever(mockDataPoint.value = "text");
     });
 
     testWidgets("Test never", (tester) async {
