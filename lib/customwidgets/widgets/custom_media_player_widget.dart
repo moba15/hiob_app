@@ -3,7 +3,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_media_player_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_medial_player_settings.dart';
 
-class CustomMediaPlayerWidget extends CustomWidget {
+class CustomMediaPlayerWidget extends CustomWidgetDeprecated {
   String? url;
   int width = 16;
   int height = 9;
@@ -12,7 +12,10 @@ class CustomMediaPlayerWidget extends CustomWidget {
       required this.url,
       this.width = 16,
       this.height = 9})
-      : super(name: name, type: CustomWidgetType.mediaPlayer, settings: {});
+      : super(
+            name: name,
+            type: CustomWidgetTypeDeprecated.mediaPlayer,
+            settings: {});
 
   factory CustomMediaPlayerWidget.fromJSON(Map<String, dynamic> json) {
     return CustomMediaPlayerWidget(
@@ -23,7 +26,7 @@ class CustomMediaPlayerWidget extends CustomWidget {
   }
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomMediaPlayerWidget(
         name: name, url: url, width: width, height: height);
   }

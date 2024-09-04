@@ -22,7 +22,7 @@ class AlterDialogWidgetView extends StatelessWidget {
               ? []
               : customAlertDialogWidget.templates!
                   .map((e) => Card(
-                        child: e.customWidget.widget,
+                        child: e.widget,
                       ))
                   .toList(growable: false),
         ),
@@ -73,7 +73,7 @@ class BottomSheetWidget extends StatelessWidget {
                           ? []
                           : customAlertDialogWidget.templates!
                               .map((e) => Card(
-                                    child: e.customWidget.widget,
+                                    child: e.widget,
                                   ))
                               .toList(growable: false),
                     ),

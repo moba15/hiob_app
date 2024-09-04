@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
+import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
@@ -40,7 +43,7 @@ class Screen {
         widgetTemplates.add(Manager.instance.customWidgetManager.templates
             .firstWhere((element) => element.id == templateRaw["id"]));
       } else {
-        if (templateRaw["type"] == CustomWidgetType.line.toString()) {
+        if (templateRaw["type"] == CustomWidgetTypeDeprecated.line.toString()) {
           widgetTemplates.add(CustomWidgetTemplate(
               id: Manager.instance.getRandString(12),
               name: "Line",
@@ -82,13 +85,14 @@ class Screen {
       "enabled": enabled,
     };
     List<Map<String, dynamic>> widgets = [];
+    //! Old version Support
     for (dynamic w in widgetTemplates) {
       if (w is CustomGroupWidget) {
         widgets.add(w.toJson());
       } else if (w is CustomWidgetTemplate &&
           w.customWidget is CustomDivisionLineWidget) {
         widgets.add(w.customWidget.toJson());
-      } else if (w is CustomWidgetTemplate) {
+      } else if (w is CustomWidgetWrapper) {
         widgets.add({
           "widget": w.name,
           "id": w.id,
@@ -107,8 +111,8 @@ class Screen {
   }
 
   void addWidgetTemplates(ScreenManager screenManager,
-      List<CustomWidgetTemplate> customWidgetTemplates) async {
-    for (CustomWidgetTemplate t in customWidgetTemplates) {
+      List<CustomWidgetWrapper> customWidgetTemplates) async {
+    for (CustomWidgetWrapper t in customWidgetTemplates) {
       if (!widgetTemplates.contains(t)) {
         widgetTemplates.add(t);
       }
@@ -163,6 +167,17 @@ class Screen {
   }
 
   void onTemplateRemove(CustomWidgetTemplate customWidgetTemplate) {}
+
+  List<DataPoint> getDependentDataPoints() {
+    List<DataPoint> dataPoints = [];
+    List<CustomWidget> customWidgtes =
+        widgetTemplates.whereType<CustomWidget>().map((t) => t).toList();
+    for (CustomWidget c in customWidgtes) {
+      dataPoints.addAll(c.dependentDataPoints);
+    }
+
+    return dataPoints;
+  }
 
   Screen clone() {
     return Screen(

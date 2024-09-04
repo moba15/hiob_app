@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -172,7 +172,7 @@ class ScreenManager {
     }
   }
 
-  void templateRemoved(CustomWidgetTemplate template) async {
+  void templateRemoved(CustomWidgetWrapper template) async {
     for (Screen s in screens) {
       s.widgetTemplates.removeWhere((element) => template == element);
       for (dynamic temp in s.widgetTemplates) {
@@ -185,7 +185,7 @@ class ScreenManager {
     screenStreamController.add(screens);
   }
 
-  void templateEdited(CustomWidgetTemplate template) {
+  void templateEdited(CustomWidgetWrapper template) {
     screenStreamController.add(screens);
   }
 }

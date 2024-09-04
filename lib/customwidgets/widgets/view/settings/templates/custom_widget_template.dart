@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 
-class CustomWidgetTemplate {
+class CustomWidgetTemplate extends CustomWidgetWrapper {
+  @override
   String id;
-  CustomWidget customWidget;
+  CustomWidgetDeprecated customWidget;
+  @override
   String name;
 
   CustomWidgetTemplate(
@@ -13,4 +17,18 @@ class CustomWidgetTemplate {
         "name": name,
         "widget": customWidget.toJson(),
       };
+
+  @override
+  CustomWidgetTypeDeprecated? get type {
+    return customWidget.type;
+  }
+
+  @override
+  Widget get widget {
+    return customWidget.widget;
+  }
+
+  @override
+  // TODO: implement settingWidget
+  CustomWidgetSettingWidget get settingWidget => customWidget.settingWidget;
 }

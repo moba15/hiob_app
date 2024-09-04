@@ -8,7 +8,7 @@ import 'package:smart_home/manager/manager.dart';
 
 import '../../device/device.dart';
 
-class CustomSimpleValueWidget extends CustomWidget {
+class CustomSimpleValueWidget extends CustomWidgetDeprecated {
   Device? device;
   DataPoint? dataPoint;
   int? round = 2;
@@ -24,15 +24,15 @@ class CustomSimpleValueWidget extends CustomWidget {
       this.unit})
       : super(
             name: name,
-            type: CustomWidgetType.simpleValue,
+            type: CustomWidgetTypeDeprecated.simpleValue,
             settings: {"device": device?.id});
 
   CustomSimpleValueWidget.edit()
-      : super.edit(type: CustomWidgetType.simpleValue);
+      : super.edit(type: CustomWidgetTypeDeprecated.simpleValue);
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": CustomWidgetType.simpleValue.toString(),
+        "type": CustomWidgetTypeDeprecated.simpleValue.toString(),
         "device": device?.id, //Device ID
         "dataPoint": dataPoint?.id, // DataPoint ID
         "round": round,
@@ -64,7 +64,7 @@ class CustomSimpleValueWidget extends CustomWidget {
   Widget get widget => SimpleValueWidgetView(customSimpleValueWidget: this);
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomSimpleValueWidget(
         name: name,
         device: device,

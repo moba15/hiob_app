@@ -5,6 +5,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -171,7 +173,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     Manager.instance.screenManager.update();
   }
 
-  void _addTemplates(List<CustomWidgetTemplate> templates) {
+  void _addTemplates(List<CustomWidgetWrapper> templates) {
     clone.addTemplates(templates);
   }
 
@@ -208,7 +210,10 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
       _CustomGroupWidgetSettingsState();
 
   @override
-  CustomWidget get customWidget => customGroupWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customGroupWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {
@@ -218,6 +223,10 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
@@ -382,7 +391,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
 class AddTemplateAlertDialog extends StatefulWidget {
   final CustomGroupWidget customGroupWidget;
   final ScreenManager screenManager;
-  final Function(List<CustomWidgetTemplate>) onAdded;
+  final Function(List<CustomWidgetWrapper>) onAdded;
   const AddTemplateAlertDialog(
       {Key? key,
       required this.customGroupWidget,
@@ -395,11 +404,11 @@ class AddTemplateAlertDialog extends StatefulWidget {
 }
 
 class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
-  List<CustomWidgetTemplate> selected = [];
+  List<CustomWidgetWrapper> selected = [];
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetTemplate> templates =
+    List<CustomWidgetWrapper> templates =
         List.of(widget.screenManager.manager.customWidgetManager.templates);
     templates.removeWhere(
         (element) => widget.customGroupWidget.templates.contains(element));
@@ -412,15 +421,16 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
       content: SizedBox(
         child: Column(
           children: [
-            for (CustomWidgetType type in CustomWidgetType.values
-                .where((element) => element != CustomWidgetType.group))
-              if (templates.any((element) => element.customWidget.type == type))
+            for (CustomWidgetTypeDeprecated type
+                in CustomWidgetTypeDeprecated.values.where((element) =>
+                    element.name != CustomWidgetTypeDeprecated.group.name))
+              if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(
-                      "${type.name} (${templates.where((element) => element.customWidget.type == type).length})"),
+                      "${type.name} (${templates.where((element) => element.type?.name == type.name).length})"),
                   children: [
-                    for (CustomWidgetTemplate t in templates
-                        .where((element) => element.customWidget.type == type))
+                    for (CustomWidgetWrapper t in templates
+                        .where((element) => element.type?.name == type.name))
                       ListTile(
                         selected: selected.contains(t),
                         leading: Checkbox(
@@ -436,7 +446,7 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
                           value: selected.contains(t),
                         ),
                         title: Text(t.name),
-                        subtitle: Text(t.customWidget.type?.name ?? "Error"),
+                        subtitle: Text(t.type?.name ?? "Error"),
                       )
                   ],
                 ),

@@ -6,7 +6,7 @@ import 'package:smart_home/device/state/state.dart';
 import '../../manager/manager.dart';
 import '../custom_widget.dart';
 
-class CustomWebViewWidget extends CustomWidget {
+class CustomWebViewWidget extends CustomWidgetDeprecated {
   String? url;
   int height;
   bool javaScript;
@@ -18,7 +18,8 @@ class CustomWebViewWidget extends CustomWidget {
       required this.dataPoint,
       this.height = 300,
       this.javaScript = false})
-      : super(name: name, type: CustomWidgetType.webView, settings: {});
+      : super(
+            name: name, type: CustomWidgetTypeDeprecated.webView, settings: {});
 
   @override
   // TODO: implement settingWidget
@@ -27,7 +28,7 @@ class CustomWebViewWidget extends CustomWidget {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": CustomWidgetType.webView.toString(),
+        "type": CustomWidgetTypeDeprecated.webView.toString(),
         "name": name,
         "url": url,
         "height": height,
@@ -56,7 +57,7 @@ class CustomWebViewWidget extends CustomWidget {
   Widget get widget => CustomWebViewView(customWebViewWidget: this);
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomWebViewWidget(
         name: name,
         url: url,

@@ -13,12 +13,12 @@ class WidgetTemplateListToggleSelectionEvent extends WidgetTemplateListEvent {
 }
 
 class WidgetTemplateLoadedEvent extends WidgetTemplateListEvent {
-  final List<CustomWidgetTemplate> templates;
+  final List<CustomWidgetWrapper> templates;
   const WidgetTemplateLoadedEvent({required this.templates});
 }
 
 class WidgetTemplateToggleSelectEvent extends WidgetTemplateListEvent {
-  final CustomWidgetTemplate template;
+  final CustomWidgetWrapper template;
   final bool selection;
 
   const WidgetTemplateToggleSelectEvent(

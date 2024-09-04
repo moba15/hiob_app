@@ -159,7 +159,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
                 style: TextStyle(fontSize: 17.5),
               ),
               modalBottomSheetProps: ModalBottomSheetProps(
-                  backgroundColor: Theme.of(context).colorScheme.background)),
+                  backgroundColor: Theme.of(context).colorScheme.surface)),
           dropdownDecoratorProps: const DropDownDecoratorProps(
             dropdownSearchDecoration: InputDecoration(
               labelText: "End of axis",
@@ -205,7 +205,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
                     style: TextStyle(fontSize: 17.5),
                   ),
                   modalBottomSheetProps: ModalBottomSheetProps(
-                    backgroundColor: Theme.of(context).colorScheme.background,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                   )),
               dropdownDecoratorProps: const DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(

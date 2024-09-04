@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/trigger_action_selection.dart';
@@ -18,12 +19,15 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
   TriggerActionSetting? setting;
 
   @override
-  CustomWidget get customWidget => advancedCustomWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => advancedCustomWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {
-    return advancedCustomWidget.bodyTriggerAction != null &&
-        advancedCustomWidget.bodyTriggerAction!.validate() &&
+    return advancedCustomWidget.mainBody != null &&
+        advancedCustomWidget.mainBody!.validate() &&
         advancedCustomWidget.customAlertDialogWidget != null;
   }
 
@@ -64,11 +68,9 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
             description:
                 "Here you can setup the main body of this widget, you can choose between a lot different widget types",
             child: TriggerActionSelectionTemplate(
-              onChange: (trigger, settings) => {
-                advancedCustomWidget.bodyTriggerAction = trigger,
-                setting = settings
-              },
-              preSelectedTriggerAction: advancedCustomWidget.bodyTriggerAction,
+              onChange: (trigger, settings) =>
+                  {advancedCustomWidget.mainBody = trigger, setting = settings},
+              preSelectedTriggerAction: advancedCustomWidget.mainBody,
             ),
           ),
           Container(
@@ -104,4 +106,8 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
   List<GlobalKey<State<StatefulWidget>>> get showKeys {
     return [valueKey, mainBodyKey, ...?setting?.showKeys, popupKey];
   }
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }

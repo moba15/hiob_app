@@ -57,7 +57,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
                 isFilterOnline: false,
                 searchDelay: const Duration(seconds: 0),
                 modalBottomSheetProps: ModalBottomSheetProps(
-                    backgroundColor: Theme.of(context).colorScheme.background)),
+                    backgroundColor: Theme.of(context).colorScheme.surface)),
             //popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
             items: widget.customWidgetManager.manager.deviceManager.devicesList,
             itemAsString: (e) => e.name,
@@ -102,7 +102,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
           child: DropdownSearch<DataPoint>(
             popupProps: PopupProps.modalBottomSheet(
               modalBottomSheetProps: ModalBottomSheetProps(
-                  backgroundColor: Theme.of(context).colorScheme.background),
+                  backgroundColor: Theme.of(context).colorScheme.surface),
               showSelectedItems: true,
               searchDelay: const Duration(seconds: 0),
               showSearchBox: true,

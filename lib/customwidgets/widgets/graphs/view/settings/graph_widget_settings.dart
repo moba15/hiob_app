@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_axis.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_line.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
@@ -20,7 +21,10 @@ class GraphWidgetSettings extends CustomWidgetSettingStatefulWidget {
   State<GraphWidgetSettings> createState() => _GraphWidgetSettingsState();
 
   @override
-  CustomWidget get customWidget => graphWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => graphWidget;
+
+  @override
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
@@ -30,6 +34,9 @@ class GraphWidgetSettings extends CustomWidgetSettingStatefulWidget {
   bool validate() {
     return true;
   }
+
+  @override
+  bool get deprecated => true;
 }
 
 class _GraphWidgetSettingsState extends State<GraphWidgetSettings> {

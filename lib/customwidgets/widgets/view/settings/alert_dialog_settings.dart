@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -16,7 +17,10 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   State<AlertDialogSettings> createState() => _AlertDialogSettingsState();
 
   @override
-  CustomWidget get customWidget => customAlertDialogWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customAlertDialogWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {
@@ -25,6 +29,10 @@ class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys => [];
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _AlertDialogSettingsState extends State<AlertDialogSettings> {
@@ -46,7 +54,7 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
             if (oldIndex < newIndex) {
               newIndex--;
             }
-            CustomWidgetTemplate tmp =
+            CustomWidgetWrapper tmp =
                 widget.customAlertDialogWidget.templates![oldIndex];
             widget.customAlertDialogWidget.templates!.removeAt(oldIndex);
             widget.customAlertDialogWidget.templates!.add(tmp);
@@ -57,7 +65,7 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
-            for (CustomWidgetTemplate template
+            for (CustomWidgetWrapper template
                 in widget.customAlertDialogWidget.templates ?? [])
               Dismissible(
                 background: Container(

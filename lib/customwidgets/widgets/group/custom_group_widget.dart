@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class CustomGroupWidget extends CustomWidget {
+class CustomGroupWidget extends CustomWidgetDeprecated {
   List<dynamic> templates;
   bool isExtended;
   IconWrapper? iconWrapper;
@@ -19,7 +20,7 @@ class CustomGroupWidget extends CustomWidget {
       this.templates = const [],
       this.isExtended = true,
       this.iconWrapper})
-      : super(name: name, type: CustomWidgetType.group, settings: {});
+      : super(name: name, type: CustomWidgetTypeDeprecated.group, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();
@@ -38,7 +39,7 @@ class CustomGroupWidget extends CustomWidget {
       } else if (w is CustomWidgetTemplate &&
           w.customWidget is CustomDivisionLineWidget) {
         widgets.add(w.customWidget.toJson());
-      } else if (w is CustomWidgetTemplate) {
+      } else if (w is CustomWidgetWrapper) {
         widgets.add({
           "widget": w.name,
           "id": w.id,
@@ -62,7 +63,7 @@ class CustomGroupWidget extends CustomWidget {
   }
 
   factory CustomGroupWidget.fromJSON(
-      Map<String, dynamic> json, List<CustomWidgetTemplate> allTemplates) {
+      Map<String, dynamic> json, List<CustomWidgetWrapper> allTemplates) {
     List<dynamic> templates = [];
     if (json["templates"] != null) {
       for (Map<String, dynamic> templatesRaw in json["templates"] is String
@@ -77,7 +78,8 @@ class CustomGroupWidget extends CustomWidget {
               .firstWhere((element) => element.id == templatesRaw["id"]));
         } else if (templatesRaw.containsKey("isExtended")) {
           templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
-        } else if (templatesRaw["type"] == CustomWidgetType.line.toString()) {
+        } else if (templatesRaw["type"] ==
+            CustomWidgetTypeDeprecated.line.toString()) {
           templates.add(CustomWidgetTemplate(
               id: Manager.instance.getRandString(12),
               name: "Line",
@@ -119,8 +121,8 @@ class CustomGroupWidget extends CustomWidget {
         iconWrapper: iconWrapper);
   }
 
-  void addTemplates(List<CustomWidgetTemplate> templates) {
-    for (CustomWidgetTemplate t in templates) {
+  void addTemplates(List<CustomWidgetWrapper> templates) {
+    for (CustomWidgetWrapper t in templates) {
       if (!this.templates.contains(t)) {
         this.templates.add(t);
       }

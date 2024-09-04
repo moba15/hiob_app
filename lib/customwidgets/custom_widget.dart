@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -11,7 +14,7 @@ import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 
-enum CustomWidgetType {
+enum CustomWidgetTypeDeprecated {
   simpleSwitch,
   simpleValue,
   advanced,
@@ -24,29 +27,31 @@ enum CustomWidgetType {
   graph,
   colorPallete,
   mediaPlayer,
+  input,
+  button,
 }
 
-extension CustomWidgetTypeExtension on CustomWidgetType {
+extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
   CustomWidgetSettingWidget get settingWidget {
     switch (this) {
-      case CustomWidgetType.simpleSwitch:
+      case CustomWidgetTypeDeprecated.simpleSwitch:
         return CustomSimpleSwitchWidget.edit().settingWidget;
-      case CustomWidgetType.light:
+      case CustomWidgetTypeDeprecated.light:
         return CustomLightWidget(name: "").settingWidget;
-      case CustomWidgetType.group:
+      case CustomWidgetTypeDeprecated.group:
         throw UnimplementedError("Error 12");
-      case CustomWidgetType.line:
+      case CustomWidgetTypeDeprecated.line:
         return CustomDivisionLineWidget(name: "").settingWidget;
-      case CustomWidgetType.simpleValue:
+      case CustomWidgetTypeDeprecated.simpleValue:
         return CustomSimpleValueWidget.edit().settingWidget;
-      case CustomWidgetType.advanced:
+      case CustomWidgetTypeDeprecated.advanced:
         return AdvancedCustomWidget.edit().settingWidget;
-      case CustomWidgetType.webView:
+      case CustomWidgetTypeDeprecated.webView:
         return CustomWebViewWidget(name: null, url: null, dataPoint: null)
             .settingWidget;
-      case CustomWidgetType.alertDialog:
+      case CustomWidgetTypeDeprecated.alertDialog:
         return CustomAlertDialogWidget(name: "").settingWidget;
-      case CustomWidgetType.table:
+      case CustomWidgetTypeDeprecated.table:
         return CustomTableWidget(
             name: "",
             header: "",
@@ -55,71 +60,88 @@ extension CustomWidgetTypeExtension on CustomWidgetType {
             initialSortEnabled: false,
             elementsPerPage: 10,
             columns: {}).settingWidget;
-      case CustomWidgetType.graph:
+      case CustomWidgetTypeDeprecated.graph:
         return GraphWidget(name: "name").settingWidget;
-      case CustomWidgetType.colorPallete:
+      case CustomWidgetTypeDeprecated.colorPallete:
         return CustomColorPaletteWidget(name: "", pickersEnabled: {})
             .settingWidget;
-      case CustomWidgetType.mediaPlayer:
+      case CustomWidgetTypeDeprecated.mediaPlayer:
         return CustomMediaPlayerWidget(name: "", url: "").settingWidget;
+      case CustomWidgetTypeDeprecated.input:
+        return CustomInputWidget(
+                id: "", name: "", hintText: "", dataPoint: null, suffix: "")
+            .settingWidget;
+      case CustomWidgetTypeDeprecated.button:
+        return CustomButtonWidget(
+          id: "",
+          name: "",
+          dataPoint: null,
+        ).settingWidget;
     }
   }
 
   String get name {
     switch (this) {
-      case CustomWidgetType.simpleSwitch:
-        return "Button";
-      case CustomWidgetType.light:
+      case CustomWidgetTypeDeprecated.simpleSwitch:
+        return "Button (Deprecated)";
+      case CustomWidgetTypeDeprecated.light:
         return "Switch with Slider";
-      case CustomWidgetType.line:
+      case CustomWidgetTypeDeprecated.line:
         return "Division Line";
-      case CustomWidgetType.simpleValue:
+      case CustomWidgetTypeDeprecated.simpleValue:
         return "Value";
-      case CustomWidgetType.advanced:
+      case CustomWidgetTypeDeprecated.advanced:
         return "Advanced/Flexible";
-      case CustomWidgetType.webView:
+      case CustomWidgetTypeDeprecated.webView:
         return "Web View";
-      case CustomWidgetType.table:
+      case CustomWidgetTypeDeprecated.table:
         return "Table";
-      case CustomWidgetType.graph:
+      case CustomWidgetTypeDeprecated.graph:
         return "Graph (only sql Adapter)";
-      case CustomWidgetType.colorPallete:
+      case CustomWidgetTypeDeprecated.colorPallete:
         return "Color Palette";
-      case CustomWidgetType.mediaPlayer:
+      case CustomWidgetTypeDeprecated.mediaPlayer:
         return "Network Media Player";
+      case CustomWidgetTypeDeprecated.button:
+        return "Button (new)";
+      case CustomWidgetTypeDeprecated.input:
+        return "Input (new)";
       default:
         return toString();
     }
   }
 }
 
-abstract class CustomWidget {
+abstract class CustomWidgetDeprecated {
   static String typeID = "-1";
   String? name;
-  CustomWidgetType? type;
+  CustomWidgetTypeDeprecated? type;
   Map<String, dynamic>? settings;
 
-  CustomWidget(
+  CustomWidgetDeprecated(
       {required this.name, required this.type, required this.settings});
 
-  CustomWidget.edit({required this.type});
+  CustomWidgetDeprecated.edit({required this.type});
 
   Widget get widget;
 
   CustomWidgetSettingWidget get settingWidget;
 
-  factory CustomWidget.fromJSON(Map<String, dynamic> json) {
+  factory CustomWidgetDeprecated.fromJSON(Map<String, dynamic> json) {
     throw UnimplementedError();
   }
 
   Map<String, dynamic> toJson();
 
-  CustomWidget clone();
+  CustomWidgetDeprecated clone();
 }
 
 abstract class CustomWidgetSettingWidget {
   bool validate();
 
+  final bool deprecated = true;
+
+  CustomWidgetDeprecated get customWidgetDeprecated;
   CustomWidget get customWidget;
 
   List<GlobalKey> get showKeys;

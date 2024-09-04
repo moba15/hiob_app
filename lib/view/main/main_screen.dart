@@ -3,12 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
-import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
+import 'package:smart_home/screen/view/screen_view.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/utils/blinking_widget.dart';
 import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
@@ -165,6 +164,9 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
             appBar: AppBar(),
           );
         }
+        List<ScreenView> screenViews = screens
+            .map((t) => ScreenView(screen: t, numberOfRows: numberOfRows))
+            .toList();
         return Scaffold(
             appBar: AppBar(
               toolbarHeight: 90,
@@ -240,56 +242,10 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            body: screens.isEmpty
+            body: screenViews.isEmpty
                 ? const Text("null")
                 : TabBarView(
-                    controller: _tabController,
-                    children: [
-                      for (int i = 0; i < screens.length; i++)
-                        ListView.builder(
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            Screen screen = screens[i];
-                            List<dynamic> templates = screen.widgetTemplates;
-                            List<List<dynamic>> rows =
-                                List.generate(numberOfRows, (index) {
-                              List<dynamic> row = [];
-                              for (int i = index;
-                                  i < templates.length;
-                                  i += numberOfRows) {
-                                row.add(templates[i]);
-                              }
-                              return row;
-                            });
-                            rows.removeWhere((element) => element.isEmpty);
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                for (List<dynamic> t in rows)
-                                  Expanded(
-                                    child: Column(
-                                      children: t.map((e) {
-                                        if (e is CustomWidgetTemplate) {
-                                          return Card(
-                                            child: e.customWidget.widget,
-                                          );
-                                        } else if (e is CustomGroupWidget) {
-                                          return Card(
-                                            child: e.widget,
-                                          );
-                                        } else {
-                                          return const Text("Error 404");
-                                        }
-                                      }).toList(),
-                                    ),
-                                  )
-                              ],
-                            );
-                          },
-                        )
-                    ],
-                  ));
+                    controller: _tabController, children: screenViews));
       },
     );
   }

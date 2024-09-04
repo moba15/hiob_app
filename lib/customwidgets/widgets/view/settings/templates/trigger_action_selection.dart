@@ -45,7 +45,7 @@ class _TriggerActionSelectionTemplateState
           },
           popupProps: PopupProps.modalBottomSheet(
             modalBottomSheetProps: ModalBottomSheetProps(
-                backgroundColor: Theme.of(context).colorScheme.background),
+                backgroundColor: Theme.of(context).colorScheme.surface),
             showSelectedItems: true,
           ),
           selectedItem: _selectedType,
@@ -60,7 +60,7 @@ class _TriggerActionSelectionTemplateState
           compareFn: (d, d2) => d == d2,
         ),
         ExpansionTile(
-          title: const Text("Trigger Settings"),
+          title: const Text("Main Body Settings"),
           leading: const Icon(Icons.settings),
           initiallyExpanded: true,
           childrenPadding: const EdgeInsets.only(

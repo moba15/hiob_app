@@ -8,7 +8,7 @@ import 'package:smart_home/manager/manager.dart';
 
 import '../../device/device.dart';
 
-class CustomSimpleSwitchWidget extends CustomWidget {
+class CustomSimpleSwitchWidget extends CustomWidgetDeprecated {
   String? value;
   Device? device;
   DataPoint? dataPoint;
@@ -22,11 +22,11 @@ class CustomSimpleSwitchWidget extends CustomWidget {
       this.buttonText})
       : super(
             name: name,
-            type: CustomWidgetType.simpleSwitch,
+            type: CustomWidgetTypeDeprecated.simpleSwitch,
             settings: {"text": value, "device": device?.id});
 
   CustomSimpleSwitchWidget.edit()
-      : super.edit(type: CustomWidgetType.simpleSwitch);
+      : super.edit(type: CustomWidgetTypeDeprecated.simpleSwitch);
 
   @override
   Map<String, dynamic> toJson() => {
@@ -61,7 +61,7 @@ class CustomSimpleSwitchWidget extends CustomWidget {
   Widget get widget => SimpleSwitchWidgetView(customSimpleSwitchWidget: this);
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomSimpleSwitchWidget(
       value: value,
       name: name,

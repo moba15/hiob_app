@@ -3,6 +3,10 @@ import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/input_widget/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
@@ -23,8 +27,8 @@ class CustomWidgetManager {
   FileManager fileManager;
   DeviceManager deviceManager;
   Manager manager;
-  final List<CustomWidgetTemplate> templates = [];
-  final StreamController<List<CustomWidgetTemplate>> templatesStreamController =
+  final List<CustomWidgetWrapper> templates = [];
+  final StreamController<List<CustomWidgetWrapper>> templatesStreamController =
       StreamController.broadcast();
 
   CustomWidgetManager(
@@ -58,57 +62,78 @@ class CustomWidgetManager {
     templatesStreamController.add(templates);
   }
 
-  List<CustomWidgetTemplate> loadTemplate(List<dynamic> listRaw) {
-    List<CustomWidgetTemplate> templates = [];
+  List<CustomWidgetWrapper> loadTemplate(List<dynamic> listRaw) {
+    List<CustomWidgetWrapper> templates = [];
     for (Map<String, dynamic> templateRaw in listRaw) {
+      //TODO
+
       String name = templateRaw["name"];
       String id = templateRaw["id"];
-      Map<String, dynamic> widgetRaw = templateRaw["widget"];
+      Map<String, dynamic> widgetRaw = templateRaw["widget"] ?? templateRaw;
+      if (widgetRaw["type"] == null) {
+        continue;
+      }
       String typeRaw = widgetRaw["type"];
-      CustomWidgetType type = CustomWidgetType.values
-          .firstWhere((element) => element.toString() == typeRaw);
-      CustomWidget customWidget;
+      CustomWidgetTypeDeprecated type = CustomWidgetTypeDeprecated.values
+          .firstWhere((element) =>
+              element.toString() == typeRaw ||
+              element.toString().replaceAll("Deprecated", "") == typeRaw ||
+              element
+                      .toString()
+                      .replaceAll("CustomWidgetTypeDeprecated.", "") ==
+                  typeRaw);
+      //TODO refactor
+      dynamic customWidget;
       switch (type) {
-        case CustomWidgetType.simpleSwitch:
+        case CustomWidgetTypeDeprecated.simpleSwitch:
           customWidget = CustomSimpleSwitchWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.light:
+        case CustomWidgetTypeDeprecated.light:
           customWidget = CustomLightWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.line:
+        case CustomWidgetTypeDeprecated.line:
           customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.group:
-        case CustomWidgetType.alertDialog:
+        case CustomWidgetTypeDeprecated.group:
+        case CustomWidgetTypeDeprecated.alertDialog:
           continue;
-        case CustomWidgetType.simpleValue:
+        case CustomWidgetTypeDeprecated.simpleValue:
           customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.advanced:
+        case CustomWidgetTypeDeprecated.advanced:
           customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.webView:
+        case CustomWidgetTypeDeprecated.webView:
           customWidget = CustomWebViewWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.table:
+        case CustomWidgetTypeDeprecated.table:
           customWidget = CustomTableWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.graph:
+        case CustomWidgetTypeDeprecated.graph:
           customWidget = GraphWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.colorPallete:
+        case CustomWidgetTypeDeprecated.colorPallete:
           customWidget = CustomColorPaletteWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetType.mediaPlayer:
+        case CustomWidgetTypeDeprecated.mediaPlayer:
           customWidget = CustomMediaPlayerWidget.fromJSON(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.input:
+          customWidget = CustomInputWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.button:
+          customWidget = CustomButtonWidget.fromJson(widgetRaw);
           break;
         default:
           throw UnimplementedError();
       }
-
-      CustomWidgetTemplate template =
-          CustomWidgetTemplate(name: name, customWidget: customWidget, id: id);
-      templates.add(template);
+      if (customWidget is CustomWidgetDeprecated) {
+        CustomWidgetTemplate template = CustomWidgetTemplate(
+            name: name, customWidget: customWidget, id: id);
+        templates.add(template);
+      } else if (customWidget is CustomWidget) {
+        templates.add(customWidget);
+      }
     }
     return templates;
   }
@@ -131,27 +156,27 @@ class CustomWidgetManager {
 
   void sort() {
     templates.sort((a, b) {
-      if (a.customWidget.type == b.customWidget.type) {
+      if (a.type == b.type) {
         return a.name.compareTo(b.name);
       } else {
-        return a.customWidget.type?.index
-                .compareTo(b.customWidget.type?.index ?? 0) ??
-            0;
+        return a.type?.index.compareTo(b.type?.index ?? 0) ?? 0;
       }
     });
   }
 
-  List<CustomWidgetTemplate> getTemplatesByType(CustomWidgetType type) {
-    List<CustomWidgetTemplate> tmps = [];
-    for (CustomWidgetTemplate t in templates) {
-      if (t.customWidget.type == type) {
+  List<CustomWidgetWrapper> getTemplatesByType(
+      CustomWidgetTypeDeprecated type) {
+    List<CustomWidgetWrapper> tmps = [];
+    for (CustomWidgetWrapper t in templates) {
+      if (t.type?.name == type.name) {
         tmps.add(t);
       }
     }
     return tmps;
   }
 
-  Future<void> save({required CustomWidgetTemplate template}) async {
+  Future<void> save({required CustomWidgetWrapper template}) async {
+    //TODO Random generator
     templates.add(template);
     sort();
     templatesStreamController.add(templates);
@@ -161,7 +186,9 @@ class CustomWidgetManager {
     }
   }
 
-  Future<bool> edit({required CustomWidgetTemplate template}) async {
+  Future<bool> edit({required CustomWidgetWrapper template}) async {
+    templates.removeWhere((element) => element.id == template.id);
+    templates.add(template);
     sort();
     templatesStreamController.add(templates);
 
@@ -175,7 +202,7 @@ class CustomWidgetManager {
     return true;
   }
 
-  Future<void> removeTemplate(CustomWidgetTemplate template) async {
+  Future<void> removeTemplate(CustomWidgetWrapper template) async {
     templates.remove(template);
     templatesStreamController.add(templates);
     if (!await fileManager.writeJSONList(templateKey, templates)) {
@@ -186,16 +213,18 @@ class CustomWidgetManager {
     }
   }
 
-  void removeTemplates(List<CustomWidgetTemplate> templatesToRemove) {
+  void removeTemplates(List<CustomWidgetWrapper> templatesToRemove) {
     templates.removeWhere((element) => templatesToRemove.contains(element));
-    for (CustomWidgetTemplate c in templatesToRemove) {
+    for (CustomWidgetWrapper c in templatesToRemove) {
       manager.screenManager.templateRemoved(c);
     }
     fileManager.writeJSONList(templateKey, templates);
   }
 
-  void copyTemplates(List<CustomWidgetTemplate> templatesToCopy) {
-    List<CustomWidgetTemplate> renamedTemplates = templatesToCopy
+  void copyTemplates(List<CustomWidgetWrapper> templatesToCopy) {
+    List<CustomWidgetWrapper> renamedTemplates = templatesToCopy
+        .whereType<CustomWidgetTemplate>()
+        .map((e) => e)
         .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
             id: Manager.instance.getRandString(12),
             name: "${e.name}_copy",

@@ -6,7 +6,7 @@ import 'package:smart_home/device/state/state.dart';
 
 import '../../manager/manager.dart';
 
-class CustomLightWidget extends CustomWidget {
+class CustomLightWidget extends CustomWidgetDeprecated {
   DataPoint? onDataPoint;
   DataPoint? briDataPoint;
   int briMax;
@@ -27,7 +27,7 @@ class CustomLightWidget extends CustomWidget {
       this.briSteps = 10,
       this.value,
       this.briDisplay = "Brightness"})
-      : super(name: name, type: CustomWidgetType.light, settings: {});
+      : super(name: name, type: CustomWidgetTypeDeprecated.light, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -79,7 +79,7 @@ class CustomLightWidget extends CustomWidget {
       );
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomLightWidget(
       name: name,
       onDataPoint: onDataPoint,

@@ -19,44 +19,43 @@ class AdvancedWidgetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (advancedCustomWidget.bodyTriggerAction == null) {
+    if (advancedCustomWidget.mainBody == null) {
       return const ListTile(
         title: Text("No Trigger Found"),
       );
     }
 
-    switch (advancedCustomWidget.bodyTriggerAction!.type) {
+    switch (advancedCustomWidget.mainBody!.type) {
       case TriggerActionType.none:
         return _NoneTriggerActionView(
           advancedCustomWidget: advancedCustomWidget,
-          noneTriggerAction:
-              advancedCustomWidget.bodyTriggerAction as NoneTriggerAction,
+          noneTriggerAction: advancedCustomWidget.mainBody as NoneTriggerAction,
           onLongTab: () => _onLongTab(context),
         );
       case TriggerActionType.multiSelection:
         return _MultiSelectionTriggerActionView(
           advancedCustomWidget: advancedCustomWidget,
-          multiSelectionTriggerAction: advancedCustomWidget.bodyTriggerAction
-              as MultiSelectionTriggerAction,
+          multiSelectionTriggerAction:
+              advancedCustomWidget.mainBody as MultiSelectionTriggerAction,
           onLongTab: () => _onLongTab(context),
         );
       case TriggerActionType.slider:
         return _SliderTriggerView(
             advancedCustomWidget: advancedCustomWidget,
             sliderTriggerAction:
-                advancedCustomWidget.bodyTriggerAction as SliderTriggerAction,
+                advancedCustomWidget.mainBody as SliderTriggerAction,
             onLongTab: () => _onLongTab(context));
       case TriggerActionType.handleSwitch:
         return _SwitchTriggerView(
             advancedCustomWidget: advancedCustomWidget,
             switchTriggerAction:
-                advancedCustomWidget.bodyTriggerAction as SwitchTriggerAction,
+                advancedCustomWidget.mainBody as SwitchTriggerAction,
             onLongTab: () => _onLongTab(context));
       case TriggerActionType.button:
         return _ButtonTriggerView(
             advancedCustomWidget: advancedCustomWidget,
             buttonTriggerAction:
-                advancedCustomWidget.bodyTriggerAction as ButtonTriggerAction,
+                advancedCustomWidget.mainBody as ButtonTriggerAction,
             onLongTab: () => _onLongTab(context));
       default:
         return const Text("Error 404 no view found");

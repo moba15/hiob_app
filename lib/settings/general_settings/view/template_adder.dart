@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -21,7 +22,7 @@ class TemplateAdder extends StatefulWidget {
   final Widget? toggle;
   final bool Function() isSaved;
   final Function(String name) save;
-  final Function(List<CustomWidgetTemplate>) addTemplates;
+  final Function(List<CustomWidgetWrapper>) addTemplates;
   final IconWrapper? currentIconWrapper;
   final Function(CustomWidgetTemplate) addLine;
   final Function(CustomGroupWidget) addGroup;
@@ -205,7 +206,7 @@ class _TemplateAdderState extends State<TemplateAdder> {
         builder: (context) => _AddTemplateAlertDialog(
               screenManager: widget.screenManager,
               selected: widget.templates,
-              onAdd: (List<CustomWidgetTemplate> templates) {
+              onAdd: (List<CustomWidgetWrapper> templates) {
                 setState(() {
                   widget.addTemplates(templates);
                 });
@@ -274,7 +275,7 @@ class _SaveDialog extends StatelessWidget {
 class _AddTemplateAlertDialog extends StatefulWidget {
   final ScreenManager screenManager;
   final List<dynamic> selected;
-  final Function(List<CustomWidgetTemplate>) onAdd;
+  final Function(List<CustomWidgetWrapper>) onAdd;
 
   const _AddTemplateAlertDialog(
       {Key? key,
@@ -289,11 +290,11 @@ class _AddTemplateAlertDialog extends StatefulWidget {
 }
 
 class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
-  List<CustomWidgetTemplate> selected = [];
+  List<CustomWidgetWrapper> selected = [];
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetTemplate> templates =
+    List<CustomWidgetWrapper> templates =
         List.of(widget.screenManager.manager.customWidgetManager.templates);
 
     templates.removeWhere((element) => widget.selected.contains(element));
@@ -310,15 +311,16 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
       content: SizedBox(
         child: Column(
           children: [
-            for (CustomWidgetType type in CustomWidgetType.values
-                .where((element) => element != CustomWidgetType.group))
-              if (templates.any((element) => element.customWidget.type == type))
+            for (CustomWidgetTypeDeprecated type
+                in CustomWidgetTypeDeprecated.values.where(
+                    (element) => element != CustomWidgetTypeDeprecated.group))
+              if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(
-                      "${type.name} (${templates.where((element) => element.customWidget.type == type).length})"),
+                      "${type.name} (${templates.where((element) => element.type?.name == type.name).length})"),
                   children: [
-                    for (CustomWidgetTemplate t in templates
-                        .where((element) => element.customWidget.type == type))
+                    for (CustomWidgetWrapper t in templates
+                        .where((element) => element.type?.name == type.name))
                       ListTile(
                         selected: selected.contains(t),
                         leading: Checkbox(
@@ -334,7 +336,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
                           value: selected.contains(t),
                         ),
                         title: Text(t.name),
-                        subtitle: Text(t.customWidget.type?.name ?? "Error"),
+                        subtitle: Text(t.type?.name ?? "Error"),
                       )
                   ],
                 ),
@@ -418,7 +420,7 @@ class WidgetTemplateListPage extends StatelessWidget {
         },
         itemBuilder: (BuildContext context, int index) {
           if (widgetTemplates.length > index &&
-              widgetTemplates[index] is CustomWidgetTemplate) {
+              widgetTemplates[index] is CustomWidgetWrapper) {
             return Dismissible(
                 background: Container(
                   color: Colors.red,

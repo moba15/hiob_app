@@ -7,7 +7,7 @@ import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/device.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class CustomColorPaletteWidget extends CustomWidget {
+class CustomColorPaletteWidget extends CustomWidgetDeprecated {
   String? value;
   Map<ColorPickerType, bool> pickersEnabled;
   DataPoint? dataPoint;
@@ -26,7 +26,10 @@ class CustomColorPaletteWidget extends CustomWidget {
       this.prefix = "0x",
       this.alpha = false,
       this.shadesSelection = true})
-      : super(name: name, type: CustomWidgetType.colorPallete, settings: {}) {
+      : super(
+            name: name,
+            type: CustomWidgetTypeDeprecated.colorPallete,
+            settings: {}) {
     for (ColorPickerType type in ColorPickerType.values) {
       if (!pickersEnabled.containsKey(type) && type != ColorPickerType.custom) {
         pickersEnabled[type] = false;
@@ -35,7 +38,7 @@ class CustomColorPaletteWidget extends CustomWidget {
   }
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomColorPaletteWidget(
         name: name,
         value: value,

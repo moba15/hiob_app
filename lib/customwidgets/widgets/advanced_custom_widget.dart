@@ -10,9 +10,9 @@ import 'package:smart_home/customwidgets/widgets/view/settings/advanced_widget_s
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
-class AdvancedCustomWidget extends CustomWidget {
+class AdvancedCustomWidget extends CustomWidgetDeprecated {
   String? value;
-  TriggerAction? bodyTriggerAction;
+  TriggerAction? mainBody;
   String? bodyIconID;
 
   String? subTitle;
@@ -24,19 +24,23 @@ class AdvancedCustomWidget extends CustomWidget {
   AdvancedCustomWidget(
       {required name,
       this.value,
-      this.bodyTriggerAction,
+      this.mainBody,
       this.subTitle,
       this.subTitleDataPoint,
       this.bodyIconID,
       this.customAlertDialogWidget})
-      : super(name: name, type: CustomWidgetType.advanced, settings: {});
+      : super(
+            name: name,
+            type: CustomWidgetTypeDeprecated.advanced,
+            settings: {});
 
-  AdvancedCustomWidget.edit() : super.edit(type: CustomWidgetType.advanced);
+  AdvancedCustomWidget.edit()
+      : super.edit(type: CustomWidgetTypeDeprecated.advanced);
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": CustomWidgetType.advanced.toString(),
-        "bodyTriggerAction": jsonEncode(bodyTriggerAction?.toJson()),
+        "type": CustomWidgetTypeDeprecated.advanced.toString(),
+        "mainBody": jsonEncode(mainBody?.toJson()),
         "subTitle": subTitle,
         "subTitleDataPoint": subTitleDataPoint?.id,
         "name": name,
@@ -48,13 +52,13 @@ class AdvancedCustomWidget extends CustomWidget {
   factory AdvancedCustomWidget.fromJson(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["subTitleDataPoint"].toString());
-    TriggerAction triggerAction =
-        TriggerAction.fromJSON(jsonDecode(json["bodyTriggerAction"] ?? "{}"));
+    TriggerAction triggerAction = TriggerAction.fromJSON(
+        jsonDecode(json["bodyTriggerAction"] ?? (json["mainBody"] ?? "{}")));
     return AdvancedCustomWidget(
       name: json["name"],
       subTitle: json["subTitle"],
       subTitleDataPoint: dataPoint,
-      bodyTriggerAction: triggerAction, //TODO:
+      mainBody: triggerAction, //TODO:
       value: json["value"],
       bodyIconID: json["bodyIconID"],
       customAlertDialogWidget: json["customAlertDialogWidget"] == null
@@ -77,11 +81,11 @@ class AdvancedCustomWidget extends CustomWidget {
       );
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return AdvancedCustomWidget(
         name: name,
         value: value,
-        bodyTriggerAction: bodyTriggerAction,
+        mainBody: mainBody,
         subTitle: subTitle,
         subTitleDataPoint: subTitleDataPoint,
         bodyIconID: bodyIconID,

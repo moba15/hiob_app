@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -35,6 +36,8 @@ class CustomGroupWidgetView extends StatelessWidget {
             return e.widget;
           } else if (e is CustomGroupWidget) {
             return CustomGroupWidgetView(customGroupWidget: e);
+          } else if (e is CustomWidget) {
+            return e.widget;
           } else {
             return const Text("Error 404");
           }

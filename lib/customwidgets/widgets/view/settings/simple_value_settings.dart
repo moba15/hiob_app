@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/device/state/state.dart';
@@ -26,7 +27,10 @@ class CustomSimpleValueWidgetSettingWidget
       _CustomSimpleValueWidgetSettingWidgetState();
 
   @override
-  CustomWidget get customWidget => customSimpleValueWidget;
+  CustomWidgetDeprecated get customWidgetDeprecated => customSimpleValueWidget;
+  @override
+  // TODO: implement customWidget
+  CustomWidget get customWidget => throw UnimplementedError();
 
   @override
   bool validate() {
@@ -39,6 +43,10 @@ class CustomSimpleValueWidgetSettingWidget
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       [valueKey, roundKey, unitKey, deviceDatapointKey];
+
+  @override
+  // TODO: implement deprecated
+  bool get deprecated => true;
 }
 
 class _CustomSimpleValueWidgetSettingWidgetState

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/cutsom_divider_settigs.dart';
 
-class CustomDivisionLineWidget extends CustomWidget {
+class CustomDivisionLineWidget extends CustomWidgetDeprecated {
   Color color;
   int thickness;
 
   CustomDivisionLineWidget(
       {required String? name, this.color = Colors.black, this.thickness = 3})
-      : super(name: name, type: CustomWidgetType.line, settings: {});
+      : super(name: name, type: CustomWidgetTypeDeprecated.line, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -38,7 +38,7 @@ class CustomDivisionLineWidget extends CustomWidget {
       );
 
   @override
-  CustomWidget clone() {
+  CustomWidgetDeprecated clone() {
     return CustomDivisionLineWidget(
         name: name, color: color, thickness: thickness);
   }
