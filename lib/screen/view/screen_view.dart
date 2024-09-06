@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/screen/screen.dart';
 

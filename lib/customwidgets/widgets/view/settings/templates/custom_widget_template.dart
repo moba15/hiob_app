@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 
 class CustomWidgetTemplate extends CustomWidgetWrapper {
   @override

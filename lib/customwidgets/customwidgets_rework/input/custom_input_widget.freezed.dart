@@ -311,7 +311,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
 }
 
 abstract class _CustomInputWidget extends CustomInputWidget
-    implements CustomWidget {
+    implements InvalidType {
   factory _CustomInputWidget(
           {CustomWidgetTypeDeprecated type,
           required String id,

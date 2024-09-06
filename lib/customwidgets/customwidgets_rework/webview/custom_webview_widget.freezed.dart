@@ -257,7 +257,7 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
 }
 
 abstract class _CustomWebViewWidget extends CustomWebViewWidget
-    implements CustomWidget {
+    implements InvalidType {
   factory _CustomWebViewWidget(
       {CustomWidgetTypeDeprecated type,
       required String id,

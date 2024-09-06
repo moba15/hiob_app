@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/state/state.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/settings/custom_button_widget_settings_view.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/view/custom_button_widget_view.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/button/settings/custom_button_widget_settings_view.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/button/view/custom_button_widget_view.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
 import 'package:smart_home/device/state/state.dart';
 

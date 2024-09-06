@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/custom_input_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/view/custom_input_widget_view.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/input/view/custom_input_widget_view.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/state/state.dart';
 

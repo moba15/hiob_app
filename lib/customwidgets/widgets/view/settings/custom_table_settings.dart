@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/map_order_add_setting_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';

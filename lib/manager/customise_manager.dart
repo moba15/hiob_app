@@ -3,11 +3,11 @@ import 'dart:developer' as developer;
 
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/button/custom_button_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/custom_widget_rework_wrapper.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/custom_input_widget.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/webview/custom_webview_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';

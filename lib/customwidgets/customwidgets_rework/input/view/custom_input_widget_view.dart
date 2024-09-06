@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/cutsomwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomInputWidgetView extends StatefulWidget {
