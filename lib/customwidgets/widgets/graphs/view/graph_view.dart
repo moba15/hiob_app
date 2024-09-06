@@ -5,7 +5,6 @@ import 'package:smart_home/customwidgets/widgets/graphs/graph_line.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/history/bloc/history_data_bloc.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class GraphView extends StatefulWidget {
   final GraphWidget graphWidget;
@@ -17,7 +16,7 @@ class GraphView extends StatefulWidget {
 
 class _GraphViewState extends State<GraphView> {
   int test = 0;
-  List<LineSeries<_ChartData, DateTime>> mainSeries = [];
+  // List<LineSeries<_ChartData, DateTime>> mainSeries = [];
   HistoryDataBloc? historyDataBloc;
   @override
   Widget build(BuildContext context) {
@@ -29,29 +28,10 @@ class _GraphViewState extends State<GraphView> {
     }
     historyDataBloc ??= HistoryDataBloc(
         dataPoint: widget.graphWidget.graphLines!.first.dataPoint!);
-    return BlocBuilder(
-      bloc: historyDataBloc,
-      builder: (BuildContext context, state) {
-        return SfCartesianChart(
-          title: ChartTitle(text: widget.graphWidget.title ?? "No Title set"),
-          primaryXAxis: _getPrimaryXAxis(),
-          primaryYAxis: _getPrimaryYAxis(),
-          series: getSeries(),
-          tooltipBehavior: TooltipBehavior(enable: false),
-          axes: _getAxes(),
-          trackballBehavior: TrackballBehavior(
-            enable: widget.graphWidget.trackBall ?? false,
-            activationMode: ActivationMode.singleTap,
-            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-            lineType: TrackballLineType.vertical,
-            shouldAlwaysShow: true,
-          ),
-        );
-      },
-    );
+    return Placeholder();
   }
 
-  List<LineSeries<_ChartData, DateTime>> getSeries() {
+  /*List<LineSeries<_ChartData, DateTime>> getSeries() {
     List<LineSeries<_ChartData, DateTime>> series = [];
 
     for (GraphLine graphLine in widget.graphWidget.graphLines ?? []) {
@@ -154,7 +134,7 @@ class _GraphViewState extends State<GraphView> {
       ));
     }
     return axes;
-  }
+  }*/
 }
 
 class _ChartData {
