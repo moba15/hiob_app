@@ -49,7 +49,7 @@ class CustomButtonWidgetView extends StatelessWidget {
         return CustomButtonWidgetDeviceView(
           text: customButtonWidget.labelOrName,
           buttonLabel: customButtonWidget.buttonLabel ?? "Press",
-          dataPointBloc: dataPointBloc,
+          dataPoint: customButtonWidget.dataPoint!,
           tryOpenPopup: customButtonWidget.tryOpenPopupmenu,
         );
       },
@@ -61,12 +61,12 @@ class CustomButtonWidgetDeviceView extends StatefulWidget {
   final String text;
   final String buttonLabel;
   final bool Function(BuildContext) tryOpenPopup;
-  final DataPointBloc dataPointBloc;
+  final DataPoint dataPoint;
   const CustomButtonWidgetDeviceView(
       {Key? key,
       required this.text,
       required this.buttonLabel,
-      required this.dataPointBloc,
+      required this.dataPoint,
       required this.tryOpenPopup})
       : super(key: key);
 
@@ -79,6 +79,7 @@ class _CustomButtonWidgetDeviceViewState
     extends State<CustomButtonWidgetDeviceView>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late DataPointBloc _bloc;
   @override
   void initState() {
     _animationController = AnimationController(
@@ -86,72 +87,78 @@ class _CustomButtonWidgetDeviceViewState
         duration: const Duration(milliseconds: 80),
         lowerBound: 0,
         upperBound: 0.15);
+    _bloc = DataPointBloc(widget.dataPoint);
     super.initState();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _bloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTapDown: (details) => startAnimation(),
-      onTapCancel: () => startAnimationRev(),
-      child: ListTile(
-          visualDensity: VisualDensity.compact,
-          onTap: () {
-            if (!widget.tryOpenPopup(context)) {
-              widget.dataPointBloc.add(DataPointValueUpdateRequest(
-                  value: !(widget.dataPointBloc.state.value == true),
-                  oldValue: widget.dataPointBloc.state.value));
-              if (Manager().generalManager.vibrateEnabled) {
-                Vibrate.feedback(FeedbackType.light);
-              }
-            }
-          },
-          title: Row(
-            children: [
-              Flexible(
-                child: Text(
-                  widget.text,
-                  overflow: TextOverflow.clip,
-                ),
-              ),
-              if (widget.dataPointBloc.dataPoint.device?.getDeviceStatus() !=
-                  DeviceStatus.ready)
-                const Flexible(
-                  child: Text(
-                    " U/A",
-                    style: TextStyle(color: Colors.red),
-                    overflow: TextOverflow.clip,
-                  ),
-                )
-            ],
-          ),
-          //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
-          trailing: AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: 1 - _animationController.value,
-                  child: child,
-                );
-              },
-              child: OutlinedButton(
-                child: Text(widget.buttonLabel),
-                onPressed: () async {
-                  widget.dataPointBloc.add(DataPointValueUpdateRequest(
-                      value: true,
-                      oldValue: widget.dataPointBloc.state.value == true));
+    return BlocBuilder<DataPointBloc, DataPointState>(
+      bloc: _bloc,
+      builder: (context, state) {
+        return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTapDown: (details) => startAnimation(),
+          onTapCancel: () => startAnimationRev(),
+          child: ListTile(
+              visualDensity: VisualDensity.compact,
+              onTap: () {
+                if (!widget.tryOpenPopup(context)) {
+                  _bloc.add(DataPointValueUpdateRequest(
+                      value: !(_bloc.state.value == true),
+                      oldValue: _bloc.state.value));
                   if (Manager().generalManager.vibrateEnabled) {
                     Vibrate.feedback(FeedbackType.light);
                   }
-                },
-              ))),
+                }
+              },
+              title: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      widget.text,
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                  if (_bloc.dataPoint.device?.getDeviceStatus() !=
+                      DeviceStatus.ready)
+                    const Flexible(
+                      child: Text(
+                        " U/A",
+                        style: TextStyle(color: Colors.red),
+                        overflow: TextOverflow.clip,
+                      ),
+                    )
+                ],
+              ),
+              //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
+              trailing: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: 1 - _animationController.value,
+                      child: child,
+                    );
+                  },
+                  child: OutlinedButton(
+                    child: Text(widget.buttonLabel),
+                    onPressed: () async {
+                      _bloc.add(DataPointValueUpdateRequest(
+                          value: true, oldValue: _bloc.state.value == true));
+                      if (Manager().generalManager.vibrateEnabled) {
+                        Vibrate.feedback(FeedbackType.light);
+                      }
+                    },
+                  ))),
+        );
+      },
     );
   }
 
