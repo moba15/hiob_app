@@ -256,7 +256,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
 }
 
 abstract class _CustomButtonWidget extends CustomButtonWidget
-    implements InvalidType {
+    implements CustomWidget {
   factory _CustomButtonWidget(
       {CustomWidgetTypeDeprecated type,
       required String id,
