@@ -49,8 +49,12 @@ mixin _$CustomInputWidget {
   set customInputDisplayConentType(CustomInputDisplayConentType? value) =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this CustomInputWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CustomInputWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomInputWidgetCopyWith<CustomInputWidget> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -86,6 +90,8 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CustomInputWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,6 +150,8 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
     ) as $Val);
   }
 
+  /// Create a copy of CustomInputWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
@@ -189,6 +197,8 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
       $Res Function(_$CustomInputWidgetImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CustomInputWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -295,7 +305,9 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
     return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customPopupmenu: $customPopupmenu, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType)';
   }
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CustomInputWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CustomInputWidgetImplCopyWith<_$CustomInputWidgetImpl> get copyWith =>
@@ -361,8 +373,11 @@ abstract class _CustomInputWidget extends CustomInputWidget
   @override
   CustomInputDisplayConentType? get customInputDisplayConentType;
   set customInputDisplayConentType(CustomInputDisplayConentType? value);
+
+  /// Create a copy of CustomInputWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomInputWidgetImplCopyWith<_$CustomInputWidgetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

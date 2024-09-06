@@ -21,7 +21,7 @@ class CustomTableWidget with _$CustomTableWidget implements CustomWidget {
 
   @Implements<CustomWidget>()
   factory CustomTableWidget({
-    @Default(CustomWidgetTypeDeprecated.webViewNew)
+    @Default(CustomWidgetTypeDeprecated.tableNew)
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,

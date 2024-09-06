@@ -11,7 +11,7 @@ _$CustomTableWidgetImpl _$$CustomTableWidgetImplFromJson(
     _$CustomTableWidgetImpl(
       type: $enumDecodeNullable(
               _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.webViewNew,
+          CustomWidgetTypeDeprecated.tableNew,
       id: json['id'] as String,
       name: json['name'] as String,
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
@@ -60,6 +60,7 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.input: 'input',
   CustomWidgetTypeDeprecated.button: 'button',
   CustomWidgetTypeDeprecated.webViewNew: 'webViewNew',
+  CustomWidgetTypeDeprecated.tableNew: 'tableNew',
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

@@ -39,8 +39,12 @@ mixin _$CustomButtonWidget {
   String? get buttonLabel => throw _privateConstructorUsedError;
   set buttonLabel(String? value) => throw _privateConstructorUsedError;
 
+  /// Serializes this CustomButtonWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CustomButtonWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomButtonWidgetCopyWith<CustomButtonWidget> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -73,6 +77,8 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CustomButtonWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -116,6 +122,8 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
     ) as $Val);
   }
 
+  /// Create a copy of CustomButtonWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
@@ -158,6 +166,8 @@ class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
       $Res Function(_$CustomButtonWidgetImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CustomButtonWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -240,7 +250,9 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
     return 'CustomButtonWidget(type: $type, id: $id, name: $name, customPopupmenu: $customPopupmenu, label: $label, dataPoint: $dataPoint, buttonLabel: $buttonLabel)';
   }
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CustomButtonWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CustomButtonWidgetImplCopyWith<_$CustomButtonWidgetImpl> get copyWith =>
@@ -293,8 +305,11 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
   @override
   String? get buttonLabel;
   set buttonLabel(String? value);
+
+  /// Create a copy of CustomButtonWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomButtonWidgetImplCopyWith<_$CustomButtonWidgetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

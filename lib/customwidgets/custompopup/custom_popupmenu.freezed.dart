@@ -26,8 +26,12 @@ mixin _$CustomPopupmenu {
   set customWidgets(List<CustomWidget> value) =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this CustomPopupmenu to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CustomPopupmenu
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomPopupmenuCopyWith<CustomPopupmenu> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$CustomPopupmenuCopyWithImpl<$Res, $Val extends CustomPopupmenu>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CustomPopupmenu
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,6 +90,8 @@ class __$$CustomPopupmenuImplCopyWithImpl<$Res>
       _$CustomPopupmenuImpl _value, $Res Function(_$CustomPopupmenuImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CustomPopupmenu
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -116,7 +124,9 @@ class _$CustomPopupmenuImpl extends _CustomPopupmenu {
     return 'CustomPopupmenu(customWidgets: $customWidgets)';
   }
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CustomPopupmenu
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CustomPopupmenuImplCopyWith<_$CustomPopupmenuImpl> get copyWith =>
@@ -145,8 +155,11 @@ abstract class _CustomPopupmenu extends CustomPopupmenu {
   List<CustomWidget> get customWidgets;
   @CustomWidgetConverter()
   set customWidgets(List<CustomWidget> value);
+
+  /// Create a copy of CustomPopupmenu
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomPopupmenuImplCopyWith<_$CustomPopupmenuImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -63,6 +63,7 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.input: 'input',
   CustomWidgetTypeDeprecated.button: 'button',
   CustomWidgetTypeDeprecated.webViewNew: 'webViewNew',
+  CustomWidgetTypeDeprecated.tableNew: 'tableNew',
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

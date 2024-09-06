@@ -3,6 +3,7 @@ import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
@@ -11,7 +12,8 @@ import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
+    as depc_table;
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
     as depc;
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
@@ -32,6 +34,7 @@ enum CustomWidgetTypeDeprecated {
   input,
   button,
   webViewNew,
+  tableNew,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -55,7 +58,7 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.alertDialog:
         return CustomAlertDialogWidget(name: "").settingWidget;
       case CustomWidgetTypeDeprecated.table:
-        return CustomTableWidget(
+        return depc_table.CustomTableWidget(
             name: "",
             header: "",
             sortAsc: true,
@@ -82,6 +85,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         ).settingWidget;
       case CustomWidgetTypeDeprecated.webViewNew:
         return CustomWebViewWidget(id: "id", name: "", dataPoint: null)
+            .settingWidget;
+      case CustomWidgetTypeDeprecated.tableNew:
+        return CustomTableWidget(id: "", name: "", dataPoint: null, columns: {})
             .settingWidget;
     }
   }

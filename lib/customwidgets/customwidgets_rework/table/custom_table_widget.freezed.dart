@@ -47,8 +47,12 @@ mixin _$CustomTableWidget {
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this CustomTableWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomTableWidgetCopyWith<CustomTableWidget> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -85,6 +89,8 @@ class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,6 +154,8 @@ class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
     ) as $Val);
   }
 
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
@@ -194,6 +202,8 @@ class __$$CustomTableWidgetImplCopyWithImpl<$Res>
       $Res Function(_$CustomTableWidgetImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -262,7 +272,7 @@ class __$$CustomTableWidgetImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomTableWidgetImpl extends _CustomTableWidget {
   _$CustomTableWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.webViewNew,
+      {this.type = CustomWidgetTypeDeprecated.tableNew,
       required this.id,
       required this.name,
       @DataPointIdConverter() required this.dataPoint,
@@ -312,7 +322,9 @@ class _$CustomTableWidgetImpl extends _CustomTableWidget {
     return 'CustomTableWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, header: $header, sortAsc: $sortAsc, initalSortColumn: $initalSortColumn, initialSortEnabled: $initialSortEnabled, elementsPerPage: $elementsPerPage, columns: $columns, customPopupmenu: $customPopupmenu)';
   }
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CustomTableWidgetImplCopyWith<_$CustomTableWidgetImpl> get copyWith =>
@@ -381,8 +393,11 @@ abstract class _CustomTableWidget extends CustomTableWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomTableWidgetImplCopyWith<_$CustomTableWidgetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

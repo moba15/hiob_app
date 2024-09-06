@@ -39,8 +39,12 @@ mixin _$CustomWebViewWidget {
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this CustomWebViewWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CustomWebViewWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomWebViewWidgetCopyWith<CustomWebViewWidget> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -73,6 +77,8 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CustomWebViewWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -116,6 +122,8 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
     ) as $Val);
   }
 
+  /// Create a copy of CustomWebViewWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
@@ -158,6 +166,8 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
       $Res Function(_$CustomWebViewWidgetImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CustomWebViewWidget
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -241,7 +251,9 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
     return 'CustomWebViewWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, url: $url, height: $height, customPopupmenu: $customPopupmenu)';
   }
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CustomWebViewWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CustomWebViewWidgetImplCopyWith<_$CustomWebViewWidgetImpl> get copyWith =>
@@ -294,8 +306,11 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+
+  /// Create a copy of CustomWebViewWidget
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomWebViewWidgetImplCopyWith<_$CustomWebViewWidgetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
