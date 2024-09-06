@@ -17,6 +17,7 @@ class CustomWebViewWidgetView extends StatefulWidget {
 
 class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
   late WebViewController _webViewController;
+  late DataPointBloc bloc;
 
   @override
   void initState() {
@@ -25,6 +26,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
         ..loadRequest(
             Uri.parse(widget.customWebViewWidget.dataPoint!.value.toString()));
+      bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
     } else {
       if (widget.customWebViewWidget.url.toString().startsWith("https://") ||
           widget.customWebViewWidget.url.toString().startsWith("http://")) {
@@ -43,6 +45,14 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
   }
 
   @override
+  void dispose() {
+    if (widget.customWebViewWidget.dataPoint != null) {
+      bloc.close();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onLongPress: () => _webViewController.reload(),
@@ -50,7 +60,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
           children: [
             if (widget.customWebViewWidget.dataPoint != null)
               BlocListener<DataPointBloc, DataPointState>(
-                bloc: DataPointBloc(widget.customWebViewWidget.dataPoint!),
+                bloc: bloc,
                 child: SizedBox(
                   height: widget.customWebViewWidget.height.toDouble(),
                   child: WebViewWidget(
