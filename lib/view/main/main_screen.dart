@@ -80,14 +80,266 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-class MainView extends StatefulWidget {
+class MainView extends StatelessWidget {
   const MainView({Key? key}) : super(key: key);
 
   @override
-  State<MainView> createState() => _MainViewState();
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainViewCubit, MainViewState>(
+      bloc: MainViewCubit(),
+      builder: (context, state) {
+        return DefaultTabController(
+            length: state.screens.length,
+            child: Scaffold(
+              appBar: AppBar(
+                toolbarHeight: 90,
+                centerTitle: true,
+                leading: MainViewAppBarLeading(
+                  connectionStatus: state.connectionStatus,
+                ),
+                title: MainViewBarTitle(
+                  screens: state.screens,
+                ),
+                bottom: TabBar(
+                    tabAlignment: TabAlignment.start,
+                    onTap: (i) {},
+                    indicatorWeight: 3,
+                    isScrollable: true,
+                    tabs: state.screens
+                        .map<ScreenTab>(
+                          (e) => ScreenTab(screen: e),
+                        )
+                        .toList()),
+                actions: [
+                  StreamBuilder(
+                    stream:
+                        Manager.instance.notificationManager.notificationStream,
+                    builder: (context, state) {
+                      return Badge(
+                        isLabelVisible: Manager.instance.notificationManager
+                                .unreadNotifications >
+                            0,
+                        label: Manager.instance.notificationManager
+                                    .unreadNotifications >
+                                0
+                            ? Text(
+                                "${Manager.instance.notificationManager.unreadNotifications}")
+                            : null,
+                        child: IconButton(
+                          onPressed: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NotificationLogViewScreen())),
+                          },
+                          icon: const Icon(Icons.notifications),
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MainSettingsScreen(manager: Manager())),
+                      )
+                    },
+                    icon: const Icon(Icons.settings),
+                  ),
+                ],
+              ),
+              body: TabBarView(
+                  children: state.screens
+                      .map((t) => ScreenView(screen: t, numberOfRows: 1))
+                      .toList()),
+            ));
+      },
+    );
+  }
 }
 
-class _MainViewState extends State<MainView> with TickerProviderStateMixin {
+class MainViewBarTitle extends StatefulWidget {
+  final List<Screen> screens;
+  const MainViewBarTitle({Key? key, required this.screens}) : super(key: key);
+
+  @override
+  State<MainViewBarTitle> createState() => _MainViewBarTitleState();
+}
+
+class _MainViewBarTitleState extends State<MainViewBarTitle> {
+  late StreamController<int> tabStreamController;
+  late TabController _tabController;
+  bool listend = false;
+  int index = 0;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {});
+  }
+
+  @override
+  void dispose() {
+    listend = false;
+    _tabController.removeListener(listen);
+
+    super.dispose();
+  }
+
+  listen() {
+    setState(() {
+      index = _tabController.index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _tabController = DefaultTabController.of(context);
+    _tabController.addListener(listen);
+
+    listend = true;
+
+    if (widget.screens.isEmpty) {
+      return Text("Empty");
+    }
+    return Text(widget.screens[index].name);
+  }
+}
+
+class MainViewAppBarLeading extends StatefulWidget {
+  final man.ConnectionStatus connectionStatus;
+  const MainViewAppBarLeading({Key? key, required this.connectionStatus})
+      : super(key: key);
+
+  @override
+  State<MainViewAppBarLeading> createState() => _MainViewAppBarLeadingState();
+}
+
+class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
+    with TickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return _getAppBarStatus(widget.connectionStatus);
+  }
+
+  Widget _getAppBarStatus(man.ConnectionStatus connectionStatus) {
+    debugPrint("AppBar Status: ${connectionStatus.name}");
+    int n = 0;
+    BlinkingWidget blinkingWidget;
+    switch (connectionStatus) {
+      case man.ConnectionStatus.connected:
+      case man.ConnectionStatus.loggedIn:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          disablerAfter: const Duration(seconds: 3),
+          invisibleAfter: true,
+          child: const Icon(Icons.done, color: Colors.green),
+        );
+        break;
+      case man.ConnectionStatus.loggingIn:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(
+            Icons.login,
+            color: Colors.orange,
+          ),
+        );
+        break;
+      case man.ConnectionStatus.loginDeclined:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.login, color: Colors.orange),
+        );
+        break;
+      case man.ConnectionStatus.newAesKey:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.add_moderator, color: Colors.yellow),
+        );
+        break;
+      case man.ConnectionStatus.wrongAdapterVersion:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.update, color: Colors.yellow),
+        );
+        break;
+      case man.ConnectionStatus.emptyAES:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: const Icon(Icons.add_moderator_outlined, color: Colors.red),
+        );
+        break;
+
+      default:
+        blinkingWidget = BlinkingWidget(
+          vsync: this,
+          child: IconButton(
+              icon: const Icon(
+                  Icons.signal_wifi_connected_no_internet_4_outlined,
+                  color: Colors.red),
+              onPressed: () => {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => const IoBrokerSettingsPage()))
+                  }),
+        );
+    }
+    return blinkingWidget;
+    /* if (connectionStatus.isConnected) {
+      return BlinkingWidget(
+        vsync: this,
+        disablerAfter: const Duration(seconds: 3),
+        invisibleAfter: true,
+        child: const Icon(Icons.done, color: Colors.green),
+      );
+    } else if (connectionStatus == man.ConnectionStatus.loggingIn) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(
+          Icons.login,
+          color: Colors.orange,
+        ),
+      );
+    } else if (connectionStatus == man.ConnectionStatus.loginDeclined) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(Icons.login, color: Colors.orange),
+      );
+    } else if (connectionStatus == man.ConnectionStatus.newAesKey) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(Icons.add_moderator, color: Colors.yellow),
+      );
+    } else if (connectionStatus == man.ConnectionStatus.emptyAES) {
+      return BlinkingWidget(
+        vsync: this,
+        child: const Icon(Icons.add_moderator_outlined, color: Colors.red),
+      );
+    } else {
+      return BlinkingWidget(
+        vsync: this,
+        child: IconButton(
+            icon: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined,
+                color: Colors.red),
+            onPressed: () => {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (c) => const IoBrokerSettingsPage()))
+                }),
+      );
+    }*/
+  }
+}
+
+class MainViewOld extends StatefulWidget {
+  const MainViewOld({Key? key}) : super(key: key);
+
+  @override
+  State<MainViewOld> createState() => _MainViewOldState();
+}
+
+class _MainViewOldState extends State<MainViewOld>
+    with TickerProviderStateMixin {
   late StreamController<int> _controller;
   int numberOfRows = 1;
   late StreamSubscription<man.ConnectionStatus> _ioConnectionSub;
@@ -119,10 +371,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
 
   int currentTab = 0;
 
-  void onViewChange() {
-    setState(() {});
-  }
-
   @override
   void dispose() {
     //_tabController.dispose();
@@ -144,7 +392,7 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
     if (width < 960.0) {
       numberOfRows = 1;
     }
-    Manager manager = context.read<Manager>();
+    Manager manager = Manager();
 
     return BlocBuilder<MainViewCubit, MainViewState>(
       bloc: MainViewCubit(),
@@ -159,11 +407,11 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
         _tabController.addListener(() {
           _controller.add(_tabController.index);
         });
-        if (screens.isEmpty) {
+        /*if (screens.isEmpty) {
           return Scaffold(
             appBar: AppBar(),
           );
-        }
+        }*/
         List<ScreenView> screenViews = screens
             .map((t) => ScreenView(screen: t, numberOfRows: numberOfRows))
             .toList();
@@ -242,10 +490,12 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            body: screenViews.isEmpty
-                ? const Text("null")
-                : TabBarView(
-                    controller: _tabController, children: screenViews));
+            body: TabBarView(
+                controller: _tabController,
+                children: screens
+                    .map((t) =>
+                        ScreenView(screen: t, numberOfRows: numberOfRows))
+                    .toList()));
       },
     );
   }
