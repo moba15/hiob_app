@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/widgets/graphs/graph_axis.dart';
-import 'package:smart_home/customwidgets/widgets/graphs/graph_line.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
-import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/history/bloc/history_data_bloc.dart';
 
 class GraphView extends StatefulWidget {
@@ -28,7 +24,7 @@ class _GraphViewState extends State<GraphView> {
     }
     historyDataBloc ??= HistoryDataBloc(
         dataPoint: widget.graphWidget.graphLines!.first.dataPoint!);
-    return Placeholder();
+    return const Placeholder();
   }
 
   /*List<LineSeries<_ChartData, DateTime>> getSeries() {

@@ -120,6 +120,8 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         return "Input (new)";
       case CustomWidgetTypeDeprecated.webViewNew:
         return "Web view (new)";
+      case CustomWidgetTypeDeprecated.tableNew:
+        return "Table (new)";
       default:
         return toString();
     }

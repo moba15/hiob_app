@@ -202,7 +202,7 @@ class _MainViewBarTitleState extends State<MainViewBarTitle> {
     listend = true;
 
     if (widget.screens.isEmpty) {
-      return Text("Empty");
+      return const Text("Empty");
     }
     return Text(widget.screens[index].name);
   }
@@ -286,48 +286,6 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
         );
     }
     return blinkingWidget;
-    /* if (connectionStatus.isConnected) {
-      return BlinkingWidget(
-        vsync: this,
-        disablerAfter: const Duration(seconds: 3),
-        invisibleAfter: true,
-        child: const Icon(Icons.done, color: Colors.green),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.loggingIn) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(
-          Icons.login,
-          color: Colors.orange,
-        ),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.loginDeclined) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(Icons.login, color: Colors.orange),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.newAesKey) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(Icons.add_moderator, color: Colors.yellow),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.emptyAES) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(Icons.add_moderator_outlined, color: Colors.red),
-      );
-    } else {
-      return BlinkingWidget(
-        vsync: this,
-        child: IconButton(
-            icon: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined,
-                color: Colors.red),
-            onPressed: () => {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (c) => const IoBrokerSettingsPage()))
-                }),
-      );
-    }*/
   }
 }
 
@@ -412,9 +370,6 @@ class _MainViewOldState extends State<MainViewOld>
             appBar: AppBar(),
           );
         }*/
-        List<ScreenView> screenViews = screens
-            .map((t) => ScreenView(screen: t, numberOfRows: numberOfRows))
-            .toList();
         return Scaffold(
             appBar: AppBar(
               toolbarHeight: 90,
@@ -562,47 +517,5 @@ class _MainViewOldState extends State<MainViewOld>
         );
     }
     return blinkingWidget;
-    /* if (connectionStatus.isConnected) {
-      return BlinkingWidget(
-        vsync: this,
-        disablerAfter: const Duration(seconds: 3),
-        invisibleAfter: true,
-        child: const Icon(Icons.done, color: Colors.green),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.loggingIn) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(
-          Icons.login,
-          color: Colors.orange,
-        ),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.loginDeclined) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(Icons.login, color: Colors.orange),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.newAesKey) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(Icons.add_moderator, color: Colors.yellow),
-      );
-    } else if (connectionStatus == man.ConnectionStatus.emptyAES) {
-      return BlinkingWidget(
-        vsync: this,
-        child: const Icon(Icons.add_moderator_outlined, color: Colors.red),
-      );
-    } else {
-      return BlinkingWidget(
-        vsync: this,
-        child: IconButton(
-            icon: const Icon(Icons.signal_wifi_connected_no_internet_4_outlined,
-                color: Colors.red),
-            onPressed: () => {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (c) => const IoBrokerSettingsPage()))
-                }),
-      );
-    }*/
   }
 }

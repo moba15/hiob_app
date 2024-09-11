@@ -5,8 +5,11 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/map_order_add_setting_template.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/utils/reorder_helper.dart';
 import 'package:smart_home/utils/theme.dart';
+import 'package:smart_home/utils/widgets/map/map_setting_widget.dart';
 
 class CustomTableWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomTableWidget customTableWidget;
@@ -19,7 +22,7 @@ class CustomTableWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
       _CustomTableWidgetSettingsViewState();
 
   @override
-  CustomWidget get customWidget => throw UnimplementedError();
+  CustomWidget get customWidget => customTableWidget;
 
   @override
   CustomWidgetDeprecated get customWidgetDeprecated =>
@@ -34,7 +37,8 @@ class CustomTableWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
 
   @override
   bool validate() {
-    throw UnimplementedError();
+    return customTableWidget.columns.isNotEmpty &&
+        customTableWidget.dataPoint != null;
   }
 }
 
@@ -76,12 +80,32 @@ class _CustomTableWidgetSettingsViewState
           )),
           InputFieldContainer.inputContainer(
               child: TextField(
+            controller:
+                TextEditingController(text: widget.customTableWidget.header),
             onChanged: (d) => {
               widget.customTableWidget.header = d,
               c.update(widget.customTableWidget)
             },
             decoration: const InputDecoration(label: Text("Header (optional)")),
           )),
+          InputFieldContainer.inputContainer(
+              child: MapOrderSettingTemplate<String>(
+                  title: const Text("Columns"),
+                  data: widget.customTableWidget.columns,
+                  onChange: (p0) {
+                    widget.customTableWidget.columns = p0;
+                  },
+                  toStr: (p0) {
+                    return p0.toString();
+                  },
+                  fromStr: (p0) {
+                    return p0;
+                  },
+                  alertTitle: const Text("Column"),
+                  alertKeyText: "Column key from json",
+                  alertValueText: "Column name",
+                  keyTileText: "Column json: ",
+                  valueTileText: "Column name: ")),
         ],
       ),
     );

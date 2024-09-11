@@ -15,9 +15,11 @@ import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
+    as depc_table;
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
     as depc_web_view;
+import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
@@ -109,7 +111,7 @@ class CustomWidgetManager {
           customWidget = depc_web_view.CustomWebViewWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.table:
-          customWidget = CustomTableWidget.fromJson(widgetRaw);
+          customWidget = depc_table.CustomTableWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.graph:
           customWidget = GraphWidget.fromJson(widgetRaw);
@@ -128,6 +130,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetTypeDeprecated.webViewNew:
           customWidget = CustomWebViewWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.tableNew:
+          customWidget = CustomTableWidget.fromJson(widgetRaw);
           break;
         default:
           throw UnimplementedError();
