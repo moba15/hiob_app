@@ -85,9 +85,8 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     int numberOfRows = 1;
-    if (width >= 960.0) {
+    /*if (width >= 960.0) {
       numberOfRows = 2;
     }
     if (width >= 1300) {
@@ -95,7 +94,7 @@ class MainView extends StatelessWidget {
     }
     if (width < 960.0) {
       numberOfRows = 1;
-    }
+    }*/
     return BlocBuilder<MainViewCubit, MainViewState>(
       bloc: MainViewCubit(),
       builder: (context, state) {
