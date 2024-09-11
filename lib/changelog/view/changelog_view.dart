@@ -31,6 +31,15 @@ class ChangeLogScreen extends StatelessWidget {
     return """
 # Templates \n
 - **Important:** The new features are all highly experimental
+- Fixed some bugs
+- Migrated Table
+  """;
+  }
+
+  String _changelogComplete() {
+    return """
+# Templates \n
+- **Important:** The new features are all highly experimental
 - I completly rewrote the way templates/widgtes work
 - You now can find two (new) widgets one of them a new input widget
 - With the new types of widgtes you can directly add a popupmenu, so you don't have to use a advanced widget for this
