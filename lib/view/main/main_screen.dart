@@ -85,6 +85,17 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    int numberOfRows = 1;
+    if (width >= 960.0) {
+      numberOfRows = 2;
+    }
+    if (width >= 1300) {
+      numberOfRows = 3;
+    }
+    if (width < 960.0) {
+      numberOfRows = 1;
+    }
     return BlocBuilder<MainViewCubit, MainViewState>(
       bloc: MainViewCubit(),
       builder: (context, state) {
@@ -153,7 +164,8 @@ class MainView extends StatelessWidget {
               ),
               body: TabBarView(
                   children: state.screens
-                      .map((t) => ScreenView(screen: t, numberOfRows: 1))
+                      .map((t) =>
+                          ScreenView(screen: t, numberOfRows: numberOfRows))
                       .toList()),
             ));
       },
