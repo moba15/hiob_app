@@ -7,13 +7,15 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart'
+    as depc_value;
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
     as depc_table;
@@ -102,7 +104,7 @@ class CustomWidgetManager {
         case CustomWidgetTypeDeprecated.alertDialog:
           continue;
         case CustomWidgetTypeDeprecated.simpleValue:
-          customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
+          customWidget = depc_value.CustomSimpleValueWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.advanced:
           customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
@@ -133,6 +135,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetTypeDeprecated.tableNew:
           customWidget = CustomTableWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.valueNew:
+          customWidget = CustomValueWidget.fromJson(widgetRaw);
           break;
         default:
           throw UnimplementedError();
