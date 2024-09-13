@@ -5,11 +5,9 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/map_order_add_setting_template.dart';
+import 'package:smart_home/utils/widgets/map/map_order_add_setting_template.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/utils/reorder_helper.dart';
 import 'package:smart_home/utils/theme.dart';
-import 'package:smart_home/utils/widgets/map/map_setting_widget.dart';
 
 class CustomTableWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomTableWidget customTableWidget;
@@ -94,6 +92,7 @@ class _CustomTableWidgetSettingsViewState
                   data: widget.customTableWidget.columns,
                   onChange: (p0) {
                     widget.customTableWidget.columns = p0;
+                    c.update(widget.customTableWidget);
                   },
                   toStr: (p0) {
                     return p0.toString();

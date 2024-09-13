@@ -4,6 +4,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
@@ -35,6 +36,7 @@ enum CustomWidgetTypeDeprecated {
   button,
   webViewNew,
   tableNew,
+  valueNew,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -89,6 +91,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.tableNew:
         return CustomTableWidget(id: "", name: "", dataPoint: null, columns: {})
             .settingWidget;
+      case CustomWidgetTypeDeprecated.valueNew:
+        return CustomValueWidget(id: "", name: "", dataPoint: null)
+            .settingWidget;
     }
   }
 
@@ -97,7 +102,7 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.simpleSwitch:
         return "Button (Deprecated)";
       case CustomWidgetTypeDeprecated.light:
-        return "Switch with Slider";
+        return "Switch with Slider (Deprecated)";
       case CustomWidgetTypeDeprecated.line:
         return "Division Line";
       case CustomWidgetTypeDeprecated.simpleValue:
@@ -107,7 +112,7 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.webView:
         return "Web View (Deprecated)";
       case CustomWidgetTypeDeprecated.table:
-        return "Table";
+        return "Table (Deprecated)";
       case CustomWidgetTypeDeprecated.graph:
         return "Graph (only sql Adapter)";
       case CustomWidgetTypeDeprecated.colorPallete:
