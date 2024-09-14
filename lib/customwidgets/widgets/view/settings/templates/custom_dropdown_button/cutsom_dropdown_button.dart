@@ -3,10 +3,23 @@ import 'package:flutter/scheduler.dart';
 
 enum DropdownMenuMode { bottomSheet, dropdown }
 
+extension DropdownMenuModeExt on DropdownMenuMode {
+  get name {
+    switch (this) {
+      case DropdownMenuMode.bottomSheet:
+        return "Bottom Sheet";
+      case DropdownMenuMode.dropdown:
+        return "Classic";
+    }
+  }
+}
+
 class CustomDropdownButton<T> extends FormField<T> {
   final List<T> items;
   final DropdownMenuMode mode;
-  final Widget Function(BuildContext, dynamic)? itemBuilder;
+  final Widget Function(BuildContext, T)? itemBuilder;
+  final Function(T) onSelect;
+  final Widget? label;
   final T? selected;
 
   const CustomDropdownButton(
@@ -14,7 +27,9 @@ class CustomDropdownButton<T> extends FormField<T> {
       this.items = const [],
       this.itemBuilder,
       this.mode = DropdownMenuMode.dropdown,
-      this.selected})
+      this.selected,
+      this.label,
+      required this.onSelect})
       : super(key: key, builder: _build);
 
   static Widget _build<T>(FormFieldState<T> state) {
@@ -27,7 +42,8 @@ class CustomDropdownButton<T> extends FormField<T> {
 
 class _CustomDropDownState<T> extends FormFieldState<T> {
   late CustomDropdownButton<T> w;
-  late Widget Function(BuildContext, dynamic) itemBuilder;
+  late Widget Function(BuildContext, T) itemBuilder;
+  late Function(T) onSelect;
   T? selected;
 
   @override
@@ -35,7 +51,16 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
     w = widget as CustomDropdownButton<T>;
     itemBuilder = w.itemBuilder ?? (context, t) => Text(t.toString());
     selected = w.selected;
+    onSelect = w.onSelect;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant FormField<T> oldWidget) {
+    setState(() {
+      selected = w.selected;
+    });
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -55,9 +80,12 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
             setState(() {
               selected = d;
             });
+            if (d != null) {
+              onSelect(d);
+            }
           },
-          decoration: const InputDecoration(
-              border: OutlineInputBorder(), labelText: "Test"),
+          decoration: InputDecoration(
+              border: const OutlineInputBorder(), label: w.label),
           iconEnabledColor:
               SchedulerBinding.instance.window.platformBrightness ==
                       Brightness.dark
@@ -89,12 +117,15 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
         builder: (context) {
           return _BottomSheetMenu<T>(
               items: w.items,
-              itemBuilder: itemBuilder,
+              itemBuilder: (p0, dynamic p1) {
+                return itemBuilder(p0, p1);
+              },
               onSelect: (dynamic e) {
                 if (e is T) {
                   setState(() {
                     selected = e;
                   });
+                  onSelect(e);
                 }
               });
         });
@@ -103,7 +134,7 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
 
 class _BottomSheetMenu<T> extends StatefulWidget {
   final List<T> items;
-  final Widget Function(BuildContext, dynamic) itemBuilder;
+  final Widget Function(BuildContext, T) itemBuilder;
   final Function(dynamic) onSelect;
   const _BottomSheetMenu(
       {Key? key,
@@ -124,7 +155,10 @@ class _BottomSheetMenuState<T> extends State<_BottomSheetMenu> {
           .items
           .map((T e) => ListTile(
                 title: widget.itemBuilder(context, e),
-                onTap: () => widget.onSelect(e),
+                onTap: () {
+                  widget.onSelect(e);
+                  Navigator.pop(context);
+                },
               ))
           .toList(),
     );
