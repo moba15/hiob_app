@@ -4,6 +4,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
@@ -39,6 +40,7 @@ enum CustomWidgetTypeDeprecated {
   tableNew,
   valueNew,
   multiselection,
+  slider,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -99,6 +101,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.multiselection:
         return CustomMultiselectionWidget(
             id: "", name: "", dataPoint: null, selections: {}).settingWidget;
+      case CustomWidgetTypeDeprecated.slider:
+        return CustomSliderWidget(id: "", name: "", dataPoint: null)
+            .settingWidget;
     }
   }
 
@@ -136,6 +141,8 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         return "Value (new)";
       case CustomWidgetTypeDeprecated.multiselection:
         return "Multiselection";
+      case CustomWidgetTypeDeprecated.slider:
+        return "Slider";
       default:
         return toString();
     }

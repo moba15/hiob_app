@@ -1,38 +1,45 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'custom_webview_widget.dart';
+part of 'custom_slider_widget.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
+_$CustomSliderWidgetImpl _$$CustomSliderWidgetImplFromJson(
         Map<String, dynamic> json) =>
-    _$CustomWebViewWidgetImpl(
+    _$CustomSliderWidgetImpl(
       type: $enumDecodeNullable(
               _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.webViewNew,
+          CustomWidgetTypeDeprecated.slider,
       id: json['id'] as String,
       name: json['name'] as String,
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
           json['dataPoint'], const DataPointIdConverter().fromJson),
-      url: json['url'] as String?,
-      height: (json['height'] as num?)?.toInt() ?? 500,
+      max: (json['max'] as num?)?.toInt() ?? 100,
+      min: (json['min'] as num?)?.toInt() ?? 0,
+      step: (json['step'] as num?)?.toInt() ?? 10,
+      valueMapper: (json['valueMapper'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(k, e as String),
+          ) ??
+          const {},
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
-        _$CustomWebViewWidgetImpl instance) =>
+Map<String, dynamic> _$$CustomSliderWidgetImplToJson(
+        _$CustomSliderWidgetImpl instance) =>
     <String, dynamic>{
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
-      'url': instance.url,
-      'height': instance.height,
+      'max': instance.max,
+      'min': instance.min,
+      'step': instance.step,
+      'valueMapper': instance.valueMapper,
       'customPopupmenu': instance.customPopupmenu,
     };
 
