@@ -3,6 +3,7 @@ import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
@@ -37,6 +38,7 @@ enum CustomWidgetTypeDeprecated {
   webViewNew,
   tableNew,
   valueNew,
+  multiselection,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -94,6 +96,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.valueNew:
         return CustomValueWidget(id: "", name: "", dataPoint: null)
             .settingWidget;
+      case CustomWidgetTypeDeprecated.multiselection:
+        return CustomMultiselectionWidget(
+            id: "", name: "", dataPoint: null, selections: {}).settingWidget;
     }
   }
 
@@ -127,6 +132,10 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         return "Web view (new)";
       case CustomWidgetTypeDeprecated.tableNew:
         return "Table (new)";
+      case CustomWidgetTypeDeprecated.valueNew:
+        return "Value (new)";
+      case CustomWidgetTypeDeprecated.multiselection:
+        return "Multiselection";
       default:
         return toString();
     }
