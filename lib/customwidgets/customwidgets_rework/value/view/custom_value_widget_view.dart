@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
@@ -41,6 +40,8 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
       bloc?.close();
       if (widget.customValueWidget.dataPoint != null) {
         bloc = DataPointBloc(widget.customValueWidget.dataPoint!);
+      } else {
+        bloc = null;
       }
     });
     super.didUpdateWidget(oldWidget);
