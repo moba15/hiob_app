@@ -48,6 +48,8 @@ mixin _$CustomInputWidget {
       throw _privateConstructorUsedError;
   set customInputDisplayConentType(CustomInputDisplayConentType? value) =>
       throw _privateConstructorUsedError;
+  bool get fullSize => throw _privateConstructorUsedError;
+  set fullSize(bool value) => throw _privateConstructorUsedError;
 
   /// Serializes this CustomInputWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -75,7 +77,8 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       String? suffix,
       CustomPopupmenu? customPopupmenu,
       CustomInputSendMethod? customInputSendMethod,
-      CustomInputDisplayConentType? customInputDisplayConentType});
+      CustomInputDisplayConentType? customInputDisplayConentType,
+      bool fullSize});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -105,6 +108,7 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
     Object? customPopupmenu = freezed,
     Object? customInputSendMethod = freezed,
     Object? customInputDisplayConentType = freezed,
+    Object? fullSize = null,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -147,6 +151,10 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
           ? _value.customInputDisplayConentType
           : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
               as CustomInputDisplayConentType?,
+      fullSize: null == fullSize
+          ? _value.fullSize
+          : fullSize // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -183,7 +191,8 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
       String? suffix,
       CustomPopupmenu? customPopupmenu,
       CustomInputSendMethod? customInputSendMethod,
-      CustomInputDisplayConentType? customInputDisplayConentType});
+      CustomInputDisplayConentType? customInputDisplayConentType,
+      bool fullSize});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -212,6 +221,7 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
     Object? customPopupmenu = freezed,
     Object? customInputSendMethod = freezed,
     Object? customInputDisplayConentType = freezed,
+    Object? fullSize = null,
   }) {
     return _then(_$CustomInputWidgetImpl(
       type: null == type
@@ -254,6 +264,10 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
           ? _value.customInputDisplayConentType
           : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
               as CustomInputDisplayConentType?,
+      fullSize: null == fullSize
+          ? _value.fullSize
+          : fullSize // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -271,7 +285,8 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
       this.suffix,
       this.customPopupmenu,
       this.customInputSendMethod,
-      this.customInputDisplayConentType})
+      this.customInputDisplayConentType,
+      this.fullSize = false})
       : super._();
 
   factory _$CustomInputWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -299,10 +314,13 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   CustomInputSendMethod? customInputSendMethod;
   @override
   CustomInputDisplayConentType? customInputDisplayConentType;
+  @override
+  @JsonKey()
+  bool fullSize;
 
   @override
   String toString() {
-    return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customPopupmenu: $customPopupmenu, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType)';
+    return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customPopupmenu: $customPopupmenu, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType, fullSize: $fullSize)';
   }
 
   /// Create a copy of CustomInputWidget
@@ -325,17 +343,17 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
 abstract class _CustomInputWidget extends CustomInputWidget
     implements CustomWidget {
   factory _CustomInputWidget(
-          {CustomWidgetTypeDeprecated type,
-          required String id,
-          required String name,
-          String? label,
-          @DataPointIdConverter() required DataPoint? dataPoint,
-          String? hintText,
-          String? suffix,
-          CustomPopupmenu? customPopupmenu,
-          CustomInputSendMethod? customInputSendMethod,
-          CustomInputDisplayConentType? customInputDisplayConentType}) =
-      _$CustomInputWidgetImpl;
+      {CustomWidgetTypeDeprecated type,
+      required String id,
+      required String name,
+      String? label,
+      @DataPointIdConverter() required DataPoint? dataPoint,
+      String? hintText,
+      String? suffix,
+      CustomPopupmenu? customPopupmenu,
+      CustomInputSendMethod? customInputSendMethod,
+      CustomInputDisplayConentType? customInputDisplayConentType,
+      bool fullSize}) = _$CustomInputWidgetImpl;
   _CustomInputWidget._() : super._();
 
   factory _CustomInputWidget.fromJson(Map<String, dynamic> json) =
@@ -373,6 +391,9 @@ abstract class _CustomInputWidget extends CustomInputWidget
   @override
   CustomInputDisplayConentType? get customInputDisplayConentType;
   set customInputDisplayConentType(CustomInputDisplayConentType? value);
+  @override
+  bool get fullSize;
+  set fullSize(bool value);
 
   /// Create a copy of CustomInputWidget
   /// with the given fields replaced by the non-null parameter values.

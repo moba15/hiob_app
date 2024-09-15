@@ -95,6 +95,17 @@ class _CustomInputWidgetSettingsViewState
               c.update(widget.customInputWidget)
             },
           )),
+          InputFieldContainer.inputContainer(
+              child: SwitchListTile(
+            value: widget.customInputWidget.fullSize,
+            onChanged: (value) {
+              setState(() {
+                widget.customInputWidget.fullSize = value;
+              });
+              c.update(widget.customInputWidget);
+            },
+            title: const Text("Fullsize"),
+          )),
         ],
       ),
     );

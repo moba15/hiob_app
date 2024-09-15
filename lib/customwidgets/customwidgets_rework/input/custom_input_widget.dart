@@ -50,18 +50,19 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
   const CustomInputWidget._();
 
   @Implements<CustomWidget>()
-  factory CustomInputWidget({
-    @Default(CustomWidgetTypeDeprecated.input) CustomWidgetTypeDeprecated type,
-    required String id,
-    required String name,
-    String? label,
-    @DataPointIdConverter() required DataPoint? dataPoint,
-    String? hintText,
-    String? suffix,
-    CustomPopupmenu? customPopupmenu,
-    CustomInputSendMethod? customInputSendMethod,
-    CustomInputDisplayConentType? customInputDisplayConentType,
-  }) = _CustomInputWidget;
+  factory CustomInputWidget(
+      {@Default(CustomWidgetTypeDeprecated.input)
+      CustomWidgetTypeDeprecated type,
+      required String id,
+      required String name,
+      String? label,
+      @DataPointIdConverter() required DataPoint? dataPoint,
+      String? hintText,
+      String? suffix,
+      CustomPopupmenu? customPopupmenu,
+      CustomInputSendMethod? customInputSendMethod,
+      CustomInputDisplayConentType? customInputDisplayConentType,
+      @Default(false) bool fullSize}) = _CustomInputWidget;
 
   @override
   CustomWidgetSettingWidget get settingWidget {

@@ -28,6 +28,7 @@ _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
       customInputDisplayConentType: $enumDecodeNullable(
           _$CustomInputDisplayConentTypeEnumMap,
           json['customInputDisplayConentType']),
+      fullSize: json['fullSize'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$CustomInputWidgetImplToJson(
@@ -45,6 +46,7 @@ Map<String, dynamic> _$$CustomInputWidgetImplToJson(
           _$CustomInputSendMethodEnumMap[instance.customInputSendMethod],
       'customInputDisplayConentType': _$CustomInputDisplayConentTypeEnumMap[
           instance.customInputDisplayConentType],
+      'fullSize': instance.fullSize,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
