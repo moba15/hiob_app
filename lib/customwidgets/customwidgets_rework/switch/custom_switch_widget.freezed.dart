@@ -33,9 +33,6 @@ mixin _$CustomSwitchWidget {
   set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
-  Map<String, String> get valueMapper => throw _privateConstructorUsedError;
-  set valueMapper(Map<String, String> value) =>
-      throw _privateConstructorUsedError;
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
@@ -62,7 +59,6 @@ abstract class $CustomSwitchWidgetCopyWith<$Res> {
       String name,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? label,
-      Map<String, String> valueMapper,
       CustomPopupmenu? customPopupmenu});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -88,7 +84,6 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res, $Val extends CustomSwitchWidget>
     Object? name = null,
     Object? dataPoint = freezed,
     Object? label = freezed,
-    Object? valueMapper = null,
     Object? customPopupmenu = freezed,
   }) {
     return _then(_value.copyWith(
@@ -112,10 +107,6 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res, $Val extends CustomSwitchWidget>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String?,
-      valueMapper: null == valueMapper
-          ? _value.valueMapper
-          : valueMapper // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -152,7 +143,6 @@ abstract class _$$CustomSwitchWidgetImplCopyWith<$Res>
       String name,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? label,
-      Map<String, String> valueMapper,
       CustomPopupmenu? customPopupmenu});
 
   @override
@@ -177,7 +167,6 @@ class __$$CustomSwitchWidgetImplCopyWithImpl<$Res>
     Object? name = null,
     Object? dataPoint = freezed,
     Object? label = freezed,
-    Object? valueMapper = null,
     Object? customPopupmenu = freezed,
   }) {
     return _then(_$CustomSwitchWidgetImpl(
@@ -201,10 +190,6 @@ class __$$CustomSwitchWidgetImplCopyWithImpl<$Res>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String?,
-      valueMapper: null == valueMapper
-          ? _value.valueMapper
-          : valueMapper // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -222,7 +207,6 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
       required this.name,
       @DataPointIdConverter() required this.dataPoint,
       this.label,
-      this.valueMapper = const {},
       this.customPopupmenu})
       : super._();
 
@@ -242,14 +226,11 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
   @override
   String? label;
   @override
-  @JsonKey()
-  Map<String, String> valueMapper;
-  @override
   CustomPopupmenu? customPopupmenu;
 
   @override
   String toString() {
-    return 'CustomSwitchWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, valueMapper: $valueMapper, customPopupmenu: $customPopupmenu)';
+    return 'CustomSwitchWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, customPopupmenu: $customPopupmenu)';
   }
 
   /// Create a copy of CustomSwitchWidget
@@ -277,7 +258,6 @@ abstract class _CustomSwitchWidget extends CustomSwitchWidget
       required String name,
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? label,
-      Map<String, String> valueMapper,
       CustomPopupmenu? customPopupmenu}) = _$CustomSwitchWidgetImpl;
   _CustomSwitchWidget._() : super._();
 
@@ -301,9 +281,6 @@ abstract class _CustomSwitchWidget extends CustomSwitchWidget
   @override
   String? get label;
   set label(String? value);
-  @override
-  Map<String, String> get valueMapper;
-  set valueMapper(Map<String, String> value);
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);

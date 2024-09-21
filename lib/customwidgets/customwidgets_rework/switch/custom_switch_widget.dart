@@ -26,7 +26,6 @@ class CustomSwitchWidget with _$CustomSwitchWidget implements CustomWidget {
       required String name,
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? label,
-      @Default({}) Map<String, String> valueMapper,
       CustomPopupmenu? customPopupmenu}) = _CustomSwitchWidget;
 
   @override

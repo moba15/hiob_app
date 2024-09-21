@@ -17,10 +17,6 @@ _$CustomSwitchWidgetImpl _$$CustomSwitchWidgetImplFromJson(
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
           json['dataPoint'], const DataPointIdConverter().fromJson),
       label: json['label'] as String?,
-      valueMapper: (json['valueMapper'] as Map<String, dynamic>?)?.map(
-            (k, e) => MapEntry(k, e as String),
-          ) ??
-          const {},
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(
@@ -35,7 +31,6 @@ Map<String, dynamic> _$$CustomSwitchWidgetImplToJson(
       'name': instance.name,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'label': instance.label,
-      'valueMapper': instance.valueMapper,
       'customPopupmenu': instance.customPopupmenu,
     };
 
