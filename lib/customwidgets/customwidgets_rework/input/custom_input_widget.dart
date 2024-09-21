@@ -44,8 +44,9 @@ extension CustomInputDisplayConentTypeExtension
 
 @unfreezed
 class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
+  @JsonKey(includeToJson: false, includeFromJson: false)
   @override
-  final isAbleToPopupMenu = false;
+  final isAbleToPopupMenu = true;
   @override
   const CustomInputWidget._();
 

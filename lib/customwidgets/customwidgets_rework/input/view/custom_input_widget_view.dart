@@ -67,6 +67,9 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
                 ? Text(widget.customInputWidget.name)
                 : Text(widget.customInputWidget.label!);
             return ListTile(
+                onLongPress: () {
+                  widget.customInputWidget.customPopupmenu?.tryOpen(context);
+                },
                 title: label,
                 trailing: FractionallySizedBox(
                   widthFactor: 0.4,
