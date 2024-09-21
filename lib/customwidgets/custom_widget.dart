@@ -17,6 +17,7 @@ import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
     as depc_table;
+import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
     as depc;
 import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
@@ -41,6 +42,7 @@ enum CustomWidgetTypeDeprecated {
   valueNew,
   multiselection,
   slider,
+  networkPlayer,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -104,6 +106,8 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.slider:
         return CustomSliderWidget(id: "", name: "", dataPoint: null)
             .settingWidget;
+      case CustomWidgetTypeDeprecated.networkPlayer:
+        return CustomNetworkPlayerWidget(id: "", name: "name").settingWidget;
     }
   }
 
@@ -143,6 +147,8 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         return "Multiselection";
       case CustomWidgetTypeDeprecated.slider:
         return "Slider";
+      case CustomWidgetTypeDeprecated.networkPlayer:
+        return "Network player (new)";
       default:
         return toString();
     }
