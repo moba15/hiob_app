@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/simple_switch_settings.dart';
 import 'package:smart_home/customwidgets/widgets/view/simple_switch_widget_view.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart'
+    as new_widget;
 
 import '../../device/device.dart';
 
@@ -69,5 +72,15 @@ class CustomSimpleSwitchWidget extends CustomWidgetDeprecated {
       dataPoint: dataPoint,
       buttonText: buttonText,
     );
+  }
+
+  @override
+  CustomWidget migrate({required String id}) {
+    return new_widget.CustomButtonWidget(
+        id: id,
+        name: name ?? "No name found",
+        dataPoint: dataPoint,
+        label: value,
+        buttonLabel: buttonText);
   }
 }

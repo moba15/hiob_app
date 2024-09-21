@@ -7,6 +7,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
@@ -158,6 +159,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetTypeDeprecated.switchWidget:
           customWidget = CustomSwitchWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.divisionLine:
+          customWidget = CustomDivisionlineWidget.fromJson(widgetRaw);
           break;
         default:
           throw UnimplementedError(type.name);

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_light_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/light_widget_settings.dart';
 import 'package:smart_home/device/state/state.dart';
-
+import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart'
+    as new_widget;
 import '../../manager/manager.dart';
 
 class CustomLightWidget extends CustomWidgetDeprecated {
@@ -91,5 +95,20 @@ class CustomLightWidget extends CustomWidgetDeprecated {
       briMin: briMin,
       briDisplay: briDisplay,
     );
+  }
+
+  @override
+  CustomWidget migrate({required String id}) {
+    return new_widget.CustomSwitchWidget(
+        id: id,
+        name: name ?? "No name found",
+        dataPoint: onDataPoint,
+        label: value,
+        customPopupmenu: CustomPopupmenu(customWidgets: [
+          CustomSliderWidget(
+              id: Manager().getRandString(12),
+              name: "Brightness",
+              dataPoint: briDataPoint)
+        ]));
   }
 }

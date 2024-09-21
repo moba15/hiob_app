@@ -1,6 +1,8 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_color_palette_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_color_pallete_widget_settings.dart';
 import 'package:smart_home/device/state/state.dart';
@@ -89,5 +91,18 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
             ColorPickerType.values
                 .firstWhere((element) => element.toString() == key),
             value)));
+  }
+
+  @override
+  CustomWidget migrate({required String id}) {
+    return CustomColorPickerWidget(
+        id: id,
+        name: name ?? "No name found",
+        dataPoint: dataPoint,
+        alpha: alpha,
+        label: value,
+        prefix: prefix,
+        pickersEnabled: pickersEnabled,
+        shadesSelection: shadesSelection);
   }
 }

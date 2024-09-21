@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_webview_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_webview_settings.dart';
 import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart'
+    as new_widget;
 
 import '../../manager/manager.dart';
 import '../custom_widget.dart';
@@ -22,7 +25,6 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
             name: name, type: CustomWidgetTypeDeprecated.webView, settings: {});
 
   @override
-  // TODO: implement settingWidget
   CustomWidgetSettingWidget get settingWidget =>
       CustomWebViewWidgetSettingWidget(customWebViewWidget: this);
 
@@ -53,7 +55,6 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
   }
 
   @override
-  // TODO: implement widget
   Widget get widget => CustomWebViewView(customWebViewWidget: this);
 
   @override
@@ -64,5 +65,15 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
         height: height,
         javaScript: javaScript,
         dataPoint: dataPoint);
+  }
+
+  @override
+  CustomWidget migrate({required String id}) {
+    return new_widget.CustomWebViewWidget(
+        id: id,
+        name: name ?? "No name",
+        dataPoint: dataPoint,
+        url: url,
+        height: height);
   }
 }

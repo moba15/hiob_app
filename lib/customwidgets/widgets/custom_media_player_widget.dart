@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_media_player_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_medial_player_settings.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart'
+    as new_widget;
 
 class CustomMediaPlayerWidget extends CustomWidgetDeprecated {
   String? url;
@@ -50,4 +53,14 @@ class CustomMediaPlayerWidget extends CustomWidgetDeprecated {
   Widget get widget => CustomMediaPlayerWidgetView(
         customMediaPlayerWidget: this,
       );
+
+  @override
+  CustomWidget migrate({required String id}) {
+    return new_widget.CustomNetworkPlayerWidget(
+        id: id,
+        name: name ?? "No name found",
+        height: height,
+        url: url,
+        width: width);
+  }
 }

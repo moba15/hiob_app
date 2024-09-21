@@ -19,10 +19,6 @@ _$CustomSliderWidgetImpl _$$CustomSliderWidgetImplFromJson(
       max: (json['max'] as num?)?.toInt() ?? 100,
       min: (json['min'] as num?)?.toInt() ?? 0,
       step: (json['step'] as num?)?.toInt() ?? 10,
-      valueMapper: (json['valueMapper'] as Map<String, dynamic>?)?.map(
-            (k, e) => MapEntry(k, e as String),
-          ) ??
-          const {},
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(
@@ -39,7 +35,6 @@ Map<String, dynamic> _$$CustomSliderWidgetImplToJson(
       'max': instance.max,
       'min': instance.min,
       'step': instance.step,
-      'valueMapper': instance.valueMapper,
       'customPopupmenu': instance.customPopupmenu,
     };
 
@@ -66,6 +61,7 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
   CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
+  CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

@@ -6,6 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
@@ -45,6 +46,8 @@ enum CustomWidgetTypeDeprecated {
   slider,
   networkPlayer,
   colorPicker,
+  switchWidget,
+  divisionLine
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -113,6 +116,11 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.colorPicker:
         return CustomColorPickerWidget(id: "", name: "", dataPoint: null)
             .settingWidget;
+      case CustomWidgetTypeDeprecated.switchWidget:
+        return CustomSwitchWidget(id: "id", name: "", dataPoint: null)
+            .settingWidget;
+      case CustomWidgetTypeDeprecated.divisionLine:
+        return CustomDivisionLineWidget(name: "").settingWidget;
     }
   }
 
@@ -123,11 +131,11 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.light:
         return "Switch with Slider (Deprecated)";
       case CustomWidgetTypeDeprecated.line:
-        return "Division Line";
+        return "Division Line (Deprecated)";
       case CustomWidgetTypeDeprecated.simpleValue:
-        return "Value";
+        return "Value (Deprecated)";
       case CustomWidgetTypeDeprecated.advanced:
-        return "Advanced/Flexible";
+        return "Advanced/Flexible (Deprecated)";
       case CustomWidgetTypeDeprecated.webView:
         return "Web View (Deprecated)";
       case CustomWidgetTypeDeprecated.table:
@@ -135,9 +143,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.graph:
         return "Graph (only sql Adapter)";
       case CustomWidgetTypeDeprecated.colorPallete:
-        return "Color Palette";
+        return "Color Palette (Deprecated)";
       case CustomWidgetTypeDeprecated.mediaPlayer:
-        return "Network Media Player";
+        return "Network Media Player (Deprecated)";
       case CustomWidgetTypeDeprecated.button:
         return "Button (new)";
       case CustomWidgetTypeDeprecated.input:
@@ -149,13 +157,17 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.valueNew:
         return "Value (new)";
       case CustomWidgetTypeDeprecated.multiselection:
-        return "Multiselection";
+        return "Multiselection (new)";
       case CustomWidgetTypeDeprecated.slider:
-        return "Slider";
+        return "Slider (new)";
       case CustomWidgetTypeDeprecated.networkPlayer:
         return "Network player (new)";
       case CustomWidgetTypeDeprecated.colorPicker:
         return "Colorpicker (new)";
+      case CustomWidgetTypeDeprecated.switchWidget:
+        return "Switch (new)";
+      case CustomWidgetTypeDeprecated.divisionLine:
+        return "Line (new)";
       default:
         return toString();
     }
@@ -184,6 +196,8 @@ abstract class CustomWidgetDeprecated {
   Map<String, dynamic> toJson();
 
   CustomWidgetDeprecated clone();
+
+  CustomWidget migrate({required String id});
 }
 
 abstract class CustomWidgetSettingWidget {

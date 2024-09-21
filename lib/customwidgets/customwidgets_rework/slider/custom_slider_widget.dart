@@ -29,7 +29,6 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
       @Default(100) int max,
       @Default(0) int min,
       @Default(10) int step,
-      @Default({}) Map<String, String> valueMapper,
       CustomPopupmenu? customPopupmenu}) = _CustomSliderWidget;
 
   @override

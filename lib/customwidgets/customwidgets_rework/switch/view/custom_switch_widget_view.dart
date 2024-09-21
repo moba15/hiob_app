@@ -76,11 +76,6 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
     );
   }
 
-  String getValue(dynamic value) {
-    return widget.customSwitchWidget.valueMapper[value.toString()] ??
-        value.toString();
-  }
-
   onLongPress() {
     widget.customSwitchWidget.customPopupmenu?.tryOpen(context);
   }

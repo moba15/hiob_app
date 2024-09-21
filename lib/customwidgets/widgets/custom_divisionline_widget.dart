@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/cutsom_divider_settigs.dart';
 
 class CustomDivisionLineWidget extends CustomWidgetDeprecated {
@@ -41,5 +43,10 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
   CustomWidgetDeprecated clone() {
     return CustomDivisionLineWidget(
         name: name, color: color, thickness: thickness);
+  }
+
+  @override
+  CustomWidget migrate({required String id}) {
+    return CustomDivisionlineWidget(id: id, name: name ?? "No name found");
   }
 }

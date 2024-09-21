@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/button_trigger_action.dart';
-import 'package:smart_home/customwidgets/triggerAction/color_pallete_trigger_action.dart';
+
 import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/none_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/slider_trigger_action.dart';
 import 'package:smart_home/customwidgets/triggerAction/switch_trigger_action.dart';
-import 'package:smart_home/customwidgets/triggerAction/template_widget_trigger_action.dart';
 
 enum TriggerActionType {
   button,
   handleSwitch,
   slider,
   multiSelection,
-  colorPallete,
-  templateWidget,
+
   none //VALUE,
 }
 
@@ -30,10 +29,6 @@ extension TriggerActionTypeExtension on TriggerActionType {
         return "Slider";
       case TriggerActionType.none:
         return "Value";
-      case TriggerActionType.colorPallete:
-        return "Color Pallete";
-      case TriggerActionType.templateWidget:
-        return "Template Widget";
     }
   }
 
@@ -51,10 +46,6 @@ extension TriggerActionTypeExtension on TriggerActionType {
         return SliderTriggerAction(dataPoint: null);
       case TriggerActionType.none:
         return NoneTriggerAction(dataPoint: null, displayRules: null);
-      case TriggerActionType.colorPallete:
-        return ColorPalleteTriggerAction(dataPoint: null);
-      case TriggerActionType.templateWidget:
-        return TemplateWidgetTriggerAction();
     }
   }
 }
@@ -69,6 +60,7 @@ abstract class TriggerAction {
   TriggerActionType get type;
   Map<String, dynamic> toJson();
   void trigger();
+  CustomWidget migrate({required String id, required String name});
 
   static TriggerAction fromJSON(Map<String, dynamic> map) {
     String? typeRaw = map["type"];

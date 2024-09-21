@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/settings/none_trigger_action_settings.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart'
+    as new_widget;
 
 class NoneTriggerAction extends TriggerAction {
   String id = Manager.instance.getRandString(12);
@@ -63,4 +66,13 @@ class NoneTriggerAction extends TriggerAction {
 
   @override
   void trigger() {}
+
+  @override
+  CustomWidget migrate({required String id, required String name}) {
+    return new_widget.CustomValueWidget(
+        id: id,
+        name: name,
+        dataPoint: dataPoint,
+        valueMapper: displayRules ?? {});
+  }
 }

@@ -58,4 +58,5 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
   CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
+  CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
