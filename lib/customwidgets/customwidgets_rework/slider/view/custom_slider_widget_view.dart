@@ -18,6 +18,9 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
   DataPointBloc? bloc;
   @override
   void initState() {
+    if (widget.customSliderWidget.dataPoint != null) {
+      bloc = DataPointBloc(widget.customSliderWidget.dataPoint!);
+    }
     super.initState();
   }
 
