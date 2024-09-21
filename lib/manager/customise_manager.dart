@@ -4,10 +4,13 @@ import 'dart:developer' as developer;
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
@@ -143,8 +146,17 @@ class CustomWidgetManager {
         case CustomWidgetTypeDeprecated.multiselection:
           customWidget = CustomMultiselectionWidget.fromJson(widgetRaw);
           break;
+        case CustomWidgetTypeDeprecated.colorPicker:
+          customWidget = CustomColorPickerWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.networkPlayer:
+          customWidget = CustomNetworkPlayerWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.slider:
+          customWidget = CustomSliderWidget.fromJson(widgetRaw);
+          break;
         default:
-          throw UnimplementedError();
+          throw UnimplementedError(type.name);
       }
       if (customWidget is CustomWidgetDeprecated) {
         CustomWidgetTemplate template = CustomWidgetTemplate(
