@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
@@ -43,6 +44,7 @@ enum CustomWidgetTypeDeprecated {
   multiselection,
   slider,
   networkPlayer,
+  colorPicker,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -108,6 +110,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
             .settingWidget;
       case CustomWidgetTypeDeprecated.networkPlayer:
         return CustomNetworkPlayerWidget(id: "", name: "name").settingWidget;
+      case CustomWidgetTypeDeprecated.colorPicker:
+        return CustomColorPickerWidget(id: "", name: "", dataPoint: null)
+            .settingWidget;
     }
   }
 
@@ -149,6 +154,8 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
         return "Slider";
       case CustomWidgetTypeDeprecated.networkPlayer:
         return "Network player (new)";
+      case CustomWidgetTypeDeprecated.colorPicker:
+        return "Colorpicker (new)";
       default:
         return toString();
     }
