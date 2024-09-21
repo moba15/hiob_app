@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
 
-
 class CustomNetworkPlayerWidgetView extends StatefulWidget {
   final CustomNetworkPlayerWidget customNetworkPlayer;
   const CustomNetworkPlayerWidgetView(
