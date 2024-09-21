@@ -1,39 +1,42 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'custom_button_widget.dart';
+part of 'custom_switch_widget.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CustomButtonWidgetImpl _$$CustomButtonWidgetImplFromJson(
+_$CustomSwitchWidgetImpl _$$CustomSwitchWidgetImplFromJson(
         Map<String, dynamic> json) =>
-    _$CustomButtonWidgetImpl(
+    _$CustomSwitchWidgetImpl(
       type: $enumDecodeNullable(
               _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.button,
+          CustomWidgetTypeDeprecated.switchWidget,
       id: json['id'] as String,
       name: json['name'] as String,
+      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
+          json['dataPoint'], const DataPointIdConverter().fromJson),
+      label: json['label'] as String?,
+      valueMapper: (json['valueMapper'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(k, e as String),
+          ) ??
+          const {},
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
-      label: json['label'] as String?,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
-      buttonLabel: json['buttonLabel'] as String?,
     );
 
-Map<String, dynamic> _$$CustomButtonWidgetImplToJson(
-        _$CustomButtonWidgetImpl instance) =>
+Map<String, dynamic> _$$CustomSwitchWidgetImplToJson(
+        _$CustomSwitchWidgetImpl instance) =>
     <String, dynamic>{
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'customPopupmenu': instance.customPopupmenu,
-      'label': instance.label,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
-      'buttonLabel': instance.buttonLabel,
+      'label': instance.label,
+      'valueMapper': instance.valueMapper,
+      'customPopupmenu': instance.customPopupmenu,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {

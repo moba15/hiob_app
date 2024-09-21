@@ -11,6 +11,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
@@ -154,6 +155,9 @@ class CustomWidgetManager {
           break;
         case CustomWidgetTypeDeprecated.slider:
           customWidget = CustomSliderWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.switchWidget:
+          customWidget = CustomSwitchWidget.fromJson(widgetRaw);
           break;
         default:
           throw UnimplementedError(type.name);

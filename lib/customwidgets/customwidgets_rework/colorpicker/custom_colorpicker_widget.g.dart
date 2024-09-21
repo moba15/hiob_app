@@ -69,6 +69,7 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.slider: 'slider',
   CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
   CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
+  CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(
