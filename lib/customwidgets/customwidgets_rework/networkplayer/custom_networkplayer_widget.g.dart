@@ -1,38 +1,37 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'custom_webview_widget.dart';
+part of 'custom_networkplayer_widget.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
+_$CustomNetworkPlayerWidgetImpl _$$CustomNetworkPlayerWidgetImplFromJson(
         Map<String, dynamic> json) =>
-    _$CustomWebViewWidgetImpl(
+    _$CustomNetworkPlayerWidgetImpl(
       type: $enumDecodeNullable(
               _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
           CustomWidgetTypeDeprecated.webViewNew,
       id: json['id'] as String,
       name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
       url: json['url'] as String?,
-      height: (json['height'] as num?)?.toInt() ?? 500,
+      height: (json['height'] as num?)?.toInt() ?? 16,
+      width: (json['width'] as num?)?.toInt() ?? 9,
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
-        _$CustomWebViewWidgetImpl instance) =>
+Map<String, dynamic> _$$CustomNetworkPlayerWidgetImplToJson(
+        _$CustomNetworkPlayerWidgetImpl instance) =>
     <String, dynamic>{
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'url': instance.url,
       'height': instance.height,
+      'width': instance.width,
       'customPopupmenu': instance.customPopupmenu,
     };
 
@@ -58,9 +57,3 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.slider: 'slider',
   CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
