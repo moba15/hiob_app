@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
@@ -43,12 +44,14 @@ class CustomTableWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
 class _CustomTableWidgetSettingsViewState
     extends State<CustomTableWidgetSettingsView> {
   late CustomWidgetBlocCubit c;
-  late TextEditingController _headerController;
+  late TextEditingController _headerController, _initalSortColumn;
 
   @override
   void initState() {
     _headerController =
         TextEditingController(text: widget.customTableWidget.header);
+    _initalSortColumn = TextEditingController(
+        text: widget.customTableWidget.initalSortColumn.toString());
     super.initState();
   }
 
@@ -105,6 +108,30 @@ class _CustomTableWidgetSettingsViewState
                   alertValueText: "Column name",
                   keyTileText: "Column json: ",
                   valueTileText: "Column name: ")),
+          InputFieldContainer.inputContainer(
+              child: SwitchListTile(
+            title: const Text("Initial sort"),
+            value: widget.customTableWidget.initialSortEnabled,
+            onChanged: (value) {
+              setState(() {
+                widget.customTableWidget.initialSortEnabled = value;
+              });
+            },
+          )),
+          InputFieldContainer.inputContainer(
+              child: TextField(
+            controller: _initalSortColumn,
+            onChanged: (d) => {
+              widget.customTableWidget.initalSortColumn = int.tryParse(d) ?? 0,
+              _initalSortColumn.text =
+                  widget.customTableWidget.initalSortColumn.toString(),
+              c.update(widget.customTableWidget)
+            },
+            decoration: const InputDecoration(
+                label: Text("Initial sort column (optional)")),
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            keyboardType: TextInputType.number,
+          )),
         ],
       ),
     );
