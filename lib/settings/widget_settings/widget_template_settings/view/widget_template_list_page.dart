@@ -139,35 +139,23 @@ class _TemplatesViewState extends State<TemplatesView> {
   @override
   Widget build(BuildContext context) {
     WidgetTemplateListBloc bloc = context.read<WidgetTemplateListBloc>();
-    return ListView(
-      children: [
-        ListTile(
-          title: const Text("Migration"),
-          trailing: TextButton(
-              onPressed: () {
-                _startMigration();
-              },
-              child: const Text("Start")),
-        ),
-        widget.templates.isEmpty
-            ? Center(
-                child: Text(getAppLocalizations(context).no_templates_found),
-              )
-            : ListView(
-                children: [
-                  ListTile(
-                    title: const Text("Migration"),
-                    trailing: TextButton(
-                        onPressed: () {
-                          _startMigration();
-                        },
-                        child: const Text("Start")),
-                  ),
-                  ...templates(bloc)
-                ],
-              )
-      ],
-    );
+    return widget.templates.isEmpty
+        ? Center(
+            child: Text(getAppLocalizations(context).no_templates_found),
+          )
+        : ListView(
+            children: [
+              ListTile(
+                title: const Text("Migration"),
+                trailing: TextButton(
+                    onPressed: () {
+                      _startMigration();
+                    },
+                    child: const Text("Start")),
+              ),
+              ...templates(bloc)
+            ],
+          );
   }
 
   List<Widget> templates(WidgetTemplateListBloc bloc) {
@@ -211,7 +199,9 @@ class _TemplatesViewState extends State<TemplatesView> {
             "${type.name} (${widget.templates.keys.where((element) => element.type?.name == type.name).length})"),
         children: children,
       );
-      templates.add(t);
+      if (children.isNotEmpty) {
+        templates.add(t);
+      }
     }
     return templates;
   }
