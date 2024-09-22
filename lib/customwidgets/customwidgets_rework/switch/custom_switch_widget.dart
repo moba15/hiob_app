@@ -26,6 +26,8 @@ class CustomSwitchWidget with _$CustomSwitchWidget implements CustomWidget {
       required String name,
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? label,
+      @Default("true") String sendIfOn,
+      @Default("false") String sendIfOff,
       CustomPopupmenu? customPopupmenu}) = _CustomSwitchWidget;
 
   @override

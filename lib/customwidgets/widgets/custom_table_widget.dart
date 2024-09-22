@@ -73,10 +73,10 @@ class CustomTableWidget extends CustomWidgetDeprecated {
   Widget get widget => CustomTableWidgetView(customTableWidget: this);
 
   @override
-  CustomWidget migrate({required String id}) {
+  CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomTableWidget(
         id: id,
-        name: name ?? "No name found",
+        name: name,
         dataPoint: dataPoint,
         columns: columns,
         initalSortColumn: initialSortColumn,

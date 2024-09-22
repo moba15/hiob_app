@@ -197,7 +197,7 @@ abstract class CustomWidgetDeprecated {
 
   CustomWidgetDeprecated clone();
 
-  CustomWidget migrate({required String id});
+  CustomWidget migrate({required String id, required String name});
 }
 
 abstract class CustomWidgetSettingWidget {

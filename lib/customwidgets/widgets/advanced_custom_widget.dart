@@ -95,9 +95,8 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
   }
 
   @override
-  CustomWidget migrate({required String id}) {
-    CustomWidget? body =
-        mainBody?.migrate(id: id, name: name ?? "No name found");
+  CustomWidget migrate({required String id, required String name}) {
+    CustomWidget? body = mainBody?.migrate(id: id, name: name);
     if (body == null) {
       throw ErrorDescription("MainBody is null");
     }
@@ -106,7 +105,7 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
       (element) {
         if (element is CustomWidgetDeprecated) {
           popupWidgets.add((element as CustomWidgetDeprecated)
-              .migrate(id: Manager().getRandString(12)));
+              .migrate(id: Manager().getRandString(12), name: element.name));
         } else if (element is CustomWidget) {
           popupWidgets.add(element);
         }

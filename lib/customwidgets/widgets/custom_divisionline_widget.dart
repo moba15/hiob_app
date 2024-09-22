@@ -46,7 +46,7 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
   }
 
   @override
-  CustomWidget migrate({required String id}) {
-    return CustomDivisionlineWidget(id: id, name: name ?? "No name found");
+  CustomWidget migrate({required String id, required String name}) {
+    return CustomDivisionlineWidget(id: id, name: name);
   }
 }

@@ -98,10 +98,10 @@ class CustomLightWidget extends CustomWidgetDeprecated {
   }
 
   @override
-  CustomWidget migrate({required String id}) {
+  CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomSwitchWidget(
         id: id,
-        name: name ?? "No name found",
+        name: name,
         dataPoint: onDataPoint,
         label: value,
         customPopupmenu: CustomPopupmenu(customWidgets: [

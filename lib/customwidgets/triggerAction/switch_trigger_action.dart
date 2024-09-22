@@ -60,6 +60,10 @@ class SwitchTriggerAction extends TriggerAction {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomSwitchWidget(
-        id: id, name: name, dataPoint: dataPoint);
+        id: id,
+        name: name,
+        dataPoint: dataPoint,
+        sendIfOff: switchFalse.toString(),
+        sendIfOn: switchTrue.toString());
   }
 }

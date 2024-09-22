@@ -94,10 +94,10 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
   }
 
   @override
-  CustomWidget migrate({required String id}) {
+  CustomWidget migrate({required String id, required String name}) {
     return CustomColorPickerWidget(
         id: id,
-        name: name ?? "No name found",
+        name: name,
         dataPoint: dataPoint,
         alpha: alpha,
         label: value,

@@ -116,7 +116,7 @@ class GraphWidget extends CustomWidgetDeprecated {
   }
 
   @override
-  CustomWidget migrate({required String id}) {
+  CustomWidget migrate({required String id, required String name}) {
     // TODO: implement migrate
     throw UnimplementedError();
   }

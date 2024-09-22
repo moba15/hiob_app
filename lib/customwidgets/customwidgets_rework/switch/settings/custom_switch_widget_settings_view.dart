@@ -41,18 +41,24 @@ class CustomSwitchWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
 class _CustomSwitchWidgetSettingsViewState
     extends State<CustomSwitchWidgetSettingsView> {
   late CustomWidgetBlocCubit c;
-  late TextEditingController _labelController;
+  late TextEditingController _labelController, _offController, _onController;
 
   @override
   void initState() {
     _labelController =
         TextEditingController(text: widget.customSwitchWidget.label);
+    _offController =
+        TextEditingController(text: widget.customSwitchWidget.sendIfOff);
+    _onController =
+        TextEditingController(text: widget.customSwitchWidget.sendIfOn);
     super.initState();
   }
 
   @override
   void dispose() {
     _labelController.dispose();
+    _offController.dispose();
+    _onController.dispose();
     super.dispose();
   }
 
@@ -76,13 +82,30 @@ class _CustomSwitchWidgetSettingsViewState
           )),
           InputFieldContainer.inputContainer(
               child: TextField(
-            controller:
-                TextEditingController(text: widget.customSwitchWidget.label),
+            controller: _labelController,
             onChanged: (d) => {
               widget.customSwitchWidget.label = d,
               c.update(widget.customSwitchWidget)
             },
             decoration: const InputDecoration(label: Text("Label (optional)")),
+          )),
+          InputFieldContainer.inputContainer(
+              child: TextField(
+            controller: _onController,
+            onChanged: (d) => {
+              widget.customSwitchWidget.sendIfOn = d,
+              c.update(widget.customSwitchWidget)
+            },
+            decoration: const InputDecoration(label: Text("Send if on")),
+          )),
+          InputFieldContainer.inputContainer(
+              child: TextField(
+            controller: _offController,
+            onChanged: (d) => {
+              widget.customSwitchWidget.sendIfOff = d,
+              c.update(widget.customSwitchWidget)
+            },
+            decoration: const InputDecoration(label: Text("Send if off")),
           )),
         ],
       ),

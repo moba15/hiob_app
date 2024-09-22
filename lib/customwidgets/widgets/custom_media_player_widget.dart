@@ -55,12 +55,8 @@ class CustomMediaPlayerWidget extends CustomWidgetDeprecated {
       );
 
   @override
-  CustomWidget migrate({required String id}) {
+  CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomNetworkPlayerWidget(
-        id: id,
-        name: name ?? "No name found",
-        height: height,
-        url: url,
-        width: width);
+        id: id, name: name, height: height, url: url, width: width);
   }
 }

@@ -68,12 +68,8 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
   }
 
   @override
-  CustomWidget migrate({required String id}) {
+  CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomWebViewWidget(
-        id: id,
-        name: name ?? "No name",
-        dataPoint: dataPoint,
-        url: url,
-        height: height);
+        id: id, name: name, dataPoint: dataPoint, url: url, height: height);
   }
 }

@@ -33,6 +33,10 @@ mixin _$CustomSwitchWidget {
   set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
+  String get sendIfOn => throw _privateConstructorUsedError;
+  set sendIfOn(String value) => throw _privateConstructorUsedError;
+  String get sendIfOff => throw _privateConstructorUsedError;
+  set sendIfOff(String value) => throw _privateConstructorUsedError;
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
@@ -59,6 +63,8 @@ abstract class $CustomSwitchWidgetCopyWith<$Res> {
       String name,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? label,
+      String sendIfOn,
+      String sendIfOff,
       CustomPopupmenu? customPopupmenu});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -84,6 +90,8 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res, $Val extends CustomSwitchWidget>
     Object? name = null,
     Object? dataPoint = freezed,
     Object? label = freezed,
+    Object? sendIfOn = null,
+    Object? sendIfOff = null,
     Object? customPopupmenu = freezed,
   }) {
     return _then(_value.copyWith(
@@ -107,6 +115,14 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res, $Val extends CustomSwitchWidget>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String?,
+      sendIfOn: null == sendIfOn
+          ? _value.sendIfOn
+          : sendIfOn // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendIfOff: null == sendIfOff
+          ? _value.sendIfOff
+          : sendIfOff // ignore: cast_nullable_to_non_nullable
+              as String,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -143,6 +159,8 @@ abstract class _$$CustomSwitchWidgetImplCopyWith<$Res>
       String name,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? label,
+      String sendIfOn,
+      String sendIfOff,
       CustomPopupmenu? customPopupmenu});
 
   @override
@@ -167,6 +185,8 @@ class __$$CustomSwitchWidgetImplCopyWithImpl<$Res>
     Object? name = null,
     Object? dataPoint = freezed,
     Object? label = freezed,
+    Object? sendIfOn = null,
+    Object? sendIfOff = null,
     Object? customPopupmenu = freezed,
   }) {
     return _then(_$CustomSwitchWidgetImpl(
@@ -190,6 +210,14 @@ class __$$CustomSwitchWidgetImplCopyWithImpl<$Res>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String?,
+      sendIfOn: null == sendIfOn
+          ? _value.sendIfOn
+          : sendIfOn // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendIfOff: null == sendIfOff
+          ? _value.sendIfOff
+          : sendIfOff // ignore: cast_nullable_to_non_nullable
+              as String,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -207,6 +235,8 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
       required this.name,
       @DataPointIdConverter() required this.dataPoint,
       this.label,
+      this.sendIfOn = "true",
+      this.sendIfOff = "false",
       this.customPopupmenu})
       : super._();
 
@@ -226,11 +256,17 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
   @override
   String? label;
   @override
+  @JsonKey()
+  String sendIfOn;
+  @override
+  @JsonKey()
+  String sendIfOff;
+  @override
   CustomPopupmenu? customPopupmenu;
 
   @override
   String toString() {
-    return 'CustomSwitchWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, customPopupmenu: $customPopupmenu)';
+    return 'CustomSwitchWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, sendIfOn: $sendIfOn, sendIfOff: $sendIfOff, customPopupmenu: $customPopupmenu)';
   }
 
   /// Create a copy of CustomSwitchWidget
@@ -258,6 +294,8 @@ abstract class _CustomSwitchWidget extends CustomSwitchWidget
       required String name,
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? label,
+      String sendIfOn,
+      String sendIfOff,
       CustomPopupmenu? customPopupmenu}) = _$CustomSwitchWidgetImpl;
   _CustomSwitchWidget._() : super._();
 
@@ -281,6 +319,12 @@ abstract class _CustomSwitchWidget extends CustomSwitchWidget
   @override
   String? get label;
   set label(String? value);
+  @override
+  String get sendIfOn;
+  set sendIfOn(String value);
+  @override
+  String get sendIfOff;
+  set sendIfOff(String value);
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);

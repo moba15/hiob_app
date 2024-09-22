@@ -66,10 +66,22 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
           child: SwitchListTile(
             title: Text(title),
             onChanged: (value) {
-              bloc?.add(
-                  DataPointValueUpdateRequest(value: value, oldValue: value));
+              if (value) {
+                //TODO
+                bloc?.add(DataPointValueUpdateRequest(
+                    value: bool.tryParse(
+                            widget.customSwitchWidget.sendIfOn.trim()) ??
+                        widget.customSwitchWidget.sendIfOn,
+                    oldValue: value));
+              } else {
+                bloc?.add(DataPointValueUpdateRequest(
+                    value: bool.tryParse(
+                            widget.customSwitchWidget.sendIfOff.trim()) ??
+                        widget.customSwitchWidget.sendIfOn,
+                    oldValue: value));
+              }
             },
-            value: state.value ?? false,
+            value: widget.customSwitchWidget.sendIfOn == state.value.toString(),
           ),
         );
       },

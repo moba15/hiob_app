@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custompopup/view/cutsom_popupmenu_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/utils/reorder_helper.dart';
 
@@ -56,9 +57,11 @@ class CustomWidgetConverter
     switch (json["type"]) {
       case "button":
         return CustomButtonWidget.fromJson(json);
+      case "slider":
+        return CustomSliderWidget.fromJson(json);
 
       default:
-        throw ErrorDescription("Not yet implementened");
+        throw ErrorDescription("Not yet implementened: ${json["type"]}");
     }
   }
 

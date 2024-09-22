@@ -274,4 +274,15 @@ class CustomWidgetManager {
 
     fileManager.writeJSONList(templateKey, templates);
   }
+
+  void migrate(List<CustomWidgetWrapper> widgets) {
+    for (CustomWidgetWrapper w in widgets) {
+      if (w.settingWidget.deprecated) {
+        CustomWidgetTemplate wD = w as CustomWidgetTemplate;
+        templates.removeWhere((c) => c == w);
+        templates.add(wD.customWidget.migrate(id: w.id, name: w.name));
+      }
+    }
+    fileManager.writeJSONList(templateKey, templates);
+  }
 }
