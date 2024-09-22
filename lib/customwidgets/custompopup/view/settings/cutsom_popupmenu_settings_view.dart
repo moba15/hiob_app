@@ -99,8 +99,7 @@ class _CustomPopupmenuSettingsViewState
           customWidgetManager: Manager().customWidgetManager,
           onSave: _onWidgetSave,
           filter: (CustomWidgetTypeDeprecated p0) {
-            return p0 == CustomWidgetTypeDeprecated.input ||
-                p0 == CustomWidgetTypeDeprecated.button;
+            return !p0.settingWidget.deprecated;
           },
         );
       },

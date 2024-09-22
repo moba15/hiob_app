@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custompopup/view/cutsom_popupmenu_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/reorder_helper.dart';
 
 part 'custom_popupmenu.freezed.dart';
@@ -59,9 +67,25 @@ class CustomWidgetConverter
         return CustomButtonWidget.fromJson(json);
       case "slider":
         return CustomSliderWidget.fromJson(json);
-
+      case "multiselection":
+        return CustomMultiselectionWidget.fromJson(json);
+      case "webViewNew":
+        return CustomWebViewWidget.fromJson(json);
+      case "input":
+        return CustomInputWidget.fromJson(json);
+      case "tableNew":
+        return CustomTableWidget.fromJson(json);
+      case "valueNew":
+        return CustomValueWidget.fromJson(json);
+      case "colorPicker":
+        return CustomColorPickerWidget.fromJson(json);
+      case "switchWidget":
+        return CustomSwitchWidget.fromJson(json);
       default:
-        throw ErrorDescription("Not yet implementened: ${json["type"]}");
+        return CustomValueWidget(
+            id: Manager().getRandString(12),
+            name: "Please only use new widgets",
+            dataPoint: null);
     }
   }
 
