@@ -147,6 +147,10 @@ class _TemplatesViewState extends State<TemplatesView> {
             children: [
               ListTile(
                 title: const Text("Migration"),
+                subtitle: const Text(
+                  "Please do a backup before",
+                  style: TextStyle(color: Colors.red),
+                ),
                 trailing: TextButton(
                     onPressed: () {
                       _startMigration();
@@ -227,17 +231,19 @@ class _TemplatesViewState extends State<TemplatesView> {
       context: context,
       builder: (context) {
         return TemplateSelectionAlertDialog(
-            screenManager: Manager().screenManager,
-            filter: (p0) {
-              return p0.settingWidget.deprecated &&
-                  p0.type != CustomWidgetTypeDeprecated.graph;
-            },
-            onSelect: (p0) {
-              setState(() {
-                Manager().customWidgetManager.migrate(p0);
-              });
-            },
-            selected: List.empty());
+          screenManager: Manager().screenManager,
+          filter: (p0) {
+            return p0.settingWidget.deprecated &&
+                p0.type != CustomWidgetTypeDeprecated.graph;
+          },
+          onSelect: (p0) {
+            setState(() {
+              Manager().customWidgetManager.migrate(p0);
+            });
+          },
+          selected: List.empty(),
+          selectButton: "Migrate",
+        );
       },
     );
   }

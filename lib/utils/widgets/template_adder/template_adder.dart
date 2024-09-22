@@ -9,13 +9,15 @@ class TemplateSelectionAlertDialog extends StatefulWidget {
   final List<dynamic> selected;
   final Function(List<CustomWidgetWrapper>) onSelect;
   final bool Function(CustomWidgetWrapper)? filter;
+  final String selectButton;
 
   const TemplateSelectionAlertDialog(
       {Key? key,
       required this.screenManager,
       required this.onSelect,
       required this.selected,
-      this.filter})
+      this.filter,
+      this.selectButton = "Add"})
       : super(key: key);
 
   @override
@@ -40,8 +42,7 @@ class _TemplateSelectionAlertDialogState
         TextButton(
             onPressed: cancel,
             child: Text(getAppLocalizations(context).cancel)),
-        TextButton(
-            onPressed: add, child: Text(getAppLocalizations(context).add)),
+        TextButton(onPressed: add, child: Text(widget.selectButton)),
       ],
       content: SizedBox(
         child: Column(
