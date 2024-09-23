@@ -97,7 +97,13 @@ class MultiSelectionTriggerAction extends TriggerAction {
 
   @override
   CustomWidget migrate({required String id, required String name}) {
+    Map<String, String> sel = {};
+    selections.forEach(
+      (key, value) {
+        sel[value] = key;
+      },
+    );
     return new_widget.CustomMultiselectionWidget(
-        id: id, name: name, dataPoint: dataPoint, selections: selections);
+        id: id, name: name, dataPoint: dataPoint, selections: sel);
   }
 }

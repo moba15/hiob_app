@@ -73,6 +73,8 @@ class NoneTriggerAction extends TriggerAction {
         id: id,
         name: name,
         dataPoint: dataPoint,
-        valueMapper: displayRules ?? {});
+        valueMapper: displayRules ?? {},
+        round: round,
+        suffix: unit);
   }
 }

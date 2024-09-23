@@ -27,6 +27,9 @@ class CustomValueWidget with _$CustomValueWidget implements CustomWidget {
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? label,
       @Default({}) Map<String, String> valueMapper,
+      @Default(2) int round,
+      String? suffix,
+      String? prefix,
       CustomPopupmenu? customPopupmenu}) = _CustomValueWidget;
 
   @override

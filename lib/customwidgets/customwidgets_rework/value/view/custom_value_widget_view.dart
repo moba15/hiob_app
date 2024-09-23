@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
+import 'package:smart_home/device/bloc/device_bloc.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/device/state/state.dart';
 
 class CustomValueWidgetView extends StatefulWidget {
   final CustomValueWidget customValueWidget;
@@ -61,10 +63,63 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: bloc,
       builder: (context, state) {
+        String value = state.value.toString();
+        if (state.value is double) {
+          value = (state.value as double)
+              .toStringAsFixed(widget.customValueWidget.round);
+        } else {
+          double? parse = double.tryParse(state.value.toString());
+          if (parse != null) {
+            value = parse.toStringAsFixed(widget.customValueWidget.round);
+          }
+        }
+        value = (widget.customValueWidget.prefix ?? "") +
+            value +
+            (widget.customValueWidget.suffix ?? "");
         return ListTile(
-          title: Text(title),
-          trailing: Text(getValue(state.value)),
-          onLongPress: onLongPress,
+          visualDensity: VisualDensity.compact,
+          onLongPress: () => onLongPress(),
+          onTap: onTap,
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                ),
+              ),
+              if (widget.customValueWidget.dataPoint?.device
+                      ?.getDeviceStatus() !=
+                  DeviceStatus.ready)
+                const Flexible(
+                  child: Text(
+                    " U/A",
+                    style: TextStyle(color: Colors.red),
+                    overflow: TextOverflow.clip,
+                    softWrap: false,
+                    maxLines: 1,
+                  ),
+                )
+            ],
+          ),
+          //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
+          trailing: state.value is double
+              ? Text(
+                  value,
+                  style: const TextStyle(fontSize: 16),
+                  overflow: TextOverflow.fade,
+                )
+              : Container(
+                  constraints: const BoxConstraints(maxWidth: 200),
+                  child: Text(
+                    value,
+                    style: const TextStyle(fontSize: 16),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                ),
         );
       },
     );
@@ -77,5 +132,40 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
 
   onLongPress() {
     widget.customValueWidget.customPopupmenu?.tryOpen(context);
+  }
+
+  onTap() {
+    if (widget.customValueWidget.dataPoint != null) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return _ValueDialog(
+              dataPoint: widget.customValueWidget.dataPoint!, title: title);
+        },
+      );
+    }
+  }
+}
+
+class _ValueDialog extends StatelessWidget {
+  final DataPoint dataPoint;
+  final String title;
+  const _ValueDialog({Key? key, required this.dataPoint, required this.title})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      scrollable: true,
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context), child: const Text("Back"))
+      ],
+      title: Text(title),
+      content: Text(
+        dataPoint.value.toString(),
+        style: const TextStyle(fontSize: 17),
+      ),
+    );
   }
 }

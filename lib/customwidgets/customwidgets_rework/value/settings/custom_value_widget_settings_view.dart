@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -42,12 +44,21 @@ class CustomValueWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
 class _CustomTableWidgetSettingsViewState
     extends State<CustomValueWidgetSettingsView> {
   late CustomWidgetBlocCubit c;
-  late TextEditingController _labelController;
+  late TextEditingController _labelController,
+      _suffixController,
+      _prefixController,
+      _roundController;
 
   @override
   void initState() {
     _labelController =
         TextEditingController(text: widget.customValueWidget.label);
+    _suffixController =
+        TextEditingController(text: widget.customValueWidget.suffix);
+    _prefixController =
+        TextEditingController(text: widget.customValueWidget.prefix);
+    _roundController =
+        TextEditingController(text: widget.customValueWidget.round.toString());
     super.initState();
   }
 
@@ -77,13 +88,50 @@ class _CustomTableWidgetSettingsViewState
           )),
           InputFieldContainer.inputContainer(
               child: TextField(
-            controller:
-                TextEditingController(text: widget.customValueWidget.label),
+            controller: _labelController,
             onChanged: (d) => {
               widget.customValueWidget.label = d,
               c.update(widget.customValueWidget)
             },
             decoration: const InputDecoration(label: Text("Label (optional)")),
+          )),
+          InputFieldContainer.inputContainer(
+              child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _prefixController,
+                  onChanged: (d) => {
+                    widget.customValueWidget.prefix = d,
+                    c.update(widget.customValueWidget)
+                  },
+                  decoration:
+                      const InputDecoration(label: Text("Prefix (optional)")),
+                ),
+              ),
+              const Gap(10),
+              Expanded(
+                  child: TextField(
+                controller: _suffixController,
+                onChanged: (d) => {
+                  widget.customValueWidget.suffix = d,
+                  c.update(widget.customValueWidget)
+                },
+                decoration:
+                    const InputDecoration(label: Text("Suffix (optional)")),
+              ))
+            ],
+          )),
+          InputFieldContainer.inputContainer(
+              child: TextField(
+            controller: _roundController,
+            onChanged: (d) => {
+              widget.customValueWidget.round = int.tryParse(d) ?? 0,
+              c.update(widget.customValueWidget)
+            },
+            decoration: const InputDecoration(label: Text("Round")),
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           )),
           InputFieldContainer.inputContainer(
               child: MapOrderSettingTemplate<String>(

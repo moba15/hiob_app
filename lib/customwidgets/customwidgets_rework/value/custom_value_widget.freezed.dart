@@ -36,6 +36,12 @@ mixin _$CustomValueWidget {
   Map<String, String> get valueMapper => throw _privateConstructorUsedError;
   set valueMapper(Map<String, String> value) =>
       throw _privateConstructorUsedError;
+  int get round => throw _privateConstructorUsedError;
+  set round(int value) => throw _privateConstructorUsedError;
+  String? get suffix => throw _privateConstructorUsedError;
+  set suffix(String? value) => throw _privateConstructorUsedError;
+  String? get prefix => throw _privateConstructorUsedError;
+  set prefix(String? value) => throw _privateConstructorUsedError;
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
@@ -63,6 +69,9 @@ abstract class $CustomValueWidgetCopyWith<$Res> {
       @DataPointIdConverter() DataPoint? dataPoint,
       String? label,
       Map<String, String> valueMapper,
+      int round,
+      String? suffix,
+      String? prefix,
       CustomPopupmenu? customPopupmenu});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -89,6 +98,9 @@ class _$CustomValueWidgetCopyWithImpl<$Res, $Val extends CustomValueWidget>
     Object? dataPoint = freezed,
     Object? label = freezed,
     Object? valueMapper = null,
+    Object? round = null,
+    Object? suffix = freezed,
+    Object? prefix = freezed,
     Object? customPopupmenu = freezed,
   }) {
     return _then(_value.copyWith(
@@ -116,6 +128,18 @@ class _$CustomValueWidgetCopyWithImpl<$Res, $Val extends CustomValueWidget>
           ? _value.valueMapper
           : valueMapper // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
+      round: null == round
+          ? _value.round
+          : round // ignore: cast_nullable_to_non_nullable
+              as int,
+      suffix: freezed == suffix
+          ? _value.suffix
+          : suffix // ignore: cast_nullable_to_non_nullable
+              as String?,
+      prefix: freezed == prefix
+          ? _value.prefix
+          : prefix // ignore: cast_nullable_to_non_nullable
+              as String?,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -153,6 +177,9 @@ abstract class _$$CustomValueWidgetImplCopyWith<$Res>
       @DataPointIdConverter() DataPoint? dataPoint,
       String? label,
       Map<String, String> valueMapper,
+      int round,
+      String? suffix,
+      String? prefix,
       CustomPopupmenu? customPopupmenu});
 
   @override
@@ -178,6 +205,9 @@ class __$$CustomValueWidgetImplCopyWithImpl<$Res>
     Object? dataPoint = freezed,
     Object? label = freezed,
     Object? valueMapper = null,
+    Object? round = null,
+    Object? suffix = freezed,
+    Object? prefix = freezed,
     Object? customPopupmenu = freezed,
   }) {
     return _then(_$CustomValueWidgetImpl(
@@ -205,6 +235,18 @@ class __$$CustomValueWidgetImplCopyWithImpl<$Res>
           ? _value.valueMapper
           : valueMapper // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
+      round: null == round
+          ? _value.round
+          : round // ignore: cast_nullable_to_non_nullable
+              as int,
+      suffix: freezed == suffix
+          ? _value.suffix
+          : suffix // ignore: cast_nullable_to_non_nullable
+              as String?,
+      prefix: freezed == prefix
+          ? _value.prefix
+          : prefix // ignore: cast_nullable_to_non_nullable
+              as String?,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -223,6 +265,9 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
       @DataPointIdConverter() required this.dataPoint,
       this.label,
       this.valueMapper = const {},
+      this.round = 2,
+      this.suffix,
+      this.prefix,
       this.customPopupmenu})
       : super._();
 
@@ -245,11 +290,18 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
   @JsonKey()
   Map<String, String> valueMapper;
   @override
+  @JsonKey()
+  int round;
+  @override
+  String? suffix;
+  @override
+  String? prefix;
+  @override
   CustomPopupmenu? customPopupmenu;
 
   @override
   String toString() {
-    return 'CustomValueWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, valueMapper: $valueMapper, customPopupmenu: $customPopupmenu)';
+    return 'CustomValueWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, valueMapper: $valueMapper, round: $round, suffix: $suffix, prefix: $prefix, customPopupmenu: $customPopupmenu)';
   }
 
   /// Create a copy of CustomValueWidget
@@ -278,6 +330,9 @@ abstract class _CustomValueWidget extends CustomValueWidget
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? label,
       Map<String, String> valueMapper,
+      int round,
+      String? suffix,
+      String? prefix,
       CustomPopupmenu? customPopupmenu}) = _$CustomValueWidgetImpl;
   _CustomValueWidget._() : super._();
 
@@ -304,6 +359,15 @@ abstract class _CustomValueWidget extends CustomValueWidget
   @override
   Map<String, String> get valueMapper;
   set valueMapper(Map<String, String> value);
+  @override
+  int get round;
+  set round(int value);
+  @override
+  String? get suffix;
+  set suffix(String? value);
+  @override
+  String? get prefix;
+  set prefix(String? value);
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);

@@ -21,6 +21,9 @@ _$CustomValueWidgetImpl _$$CustomValueWidgetImplFromJson(
             (k, e) => MapEntry(k, e as String),
           ) ??
           const {},
+      round: (json['round'] as num?)?.toInt() ?? 2,
+      suffix: json['suffix'] as String?,
+      prefix: json['prefix'] as String?,
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(
@@ -36,6 +39,9 @@ Map<String, dynamic> _$$CustomValueWidgetImplToJson(
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'label': instance.label,
       'valueMapper': instance.valueMapper,
+      'round': instance.round,
+      'suffix': instance.suffix,
+      'prefix': instance.prefix,
       'customPopupmenu': instance.customPopupmenu,
     };
 
