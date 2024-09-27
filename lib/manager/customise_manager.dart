@@ -4,16 +4,24 @@ import 'dart:developer' as developer;
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart'
+    as depc_value;
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
     as depc_table;
@@ -102,7 +110,7 @@ class CustomWidgetManager {
         case CustomWidgetTypeDeprecated.alertDialog:
           continue;
         case CustomWidgetTypeDeprecated.simpleValue:
-          customWidget = CustomSimpleValueWidget.fromJson(widgetRaw);
+          customWidget = depc_value.CustomSimpleValueWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.advanced:
           customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
@@ -134,8 +142,29 @@ class CustomWidgetManager {
         case CustomWidgetTypeDeprecated.tableNew:
           customWidget = CustomTableWidget.fromJson(widgetRaw);
           break;
+        case CustomWidgetTypeDeprecated.valueNew:
+          customWidget = CustomValueWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.multiselection:
+          customWidget = CustomMultiselectionWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.colorPicker:
+          customWidget = CustomColorPickerWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.networkPlayer:
+          customWidget = CustomNetworkPlayerWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.slider:
+          customWidget = CustomSliderWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.switchWidget:
+          customWidget = CustomSwitchWidget.fromJson(widgetRaw);
+          break;
+        case CustomWidgetTypeDeprecated.divisionLine:
+          customWidget = CustomDivisionlineWidget.fromJson(widgetRaw);
+          break;
         default:
-          throw UnimplementedError();
+          throw UnimplementedError(type.name);
       }
       if (customWidget is CustomWidgetDeprecated) {
         CustomWidgetTemplate template = CustomWidgetTemplate(
@@ -243,6 +272,17 @@ class CustomWidgetManager {
     templates.addAll(renamedTemplates);
     sort();
 
+    fileManager.writeJSONList(templateKey, templates);
+  }
+
+  void migrate(List<CustomWidgetWrapper> widgets) {
+    for (CustomWidgetWrapper w in widgets) {
+      if (w.settingWidget.deprecated) {
+        CustomWidgetTemplate wD = w as CustomWidgetTemplate;
+        templates.removeWhere((c) => c == w);
+        templates.add(wD.customWidget.migrate(id: w.id, name: w.name));
+      }
+    }
     fileManager.writeJSONList(templateKey, templates);
   }
 }

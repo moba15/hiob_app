@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -15,6 +14,7 @@ import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
+import 'package:smart_home/utils/widgets/template_adder/template_adder.dart';
 
 class TemplateAdder extends StatefulWidget {
   final String title;
@@ -203,10 +203,10 @@ class _TemplateAdderState extends State<TemplateAdder> {
     //widget.screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: "id", name: "name", customWidget: CustomTextWidget(name: "", text: CustomTextAttribute(data: ""))));
     showDialog(
         context: context,
-        builder: (context) => _AddTemplateAlertDialog(
+        builder: (context) => TemplateSelectionAlertDialog(
               screenManager: widget.screenManager,
               selected: widget.templates,
-              onAdd: (List<CustomWidgetWrapper> templates) {
+              onSelect: (List<CustomWidgetWrapper> templates) {
                 setState(() {
                   widget.addTemplates(templates);
                 });
@@ -269,91 +269,6 @@ class _SaveDialog extends StatelessWidget {
             child: Text(getAppLocalizations(context).save)),
       ],
     );
-  }
-}
-
-class _AddTemplateAlertDialog extends StatefulWidget {
-  final ScreenManager screenManager;
-  final List<dynamic> selected;
-  final Function(List<CustomWidgetWrapper>) onAdd;
-
-  const _AddTemplateAlertDialog(
-      {Key? key,
-      required this.screenManager,
-      required this.onAdd,
-      required this.selected})
-      : super(key: key);
-
-  @override
-  State<_AddTemplateAlertDialog> createState() =>
-      _AddTemplateAlertDialogState();
-}
-
-class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
-  List<CustomWidgetWrapper> selected = [];
-
-  @override
-  Widget build(BuildContext context) {
-    List<CustomWidgetWrapper> templates =
-        List.of(widget.screenManager.manager.customWidgetManager.templates);
-
-    templates.removeWhere((element) => widget.selected.contains(element));
-    return AlertDialog(
-      title:
-          Text(getAppLocalizations(context).select_widget_template_alert_title),
-      actions: [
-        TextButton(
-            onPressed: cancel,
-            child: Text(getAppLocalizations(context).cancel)),
-        TextButton(
-            onPressed: add, child: Text(getAppLocalizations(context).add)),
-      ],
-      content: SizedBox(
-        child: Column(
-          children: [
-            for (CustomWidgetTypeDeprecated type
-                in CustomWidgetTypeDeprecated.values.where(
-                    (element) => element != CustomWidgetTypeDeprecated.group))
-              if (templates.any((element) => element.type?.name == type.name))
-                ExpansionTile(
-                  title: Text(
-                      "${type.name} (${templates.where((element) => element.type?.name == type.name).length})"),
-                  children: [
-                    for (CustomWidgetWrapper t in templates
-                        .where((element) => element.type?.name == type.name))
-                      ListTile(
-                        selected: selected.contains(t),
-                        leading: Checkbox(
-                          onChanged: (bool? value) {
-                            setState(() {
-                              if (value == true) {
-                                selected.add(t);
-                              } else {
-                                selected.remove(t);
-                              }
-                            });
-                          },
-                          value: selected.contains(t),
-                        ),
-                        title: Text(t.name),
-                        subtitle: Text(t.type?.name ?? "Error"),
-                      )
-                  ],
-                ),
-          ],
-        ),
-      ),
-      scrollable: true,
-    );
-  }
-
-  void add() {
-    widget.onAdd(selected);
-    Navigator.pop(context);
-  }
-
-  void cancel() {
-    Navigator.pop(context);
   }
 }
 

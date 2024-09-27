@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/bloc/widget_template_list_bloc.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
+import 'package:smart_home/utils/widgets/template_adder/template_adder.dart';
 
 import '../../../../customwidgets/view/custom_widget_tile.dart';
 import '../../../../utils/list_status.dart';
@@ -140,50 +143,71 @@ class _TemplatesViewState extends State<TemplatesView> {
         ? Center(
             child: Text(getAppLocalizations(context).no_templates_found),
           )
-        : ListView.builder(
-            itemCount: types.length,
-            itemBuilder: (context, index) {
-              CustomWidgetTypeDeprecated type = types[index];
-              List<Dismissible> children = [];
-              for (CustomWidgetWrapper t in widget.templates.keys
-                  .where((element) => element.type?.name == type.name)) {
-                children.add(
-                  Dismissible(
-                    background: Container(
-                      color: Colors.red,
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: const Icon(Icons.delete_forever),
-                      ),
-                    ),
-                    secondaryBackground: Container(
-                      color: Colors.red,
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: const Icon(Icons.delete_forever),
-                      ),
-                    ),
-                    direction: DismissDirection.endToStart,
-                    key: ValueKey(t),
-                    onDismissed: (d) => {_delete(t)},
-                    child: CustomWidgetTemplateTile(
-                        customWidget: t,
-                        customWidgetManager: bloc.customWidgetManager,
-                        selectedMode: bloc.state.toggleSelection,
-                        selected: bloc.state.templates[t] ?? false,
-                        toggleSelect: () => toogleSelect(t, bloc)),
-                  ),
-                );
-              }
-              return ExpansionTile(
-                title: Text(
-                    "${type.name} (${widget.templates.keys.where((element) => element.type?.name == type.name).length})"),
-                children: children,
-              );
-            },
+        : ListView(
+            children: [
+              ListTile(
+                title: const Text("Migration"),
+                subtitle: const Text(
+                  "Please do a backup before",
+                  style: TextStyle(color: Colors.red),
+                ),
+                trailing: TextButton(
+                    onPressed: () {
+                      _startMigration();
+                    },
+                    child: const Text("Start")),
+              ),
+              ...templates(bloc)
+            ],
           );
+  }
+
+  List<Widget> templates(WidgetTemplateListBloc bloc) {
+    List<Widget> templates = [];
+    for (CustomWidgetTypeDeprecated type in CustomWidgetTypeDeprecated.values) {
+      List<Dismissible> children = [];
+      for (CustomWidgetWrapper t in widget.templates.keys
+          .where((element) => element.type?.name == type.name)) {
+        children.add(
+          Dismissible(
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
+            ),
+            direction: DismissDirection.endToStart,
+            key: ValueKey(t),
+            onDismissed: (d) => {_delete(t)},
+            child: CustomWidgetTemplateTile(
+                customWidget: t,
+                customWidgetManager: bloc.customWidgetManager,
+                selectedMode: bloc.state.toggleSelection,
+                selected: bloc.state.templates[t] ?? false,
+                toggleSelect: () => toogleSelect(t, bloc)),
+          ),
+        );
+      }
+      ExpansionTile t = ExpansionTile(
+        title: Text(
+            "${type.name} (${widget.templates.keys.where((element) => element.type?.name == type.name).length})"),
+        children: children,
+      );
+      if (children.isNotEmpty) {
+        templates.add(t);
+      }
+    }
+    return templates;
   }
 
   void _delete(CustomWidgetWrapper template) {
@@ -200,5 +224,27 @@ class _TemplatesViewState extends State<TemplatesView> {
     if (!bloc.state.templates.values.contains(true)) {
       bloc.add(const WidgetTemplateListToggleSelectionEvent(selection: false));
     }
+  }
+
+  void _startMigration() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return TemplateSelectionAlertDialog(
+          screenManager: Manager().screenManager,
+          filter: (p0) {
+            return p0.settingWidget.deprecated &&
+                p0.type != CustomWidgetTypeDeprecated.graph;
+          },
+          onSelect: (p0) {
+            setState(() {
+              Manager().customWidgetManager.migrate(p0);
+            });
+          },
+          selected: List.empty(),
+          selectButton: "Migrate",
+        );
+      },
+    );
   }
 }

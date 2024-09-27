@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/custom_table_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/custom_table_settings.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart'
+    as new_widget;
 
 class CustomTableWidget extends CustomWidgetDeprecated {
   DataPoint? dataPoint;
@@ -68,4 +71,18 @@ class CustomTableWidget extends CustomWidgetDeprecated {
 
   @override
   Widget get widget => CustomTableWidgetView(customTableWidget: this);
+
+  @override
+  CustomWidget migrate({required String id, required String name}) {
+    return new_widget.CustomTableWidget(
+        id: id,
+        name: name,
+        dataPoint: dataPoint,
+        columns: columns,
+        initalSortColumn: initialSortColumn,
+        elementsPerPage: elementsPerPage,
+        header: header,
+        sortAsc: sortAsc,
+        initialSortEnabled: initialSortEnabled);
+  }
 }

@@ -28,6 +28,7 @@ _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
       customInputDisplayConentType: $enumDecodeNullable(
           _$CustomInputDisplayConentTypeEnumMap,
           json['customInputDisplayConentType']),
+      fullSize: json['fullSize'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$CustomInputWidgetImplToJson(
@@ -45,6 +46,7 @@ Map<String, dynamic> _$$CustomInputWidgetImplToJson(
           _$CustomInputSendMethodEnumMap[instance.customInputSendMethod],
       'customInputDisplayConentType': _$CustomInputDisplayConentTypeEnumMap[
           instance.customInputDisplayConentType],
+      'fullSize': instance.fullSize,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
@@ -64,6 +66,13 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.button: 'button',
   CustomWidgetTypeDeprecated.webViewNew: 'webViewNew',
   CustomWidgetTypeDeprecated.tableNew: 'tableNew',
+  CustomWidgetTypeDeprecated.valueNew: 'valueNew',
+  CustomWidgetTypeDeprecated.multiselection: 'multiselection',
+  CustomWidgetTypeDeprecated.slider: 'slider',
+  CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
+  CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
+  CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
+  CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

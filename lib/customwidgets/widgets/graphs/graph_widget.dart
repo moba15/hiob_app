@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_axis.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_line.dart';
 import 'package:smart_home/customwidgets/widgets/graphs/graph_update.dart';
@@ -112,5 +113,11 @@ class GraphWidget extends CustomWidgetDeprecated {
         line.xAxis = null;
       }
     }
+  }
+
+  @override
+  CustomWidget migrate({required String id, required String name}) {
+    // TODO: implement migrate
+    throw UnimplementedError();
   }
 }

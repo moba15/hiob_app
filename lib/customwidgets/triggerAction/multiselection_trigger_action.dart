@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/settings/multiselection_trigger_action_settings.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/triggerAction/view/multiselection_trigger_view.dart';
 import 'package:smart_home/device/state/state.dart';
-
+import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart'
+    as new_widget;
 import '../../manager/manager.dart';
 
 class MultiSelectionTriggerAction extends TriggerAction {
@@ -92,4 +94,16 @@ class MultiSelectionTriggerAction extends TriggerAction {
   @override
   Widget getWidget({VoidCallback? onLongTab}) =>
       MultiSelectionTriggerActionView(multiSelectionTriggerAction: this);
+
+  @override
+  CustomWidget migrate({required String id, required String name}) {
+    Map<String, String> sel = {};
+    selections.forEach(
+      (key, value) {
+        sel[value] = key;
+      },
+    );
+    return new_widget.CustomMultiselectionWidget(
+        id: id, name: name, dataPoint: dataPoint, selections: sel);
+  }
 }

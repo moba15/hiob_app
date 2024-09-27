@@ -19,6 +19,7 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
   int? sortedColumn;
   late bool sortedAsc;
   late bool sort;
+  DataPointBloc? _bloc;
 
   @override
   void initState() {
@@ -26,8 +27,31 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
     if (sort) {
       sortedColumn = widget.customTableWidget.initalSortColumn;
     }
+    if (widget.customTableWidget.dataPoint != null) {
+      _bloc = DataPointBloc(widget.customTableWidget.dataPoint!);
+    }
     sortedAsc = widget.customTableWidget.sortAsc;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    sort = widget.customTableWidget.initialSortEnabled;
+    if (sort) {
+      sortedColumn = widget.customTableWidget.initalSortColumn;
+    }
+    _bloc?.close();
+    if (widget.customTableWidget.dataPoint != null) {
+      _bloc = DataPointBloc(widget.customTableWidget.dataPoint!);
+    }
+    sortedAsc = widget.customTableWidget.sortAsc;
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _bloc?.close();
+    super.dispose();
   }
 
   @override
@@ -38,7 +62,7 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
       );
     }
     return BlocBuilder<DataPointBloc, DataPointState>(
-      bloc: DataPointBloc(widget.customTableWidget.dataPoint!),
+      bloc: _bloc,
       builder: (c, state) {
         List<Map<String, dynamic>> data = [];
         if (state.value is! String) {

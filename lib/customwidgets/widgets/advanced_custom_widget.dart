@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/advanced_widget_view.dart';
@@ -90,5 +92,27 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
         subTitleDataPoint: subTitleDataPoint,
         bodyIconID: bodyIconID,
         customAlertDialogWidget: customAlertDialogWidget);
+  }
+
+  @override
+  CustomWidget migrate({required String id, required String name}) {
+    CustomWidget? body = mainBody?.migrate(id: id, name: name);
+    if (body == null) {
+      throw ErrorDescription("MainBody is null");
+    }
+    List<CustomWidget> popupWidgets = [];
+    customAlertDialogWidget?.templates?.forEach(
+      (element) {
+        if (element is CustomWidgetDeprecated) {
+          popupWidgets.add((element as CustomWidgetDeprecated)
+              .migrate(id: Manager().getRandString(12), name: element.name));
+        } else if (element is CustomWidget) {
+          popupWidgets.add(element);
+        }
+      },
+    );
+    body.customPopupmenu = CustomPopupmenu(customWidgets: popupWidgets);
+
+    return body;
   }
 }

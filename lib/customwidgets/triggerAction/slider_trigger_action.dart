@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/triggerAction/settings/slider_trigger_action_settings.dart';
 import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/triggerAction/view/slider_trigger_view.dart';
 import 'package:smart_home/device/state/state.dart';
-
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart'
+    as new_widget;
 import '../../manager/manager.dart';
 
 class SliderTriggerAction extends TriggerAction {
@@ -56,4 +58,15 @@ class SliderTriggerAction extends TriggerAction {
   @override
   Widget getWidget({VoidCallback? onLongTab}) =>
       SliderTriggerView(sliderTriggerAction: this);
+
+  @override
+  CustomWidget migrate({required String id, required String name}) {
+    return new_widget.CustomSliderWidget(
+        id: id,
+        name: name,
+        dataPoint: dataPoint,
+        min: min,
+        max: max,
+        step: steps);
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/simple_value_settings.dart';
 import 'package:smart_home/customwidgets/widgets/view/simple_value_widget_view.dart';
 import 'package:smart_home/device/state/state.dart';
@@ -72,5 +74,11 @@ class CustomSimpleValueWidget extends CustomWidgetDeprecated {
         unit: unit,
         round: round,
         value: value);
+  }
+
+  @override
+  CustomWidget migrate({required String id, required String name}) {
+    return CustomValueWidget(
+        id: id, name: name, dataPoint: dataPoint, label: value);
   }
 }
