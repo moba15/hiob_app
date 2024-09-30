@@ -32,7 +32,7 @@ class ChangeLogScreen extends StatelessWidget {
 # Templates \n
 - **Important:** The new features are all highly experimental
 - Fixed some bugs
-- Migrated Table
+- You **can now migrate** all older widgtes to new types: Simply go to the **Template Settings** and press **Start**
   """;
   }
 
