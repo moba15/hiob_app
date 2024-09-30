@@ -56,7 +56,7 @@ class _CustomMultiselectionWidgetViewState
         return ListTile(
             title: Text(title),
             trailing: FractionallySizedBox(
-                widthFactor: 0.3, child: getDropdown(state.value.toString())));
+                widthFactor: 0.4, child: getDropdown(state.value.toString())));
       },
     );
   }

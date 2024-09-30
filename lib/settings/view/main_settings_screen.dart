@@ -5,6 +5,7 @@ import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/custom_theme/settings/custom_theme_settings_page.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
+import 'package:smart_home/settings/documenation/documentation_view.dart';
 import 'package:smart_home/settings/general_settings/view/general_settings_page.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/settings/notification_settings/notification_settings_page.dart';
@@ -169,6 +170,20 @@ class MainSettingsScreen extends StatelessWidget {
                   applicationVersion: Manager.instance.versionNumber,
                   applicationLegalese: "LICENCE MIT",
                   applicationIcon: const Icon(Icons.smartphone_sharp))
+            },
+          ),
+          ListTile(
+            title: const Text("Documenation"),
+            leading: const Icon(Icons.document_scanner_outlined),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return const DocumentationView(
+                    currentPage: "README.md",
+                  );
+                },
+              ))
             },
           ),
           ListTile(
