@@ -33,6 +33,8 @@ class ChangeLogScreen extends StatelessWidget {
 - **Important:** The new features are all highly experimental
 - Fixed some bugs
 - You **can now migrate** all older widgtes to new types: Simply go to the **Template Settings** and press **Start**
+# Other \n
+- You can now view the Documentation inside the app
   """;
   }
 
