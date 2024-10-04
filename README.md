@@ -3,7 +3,7 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [PlayStore](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 ## Work in progress
-### Templates \n
+### Templates
 - **Important:** The new features are all highly experimental
 - I completly rewrote the way templates/widgtes work
 - You now can find two (new) widgets one of them a new input widget
@@ -11,7 +11,7 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 - The idea is that the advanced widget is no longer needed, with these kind of widgets
 - Fixed some bugs
 - You **can now migrate** all older widgtes to new types: Simply go to the **Template Settings** and press **Start**
-### Other \n
+### Other
 - You can now view the Documentation inside the app
 
 ## 0.0.615-beta.0
