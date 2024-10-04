@@ -9,6 +9,7 @@ import 'package:smart_home/customwidgets/triggerAction/trigger_actions.dart';
 import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/advanced_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/advanced_widget_settings.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
@@ -103,11 +104,12 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
     List<CustomWidget> popupWidgets = [];
     customAlertDialogWidget?.templates?.forEach(
       (element) {
-        if (element is CustomWidgetDeprecated) {
-          popupWidgets.add((element as CustomWidgetDeprecated)
-              .migrate(id: Manager().getRandString(12), name: element.name));
-        } else if (element is CustomWidget) {
-          popupWidgets.add(element);
+        if (element.settingWidget.deprecated) {
+          popupWidgets.add((element as CustomWidgetTemplate)
+              .customWidget
+              .migrate(id: element.id, name: element.name));
+        } else {
+          popupWidgets.add(element as CustomWidget);
         }
       },
     );
