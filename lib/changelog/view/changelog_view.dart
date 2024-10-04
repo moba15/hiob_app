@@ -23,7 +23,7 @@ class ChangeLogScreen extends StatelessWidget {
               "What's new? ${manager.versionNumber}(${manager.buildNumber})"),
         ),
         body: Markdown(
-          data: _changelog(),
+          data: _changelogComplete(),
         ));
   }
 
@@ -46,8 +46,11 @@ class ChangeLogScreen extends StatelessWidget {
 - You now can find two (new) widgets one of them a new input widget
 - With the new types of widgtes you can directly add a popupmenu, so you don't have to use a advanced widget for this
 - The idea is that the advanced widget is no longer needed, with these kind of widgets
-- In the future I will replace all old widgtes with the new widget types and give you a way to migrate your old widgtes to the new one
-- Please provide feadback over github or the iobroker forum
+- Fixed some bugs
+- You **can now migrate** all older widgtes to new types: Simply go to the **Template Settings** and press **Start**
+# Other \n
+- You can now view the Documentation inside the app
+
   """;
   }
 }
