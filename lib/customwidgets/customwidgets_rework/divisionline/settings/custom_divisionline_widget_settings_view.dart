@@ -5,10 +5,6 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/utils/widgets/map/map_order_add_setting_template.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomDivisionlineWidgetSettingsView

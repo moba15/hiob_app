@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/bloc/widget_template_list_bloc.dart';

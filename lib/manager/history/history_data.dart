@@ -21,7 +21,6 @@ class HistoryData {
       return;
     }
     subs.add(historySubscription);
-    //TODO: Send request
   }
 
   void addData(int time, dynamic value) {
