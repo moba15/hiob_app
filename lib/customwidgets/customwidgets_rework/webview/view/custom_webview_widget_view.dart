@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-//import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class CustomWebViewWidgetView extends StatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
@@ -16,7 +16,7 @@ class CustomWebViewWidgetView extends StatefulWidget {
 }
 
 class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
-  // late WebViewController _webViewController;
+  late WebViewController _webViewController;
   late DataPointBloc bloc;
 
   @override
@@ -47,7 +47,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
           ..loadRequest(Uri.parse(
               "https://${widget.customWebViewWidget.url ?? "https://google.de"}"));
       }
-    }*/
+    }
 
     super.initState();
   }
@@ -62,7 +62,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
 
   @override
   Widget build(BuildContext context) {
-    /*return GestureDetector(
+    return GestureDetector(
         onLongPress: () => _webViewController.reload(),
         child: Column(
           children: [
@@ -94,7 +94,6 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
                 ),
               ),
           ],
-        ));*/
-    return Placeholder();
+        ));
   }
 }
