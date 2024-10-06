@@ -21,23 +21,31 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
 
   @override
   void initState() {
-    /* if (widget.customWebViewWidget.dataPoint != null) {
-      _webViewController = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..loadRequest(
-            Uri.parse(widget.customWebViewWidget.dataPoint!.value.toString()));
-      bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
+    if (widget.customWebViewWidget.dataPoint != null) {
+      if (widget.customWebViewWidget.dataPoint!.value == null) {
+        _webViewController = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse("https://github.com/asdasdasd/adasdasd"));
+        bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
+      } else {
+        _webViewController = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse(
+              widget.customWebViewWidget.dataPoint!.value.toString()));
+        bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
+      }
     } else {
       if (widget.customWebViewWidget.url.toString().startsWith("https://") ||
           widget.customWebViewWidget.url.toString().startsWith("http://")) {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse(widget.customWebViewWidget.url ?? ""));
+          ..loadRequest(
+              Uri.parse(widget.customWebViewWidget.url ?? "https://google.de"));
       } else {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(
-              Uri.parse("https://${widget.customWebViewWidget.url ?? ""}"));
+          ..loadRequest(Uri.parse(
+              "https://${widget.customWebViewWidget.url ?? "https://google.de"}"));
       }
     }*/
 
