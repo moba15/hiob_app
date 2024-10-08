@@ -26,6 +26,10 @@ _$CustomTableWidgetImpl _$$CustomTableWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: json['customTheme'] == null
+          ? null
+          : CustomThemeForWidget.fromJson(
+              json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CustomTableWidgetImplToJson(
@@ -42,6 +46,7 @@ Map<String, dynamic> _$$CustomTableWidgetImplToJson(
       'elementsPerPage': instance.elementsPerPage,
       'columns': instance.columns,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme': instance.customTheme,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {

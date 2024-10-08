@@ -32,8 +32,8 @@ mixin _$LabelTheme {
   FontWeight? get labelFontWeight => throw _privateConstructorUsedError;
   @FontWeightConverter()
   set labelFontWeight(FontWeight? value) => throw _privateConstructorUsedError;
-  FontStyle get labelFontStyle => throw _privateConstructorUsedError;
-  set labelFontStyle(FontStyle value) => throw _privateConstructorUsedError;
+  FontStyle? get labelFontStyle => throw _privateConstructorUsedError;
+  set labelFontStyle(FontStyle? value) => throw _privateConstructorUsedError;
 
   /// Serializes this LabelTheme to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +56,7 @@ abstract class $LabelThemeCopyWith<$Res> {
       @MaterialColorConverter() Color? labelColor,
       double? labelFonSize,
       @FontWeightConverter() FontWeight? labelFontWeight,
-      FontStyle labelFontStyle});
+      FontStyle? labelFontStyle});
 }
 
 /// @nodoc
@@ -78,7 +78,7 @@ class _$LabelThemeCopyWithImpl<$Res, $Val extends LabelTheme>
     Object? labelColor = freezed,
     Object? labelFonSize = freezed,
     Object? labelFontWeight = freezed,
-    Object? labelFontStyle = null,
+    Object? labelFontStyle = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -97,10 +97,10 @@ class _$LabelThemeCopyWithImpl<$Res, $Val extends LabelTheme>
           ? _value.labelFontWeight
           : labelFontWeight // ignore: cast_nullable_to_non_nullable
               as FontWeight?,
-      labelFontStyle: null == labelFontStyle
+      labelFontStyle: freezed == labelFontStyle
           ? _value.labelFontStyle
           : labelFontStyle // ignore: cast_nullable_to_non_nullable
-              as FontStyle,
+              as FontStyle?,
     ) as $Val);
   }
 }
@@ -118,7 +118,7 @@ abstract class _$$LabelThemeImplCopyWith<$Res>
       @MaterialColorConverter() Color? labelColor,
       double? labelFonSize,
       @FontWeightConverter() FontWeight? labelFontWeight,
-      FontStyle labelFontStyle});
+      FontStyle? labelFontStyle});
 }
 
 /// @nodoc
@@ -138,7 +138,7 @@ class __$$LabelThemeImplCopyWithImpl<$Res>
     Object? labelColor = freezed,
     Object? labelFonSize = freezed,
     Object? labelFontWeight = freezed,
-    Object? labelFontStyle = null,
+    Object? labelFontStyle = freezed,
   }) {
     return _then(_$LabelThemeImpl(
       null == id
@@ -157,10 +157,10 @@ class __$$LabelThemeImplCopyWithImpl<$Res>
           ? _value.labelFontWeight
           : labelFontWeight // ignore: cast_nullable_to_non_nullable
               as FontWeight?,
-      null == labelFontStyle
+      freezed == labelFontStyle
           ? _value.labelFontStyle
           : labelFontStyle // ignore: cast_nullable_to_non_nullable
-              as FontStyle,
+              as FontStyle?,
     ));
   }
 }
@@ -190,7 +190,7 @@ class _$LabelThemeImpl extends _LabelTheme {
   @FontWeightConverter()
   FontWeight? labelFontWeight;
   @override
-  FontStyle labelFontStyle;
+  FontStyle? labelFontStyle;
 
   @override
   String toString() {
@@ -219,7 +219,7 @@ abstract class _LabelTheme extends LabelTheme implements CustomThemeForWidget {
       @MaterialColorConverter() Color? labelColor,
       double? labelFonSize,
       @FontWeightConverter() FontWeight? labelFontWeight,
-      FontStyle labelFontStyle) = _$LabelThemeImpl;
+      FontStyle? labelFontStyle) = _$LabelThemeImpl;
   _LabelTheme._() : super._();
 
   factory _LabelTheme.fromJson(Map<String, dynamic> json) =
@@ -242,8 +242,8 @@ abstract class _LabelTheme extends LabelTheme implements CustomThemeForWidget {
   @FontWeightConverter()
   set labelFontWeight(FontWeight? value);
   @override
-  FontStyle get labelFontStyle;
-  set labelFontStyle(FontStyle value);
+  FontStyle? get labelFontStyle;
+  set labelFontStyle(FontStyle? value);
 
   /// Create a copy of LabelTheme
   /// with the given fields replaced by the non-null parameter values.

@@ -40,6 +40,9 @@ mixin _$CustomSliderWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomSliderWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,7 +68,8 @@ abstract class $CustomSliderWidgetCopyWith<$Res> {
       int max,
       int min,
       int step,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -93,6 +97,7 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
     Object? min = null,
     Object? step = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -127,6 +132,10 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -161,7 +170,8 @@ abstract class _$$CustomSliderWidgetImplCopyWith<$Res>
       int max,
       int min,
       int step,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -188,6 +198,7 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
     Object? min = null,
     Object? step = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomSliderWidgetImpl(
       type: null == type
@@ -222,6 +233,10 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -237,7 +252,8 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
       this.max = 100,
       this.min = 0,
       this.step = 10,
-      this.customPopupmenu})
+      this.customPopupmenu,
+      this.customTheme})
       : super._();
 
   factory _$CustomSliderWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -264,10 +280,12 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
   int step;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomSliderWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, max: $max, min: $min, step: $step, customPopupmenu: $customPopupmenu)';
+    return 'CustomSliderWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, max: $max, min: $min, step: $step, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomSliderWidget
@@ -297,7 +315,8 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
       int max,
       int min,
       int step,
-      CustomPopupmenu? customPopupmenu}) = _$CustomSliderWidgetImpl;
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme}) = _$CustomSliderWidgetImpl;
   _CustomSliderWidget._() : super._();
 
   factory _CustomSliderWidget.fromJson(Map<String, dynamic> json) =
@@ -329,6 +348,9 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomSliderWidget
   /// with the given fields replaced by the non-null parameter values.

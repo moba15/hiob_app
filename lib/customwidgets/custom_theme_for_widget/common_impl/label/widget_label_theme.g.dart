@@ -14,7 +14,7 @@ _$LabelThemeImpl _$$LabelThemeImplFromJson(Map<String, dynamic> json) =>
       (json['labelFonSize'] as num?)?.toDouble(),
       const FontWeightConverter()
           .fromJson((json['labelFontWeight'] as num?)?.toInt()),
-      $enumDecode(_$FontStyleEnumMap, json['labelFontStyle']),
+      $enumDecodeNullable(_$FontStyleEnumMap, json['labelFontStyle']),
     );
 
 Map<String, dynamic> _$$LabelThemeImplToJson(_$LabelThemeImpl instance) =>
@@ -24,7 +24,7 @@ Map<String, dynamic> _$$LabelThemeImplToJson(_$LabelThemeImpl instance) =>
       'labelFonSize': instance.labelFonSize,
       'labelFontWeight':
           const FontWeightConverter().toJson(instance.labelFontWeight),
-      'labelFontStyle': _$FontStyleEnumMap[instance.labelFontStyle]!,
+      'labelFontStyle': _$FontStyleEnumMap[instance.labelFontStyle],
     };
 
 const _$FontStyleEnumMap = {

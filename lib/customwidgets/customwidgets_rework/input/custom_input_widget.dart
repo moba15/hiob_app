@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -48,6 +49,8 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
   @override
   final isAbleToPopupMenu = true;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomInputWidget._();
 
   @Implements<CustomWidget>()
@@ -61,6 +64,7 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType,
       @Default(false) bool fullSize}) = _CustomInputWidget;

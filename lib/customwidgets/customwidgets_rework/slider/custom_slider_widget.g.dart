@@ -23,6 +23,10 @@ _$CustomSliderWidgetImpl _$$CustomSliderWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: json['customTheme'] == null
+          ? null
+          : CustomThemeForWidget.fromJson(
+              json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CustomSliderWidgetImplToJson(
@@ -36,6 +40,7 @@ Map<String, dynamic> _$$CustomSliderWidgetImplToJson(
       'min': instance.min,
       'step': instance.step,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme': instance.customTheme,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {

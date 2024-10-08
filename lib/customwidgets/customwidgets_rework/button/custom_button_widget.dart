@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/settings/custom_button_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/view/custom_button_widget_view.dart';
@@ -16,6 +17,9 @@ class CustomButtonWidget with _$CustomButtonWidget implements CustomWidget {
   @override
   final isAbleToPopupMenu = true;
 
+  @override
+  final hasCustomTheme = false;
+
   const CustomButtonWidget._();
 
   @Implements<CustomWidget>()
@@ -24,6 +28,7 @@ class CustomButtonWidget with _$CustomButtonWidget implements CustomWidget {
     required String id,
     required String name,
     CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
     String? label,
     @DataPointIdConverter() required DataPoint? dataPoint,
     String? buttonLabel,

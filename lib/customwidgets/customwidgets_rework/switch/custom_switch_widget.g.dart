@@ -23,6 +23,10 @@ _$CustomSwitchWidgetImpl _$$CustomSwitchWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: json['customTheme'] == null
+          ? null
+          : CustomThemeForWidget.fromJson(
+              json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CustomSwitchWidgetImplToJson(
@@ -36,6 +40,7 @@ Map<String, dynamic> _$$CustomSwitchWidgetImplToJson(
       'sendIfOn': instance.sendIfOn,
       'sendIfOff': instance.sendIfOff,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme': instance.customTheme,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {

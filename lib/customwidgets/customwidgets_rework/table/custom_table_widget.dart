@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -17,6 +18,8 @@ class CustomTableWidget with _$CustomTableWidget implements CustomWidget {
   @override
   final isAbleToPopupMenu = false;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomTableWidget._();
 
   @Implements<CustomWidget>()
@@ -33,6 +36,7 @@ class CustomTableWidget with _$CustomTableWidget implements CustomWidget {
     @Default(10) int elementsPerPage,
     required Map<String, String> columns,
     CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
   }) = _CustomTableWidget;
 
   @override

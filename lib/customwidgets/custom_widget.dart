@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/common_impl/label/widget_label_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -8,6 +9,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/cus
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
@@ -121,6 +123,17 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
             .settingWidget;
       case CustomWidgetTypeDeprecated.divisionLine:
         return CustomDivisionLineWidget(name: "").settingWidget;
+    }
+  }
+
+  CustomValueWidgetTheme get emptyTheme {
+    switch (this) {
+      case CustomWidgetTypeDeprecated.valueNew:
+        return CustomValueWidgetTheme("not set",
+            LabelTheme("not set", null, null, null, null), null, null, null);
+
+      default:
+        throw UnimplementedError("Not implemented for $this");
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -20,6 +21,8 @@ class CustomMultiselectionWidget
   @override
   final isAbleToPopupMenu = true;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomMultiselectionWidget._();
 
   @Implements<CustomWidget>()
@@ -33,6 +36,7 @@ class CustomMultiselectionWidget
     required Map<String, String> selections,
     @Default(DropdownMenuMode.dropdown) DropdownMenuMode dropdownMenuMode,
     CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
   }) = _CustomMultiselectionWidget;
 
   @override

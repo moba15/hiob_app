@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -16,19 +17,23 @@ class CustomSwitchWidget with _$CustomSwitchWidget implements CustomWidget {
   @override
   final isAbleToPopupMenu = true;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomSwitchWidget._();
 
   @Implements<CustomWidget>()
-  factory CustomSwitchWidget(
-      {@Default(CustomWidgetTypeDeprecated.switchWidget)
-      CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      String? label,
-      @Default("true") String sendIfOn,
-      @Default("false") String sendIfOff,
-      CustomPopupmenu? customPopupmenu}) = _CustomSwitchWidget;
+  factory CustomSwitchWidget({
+    @Default(CustomWidgetTypeDeprecated.switchWidget)
+    CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    @DataPointIdConverter() required DataPoint? dataPoint,
+    String? label,
+    @Default("true") String sendIfOn,
+    @Default("false") String sendIfOff,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  }) = _CustomSwitchWidget;
 
   @override
   CustomWidgetSettingWidget get settingWidget {

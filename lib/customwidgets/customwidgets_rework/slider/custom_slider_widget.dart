@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -17,19 +18,22 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
   @override
   final isAbleToPopupMenu = false;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomSliderWidget._();
 
   @Implements<CustomWidget>()
-  factory CustomSliderWidget(
-      {@Default(CustomWidgetTypeDeprecated.slider)
-      CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      @Default(100) int max,
-      @Default(0) int min,
-      @Default(10) int step,
-      CustomPopupmenu? customPopupmenu}) = _CustomSliderWidget;
+  factory CustomSliderWidget({
+    @Default(CustomWidgetTypeDeprecated.slider) CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    @DataPointIdConverter() required DataPoint? dataPoint,
+    @Default(100) int max,
+    @Default(0) int min,
+    @Default(10) int step,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  }) = _CustomSliderWidget;
 
   @override
   CustomWidgetSettingWidget get settingWidget {

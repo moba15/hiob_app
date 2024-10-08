@@ -22,6 +22,10 @@ _$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: json['customTheme'] == null
+          ? null
+          : CustomThemeForWidget.fromJson(
+              json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
@@ -34,6 +38,7 @@ Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
       'url': instance.url,
       'height': instance.height,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme': instance.customTheme,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {

@@ -1,6 +1,7 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/settings/custom_colorpicker_widget_settings_view.dart';
@@ -20,6 +21,8 @@ class CustomColorPickerWidget
   @override
   final isAbleToPopupMenu = false;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomColorPickerWidget._();
 
   @Implements<CustomWidget>()
@@ -35,6 +38,7 @@ class CustomColorPickerWidget
     @Default(true) shadesSelection,
     @Default({}) Map<ColorPickerType, bool> pickersEnabled,
     CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
   }) = _CustomColorPickerWidget;
 
   @override

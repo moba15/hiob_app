@@ -46,6 +46,9 @@ mixin _$CustomTableWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomTableWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -74,7 +77,8 @@ abstract class $CustomTableWidgetCopyWith<$Res> {
       bool initialSortEnabled,
       int elementsPerPage,
       Map<String, String> columns,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -105,6 +109,7 @@ class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
     Object? elementsPerPage = null,
     Object? columns = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -151,6 +156,10 @@ class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -188,7 +197,8 @@ abstract class _$$CustomTableWidgetImplCopyWith<$Res>
       bool initialSortEnabled,
       int elementsPerPage,
       Map<String, String> columns,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -218,6 +228,7 @@ class __$$CustomTableWidgetImplCopyWithImpl<$Res>
     Object? elementsPerPage = null,
     Object? columns = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomTableWidgetImpl(
       type: null == type
@@ -264,6 +275,10 @@ class __$$CustomTableWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -282,7 +297,8 @@ class _$CustomTableWidgetImpl extends _CustomTableWidget {
       this.initialSortEnabled = false,
       this.elementsPerPage = 10,
       required this.columns,
-      this.customPopupmenu})
+      this.customPopupmenu,
+      this.customTheme})
       : super._();
 
   factory _$CustomTableWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -316,10 +332,12 @@ class _$CustomTableWidgetImpl extends _CustomTableWidget {
   Map<String, String> columns;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomTableWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, header: $header, sortAsc: $sortAsc, initalSortColumn: $initalSortColumn, initialSortEnabled: $initialSortEnabled, elementsPerPage: $elementsPerPage, columns: $columns, customPopupmenu: $customPopupmenu)';
+    return 'CustomTableWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, header: $header, sortAsc: $sortAsc, initalSortColumn: $initalSortColumn, initialSortEnabled: $initialSortEnabled, elementsPerPage: $elementsPerPage, columns: $columns, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomTableWidget
@@ -352,7 +370,8 @@ abstract class _CustomTableWidget extends CustomTableWidget
       bool initialSortEnabled,
       int elementsPerPage,
       required Map<String, String> columns,
-      CustomPopupmenu? customPopupmenu}) = _$CustomTableWidgetImpl;
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme}) = _$CustomTableWidgetImpl;
   _CustomTableWidget._() : super._();
 
   factory _CustomTableWidget.fromJson(Map<String, dynamic> json) =
@@ -393,6 +412,9 @@ abstract class _CustomTableWidget extends CustomTableWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomTableWidget
   /// with the given fields replaced by the non-null parameter values.

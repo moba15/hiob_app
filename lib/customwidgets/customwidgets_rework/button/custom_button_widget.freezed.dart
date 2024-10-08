@@ -30,6 +30,9 @@ mixin _$CustomButtonWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
   @DataPointIdConverter()
@@ -60,6 +63,7 @@ abstract class $CustomButtonWidgetCopyWith<$Res> {
       String id,
       String name,
       CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme,
       String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? buttonLabel});
@@ -86,6 +90,7 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
     Object? id = null,
     Object? name = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
     Object? label = freezed,
     Object? dataPoint = freezed,
     Object? buttonLabel = freezed,
@@ -107,6 +112,10 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
       label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -150,6 +159,7 @@ abstract class _$$CustomButtonWidgetImplCopyWith<$Res>
       String id,
       String name,
       CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme,
       String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? buttonLabel});
@@ -175,6 +185,7 @@ class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
     Object? label = freezed,
     Object? dataPoint = freezed,
     Object? buttonLabel = freezed,
@@ -196,6 +207,10 @@ class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
       label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -220,6 +235,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
       required this.id,
       required this.name,
       this.customPopupmenu,
+      this.customTheme,
       this.label,
       @DataPointIdConverter() required this.dataPoint,
       this.buttonLabel})
@@ -238,6 +254,8 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
   @override
   CustomPopupmenu? customPopupmenu;
   @override
+  CustomThemeForWidget? customTheme;
+  @override
   String? label;
   @override
   @DataPointIdConverter()
@@ -247,7 +265,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
 
   @override
   String toString() {
-    return 'CustomButtonWidget(type: $type, id: $id, name: $name, customPopupmenu: $customPopupmenu, label: $label, dataPoint: $dataPoint, buttonLabel: $buttonLabel)';
+    return 'CustomButtonWidget(type: $type, id: $id, name: $name, customPopupmenu: $customPopupmenu, customTheme: $customTheme, label: $label, dataPoint: $dataPoint, buttonLabel: $buttonLabel)';
   }
 
   /// Create a copy of CustomButtonWidget
@@ -274,6 +292,7 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
       required String id,
       required String name,
       CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme,
       String? label,
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? buttonLabel}) = _$CustomButtonWidgetImpl;
@@ -294,6 +313,9 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
   @override
   String? get label;
   set label(String? value);

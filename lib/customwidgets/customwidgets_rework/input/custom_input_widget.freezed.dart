@@ -40,6 +40,9 @@ mixin _$CustomInputWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
   CustomInputSendMethod? get customInputSendMethod =>
       throw _privateConstructorUsedError;
   set customInputSendMethod(CustomInputSendMethod? value) =>
@@ -76,6 +79,7 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType,
       bool fullSize});
@@ -106,6 +110,7 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
     Object? hintText = freezed,
     Object? suffix = freezed,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
     Object? customInputSendMethod = freezed,
     Object? customInputDisplayConentType = freezed,
     Object? fullSize = null,
@@ -143,6 +148,10 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
       customInputSendMethod: freezed == customInputSendMethod
           ? _value.customInputSendMethod
           : customInputSendMethod // ignore: cast_nullable_to_non_nullable
@@ -190,6 +199,7 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType,
       bool fullSize});
@@ -219,6 +229,7 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
     Object? hintText = freezed,
     Object? suffix = freezed,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
     Object? customInputSendMethod = freezed,
     Object? customInputDisplayConentType = freezed,
     Object? fullSize = null,
@@ -256,6 +267,10 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
       customInputSendMethod: freezed == customInputSendMethod
           ? _value.customInputSendMethod
           : customInputSendMethod // ignore: cast_nullable_to_non_nullable
@@ -284,6 +299,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
       this.hintText,
       this.suffix,
       this.customPopupmenu,
+      this.customTheme,
       this.customInputSendMethod,
       this.customInputDisplayConentType,
       this.fullSize = false})
@@ -311,6 +327,8 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   @override
   CustomPopupmenu? customPopupmenu;
   @override
+  CustomThemeForWidget? customTheme;
+  @override
   CustomInputSendMethod? customInputSendMethod;
   @override
   CustomInputDisplayConentType? customInputDisplayConentType;
@@ -320,7 +338,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
 
   @override
   String toString() {
-    return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customPopupmenu: $customPopupmenu, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType, fullSize: $fullSize)';
+    return 'CustomInputWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, hintText: $hintText, suffix: $suffix, customPopupmenu: $customPopupmenu, customTheme: $customTheme, customInputSendMethod: $customInputSendMethod, customInputDisplayConentType: $customInputDisplayConentType, fullSize: $fullSize)';
   }
 
   /// Create a copy of CustomInputWidget
@@ -351,6 +369,7 @@ abstract class _CustomInputWidget extends CustomInputWidget
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType,
       bool fullSize}) = _$CustomInputWidgetImpl;
@@ -385,6 +404,9 @@ abstract class _CustomInputWidget extends CustomInputWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
   @override
   CustomInputSendMethod? get customInputSendMethod;
   set customInputSendMethod(CustomInputSendMethod? value);
