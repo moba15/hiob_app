@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+//import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
@@ -115,7 +115,7 @@ class _CustomButtonWidgetDeviceViewState
                       value: !(_bloc.state.value == true),
                       oldValue: _bloc.state.value));
                   if (Manager().generalManager.vibrateEnabled) {
-                    Vibrate.feedback(FeedbackType.light);
+                //    Vibrate.feedback(FeedbackType.light);
                   }
                 }
               },
@@ -153,7 +153,7 @@ class _CustomButtonWidgetDeviceViewState
                       _bloc.add(DataPointValueUpdateRequest(
                           value: true, oldValue: _bloc.state.value == true));
                       if (Manager().generalManager.vibrateEnabled) {
-                        Vibrate.feedback(FeedbackType.light);
+                    //    Vibrate.feedback(FeedbackType.light);
                       }
                     },
                   ))),

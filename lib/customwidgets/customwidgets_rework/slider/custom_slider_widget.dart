@@ -18,7 +18,7 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
   final isAbleToPopupMenu = false;
   @override
   const CustomSliderWidget._();
-
+  //TODO Label anzeige
   @Implements<CustomWidget>()
   factory CustomSliderWidget(
       {@Default(CustomWidgetTypeDeprecated.slider)
