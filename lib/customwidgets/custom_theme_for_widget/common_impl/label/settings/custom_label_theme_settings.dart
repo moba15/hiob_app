@@ -90,6 +90,7 @@ class _CustomLabelThemeSettingsState extends State<CustomLabelThemeSettings> {
         widget.labelTheme.labelFontWeight = value;
         c.update(null);
       },
+      decoration: const InputDecoration(label: Text("Label font weight")),
     );
   }
 
