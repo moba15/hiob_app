@@ -128,9 +128,12 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
             items: [
               for (CustomWidgetTypeDeprecated c
                   in CustomWidgetTypeDeprecated.values.where((value) =>
-                      value != CustomWidgetTypeDeprecated.group &&
-                      value != CustomWidgetTypeDeprecated.alertDialog &&
-                      (widget.filter == null || widget.filter!(value))))
+                      (value != CustomWidgetTypeDeprecated.group &&
+                          value != CustomWidgetTypeDeprecated.alertDialog &&
+                          (!value.settingWidget.deprecated &&
+                              (widget.filter == null ||
+                                  widget.filter!(value)))) ||
+                      value == _selectedType))
                 DropdownMenuItem(
                   value: c,
                   child: Text(c.name),
