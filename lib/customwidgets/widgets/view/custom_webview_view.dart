@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
 
 class CustomWebViewView extends StatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
@@ -14,11 +14,11 @@ class CustomWebViewView extends StatefulWidget {
 }
 
 class _CustomWebViewViewState extends State<CustomWebViewView> {
-  late WebViewController _webViewController;
+  //late WebViewController _webViewController;
 
   @override
   void initState() {
-    if (widget.customWebViewWidget.dataPoint != null) {
+    /* if (widget.customWebViewWidget.dataPoint != null) {
       _webViewController = WebViewController()
         ..setJavaScriptMode(widget.customWebViewWidget.javaScript
             ? JavaScriptMode.unrestricted
@@ -41,14 +41,14 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
           ..loadRequest(
               Uri.parse("https://${widget.customWebViewWidget.url ?? ""}"));
       }
-    }
+    }*/
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    /* return GestureDetector(
         onLongPress: () => _webViewController.reload(),
         child: Column(
           children: [
@@ -80,6 +80,7 @@ class _CustomWebViewViewState extends State<CustomWebViewView> {
                 ),
               ),
           ],
-        ));
+        ));*/
+    return Placeholder();
   }
 }

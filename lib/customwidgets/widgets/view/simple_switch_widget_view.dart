@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+//import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/device/state/state.dart';
@@ -100,7 +100,7 @@ class _SimpleSwitchWidgetDeviceViewState
                 value: !(bloc.state.value == true),
                 oldValue: bloc.state.value));
             if (context.read<Manager>().generalManager.vibrateEnabled) {
-              Vibrate.feedback(FeedbackType.light);
+              //  Vibrate.feedback(FeedbackType.light);
             }
           },
           title: Row(
@@ -137,7 +137,7 @@ class _SimpleSwitchWidgetDeviceViewState
                   bloc.add(DataPointValueUpdateRequest(
                       value: true, oldValue: bloc.state.value == true));
                   if (context.read<Manager>().generalManager.vibrateEnabled) {
-                    Vibrate.feedback(FeedbackType.light);
+                    // Vibrate.feedback(FeedbackType.light);
                   }
                 },
               ))),

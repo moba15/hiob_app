@@ -14,6 +14,7 @@ _$CustomSliderWidgetImpl _$$CustomSliderWidgetImplFromJson(
           CustomWidgetTypeDeprecated.slider,
       id: json['id'] as String,
       name: json['name'] as String,
+      label: json['label'] as String?,
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
           json['dataPoint'], const DataPointIdConverter().fromJson),
       max: (json['max'] as num?)?.toInt() ?? 100,
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$CustomSliderWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
+      'label': instance.label,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'max': instance.max,
       'min': instance.min,

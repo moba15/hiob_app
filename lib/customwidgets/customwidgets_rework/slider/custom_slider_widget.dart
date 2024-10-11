@@ -18,13 +18,14 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
   final isAbleToPopupMenu = false;
   @override
   const CustomSliderWidget._();
-
+  //TODO Label anzeige
   @Implements<CustomWidget>()
   factory CustomSliderWidget(
       {@Default(CustomWidgetTypeDeprecated.slider)
       CustomWidgetTypeDeprecated type,
       required String id,
       required String name,
+      String? label,
       @DataPointIdConverter() required DataPoint? dataPoint,
       @Default(100) int max,
       @Default(0) int min,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:gap/gap.dart';
 
 class DocumentationView extends StatefulWidget {
   final String currentPage;
