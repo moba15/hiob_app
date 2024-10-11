@@ -30,7 +30,9 @@ mixin _$CustomButtonWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  @_CustomButtonThemeConverter()
   CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  @_CustomButtonThemeConverter()
   set customTheme(CustomThemeForWidget? value) =>
       throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
@@ -63,7 +65,7 @@ abstract class $CustomButtonWidgetCopyWith<$Res> {
       String id,
       String name,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme,
+      @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
       String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? buttonLabel});
@@ -159,7 +161,7 @@ abstract class _$$CustomButtonWidgetImplCopyWith<$Res>
       String id,
       String name,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme,
+      @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
       String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       String? buttonLabel});
@@ -235,7 +237,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
       required this.id,
       required this.name,
       this.customPopupmenu,
-      this.customTheme,
+      @_CustomButtonThemeConverter() this.customTheme,
       this.label,
       @DataPointIdConverter() required this.dataPoint,
       this.buttonLabel})
@@ -254,6 +256,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
   @override
   CustomPopupmenu? customPopupmenu;
   @override
+  @_CustomButtonThemeConverter()
   CustomThemeForWidget? customTheme;
   @override
   String? label;
@@ -292,7 +295,7 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
       required String id,
       required String name,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme,
+      @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
       String? label,
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? buttonLabel}) = _$CustomButtonWidgetImpl;
@@ -314,7 +317,9 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
   @override
+  @_CustomButtonThemeConverter()
   CustomThemeForWidget? get customTheme;
+  @_CustomButtonThemeConverter()
   set customTheme(CustomThemeForWidget? value);
   @override
   String? get label;
