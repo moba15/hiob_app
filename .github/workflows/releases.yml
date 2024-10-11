@@ -38,7 +38,7 @@ jobs:
           STOREPASSWORD: ${{ secrets.STOREPASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
-          name: release-apks
+          name: release-appbundle
           path: build/app/outputs/bundle/release/app-release.aab
           compression-level: 1
   build-apk:
