@@ -44,7 +44,7 @@ class CustomColorPickerWidgetSettingsView
 class _CustomColorPickerWidgetSettingsViewState
     extends State<CustomColorPickerWidgetSettingsView> {
   late CustomWidgetBlocCubit c;
-  late TextEditingController _labelController, _initalSortColumn;
+  late TextEditingController _labelController;
 
   @override
   void initState() {
