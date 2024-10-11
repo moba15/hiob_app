@@ -8,7 +8,11 @@ class FontWeightConverter implements JsonConverter<FontWeight?, int?> {
     if (json == null) {
       return null;
     }
-    return FontWeight.values[json];
+
+    return FontWeight.values.firstWhere(
+      (element) => element.index == json,
+      orElse: () => FontWeight.normal,
+    );
   }
 
   @override
