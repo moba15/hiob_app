@@ -29,5 +29,6 @@ class LabelTheme with _$LabelTheme {
   factory LabelTheme.fromJson(Map<String, dynamic> json) =>
       _$LabelThemeFromJson(json);
 
-  TextStyle get textStyle => TextStyle(fontSize: labelFonSize);
+  TextStyle get textStyle => TextStyle(
+      fontSize: labelFonSize, color: labelColor, fontWeight: labelFontWeight);
 }
