@@ -6,6 +6,12 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
+## 0.0.701
+
+### Templates 
+- fixed some bugs
+- added label for slider
+
 ## 0.0.700
 
 ### Templates
