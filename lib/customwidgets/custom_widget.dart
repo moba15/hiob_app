@@ -12,6 +12,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
@@ -159,6 +160,10 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
             as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.colorPicker:
         return CustomColorpickerWidgetTheme(
+                "not set", LabelTheme("not set", null, null, null, null))
+            as CustomThemeForWidget;
+      case CustomWidgetTypeDeprecated.slider:
+        return CustomSliderWidgetTheme(
                 "not set", LabelTheme("not set", null, null, null, null))
             as CustomThemeForWidget;
 
