@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/settings/custom_slider_widget_settings_view.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/view/custom_slider_widget_view.dart';
 
 import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
@@ -13,12 +14,34 @@ import 'package:smart_home/device/state/state.dart';
 part 'custom_slider_widget.freezed.dart';
 part 'custom_slider_widget.g.dart';
 
+class _CustomSliderThemeConverter
+    implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
+  const _CustomSliderThemeConverter();
+  @override
+  CustomThemeForWidget? fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return null;
+    } else {
+      return CustomSliderWidgetTheme.fromJson(json) as CustomThemeForWidget;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(CustomThemeForWidget? object) {
+    if (object == null) {
+      return null;
+    }
+    return object.toJson();
+  }
+}
+
 @unfreezed
 class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
   @override
   final isAbleToPopupMenu = false;
   @override
-  final hasCustomTheme = false;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final hasCustomTheme = true;
   @override
   const CustomSliderWidget._();
 
@@ -32,7 +55,7 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
     @Default(0) int min,
     @Default(10) int step,
     CustomPopupmenu? customPopupmenu,
-    CustomThemeForWidget? customTheme,
+    @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme,
   }) = _CustomSliderWidget;
 
   @override

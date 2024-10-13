@@ -40,7 +40,9 @@ mixin _$CustomSliderWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  @_CustomSliderThemeConverter()
   CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  @_CustomSliderThemeConverter()
   set customTheme(CustomThemeForWidget? value) =>
       throw _privateConstructorUsedError;
 
@@ -69,7 +71,7 @@ abstract class $CustomSliderWidgetCopyWith<$Res> {
       int min,
       int step,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+      @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -171,7 +173,7 @@ abstract class _$$CustomSliderWidgetImplCopyWith<$Res>
       int min,
       int step,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+      @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -253,7 +255,7 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
       this.min = 0,
       this.step = 10,
       this.customPopupmenu,
-      this.customTheme})
+      @_CustomSliderThemeConverter() this.customTheme})
       : super._();
 
   factory _$CustomSliderWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -281,6 +283,7 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
   @override
   CustomPopupmenu? customPopupmenu;
   @override
+  @_CustomSliderThemeConverter()
   CustomThemeForWidget? customTheme;
 
   @override
@@ -308,15 +311,16 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
 abstract class _CustomSliderWidget extends CustomSliderWidget
     implements CustomWidget {
   factory _CustomSliderWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      int max,
-      int min,
-      int step,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme}) = _$CustomSliderWidgetImpl;
+          {CustomWidgetTypeDeprecated type,
+          required String id,
+          required String name,
+          @DataPointIdConverter() required DataPoint? dataPoint,
+          int max,
+          int min,
+          int step,
+          CustomPopupmenu? customPopupmenu,
+          @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme}) =
+      _$CustomSliderWidgetImpl;
   _CustomSliderWidget._() : super._();
 
   factory _CustomSliderWidget.fromJson(Map<String, dynamic> json) =
@@ -349,7 +353,9 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
   @override
+  @_CustomSliderThemeConverter()
   CustomThemeForWidget? get customTheme;
+  @_CustomSliderThemeConverter()
   set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomSliderWidget
