@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_fo
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/settings/custom_colorpicker_widget_settings_view.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/view/custom_colorpicker_widget_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 
@@ -14,6 +15,28 @@ import 'package:smart_home/device/state/state.dart';
 part 'custom_colorpicker_widget.freezed.dart';
 part 'custom_colorpicker_widget.g.dart';
 
+class _CustomColorpickerThemeConverter
+    implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
+  const _CustomColorpickerThemeConverter();
+  @override
+  CustomThemeForWidget? fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return null;
+    } else {
+      return CustomColorpickerWidgetTheme.fromJson(json)
+          as CustomThemeForWidget;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(CustomThemeForWidget? object) {
+    if (object == null) {
+      return null;
+    }
+    return object.toJson();
+  }
+}
+
 @unfreezed
 class CustomColorPickerWidget
     with _$CustomColorPickerWidget
@@ -21,7 +44,8 @@ class CustomColorPickerWidget
   @override
   final isAbleToPopupMenu = false;
   @override
-  final hasCustomTheme = false;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final hasCustomTheme = true;
   @override
   const CustomColorPickerWidget._();
 
@@ -38,7 +62,7 @@ class CustomColorPickerWidget
     @Default(true) shadesSelection,
     @Default({}) Map<ColorPickerType, bool> pickersEnabled,
     CustomPopupmenu? customPopupmenu,
-    CustomThemeForWidget? customTheme,
+    @_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme,
   }) = _CustomColorPickerWidget;
 
   @override

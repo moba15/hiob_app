@@ -47,7 +47,9 @@ mixin _$CustomColorPickerWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  @_CustomColorpickerThemeConverter()
   CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  @_CustomColorpickerThemeConverter()
   set customTheme(CustomThemeForWidget? value) =>
       throw _privateConstructorUsedError;
 
@@ -78,7 +80,7 @@ abstract class $CustomColorPickerWidgetCopyWith<$Res> {
       dynamic shadesSelection,
       Map<ColorPickerType, bool> pickersEnabled,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+      @_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -194,7 +196,7 @@ abstract class _$$CustomColorPickerWidgetImplCopyWith<$Res>
       dynamic shadesSelection,
       Map<ColorPickerType, bool> pickersEnabled,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+      @_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -286,7 +288,7 @@ class _$CustomColorPickerWidgetImpl extends _CustomColorPickerWidget {
       this.shadesSelection = true,
       this.pickersEnabled = const {},
       this.customPopupmenu,
-      this.customTheme})
+      @_CustomColorpickerThemeConverter() this.customTheme})
       : super._();
 
   factory _$CustomColorPickerWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -319,6 +321,7 @@ class _$CustomColorPickerWidgetImpl extends _CustomColorPickerWidget {
   @override
   CustomPopupmenu? customPopupmenu;
   @override
+  @_CustomColorpickerThemeConverter()
   CustomThemeForWidget? customTheme;
 
   @override
@@ -356,6 +359,7 @@ abstract class _CustomColorPickerWidget extends CustomColorPickerWidget
       dynamic shadesSelection,
       Map<ColorPickerType, bool> pickersEnabled,
       CustomPopupmenu? customPopupmenu,
+      @_CustomColorpickerThemeConverter()
       CustomThemeForWidget? customTheme}) = _$CustomColorPickerWidgetImpl;
   _CustomColorPickerWidget._() : super._();
 
@@ -395,7 +399,9 @@ abstract class _CustomColorPickerWidget extends CustomColorPickerWidget
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
   @override
+  @_CustomColorpickerThemeConverter()
   CustomThemeForWidget? get customTheme;
+  @_CustomColorpickerThemeConverter()
   set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomColorPickerWidget

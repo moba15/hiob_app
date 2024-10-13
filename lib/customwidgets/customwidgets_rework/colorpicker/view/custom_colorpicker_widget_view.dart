@@ -2,6 +2,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
@@ -18,18 +19,21 @@ class CustomColorPickerWidgetView extends StatefulWidget {
 
 class _CustomColorPickerWidgetViewState
     extends State<CustomColorPickerWidgetView> {
-  late String _name;
+  late String _label;
   DataPointBloc? _bloc;
+  late CustomColorpickerWidgetTheme? theme;
 
   @override
   void initState() {
     if (widget.customColorPickerWidget.dataPoint != null) {
       _bloc = DataPointBloc(widget.customColorPickerWidget.dataPoint!);
     }
-    _name = widget.customColorPickerWidget.label != null &&
+    _label = widget.customColorPickerWidget.label != null &&
             widget.customColorPickerWidget.label!.isNotEmpty
         ? widget.customColorPickerWidget.label!
         : widget.customColorPickerWidget.name;
+    theme = widget.customColorPickerWidget.customTheme
+        as CustomColorpickerWidgetTheme?;
     super.initState();
   }
 
@@ -40,10 +44,12 @@ class _CustomColorPickerWidgetViewState
       if (widget.customColorPickerWidget.dataPoint != null) {
         _bloc = DataPointBloc(widget.customColorPickerWidget.dataPoint!);
       }
-      _name = widget.customColorPickerWidget.label != null &&
+      _label = widget.customColorPickerWidget.label != null &&
               widget.customColorPickerWidget.label!.isNotEmpty
           ? widget.customColorPickerWidget.label!
           : widget.customColorPickerWidget.name;
+      theme = widget.customColorPickerWidget.customTheme
+          as CustomColorpickerWidgetTheme?;
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -78,7 +84,10 @@ class _CustomColorPickerWidgetViewState
             (regExp.allMatches(value).length != 6 &&
                 regExp.allMatches(value).length != 8)) {
           return ListTile(
-            title: Text(_name),
+            title: Text(
+              _label,
+              style: theme?.labelTheme.textStyle,
+            ),
             trailing: Text("Not supported value: $value"),
             onTap: () => colorPickerDialog(
                 context, _bloc!, const Color.fromARGB(0, 0, 0, 0)),
@@ -101,7 +110,10 @@ class _CustomColorPickerWidgetViewState
         }
 
         return ListTile(
-            title: Text(_name),
+            title: Text(
+              _label,
+              style: theme?.labelTheme.textStyle,
+            ),
             trailing: alpha == null ||
                     red == null ||
                     blue == null ||
