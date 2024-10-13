@@ -25,10 +25,8 @@ _$CustomMultiselectionWidgetImpl _$$CustomMultiselectionWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
-      customTheme: json['customTheme'] == null
-          ? null
-          : CustomThemeForWidget.fromJson(
-              json['customTheme'] as Map<String, dynamic>),
+      customTheme: const _CustomMultiselectionThemeConverter()
+          .fromJson(json['customTheme'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$$CustomMultiselectionWidgetImplToJson(
@@ -42,7 +40,8 @@ Map<String, dynamic> _$$CustomMultiselectionWidgetImplToJson(
       'selections': instance.selections,
       'dropdownMenuMode': _$DropdownMenuModeEnumMap[instance.dropdownMenuMode]!,
       'customPopupmenu': instance.customPopupmenu,
-      'customTheme': instance.customTheme,
+      'customTheme': const _CustomMultiselectionThemeConverter()
+          .toJson(instance.customTheme),
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
