@@ -10,7 +10,7 @@ class MaterialColorConverter
       return null;
     }
     return Color.fromARGB(
-        json["alpha"], json["red"], json["blue"], json["green"]);
+        json["alpha"], json["red"], json["green"], json["blue"]);
   }
 
   @override
