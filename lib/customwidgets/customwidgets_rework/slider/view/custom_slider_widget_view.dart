@@ -62,21 +62,26 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
                 widget.customSliderWidget.max.toDouble());
         int divisons =
             (max.toInt() - min.toInt()) ~/ widget.customSliderWidget.step;
-        return SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            thumbShape: CustomSliderThumbValueCircle(
-                thumbRadius: 16, max: max.toInt(), min: min.toInt()),
-          ),
-          child: Slider(
-            value: double.tryParse(state.value.toString()) ?? min,
-            min: min,
-            max: max,
-            divisions: divisons,
-            onChanged: (value) {
-              bloc?.add(
-                  DataPointValueUpdateRequest(value: value, oldValue: value));
-            },
-            label: (double.tryParse(state.value.toString()) ?? min).toString(),
+        return ListTile(
+          title: Text(widget.customSliderWidget.label ??
+              widget.customSliderWidget.name),
+          subtitle: SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              thumbShape: CustomSliderThumbValueCircle(
+                  thumbRadius: 16, max: max.toInt(), min: min.toInt()),
+            ),
+            child: Slider(
+              value: double.tryParse(state.value.toString()) ?? min,
+              min: min,
+              max: max,
+              divisions: divisons,
+              onChanged: (value) {
+                bloc?.add(
+                    DataPointValueUpdateRequest(value: value, oldValue: value));
+              },
+              label:
+                  (double.tryParse(state.value.toString()) ?? min).toString(),
+            ),
           ),
         );
       },

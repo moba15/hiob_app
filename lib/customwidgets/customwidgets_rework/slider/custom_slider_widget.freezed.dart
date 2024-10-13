@@ -27,6 +27,8 @@ mixin _$CustomSliderWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
+  String? get label => throw _privateConstructorUsedError;
+  set label(String? value) => throw _privateConstructorUsedError;
   @DataPointIdConverter()
   DataPoint? get dataPoint => throw _privateConstructorUsedError;
   @DataPointIdConverter()
@@ -66,6 +68,7 @@ abstract class $CustomSliderWidgetCopyWith<$Res> {
       {CustomWidgetTypeDeprecated type,
       String id,
       String name,
+      String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       int max,
       int min,
@@ -94,6 +97,7 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? label = freezed,
     Object? dataPoint = freezed,
     Object? max = null,
     Object? min = null,
@@ -114,6 +118,10 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -168,6 +176,7 @@ abstract class _$$CustomSliderWidgetImplCopyWith<$Res>
       {CustomWidgetTypeDeprecated type,
       String id,
       String name,
+      String? label,
       @DataPointIdConverter() DataPoint? dataPoint,
       int max,
       int min,
@@ -195,6 +204,7 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? label = freezed,
     Object? dataPoint = freezed,
     Object? max = null,
     Object? min = null,
@@ -215,6 +225,10 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -250,6 +264,7 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
       {this.type = CustomWidgetTypeDeprecated.slider,
       required this.id,
       required this.name,
+      this.label,
       @DataPointIdConverter() required this.dataPoint,
       this.max = 100,
       this.min = 0,
@@ -268,6 +283,8 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
   String id;
   @override
   String name;
+  @override
+  String? label;
   @override
   @DataPointIdConverter()
   DataPoint? dataPoint;
@@ -288,7 +305,7 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
 
   @override
   String toString() {
-    return 'CustomSliderWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, max: $max, min: $min, step: $step, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
+    return 'CustomSliderWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, max: $max, min: $min, step: $step, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomSliderWidget
@@ -314,6 +331,7 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
           {CustomWidgetTypeDeprecated type,
           required String id,
           required String name,
+          String? label,
           @DataPointIdConverter() required DataPoint? dataPoint,
           int max,
           int min,
@@ -335,6 +353,9 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
   @override
   String get name;
   set name(String value);
+  @override
+  String? get label;
+  set label(String? value);
   @override
   @DataPointIdConverter()
   DataPoint? get dataPoint;

@@ -72,6 +72,17 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
+              child: TextField(
+                  onChanged: (d) {
+                    widget.customSliderWidget.label = d;
+                    if (d.isEmpty) {
+                      widget.customSliderWidget.label = null;
+                    }
+                    c.update(widget.customSliderWidget);
+                  },
+                  controller: TextEditingController()
+                    ..text = widget.customSliderWidget.label ?? "")),
+          InputFieldContainer.inputContainer(
               child: DeviceSelection(
             onDeviceSelected: (d) => {c.update(widget.customSliderWidget)},
             onDataPointSelected: (d) => {
