@@ -40,7 +40,9 @@ mixin _$CustomInputWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  @_CustomInputThemeConverter()
   CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  @_CustomInputThemeConverter()
   set customTheme(CustomThemeForWidget? value) =>
       throw _privateConstructorUsedError;
   CustomInputSendMethod? get customInputSendMethod =>
@@ -79,7 +81,7 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme,
+      @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType,
       bool fullSize});
@@ -199,7 +201,7 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme,
+      @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType,
       bool fullSize});
@@ -299,7 +301,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
       this.hintText,
       this.suffix,
       this.customPopupmenu,
-      this.customTheme,
+      @_CustomInputThemeConverter() this.customTheme,
       this.customInputSendMethod,
       this.customInputDisplayConentType,
       this.fullSize = false})
@@ -327,6 +329,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   @override
   CustomPopupmenu? customPopupmenu;
   @override
+  @_CustomInputThemeConverter()
   CustomThemeForWidget? customTheme;
   @override
   CustomInputSendMethod? customInputSendMethod;
@@ -369,7 +372,7 @@ abstract class _CustomInputWidget extends CustomInputWidget
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme,
+      @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
       CustomInputSendMethod? customInputSendMethod,
       CustomInputDisplayConentType? customInputDisplayConentType,
       bool fullSize}) = _$CustomInputWidgetImpl;
@@ -405,7 +408,9 @@ abstract class _CustomInputWidget extends CustomInputWidget
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
   @override
+  @_CustomInputThemeConverter()
   CustomThemeForWidget? get customTheme;
+  @_CustomInputThemeConverter()
   set customTheme(CustomThemeForWidget? value);
   @override
   CustomInputSendMethod? get customInputSendMethod;
