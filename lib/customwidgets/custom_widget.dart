@@ -5,9 +5,12 @@ import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_fo
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
@@ -144,6 +147,18 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
             as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.button:
         return CustomButtonWidgetTheme(
+                "not set", LabelTheme("not set", null, null, null, null))
+            as CustomThemeForWidget;
+      case CustomWidgetTypeDeprecated.input:
+        return CustomInputWidgetTheme(
+                "not set", LabelTheme("not set", null, null, null, null))
+            as CustomThemeForWidget;
+      case CustomWidgetTypeDeprecated.multiselection:
+        return CustomMultiselectionWidgetTheme(
+                "not set", LabelTheme("not set", null, null, null, null))
+            as CustomThemeForWidget;
+      case CustomWidgetTypeDeprecated.colorPicker:
+        return CustomColorpickerWidgetTheme(
                 "not set", LabelTheme("not set", null, null, null, null))
             as CustomThemeForWidget;
 

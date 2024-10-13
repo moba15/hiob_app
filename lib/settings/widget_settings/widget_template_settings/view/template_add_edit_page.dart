@@ -463,8 +463,7 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
     } else if (currentTab == 2 || (!hasPopupmenu && currentTab == 1)) {
       if (widget.customWidgetSettingWidget!.customWidget.customTheme == null) {
         CustomThemeForWidget customThemeForWidget =
-            (widget.customWidgetSettingWidget!.customWidget).type.emptyTheme
-                as CustomThemeForWidget;
+            (widget.customWidgetSettingWidget!.customWidget).type.emptyTheme;
         widget.customWidgetSettingWidget!.customWidget.customTheme =
             customThemeForWidget;
         return customThemeForWidget.settingWidget;

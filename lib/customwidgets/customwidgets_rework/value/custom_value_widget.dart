@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/common_impl/label/widget_label_theme.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
@@ -10,7 +9,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/value/settings/cus
 import 'package:smart_home/customwidgets/customwidgets_rework/value/view/custom_value_widget_view.dart';
 import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
 import 'package:smart_home/device/state/state.dart';
-import 'package:smart_home/manager/manager.dart';
 
 part 'custom_value_widget.freezed.dart';
 part 'custom_value_widget.g.dart';

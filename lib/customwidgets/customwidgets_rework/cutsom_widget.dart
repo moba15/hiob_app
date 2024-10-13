@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/custom_theme/custom_theme.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
