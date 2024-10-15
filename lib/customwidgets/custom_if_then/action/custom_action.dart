@@ -1,12 +1,12 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-part 'custom_action.freezed.dart';
-part 'custom_action.g.dart';
+enum CustomActionType { applyTheme }
 
-@unfreezed
-class CustomAction with _$CustomAction {
-  factory CustomAction() = _CustomAction;
+abstract class CustomAction {
+  final CustomActionType type;
+  CustomAction({required this.type});
 
-  @override
-  factory CustomAction.fromJson(Map<String, dynamic> json) =>
-      _$CustomActionFromJson(json);
+  Map<String, dynamic> toJson();
+
+  factory CustomAction.fromJson(Map<String, dynamic> json) {
+    throw UnimplementedError("");
+  }
 }

@@ -1,12 +1,21 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-part 'custom_condition.freezed.dart';
-part 'custom_condition.g.dart';
+enum ConditionType { and, or, not, stateValue }
 
-@unfreezed
-class CustomCondition with _$CustomCondition {
-  factory CustomCondition() = _CustomCondition;
+abstract class CustomCondition {
+  final ConditionType type;
+  CustomCondition({required this.type});
+
+  Map<String, dynamic> toJson();
+
+  bool toBoolean();
 
   @override
-  factory CustomCondition.fromJson(Map<String, dynamic> json) =>
-      _$CustomConditionFromJson(json);
+  factory CustomCondition.fromJson(Map<String, dynamic> json) {
+    throw UnimplementedError("");
+  }
+}
+
+extension CustomConditionExt on CustomCondition {
+  //TODO test if this works for &&
+  bool operator &(CustomCondition condition) =>
+      toBoolean() && condition.toBoolean();
 }
