@@ -40,6 +40,11 @@ mixin _$CustomSwitchWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  @_CustomSwitchThemeConverter()
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  @_CustomSwitchThemeConverter()
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomSwitchWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,7 +70,8 @@ abstract class $CustomSwitchWidgetCopyWith<$Res> {
       String? label,
       String sendIfOn,
       String sendIfOff,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      @_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -93,6 +99,7 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res, $Val extends CustomSwitchWidget>
     Object? sendIfOn = null,
     Object? sendIfOff = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -127,6 +134,10 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res, $Val extends CustomSwitchWidget>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -161,7 +172,8 @@ abstract class _$$CustomSwitchWidgetImplCopyWith<$Res>
       String? label,
       String sendIfOn,
       String sendIfOff,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      @_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -188,6 +200,7 @@ class __$$CustomSwitchWidgetImplCopyWithImpl<$Res>
     Object? sendIfOn = null,
     Object? sendIfOff = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomSwitchWidgetImpl(
       type: null == type
@@ -222,6 +235,10 @@ class __$$CustomSwitchWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -237,7 +254,8 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
       this.label,
       this.sendIfOn = "true",
       this.sendIfOff = "false",
-      this.customPopupmenu})
+      this.customPopupmenu,
+      @_CustomSwitchThemeConverter() this.customTheme})
       : super._();
 
   factory _$CustomSwitchWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -263,10 +281,13 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
   String sendIfOff;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  @_CustomSwitchThemeConverter()
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomSwitchWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, sendIfOn: $sendIfOn, sendIfOff: $sendIfOff, customPopupmenu: $customPopupmenu)';
+    return 'CustomSwitchWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, sendIfOn: $sendIfOn, sendIfOff: $sendIfOff, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomSwitchWidget
@@ -289,14 +310,16 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
 abstract class _CustomSwitchWidget extends CustomSwitchWidget
     implements CustomWidget {
   factory _CustomSwitchWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      String? label,
-      String sendIfOn,
-      String sendIfOff,
-      CustomPopupmenu? customPopupmenu}) = _$CustomSwitchWidgetImpl;
+          {CustomWidgetTypeDeprecated type,
+          required String id,
+          required String name,
+          @DataPointIdConverter() required DataPoint? dataPoint,
+          String? label,
+          String sendIfOn,
+          String sendIfOff,
+          CustomPopupmenu? customPopupmenu,
+          @_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme}) =
+      _$CustomSwitchWidgetImpl;
   _CustomSwitchWidget._() : super._();
 
   factory _CustomSwitchWidget.fromJson(Map<String, dynamic> json) =
@@ -328,6 +351,11 @@ abstract class _CustomSwitchWidget extends CustomSwitchWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  @_CustomSwitchThemeConverter()
+  CustomThemeForWidget? get customTheme;
+  @_CustomSwitchThemeConverter()
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomSwitchWidget
   /// with the given fields replaced by the non-null parameter values.

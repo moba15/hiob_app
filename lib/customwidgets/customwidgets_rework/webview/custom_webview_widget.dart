@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -16,6 +17,8 @@ class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
   @override
   final isAbleToPopupMenu = false;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomWebViewWidget._();
 
   @Implements<CustomWidget>()
@@ -28,6 +31,7 @@ class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
     String? url,
     @Default(500) int height,
     CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
   }) = _CustomWebViewWidget;
 
   @override

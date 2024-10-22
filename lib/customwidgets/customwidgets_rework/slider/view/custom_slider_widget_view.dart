@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'dart:math' as math;
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/shapes/sldier/custom_slider_thumb_value.dart';
@@ -16,11 +17,13 @@ class CustomSliderWidgetView extends StatefulWidget {
 
 class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
   DataPointBloc? bloc;
+  late CustomSliderWidgetTheme? theme;
   @override
   void initState() {
     if (widget.customSliderWidget.dataPoint != null) {
       bloc = DataPointBloc(widget.customSliderWidget.dataPoint!);
     }
+    theme = widget.customSliderWidget.customTheme as CustomSliderWidgetTheme?;
     super.initState();
   }
 
@@ -31,6 +34,7 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
       if (widget.customSliderWidget.dataPoint != null) {
         bloc = DataPointBloc(widget.customSliderWidget.dataPoint!);
       }
+      theme = widget.customSliderWidget.customTheme as CustomSliderWidgetTheme?;
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -63,8 +67,10 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
         int divisons =
             (max.toInt() - min.toInt()) ~/ widget.customSliderWidget.step;
         return ListTile(
-          title: Text(widget.customSliderWidget.label ??
-              widget.customSliderWidget.name),
+          title: Text(
+            widget.customSliderWidget.label ?? widget.customSliderWidget.name,
+            style: theme?.labelTheme.textStyle,
+          ),
           subtitle: SliderTheme(
             data: SliderTheme.of(context).copyWith(
               thumbShape: CustomSliderThumbValueCircle(
