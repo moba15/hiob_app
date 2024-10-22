@@ -81,7 +81,7 @@ class _CustomPopupmenuSettingsViewState
           child: CustomWidgetTemplateTile(
               customWidget: customWidget,
               customWidgetManager: Manager().customWidgetManager,
-              toggleSelect: () {})));
+              toggleSelect: null)));
     }
     return list;
   }
