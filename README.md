@@ -28,26 +28,12 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 
 - You can now view the Documentation inside the app
 
-## 0.0.615-beta.0
-
-- Added network media player widget
-- Added color picker widget
-- Fixed #56
-
-## 0.0.615-beta.0
-
-- Added notifications log
-- Added Textscale
 
 ## 0.0.612
 
 - Fixed Tabbar alignment
 - Fixed #46
 - Fixed some notifications bugs
-
-## 0.0.611-beta.0.
-
-- Added notifications
 
 ## 0.0.604
 
