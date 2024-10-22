@@ -37,6 +37,7 @@ class _CustomPopupmenuSettingsViewState
         )),
         ReorderableListView(
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           onReorder: (oldIndex, newIndex) {
             setState(() {
               widget.customPopupmenu.reorder(oldIndex, newIndex);
