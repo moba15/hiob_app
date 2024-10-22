@@ -5,6 +5,10 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
+## **Work in progress**
+- Fixed scrolling and reorder issue in the custompopup settings
+- **Important:** The following features are all highly experimental
+- Added customthemes for widgets
 
 ## 0.0.701
 
