@@ -23,7 +23,7 @@ import '../background/background_runner.dart';
 class Manager {
   //@Deprecated("Please use the Context")
   static final Manager instance =
-      Manager._internal(versionNumber: "0.0.700-beta.4", buildNumber: "177");
+      Manager._internal(versionNumber: "0.0.701", buildNumber: "180");
   static final navigatorKey = GlobalKey<NavigatorState>();
   //@Deprecated("Please use the Context")
   factory Manager() => instance;
