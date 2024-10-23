@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -17,6 +18,8 @@ class CustomNetworkPlayerWidget
   @override
   final isAbleToPopupMenu = false;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomNetworkPlayerWidget._();
 
   @Implements<CustomWidget>()
@@ -29,6 +32,7 @@ class CustomNetworkPlayerWidget
     @Default(16) int height,
     @Default(9) int width,
     CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
   }) = _CustomNetworkPlayerWidget;
 
   @override

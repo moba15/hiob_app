@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/custompopup/view/settings/cutsom_popupmenu_settings_view.dart';
@@ -55,8 +56,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         ? _customWidgetSettingWidget!.customWidgetDeprecated.toJson()
         : _customWidgetSettingWidget!.customWidget.toJson());
 
-    customWidgetBlocCubit =
-        CustomWidgetBlocCubit(customWidget: widget.preSelectedTemplate);
+    customWidgetBlocCubit = CustomWidgetBlocCubit();
     super.initState();
   }
 
@@ -128,9 +128,12 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
             items: [
               for (CustomWidgetTypeDeprecated c
                   in CustomWidgetTypeDeprecated.values.where((value) =>
-                      value != CustomWidgetTypeDeprecated.group &&
-                      value != CustomWidgetTypeDeprecated.alertDialog &&
-                      (widget.filter == null || widget.filter!(value))))
+                      (value != CustomWidgetTypeDeprecated.group &&
+                          value != CustomWidgetTypeDeprecated.alertDialog &&
+                          (!value.settingWidget.deprecated &&
+                              (widget.filter == null ||
+                                  widget.filter!(value)))) ||
+                      value == _selectedType))
                 DropdownMenuItem(
                   value: c,
                   child: Text(c.name),
@@ -352,6 +355,7 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
     with TickerProviderStateMixin {
   late TabController _tabController;
   late bool hasPopupmenu = false;
+  late bool hasCustomTheme;
   int currentTab = 0;
   @override
   void initState() {
@@ -359,7 +363,18 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
         widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
         (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
             .isAbleToPopupMenu;
-    _tabController = TabController(length: hasPopupmenu ? 2 : 1, vsync: this);
+    hasCustomTheme = !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
+        widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
+        (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
+            .hasCustomTheme;
+    int length = 1;
+    if (hasPopupmenu) {
+      length++;
+    }
+    if (hasCustomTheme) {
+      length++;
+    }
+    _tabController = TabController(length: length, vsync: this);
     _tabController.addListener(() {
       changeTab(_tabController.index);
     });
@@ -373,9 +388,21 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
         widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
         (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
             .isAbleToPopupMenu;
+
+    hasCustomTheme = !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
+        widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
+        (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
+            .hasCustomTheme;
+    int length = 1;
+    if (hasPopupmenu) {
+      length++;
+    }
+    if (hasCustomTheme) {
+      length++;
+    }
     currentTab = 0;
     _tabController.dispose();
-    _tabController = TabController(length: hasPopupmenu ? 2 : 1, vsync: this);
+    _tabController = TabController(length: length, vsync: this);
     _tabController.addListener(() {
       changeTab(_tabController.index);
     });
@@ -406,6 +433,10 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
       if (hasPopupmenu)
         const Tab(
           text: "PopUpMenu",
+        ),
+      if (hasCustomTheme)
+        const Tab(
+          text: "Theme",
         )
     ]);
   }
@@ -418,7 +449,7 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
       return RepositoryProvider.value(
           value: Manager().customWidgetManager,
           child: widget.customWidgetSettingWidget! as Widget);
-    } else if (currentTab == 1) {
+    } else if (currentTab == 1 && hasPopupmenu) {
       if (widget.customWidgetSettingWidget!.customWidget.customPopupmenu ==
           null) {
         widget.customWidgetSettingWidget!.customWidget.customPopupmenu =
@@ -429,6 +460,18 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
           customPopupmenu:
               widget.customWidgetSettingWidget!.customWidget.customPopupmenu ??
                   CustomPopupmenu(customWidgets: []));
+    } else if (currentTab == 2 || (!hasPopupmenu && currentTab == 1)) {
+      if (widget.customWidgetSettingWidget!.customWidget.customTheme == null) {
+        CustomThemeForWidget customThemeForWidget =
+            (widget.customWidgetSettingWidget!.customWidget).type.emptyTheme;
+        widget.customWidgetSettingWidget!.customWidget.customTheme =
+            customThemeForWidget;
+        return customThemeForWidget.settingWidget;
+      } else {
+        return (widget.customWidgetSettingWidget!.customWidget)
+            .customTheme!
+            .settingWidget;
+      }
     }
 
     return const Text("Error 404");

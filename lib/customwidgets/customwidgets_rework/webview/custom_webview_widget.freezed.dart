@@ -38,6 +38,9 @@ mixin _$CustomWebViewWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomWebViewWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +65,8 @@ abstract class $CustomWebViewWidgetCopyWith<$Res> {
       @DataPointIdConverter() DataPoint? dataPoint,
       String? url,
       int height,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -89,6 +93,7 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
     Object? url = freezed,
     Object? height = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -119,6 +124,10 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -152,7 +161,8 @@ abstract class _$$CustomWebViewWidgetImplCopyWith<$Res>
       @DataPointIdConverter() DataPoint? dataPoint,
       String? url,
       int height,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -178,6 +188,7 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
     Object? url = freezed,
     Object? height = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomWebViewWidgetImpl(
       type: null == type
@@ -208,6 +219,10 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -222,7 +237,8 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
       @DataPointIdConverter() required this.dataPoint,
       this.url,
       this.height = 500,
-      this.customPopupmenu})
+      this.customPopupmenu,
+      this.customTheme})
       : super._();
 
   factory _$CustomWebViewWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -245,10 +261,12 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
   int height;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomWebViewWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, url: $url, height: $height, customPopupmenu: $customPopupmenu)';
+    return 'CustomWebViewWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, url: $url, height: $height, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomWebViewWidget
@@ -277,7 +295,8 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
       @DataPointIdConverter() required DataPoint? dataPoint,
       String? url,
       int height,
-      CustomPopupmenu? customPopupmenu}) = _$CustomWebViewWidgetImpl;
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme}) = _$CustomWebViewWidgetImpl;
   _CustomWebViewWidget._() : super._();
 
   factory _CustomWebViewWidget.fromJson(Map<String, dynamic> json) =
@@ -306,6 +325,9 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomWebViewWidget
   /// with the given fields replaced by the non-null parameter values.

@@ -23,6 +23,8 @@ _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: const _CustomInputThemeConverter()
+          .fromJson(json['customTheme'] as Map<String, dynamic>?),
       customInputSendMethod: $enumDecodeNullable(
           _$CustomInputSendMethodEnumMap, json['customInputSendMethod']),
       customInputDisplayConentType: $enumDecodeNullable(
@@ -42,6 +44,8 @@ Map<String, dynamic> _$$CustomInputWidgetImplToJson(
       'hintText': instance.hintText,
       'suffix': instance.suffix,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme':
+          const _CustomInputThemeConverter().toJson(instance.customTheme),
       'customInputSendMethod':
           _$CustomInputSendMethodEnumMap[instance.customInputSendMethod],
       'customInputDisplayConentType': _$CustomInputDisplayConentTypeEnumMap[

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomMultiselectionWidgetView extends StatefulWidget {
@@ -18,6 +19,7 @@ class _CustomMultiselectionWidgetViewState
     extends State<CustomMultiselectionWidgetView> {
   DataPointBloc? bloc;
   late String title;
+  late CustomMultiselectionWidgetTheme? theme;
   @override
   void initState() {
     if (widget.customMultiselectionWidget.dataPoint != null) {
@@ -25,6 +27,8 @@ class _CustomMultiselectionWidgetViewState
     }
     title = widget.customMultiselectionWidget.label ??
         widget.customMultiselectionWidget.name;
+    theme = widget.customMultiselectionWidget.customTheme
+        as CustomMultiselectionWidgetTheme?;
     super.initState();
   }
 
@@ -38,6 +42,8 @@ class _CustomMultiselectionWidgetViewState
     }
     title = widget.customMultiselectionWidget.label ??
         widget.customMultiselectionWidget.name;
+    theme = widget.customMultiselectionWidget.customTheme
+        as CustomMultiselectionWidgetTheme?;
     setState(() {});
     super.didUpdateWidget(oldWidget);
   }
@@ -58,7 +64,10 @@ class _CustomMultiselectionWidgetViewState
               widget.customMultiselectionWidget.customPopupmenu
                   ?.tryOpen(context);
             },
-            title: Text(title),
+            title: Text(
+              title,
+              style: theme?.labelTheme.textStyle,
+            ),
             trailing: FractionallySizedBox(
                 widthFactor: 0.4, child: getDropdown(state.value.toString())));
       },

@@ -28,6 +28,8 @@ _$CustomValueWidgetImpl _$$CustomValueWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: const _CustomValueThemeConverter()
+          .fromJson(json['customTheme'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$$CustomValueWidgetImplToJson(
@@ -43,6 +45,8 @@ Map<String, dynamic> _$$CustomValueWidgetImplToJson(
       'suffix': instance.suffix,
       'prefix': instance.prefix,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme':
+          const _CustomValueThemeConverter().toJson(instance.customTheme),
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {

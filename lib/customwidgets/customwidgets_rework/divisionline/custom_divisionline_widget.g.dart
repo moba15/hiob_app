@@ -19,6 +19,10 @@ _$CustomDivisionlineWidgetImpl _$$CustomDivisionlineWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: json['customTheme'] == null
+          ? null
+          : CustomThemeForWidget.fromJson(
+              json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CustomDivisionlineWidgetImplToJson(
@@ -29,6 +33,7 @@ Map<String, dynamic> _$$CustomDivisionlineWidgetImplToJson(
       'name': instance.name,
       'thickness': instance.thickness,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme': instance.customTheme,
     };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
