@@ -54,6 +54,10 @@ class _CustomMultiselectionWidgetViewState
       bloc: bloc,
       builder: (context, state) {
         return ListTile(
+            onLongPress: () {
+              widget.customMultiselectionWidget.customPopupmenu
+                  ?.tryOpen(context);
+            },
             title: Text(title),
             trailing: FractionallySizedBox(
                 widthFactor: 0.4, child: getDropdown(state.value.toString())));
