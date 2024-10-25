@@ -65,15 +65,20 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
       bloc: bloc,
       builder: (context, state) {
         String value = state.value.toString();
-        if (state.value is double) {
-          value = (state.value as double)
-              .toStringAsFixed(widget.customValueWidget.round);
+        if (widget.customValueWidget.valueMapper.containsKey(value.trim())) {
+          value = widget.customValueWidget.valueMapper[value.trim()].toString();
         } else {
-          double? parse = double.tryParse(state.value.toString());
-          if (parse != null) {
-            value = parse.toStringAsFixed(widget.customValueWidget.round);
+          if (state.value is double) {
+            value = (state.value as double)
+                .toStringAsFixed(widget.customValueWidget.round);
+          } else {
+            double? parse = double.tryParse(state.value.toString());
+            if (parse != null) {
+              value = parse.toStringAsFixed(widget.customValueWidget.round);
+            }
           }
         }
+
         value = (widget.customValueWidget.prefix ?? "") +
             value +
             (widget.customValueWidget.suffix ?? "");

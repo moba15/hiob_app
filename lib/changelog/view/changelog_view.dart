@@ -40,7 +40,8 @@ class ChangeLogScreen extends StatelessWidget {
 # Templates \n
 - Fixed reorder and scrolling bug inside the PopUp settings
 - Fixed PopUp Menu for Multiselection
-- **Important:** The following features are all highly experimental
+- Fixed value mapping for value widget
+# Experimental
 - Added customthemes for widgets
   """;
   }
