@@ -43,6 +43,10 @@ class ChangeLogScreen extends StatelessWidget {
 - Fixed value mapping for value widget
 # Experimental
 - Added customthemes for widgets
+# Other \n
+- Updated background runner
+- Updated minSdk version 
+- Update Flutter version
   """;
   }
 }
