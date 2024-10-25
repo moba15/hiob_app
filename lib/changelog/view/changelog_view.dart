@@ -23,7 +23,7 @@ class ChangeLogScreen extends StatelessWidget {
               "What's new? ${manager.versionNumber}(${manager.buildNumber})"),
         ),
         body: Markdown(
-          data: _changelog(),
+          data: _changelogComplete(),
         ));
   }
 
@@ -39,6 +39,7 @@ class ChangeLogScreen extends StatelessWidget {
     return """
 # Templates \n
 - Fixed reorder and scrolling bug inside the PopUp settings
+- Fixed PopUp Menu for Multiselection
 - **Important:** The following features are all highly experimental
 - Added customthemes for widgets
   """;
