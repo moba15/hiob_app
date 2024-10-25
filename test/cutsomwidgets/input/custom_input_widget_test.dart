@@ -79,7 +79,7 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets("Test label", (tester) async {
+    testWidgets("Test label fullsize false", (tester) async {
       when(mockDataPointState.value).thenReturn("asdasd");
 
       await tester.pumpWidget(MaterialApp(
@@ -88,6 +88,34 @@ void main() {
                 customInputWidget: CustomInputWidget(
                     id: "id",
                     name: "name",
+                    dataPoint: mockDataPoint,
+                    customInputDisplayConentType:
+                        CustomInputDisplayConentType.noShow,
+                    label: "asd"))),
+      ));
+      await tester.pump();
+
+      expect(find.byType(TextField), findsOneWidget);
+      expect(
+          tester
+              .widget<TextField>(find.byType(TextField))
+              .decoration!
+              .labelText,
+          "asd");
+
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets("Test label fullsize true", (tester) async {
+      when(mockDataPointState.value).thenReturn("asdasd");
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: CustomInputWidgetView(
+                customInputWidget: CustomInputWidget(
+                    id: "id",
+                    name: "name",
+                    fullSize: true,
                     dataPoint: mockDataPoint,
                     customInputDisplayConentType:
                         CustomInputDisplayConentType.noShow,

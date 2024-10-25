@@ -119,8 +119,8 @@ class _CustomButtonWidgetDeviceViewState
                   _bloc.add(DataPointValueUpdateRequest(
                       value: !(_bloc.state.value == true),
                       oldValue: _bloc.state.value));
-                  if (Manager().generalManager.vibrateEnabled) {
-                //    Vibrate.feedback(FeedbackType.light);
+                  if (context.read<Manager>().generalManager.vibrateEnabled) {
+                    //    Vibrate.feedback(FeedbackType.light);
                   }
                 }
               },
@@ -159,8 +159,11 @@ class _CustomButtonWidgetDeviceViewState
                     onPressed: () async {
                       _bloc.add(DataPointValueUpdateRequest(
                           value: true, oldValue: _bloc.state.value == true));
-                      if (Manager().generalManager.vibrateEnabled) {
-                    //    Vibrate.feedback(FeedbackType.light);
+                      if (context
+                          .read<Manager>()
+                          .generalManager
+                          .vibrateEnabled) {
+                        //    Vibrate.feedback(FeedbackType.light);
                       }
                     },
                   ))),

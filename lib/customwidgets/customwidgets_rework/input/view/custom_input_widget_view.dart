@@ -14,23 +14,36 @@ class CustomInputWidgetView extends StatefulWidget {
 }
 
 class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
-  late DataPointBloc bloc;
+  DataPointBloc? bloc;
   @override
   void initState() {
-    bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+    if (widget.customInputWidget.dataPoint != null) {
+      bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+    }
 
     super.initState();
   }
 
   @override
+  void didUpdateWidget(covariant CustomInputWidgetView oldWidget) {
+    bloc?.close();
+    bloc = null;
+    if (widget.customInputWidget.dataPoint != null) {
+      bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
-    bloc.close();
+    bloc?.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.customInputWidget.dataPoint == null) {
+    if (widget.customInputWidget.dataPoint == null || bloc == null) {
       return const Text("Device not found");
     }
 
@@ -86,7 +99,7 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
                     onChanged: (v) =>
                         onChanged != null ? onChanged(v, bloc) : null,
                     onSubmitted: (v) =>
-                        onSubmitted != null ? onSubmitted(v, bloc) : null,
+                        onSubmitted != null ? onSubmitted(v, bloc!) : null,
                     decoration: InputDecoration(
                         hintText: hintText,
                         labelStyle: (widget.customInputWidget.customTheme
@@ -143,7 +156,7 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
               controller: textEditingController,
               onChanged: (v) => onChanged != null ? onChanged(v, bloc) : null,
               onSubmitted: (v) =>
-                  onSubmitted != null ? onSubmitted(v, bloc) : null,
+                  onSubmitted != null ? onSubmitted(v, bloc!) : null,
               decoration: InputDecoration(
                   hintText: hintText,
                   label: label,
