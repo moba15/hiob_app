@@ -74,6 +74,7 @@ android {
             shrinkResources false
         }
     }
+    namespace 'de.bachmaier.smart_home'
 
 }
 
