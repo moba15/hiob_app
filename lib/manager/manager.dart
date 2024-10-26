@@ -17,7 +17,7 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
-
+import 'package:talker_flutter/talker_flutter.dart';
 import '../background/background_runner.dart';
 
 class Manager {
@@ -60,6 +60,8 @@ class Manager {
   late BackgroundRunner backgroundRunner;
 
   late NotificationManager notificationManager;
+
+  final Talker talker = TalkerFlutter.init();
 
   ManagerStatus status = ManagerStatus.loading;
 
