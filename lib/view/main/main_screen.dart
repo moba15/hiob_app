@@ -67,7 +67,7 @@ class MainScreen extends StatelessWidget {
                         icon: const Icon(Icons.settings)),
                   ],
                 ),
-                body:  Center(
+                body: Center(
                   key: GlobalKey(),
                   child: const CircularProgressIndicator(),
                 ));
@@ -163,7 +163,7 @@ class MainView extends StatelessWidget {
                 ],
               ),
               body: TabBarView(
-                key: GlobalKey(),
+                  key: GlobalKey(),
                   children: state.screens
                       .map((t) =>
                           ScreenView(screen: t, numberOfRows: numberOfRows))

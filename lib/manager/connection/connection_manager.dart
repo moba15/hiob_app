@@ -5,7 +5,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
+import 'package:smart_home/device/repo/device_repo.dart';
+import 'package:smart_home/device/repo/impl/remote/device_repo_remote_impl.dart';
 import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/device/state_search_filter.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -83,6 +86,11 @@ class ConnectionManager with WidgetsBindingObserver {
       StreamController.broadcast(); //TODO: Kein Broadcast
   int tries = 0;
 
+  final StreamController<DataPackage> _dataPackagesStreamController =
+      StreamController.broadcast();
+
+  late DeviceRepo deviceRepo;
+
   ConnectionManager(
       {required this.deviceManager,
       required this.ioBrokerManager,
@@ -91,6 +99,10 @@ class ConnectionManager with WidgetsBindingObserver {
     connectionStatusStreamController.stream.listen((event) {
       connectionStatus = event;
     });
+
+    //TODO Filter
+    deviceRepo =
+        DeviceRepoRemoteImpl(predefindeRepo: StateSearchFilter()) as DeviceRepo;
   }
 
   Future<Uri> getUrl() async {
@@ -233,6 +245,7 @@ class ConnectionManager with WidgetsBindingObserver {
       return;
     }
     rawMap = rawMap["content"];
+    DataPackage? dataPackage;
     switch (packageType) {
       case DataPackageType.iobStateChanged:
         stateChangedPackage(
@@ -298,6 +311,13 @@ class ConnectionManager with WidgetsBindingObserver {
       default:
         throw UnimplementedError("Error");
     }
+    //TODO Finish and cleanUp
+    switch (packageType) {
+      case DataPackageType.getIoBFunctions:
+        _dataPackagesStreamController.add(GetIoBFunctionsDataPackage());
+        break;
+      default:
+    }
   }
 
   void stateChangedPackage({required String objectID, required dynamic value}) {
@@ -362,6 +382,7 @@ class ConnectionManager with WidgetsBindingObserver {
   void _onLoginApproved(String? version) {
     connectionStatusStreamController.add(ConnectionStatus.loggedIn);
     deviceManager.subscribeToDataPointsIoB(this);
+    deviceRepo.getFunctions();
   }
 
   void _onLoginKey(String? key) {
@@ -402,5 +423,9 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void _onTemplateSettingCreate() {
     Manager.instance.settingsSyncManager.onTemplateCreate();
+  }
+
+  Stream<DataPackage> get dataPackageStream {
+    return _dataPackagesStreamController.stream;
   }
 }

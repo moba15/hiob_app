@@ -23,7 +23,10 @@ enum DataPackageType {
   uploadTemplateSetting,
   uploadTemplateSettingSuccess,
   getTemplatesSetting,
-  notification
+  notification,
+
+  /// Device repo
+  getIoBFunctions,
 }
 
 class DataPackage {
@@ -145,4 +148,12 @@ class GetTemplateSetting extends DataPackage {
 class SubscribeOnlyToNotifications extends DataPackage {
   SubscribeOnlyToNotifications()
       : super(type: DataPackageType.notification, content: {});
+}
+
+class GetIoBFunctionsDataPackage extends DataPackage {
+  final List<String>? functions;
+  GetIoBFunctionsDataPackage({this.functions})
+      : super(
+            type: DataPackageType.getIoBFunctions,
+            content: {"functions": functions});
 }
