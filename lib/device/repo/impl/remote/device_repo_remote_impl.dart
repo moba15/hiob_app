@@ -12,31 +12,27 @@ class DeviceRepoRemoteImpl extends DeviceRepo {
 
   @override
   Future<List<IobObject>> fetchAllObjects({StateSearchFilter? filter}) {
-    // TODO: implement fetchAllObjects
     throw UnimplementedError();
   }
 
   @override
   Future<List<IobState>> fetchAllStates() {
-    // TODO: implement fetchAllStates
     throw UnimplementedError();
   }
 
   @override
   Future<List<IobObject>> fetchFirstObjectLayer({StateSearchFilter? filter}) {
-    // TODO: implement fetchFirstObjectLayer
     throw UnimplementedError();
   }
 
   @override
   Future<List<IobState>> fetchStateByQuery(
       {required String query, StateSearchFilter? filter}) {
-    // TODO: implement fetchStateByQuery
     throw UnimplementedError();
   }
 
   @override
-  Future<List<String>> getFunctions() async {
+  Future<List<Map<String, dynamic>>> getFunctions() async {
     Future<DataPackage> test =
         manager.connectionManager.dataPackageStream.firstWhere(
       (element) {
@@ -50,13 +46,19 @@ class DeviceRepoRemoteImpl extends DeviceRepo {
 
   @override
   Future<List<String>> getRoles() {
-    // TODO: implement getRoles
     throw UnimplementedError();
   }
 
   @override
-  Future<List<String>> getRooms() {
-    // TODO: implement getRooms
-    throw UnimplementedError();
+  Future<List<Map<String, dynamic>>> getRooms() async {
+    Future<DataPackage> test =
+        manager.connectionManager.dataPackageStream.firstWhere(
+      (element) {
+        return element.type == DataPackageType.getIoBRooms;
+      },
+    );
+    manager.connectionManager.sendMsg(GetIoBRooms());
+
+    return (await test as GetIoBRooms).rooms ?? [];
   }
 }

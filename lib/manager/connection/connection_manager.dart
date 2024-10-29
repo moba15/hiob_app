@@ -308,13 +308,12 @@ class ConnectionManager with WidgetsBindingObserver {
         Manager.instance.notificationManager
             .showIoBNotificationInForeground(rawMap["content"]);
         break;
-      default:
-        throw UnimplementedError("Error");
     }
     //TODO Finish and cleanUp
     switch (packageType) {
       case DataPackageType.getIoBFunctions:
-        _dataPackagesStreamController.add(GetIoBFunctionsDataPackage());
+        _dataPackagesStreamController.add(GetIoBFunctionsDataPackage(
+            functions: List<Map<String, dynamic>>.from(rawMap["functions"])));
         break;
       default:
     }
@@ -379,10 +378,10 @@ class ConnectionManager with WidgetsBindingObserver {
     connectionStatusStreamController.add(ConnectionStatus.emptyAES);
   }
 
-  void _onLoginApproved(String? version) {
+  void _onLoginApproved(String? version) async {
     connectionStatusStreamController.add(ConnectionStatus.loggedIn);
     deviceManager.subscribeToDataPointsIoB(this);
-    deviceRepo.getFunctions();
+    dynamic t = await deviceRepo.getRooms();
   }
 
   void _onLoginKey(String? key) {

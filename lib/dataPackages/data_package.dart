@@ -27,6 +27,7 @@ enum DataPackageType {
 
   /// Device repo
   getIoBFunctions,
+  getIoBRooms,
 }
 
 class DataPackage {
@@ -151,9 +152,15 @@ class SubscribeOnlyToNotifications extends DataPackage {
 }
 
 class GetIoBFunctionsDataPackage extends DataPackage {
-  final List<String>? functions;
+  final List<Map<String, dynamic>>? functions;
   GetIoBFunctionsDataPackage({this.functions})
       : super(
             type: DataPackageType.getIoBFunctions,
             content: {"functions": functions});
+}
+
+class GetIoBRooms extends DataPackage {
+  final List<Map<String, dynamic>>? rooms;
+  GetIoBRooms({this.rooms})
+      : super(type: DataPackageType.getIoBRooms, content: {"rooms": rooms});
 }

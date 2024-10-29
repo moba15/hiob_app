@@ -6,8 +6,8 @@ abstract class DeviceRepo {
   StateSearchFilter predefindeRepo;
   DeviceRepo({required this.predefindeRepo});
 
-  Future<List<String>> getRooms();
-  Future<List<String>> getFunctions();
+  Future<List<Map<String, dynamic>>> getRooms();
+  Future<List<Map<String, dynamic>>> getFunctions();
   Future<List<String>> getRoles();
 
   Future<List<IobObject>> fetchAllObjects({StateSearchFilter? filter});
