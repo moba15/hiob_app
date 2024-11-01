@@ -261,7 +261,7 @@ class CustomWidgetManager {
   }
 
   void copyTemplates(List<CustomWidgetWrapper> templatesToCopy) {
-    List<CustomWidgetWrapper> renamedTemplates = templatesToCopy
+    List<CustomWidgetTemplate> renamedTemplatesDepc = templatesToCopy
         .whereType<CustomWidgetTemplate>()
         .map((e) => e)
         .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
@@ -269,6 +269,15 @@ class CustomWidgetManager {
             name: "${e.name}_copy",
             customWidget: e.customWidget.clone()..name = ("${e.name}_copy")))
         .toList();
+    templates.addAll(renamedTemplatesDepc);
+
+    List<CustomWidget> renamedTemplates =
+        templatesToCopy.whereType<CustomWidget>().toList();
+    for (var element in renamedTemplates) {
+      element.name = "${element.name}_copy";
+      element.id = Manager().getRandString(12);
+    }
+
     templates.addAll(renamedTemplates);
     sort();
 
