@@ -5,6 +5,13 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
+## 0.0.703
+# Templates
+- Fixed Networkplayer migration
+- Fixed Value migration for units and rounding
+- Fixed copying new widgets/templates
+
+
 ## 0.0.702
 ### Templates
 - Fixed reorder and scrolling bug inside the PopUp settings
