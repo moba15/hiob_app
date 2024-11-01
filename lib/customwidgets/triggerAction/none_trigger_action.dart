@@ -75,6 +75,6 @@ class NoneTriggerAction extends TriggerAction {
         dataPoint: dataPoint,
         valueMapper: displayRules ?? {},
         round: round,
-        suffix: unit);
+        suffix: " $unit");
   }
 }
