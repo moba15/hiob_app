@@ -33,6 +33,9 @@ mixin _$CustomDivisionlineWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomDivisionlineWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +58,8 @@ abstract class $CustomDivisionlineWidgetCopyWith<$Res> {
       String id,
       String name,
       dynamic thickness,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -81,6 +85,7 @@ class _$CustomDivisionlineWidgetCopyWithImpl<$Res,
     Object? name = null,
     Object? thickness = freezed,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -103,6 +108,10 @@ class _$CustomDivisionlineWidgetCopyWithImpl<$Res,
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -135,7 +144,8 @@ abstract class _$$CustomDivisionlineWidgetImplCopyWith<$Res>
       String id,
       String name,
       dynamic thickness,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -161,6 +171,7 @@ class __$$CustomDivisionlineWidgetImplCopyWithImpl<$Res>
     Object? name = null,
     Object? thickness = freezed,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomDivisionlineWidgetImpl(
       type: null == type
@@ -180,6 +191,10 @@ class __$$CustomDivisionlineWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -192,7 +207,8 @@ class _$CustomDivisionlineWidgetImpl extends _CustomDivisionlineWidget {
       required this.id,
       required this.name,
       this.thickness = 1,
-      this.customPopupmenu})
+      this.customPopupmenu,
+      this.customTheme})
       : super._();
 
   factory _$CustomDivisionlineWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -210,10 +226,12 @@ class _$CustomDivisionlineWidgetImpl extends _CustomDivisionlineWidget {
   dynamic thickness;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomDivisionlineWidget(type: $type, id: $id, name: $name, thickness: $thickness, customPopupmenu: $customPopupmenu)';
+    return 'CustomDivisionlineWidget(type: $type, id: $id, name: $name, thickness: $thickness, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomDivisionlineWidget
@@ -240,7 +258,8 @@ abstract class _CustomDivisionlineWidget extends CustomDivisionlineWidget
       required String id,
       required String name,
       dynamic thickness,
-      CustomPopupmenu? customPopupmenu}) = _$CustomDivisionlineWidgetImpl;
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme}) = _$CustomDivisionlineWidgetImpl;
   _CustomDivisionlineWidget._() : super._();
 
   factory _CustomDivisionlineWidget.fromJson(Map<String, dynamic> json) =
@@ -261,6 +280,9 @@ abstract class _CustomDivisionlineWidget extends CustomDivisionlineWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomDivisionlineWidget
   /// with the given fields replaced by the non-null parameter values.

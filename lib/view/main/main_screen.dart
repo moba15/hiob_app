@@ -67,8 +67,9 @@ class MainScreen extends StatelessWidget {
                         icon: const Icon(Icons.settings)),
                   ],
                 ),
-                body: const Center(
-                  child: CircularProgressIndicator(),
+                body:  Center(
+                  key: GlobalKey(),
+                  child: const CircularProgressIndicator(),
                 ));
           case ManagerStatus.changeLog:
             return ChangeLogScreen(manager: manager);
@@ -162,6 +163,7 @@ class MainView extends StatelessWidget {
                 ],
               ),
               body: TabBarView(
+                key: GlobalKey(),
                   children: state.screens
                       .map((t) =>
                           ScreenView(screen: t, numberOfRows: numberOfRows))

@@ -21,9 +21,6 @@ CustomNetworkPlayerWidget _$CustomNetworkPlayerWidgetFromJson(
 
 /// @nodoc
 mixin _$CustomNetworkPlayerWidget {
-  CustomWidgetTypeDeprecated get type => throw _privateConstructorUsedError;
-  set type(CustomWidgetTypeDeprecated value) =>
-      throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
@@ -36,6 +33,9 @@ mixin _$CustomNetworkPlayerWidget {
   set width(int value) => throw _privateConstructorUsedError;
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
+      throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
       throw _privateConstructorUsedError;
 
   /// Serializes this CustomNetworkPlayerWidget to a JSON map.
@@ -55,13 +55,13 @@ abstract class $CustomNetworkPlayerWidgetCopyWith<$Res> {
       _$CustomNetworkPlayerWidgetCopyWithImpl<$Res, CustomNetworkPlayerWidget>;
   @useResult
   $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
+      {String id,
       String name,
       String? url,
       int height,
       int width,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -82,19 +82,15 @@ class _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
     Object? id = null,
     Object? name = null,
     Object? url = freezed,
     Object? height = null,
     Object? width = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -119,6 +115,10 @@ class _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -147,13 +147,13 @@ abstract class _$$CustomNetworkPlayerWidgetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
+      {String id,
       String name,
       String? url,
       int height,
       int width,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -174,19 +174,15 @@ class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
     Object? id = null,
     Object? name = null,
     Object? url = freezed,
     Object? height = null,
     Object? width = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomNetworkPlayerWidgetImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -211,6 +207,10 @@ class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -219,21 +219,18 @@ class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
   _$CustomNetworkPlayerWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.webViewNew,
-      required this.id,
+      {required this.id,
       required this.name,
       this.url,
-      this.height = 16,
-      this.width = 9,
-      this.customPopupmenu})
+      this.height = 9,
+      this.width = 16,
+      this.customPopupmenu,
+      this.customTheme})
       : super._();
 
   factory _$CustomNetworkPlayerWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomNetworkPlayerWidgetImplFromJson(json);
 
-  @override
-  @JsonKey()
-  CustomWidgetTypeDeprecated type;
   @override
   String id;
   @override
@@ -248,10 +245,12 @@ class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
   int width;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomNetworkPlayerWidget(type: $type, id: $id, name: $name, url: $url, height: $height, width: $width, customPopupmenu: $customPopupmenu)';
+    return 'CustomNetworkPlayerWidget(id: $id, name: $name, url: $url, height: $height, width: $width, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomNetworkPlayerWidget
@@ -274,21 +273,18 @@ class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
 abstract class _CustomNetworkPlayerWidget extends CustomNetworkPlayerWidget
     implements CustomWidget {
   factory _CustomNetworkPlayerWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
+      {required String id,
       required String name,
       String? url,
       int height,
       int width,
-      CustomPopupmenu? customPopupmenu}) = _$CustomNetworkPlayerWidgetImpl;
+      CustomPopupmenu? customPopupmenu,
+      CustomThemeForWidget? customTheme}) = _$CustomNetworkPlayerWidgetImpl;
   _CustomNetworkPlayerWidget._() : super._();
 
   factory _CustomNetworkPlayerWidget.fromJson(Map<String, dynamic> json) =
       _$CustomNetworkPlayerWidgetImpl.fromJson;
 
-  @override
-  CustomWidgetTypeDeprecated get type;
-  set type(CustomWidgetTypeDeprecated value);
   @override
   String get id;
   set id(String value);
@@ -307,6 +303,9 @@ abstract class _CustomNetworkPlayerWidget extends CustomNetworkPlayerWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomNetworkPlayerWidget
   /// with the given fields replaced by the non-null parameter values.

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -17,18 +18,25 @@ class CustomNetworkPlayerWidget
   @override
   final isAbleToPopupMenu = false;
   @override
+  final hasCustomTheme = false;
+  @override
   const CustomNetworkPlayerWidget._();
+
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: true)
+  get type {
+    return CustomWidgetTypeDeprecated.networkPlayer;
+  }
 
   @Implements<CustomWidget>()
   factory CustomNetworkPlayerWidget({
-    @Default(CustomWidgetTypeDeprecated.webViewNew)
-    CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
     String? url,
-    @Default(16) int height,
-    @Default(9) int width,
+    @Default(9) int height,
+    @Default(16) int width,
     CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
   }) = _CustomNetworkPlayerWidget;
 
   @override

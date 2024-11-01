@@ -18,6 +18,8 @@ _$CustomButtonWidgetImpl _$$CustomButtonWidgetImplFromJson(
           ? null
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>),
+      customTheme: const _CustomButtonThemeConverter()
+          .fromJson(json['customTheme'] as Map<String, dynamic>?),
       label: json['label'] as String?,
       dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
           json['dataPoint'], const DataPointIdConverter().fromJson),
@@ -31,6 +33,8 @@ Map<String, dynamic> _$$CustomButtonWidgetImplToJson(
       'id': instance.id,
       'name': instance.name,
       'customPopupmenu': instance.customPopupmenu,
+      'customTheme':
+          const _CustomButtonThemeConverter().toJson(instance.customTheme),
       'label': instance.label,
       'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
       'buttonLabel': instance.buttonLabel,

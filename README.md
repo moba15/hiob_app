@@ -5,6 +5,24 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
+## 0.0.703
+# Templates
+- Fixed Networkplayer migration
+- Fixed Value migration for units and rounding
+- Fixed copying new widgets/templates
+
+
+## 0.0.702
+### Templates
+- Fixed reorder and scrolling bug inside the PopUp settings
+- Fixed PopUp Menu for Multiselection
+- Fixed value mapping for value widget
+### Experimental
+- Added customthemes for widgets
+### Other
+- Updated background runner
+- Updated minSdk version 
+- Updated Flutter version
 
 ## 0.0.701
 
@@ -28,26 +46,12 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 
 - You can now view the Documentation inside the app
 
-## 0.0.615-beta.0
-
-- Added network media player widget
-- Added color picker widget
-- Fixed #56
-
-## 0.0.615-beta.0
-
-- Added notifications log
-- Added Textscale
 
 ## 0.0.612
 
 - Fixed Tabbar alignment
 - Fixed #46
 - Fixed some notifications bugs
-
-## 0.0.611-beta.0.
-
-- Added notifications
 
 ## 0.0.604
 

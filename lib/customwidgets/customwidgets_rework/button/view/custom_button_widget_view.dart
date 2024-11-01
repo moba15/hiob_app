@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
@@ -51,6 +52,8 @@ class CustomButtonWidgetView extends StatelessWidget {
           buttonLabel: customButtonWidget.buttonLabel ?? "Press",
           dataPoint: customButtonWidget.dataPoint!,
           tryOpenPopup: customButtonWidget.tryOpenPopupmenu,
+          customButtonWidgetTheme:
+              customButtonWidget.customTheme as CustomButtonWidgetTheme?,
         );
       },
     );
@@ -60,6 +63,7 @@ class CustomButtonWidgetView extends StatelessWidget {
 class CustomButtonWidgetDeviceView extends StatefulWidget {
   final String text;
   final String buttonLabel;
+  final CustomButtonWidgetTheme? customButtonWidgetTheme;
   final bool Function(BuildContext) tryOpenPopup;
   final DataPoint dataPoint;
   const CustomButtonWidgetDeviceView(
@@ -67,7 +71,8 @@ class CustomButtonWidgetDeviceView extends StatefulWidget {
       required this.text,
       required this.buttonLabel,
       required this.dataPoint,
-      required this.tryOpenPopup})
+      required this.tryOpenPopup,
+      required this.customButtonWidgetTheme})
       : super(key: key);
 
   @override
@@ -114,8 +119,8 @@ class _CustomButtonWidgetDeviceViewState
                   _bloc.add(DataPointValueUpdateRequest(
                       value: !(_bloc.state.value == true),
                       oldValue: _bloc.state.value));
-                  if (Manager().generalManager.vibrateEnabled) {
-                //    Vibrate.feedback(FeedbackType.light);
+                  if (context.read<Manager>().generalManager.vibrateEnabled) {
+                    //    Vibrate.feedback(FeedbackType.light);
                   }
                 }
               },
@@ -125,6 +130,8 @@ class _CustomButtonWidgetDeviceViewState
                     child: Text(
                       widget.text,
                       overflow: TextOverflow.clip,
+                      style:
+                          widget.customButtonWidgetTheme?.labelTheme.textStyle,
                     ),
                   ),
                   if (_bloc.dataPoint.device?.getDeviceStatus() !=
@@ -152,8 +159,11 @@ class _CustomButtonWidgetDeviceViewState
                     onPressed: () async {
                       _bloc.add(DataPointValueUpdateRequest(
                           value: true, oldValue: _bloc.state.value == true));
-                      if (Manager().generalManager.vibrateEnabled) {
-                    //    Vibrate.feedback(FeedbackType.light);
+                      if (context
+                          .read<Manager>()
+                          .generalManager
+                          .vibrateEnabled) {
+                        //    Vibrate.feedback(FeedbackType.light);
                       }
                     },
                   ))),

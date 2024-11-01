@@ -37,6 +37,7 @@ class _CustomPopupmenuSettingsViewState
         )),
         ReorderableListView(
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           onReorder: (oldIndex, newIndex) {
             setState(() {
               widget.customPopupmenu.reorder(oldIndex, newIndex);
@@ -81,7 +82,7 @@ class _CustomPopupmenuSettingsViewState
           child: CustomWidgetTemplateTile(
               customWidget: customWidget,
               customWidgetManager: Manager().customWidgetManager,
-              toggleSelect: () {})));
+              toggleSelect: null)));
     }
     return list;
   }

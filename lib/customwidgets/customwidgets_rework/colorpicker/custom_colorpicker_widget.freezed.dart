@@ -47,6 +47,11 @@ mixin _$CustomColorPickerWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  @_CustomColorpickerThemeConverter()
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  @_CustomColorpickerThemeConverter()
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomColorPickerWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -74,7 +79,8 @@ abstract class $CustomColorPickerWidgetCopyWith<$Res> {
       dynamic alpha,
       dynamic shadesSelection,
       Map<ColorPickerType, bool> pickersEnabled,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      @_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -105,6 +111,7 @@ class _$CustomColorPickerWidgetCopyWithImpl<$Res,
     Object? shadesSelection = freezed,
     Object? pickersEnabled = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -147,6 +154,10 @@ class _$CustomColorPickerWidgetCopyWithImpl<$Res,
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -184,7 +195,8 @@ abstract class _$$CustomColorPickerWidgetImplCopyWith<$Res>
       dynamic alpha,
       dynamic shadesSelection,
       Map<ColorPickerType, bool> pickersEnabled,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      @_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -215,6 +227,7 @@ class __$$CustomColorPickerWidgetImplCopyWithImpl<$Res>
     Object? shadesSelection = freezed,
     Object? pickersEnabled = null,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomColorPickerWidgetImpl(
       type: null == type
@@ -253,6 +266,10 @@ class __$$CustomColorPickerWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -270,7 +287,8 @@ class _$CustomColorPickerWidgetImpl extends _CustomColorPickerWidget {
       this.alpha = false,
       this.shadesSelection = true,
       this.pickersEnabled = const {},
-      this.customPopupmenu})
+      this.customPopupmenu,
+      @_CustomColorpickerThemeConverter() this.customTheme})
       : super._();
 
   factory _$CustomColorPickerWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -302,10 +320,13 @@ class _$CustomColorPickerWidgetImpl extends _CustomColorPickerWidget {
   Map<ColorPickerType, bool> pickersEnabled;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  @_CustomColorpickerThemeConverter()
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomColorPickerWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, prefix: $prefix, alpha: $alpha, shadesSelection: $shadesSelection, pickersEnabled: $pickersEnabled, customPopupmenu: $customPopupmenu)';
+    return 'CustomColorPickerWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, prefix: $prefix, alpha: $alpha, shadesSelection: $shadesSelection, pickersEnabled: $pickersEnabled, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomColorPickerWidget
@@ -337,7 +358,9 @@ abstract class _CustomColorPickerWidget extends CustomColorPickerWidget
       dynamic alpha,
       dynamic shadesSelection,
       Map<ColorPickerType, bool> pickersEnabled,
-      CustomPopupmenu? customPopupmenu}) = _$CustomColorPickerWidgetImpl;
+      CustomPopupmenu? customPopupmenu,
+      @_CustomColorpickerThemeConverter()
+      CustomThemeForWidget? customTheme}) = _$CustomColorPickerWidgetImpl;
   _CustomColorPickerWidget._() : super._();
 
   factory _CustomColorPickerWidget.fromJson(Map<String, dynamic> json) =
@@ -375,6 +398,11 @@ abstract class _CustomColorPickerWidget extends CustomColorPickerWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  @_CustomColorpickerThemeConverter()
+  CustomThemeForWidget? get customTheme;
+  @_CustomColorpickerThemeConverter()
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomColorPickerWidget
   /// with the given fields replaced by the non-null parameter values.

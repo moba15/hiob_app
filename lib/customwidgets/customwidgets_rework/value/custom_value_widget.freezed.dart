@@ -45,6 +45,11 @@ mixin _$CustomValueWidget {
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
+  @_CustomValueThemeConverter()
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  @_CustomValueThemeConverter()
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomValueWidget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -72,7 +77,8 @@ abstract class $CustomValueWidgetCopyWith<$Res> {
       int round,
       String? suffix,
       String? prefix,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      @_CustomValueThemeConverter() CustomThemeForWidget? customTheme});
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -102,6 +108,7 @@ class _$CustomValueWidgetCopyWithImpl<$Res, $Val extends CustomValueWidget>
     Object? suffix = freezed,
     Object? prefix = freezed,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -144,6 +151,10 @@ class _$CustomValueWidgetCopyWithImpl<$Res, $Val extends CustomValueWidget>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ) as $Val);
   }
 
@@ -180,7 +191,8 @@ abstract class _$$CustomValueWidgetImplCopyWith<$Res>
       int round,
       String? suffix,
       String? prefix,
-      CustomPopupmenu? customPopupmenu});
+      CustomPopupmenu? customPopupmenu,
+      @_CustomValueThemeConverter() CustomThemeForWidget? customTheme});
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -209,6 +221,7 @@ class __$$CustomValueWidgetImplCopyWithImpl<$Res>
     Object? suffix = freezed,
     Object? prefix = freezed,
     Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
   }) {
     return _then(_$CustomValueWidgetImpl(
       type: null == type
@@ -251,6 +264,10 @@ class __$$CustomValueWidgetImplCopyWithImpl<$Res>
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
               as CustomPopupmenu?,
+      customTheme: freezed == customTheme
+          ? _value.customTheme
+          : customTheme // ignore: cast_nullable_to_non_nullable
+              as CustomThemeForWidget?,
     ));
   }
 }
@@ -268,7 +285,8 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
       this.round = 2,
       this.suffix,
       this.prefix,
-      this.customPopupmenu})
+      this.customPopupmenu,
+      @_CustomValueThemeConverter() this.customTheme})
       : super._();
 
   factory _$CustomValueWidgetImpl.fromJson(Map<String, dynamic> json) =>
@@ -298,10 +316,13 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
   String? prefix;
   @override
   CustomPopupmenu? customPopupmenu;
+  @override
+  @_CustomValueThemeConverter()
+  CustomThemeForWidget? customTheme;
 
   @override
   String toString() {
-    return 'CustomValueWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, valueMapper: $valueMapper, round: $round, suffix: $suffix, prefix: $prefix, customPopupmenu: $customPopupmenu)';
+    return 'CustomValueWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, label: $label, valueMapper: $valueMapper, round: $round, suffix: $suffix, prefix: $prefix, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomValueWidget
@@ -324,16 +345,18 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
 abstract class _CustomValueWidget extends CustomValueWidget
     implements CustomWidget {
   factory _CustomValueWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      String? label,
-      Map<String, String> valueMapper,
-      int round,
-      String? suffix,
-      String? prefix,
-      CustomPopupmenu? customPopupmenu}) = _$CustomValueWidgetImpl;
+          {CustomWidgetTypeDeprecated type,
+          required String id,
+          required String name,
+          @DataPointIdConverter() required DataPoint? dataPoint,
+          String? label,
+          Map<String, String> valueMapper,
+          int round,
+          String? suffix,
+          String? prefix,
+          CustomPopupmenu? customPopupmenu,
+          @_CustomValueThemeConverter() CustomThemeForWidget? customTheme}) =
+      _$CustomValueWidgetImpl;
   _CustomValueWidget._() : super._();
 
   factory _CustomValueWidget.fromJson(Map<String, dynamic> json) =
@@ -371,6 +394,11 @@ abstract class _CustomValueWidget extends CustomValueWidget
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
+  @override
+  @_CustomValueThemeConverter()
+  CustomThemeForWidget? get customTheme;
+  @_CustomValueThemeConverter()
+  set customTheme(CustomThemeForWidget? value);
 
   /// Create a copy of CustomValueWidget
   /// with the given fields replaced by the non-null parameter values.

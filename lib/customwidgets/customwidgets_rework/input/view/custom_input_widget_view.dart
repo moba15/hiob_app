@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomInputWidgetView extends StatefulWidget {
@@ -13,23 +14,36 @@ class CustomInputWidgetView extends StatefulWidget {
 }
 
 class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
-  late DataPointBloc bloc;
+  DataPointBloc? bloc;
   @override
   void initState() {
-    bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+    if (widget.customInputWidget.dataPoint != null) {
+      bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+    }
 
     super.initState();
   }
 
   @override
+  void didUpdateWidget(covariant CustomInputWidgetView oldWidget) {
+    bloc?.close();
+    bloc = null;
+    if (widget.customInputWidget.dataPoint != null) {
+      bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
-    bloc.close();
+    bloc?.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.customInputWidget.dataPoint == null) {
+    if (widget.customInputWidget.dataPoint == null || bloc == null) {
       return const Text("Device not found");
     }
 
@@ -62,10 +76,17 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
                         CustomInputDisplayConentType.hintText
                     ? state.value.toString()
                     : null;
-            final Text label = widget.customInputWidget.label == null ||
+            final String labelText = widget.customInputWidget.label == null ||
                     widget.customInputWidget.label!.isEmpty
-                ? Text(widget.customInputWidget.name)
-                : Text(widget.customInputWidget.label!);
+                ? widget.customInputWidget.name
+                : widget.customInputWidget.label!;
+            final Text label = Text(
+              labelText,
+              style: (widget.customInputWidget.customTheme
+                      as CustomInputWidgetTheme?)
+                  ?.labelTheme
+                  .textStyle,
+            );
             return ListTile(
                 onLongPress: () {
                   widget.customInputWidget.customPopupmenu?.tryOpen(context);
@@ -78,11 +99,14 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
                     onChanged: (v) =>
                         onChanged != null ? onChanged(v, bloc) : null,
                     onSubmitted: (v) =>
-                        onSubmitted != null ? onSubmitted(v, bloc) : null,
+                        onSubmitted != null ? onSubmitted(v, bloc!) : null,
                     decoration: InputDecoration(
                         hintText: hintText,
-                        label:
-                            !widget.customInputWidget.fullSize ? label : null,
+                        labelStyle: (widget.customInputWidget.customTheme
+                                as CustomInputWidgetTheme?)
+                            ?.labelTheme
+                            .textStyle,
+                        labelText: labelText,
                         floatingLabelBehavior: FloatingLabelBehavior.always),
                   ),
                 ));
@@ -114,13 +138,25 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
                     : null;
             final Text label = widget.customInputWidget.label == null ||
                     widget.customInputWidget.label!.isEmpty
-                ? Text(widget.customInputWidget.name)
-                : Text(widget.customInputWidget.label!);
+                ? Text(
+                    widget.customInputWidget.name,
+                    style: (widget.customInputWidget.customTheme
+                            as CustomInputWidgetTheme?)
+                        ?.labelTheme
+                        .textStyle,
+                  )
+                : Text(
+                    widget.customInputWidget.label!,
+                    style: (widget.customInputWidget.customTheme
+                            as CustomInputWidgetTheme?)
+                        ?.labelTheme
+                        .textStyle,
+                  );
             return TextField(
               controller: textEditingController,
               onChanged: (v) => onChanged != null ? onChanged(v, bloc) : null,
               onSubmitted: (v) =>
-                  onSubmitted != null ? onSubmitted(v, bloc) : null,
+                  onSubmitted != null ? onSubmitted(v, bloc!) : null,
               decoration: InputDecoration(
                   hintText: hintText,
                   label: label,

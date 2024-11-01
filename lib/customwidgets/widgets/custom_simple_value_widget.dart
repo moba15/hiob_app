@@ -79,6 +79,11 @@ class CustomSimpleValueWidget extends CustomWidgetDeprecated {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return CustomValueWidget(
-        id: id, name: name, dataPoint: dataPoint, label: value);
+        id: id,
+        name: name,
+        dataPoint: dataPoint,
+        label: value,
+        suffix: " $unit",
+        round: round ?? 2);
   }
 }
