@@ -38,15 +38,9 @@ class ChangeLogScreen extends StatelessWidget {
   String _changelogComplete() {
     return """
 # Templates \n
-- Fixed reorder and scrolling bug inside the PopUp settings
-- Fixed PopUp Menu for Multiselection
-- Fixed value mapping for value widget
-# Experimental
-- Added customthemes for widgets
-# Other \n
-- Updated background runner
-- Updated minSdk version 
-- Update Flutter version
+- Fixed Networkplayer migration
+- Fixed Value migration for units and rounding
+- Fixed copying new widgets/templates
   """;
   }
 }
