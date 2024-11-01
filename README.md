@@ -10,6 +10,7 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 - Fixed Networkplayer migration
 - Fixed Value migration for units and rounding
 - Fixed copying new widgets/templates
+- Fixed Multiselection reorder
 
 
 ## 0.0.702
