@@ -9,14 +9,11 @@ part of 'custom_networkplayer_widget.dart';
 _$CustomNetworkPlayerWidgetImpl _$$CustomNetworkPlayerWidgetImplFromJson(
         Map<String, dynamic> json) =>
     _$CustomNetworkPlayerWidgetImpl(
-      type: $enumDecodeNullable(
-              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.webViewNew,
       id: json['id'] as String,
       name: json['name'] as String,
       url: json['url'] as String?,
-      height: (json['height'] as num?)?.toInt() ?? 16,
-      width: (json['width'] as num?)?.toInt() ?? 9,
+      height: (json['height'] as num?)?.toInt() ?? 9,
+      width: (json['width'] as num?)?.toInt() ?? 16,
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(

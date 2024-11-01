@@ -22,15 +22,19 @@ class CustomNetworkPlayerWidget
   @override
   const CustomNetworkPlayerWidget._();
 
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: true)
+  get type {
+    return CustomWidgetTypeDeprecated.networkPlayer;
+  }
+
   @Implements<CustomWidget>()
   factory CustomNetworkPlayerWidget({
-    @Default(CustomWidgetTypeDeprecated.webViewNew)
-    CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
     String? url,
-    @Default(16) int height,
-    @Default(9) int width,
+    @Default(9) int height,
+    @Default(16) int width,
     CustomPopupmenu? customPopupmenu,
     CustomThemeForWidget? customTheme,
   }) = _CustomNetworkPlayerWidget;

@@ -95,7 +95,9 @@ class _CustomWebViewWidgetSettingViewState
               });
             },
             max: 2000,
-            min: 100,
+            min: widget.customWebViewWidget.height.toDouble() < 100
+                ? widget.customWebViewWidget.height.toDouble()
+                : 100,
             divisions: 1900,
           ))
         ]));

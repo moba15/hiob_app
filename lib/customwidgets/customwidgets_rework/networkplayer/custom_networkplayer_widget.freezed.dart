@@ -21,9 +21,6 @@ CustomNetworkPlayerWidget _$CustomNetworkPlayerWidgetFromJson(
 
 /// @nodoc
 mixin _$CustomNetworkPlayerWidget {
-  CustomWidgetTypeDeprecated get type => throw _privateConstructorUsedError;
-  set type(CustomWidgetTypeDeprecated value) =>
-      throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
@@ -58,8 +55,7 @@ abstract class $CustomNetworkPlayerWidgetCopyWith<$Res> {
       _$CustomNetworkPlayerWidgetCopyWithImpl<$Res, CustomNetworkPlayerWidget>;
   @useResult
   $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
+      {String id,
       String name,
       String? url,
       int height,
@@ -86,7 +82,6 @@ class _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
     Object? id = null,
     Object? name = null,
     Object? url = freezed,
@@ -96,10 +91,6 @@ class _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
     Object? customTheme = freezed,
   }) {
     return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -156,8 +147,7 @@ abstract class _$$CustomNetworkPlayerWidgetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
+      {String id,
       String name,
       String? url,
       int height,
@@ -184,7 +174,6 @@ class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
     Object? id = null,
     Object? name = null,
     Object? url = freezed,
@@ -194,10 +183,6 @@ class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
     Object? customTheme = freezed,
   }) {
     return _then(_$CustomNetworkPlayerWidgetImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -234,12 +219,11 @@ class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
   _$CustomNetworkPlayerWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.webViewNew,
-      required this.id,
+      {required this.id,
       required this.name,
       this.url,
-      this.height = 16,
-      this.width = 9,
+      this.height = 9,
+      this.width = 16,
       this.customPopupmenu,
       this.customTheme})
       : super._();
@@ -247,9 +231,6 @@ class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
   factory _$CustomNetworkPlayerWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomNetworkPlayerWidgetImplFromJson(json);
 
-  @override
-  @JsonKey()
-  CustomWidgetTypeDeprecated type;
   @override
   String id;
   @override
@@ -269,7 +250,7 @@ class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
 
   @override
   String toString() {
-    return 'CustomNetworkPlayerWidget(type: $type, id: $id, name: $name, url: $url, height: $height, width: $width, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
+    return 'CustomNetworkPlayerWidget(id: $id, name: $name, url: $url, height: $height, width: $width, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomNetworkPlayerWidget
@@ -292,8 +273,7 @@ class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
 abstract class _CustomNetworkPlayerWidget extends CustomNetworkPlayerWidget
     implements CustomWidget {
   factory _CustomNetworkPlayerWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
+      {required String id,
       required String name,
       String? url,
       int height,
@@ -305,9 +285,6 @@ abstract class _CustomNetworkPlayerWidget extends CustomNetworkPlayerWidget
   factory _CustomNetworkPlayerWidget.fromJson(Map<String, dynamic> json) =
       _$CustomNetworkPlayerWidgetImpl.fromJson;
 
-  @override
-  CustomWidgetTypeDeprecated get type;
-  set type(CustomWidgetTypeDeprecated value);
   @override
   String get id;
   set id(String value);
