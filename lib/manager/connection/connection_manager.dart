@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:grpc/grpc.dart';
+import 'package:grpc/grpc_connection_interface.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/generated/login/login.pbgrpc.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -73,6 +76,7 @@ class ConnectionManager with WidgetsBindingObserver {
   Socket? socket;
   WebSocketChannel? _webSocket;
   StreamSubscription? _webSocketStreamSub;
+  ClientChannel? channel;
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
   final GeneralManager generalManager;
@@ -105,7 +109,16 @@ class ConnectionManager with WidgetsBindingObserver {
 
   Future<void> connectIoB() async {
     Uri url = await getUrl();
-    try {
+
+    channel = ClientChannel(url.host,
+        port: url.port,
+        options:
+            const ChannelOptions(credentials: ChannelCredentials.insecure()));
+    LoginClient stub = LoginClient(channel!);
+
+    await stub.login(LoginRequest(deviceID: "", deviceName: ""));
+
+    /*try {
       _webSocket = IOWebSocketChannel.connect(url,
           pingInterval: const Duration(minutes: 5));
       _webSocketStreamSub =
@@ -115,7 +128,7 @@ class ConnectionManager with WidgetsBindingObserver {
     } finally {
       statusStreamController.add(true);
       statusStreamController.close();
-    }
+    }*/
   }
 
   @override

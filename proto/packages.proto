@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+enum PackageType {
+    firstPing = 0;
+}
+message Package {
+    PackageType type = 1;
+   
+
+}
