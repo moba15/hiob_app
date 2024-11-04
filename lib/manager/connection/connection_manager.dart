@@ -77,6 +77,7 @@ class ConnectionManager with WidgetsBindingObserver {
   WebSocketChannel? _webSocket;
   StreamSubscription? _webSocketStreamSub;
   ClientChannel? channel;
+  LoginClient? loginClientStub;
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
   final GeneralManager generalManager;
@@ -114,10 +115,18 @@ class ConnectionManager with WidgetsBindingObserver {
         port: url.port,
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure()));
-    LoginClient stub = LoginClient(channel!);
 
-    await stub.login(LoginRequest(deviceID: "", deviceName: ""));
+    loginClientStub = LoginClient(channel!);
+    channel!.onConnectionStateChanged.listen(
+      (event) {
+        Manager().talker.debug(
+            "ConnectionManager | onConnectionStateChanged | ${event.name}");
+      },
+    );
 
+    channel!.createConnection();
+
+    _requestLogin();
     /*try {
       _webSocket = IOWebSocketChannel.connect(url,
           pingInterval: const Duration(minutes: 5));
@@ -157,38 +166,41 @@ class ConnectionManager with WidgetsBindingObserver {
     }
   }
 
-  void onError(e) {
+  void onError(e) async {
     ioBConnected = false;
     ioBrokerManager.connected = true;
+    Manager().talker.error("ConnectionManager | onError ", e);
   }
 
   void reconnect() async {
     // ignore: dead_code
     Uri url = await getUrl();
-    connectionStatusStreamController.add(ConnectionStatus.tryAgain);
-    if (_webSocketStreamSub != null) {
-      _webSocketStreamSub!.cancel();
+
+    await Future.delayed(const Duration(seconds: 2));
+    tries++;
+    if (tries > 10) {
+      Manager().talker.debug(
+          "ConnectionManager | reconnect | More than 10 tries, not reconnecting");
+      return;
     }
-    if (_webSocket != null) {
-      _webSocket?.sink.close(status.goingAway);
-    }
-    _webSocket = null;
+    Manager().talker.debug("ConnectionManager | reconnect | reconnecting");
 
-    ioBrokerManager.connected = false;
+    channel = ClientChannel(url.host,
+        port: url.port,
+        options:
+            const ChannelOptions(credentials: ChannelCredentials.insecure()));
 
-    try {
-      _webSocket = IOWebSocketChannel.connect(url,
-          pingInterval: const Duration(minutes: 5));
-      _webSocketStreamSub =
-          _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-    } catch (e) {
-      ioBrokerManager.connected = false;
+    loginClientStub = LoginClient(channel!);
+    channel!.onConnectionStateChanged.listen(
+      (event) {
+        Manager().talker.debug(
+            "ConnectionManager | onConnectionStateChanged | ${event.name}");
+      },
+    );
 
-      connectionStatusStreamController.add(ConnectionStatus.error);
+    channel!.createConnection();
 
-      _webSocket = null;
-      _webSocketStreamSub = null;
-    }
+    _requestLogin();
   }
 
   void onData(event) {
@@ -355,13 +367,18 @@ class ConnectionManager with WidgetsBindingObserver {
     Manager().talker.debug(
         "ConnectionManager | Request login ${generalManager.deviceName}:${generalManager.deviceID}");
     connectionStatusStreamController.add(ConnectionStatus.loggingIn);
-    sendMsg(RequestLoginPackage(
-        deviceName: generalManager.deviceName,
-        deviceID: generalManager.deviceID,
-        key: generalManager.loginKey,
-        version: deviceManager.manager.versionNumber,
-        password: ioBrokerManager.usePwd ? ioBrokerManager.password : null,
-        user: ioBrokerManager.user));
+
+    LoginResponse response = await loginClientStub!
+        .login(LoginRequest(
+            deviceID: generalManager.deviceID,
+            deviceName: generalManager.deviceName,
+            key: generalManager.loginKey,
+            password: ioBrokerManager.password,
+            user: ioBrokerManager.user))
+        .catchError((Object e) async {
+      Manager().talker.error("ConnectionManager | errorLogin", e);
+      return LoginResponse(status: LoginResponse_Status.error);
+    });
   }
 
   void _onLoginDeclined() {

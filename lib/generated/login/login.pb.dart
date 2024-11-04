@@ -13,6 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'login.pbenum.dart';
+
 export 'login.pbenum.dart';
 
 class CompatibilityRequest extends $pb.GeneratedMessage {
@@ -316,10 +318,14 @@ class LoginRequest extends $pb.GeneratedMessage {
 class LoginResponse extends $pb.GeneratedMessage {
   factory LoginResponse({
     $core.String? key,
+    LoginResponse_Status? status,
   }) {
     final $result = create();
     if (key != null) {
       $result.key = key;
+    }
+    if (status != null) {
+      $result.status = status;
     }
     return $result;
   }
@@ -329,6 +335,7 @@ class LoginResponse extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginResponse', createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'key')
+    ..e<LoginResponse_Status>(2, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: LoginResponse_Status.succesfull, valueOf: LoginResponse_Status.valueOf, enumValues: LoginResponse_Status.values)
     ..hasRequiredFields = false
   ;
 
@@ -361,6 +368,15 @@ class LoginResponse extends $pb.GeneratedMessage {
   $core.bool hasKey() => $_has(0);
   @$pb.TagNumber(1)
   void clearKey() => clearField(1);
+
+  @$pb.TagNumber(2)
+  LoginResponse_Status get status => $_getN(1);
+  @$pb.TagNumber(2)
+  set status(LoginResponse_Status v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStatus() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStatus() => clearField(2);
 }
 
 class NewAesPacket extends $pb.GeneratedMessage {
