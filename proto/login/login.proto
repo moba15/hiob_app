@@ -32,12 +32,13 @@ message LoginRequest {
 
 message LoginResponse {
     string key = 1;
-    enum status {
+    enum Status {
         succesfull = 0;
         wrongKey = 1;
         wrongPassword = 2;
         error = 3;
-    }
+    };
+    Status status = 2;
 }
 
 message NewAesPacket {

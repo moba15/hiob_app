@@ -13,23 +13,23 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class LoginResponse_status extends $pb.ProtobufEnum {
-  static const LoginResponse_status succesfull = LoginResponse_status._(0, _omitEnumNames ? '' : 'succesfull');
-  static const LoginResponse_status wrongKey = LoginResponse_status._(1, _omitEnumNames ? '' : 'wrongKey');
-  static const LoginResponse_status wrongPassword = LoginResponse_status._(2, _omitEnumNames ? '' : 'wrongPassword');
-  static const LoginResponse_status error = LoginResponse_status._(3, _omitEnumNames ? '' : 'error');
+class LoginResponse_Status extends $pb.ProtobufEnum {
+  static const LoginResponse_Status succesfull = LoginResponse_Status._(0, _omitEnumNames ? '' : 'succesfull');
+  static const LoginResponse_Status wrongKey = LoginResponse_Status._(1, _omitEnumNames ? '' : 'wrongKey');
+  static const LoginResponse_Status wrongPassword = LoginResponse_Status._(2, _omitEnumNames ? '' : 'wrongPassword');
+  static const LoginResponse_Status error = LoginResponse_Status._(3, _omitEnumNames ? '' : 'error');
 
-  static const $core.List<LoginResponse_status> values = <LoginResponse_status> [
+  static const $core.List<LoginResponse_Status> values = <LoginResponse_Status> [
     succesfull,
     wrongKey,
     wrongPassword,
     error,
   ];
 
-  static final $core.Map<$core.int, LoginResponse_status> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static LoginResponse_status? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, LoginResponse_Status> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static LoginResponse_Status? valueOf($core.int value) => _byValue[value];
 
-  const LoginResponse_status._($core.int v, $core.String n) : super(v, n);
+  const LoginResponse_Status._($core.int v, $core.String n) : super(v, n);
 }
 
 

@@ -81,13 +81,14 @@ const LoginResponse$json = {
   '1': 'LoginResponse',
   '2': [
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'status', '3': 2, '4': 1, '5': 14, '6': '.LoginResponse.Status', '10': 'status'},
   ],
-  '4': [LoginResponse_status$json],
+  '4': [LoginResponse_Status$json],
 };
 
 @$core.Deprecated('Use loginResponseDescriptor instead')
-const LoginResponse_status$json = {
-  '1': 'status',
+const LoginResponse_Status$json = {
+  '1': 'Status',
   '2': [
     {'1': 'succesfull', '2': 0},
     {'1': 'wrongKey', '2': 1},
@@ -98,8 +99,9 @@ const LoginResponse_status$json = {
 
 /// Descriptor for `LoginResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loginResponseDescriptor = $convert.base64Decode(
-    'Cg1Mb2dpblJlc3BvbnNlEhAKA2tleRgBIAEoCVIDa2V5IkQKBnN0YXR1cxIOCgpzdWNjZXNmdW'
-    'xsEAASDAoId3JvbmdLZXkQARIRCg13cm9uZ1Bhc3N3b3JkEAISCQoFZXJyb3IQAw==');
+    'Cg1Mb2dpblJlc3BvbnNlEhAKA2tleRgBIAEoCVIDa2V5Ei0KBnN0YXR1cxgCIAEoDjIVLkxvZ2'
+    'luUmVzcG9uc2UuU3RhdHVzUgZzdGF0dXMiRAoGU3RhdHVzEg4KCnN1Y2Nlc2Z1bGwQABIMCgh3'
+    'cm9uZ0tleRABEhEKDXdyb25nUGFzc3dvcmQQAhIJCgVlcnJvchAD');
 
 @$core.Deprecated('Use newAesPacketDescriptor instead')
 const NewAesPacket$json = {
