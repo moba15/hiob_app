@@ -4,11 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
-import 'package:grpc/grpc_connection_interface.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/state/state.dart';
-import 'package:smart_home/generated/login/login.pbgrpc.dart';
+import 'package:smart_home/generated/login/login.pb.dart';
+import 'package:smart_home/generated/login/login.pbserver.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -116,7 +116,7 @@ class ConnectionManager with WidgetsBindingObserver {
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure()));
 
-    loginClientStub = LoginClient(channel!);
+    loginClientStub = LoginApi(channel!);
     channel!.onConnectionStateChanged.listen(
       (event) {
         Manager().talker.debug(
@@ -377,7 +377,6 @@ class ConnectionManager with WidgetsBindingObserver {
             user: ioBrokerManager.user))
         .catchError((Object e) async {
       Manager().talker.error("ConnectionManager | errorLogin", e);
-      return LoginResponse(status: LoginResponse_Status.error);
     });
   }
 
