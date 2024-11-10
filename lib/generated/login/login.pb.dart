@@ -9,6 +9,7 @@
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
+import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
@@ -212,7 +213,7 @@ class FirstPing extends $pb.GeneratedMessage {
 class LoginRequest extends $pb.GeneratedMessage {
   factory LoginRequest({
     $core.String? deviceName,
-    $core.String? deviceID,
+    $core.String? deviceId,
     $core.String? key,
     $core.String? user,
     $core.String? password,
@@ -221,8 +222,8 @@ class LoginRequest extends $pb.GeneratedMessage {
     if (deviceName != null) {
       $result.deviceName = deviceName;
     }
-    if (deviceID != null) {
-      $result.deviceID = deviceID;
+    if (deviceId != null) {
+      $result.deviceId = deviceId;
     }
     if (key != null) {
       $result.key = key;
@@ -241,7 +242,7 @@ class LoginRequest extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginRequest', createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'deviceName', protoName: 'deviceName')
-    ..aOS(2, _omitFieldNames ? '' : 'deviceID', protoName: 'deviceID')
+    ..aOS(2, _omitFieldNames ? '' : 'deviceId', protoName: 'deviceId')
     ..aOS(3, _omitFieldNames ? '' : 'key')
     ..aOS(4, _omitFieldNames ? '' : 'user')
     ..aOS(5, _omitFieldNames ? '' : 'password')
@@ -279,13 +280,13 @@ class LoginRequest extends $pb.GeneratedMessage {
   void clearDeviceName() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get deviceID => $_getSZ(1);
+  $core.String get deviceId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set deviceID($core.String v) { $_setString(1, v); }
+  set deviceId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasDeviceID() => $_has(1);
+  $core.bool hasDeviceId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearDeviceID() => clearField(2);
+  void clearDeviceId() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.String get key => $_getSZ(2);
@@ -319,6 +320,8 @@ class LoginResponse extends $pb.GeneratedMessage {
   factory LoginResponse({
     $core.String? key,
     LoginResponse_Status? status,
+    $core.String? errorMsg,
+    $core.String? sessionId,
   }) {
     final $result = create();
     if (key != null) {
@@ -326,6 +329,12 @@ class LoginResponse extends $pb.GeneratedMessage {
     }
     if (status != null) {
       $result.status = status;
+    }
+    if (errorMsg != null) {
+      $result.errorMsg = errorMsg;
+    }
+    if (sessionId != null) {
+      $result.sessionId = sessionId;
     }
     return $result;
   }
@@ -335,7 +344,9 @@ class LoginResponse extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginResponse', createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..e<LoginResponse_Status>(2, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: LoginResponse_Status.succesfull, valueOf: LoginResponse_Status.valueOf, enumValues: LoginResponse_Status.values)
+    ..e<LoginResponse_Status>(4, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: LoginResponse_Status.succesfull, valueOf: LoginResponse_Status.valueOf, enumValues: LoginResponse_Status.values)
+    ..aOS(5, _omitFieldNames ? '' : 'errorMsg', protoName: 'errorMsg')
+    ..aOS(6, _omitFieldNames ? '' : 'sessionId', protoName: 'sessionId')
     ..hasRequiredFields = false
   ;
 
@@ -369,14 +380,32 @@ class LoginResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearKey() => clearField(1);
 
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(4)
   LoginResponse_Status get status => $_getN(1);
-  @$pb.TagNumber(2)
-  set status(LoginResponse_Status v) { setField(2, v); }
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(4)
+  set status(LoginResponse_Status v) { setField(4, v); }
+  @$pb.TagNumber(4)
   $core.bool hasStatus() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearStatus() => clearField(2);
+  @$pb.TagNumber(4)
+  void clearStatus() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get errorMsg => $_getSZ(2);
+  @$pb.TagNumber(5)
+  set errorMsg($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasErrorMsg() => $_has(2);
+  @$pb.TagNumber(5)
+  void clearErrorMsg() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get sessionId => $_getSZ(3);
+  @$pb.TagNumber(6)
+  set sessionId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasSessionId() => $_has(3);
+  @$pb.TagNumber(6)
+  void clearSessionId() => clearField(6);
 }
 
 class NewAesPacket extends $pb.GeneratedMessage {
@@ -441,6 +470,18 @@ class WrongAesKeyPack extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static WrongAesKeyPack getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WrongAesKeyPack>(create);
   static WrongAesKeyPack? _defaultInstance;
+}
+
+class LoginApi {
+  $pb.RpcClient _client;
+  LoginApi(this._client);
+
+  $async.Future<CompatibilityResponse> checkCompatibility($pb.ClientContext? ctx, CompatibilityRequest request) =>
+    _client.invoke<CompatibilityResponse>(ctx, 'Login', 'CheckCompatibility', request, CompatibilityResponse())
+  ;
+  $async.Future<LoginResponse> login($pb.ClientContext? ctx, LoginRequest request) =>
+    _client.invoke<LoginResponse>(ctx, 'Login', 'Login', request, LoginResponse())
+  ;
 }
 
 
