@@ -44,7 +44,7 @@ dependencies:
   bloc: ^8.0.3
   equatable: ^2.0.2
 
-  dropdown_search: ^6.0.1
+  dropdown_search: ^5.0.1
   web_socket_channel: ^3.0.1
   icon_picker: ^2.1.0
   file_picker: ^8.1.3
