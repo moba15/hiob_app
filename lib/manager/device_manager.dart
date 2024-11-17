@@ -4,6 +4,7 @@ import 'dart:developer' as developer;
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/iobroker_device.dart';
+import 'package:smart_home/generated/state/state.pb.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 
@@ -239,15 +240,20 @@ class DeviceManager {
   }
 
   void subscribeToDataPointsIoB(ConnectionManager connectionManager) {
-    List<String> dataPoints = [];
-    for (Device device in devicesList) {
-      if (device is IoBrokerDevice) {
-        for (DataPoint dataPoint in device.dataPoints ?? []) {
-          dataPoints.add(dataPoint.id);
+    if (connectionManager.stateUpdateClientStub != null) {
+      List<String> dataPoints = [];
+      for (Device device in devicesList) {
+        if (device is IoBrokerDevice) {
+          for (DataPoint dataPoint in device.dataPoints ?? []) {
+            dataPoints.add(dataPoint.id);
+          }
         }
       }
+      this.manager.talker.debug(
+          "DeviceManager | subscribe to ${dataPoints.length} datapoints");
+      connectionManager.stateUpdateClientStub?.subscibe(StateSubscribtion(
+          type: StateSubscribtion_SubscriptionType.subscripe,
+          stateIds: dataPoints));
     }
-    connectionManager
-        .sendMsg(SubscribeToDataPointsIobPackage(dataPoints: dataPoints));
   }
 }

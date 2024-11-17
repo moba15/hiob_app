@@ -9,7 +9,6 @@
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
-import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
@@ -363,14 +362,10 @@ class StateValueUpdateResponse extends $pb.GeneratedMessage {
 
 class StateSubscribtion extends $pb.GeneratedMessage {
   factory StateSubscribtion({
-    $core.String? userId,
     StateSubscribtion_SubscriptionType? type,
     $core.Iterable<$core.String>? stateIds,
   }) {
     final $result = create();
-    if (userId != null) {
-      $result.userId = userId;
-    }
     if (type != null) {
       $result.type = type;
     }
@@ -384,7 +379,6 @@ class StateSubscribtion extends $pb.GeneratedMessage {
   factory StateSubscribtion.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StateSubscribtion', createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
     ..e<StateSubscribtion_SubscriptionType>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: StateSubscribtion_SubscriptionType.cancle, valueOf: StateSubscribtion_SubscriptionType.valueOf, enumValues: StateSubscribtion_SubscriptionType.values)
     ..pPS(3, _omitFieldNames ? '' : 'stateIds', protoName: 'stateIds')
     ..hasRequiredFields = false
@@ -411,26 +405,17 @@ class StateSubscribtion extends $pb.GeneratedMessage {
   static StateSubscribtion getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StateSubscribtion>(create);
   static StateSubscribtion? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $core.String get userId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set userId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUserId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUserId() => clearField(1);
-
   @$pb.TagNumber(2)
-  StateSubscribtion_SubscriptionType get type => $_getN(1);
+  StateSubscribtion_SubscriptionType get type => $_getN(0);
   @$pb.TagNumber(2)
   set type(StateSubscribtion_SubscriptionType v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasType() => $_has(1);
+  $core.bool hasType() => $_has(0);
   @$pb.TagNumber(2)
   void clearType() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.List<$core.String> get stateIds => $_getList(2);
+  $core.List<$core.String> get stateIds => $_getList(1);
 }
 
 class SearchState extends $pb.GeneratedMessage {
@@ -840,24 +825,6 @@ class State extends $pb.GeneratedMessage {
   $core.bool hasOther() => $_has(4);
   @$pb.TagNumber(99)
   void clearOther() => clearField(99);
-}
-
-class stateServiceApi {
-  $pb.RpcClient _client;
-  stateServiceApi(this._client);
-
-  $async.Future<StateValueUpdate> subscibe($pb.ClientContext? ctx, StateSubscribtion request) =>
-    _client.invoke<StateValueUpdate>(ctx, 'stateService', 'Subscibe', request, StateValueUpdate())
-  ;
-  $async.Future<StateValueUpdateResponse> updateValue($pb.ClientContext? ctx, StateValueUpdateRequest request) =>
-    _client.invoke<StateValueUpdateResponse>(ctx, 'stateService', 'updateValue', request, StateValueUpdateResponse())
-  ;
-  $async.Future<SearchStateResponse> searchState($pb.ClientContext? ctx, SearchState request) =>
-    _client.invoke<SearchStateResponse>(ctx, 'stateService', 'searchState', request, SearchStateResponse())
-  ;
-  $async.Future<SearchStateResponse> searchStateStream($pb.ClientContext? ctx, SearchState request) =>
-    _client.invoke<SearchStateResponse>(ctx, 'stateService', 'searchStateStream', request, SearchStateResponse())
-  ;
 }
 
 
