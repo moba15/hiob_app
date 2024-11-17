@@ -76,7 +76,6 @@ final $typed_data.Uint8List stateValueUpdateResponseDescriptor = $convert.base64
 const StateSubscribtion$json = {
   '1': 'StateSubscribtion',
   '2': [
-    {'1': 'userId', '3': 1, '4': 1, '5': 9, '10': 'userId'},
     {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.StateSubscribtion.SubscriptionType', '10': 'type'},
     {'1': 'stateIds', '3': 3, '4': 3, '5': 9, '10': 'stateIds'},
   ],
@@ -94,10 +93,9 @@ const StateSubscribtion_SubscriptionType$json = {
 
 /// Descriptor for `StateSubscribtion`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List stateSubscribtionDescriptor = $convert.base64Decode(
-    'ChFTdGF0ZVN1YnNjcmlidGlvbhIWCgZ1c2VySWQYASABKAlSBnVzZXJJZBI3CgR0eXBlGAIgAS'
-    'gOMiMuU3RhdGVTdWJzY3JpYnRpb24uU3Vic2NyaXB0aW9uVHlwZVIEdHlwZRIaCghzdGF0ZUlk'
-    'cxgDIAMoCVIIc3RhdGVJZHMiLQoQU3Vic2NyaXB0aW9uVHlwZRIKCgZjYW5jbGUQABINCglzdW'
-    'JzY3JpcGUQAQ==');
+    'ChFTdGF0ZVN1YnNjcmlidGlvbhI3CgR0eXBlGAIgASgOMiMuU3RhdGVTdWJzY3JpYnRpb24uU3'
+    'Vic2NyaXB0aW9uVHlwZVIEdHlwZRIaCghzdGF0ZUlkcxgDIAMoCVIIc3RhdGVJZHMiLQoQU3Vi'
+    'c2NyaXB0aW9uVHlwZRIKCgZjYW5jbGUQABINCglzdWJzY3JpcGUQAQ==');
 
 @$core.Deprecated('Use searchStateDescriptor instead')
 const SearchState$json = {
@@ -187,33 +185,4 @@ final $typed_data.Uint8List stateDescriptor = $convert.base64Decode(
     'ABKAVIAlIDbWluiAEBEhUKA21heBgKIAEoBUgDUgNtYXiIAQEiLQoJU3RhdGVUeXBlEgsKB2Jv'
     'b2xlYW4QABIHCgNzdHIQARIKCgZudW1iZXIQAkIHCgVfdW5pdEIHCgVfc3RlcEIGCgRfbWluQg'
     'YKBF9tYXhCBwoFdmFsdWU=');
-
-const $core.Map<$core.String, $core.dynamic> stateServiceBase$json = {
-  '1': 'stateService',
-  '2': [
-    {'1': 'Subscibe', '2': '.StateSubscribtion', '3': '.StateValueUpdate', '6': true},
-    {'1': 'updateValue', '2': '.StateValueUpdateRequest', '3': '.StateValueUpdateResponse'},
-    {'1': 'searchState', '2': '.SearchState', '3': '.SearchStateResponse'},
-    {'1': 'searchStateStream', '2': '.SearchState', '3': '.SearchStateResponse', '5': true, '6': true},
-  ],
-};
-
-@$core.Deprecated('Use stateServiceDescriptor instead')
-const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> stateServiceBase$messageJson = {
-  '.StateSubscribtion': StateSubscribtion$json,
-  '.StateValueUpdate': StateValueUpdate$json,
-  '.StateValueUpdateRequest': StateValueUpdateRequest$json,
-  '.StateValueUpdateResponse': StateValueUpdateResponse$json,
-  '.SearchState': SearchState$json,
-  '.SearchStateResponse': SearchStateResponse$json,
-  '.State': State$json,
-};
-
-/// Descriptor for `stateService`. Decode as a `google.protobuf.ServiceDescriptorProto`.
-final $typed_data.Uint8List stateServiceDescriptor = $convert.base64Decode(
-    'CgxzdGF0ZVNlcnZpY2USMwoIU3Vic2NpYmUSEi5TdGF0ZVN1YnNjcmlidGlvbhoRLlN0YXRlVm'
-    'FsdWVVcGRhdGUwARJCCgt1cGRhdGVWYWx1ZRIYLlN0YXRlVmFsdWVVcGRhdGVSZXF1ZXN0Ghku'
-    'U3RhdGVWYWx1ZVVwZGF0ZVJlc3BvbnNlEjEKC3NlYXJjaFN0YXRlEgwuU2VhcmNoU3RhdGUaFC'
-    '5TZWFyY2hTdGF0ZVJlc3BvbnNlEjsKEXNlYXJjaFN0YXRlU3RyZWFtEgwuU2VhcmNoU3RhdGUa'
-    'FC5TZWFyY2hTdGF0ZVJlc3BvbnNlKAEwAQ==');
 

@@ -80,10 +80,9 @@ final $typed_data.Uint8List loginRequestDescriptor = $convert.base64Decode(
 const LoginResponse$json = {
   '1': 'LoginResponse',
   '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.LoginResponse.Status', '10': 'status'},
-    {'1': 'errorMsg', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'errorMsg', '17': true},
-    {'1': 'sessionId', '3': 6, '4': 1, '5': 9, '10': 'sessionId'},
+    {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.LoginResponse.Status', '10': 'status'},
+    {'1': 'errorMsg', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'errorMsg', '17': true},
+    {'1': 'sessionId', '3': 3, '4': 1, '5': 9, '10': 'sessionId'},
   ],
   '4': [LoginResponse_Status$json],
   '8': [
@@ -99,16 +98,17 @@ const LoginResponse_Status$json = {
     {'1': 'wrongKey', '2': 1},
     {'1': 'wrongPassword', '2': 2},
     {'1': 'error', '2': 3},
+    {'1': 'notApproved', '2': 4},
   ],
 };
 
 /// Descriptor for `LoginResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loginResponseDescriptor = $convert.base64Decode(
-    'Cg1Mb2dpblJlc3BvbnNlEhAKA2tleRgBIAEoCVIDa2V5Ei0KBnN0YXR1cxgEIAEoDjIVLkxvZ2'
-    'luUmVzcG9uc2UuU3RhdHVzUgZzdGF0dXMSHwoIZXJyb3JNc2cYBSABKAlIAFIIZXJyb3JNc2eI'
-    'AQESHAoJc2Vzc2lvbklkGAYgASgJUglzZXNzaW9uSWQiRAoGU3RhdHVzEg4KCnN1Y2Nlc2Z1bG'
-    'wQABIMCgh3cm9uZ0tleRABEhEKDXdyb25nUGFzc3dvcmQQAhIJCgVlcnJvchADQgsKCV9lcnJv'
-    'ck1zZw==');
+    'Cg1Mb2dpblJlc3BvbnNlEi0KBnN0YXR1cxgBIAEoDjIVLkxvZ2luUmVzcG9uc2UuU3RhdHVzUg'
+    'ZzdGF0dXMSHwoIZXJyb3JNc2cYAiABKAlIAFIIZXJyb3JNc2eIAQESHAoJc2Vzc2lvbklkGAMg'
+    'ASgJUglzZXNzaW9uSWQiVQoGU3RhdHVzEg4KCnN1Y2Nlc2Z1bGwQABIMCgh3cm9uZ0tleRABEh'
+    'EKDXdyb25nUGFzc3dvcmQQAhIJCgVlcnJvchADEg8KC25vdEFwcHJvdmVkEARCCwoJX2Vycm9y'
+    'TXNn');
 
 @$core.Deprecated('Use newAesPacketDescriptor instead')
 const NewAesPacket$json = {
@@ -128,25 +128,45 @@ const WrongAesKeyPack$json = {
 final $typed_data.Uint8List wrongAesKeyPackDescriptor = $convert.base64Decode(
     'Cg9Xcm9uZ0Flc0tleVBhY2s=');
 
-const $core.Map<$core.String, $core.dynamic> LoginServiceBase$json = {
-  '1': 'Login',
+@$core.Deprecated('Use approvalRequestDescriptor instead')
+const ApprovalRequest$json = {
+  '1': 'ApprovalRequest',
   '2': [
-    {'1': 'CheckCompatibility', '2': '.CompatibilityRequest', '3': '.CompatibilityResponse', '4': {}},
-    {'1': 'Login', '2': '.LoginRequest', '3': '.LoginResponse', '4': {}},
+    {'1': 'deviceName', '3': 1, '4': 1, '5': 9, '10': 'deviceName'},
+    {'1': 'deviceId', '3': 2, '4': 1, '5': 9, '10': 'deviceId'},
   ],
 };
 
-@$core.Deprecated('Use loginServiceDescriptor instead')
-const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> LoginServiceBase$messageJson = {
-  '.CompatibilityRequest': CompatibilityRequest$json,
-  '.CompatibilityResponse': CompatibilityResponse$json,
-  '.LoginRequest': LoginRequest$json,
-  '.LoginResponse': LoginResponse$json,
+/// Descriptor for `ApprovalRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List approvalRequestDescriptor = $convert.base64Decode(
+    'Cg9BcHByb3ZhbFJlcXVlc3QSHgoKZGV2aWNlTmFtZRgBIAEoCVIKZGV2aWNlTmFtZRIaCghkZX'
+    'ZpY2VJZBgCIAEoCVIIZGV2aWNlSWQ=');
+
+@$core.Deprecated('Use approvalResponseDescriptor instead')
+const ApprovalResponse$json = {
+  '1': 'ApprovalResponse',
+  '2': [
+    {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.ApprovalResponse.Status', '10': 'status'},
+    {'1': 'key', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'key', '17': true},
+  ],
+  '4': [ApprovalResponse_Status$json],
+  '8': [
+    {'1': '_key'},
+  ],
 };
 
-/// Descriptor for `Login`. Decode as a `google.protobuf.ServiceDescriptorProto`.
-final $typed_data.Uint8List loginServiceDescriptor = $convert.base64Decode(
-    'CgVMb2dpbhJFChJDaGVja0NvbXBhdGliaWxpdHkSFS5Db21wYXRpYmlsaXR5UmVxdWVzdBoWLk'
-    'NvbXBhdGliaWxpdHlSZXNwb25zZSIAEigKBUxvZ2luEg0uTG9naW5SZXF1ZXN0Gg4uTG9naW5S'
-    'ZXNwb25zZSIA');
+@$core.Deprecated('Use approvalResponseDescriptor instead')
+const ApprovalResponse_Status$json = {
+  '1': 'Status',
+  '2': [
+    {'1': 'aprroved', '2': 0},
+    {'1': 'timeout', '2': 1},
+  ],
+};
+
+/// Descriptor for `ApprovalResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List approvalResponseDescriptor = $convert.base64Decode(
+    'ChBBcHByb3ZhbFJlc3BvbnNlEjAKBnN0YXR1cxgBIAEoDjIYLkFwcHJvdmFsUmVzcG9uc2UuU3'
+    'RhdHVzUgZzdGF0dXMSFQoDa2V5GAIgASgJSABSA2tleYgBASIjCgZTdGF0dXMSDAoIYXBycm92'
+    'ZWQQABILCgd0aW1lb3V0EAFCBgoEX2tleQ==');
 
