@@ -7,8 +7,8 @@ import 'package:grpc/grpc.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/state/state.dart';
-import 'package:smart_home/generated/login/login.pb.dart';
-import 'package:smart_home/generated/login/login.pbserver.dart';
+import 'package:smart_home/generated/login/login.pbgrpc.dart';
+import 'package:smart_home/generated/state/state.pbgrpc.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -78,6 +78,8 @@ class ConnectionManager with WidgetsBindingObserver {
   StreamSubscription? _webSocketStreamSub;
   ClientChannel? channel;
   LoginClient? loginClientStub;
+  StateUpdateClient? stateUpdateClientStub;
+
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
   final GeneralManager generalManager;
@@ -110,13 +112,13 @@ class ConnectionManager with WidgetsBindingObserver {
 
   Future<void> connectIoB() async {
     Uri url = await getUrl();
-
     channel = ClientChannel(url.host,
         port: url.port,
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure()));
 
-    loginClientStub = LoginApi(channel!);
+    loginClientStub = LoginClient(channel!,
+        options: CallOptions(metadata: {"x-auth": "asdasdasdasd"}));
     channel!.onConnectionStateChanged.listen(
       (event) {
         Manager().talker.debug(
@@ -290,7 +292,7 @@ class ConnectionManager with WidgetsBindingObserver {
             .onHistoryUpdate(data: jsonDecode(rawMap["data"]));
         break;
       case DataPackageType.loginDeclined:
-        _onLoginDeclined();
+        //_onLoginDeclined();
         break;
       case DataPackageType.loginApproved:
         _onLoginApproved(rawMap["version"]);
@@ -370,7 +372,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
     LoginResponse response = await loginClientStub!
         .login(LoginRequest(
-            deviceID: generalManager.deviceID,
+            deviceId: generalManager.deviceID,
             deviceName: generalManager.deviceName,
             key: generalManager.loginKey,
             password: ioBrokerManager.password,
@@ -378,11 +380,38 @@ class ConnectionManager with WidgetsBindingObserver {
         .catchError((Object e) async {
       Manager().talker.error("ConnectionManager | errorLogin", e);
     });
+
+    if (response.status != LoginResponse_Status.succesfull) {
+      _onLoginDeclined(response.status);
+    } else {
+      _onLoginApproved("");
+    }
   }
 
-  void _onLoginDeclined() {
-    Manager().talker.debug("ConnectionManager | Login declined");
+  void _onLoginDeclined(LoginResponse_Status status) {
+    Manager().talker.debug("ConnectionManager | Login declined ${status.name}");
+
+    _requestApproval();
+
     connectionStatusStreamController.add(ConnectionStatus.loginDeclined);
+  }
+
+  void _requestApproval() async {
+    Manager().talker.debug("ConnectionManager | Requesting approval");
+    ApprovalResponse response = await loginClientStub!.requestApproval(
+        ApprovalRequest(
+            deviceId: generalManager.deviceID,
+            deviceName: generalManager.deviceName));
+    if (response.status == ApprovalResponse_Status.timeout) {
+      Manager()
+          .talker
+          .debug("ConnectionManager | Requesting approval: timeout");
+    } else if (response.status == ApprovalResponse_Status.aprroved) {
+      Manager()
+          .talker
+          .debug("ConnectionManager | Requesting approval: successfull");
+      _onLoginKey(response.key);
+    }
   }
 
   void _onNewAes() {
@@ -394,6 +423,9 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onLoginApproved(String? version) {
+    Manager().talker.debug("ConnectionManager | Login approved");
+
+    _registerOtherServices();
     connectionStatusStreamController.add(ConnectionStatus.loggedIn);
     deviceManager.subscribeToDataPointsIoB(this);
   }
@@ -406,6 +438,19 @@ class ConnectionManager with WidgetsBindingObserver {
 
     generalManager.updateLoginKey(key);
     _requestLogin();
+  }
+
+  void _registerOtherServices() {
+    Manager().talker.debug("ConnectionManager | Regiserting other services");
+    if (stateUpdateClientStub != null) {
+      //TODO clean
+    }
+    Map<String, String> header = {
+      "token": generalManager.loginKey ?? "",
+      "deviceId": generalManager.deviceID ?? ""
+    };
+    stateUpdateClientStub =
+        StateUpdateClient(channel!, options: CallOptions(metadata: header));
   }
 
   void sendMsg(DataPackage dataPackage) {

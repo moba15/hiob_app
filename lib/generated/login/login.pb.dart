@@ -9,7 +9,6 @@
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
-import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
@@ -318,15 +317,11 @@ class LoginRequest extends $pb.GeneratedMessage {
 
 class LoginResponse extends $pb.GeneratedMessage {
   factory LoginResponse({
-    $core.String? key,
     LoginResponse_Status? status,
     $core.String? errorMsg,
     $core.String? sessionId,
   }) {
     final $result = create();
-    if (key != null) {
-      $result.key = key;
-    }
     if (status != null) {
       $result.status = status;
     }
@@ -343,10 +338,9 @@ class LoginResponse extends $pb.GeneratedMessage {
   factory LoginResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LoginResponse', createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..e<LoginResponse_Status>(4, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: LoginResponse_Status.succesfull, valueOf: LoginResponse_Status.valueOf, enumValues: LoginResponse_Status.values)
-    ..aOS(5, _omitFieldNames ? '' : 'errorMsg', protoName: 'errorMsg')
-    ..aOS(6, _omitFieldNames ? '' : 'sessionId', protoName: 'sessionId')
+    ..e<LoginResponse_Status>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: LoginResponse_Status.succesfull, valueOf: LoginResponse_Status.valueOf, enumValues: LoginResponse_Status.values)
+    ..aOS(2, _omitFieldNames ? '' : 'errorMsg', protoName: 'errorMsg')
+    ..aOS(3, _omitFieldNames ? '' : 'sessionId', protoName: 'sessionId')
     ..hasRequiredFields = false
   ;
 
@@ -372,40 +366,31 @@ class LoginResponse extends $pb.GeneratedMessage {
   static LoginResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get key => $_getSZ(0);
+  LoginResponse_Status get status => $_getN(0);
   @$pb.TagNumber(1)
-  set key($core.String v) { $_setString(0, v); }
+  set status(LoginResponse_Status v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasKey() => $_has(0);
+  $core.bool hasStatus() => $_has(0);
   @$pb.TagNumber(1)
-  void clearKey() => clearField(1);
+  void clearStatus() => clearField(1);
 
-  @$pb.TagNumber(4)
-  LoginResponse_Status get status => $_getN(1);
-  @$pb.TagNumber(4)
-  set status(LoginResponse_Status v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasStatus() => $_has(1);
-  @$pb.TagNumber(4)
-  void clearStatus() => clearField(4);
+  @$pb.TagNumber(2)
+  $core.String get errorMsg => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set errorMsg($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasErrorMsg() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearErrorMsg() => clearField(2);
 
-  @$pb.TagNumber(5)
-  $core.String get errorMsg => $_getSZ(2);
-  @$pb.TagNumber(5)
-  set errorMsg($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasErrorMsg() => $_has(2);
-  @$pb.TagNumber(5)
-  void clearErrorMsg() => clearField(5);
-
-  @$pb.TagNumber(6)
-  $core.String get sessionId => $_getSZ(3);
-  @$pb.TagNumber(6)
-  set sessionId($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasSessionId() => $_has(3);
-  @$pb.TagNumber(6)
-  void clearSessionId() => clearField(6);
+  @$pb.TagNumber(3)
+  $core.String get sessionId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set sessionId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSessionId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSessionId() => clearField(3);
 }
 
 class NewAesPacket extends $pb.GeneratedMessage {
@@ -472,16 +457,132 @@ class WrongAesKeyPack extends $pb.GeneratedMessage {
   static WrongAesKeyPack? _defaultInstance;
 }
 
-class LoginApi {
-  $pb.RpcClient _client;
-  LoginApi(this._client);
+class ApprovalRequest extends $pb.GeneratedMessage {
+  factory ApprovalRequest({
+    $core.String? deviceName,
+    $core.String? deviceId,
+  }) {
+    final $result = create();
+    if (deviceName != null) {
+      $result.deviceName = deviceName;
+    }
+    if (deviceId != null) {
+      $result.deviceId = deviceId;
+    }
+    return $result;
+  }
+  ApprovalRequest._() : super();
+  factory ApprovalRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ApprovalRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  $async.Future<CompatibilityResponse> checkCompatibility($pb.ClientContext? ctx, CompatibilityRequest request) =>
-    _client.invoke<CompatibilityResponse>(ctx, 'Login', 'CheckCompatibility', request, CompatibilityResponse())
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ApprovalRequest', createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'deviceName', protoName: 'deviceName')
+    ..aOS(2, _omitFieldNames ? '' : 'deviceId', protoName: 'deviceId')
+    ..hasRequiredFields = false
   ;
-  $async.Future<LoginResponse> login($pb.ClientContext? ctx, LoginRequest request) =>
-    _client.invoke<LoginResponse>(ctx, 'Login', 'Login', request, LoginResponse())
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ApprovalRequest clone() => ApprovalRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ApprovalRequest copyWith(void Function(ApprovalRequest) updates) => super.copyWith((message) => updates(message as ApprovalRequest)) as ApprovalRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ApprovalRequest create() => ApprovalRequest._();
+  ApprovalRequest createEmptyInstance() => create();
+  static $pb.PbList<ApprovalRequest> createRepeated() => $pb.PbList<ApprovalRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ApprovalRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ApprovalRequest>(create);
+  static ApprovalRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get deviceName => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set deviceName($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDeviceName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDeviceName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get deviceId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set deviceId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasDeviceId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDeviceId() => clearField(2);
+}
+
+class ApprovalResponse extends $pb.GeneratedMessage {
+  factory ApprovalResponse({
+    ApprovalResponse_Status? status,
+    $core.String? key,
+  }) {
+    final $result = create();
+    if (status != null) {
+      $result.status = status;
+    }
+    if (key != null) {
+      $result.key = key;
+    }
+    return $result;
+  }
+  ApprovalResponse._() : super();
+  factory ApprovalResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ApprovalResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ApprovalResponse', createEmptyInstance: create)
+    ..e<ApprovalResponse_Status>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: ApprovalResponse_Status.aprroved, valueOf: ApprovalResponse_Status.valueOf, enumValues: ApprovalResponse_Status.values)
+    ..aOS(2, _omitFieldNames ? '' : 'key')
+    ..hasRequiredFields = false
   ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ApprovalResponse clone() => ApprovalResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ApprovalResponse copyWith(void Function(ApprovalResponse) updates) => super.copyWith((message) => updates(message as ApprovalResponse)) as ApprovalResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ApprovalResponse create() => ApprovalResponse._();
+  ApprovalResponse createEmptyInstance() => create();
+  static $pb.PbList<ApprovalResponse> createRepeated() => $pb.PbList<ApprovalResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ApprovalResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ApprovalResponse>(create);
+  static ApprovalResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ApprovalResponse_Status get status => $_getN(0);
+  @$pb.TagNumber(1)
+  set status(ApprovalResponse_Status v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasStatus() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStatus() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get key => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set key($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasKey() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearKey() => clearField(2);
 }
 
 
