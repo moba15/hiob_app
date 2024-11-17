@@ -162,4 +162,4 @@ flutter:
 
 
 scripts: 
-  generate: rm -rf lib/generated && mkdir lib/generated && protoc -I=proto --dart_out=grpc:"./lib/generated" proto/packages.proto proto/state/state.proto  proto/login/login.proto
+  generate: rm -rf lib/generated && mkdir lib/generated && protoc -I=proto --dart_out=grpc:"./lib/generated" proto/packages.proto proto/state/state.proto  proto/login/login.proto && dart format lib/generated/

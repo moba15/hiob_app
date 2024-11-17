@@ -69,14 +69,22 @@ const StateValueUpdateResponse$json = {
 };
 
 /// Descriptor for `StateValueUpdateResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List stateValueUpdateResponseDescriptor = $convert.base64Decode(
-    'ChhTdGF0ZVZhbHVlVXBkYXRlUmVzcG9uc2USEAoDc3VjGAEgASgIUgNzdWM=');
+final $typed_data.Uint8List stateValueUpdateResponseDescriptor =
+    $convert.base64Decode(
+        'ChhTdGF0ZVZhbHVlVXBkYXRlUmVzcG9uc2USEAoDc3VjGAEgASgIUgNzdWM=');
 
 @$core.Deprecated('Use stateSubscribtionDescriptor instead')
 const StateSubscribtion$json = {
   '1': 'StateSubscribtion',
   '2': [
-    {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.StateSubscribtion.SubscriptionType', '10': 'type'},
+    {
+      '1': 'type',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.StateSubscribtion.SubscriptionType',
+      '10': 'type'
+    },
     {'1': 'stateIds', '3': 3, '4': 3, '5': 9, '10': 'stateIds'},
   ],
   '4': [StateSubscribtion_SubscriptionType$json],
@@ -145,7 +153,14 @@ const State_StateCommon$json = {
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'desc', '3': 2, '4': 1, '5': 9, '10': 'desc'},
-    {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.State.StateCommon.StateType', '10': 'type'},
+    {
+      '1': 'type',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.State.StateCommon.StateType',
+      '10': 'type'
+    },
     {'1': 'read', '3': 4, '4': 1, '5': 8, '10': 'read'},
     {'1': 'write', '3': 5, '4': 1, '5': 8, '10': 'write'},
     {'1': 'role', '3': 6, '4': 1, '5': 9, '10': 'role'},
@@ -185,4 +200,3 @@ final $typed_data.Uint8List stateDescriptor = $convert.base64Decode(
     'ABKAVIAlIDbWluiAEBEhUKA21heBgKIAEoBUgDUgNtYXiIAQEiLQoJU3RhdGVUeXBlEgsKB2Jv'
     'b2xlYW4QABIHCgNzdHIQARIKCgZudW1iZXIQAkIHCgVfdW5pdEIHCgVfc3RlcEIGCgRfbWluQg'
     'YKBF9tYXhCBwoFdmFsdWU=');
-

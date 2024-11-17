@@ -63,7 +63,15 @@ const LoginRequest$json = {
     {'1': 'deviceId', '3': 2, '4': 1, '5': 9, '10': 'deviceId'},
     {'1': 'key', '3': 3, '4': 1, '5': 9, '10': 'key'},
     {'1': 'user', '3': 4, '4': 1, '5': 9, '10': 'user'},
-    {'1': 'password', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'password', '17': true},
+    {
+      '1': 'password',
+      '3': 5,
+      '4': 1,
+      '5': 9,
+      '9': 0,
+      '10': 'password',
+      '17': true
+    },
   ],
   '8': [
     {'1': '_password'},
@@ -80,8 +88,23 @@ final $typed_data.Uint8List loginRequestDescriptor = $convert.base64Decode(
 const LoginResponse$json = {
   '1': 'LoginResponse',
   '2': [
-    {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.LoginResponse.Status', '10': 'status'},
-    {'1': 'errorMsg', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'errorMsg', '17': true},
+    {
+      '1': 'status',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.LoginResponse.Status',
+      '10': 'status'
+    },
+    {
+      '1': 'errorMsg',
+      '3': 2,
+      '4': 1,
+      '5': 9,
+      '9': 0,
+      '10': 'errorMsg',
+      '17': true
+    },
     {'1': 'sessionId', '3': 3, '4': 1, '5': 9, '10': 'sessionId'},
   ],
   '4': [LoginResponse_Status$json],
@@ -116,8 +139,8 @@ const NewAesPacket$json = {
 };
 
 /// Descriptor for `NewAesPacket`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List newAesPacketDescriptor = $convert.base64Decode(
-    'CgxOZXdBZXNQYWNrZXQ=');
+final $typed_data.Uint8List newAesPacketDescriptor =
+    $convert.base64Decode('CgxOZXdBZXNQYWNrZXQ=');
 
 @$core.Deprecated('Use wrongAesKeyPackDescriptor instead')
 const WrongAesKeyPack$json = {
@@ -125,8 +148,8 @@ const WrongAesKeyPack$json = {
 };
 
 /// Descriptor for `WrongAesKeyPack`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List wrongAesKeyPackDescriptor = $convert.base64Decode(
-    'Cg9Xcm9uZ0Flc0tleVBhY2s=');
+final $typed_data.Uint8List wrongAesKeyPackDescriptor =
+    $convert.base64Decode('Cg9Xcm9uZ0Flc0tleVBhY2s=');
 
 @$core.Deprecated('Use approvalRequestDescriptor instead')
 const ApprovalRequest$json = {
@@ -146,7 +169,14 @@ final $typed_data.Uint8List approvalRequestDescriptor = $convert.base64Decode(
 const ApprovalResponse$json = {
   '1': 'ApprovalResponse',
   '2': [
-    {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.ApprovalResponse.Status', '10': 'status'},
+    {
+      '1': 'status',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.ApprovalResponse.Status',
+      '10': 'status'
+    },
     {'1': 'key', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'key', '17': true},
   ],
   '4': [ApprovalResponse_Status$json],
@@ -169,4 +199,3 @@ final $typed_data.Uint8List approvalResponseDescriptor = $convert.base64Decode(
     'ChBBcHByb3ZhbFJlc3BvbnNlEjAKBnN0YXR1cxgBIAEoDjIYLkFwcHJvdmFsUmVzcG9uc2UuU3'
     'RhdHVzUgZzdGF0dXMSFQoDa2V5GAIgASgJSABSA2tleYgBASIjCgZTdGF0dXMSDAoIYXBycm92'
     'ZWQQABILCgd0aW1lb3V0EAFCBgoEX2tleQ==');
-

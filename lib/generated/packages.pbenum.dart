@@ -14,17 +14,18 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class PackageType extends $pb.ProtobufEnum {
-  static const PackageType firstPing = PackageType._(0, _omitEnumNames ? '' : 'firstPing');
+  static const PackageType firstPing =
+      PackageType._(0, _omitEnumNames ? '' : 'firstPing');
 
-  static const $core.List<PackageType> values = <PackageType> [
+  static const $core.List<PackageType> values = <PackageType>[
     firstPing,
   ];
 
-  static final $core.Map<$core.int, PackageType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static final $core.Map<$core.int, PackageType> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
   static PackageType? valueOf($core.int value) => _byValue[value];
 
   const PackageType._($core.int v, $core.String n) : super(v, n);
 }
-
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

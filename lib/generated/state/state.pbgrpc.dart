@@ -21,42 +21,59 @@ export 'state.pb.dart';
 
 @$pb.GrpcServiceName('StateUpdate')
 class StateUpdateClient extends $grpc.Client {
-  static final _$subscibe = $grpc.ClientMethod<$0.StateSubscribtion, $0.StateValueUpdate>(
-      '/StateUpdate/Subscibe',
-      ($0.StateSubscribtion value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.StateValueUpdate.fromBuffer(value));
-  static final _$updateValue = $grpc.ClientMethod<$0.StateValueUpdateRequest, $0.StateValueUpdateResponse>(
+  static final _$subscibe =
+      $grpc.ClientMethod<$0.StateSubscribtion, $0.StateValueUpdate>(
+          '/StateUpdate/Subscibe',
+          ($0.StateSubscribtion value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.StateValueUpdate.fromBuffer(value));
+  static final _$updateValue = $grpc.ClientMethod<$0.StateValueUpdateRequest,
+          $0.StateValueUpdateResponse>(
       '/StateUpdate/updateValue',
       ($0.StateValueUpdateRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.StateValueUpdateResponse.fromBuffer(value));
-  static final _$searchState = $grpc.ClientMethod<$0.SearchState, $0.SearchStateResponse>(
-      '/StateUpdate/searchState',
-      ($0.SearchState value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.SearchStateResponse.fromBuffer(value));
-  static final _$searchStateStream = $grpc.ClientMethod<$0.SearchState, $0.SearchStateResponse>(
-      '/StateUpdate/searchStateStream',
-      ($0.SearchState value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.SearchStateResponse.fromBuffer(value));
+      ($core.List<$core.int> value) =>
+          $0.StateValueUpdateResponse.fromBuffer(value));
+  static final _$searchState =
+      $grpc.ClientMethod<$0.SearchState, $0.SearchStateResponse>(
+          '/StateUpdate/searchState',
+          ($0.SearchState value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.SearchStateResponse.fromBuffer(value));
+  static final _$searchStateStream =
+      $grpc.ClientMethod<$0.SearchState, $0.SearchStateResponse>(
+          '/StateUpdate/searchStateStream',
+          ($0.SearchState value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.SearchStateResponse.fromBuffer(value));
 
   StateUpdateClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$0.StateValueUpdate> subscibe($0.StateSubscribtion request, {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$subscibe, $async.Stream.fromIterable([request]), options: options);
+  $grpc.ResponseStream<$0.StateValueUpdate> subscibe(
+      $0.StateSubscribtion request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$subscibe, $async.Stream.fromIterable([request]),
+        options: options);
   }
 
-  $grpc.ResponseFuture<$0.StateValueUpdateResponse> updateValue($0.StateValueUpdateRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.StateValueUpdateResponse> updateValue(
+      $0.StateValueUpdateRequest request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateValue, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.SearchStateResponse> searchState($0.SearchState request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.SearchStateResponse> searchState(
+      $0.SearchState request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$searchState, request, options: options);
   }
 
-  $grpc.ResponseStream<$0.SearchStateResponse> searchStateStream($async.Stream<$0.SearchState> request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseStream<$0.SearchStateResponse> searchStateStream(
+      $async.Stream<$0.SearchState> request,
+      {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$searchStateStream, request, options: options);
   }
 }
@@ -73,12 +90,14 @@ abstract class StateUpdateServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.StateSubscribtion.fromBuffer(value),
         ($0.StateValueUpdate value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.StateValueUpdateRequest, $0.StateValueUpdateResponse>(
+    $addMethod($grpc.ServiceMethod<$0.StateValueUpdateRequest,
+            $0.StateValueUpdateResponse>(
         'updateValue',
         updateValue_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.StateValueUpdateRequest.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $0.StateValueUpdateRequest.fromBuffer(value),
         ($0.StateValueUpdateResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.SearchState, $0.SearchStateResponse>(
         'searchState',
@@ -96,20 +115,28 @@ abstract class StateUpdateServiceBase extends $grpc.Service {
         ($0.SearchStateResponse value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$0.StateValueUpdate> subscibe_Pre($grpc.ServiceCall call, $async.Future<$0.StateSubscribtion> request) async* {
+  $async.Stream<$0.StateValueUpdate> subscibe_Pre($grpc.ServiceCall call,
+      $async.Future<$0.StateSubscribtion> request) async* {
     yield* subscibe(call, await request);
   }
 
-  $async.Future<$0.StateValueUpdateResponse> updateValue_Pre($grpc.ServiceCall call, $async.Future<$0.StateValueUpdateRequest> request) async {
+  $async.Future<$0.StateValueUpdateResponse> updateValue_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.StateValueUpdateRequest> request) async {
     return updateValue(call, await request);
   }
 
-  $async.Future<$0.SearchStateResponse> searchState_Pre($grpc.ServiceCall call, $async.Future<$0.SearchState> request) async {
+  $async.Future<$0.SearchStateResponse> searchState_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.SearchState> request) async {
     return searchState(call, await request);
   }
 
-  $async.Stream<$0.StateValueUpdate> subscibe($grpc.ServiceCall call, $0.StateSubscribtion request);
-  $async.Future<$0.StateValueUpdateResponse> updateValue($grpc.ServiceCall call, $0.StateValueUpdateRequest request);
-  $async.Future<$0.SearchStateResponse> searchState($grpc.ServiceCall call, $0.SearchState request);
-  $async.Stream<$0.SearchStateResponse> searchStateStream($grpc.ServiceCall call, $async.Stream<$0.SearchState> request);
+  $async.Stream<$0.StateValueUpdate> subscibe(
+      $grpc.ServiceCall call, $0.StateSubscribtion request);
+  $async.Future<$0.StateValueUpdateResponse> updateValue(
+      $grpc.ServiceCall call, $0.StateValueUpdateRequest request);
+  $async.Future<$0.SearchStateResponse> searchState(
+      $grpc.ServiceCall call, $0.SearchState request);
+  $async.Stream<$0.SearchStateResponse> searchStateStream(
+      $grpc.ServiceCall call, $async.Stream<$0.SearchState> request);
 }
