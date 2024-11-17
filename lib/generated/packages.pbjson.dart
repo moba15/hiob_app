@@ -22,8 +22,8 @@ const PackageType$json = {
 };
 
 /// Descriptor for `PackageType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List packageTypeDescriptor = $convert.base64Decode(
-    'CgtQYWNrYWdlVHlwZRINCglmaXJzdFBpbmcQAA==');
+final $typed_data.Uint8List packageTypeDescriptor =
+    $convert.base64Decode('CgtQYWNrYWdlVHlwZRINCglmaXJzdFBpbmcQAA==');
 
 @$core.Deprecated('Use packageDescriptor instead')
 const Package$json = {
@@ -36,4 +36,3 @@ const Package$json = {
 /// Descriptor for `Package`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List packageDescriptor = $convert.base64Decode(
     'CgdQYWNrYWdlEiAKBHR5cGUYASABKA4yDC5QYWNrYWdlVHlwZVIEdHlwZQ==');
-
