@@ -18,6 +18,59 @@ import 'state.pbenum.dart';
 
 export 'state.pbenum.dart';
 
+class StatesValueUpdate extends $pb.GeneratedMessage {
+  factory StatesValueUpdate({
+    $core.Iterable<StateValueUpdate>? stateUpdates,
+  }) {
+    final $result = create();
+    if (stateUpdates != null) {
+      $result.stateUpdates.addAll(stateUpdates);
+    }
+    return $result;
+  }
+  StatesValueUpdate._() : super();
+  factory StatesValueUpdate.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory StatesValueUpdate.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StatesValueUpdate',
+      createEmptyInstance: create)
+    ..pc<StateValueUpdate>(
+        2, _omitFieldNames ? '' : 'stateUpdates', $pb.PbFieldType.PM,
+        protoName: 'stateUpdates', subBuilder: StateValueUpdate.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  StatesValueUpdate clone() => StatesValueUpdate()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  StatesValueUpdate copyWith(void Function(StatesValueUpdate) updates) =>
+      super.copyWith((message) => updates(message as StatesValueUpdate))
+          as StatesValueUpdate;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StatesValueUpdate create() => StatesValueUpdate._();
+  StatesValueUpdate createEmptyInstance() => create();
+  static $pb.PbList<StatesValueUpdate> createRepeated() =>
+      $pb.PbList<StatesValueUpdate>();
+  @$core.pragma('dart2js:noInline')
+  static StatesValueUpdate getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StatesValueUpdate>(create);
+  static StatesValueUpdate? _defaultInstance;
+
+  @$pb.TagNumber(2)
+  $core.List<StateValueUpdate> get stateUpdates => $_getList(0);
+}
+
 enum StateValueUpdate_Value {
   stringValue,
   boolValue,
@@ -861,6 +914,7 @@ class State extends $pb.GeneratedMessage {
     $core.String? stringValue,
     $core.bool? boolValue,
     $core.double? doubleValue,
+    State_StateCommon? common,
     $core.String? other,
   }) {
     final $result = create();
@@ -875,6 +929,9 @@ class State extends $pb.GeneratedMessage {
     }
     if (doubleValue != null) {
       $result.doubleValue = doubleValue;
+    }
+    if (common != null) {
+      $result.common = common;
     }
     if (other != null) {
       $result.other = other;
@@ -906,6 +963,8 @@ class State extends $pb.GeneratedMessage {
     ..a<$core.double>(
         5, _omitFieldNames ? '' : 'doubleValue', $pb.PbFieldType.OD,
         protoName: 'doubleValue')
+    ..aOM<State_StateCommon>(6, _omitFieldNames ? '' : 'common',
+        subBuilder: State_StateCommon.create)
     ..aOS(99, _omitFieldNames ? '' : 'other')
     ..hasRequiredFields = false;
 
@@ -981,15 +1040,29 @@ class State extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearDoubleValue() => clearField(5);
 
+  @$pb.TagNumber(6)
+  State_StateCommon get common => $_getN(4);
+  @$pb.TagNumber(6)
+  set common(State_StateCommon v) {
+    setField(6, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasCommon() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearCommon() => clearField(6);
+  @$pb.TagNumber(6)
+  State_StateCommon ensureCommon() => $_ensure(4);
+
   @$pb.TagNumber(99)
-  $core.String get other => $_getSZ(4);
+  $core.String get other => $_getSZ(5);
   @$pb.TagNumber(99)
   set other($core.String v) {
-    $_setString(4, v);
+    $_setString(5, v);
   }
 
   @$pb.TagNumber(99)
-  $core.bool hasOther() => $_has(4);
+  $core.bool hasOther() => $_has(5);
   @$pb.TagNumber(99)
   void clearOther() => clearField(99);
 }

@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:grpc/grpc.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/iobroker_device.dart';
@@ -251,9 +253,25 @@ class DeviceManager {
       }
       this.manager.talker.debug(
           "DeviceManager | subscribe to ${dataPoints.length} datapoints");
-      connectionManager.stateUpdateClientStub?.subscibe(StateSubscribtion(
-          type: StateSubscribtion_SubscriptionType.subscripe,
-          stateIds: dataPoints));
+      StreamSubscription<StatesValueUpdate>? subscription = connectionManager
+          .stateUpdateClientStub
+          ?.subscibe(StateSubscribtion(
+              type: StateSubscribtion_SubscriptionType.subscripe,
+              stateIds: dataPoints))
+          .listen((value) {
+        Manager().talker.debug(
+            "DeviceManager | stateSubscriptionStream | Recieved update from ${value.stateUpdates.length} states");
+        Manager().talker.verbose(
+                "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map(
+              (e) {
+                return "${e.stateId}: [${e.boolValue}, ${e.doubleValue}, ${e.stringValue}]";
+              },
+            )}");
+      });
+      if (subscription == null) {
+        Manager().talker.error(
+            "DeviceManager | unable to create StreamSubscription for subscribed Datapoints");
+      }
     }
   }
 }

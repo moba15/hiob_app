@@ -13,6 +13,26 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use statesValueUpdateDescriptor instead')
+const StatesValueUpdate$json = {
+  '1': 'StatesValueUpdate',
+  '2': [
+    {
+      '1': 'stateUpdates',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.StateValueUpdate',
+      '10': 'stateUpdates'
+    },
+  ],
+};
+
+/// Descriptor for `StatesValueUpdate`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List statesValueUpdateDescriptor = $convert.base64Decode(
+    'ChFTdGF0ZXNWYWx1ZVVwZGF0ZRI1CgxzdGF0ZVVwZGF0ZXMYAiADKAsyES5TdGF0ZVZhbHVlVX'
+    'BkYXRlUgxzdGF0ZVVwZGF0ZXM=');
+
 @$core.Deprecated('Use stateValueUpdateDescriptor instead')
 const StateValueUpdate$json = {
   '1': 'StateValueUpdate',
@@ -140,10 +160,21 @@ const State$json = {
     {'1': 'boolValue', '3': 4, '4': 1, '5': 8, '9': 0, '10': 'boolValue'},
     {'1': 'doubleValue', '3': 5, '4': 1, '5': 1, '9': 0, '10': 'doubleValue'},
     {'1': 'other', '3': 99, '4': 1, '5': 9, '9': 0, '10': 'other'},
+    {
+      '1': 'common',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.State.StateCommon',
+      '9': 1,
+      '10': 'common',
+      '17': true
+    },
   ],
   '3': [State_StateCommon$json],
   '8': [
     {'1': 'value'},
+    {'1': '_common'},
   ],
 };
 
@@ -192,11 +223,12 @@ const State_StateCommon_StateType$json = {
 final $typed_data.Uint8List stateDescriptor = $convert.base64Decode(
     'CgVTdGF0ZRIYCgdzdGF0ZUlkGAEgASgJUgdzdGF0ZUlkEiIKC3N0cmluZ1ZhbHVlGAMgASgJSA'
     'BSC3N0cmluZ1ZhbHVlEh4KCWJvb2xWYWx1ZRgEIAEoCEgAUglib29sVmFsdWUSIgoLZG91Ymxl'
-    'VmFsdWUYBSABKAFIAFILZG91YmxlVmFsdWUSFgoFb3RoZXIYYyABKAlIAFIFb3RoZXIa1gIKC1'
-    'N0YXRlQ29tbW9uEhIKBG5hbWUYASABKAlSBG5hbWUSEgoEZGVzYxgCIAEoCVIEZGVzYxIwCgR0'
-    'eXBlGAMgASgOMhwuU3RhdGUuU3RhdGVDb21tb24uU3RhdGVUeXBlUgR0eXBlEhIKBHJlYWQYBC'
-    'ABKAhSBHJlYWQSFAoFd3JpdGUYBSABKAhSBXdyaXRlEhIKBHJvbGUYBiABKAlSBHJvbGUSFwoE'
-    'dW5pdBgHIAEoCUgAUgR1bml0iAEBEhcKBHN0ZXAYCCABKAVIAVIEc3RlcIgBARIVCgNtaW4YCS'
-    'ABKAVIAlIDbWluiAEBEhUKA21heBgKIAEoBUgDUgNtYXiIAQEiLQoJU3RhdGVUeXBlEgsKB2Jv'
-    'b2xlYW4QABIHCgNzdHIQARIKCgZudW1iZXIQAkIHCgVfdW5pdEIHCgVfc3RlcEIGCgRfbWluQg'
-    'YKBF9tYXhCBwoFdmFsdWU=');
+    'VmFsdWUYBSABKAFIAFILZG91YmxlVmFsdWUSFgoFb3RoZXIYYyABKAlIAFIFb3RoZXISLwoGY2'
+    '9tbW9uGAYgASgLMhIuU3RhdGUuU3RhdGVDb21tb25IAVIGY29tbW9uiAEBGtYCCgtTdGF0ZUNv'
+    'bW1vbhISCgRuYW1lGAEgASgJUgRuYW1lEhIKBGRlc2MYAiABKAlSBGRlc2MSMAoEdHlwZRgDIA'
+    'EoDjIcLlN0YXRlLlN0YXRlQ29tbW9uLlN0YXRlVHlwZVIEdHlwZRISCgRyZWFkGAQgASgIUgRy'
+    'ZWFkEhQKBXdyaXRlGAUgASgIUgV3cml0ZRISCgRyb2xlGAYgASgJUgRyb2xlEhcKBHVuaXQYBy'
+    'ABKAlIAFIEdW5pdIgBARIXCgRzdGVwGAggASgFSAFSBHN0ZXCIAQESFQoDbWluGAkgASgFSAJS'
+    'A21pbogBARIVCgNtYXgYCiABKAVIA1IDbWF4iAEBIi0KCVN0YXRlVHlwZRILCgdib29sZWFuEA'
+    'ASBwoDc3RyEAESCgoGbnVtYmVyEAJCBwoFX3VuaXRCBwoFX3N0ZXBCBgoEX21pbkIGCgRfbWF4'
+    'QgcKBXZhbHVlQgkKB19jb21tb24=');

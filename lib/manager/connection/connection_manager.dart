@@ -158,7 +158,7 @@ class ConnectionManager with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         if (!ioBConnected) {
           tries = 0;
-          reconnect();
+          // reconnect();
         }
         break;
       case AppLifecycleState.hidden:
@@ -177,8 +177,6 @@ class ConnectionManager with WidgetsBindingObserver {
   void reconnect() async {
     // ignore: dead_code
     Uri url = await getUrl();
-
-    await Future.delayed(const Duration(seconds: 2));
     tries++;
     if (tries > 10) {
       Manager().talker.debug(
