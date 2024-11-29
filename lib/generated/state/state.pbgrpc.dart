@@ -22,11 +22,11 @@ export 'state.pb.dart';
 @$pb.GrpcServiceName('StateUpdate')
 class StateUpdateClient extends $grpc.Client {
   static final _$subscibe =
-      $grpc.ClientMethod<$0.StateSubscribtion, $0.StateValueUpdate>(
+      $grpc.ClientMethod<$0.StateSubscribtion, $0.StatesValueUpdate>(
           '/StateUpdate/Subscibe',
           ($0.StateSubscribtion value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $0.StateValueUpdate.fromBuffer(value));
+              $0.StatesValueUpdate.fromBuffer(value));
   static final _$updateValue = $grpc.ClientMethod<$0.StateValueUpdateRequest,
           $0.StateValueUpdateResponse>(
       '/StateUpdate/updateValue',
@@ -51,7 +51,7 @@ class StateUpdateClient extends $grpc.Client {
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$0.StateValueUpdate> subscibe(
+  $grpc.ResponseStream<$0.StatesValueUpdate> subscibe(
       $0.StateSubscribtion request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(
@@ -83,13 +83,13 @@ abstract class StateUpdateServiceBase extends $grpc.Service {
   $core.String get $name => 'StateUpdate';
 
   StateUpdateServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.StateSubscribtion, $0.StateValueUpdate>(
+    $addMethod($grpc.ServiceMethod<$0.StateSubscribtion, $0.StatesValueUpdate>(
         'Subscibe',
         subscibe_Pre,
         false,
         true,
         ($core.List<$core.int> value) => $0.StateSubscribtion.fromBuffer(value),
-        ($0.StateValueUpdate value) => value.writeToBuffer()));
+        ($0.StatesValueUpdate value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.StateValueUpdateRequest,
             $0.StateValueUpdateResponse>(
         'updateValue',
@@ -115,7 +115,7 @@ abstract class StateUpdateServiceBase extends $grpc.Service {
         ($0.SearchStateResponse value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$0.StateValueUpdate> subscibe_Pre($grpc.ServiceCall call,
+  $async.Stream<$0.StatesValueUpdate> subscibe_Pre($grpc.ServiceCall call,
       $async.Future<$0.StateSubscribtion> request) async* {
     yield* subscibe(call, await request);
   }
@@ -131,7 +131,7 @@ abstract class StateUpdateServiceBase extends $grpc.Service {
     return searchState(call, await request);
   }
 
-  $async.Stream<$0.StateValueUpdate> subscibe(
+  $async.Stream<$0.StatesValueUpdate> subscibe(
       $grpc.ServiceCall call, $0.StateSubscribtion request);
   $async.Future<$0.StateValueUpdateResponse> updateValue(
       $grpc.ServiceCall call, $0.StateValueUpdateRequest request);
