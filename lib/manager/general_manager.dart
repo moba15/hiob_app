@@ -87,4 +87,12 @@ class GeneralManager {
     ioBVersion = version;
     _save();
   }
+
+  disableLogger() {
+    manager.talker.disable();
+  }
+
+  enableLogger() {
+    manager.talker.enable();
+  }
 }

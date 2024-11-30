@@ -232,6 +232,8 @@ class ConnectionManager with WidgetsBindingObserver {
       _onLoginKey(rawMap["content"]);
       return;
     }
+    Manager().talker.debug(
+        "ConnectionManager | Recieved package ${packageType.name} | ${jsonEncode(rawMap)}");
     rawMap = rawMap["content"];
     switch (packageType) {
       case DataPackageType.iobStateChanged:
@@ -337,6 +339,8 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _requestLogin() async {
+    Manager().talker.debug(
+        "ConnectionManager | Request login ${generalManager.deviceName}:${generalManager.deviceID}");
     connectionStatusStreamController.add(ConnectionStatus.loggingIn);
     sendMsg(RequestLoginPackage(
         deviceName: generalManager.deviceName,
@@ -348,6 +352,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onLoginDeclined() {
+    Manager().talker.debug("ConnectionManager | Login declined");
     connectionStatusStreamController.add(ConnectionStatus.loginDeclined);
   }
 
@@ -365,10 +370,10 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void _onLoginKey(String? key) {
-    print(key);
     if (key == null) {
       return;
     }
+    Manager().talker.debug("ConnectionManager | Uodate login key");
 
     generalManager.updateLoginKey(key);
     _requestLogin();
