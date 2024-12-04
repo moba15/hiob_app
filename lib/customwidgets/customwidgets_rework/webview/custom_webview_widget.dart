@@ -52,4 +52,9 @@ class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
   @override
   factory CustomWebViewWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomWebViewWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }
