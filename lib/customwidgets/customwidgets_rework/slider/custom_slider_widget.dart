@@ -77,4 +77,9 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
   @override
   factory CustomSliderWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomSliderWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

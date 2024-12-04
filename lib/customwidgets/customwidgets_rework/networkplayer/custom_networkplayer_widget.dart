@@ -57,4 +57,9 @@ class CustomNetworkPlayerWidget
   @override
   factory CustomNetworkPlayerWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomNetworkPlayerWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

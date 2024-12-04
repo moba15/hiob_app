@@ -76,4 +76,9 @@ class CustomSwitchWidget with _$CustomSwitchWidget implements CustomWidget {
   @override
   factory CustomSwitchWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomSwitchWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

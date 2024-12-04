@@ -57,4 +57,9 @@ class CustomTableWidget with _$CustomTableWidget implements CustomWidget {
   @override
   factory CustomTableWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomTableWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }
