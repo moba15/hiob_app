@@ -8,6 +8,10 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Work in progress 
 - Refactor API between App and Adapater
 - Integrating new workflow
+- #95: Quickfix
+
+## Work in progress 
+
 
 ## 0.0.703
 # Templates

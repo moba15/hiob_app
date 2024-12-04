@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:smart_home/device/state/datapointTypes/datapoint_types.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -40,12 +41,19 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
 
   void _onValueUpdateRequest(
       DataPointValueUpdateRequest event, Emitter<DataPointState> emit) {
-    emit(DataPointState(value: event.value, oldValue: event.oldValue));
-    dataPoint.value = event.value;
+    dynamic value = event.value;
+    double? parsedValue =
+        double.tryParse(value.toString().replaceAll(",", "."));
+    if (parsedValue != null) {
+      value = parsedValue;
+    }
+
+    emit(DataPointState(value: value, oldValue: event.oldValue));
+    dataPoint.value = value;
     dataPoint.device?.lastUpdated = DateTime.now();
     if (dataPoint.device is IoBrokerDevice) {
-      Manager.instance.connectionManager.sendMsg(StateChangeRequestIobPackage(
-          stateID: dataPoint.id, value: event.value));
+      Manager.instance.connectionManager.sendMsg(
+          StateChangeRequestIobPackage(stateID: dataPoint.id, value: value));
     }
   }
 }
