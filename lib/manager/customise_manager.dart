@@ -281,7 +281,7 @@ class CustomWidgetManager {
     }
 
     templates.addAll(renamedTemplates);
-    //sort();
+    sort();
 
     fileManager.writeJSONList(templateKey, templates);
   }
