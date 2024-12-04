@@ -175,6 +175,7 @@ class _MapOrderSettingTemplateState<V>
 
     setState(() {
       data = newMap;
+      widget.onChange(data);
     });
   }
 }

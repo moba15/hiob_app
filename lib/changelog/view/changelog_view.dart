@@ -41,6 +41,7 @@ class ChangeLogScreen extends StatelessWidget {
 - Fixed Networkplayer migration
 - Fixed Value migration for units and rounding
 - Fixed copying new widgets/templates
+- Fixed Multiselection reorder
   """;
   }
 }

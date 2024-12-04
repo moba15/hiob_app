@@ -3,13 +3,18 @@
 Please note this [repository](https://github.com/moba15/ioBroker.hiob) and releases for changes and explainations
 
 ## Download
-
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
+
+## Work in progress 
+- Refactor API between App and Adapater
+- Integrating new workflow
+
 ## 0.0.703
 # Templates
 - Fixed Networkplayer migration
 - Fixed Value migration for units and rounding
 - Fixed copying new widgets/templates
+- Fixed Multiselection reorder
 
 
 ## 0.0.702
