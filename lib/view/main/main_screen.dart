@@ -238,7 +238,6 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
   }
 
   Widget _getAppBarStatus(man.ConnectionStatus connectionStatus) {
-    debugPrint("AppBar Status: ${connectionStatus.name}");
     int n = 0;
     BlinkingWidget blinkingWidget;
     switch (connectionStatus) {
@@ -469,7 +468,6 @@ class _MainViewOldState extends State<MainViewOld>
   }
 
   Widget? _getAppBarStatus(man.ConnectionStatus connectionStatus) {
-    debugPrint("AppBar Status: ${connectionStatus.name}");
     int n = 0;
     BlinkingWidget blinkingWidget;
     switch (connectionStatus) {

@@ -77,6 +77,8 @@ dependencies:
   
   mockito: ^5.4.4
   markdown_widget: ^2.3.2+6
+  talker: ^4.4.1
+  talker_flutter: ^4.4.0
 
  
 
