@@ -37,11 +37,10 @@ class ChangeLogScreen extends StatelessWidget {
 
   String _changelogComplete() {
     return """
-# Templates \n
-- Fixed Networkplayer migration
-- Fixed Value migration for units and rounding
-- Fixed copying new widgets/templates
-- Fixed Multiselection reorder
+- Integrating new workflow
+- #95: Quickfix for inputfields and numbers
+- #93 fixed template copy
+- Added background reconnection
   """;
   }
 }
