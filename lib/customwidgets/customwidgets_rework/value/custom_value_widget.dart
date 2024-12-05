@@ -78,4 +78,9 @@ class CustomValueWidget with _$CustomValueWidget implements CustomWidget {
   @override
   factory CustomValueWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomValueWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

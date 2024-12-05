@@ -9,8 +9,7 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 - Refactor API between App and Adapater
 - Integrating new workflow
 - #95: Quickfix
-
-## Work in progress 
+- #93 fixed
 
 
 ## 0.0.703

@@ -110,4 +110,9 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
   @override
   factory CustomInputWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomInputWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

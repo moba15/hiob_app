@@ -266,15 +266,17 @@ class CustomWidgetManager {
         .map((e) => e)
         .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
             id: Manager.instance.getRandString(12),
-            name: "${e.name}_copy",
+            name: "${e.name}_copy2",
             customWidget: e.customWidget.clone()..name = ("${e.name}_copy")))
         .toList();
     templates.addAll(renamedTemplatesDepc);
 
-    List<CustomWidget> renamedTemplates =
-        templatesToCopy.whereType<CustomWidget>().toList();
+    List<CustomWidget> renamedTemplates = templatesToCopy
+        .whereType<CustomWidget>()
+        .map((e) => e.clone())
+        .toList();
     for (var element in renamedTemplates) {
-      element.name = "${element.name}_copy";
+      element.name = "${element.name}_copy3";
       element.id = Manager().getRandString(12);
     }
 

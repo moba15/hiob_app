@@ -51,4 +51,9 @@ class CustomDivisionlineWidget
   @override
   factory CustomDivisionlineWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomDivisionlineWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

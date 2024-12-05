@@ -37,6 +37,8 @@ abstract class CustomWidget extends CustomWidgetWrapper {
   List<DataPoint> get dependentDataPoints;
 
   Map<String, dynamic> toJson();
+
+  CustomWidget clone();
 }
 
 extension CustomWidgetExetension on CustomWidget {
