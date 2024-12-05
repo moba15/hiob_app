@@ -11,8 +11,6 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 - #95: Quickfix
 - #93 fixed
 
-## Work in progress 
-
 
 ## 0.0.703
 # Templates
