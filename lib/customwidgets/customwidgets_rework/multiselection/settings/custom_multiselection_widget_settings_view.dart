@@ -86,7 +86,7 @@ class _CustomTableWidgetSettingsViewState
               widget.customMultiselectionWidget.label = d,
               c.update(widget.customMultiselectionWidget)
             },
-            decoration: const InputDecoration(label: Text("Header (optional)")),
+            decoration: const InputDecoration(label: Text("Label (optional)")),
           )),
           InputFieldContainer.inputContainer(
               child: MapOrderSettingTemplate<String>(
