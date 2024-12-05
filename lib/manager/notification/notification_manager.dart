@@ -263,34 +263,23 @@ class NotificationManager with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.detached:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is detached");
+        Manager().talker.debug("ChangeAppLifecycleState | detached");
         if (backgroundNotificationsEnabled) {
           Manager.instance.backgroundRunner.startService();
         }
         break;
       case AppLifecycleState.inactive:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is inactive");
-        if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.startService();
-        }
+        Manager().talker.debug("ChangeAppLifecycleState | inactive");
 
         break;
       case AppLifecycleState.paused:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is paused $backgroundNotificationsEnabled");
+        Manager().talker.debug("ChangeAppLifecycleState | paused");
         if (backgroundNotificationsEnabled) {
           Manager.instance.backgroundRunner.startService();
         }
         break;
       case AppLifecycleState.resumed:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is resumed");
+        Manager().talker.debug("ChangeAppLifecycleState | resumed");
         Manager.instance.backgroundRunner.stopService();
         readSettings();
         break;
