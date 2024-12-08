@@ -17,6 +17,7 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
+import 'package:smart_home/utils/logger/logger_filter.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import '../background/background_runner.dart';
 
@@ -162,6 +163,7 @@ class Manager {
   }
 
   void _initManagerAfter() {
+    talker.configure(filter: generalManager.customLoggerFilter);
     notificationManager = NotificationManager(fileManager: fileManager);
     backgroundRunner = BackgroundRunner(
         generalManager: generalManager, ioBrokerManager: ioBrokerManager)

@@ -4,35 +4,37 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
-import 'dart:math' as _i19;
+import 'dart:math' as _i20;
 
-import 'package:bloc/bloc.dart' as _i25;
+import 'package:bloc/bloc.dart' as _i27;
 import 'package:device_info_plus/device_info_plus.dart' as _i6;
-import 'package:flutter/material.dart' as _i27;
+import 'package:flutter/material.dart' as _i29;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i22;
+import 'package:mockito/src/dummies.dart' as _i24;
 import 'package:smart_home/background/background_runner.dart' as _i17;
-import 'package:smart_home/device/device.dart' as _i23;
+import 'package:smart_home/device/device.dart' as _i25;
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart' as _i5;
 import 'package:smart_home/device/state/datapointTypes/datapoint_types.dart'
-    as _i24;
+    as _i26;
 import 'package:smart_home/device/state/state.dart' as _i4;
 import 'package:smart_home/manager/connection/connection_manager.dart' as _i12;
-import 'package:smart_home/manager/cubit/manager_cubit.dart' as _i26;
+import 'package:smart_home/manager/cubit/manager_cubit.dart' as _i28;
 import 'package:smart_home/manager/customise_manager.dart' as _i8;
 import 'package:smart_home/manager/device_manager.dart' as _i9;
 import 'package:smart_home/manager/file_manager.dart' as _i7;
 import 'package:smart_home/manager/general_manager.dart' as _i13;
 import 'package:smart_home/manager/history/history_data.dart' as _i2;
 import 'package:smart_home/manager/history/history_manager.dart' as _i14;
-import 'package:smart_home/manager/manager.dart' as _i21;
+import 'package:smart_home/manager/manager.dart' as _i22;
 import 'package:smart_home/manager/notification/notification_manager.dart'
     as _i18;
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart' as _i11;
 import 'package:smart_home/manager/screen_manager.dart' as _i10;
 import 'package:smart_home/manager/settings_sync_manager.dart' as _i15;
 import 'package:smart_home/manager/theme/theme_manager.dart' as _i16;
-import 'package:uuid/uuid.dart' as _i20;
+import 'package:smart_home/utils/logger/logger_filter.dart' as _i23;
+import 'package:talker_flutter/talker_flutter.dart' as _i19;
+import 'package:uuid/uuid.dart' as _i21;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -228,8 +230,8 @@ class _FakeNotificationManager_16 extends _i1.SmartFake
         );
 }
 
-class _FakeRandom_17 extends _i1.SmartFake implements _i19.Random {
-  _FakeRandom_17(
+class _FakeTalker_17 extends _i1.SmartFake implements _i19.Talker {
+  _FakeTalker_17(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -238,8 +240,8 @@ class _FakeRandom_17 extends _i1.SmartFake implements _i19.Random {
         );
 }
 
-class _FakeUuid_18 extends _i1.SmartFake implements _i20.Uuid {
-  _FakeUuid_18(
+class _FakeRandom_18 extends _i1.SmartFake implements _i20.Random {
+  _FakeRandom_18(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -248,8 +250,29 @@ class _FakeUuid_18 extends _i1.SmartFake implements _i20.Uuid {
         );
 }
 
-class _FakeManager_19 extends _i1.SmartFake implements _i21.Manager {
-  _FakeManager_19(
+class _FakeUuid_19 extends _i1.SmartFake implements _i21.Uuid {
+  _FakeUuid_19(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeManager_20 extends _i1.SmartFake implements _i22.Manager {
+  _FakeManager_20(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCustomLoggerFilter_21 extends _i1.SmartFake
+    implements _i23.CustomLoggerFilter {
+  _FakeCustomLoggerFilter_21(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -283,11 +306,11 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
   @override
   String get name => (super.noSuchMethod(
         Invocation.getter(#name),
-        returnValue: _i22.dummyValue<String>(
+        returnValue: _i24.dummyValue<String>(
           this,
           Invocation.getter(#name),
         ),
-        returnValueForMissingStub: _i22.dummyValue<String>(
+        returnValueForMissingStub: _i24.dummyValue<String>(
           this,
           Invocation.getter(#name),
         ),
@@ -305,11 +328,11 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
   @override
   String get id => (super.noSuchMethod(
         Invocation.getter(#id),
-        returnValue: _i22.dummyValue<String>(
+        returnValue: _i24.dummyValue<String>(
           this,
           Invocation.getter(#id),
         ),
-        returnValueForMissingStub: _i22.dummyValue<String>(
+        returnValueForMissingStub: _i24.dummyValue<String>(
           this,
           Invocation.getter(#id),
         ),
@@ -325,7 +348,7 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
       );
 
   @override
-  set device(_i23.Device? _device) => super.noSuchMethod(
+  set device(_i25.Device? _device) => super.noSuchMethod(
         Invocation.setter(
           #device,
           _device,
@@ -334,7 +357,7 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
       );
 
   @override
-  set type(_i24.StateType? _type) => super.noSuchMethod(
+  set type(_i26.StateType? _type) => super.noSuchMethod(
         Invocation.setter(
           #type,
           _type,
@@ -537,8 +560,8 @@ class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
 
   @override
   void on<E extends _i5.DataPointEvent>(
-    _i25.EventHandler<E, _i5.DataPointState>? handler, {
-    _i25.EventTransformer<E>? transformer,
+    _i27.EventHandler<E, _i5.DataPointState>? handler, {
+    _i27.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -551,7 +574,7 @@ class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
 
   @override
   void onTransition(
-          _i25.Transition<_i5.DataPointEvent, _i5.DataPointState>?
+          _i27.Transition<_i5.DataPointEvent, _i5.DataPointState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -562,7 +585,7 @@ class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
       );
 
   @override
-  void onChange(_i25.Change<_i5.DataPointState>? change) => super.noSuchMethod(
+  void onChange(_i27.Change<_i5.DataPointState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -618,7 +641,7 @@ class MockDataPointState extends _i1.Mock implements _i5.DataPointState {
 /// A class which mocks [Manager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockManager extends _i1.Mock implements _i21.Manager {
+class MockManager extends _i1.Mock implements _i22.Manager {
   @override
   _i6.DeviceInfoPlugin get deviceInfo => (super.noSuchMethod(
         Invocation.getter(#deviceInfo),
@@ -984,14 +1007,27 @@ class MockManager extends _i1.Mock implements _i21.Manager {
       );
 
   @override
-  _i26.ManagerStatus get status => (super.noSuchMethod(
-        Invocation.getter(#status),
-        returnValue: _i26.ManagerStatus.finished,
-        returnValueForMissingStub: _i26.ManagerStatus.finished,
-      ) as _i26.ManagerStatus);
+  _i19.Talker get talker => (super.noSuchMethod(
+        Invocation.getter(#talker),
+        returnValue: _FakeTalker_17(
+          this,
+          Invocation.getter(#talker),
+        ),
+        returnValueForMissingStub: _FakeTalker_17(
+          this,
+          Invocation.getter(#talker),
+        ),
+      ) as _i19.Talker);
 
   @override
-  set status(_i26.ManagerStatus? _status) => super.noSuchMethod(
+  _i28.ManagerStatus get status => (super.noSuchMethod(
+        Invocation.getter(#status),
+        returnValue: _i28.ManagerStatus.finished,
+        returnValueForMissingStub: _i28.ManagerStatus.finished,
+      ) as _i28.ManagerStatus);
+
+  @override
+  set status(_i28.ManagerStatus? _status) => super.noSuchMethod(
         Invocation.setter(
           #status,
           _status,
@@ -1002,11 +1038,11 @@ class MockManager extends _i1.Mock implements _i21.Manager {
   @override
   String get versionNumber => (super.noSuchMethod(
         Invocation.getter(#versionNumber),
-        returnValue: _i22.dummyValue<String>(
+        returnValue: _i24.dummyValue<String>(
           this,
           Invocation.getter(#versionNumber),
         ),
-        returnValueForMissingStub: _i22.dummyValue<String>(
+        returnValueForMissingStub: _i24.dummyValue<String>(
           this,
           Invocation.getter(#versionNumber),
         ),
@@ -1024,11 +1060,11 @@ class MockManager extends _i1.Mock implements _i21.Manager {
   @override
   String get buildNumber => (super.noSuchMethod(
         Invocation.getter(#buildNumber),
-        returnValue: _i22.dummyValue<String>(
+        returnValue: _i24.dummyValue<String>(
           this,
           Invocation.getter(#buildNumber),
         ),
-        returnValueForMissingStub: _i22.dummyValue<String>(
+        returnValueForMissingStub: _i24.dummyValue<String>(
           this,
           Invocation.getter(#buildNumber),
         ),
@@ -1076,22 +1112,22 @@ class MockManager extends _i1.Mock implements _i21.Manager {
       );
 
   @override
-  _i3.StreamController<_i26.ManagerStatus> get managerStatusStreamController =>
+  _i3.StreamController<_i28.ManagerStatus> get managerStatusStreamController =>
       (super.noSuchMethod(
         Invocation.getter(#managerStatusStreamController),
-        returnValue: _FakeStreamController_1<_i26.ManagerStatus>(
+        returnValue: _FakeStreamController_1<_i28.ManagerStatus>(
           this,
           Invocation.getter(#managerStatusStreamController),
         ),
-        returnValueForMissingStub: _FakeStreamController_1<_i26.ManagerStatus>(
+        returnValueForMissingStub: _FakeStreamController_1<_i28.ManagerStatus>(
           this,
           Invocation.getter(#managerStatusStreamController),
         ),
-      ) as _i3.StreamController<_i26.ManagerStatus>);
+      ) as _i3.StreamController<_i28.ManagerStatus>);
 
   @override
   set managerStatusStreamController(
-          _i3.StreamController<_i26.ManagerStatus>?
+          _i3.StreamController<_i28.ManagerStatus>?
               _managerStatusStreamController) =>
       super.noSuchMethod(
         Invocation.setter(
@@ -1102,20 +1138,20 @@ class MockManager extends _i1.Mock implements _i21.Manager {
       );
 
   @override
-  _i19.Random get random => (super.noSuchMethod(
+  _i20.Random get random => (super.noSuchMethod(
         Invocation.getter(#random),
-        returnValue: _FakeRandom_17(
+        returnValue: _FakeRandom_18(
           this,
           Invocation.getter(#random),
         ),
-        returnValueForMissingStub: _FakeRandom_17(
+        returnValueForMissingStub: _FakeRandom_18(
           this,
           Invocation.getter(#random),
         ),
-      ) as _i19.Random);
+      ) as _i20.Random);
 
   @override
-  set random(_i19.Random? _random) => super.noSuchMethod(
+  set random(_i20.Random? _random) => super.noSuchMethod(
         Invocation.setter(
           #random,
           _random,
@@ -1139,14 +1175,14 @@ class MockManager extends _i1.Mock implements _i21.Manager {
           #getRandString,
           [len],
         ),
-        returnValue: _i22.dummyValue<String>(
+        returnValue: _i24.dummyValue<String>(
           this,
           Invocation.method(
             #getRandString,
             [len],
           ),
         ),
-        returnValueForMissingStub: _i22.dummyValue<String>(
+        returnValueForMissingStub: _i24.dummyValue<String>(
           this,
           Invocation.method(
             #getRandString,
@@ -1170,20 +1206,20 @@ class MockManager extends _i1.Mock implements _i21.Manager {
 /// See the documentation for Mockito's code generation for more information.
 class MockGeneralManager extends _i1.Mock implements _i13.GeneralManager {
   @override
-  _i20.Uuid get uuid => (super.noSuchMethod(
+  _i21.Uuid get uuid => (super.noSuchMethod(
         Invocation.getter(#uuid),
-        returnValue: _FakeUuid_18(
+        returnValue: _FakeUuid_19(
           this,
           Invocation.getter(#uuid),
         ),
-        returnValueForMissingStub: _FakeUuid_18(
+        returnValueForMissingStub: _FakeUuid_19(
           this,
           Invocation.getter(#uuid),
         ),
-      ) as _i20.Uuid);
+      ) as _i21.Uuid);
 
   @override
-  set uuid(_i20.Uuid? _uuid) => super.noSuchMethod(
+  set uuid(_i21.Uuid? _uuid) => super.noSuchMethod(
         Invocation.setter(
           #uuid,
           _uuid,
@@ -1205,26 +1241,26 @@ class MockGeneralManager extends _i1.Mock implements _i13.GeneralManager {
       ) as _i7.FileManager);
 
   @override
-  _i21.Manager get manager => (super.noSuchMethod(
+  _i22.Manager get manager => (super.noSuchMethod(
         Invocation.getter(#manager),
-        returnValue: _FakeManager_19(
+        returnValue: _FakeManager_20(
           this,
           Invocation.getter(#manager),
         ),
-        returnValueForMissingStub: _FakeManager_19(
+        returnValueForMissingStub: _FakeManager_20(
           this,
           Invocation.getter(#manager),
         ),
-      ) as _i21.Manager);
+      ) as _i22.Manager);
 
   @override
   String get key => (super.noSuchMethod(
         Invocation.getter(#key),
-        returnValue: _i22.dummyValue<String>(
+        returnValue: _i24.dummyValue<String>(
           this,
           Invocation.getter(#key),
         ),
-        returnValueForMissingStub: _i22.dummyValue<String>(
+        returnValueForMissingStub: _i24.dummyValue<String>(
           this,
           Invocation.getter(#key),
         ),
@@ -1233,11 +1269,11 @@ class MockGeneralManager extends _i1.Mock implements _i13.GeneralManager {
   @override
   String get buildKey => (super.noSuchMethod(
         Invocation.getter(#buildKey),
-        returnValue: _i22.dummyValue<String>(
+        returnValue: _i24.dummyValue<String>(
           this,
           Invocation.getter(#buildKey),
         ),
-        returnValueForMissingStub: _i22.dummyValue<String>(
+        returnValueForMissingStub: _i24.dummyValue<String>(
           this,
           Invocation.getter(#buildKey),
         ),
@@ -1268,25 +1304,25 @@ class MockGeneralManager extends _i1.Mock implements _i13.GeneralManager {
       );
 
   @override
-  _i3.StreamController<_i27.AlertDialog Function(_i27.BuildContext)>
+  _i3.StreamController<_i29.AlertDialog Function(_i29.BuildContext)>
       get dialogStreamController => (super.noSuchMethod(
             Invocation.getter(#dialogStreamController),
             returnValue: _FakeStreamController_1<
-                _i27.AlertDialog Function(_i27.BuildContext)>(
+                _i29.AlertDialog Function(_i29.BuildContext)>(
               this,
               Invocation.getter(#dialogStreamController),
             ),
             returnValueForMissingStub: _FakeStreamController_1<
-                _i27.AlertDialog Function(_i27.BuildContext)>(
+                _i29.AlertDialog Function(_i29.BuildContext)>(
               this,
               Invocation.getter(#dialogStreamController),
             ),
           ) as _i3
-              .StreamController<_i27.AlertDialog Function(_i27.BuildContext)>);
+              .StreamController<_i29.AlertDialog Function(_i29.BuildContext)>);
 
   @override
   set dialogStreamController(
-          _i3.StreamController<_i27.AlertDialog Function(_i27.BuildContext)>?
+          _i3.StreamController<_i29.AlertDialog Function(_i29.BuildContext)>?
               _dialogStreamController) =>
       super.noSuchMethod(
         Invocation.setter(
@@ -1360,6 +1396,29 @@ class MockGeneralManager extends _i1.Mock implements _i13.GeneralManager {
         Invocation.setter(
           #useBottomSheet,
           _useBottomSheet,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i23.CustomLoggerFilter get customLoggerFilter => (super.noSuchMethod(
+        Invocation.getter(#customLoggerFilter),
+        returnValue: _FakeCustomLoggerFilter_21(
+          this,
+          Invocation.getter(#customLoggerFilter),
+        ),
+        returnValueForMissingStub: _FakeCustomLoggerFilter_21(
+          this,
+          Invocation.getter(#customLoggerFilter),
+        ),
+      ) as _i23.CustomLoggerFilter);
+
+  @override
+  set customLoggerFilter(_i23.CustomLoggerFilter? _customLoggerFilter) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #customLoggerFilter,
+          _customLoggerFilter,
         ),
         returnValueForMissingStub: null,
       );
