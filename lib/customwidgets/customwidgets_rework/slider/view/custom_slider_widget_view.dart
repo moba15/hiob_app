@@ -18,6 +18,8 @@ class CustomSliderWidgetView extends StatefulWidget {
 class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
   DataPointBloc? bloc;
   late CustomSliderWidgetTheme? theme;
+  double? _tmpValue;
+  bool _currentlyChanging = false;
   @override
   void initState() {
     if (widget.customSliderWidget.dataPoint != null) {
@@ -66,6 +68,7 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
                 widget.customSliderWidget.max.toDouble());
         int divisons =
             (max.toInt() - min.toInt()) ~/ widget.customSliderWidget.step;
+
         return ListTile(
           title: Text(
             widget.customSliderWidget.label ?? widget.customSliderWidget.name,
@@ -77,13 +80,35 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
                   thumbRadius: 16, max: max.toInt(), min: min.toInt()),
             ),
             child: Slider(
-              value: double.tryParse(state.value.toString()) ?? min,
+              value: _getSliderValue(state, min),
               min: min,
               max: max,
               divisions: divisons,
+              onChangeStart: (value) {
+                _currentlyChanging = true;
+              },
+              onChangeEnd: (value) {
+                setState(() {
+                  _currentlyChanging = false;
+                });
+                if (widget
+                        .customSliderWidget.customSliderWidgetUpdateStrategy ==
+                    CustomSliderWidgetUpdateStrategy.onFinish) {
+                  bloc?.add(DataPointValueUpdateRequest(
+                      value: value, oldValue: value));
+                }
+              },
               onChanged: (value) {
-                bloc?.add(
-                    DataPointValueUpdateRequest(value: value, oldValue: value));
+                if (widget
+                        .customSliderWidget.customSliderWidgetUpdateStrategy ==
+                    CustomSliderWidgetUpdateStrategy.onChange) {
+                  bloc?.add(DataPointValueUpdateRequest(
+                      value: value, oldValue: value));
+                } else {
+                  setState(() {
+                    _tmpValue = value;
+                  });
+                }
               },
               label:
                   (double.tryParse(state.value.toString()) ?? min).toString(),
@@ -92,6 +117,15 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
         );
       },
     );
+  }
+
+  double _getSliderValue(DataPointState state, double min) {
+    double stateValue = (double.tryParse(state.value.toString()) ?? min);
+    if (_currentlyChanging) {
+      return _tmpValue ?? stateValue;
+    } else {
+      return stateValue;
+    }
   }
 
   onLongPress() {

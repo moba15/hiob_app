@@ -39,6 +39,11 @@ mixin _$CustomSliderWidget {
   set min(int value) => throw _privateConstructorUsedError;
   int get step => throw _privateConstructorUsedError;
   set step(int value) => throw _privateConstructorUsedError;
+  CustomSliderWidgetUpdateStrategy? get customSliderWidgetUpdateStrategy =>
+      throw _privateConstructorUsedError;
+  set customSliderWidgetUpdateStrategy(
+          CustomSliderWidgetUpdateStrategy? value) =>
+      throw _privateConstructorUsedError;
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
@@ -73,6 +78,7 @@ abstract class $CustomSliderWidgetCopyWith<$Res> {
       int max,
       int min,
       int step,
+      CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
       CustomPopupmenu? customPopupmenu,
       @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme});
 
@@ -102,6 +108,7 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
     Object? max = null,
     Object? min = null,
     Object? step = null,
+    Object? customSliderWidgetUpdateStrategy = freezed,
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
@@ -138,6 +145,11 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
           ? _value.step
           : step // ignore: cast_nullable_to_non_nullable
               as int,
+      customSliderWidgetUpdateStrategy: freezed ==
+              customSliderWidgetUpdateStrategy
+          ? _value.customSliderWidgetUpdateStrategy
+          : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
+              as CustomSliderWidgetUpdateStrategy?,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -181,6 +193,7 @@ abstract class _$$CustomSliderWidgetImplCopyWith<$Res>
       int max,
       int min,
       int step,
+      CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
       CustomPopupmenu? customPopupmenu,
       @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme});
 
@@ -209,6 +222,7 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
     Object? max = null,
     Object? min = null,
     Object? step = null,
+    Object? customSliderWidgetUpdateStrategy = freezed,
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
@@ -245,6 +259,11 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
           ? _value.step
           : step // ignore: cast_nullable_to_non_nullable
               as int,
+      customSliderWidgetUpdateStrategy: freezed ==
+              customSliderWidgetUpdateStrategy
+          ? _value.customSliderWidgetUpdateStrategy
+          : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
+              as CustomSliderWidgetUpdateStrategy?,
       customPopupmenu: freezed == customPopupmenu
           ? _value.customPopupmenu
           : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -269,6 +288,8 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
       this.max = 100,
       this.min = 0,
       this.step = 10,
+      this.customSliderWidgetUpdateStrategy =
+          CustomSliderWidgetUpdateStrategy.onFinish,
       this.customPopupmenu,
       @_CustomSliderThemeConverter() this.customTheme})
       : super._();
@@ -298,6 +319,9 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
   @JsonKey()
   int step;
   @override
+  @JsonKey()
+  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy;
+  @override
   CustomPopupmenu? customPopupmenu;
   @override
   @_CustomSliderThemeConverter()
@@ -305,7 +329,7 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
 
   @override
   String toString() {
-    return 'CustomSliderWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, max: $max, min: $min, step: $step, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
+    return 'CustomSliderWidget(type: $type, id: $id, name: $name, label: $label, dataPoint: $dataPoint, max: $max, min: $min, step: $step, customSliderWidgetUpdateStrategy: $customSliderWidgetUpdateStrategy, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomSliderWidget
@@ -336,6 +360,7 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
           int max,
           int min,
           int step,
+          CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
           CustomPopupmenu? customPopupmenu,
           @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme}) =
       _$CustomSliderWidgetImpl;
@@ -370,6 +395,9 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
   @override
   int get step;
   set step(int value);
+  @override
+  CustomSliderWidgetUpdateStrategy? get customSliderWidgetUpdateStrategy;
+  set customSliderWidgetUpdateStrategy(CustomSliderWidgetUpdateStrategy? value);
   @override
   CustomPopupmenu? get customPopupmenu;
   set customPopupmenu(CustomPopupmenu? value);
