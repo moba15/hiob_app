@@ -1477,4 +1477,13 @@ class MockGeneralManager extends _i1.Mock implements _i13.GeneralManager {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  void changeCustomLoggerFilter() => super.noSuchMethod(
+        Invocation.method(
+          #changeCustomLoggerFilter,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
