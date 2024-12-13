@@ -148,7 +148,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
               widget.graphAxis.timeAxisEnd = timeAxisEnd ?? TimeAxisEnd.hour;
             });
           },
-          items: TimeAxisEnd.values,
+          items: (a, b) => TimeAxisEnd.values,
           itemAsString: (i) => i.name,
           popupProps: PopupProps.modalBottomSheet(
               showSelectedItems: true,
@@ -160,8 +160,8 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
               ),
               modalBottomSheetProps: ModalBottomSheetProps(
                   backgroundColor: Theme.of(context).colorScheme.surface)),
-          dropdownDecoratorProps: const DropDownDecoratorProps(
-            dropdownSearchDecoration: InputDecoration(
+          decoratorProps: const DropDownDecoratorProps(
+            decoration: InputDecoration(
               labelText: "End of axis",
             ),
           ),
@@ -193,7 +193,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
               selectedItem: widget.graphAxis.scopeUnit,
               compareFn: (i, i1) => i1 == i,
               itemAsString: (i) => i.name,
-              items: UnitOfTime.values,
+              items: (a, b) => UnitOfTime.values,
               onChanged: (u) =>
                   widget.graphAxis.scopeUnit = u ?? UnitOfTime.hour,
               popupProps: PopupProps.modalBottomSheet(
@@ -207,8 +207,8 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
                   modalBottomSheetProps: ModalBottomSheetProps(
                     backgroundColor: Theme.of(context).colorScheme.surface,
                   )),
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
+              decoratorProps: const DropDownDecoratorProps(
+                decoration: InputDecoration(
                   labelText: "Scope Unit",
                 ),
               ),

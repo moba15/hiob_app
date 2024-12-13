@@ -118,11 +118,11 @@ class _LineSettingsBody extends StatelessWidget {
           disabledItemFn: (f) => f == GraphLineType.bar),
       compareFn: (i, i1) => i == i1,
       itemAsString: (i) => i.toString(),
-      items: GraphLineType.values,
+      items: (a, b) => GraphLineType.values,
       onChanged: (v) => graphLine.type = v,
       selectedItem: graphLine.type,
-      dropdownDecoratorProps: const DropDownDecoratorProps(
-          dropdownSearchDecoration: InputDecoration(labelText: "Line Type")),
+      decoratorProps: const DropDownDecoratorProps(
+          decoration: InputDecoration(labelText: "Line Type")),
     );
   }
 
@@ -131,14 +131,14 @@ class _LineSettingsBody extends StatelessWidget {
       children: [
         Expanded(
           child: DropdownSearch<GraphAxis>(
-            items: graphWidget.xAxes ?? [],
+            items: (a, b) => graphWidget.xAxes ?? [],
             popupProps: const PopupProps.menu(
               showSelectedItems: true,
             ),
             itemAsString: (i) => i.description ?? "No Name found",
             compareFn: (i, i2) => i == i2,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(labelText: "X axes")),
+            decoratorProps: const DropDownDecoratorProps(
+                decoration: InputDecoration(labelText: "X axes")),
             onChanged: (v) => {graphLine.xAxis = v, graphLine.xAxisId = v?.id},
             selectedItem: graphLine.xAxis,
           ),
@@ -148,14 +148,14 @@ class _LineSettingsBody extends StatelessWidget {
         ),
         Expanded(
           child: DropdownSearch<GraphAxis>(
-            items: graphWidget.yAxes ?? [],
+            items: (a, b) => graphWidget.yAxes ?? [],
             popupProps: const PopupProps.menu(
               showSelectedItems: true,
             ),
             itemAsString: (i) => i.description ?? "No Name found",
             compareFn: (i, i2) => i == i2,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(labelText: "Y axes")),
+            decoratorProps: const DropDownDecoratorProps(
+                decoration: InputDecoration(labelText: "Y axes")),
             onChanged: (v) => {graphLine.yAxis = v, graphLine.yAxisId = v?.id},
             selectedItem: graphLine.yAxis,
           ),

@@ -49,7 +49,7 @@ class _TriggerActionSelectionTemplateState
             showSelectedItems: true,
           ),
           selectedItem: _selectedType,
-          items: const [
+          items: (a, b) => const [
             TriggerActionType.none,
             TriggerActionType.multiSelection,
             TriggerActionType.slider,

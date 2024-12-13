@@ -54,12 +54,12 @@ class _DeviceSelectionState extends State<DeviceSelection> {
                   style: const TextStyle(fontSize: 17.5),
                 ),
                 showSearchBox: true,
-                isFilterOnline: false,
                 searchDelay: const Duration(seconds: 0),
                 modalBottomSheetProps: ModalBottomSheetProps(
                     backgroundColor: Theme.of(context).colorScheme.surface)),
             //popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
-            items: widget.customWidgetManager.manager.deviceManager.devicesList,
+            items: (a, b) =>
+                widget.customWidgetManager.manager.deviceManager.devicesList,
             itemAsString: (e) => e.name,
             onChanged: (e) {
               if (e != _currentDevice) {
@@ -78,8 +78,8 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             compareFn: (d, d1) {
               return d.id == d1.id;
             },
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
+            decoratorProps: DropDownDecoratorProps(
+              decoration: InputDecoration(
                 labelText: widget.deviceLabel,
               ),
             ),
@@ -87,7 +87,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             /*searchDelay: const Duration(seconds: 0),
             showClearButton: true,
             showAsSuffixIcons: true,
-            dropdownSearchDecoration: InputDecoration(labelText: widget.deviceLabel),
+            decoration: InputDecoration(labelText: widget.deviceLabel),
 
 
             mode: Mode.BOTTOM_SHEET,
@@ -111,12 +111,12 @@ class _DeviceSelectionState extends State<DeviceSelection> {
                 style: const TextStyle(fontSize: 17.5),
               ),
             ),
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
+            decoratorProps: DropDownDecoratorProps(
+              decoration: InputDecoration(
                 labelText: widget.dataPointLabel,
               ),
             ),
-            items: _currentDevice?.dataPoints ?? [],
+            items: (a, b) => _currentDevice?.dataPoints ?? [],
             itemAsString: (e) {
               String name = e.name;
               String? sName = e.getInformation("name");
@@ -129,7 +129,8 @@ class _DeviceSelectionState extends State<DeviceSelection> {
               _currentDataPoint = e,
               widget.onDataPointSelected(_currentDataPoint)
             },
-            clearButtonProps: const ClearButtonProps(isVisible: true),
+            suffixProps: DropdownSuffixProps(
+                clearButtonProps: const ClearButtonProps(isVisible: true)),
             filterFn: (d, s) {
               return d.id.toLowerCase().contains(s.toLowerCase()) ||
                   d.name.toLowerCase().contains(s.toLowerCase());
@@ -139,7 +140,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             },
             /*showClearButton: true,
             showAsSuffixIcons: true,
-            dropdownSearchDecoration:  InputDecoration(labelText: widget.dataPointLabel),
+            decoration:  InputDecoration(labelText: widget.dataPointLabel),
             mode: Mode.BOTTOM_SHEET,
             showSearchBox: true,*/
             selectedItem: _currentDataPoint,

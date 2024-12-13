@@ -22,13 +22,13 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
   @override
   Widget build(BuildContext context) {
     return DropdownSearch<String>(
-      dropdownDecoratorProps: const DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
+      decoratorProps: const DropDownDecoratorProps(
+        decoration: InputDecoration(
           labelText: "Icon",
         ),
       ),
       onChanged: (s) => widget.onChange(icons[s]),
-      items: icons.keys.toList()..sort(),
+      items: (a, b) => icons.keys.toList()..sort(),
       selectedItem: icons.keys.firstWhere(
           (element) =>
               icons[element]?.iconData.codePoint ==
@@ -39,8 +39,10 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
             ? (icons[iconKey]?.icon ?? const Icon(Icons.home))
             : const Text("");
       },
-      clearButtonProps: ClearButtonProps(
-        isVisible: widget.reset,
+      suffixProps: DropdownSuffixProps(
+        clearButtonProps: ClearButtonProps(
+          isVisible: widget.reset,
+        ),
       ),
       popupProps: PopupProps.modalBottomSheet(
         modalBottomSheetProps: ModalBottomSheetProps(
@@ -52,7 +54,7 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
           "Icon",
           style: TextStyle(fontSize: 17.5),
         ),
-        itemBuilder: (context, iconKey, b) {
+        itemBuilder: (context, iconKey, b, c) {
           return ListTile(
             title: icons[iconKey]?.icon ?? const Icon(Icons.question_answer),
           );

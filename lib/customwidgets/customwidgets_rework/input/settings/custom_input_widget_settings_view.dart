@@ -71,12 +71,11 @@ class _CustomInputWidgetSettingsViewState
           )),
           InputFieldContainer.inputContainer(
               child: DropdownSearch<CustomInputSendMethod>(
-            items: CustomInputSendMethod.values,
+            items: (a, b) => CustomInputSendMethod.values,
             itemAsString: (item) => item.name,
             selectedItem: widget.customInputWidget.customInputSendMethod,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration:
-                    InputDecoration(label: Text("Input send method"))),
+            decoratorProps: const DropDownDecoratorProps(
+                decoration: InputDecoration(label: Text("Input send method"))),
             onChanged: (s) => {
               widget.customInputWidget.customInputSendMethod = s,
               c.update(widget.customInputWidget)
@@ -84,11 +83,10 @@ class _CustomInputWidgetSettingsViewState
           )),
           InputFieldContainer.inputContainer(
               child: DropdownSearch<CustomInputDisplayConentType>(
-            items: CustomInputDisplayConentType.values,
             itemAsString: (item) => item.name,
             selectedItem: widget.customInputWidget.customInputDisplayConentType,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration:
+            decoratorProps: const DropDownDecoratorProps(
+                decoration:
                     InputDecoration(label: Text("Input display method"))),
             onChanged: (s) => {
               widget.customInputWidget.customInputDisplayConentType = s,
