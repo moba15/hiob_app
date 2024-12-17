@@ -54,6 +54,7 @@ class NotificationManager with WidgetsBindingObserver {
     });
     CustomLogger.logInfoNotification(
         methodname: "init", logMessage: "before init awesomeNotifications");
+
     bool init = await awesomeNotifications.initialize(
         'resource://drawable/ic_launcher',
         [
@@ -85,6 +86,18 @@ class NotificationManager with WidgetsBindingObserver {
               channelGroupName: ioBrokerNotificationChannelGroupName)
         ],
         debug: false);
+    await awesomeNotifications.setChannel(
+        NotificationChannel(
+            channelKey: ioBrokerConnectionNotificationChannelKey,
+            channelGroupKey: ioBrokerConnectionNotificationChannelGroupKey,
+            channelName: ioBrokerConnectionNotificationChannelName,
+            channelDescription: "Displays your connections status",
+            defaultColor: const Color(0xffffffff),
+            ledColor: Colors.blue,
+            playSound: false,
+            criticalAlerts: false),
+        forceUpdate: true);
+
     CustomLogger.logInfoNotification(
         methodname: "init",
         logMessage: "after init awesomeNotifications ($init)");
