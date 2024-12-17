@@ -41,6 +41,7 @@ class ChangeLogScreen extends StatelessWidget {
 - #95: Quickfix for inputfields and numbers
 - #93 fixed template copy
 - Added background reconnection
+- Added Slider update options
   """;
   }
 }

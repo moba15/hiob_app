@@ -7,10 +7,12 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## **Work in Progress**
 - #104: Add option for slider update strategy
 
-## 0.0.704-beta.0
+## 0.0.704-beta.1
 - Integrating new workflow
 - #95: Quickfix
 - #93: fixed
+- Added background reconnection
+- Added Slider update options
 
 
 ## 0.0.703
