@@ -75,22 +75,7 @@ class _GeneralSettingsView extends StatelessWidget {
           },
         ),
         const _DeviceInfo(),
-        ListTile(
-          title: const Text("Export logs"),
-          leading: const Icon(Icons.note),
-          trailing: const Icon(Icons.import_export),
-          onTap: () {
-            CustomLogger.exportInfoLogs();
-          },
-        ),
-        ListTile(
-          title: const Text("Delete all logs"),
-          leading: const Icon(Icons.note),
-          trailing: const Icon(Icons.delete),
-          onTap: () {
-            CustomLogger.deletAll();
-          },
-        ),
+        const _CustomLoggerSettings(),
       ],
     );
   }
@@ -132,6 +117,63 @@ class _DeviceInfo extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _CustomLoggerSettings extends StatefulWidget {
+  const _CustomLoggerSettings({Key? key}) : super(key: key);
+
+  @override
+  State<_CustomLoggerSettings> createState() => __CustomLoggerSettingsState();
+}
+
+class __CustomLoggerSettingsState extends State<_CustomLoggerSettings> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SwitchListTile(
+          title: const Text("Enable DebugLogs"),
+          onChanged: (value) {
+            Manager().generalManager.customLoggerFilter.logDebug = value;
+            setState(() {
+              Manager().generalManager.changeCustomLoggerFilter();
+            });
+          },
+          value: Manager().generalManager.customLoggerFilter.logDebug,
+        ),
+        SwitchListTile(
+          title: const Text("Enable ErrorLogs"),
+          onChanged: (value) {
+            Manager().generalManager.customLoggerFilter.logError = value;
+            setState(() {
+              Manager().generalManager.changeCustomLoggerFilter();
+            });
+          },
+          value: Manager().generalManager.customLoggerFilter.logError,
+        ),
+        SwitchListTile(
+          title: const Text("Enable InfoLogs"),
+          onChanged: (value) {
+            Manager().generalManager.customLoggerFilter.logInfo = value;
+            setState(() {
+              Manager().generalManager.changeCustomLoggerFilter();
+            });
+          },
+          value: Manager().generalManager.customLoggerFilter.logInfo,
+        ),
+        SwitchListTile(
+          title: const Text("Enable VerboseLogs"),
+          onChanged: (value) {
+            Manager().generalManager.customLoggerFilter.logVerbose = value;
+            setState(() {
+              Manager().generalManager.changeCustomLoggerFilter();
+            });
+          },
+          value: Manager().generalManager.customLoggerFilter.logVerbose,
+        ),
+      ],
     );
   }
 }

@@ -111,6 +111,7 @@ class BackgroundRunner {
 
   static void onStop(ServiceInstance s) {
     webSocketChannel?.sink.close();
+    s.stopSelf();
   }
 
   @pragma('vm:entry-point')

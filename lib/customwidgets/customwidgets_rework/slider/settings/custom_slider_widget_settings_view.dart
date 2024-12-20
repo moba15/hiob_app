@@ -135,6 +135,26 @@ class _CustomTableWidgetSettingsViewState
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ))
             ],
+          )),
+          InputFieldContainer.inputContainer(
+              child: DropdownButtonFormField<CustomSliderWidgetUpdateStrategy>(
+            items: const [
+              DropdownMenuItem(
+                value: CustomSliderWidgetUpdateStrategy.onChange,
+                child: Text("On Change"),
+              ),
+              DropdownMenuItem(
+                value: CustomSliderWidgetUpdateStrategy.onFinish,
+                child: Text("On Finish"),
+              )
+            ],
+            value: widget.customSliderWidget.customSliderWidgetUpdateStrategy,
+            onChanged: (value) {
+              setState(() {
+                widget.customSliderWidget.customSliderWidgetUpdateStrategy =
+                    value ?? CustomSliderWidgetUpdateStrategy.onFinish;
+              });
+            },
           ))
         ],
       ),

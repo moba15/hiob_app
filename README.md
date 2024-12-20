@@ -5,13 +5,14 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
-## Work in progress 
-- Refactor API between App and Adapater
+
+## 0.0.704-beta.1
 - Integrating new workflow
 - #95: Quickfix
-- #93 fixed
-
-## Work in progress 
+- #93: fixed
+- Added background reconnection
+- Added Slider update options
+- #104: Add option for slider update strategy
 
 
 ## 0.0.703

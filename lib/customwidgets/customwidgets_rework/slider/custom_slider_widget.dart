@@ -14,6 +14,8 @@ import 'package:smart_home/device/state/state.dart';
 part 'custom_slider_widget.freezed.dart';
 part 'custom_slider_widget.g.dart';
 
+enum CustomSliderWidgetUpdateStrategy { onFinish, onChange }
+
 class _CustomSliderThemeConverter
     implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
   const _CustomSliderThemeConverter();
@@ -55,6 +57,8 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
     @Default(100) int max,
     @Default(0) int min,
     @Default(10) int step,
+    @Default(CustomSliderWidgetUpdateStrategy.onFinish)
+    CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
     CustomPopupmenu? customPopupmenu,
     @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme,
   }) = _CustomSliderWidget;
