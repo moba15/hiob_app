@@ -13,24 +13,24 @@ class NotificationManager with WidgetsBindingObserver {
   static SharedPreferences? staticSharedPreferences;
   static AwesomeNotifications awesomeNotifications = AwesomeNotifications();
   static const String ioBrokerConnectionNotificationChannelKey =
-      "ioBroker_connection_notification";
+      "ioBroker_connection_notification2";
   static const String ioBrokerConnectionNotificationChannelGroupKey =
-      "ioBroker_connection_notification_group";
+      "ioBroker_connection_notification_group2";
   static const String ioBrokerConnectionNotificationChannelGroupName =
-      "IoBroker Connection Notification Group";
+      "IoBroker Connection Notification Group2";
   static const String ioBrokerConnectionNotificationChannelName =
-      "IoBroker Connection Notification";
-  static int ioBrokerConnectionNotificationId = 1;
+      "IoBroker Connection Notification2";
+  static int ioBrokerConnectionNotificationId = 100;
 
-  static const String ioBrokerNotificationChannelKey = "ioBroker_notification";
+  static const String ioBrokerNotificationChannelKey = "ioBroker_notification2";
   static const String ioBrokerNotificationChannelGroupKey =
-      "ioBroker_notification_group";
+      "ioBroker_notification_group2";
   static const String ioBrokerNotificationChannelGroupName =
       "IoBroker Notification Group";
   static const String ioBrokerNotificationChannelName = "IoBroker Notification";
   static int ioBrokerNotificationId = 1;
 
-  static bool backgroundNotificationsEnabled = false;
+  static bool backgroundNotificationsEnabled = true;
 
   static List<CustomNotification> notificationsLog = [];
 
@@ -54,6 +54,7 @@ class NotificationManager with WidgetsBindingObserver {
     });
     CustomLogger.logInfoNotification(
         methodname: "init", logMessage: "before init awesomeNotifications");
+
     bool init = await awesomeNotifications.initialize(
         'resource://drawable/ic_launcher',
         [
@@ -73,7 +74,7 @@ class NotificationManager with WidgetsBindingObserver {
             defaultColor: const Color(0xffffffff),
             ledColor: Colors.blue,
             enableLights: true,
-            playSound: true,
+            playSound: false,
           ),
         ],
         channelGroups: [
@@ -85,6 +86,18 @@ class NotificationManager with WidgetsBindingObserver {
               channelGroupName: ioBrokerNotificationChannelGroupName)
         ],
         debug: false);
+    await awesomeNotifications.setChannel(
+        NotificationChannel(
+            channelKey: ioBrokerConnectionNotificationChannelKey,
+            channelGroupKey: ioBrokerConnectionNotificationChannelGroupKey,
+            channelName: ioBrokerConnectionNotificationChannelName,
+            channelDescription: "Displays your connections status",
+            defaultColor: const Color(0xffffffff),
+            ledColor: Colors.blue,
+            playSound: false,
+            criticalAlerts: false),
+        forceUpdate: true);
+
     CustomLogger.logInfoNotification(
         methodname: "init",
         logMessage: "after init awesomeNotifications ($init)");
@@ -263,34 +276,23 @@ class NotificationManager with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.detached:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is detached");
+        Manager().talker.debug("ChangeAppLifecycleState | detached");
         if (backgroundNotificationsEnabled) {
           Manager.instance.backgroundRunner.startService();
         }
         break;
       case AppLifecycleState.inactive:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is inactive");
-        if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.startService();
-        }
+        Manager().talker.debug("ChangeAppLifecycleState | inactive");
 
         break;
       case AppLifecycleState.paused:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is paused $backgroundNotificationsEnabled");
+        Manager().talker.debug("ChangeAppLifecycleState | paused");
         if (backgroundNotificationsEnabled) {
           Manager.instance.backgroundRunner.startService();
         }
         break;
       case AppLifecycleState.resumed:
-        CustomLogger.logInfoNotification(
-            methodname: "didChangeAppLifecycleState",
-            logMessage: "App is resumed");
+        Manager().talker.debug("ChangeAppLifecycleState | resumed");
         Manager.instance.backgroundRunner.stopService();
         readSettings();
         break;
