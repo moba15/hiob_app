@@ -10,7 +10,8 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 - Integrating new workflow
 - Fixed copy of the new templates
 - Fixed Inputfield datatype issues
-- Added background reconnection, if the app loses connection in the background
+- Added background reconnection, if the app loses connection in the background 
+    - new Adapater version maybe needed: Will be available in ioBroker in the next week!
 - Muted connection Notification
 - Add option for slider update strategy: onChange or onFinish
 
