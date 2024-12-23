@@ -6,13 +6,13 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
 
-## 0.0.704-beta.1
+## 0.0.704
 - Integrating new workflow
-- #95: Quickfix
-- #93: fixed
-- Added background reconnection
-- Added Slider update options
-- #104: Add option for slider update strategy
+- Fixed copy of the new templates
+- Fixed Inputfield datatype issues
+- Added background reconnection, if the app loses connection in the background
+- Muted connection Notification
+- Add option for slider update strategy: onChange or onFinish
 
 
 ## 0.0.703

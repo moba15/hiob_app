@@ -38,10 +38,12 @@ class ChangeLogScreen extends StatelessWidget {
   String _changelogComplete() {
     return """
 - Integrating new workflow
-- #95: Quickfix for inputfields and numbers
-- #93 fixed template copy
-- Added background reconnection
-- Added Slider update options
+- Fixed copy of the new templates
+- Fixed Inputfield datatype issues
+- Added background reconnection, if the app loses connection in the background
+- Muted connection Notification
+- Add option for slider update strategy: onChange or onFinish
+- Fixed some other bugs
   """;
   }
 }
