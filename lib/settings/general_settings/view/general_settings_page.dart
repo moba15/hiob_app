@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/background/background_runner.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
+import 'package:smart_home/utils/widgets/divider/divider_with_text.dart';
 
 /*
 Translation status: 100%
@@ -74,7 +76,11 @@ class _GeneralSettingsView extends StatelessWidget {
             );
           },
         ),
+        const DividerWithText(text: Text("Divice info")),
         const _DeviceInfo(),
+        const DividerWithText(text: Text("Background Notifications")),
+        const _BackgroundNotificationSettings(),
+        const DividerWithText(text: Text("Logger")),
         const _CustomLoggerSettings(),
       ],
     );
@@ -173,6 +179,40 @@ class __CustomLoggerSettingsState extends State<_CustomLoggerSettings> {
           },
           value: Manager().generalManager.customLoggerFilter.logVerbose,
         ),
+      ],
+    );
+  }
+}
+
+class _BackgroundNotificationSettings extends StatefulWidget {
+  const _BackgroundNotificationSettings({Key? key}) : super(key: key);
+
+  @override
+  State<_BackgroundNotificationSettings> createState() =>
+      __BackgroundNotificationSettingsState();
+}
+
+class __BackgroundNotificationSettingsState
+    extends State<_BackgroundNotificationSettings> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        DropdownButtonFormField<BackgroundRunnerStrategy>(
+          value: Manager().generalManager.backgroundRunnerStrategy,
+          items: BackgroundRunnerStrategy.values
+              .map((e) => DropdownMenuItem(
+                    value: e,
+                    child: Text(e.name),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            setState(() {
+              Manager().generalManager.setBackgroundStrategy(
+                  value ?? BackgroundRunnerStrategy.disabled);
+            });
+          },
+        )
       ],
     );
   }

@@ -278,22 +278,25 @@ class NotificationManager with WidgetsBindingObserver {
       case AppLifecycleState.detached:
         Manager().talker.debug("ChangeAppLifecycleState | detached");
         if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.stop();
+          Manager().generalManager.backgroundRunner?.stop();
         }
         break;
       case AppLifecycleState.inactive:
+        //TODO
         Manager().talker.debug("ChangeAppLifecycleState | inactive");
 
         break;
       case AppLifecycleState.paused:
         Manager().talker.debug("ChangeAppLifecycleState | paused");
         if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.start();
+          //TODO
+          Manager().generalManager.backgroundRunner?.start();
         }
         break;
       case AppLifecycleState.resumed:
         Manager().talker.debug("ChangeAppLifecycleState | resumed");
-        Manager.instance.backgroundRunner.stop();
+        //TODO
+        Manager().generalManager.backgroundRunner?.stop();
         readSettings();
         break;
       case AppLifecycleState.hidden:

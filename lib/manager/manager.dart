@@ -59,8 +59,6 @@ class Manager {
 
   late ThemeManager themeManager;
 
-  late BackgroundRunner backgroundRunner;
-
   late NotificationManager notificationManager;
 
   final Talker talker = TalkerFlutter.init();
@@ -166,8 +164,5 @@ class Manager {
   void _initManagerAfter() {
     talker.configure(filter: generalManager.customLoggerFilter);
     notificationManager = NotificationManager(fileManager: fileManager);
-    backgroundRunner = LocalBackgroundRunnerImpl(
-        generalManager: generalManager, ioBrokerManager: ioBrokerManager)
-      ..init();
   }
 }
