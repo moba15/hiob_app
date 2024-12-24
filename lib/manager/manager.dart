@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_home/background/background_runner.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/customise_manager.dart';
@@ -19,7 +20,7 @@ import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
 import 'package:smart_home/utils/logger/logger_filter.dart';
 import 'package:talker_flutter/talker_flutter.dart';
-import '../background/background_runner.dart';
+import '../background/impl/local/local_background_runner.dart';
 
 class Manager {
   //@Deprecated("Please use the Context")
@@ -165,7 +166,7 @@ class Manager {
   void _initManagerAfter() {
     talker.configure(filter: generalManager.customLoggerFilter);
     notificationManager = NotificationManager(fileManager: fileManager);
-    backgroundRunner = BackgroundRunner(
+    backgroundRunner = LocalBackgroundRunnerImpl(
         generalManager: generalManager, ioBrokerManager: ioBrokerManager)
       ..init();
   }
