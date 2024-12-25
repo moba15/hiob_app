@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:smart_home/background/background_runner.dart';
+import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
@@ -212,8 +214,41 @@ class __BackgroundNotificationSettingsState
                   value ?? BackgroundRunnerStrategy.disabled);
             });
           },
-        )
+          decoration: const InputDecoration(label: Text("Background strategy")),
+        ),
+        const Gap(10),
+        DropdownButtonFormField<BackgroundReconnectStrategy>(
+          value: GeneralManager.backgroundReconnectStrategy,
+          items: BackgroundReconnectStrategy.values
+              .map((e) => DropdownMenuItem(
+                    value: e,
+                    child: Text(e.name),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            setState(() {
+              Manager().generalManager.setBackgroundReconnectStrategy(
+                  value ?? BackgroundReconnectStrategy.wifiOnly);
+            });
+          },
+          decoration: const InputDecoration(label: Text("Reconnect strategy")),
+        ),
       ],
     );
+  }
+}
+
+class _LocalBackgroundSettings extends StatefulWidget {
+  const _LocalBackgroundSettings({Key? key}) : super(key: key);
+
+  @override
+  State<_LocalBackgroundSettings> createState() =>
+      __LocalBackgroundSettingsState();
+}
+
+class __LocalBackgroundSettingsState extends State<_LocalBackgroundSettings> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:smart_home/background/background_runner.dart';
 import 'package:smart_home/main.dart';
@@ -36,7 +37,8 @@ class LocalBackgroundRunnerImpl extends BackgroundRunner {
       {required this.generalManager, required this.ioBrokerManager});
   @override
   Future<void> init() async {
-    NotificationManager.init();
+    DartPluginRegistrant.ensureInitialized();
+    await NotificationManager.init();
     if (!Platform.isAndroid) {
       log("Platfrom is not Android -> disabled Background runner", level: 1);
       Manager()
@@ -44,7 +46,6 @@ class LocalBackgroundRunnerImpl extends BackgroundRunner {
           .info("Backgroundrunner | init | not supported on this platform");
       return;
     }
-    log("OK");
     talker = Manager().talker;
     talker?.info("Backgroundrunner | init");
     service = FlutterBackgroundService();
@@ -61,7 +62,8 @@ class LocalBackgroundRunnerImpl extends BackgroundRunner {
       initialNotificationContent: "Paused",
       initialNotificationTitle: "Connection Status",
     );
-    service.configure(iosConfiguration: ios, androidConfiguration: android);
+    await service.configure(
+        iosConfiguration: ios, androidConfiguration: android);
     talker?.info("Backgroundrunner | init | Service configured");
   }
 
@@ -151,11 +153,24 @@ class LocalBackgroundRunnerImpl extends BackgroundRunner {
         onDone: () => onDone(s, event));
   }
 
+  static Future<bool> shouldConnect() async {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
+
+    return GeneralManager.backgroundReconnectStrategy
+        .checkConnection(connectivityResult);
+  }
+
   static void onError(ServiceInstance s, dynamic e) async {
     if (reconnectTries >= maxReconnectTries) {
       s.stopSelf();
       s.invoke("stop");
       NotificationManager.showConnectionNotification("Connection stopped");
+      return;
+    }
+    if (!await shouldConnect()) {
+      s.stopSelf();
+      s.invoke("stop");
       return;
     }
     reconnectTries++;
@@ -210,6 +225,12 @@ class LocalBackgroundRunnerImpl extends BackgroundRunner {
     NotificationManager.showConnectionNotification(
         "Disconnected please open app to connect");
     if (reconnectTries > maxReconnectTries) {
+      s.stopSelf();
+      s.invoke("stop");
+      return;
+    }
+    if (!await shouldConnect()) {
+      Talker().debug("Background | onDone | should not connect");
       s.stopSelf();
       s.invoke("stop");
       return;

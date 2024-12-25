@@ -13,14 +13,14 @@ class NotificationManager with WidgetsBindingObserver {
   static SharedPreferences? staticSharedPreferences;
   static AwesomeNotifications awesomeNotifications = AwesomeNotifications();
   static const String ioBrokerConnectionNotificationChannelKey =
-      "ioBroker_connection_notification2";
+      "ioBroker_connection_notification3";
   static const String ioBrokerConnectionNotificationChannelGroupKey =
-      "ioBroker_connection_notification_group2";
+      "ioBroker_connection_notification_group3";
   static const String ioBrokerConnectionNotificationChannelGroupName =
-      "IoBroker Connection Notification Group2";
+      "IoBroker Connection Notification Group3";
   static const String ioBrokerConnectionNotificationChannelName =
-      "IoBroker Connection Notification2";
-  static int ioBrokerConnectionNotificationId = 100;
+      "IoBroker Connection Notification3";
+  static int ioBrokerConnectionNotificationId = 300;
 
   static const String ioBrokerNotificationChannelKey = "ioBroker_notification2";
   static const String ioBrokerNotificationChannelGroupKey =
@@ -43,7 +43,7 @@ class NotificationManager with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
-  static void init() async {
+  static Future<void> init() async {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         CustomLogger.logInfoNotification(
@@ -86,21 +86,8 @@ class NotificationManager with WidgetsBindingObserver {
               channelGroupName: ioBrokerNotificationChannelGroupName)
         ],
         debug: false);
-    await awesomeNotifications.setChannel(
-        NotificationChannel(
-            channelKey: ioBrokerConnectionNotificationChannelKey,
-            channelGroupKey: ioBrokerConnectionNotificationChannelGroupKey,
-            channelName: ioBrokerConnectionNotificationChannelName,
-            channelDescription: "Displays your connections status",
-            defaultColor: const Color(0xffffffff),
-            ledColor: Colors.blue,
-            playSound: false,
-            criticalAlerts: false),
-        forceUpdate: true);
 
-    CustomLogger.logInfoNotification(
-        methodname: "init",
-        logMessage: "after init awesomeNotifications ($init)");
+    Manager().talker.debug("NotificationManager | init | channels set");
   }
 
   ///Must be all static because of Isolate

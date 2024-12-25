@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/background/background_runner.dart';
+import 'package:smart_home/background/impl/local/local_background_runner.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -9,6 +10,10 @@ import 'package:smart_home/utils/logger/logger_filter.dart';
 import 'package:uuid/uuid.dart';
 
 class GeneralManager {
+  //Has to be static for background runner
+  static BackgroundReconnectStrategy backgroundReconnectStrategy =
+      BackgroundReconnectStrategy.wifiOnly;
+
   var uuid = const Uuid();
 
   final FileManager fileManager;
@@ -45,8 +50,13 @@ class GeneralManager {
     deviceID = settings["id"] ?? uuid.v4();
     ioBVersion = settings["ioBVersion"] ?? "";
     settings["id"] = deviceID;
-    backgroundRunnerStrategy =
-        settings["backgroundRunnerStrategy"] ?? BackgroundRunnerStrategy.local;
+    backgroundRunnerStrategy = BackgroundRunnerStrategy.values.firstWhere(
+        (e) => e.toString() == settings["backgroundRunnerStrategy"],
+        orElse: () => BackgroundRunnerStrategy.local);
+    backgroundReconnectStrategy = BackgroundReconnectStrategy.values.firstWhere(
+        (e) => e.toString() == settings["backgroundReconnectStrategy"],
+        orElse: () => BackgroundReconnectStrategy.wifiOnly);
+
     customLoggerFilter = CustomLoggerFilter.fromJson(settings["logger"] ?? {});
     _save();
     statusStreamController.add(true);
@@ -57,6 +67,8 @@ class GeneralManager {
       manager.managerStatusStreamController.sink.add(ManagerStatus.changeLog);
       fileManager.writeString(buildKey, manager.buildNumber);
     }
+
+    _initBackgroundRunnerOnChange();
   }
 
   Future<void> setDeviceNameBasedOnSettingAndOS(
@@ -79,7 +91,8 @@ class GeneralManager {
       "id": deviceID,
       "ioBVersion": ioBVersion,
       "logger": customLoggerFilter,
-      "backgroundRunnerStrategy": backgroundRunnerStrategy
+      "backgroundRunnerStrategy": backgroundRunnerStrategy.toString(),
+      "backgroundReconnectStrategy": backgroundReconnectStrategy.toString(),
     };
 
     await fileManager.writeJSON(key, settings);
@@ -119,7 +132,22 @@ class GeneralManager {
     _initBackgroundRunnerOnChange();
   }
 
+  setBackgroundReconnectStrategy(
+      BackgroundReconnectStrategy backgroundReconnectStrategy) {
+    GeneralManager.backgroundReconnectStrategy = backgroundReconnectStrategy;
+    _save();
+  }
+
   void _initBackgroundRunnerOnChange() {
-    //TODO
+    switch (backgroundRunnerStrategy) {
+      case BackgroundRunnerStrategy.disabled:
+        backgroundRunner = null;
+        break;
+      case BackgroundRunnerStrategy.local:
+        backgroundRunner = LocalBackgroundRunnerImpl(
+            generalManager: this, ioBrokerManager: manager.ioBrokerManager);
+        break;
+    }
+    backgroundRunner?.init();
   }
 }
