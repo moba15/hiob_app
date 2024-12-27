@@ -83,4 +83,9 @@ class CustomColorPickerWidget
   @override
   factory CustomColorPickerWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomColorPickerWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

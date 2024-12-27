@@ -82,4 +82,9 @@ class CustomMultiselectionWidget
   @override
   factory CustomMultiselectionWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomMultiselectionWidgetFromJson(json);
+
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }

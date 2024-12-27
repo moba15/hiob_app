@@ -20,6 +20,10 @@ _$CustomSliderWidgetImpl _$$CustomSliderWidgetImplFromJson(
       max: (json['max'] as num?)?.toInt() ?? 100,
       min: (json['min'] as num?)?.toInt() ?? 0,
       step: (json['step'] as num?)?.toInt() ?? 10,
+      customSliderWidgetUpdateStrategy: $enumDecodeNullable(
+              _$CustomSliderWidgetUpdateStrategyEnumMap,
+              json['customSliderWidgetUpdateStrategy']) ??
+          CustomSliderWidgetUpdateStrategy.onFinish,
       customPopupmenu: json['customPopupmenu'] == null
           ? null
           : CustomPopupmenu.fromJson(
@@ -39,6 +43,9 @@ Map<String, dynamic> _$$CustomSliderWidgetImplToJson(
       'max': instance.max,
       'min': instance.min,
       'step': instance.step,
+      'customSliderWidgetUpdateStrategy':
+          _$CustomSliderWidgetUpdateStrategyEnumMap[
+              instance.customSliderWidgetUpdateStrategy],
       'customPopupmenu': instance.customPopupmenu,
       'customTheme':
           const _CustomSliderThemeConverter().toJson(instance.customTheme),
@@ -75,3 +82,8 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) =>
     json == null ? null : fromJson(json as Json);
+
+const _$CustomSliderWidgetUpdateStrategyEnumMap = {
+  CustomSliderWidgetUpdateStrategy.onFinish: 'onFinish',
+  CustomSliderWidgetUpdateStrategy.onChange: 'onChange',
+};

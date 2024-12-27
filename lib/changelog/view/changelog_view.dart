@@ -37,10 +37,13 @@ class ChangeLogScreen extends StatelessWidget {
 
   String _changelogComplete() {
     return """
-# Templates \n
-- Fixed Networkplayer migration
-- Fixed Value migration for units and rounding
-- Fixed copying new widgets/templates
+- Integrating new workflow
+- Fixed copy of the new templates
+- Fixed Inputfield datatype issues
+- Added background reconnection, if the app loses connection in the background
+- Muted connection Notification
+- Add option for slider update strategy: onChange or onFinish
+- Fixed some other bugs
   """;
   }
 }

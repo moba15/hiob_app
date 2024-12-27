@@ -78,4 +78,8 @@ class CustomButtonWidget with _$CustomButtonWidget implements CustomWidget {
 
   factory CustomButtonWidget.fromJson(Map<String, dynamic> json) =>
       _$CustomButtonWidgetFromJson(json);
+  @override
+  CustomWidget clone() {
+    return copyWith();
+  }
 }
