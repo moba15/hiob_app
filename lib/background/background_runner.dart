@@ -33,7 +33,7 @@ extension LocalBackgroundReconnectOnExt on BackgroundReconnectStrategy {
   }
 }
 
-enum BackgroundRunnerStrategy { disabled, local }
+enum BackgroundRunnerStrategy { disabled, local, firebaseLocal }
 
 extension BackgroundRunnerStrategyName on BackgroundRunnerStrategy {
   get name {
@@ -42,6 +42,8 @@ extension BackgroundRunnerStrategyName on BackgroundRunnerStrategy {
         return "Off";
       case BackgroundRunnerStrategy.local:
         return "Local";
+      case BackgroundRunnerStrategy.firebaseLocal:
+        return "Firebase & Local";
     }
   }
 }

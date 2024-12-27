@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/background/background_runner.dart';
+import 'package:smart_home/background/impl/firebase/firebase_local_background_runner.dart';
 import 'package:smart_home/background/impl/local/local_background_runner.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/file_manager.dart';
@@ -146,6 +147,9 @@ class GeneralManager {
       case BackgroundRunnerStrategy.local:
         backgroundRunner = LocalBackgroundRunnerImpl(
             generalManager: this, ioBrokerManager: manager.ioBrokerManager);
+        break;
+      case BackgroundRunnerStrategy.firebaseLocal:
+        backgroundRunner = FirebaseLocalBackgroundRunner();
         break;
     }
     backgroundRunner?.init();

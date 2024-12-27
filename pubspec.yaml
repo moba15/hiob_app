@@ -80,6 +80,8 @@ dependencies:
   talker: ^4.4.1
   talker_flutter: ^4.4.0
   connectivity_plus: ^6.1.1
+  firebase_messaging: ^15.1.6
+  firebase_core: ^3.9.0
 
  
 
