@@ -251,7 +251,7 @@ class DeviceManager {
           }
         }
       }
-      this.manager.talker.debug(
+      manager.talker.debug(
           "DeviceManager | subscribe to ${dataPoints.length} datapoints");
       StreamSubscription<StatesValueUpdate>? subscription = connectionManager
           .stateUpdateClientStub
@@ -267,6 +267,17 @@ class DeviceManager {
                 return "${e.stateId}: [${e.boolValue}, ${e.doubleValue}, ${e.stringValue}]";
               },
             )}");
+
+        for (StateValueUpdate update in value.stateUpdates) {
+          DataPoint? d = getIoBrokerDataPointByObjectID(update.stateId);
+          if (d != null) {
+            valueChange(d, update.stringValue);
+          }
+        }
+      }, onError: (e) {
+        Manager()
+            .talker
+            .error("DeviceManager | stateSubscriptionStream  | onError: $e");
       });
       if (subscription == null) {
         Manager().talker.error(
