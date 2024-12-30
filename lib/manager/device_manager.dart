@@ -285,4 +285,26 @@ class DeviceManager {
       }
     }
   }
+
+  Stream<SearchStateResponse>? startSearch(Stream<SearchState> searchStream) {
+    Manager().talker.debug("DeviceManager | startSearch ");
+    if (manager.connectionManager.stateUpdateClientStub != null) {
+      StreamController<SearchStateResponse> t = StreamController();
+      //TODO Close streams
+
+      StreamSubscription<SearchStateResponse> subscription = manager
+          .connectionManager.stateUpdateClientStub!
+          .searchStateStream(searchStream)
+          .listen(
+        (value) {
+          Manager().talker.verbose(value.states.map((e) => e.stateId).reduce(
+                (value, element) => "$value,$element",
+              ));
+          t.sink.add(value);
+        },
+      );
+      return t.stream;
+    }
+    return null;
+  }
 }
