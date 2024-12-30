@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/generated/state/state.pb.dart' as grpc;
 import 'package:smart_home/manager/customise_manager.dart';
+import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/utils/widgets/dropdown_search/dropdown_search_async.dart';
 
 import '../../../../../device/device.dart';
 
@@ -33,18 +38,36 @@ class DeviceSelection extends StatefulWidget {
 class _DeviceSelectionState extends State<DeviceSelection> {
   Device? _currentDevice;
   DataPoint? _currentDataPoint;
+  StreamController<grpc.SearchState>? searchInputStream;
+  Stream<grpc.SearchStateResponse>? searchOutputStream;
+  List<String> items = [];
 
   @override
   void initState() {
     _currentDevice = widget.selectedDevice;
     _currentDataPoint = widget.selectedDataPoint;
+    searchInputStream = StreamController();
+
+    searchOutputStream =
+        Manager().deviceManager.startSearch(searchInputStream!.stream);
+    searchOutputStream!.listen(
+      (event) {
+        _onResult(event);
+      },
+    );
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
+  void dispose() {
+    searchInputStream!.close();
+    super.dispose();
+  }
+  // ignore: slash_for_doc_comments
+  /**
+   * Row(
       children: [
+
         Expanded(
           child: DropdownSearch<Device>(
             popupProps: PopupProps.modalBottomSheet(
@@ -147,6 +170,17 @@ class _DeviceSelectionState extends State<DeviceSelection> {
         )
       ],
     );
+   */
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownSearchAsync();
+  }
+
+  _onResult(grpc.SearchStateResponse resp) {
+    setState(() {
+      items = resp.states.map((e) => e.stateId).toList();
+    });
   }
 
   DataPoint? selectPrefDataPoint(Device? device) {
