@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
-import 'package:smart_home/utils/logger/cutsom_logger.dart';
 
 /*
 Translation status: 100%
