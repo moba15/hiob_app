@@ -15,7 +15,22 @@ class CustomLoggerFilter extends TalkerFilter {
       this.logVerbose = false});
   @override
   bool filter(TalkerData item) {
-    return true;
+    switch (item.logLevel) {
+      case null:
+        return true;
+      case LogLevel.critical:
+        return true;
+      case LogLevel.error:
+        return logError;
+      case LogLevel.debug:
+        return logDebug;
+      case LogLevel.verbose:
+        return logVerbose;
+      case LogLevel.warning:
+        return true;
+      case LogLevel.info:
+        return logInfo;
+    }
   }
 
   factory CustomLoggerFilter.fromJson(Map<String, dynamic> json) =>
