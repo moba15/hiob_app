@@ -34,6 +34,7 @@ class BackgroundRunner {
   BackgroundRunner(
       {required this.generalManager, required this.ioBrokerManager});
   init() {
+    return;
     NotificationManager.init();
     if (!Platform.isAndroid) {
       log("Platfrom is not Android -> disabled Background runner", level: 1);

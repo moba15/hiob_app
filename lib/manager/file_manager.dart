@@ -28,26 +28,32 @@ class FileManager {
   }
 
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {
+    return true;
     return await pref.setString(key, jsonEncode(content));
   }
 
   Future<bool> writeJSONList(String key, List<dynamic> content) async {
+    return true;
     return await pref.setString(key, jsonEncode(content));
   }
 
   Future<bool> writeString(String key, String content) async {
+    return true;
     return await pref.setString(key, content);
   }
 
   Future<bool> writeInt(String key, int content) async {
+    return true;
     return await pref.setInt(key, content);
   }
 
   Future<bool> writeBool(String key, bool content) async {
+    return true;
     return await pref.setBool(key, content);
   }
 
   Future<bool> writeDouble(String key, double content) async {
+    return true;
     return await pref.setDouble(key, content);
   }
 
@@ -65,21 +71,43 @@ class FileManager {
 
   Future<Map<String, dynamic>?> getMap(String key) async {
     if (pref.getString(key) != null) {
-      return jsonDecode(pref.getString(key)!);
+      Manager()
+          .talker
+          .verbose("FileManager | getMap $key:${pref.getString(key)}");
+      try {
+        Map<String, dynamic>? m = jsonDecode(pref.getString(key)!);
+        return m;
+      } catch (e) {
+        Manager()
+            .talker
+            .error("FileManager | getMap error during decode: $e for key $key");
+        return null;
+      }
     }
+    Manager().talker.debug("FileManager | getMap key $key does not exists");
     return null;
   }
 
   Future<List<dynamic>?> getList(String key) async {
     if (pref.containsKey(key)) {
-      return jsonDecode(pref.getString(key)!);
+      Manager()
+          .talker
+          .verbose("FileManager | getList $key:${pref.getString(key)}");
+      try {
+        List<dynamic> l = jsonDecode(pref.getString(key)!);
+        return l;
+      } catch (e) {
+        Manager().talker.error(
+            "FileManager | getList error during decode: $e for key $key");
+        return null;
+      }
     } else {
+      Manager().talker.debug("FileManager | getList key $key does not exists");
       return null;
     }
   }
 
   void export(BuildContext context) async {
-    //TODO: Add IOS Support
     String? result = await FilePicker.platform.getDirectoryPath(
         dialogTitle: 'Please select an output file:',
         initialDirectory: "Download");
