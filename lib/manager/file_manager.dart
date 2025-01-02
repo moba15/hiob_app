@@ -16,44 +16,48 @@ class FileManager {
 
   FileManager({required this.pref, required this.manager}) {
     //_init();
+    _createBackup();
   }
 
   /*void _init() async {
     pref = await SharedPreferences.getInstance();
     isLoaded = true;
   }*/
+  void _createBackup() {
+    for (String key in pref.getKeys()) {
+      if (pref.containsKey("${key}_backup")) {
+        if (key.contains("backup")) {
+          continue;
+        }
+      }
+    }
+  }
 
   Future<void> reload() async {
     await pref.reload();
   }
 
   Future<bool> writeJSON(String key, Map<String, dynamic> content) async {
-    return true;
     return await pref.setString(key, jsonEncode(content));
   }
 
   Future<bool> writeJSONList(String key, List<dynamic> content) async {
-    return true;
     return await pref.setString(key, jsonEncode(content));
   }
 
   Future<bool> writeString(String key, String content) async {
-    return true;
     return await pref.setString(key, content);
   }
 
   Future<bool> writeInt(String key, int content) async {
-    return true;
     return await pref.setInt(key, content);
   }
 
   Future<bool> writeBool(String key, bool content) async {
-    return true;
     return await pref.setBool(key, content);
   }
 
   Future<bool> writeDouble(String key, double content) async {
-    return true;
     return await pref.setDouble(key, content);
   }
 
