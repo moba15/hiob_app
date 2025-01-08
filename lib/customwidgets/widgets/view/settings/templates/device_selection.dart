@@ -38,7 +38,7 @@ class DeviceSelection extends StatefulWidget {
 class _DeviceSelectionState extends State<DeviceSelection> {
   Device? _currentDevice;
   DataPoint? _currentDataPoint;
-  StreamController<grpc.SearchState>? searchInputStream;
+  StreamController<grpc.SearchStateRequest>? searchInputStream;
   Stream<grpc.SearchStateResponse>? searchOutputStream;
   List<String> items = [];
 
@@ -174,7 +174,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownSearchAsync();
+    return Placeholder();
   }
 
   _onResult(grpc.SearchStateResponse resp) {
