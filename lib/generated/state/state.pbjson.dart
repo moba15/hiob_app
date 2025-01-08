@@ -13,6 +13,27 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use allObjectsResultsDescriptor instead')
+const AllObjectsResults$json = {
+  '1': 'AllObjectsResults',
+  '2': [
+    {'1': 'states', '3': 1, '4': 3, '5': 11, '6': '.State', '10': 'states'},
+  ],
+};
+
+/// Descriptor for `AllObjectsResults`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List allObjectsResultsDescriptor = $convert.base64Decode(
+    'ChFBbGxPYmplY3RzUmVzdWx0cxIeCgZzdGF0ZXMYASADKAsyBi5TdGF0ZVIGc3RhdGVz');
+
+@$core.Deprecated('Use allObjectRequestDescriptor instead')
+const AllObjectRequest$json = {
+  '1': 'AllObjectRequest',
+};
+
+/// Descriptor for `AllObjectRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List allObjectRequestDescriptor =
+    $convert.base64Decode('ChBBbGxPYmplY3RSZXF1ZXN0');
+
 @$core.Deprecated('Use statesValueUpdateDescriptor instead')
 const StatesValueUpdate$json = {
   '1': 'StatesValueUpdate',
@@ -125,19 +146,19 @@ final $typed_data.Uint8List stateSubscribtionDescriptor = $convert.base64Decode(
     'Vic2NyaXB0aW9uVHlwZVIEdHlwZRIaCghzdGF0ZUlkcxgDIAMoCVIIc3RhdGVJZHMiLQoQU3Vi'
     'c2NyaXB0aW9uVHlwZRIKCgZjYW5jbGUQABINCglzdWJzY3JpcGUQAQ==');
 
-@$core.Deprecated('Use searchStateDescriptor instead')
-const SearchState$json = {
-  '1': 'SearchState',
+@$core.Deprecated('Use searchStateRequestDescriptor instead')
+const SearchStateRequest$json = {
+  '1': 'SearchStateRequest',
   '2': [
     {'1': 'userId', '3': 1, '4': 1, '5': 9, '10': 'userId'},
     {'1': 'query', '3': 2, '4': 1, '5': 9, '10': 'query'},
   ],
 };
 
-/// Descriptor for `SearchState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List searchStateDescriptor = $convert.base64Decode(
-    'CgtTZWFyY2hTdGF0ZRIWCgZ1c2VySWQYASABKAlSBnVzZXJJZBIUCgVxdWVyeRgCIAEoCVIFcX'
-    'Vlcnk=');
+/// Descriptor for `SearchStateRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchStateRequestDescriptor = $convert.base64Decode(
+    'ChJTZWFyY2hTdGF0ZVJlcXVlc3QSFgoGdXNlcklkGAEgASgJUgZ1c2VySWQSFAoFcXVlcnkYAi'
+    'ABKAlSBXF1ZXJ5');
 
 @$core.Deprecated('Use searchStateResponseDescriptor instead')
 const SearchStateResponse$json = {

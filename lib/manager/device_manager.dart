@@ -286,7 +286,8 @@ class DeviceManager {
     }
   }
 
-  Stream<SearchStateResponse>? startSearch(Stream<SearchState> searchStream) {
+  Stream<SearchStateResponse>? startSearch(
+      Stream<SearchStateRequest> searchStream) {
     Manager().talker.debug("DeviceManager | startSearch ");
     if (manager.connectionManager.stateUpdateClientStub != null) {
       StreamController<SearchStateResponse> t = StreamController();
