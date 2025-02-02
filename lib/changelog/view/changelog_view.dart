@@ -23,15 +23,17 @@ class ChangeLogScreen extends StatelessWidget {
               "What's new? ${manager.versionNumber}(${manager.buildNumber})"),
         ),
         body: Markdown(
-          data: _changelogComplete(),
+          data: _changelog(),
         ));
   }
 
   String _changelog() {
     return """
 # Templates \n
-- fixed some bugs
-- added label for slider
+- Slider can now have negative values \n
+
+# Short information
+- Currently I have some exams and my bachelor, so updates may be infrequent until the end of March.
   """;
   }
 

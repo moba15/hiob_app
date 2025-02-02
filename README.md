@@ -5,6 +5,9 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
+## 0.0706
+- Slider can now have negative values
+
 ## 0.0.705
 - Possible fix for crashed 
 - Added more logging
