@@ -4,6 +4,8 @@ import 'dart:developer' as developer;
 
 import 'package:grpc/grpc.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
+import 'package:smart_home/database/state-database.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/generated/state/state.pb.dart';
@@ -15,6 +17,7 @@ import 'manager.dart';
 
 class DeviceManager {
   FileManager fileManager;
+  StateDatabase stateDatabase = StateDatabase();
   Manager manager;
   List<Device> devicesList;
   StreamController deviceListStreamController = StreamController.broadcast();
@@ -27,6 +30,8 @@ class DeviceManager {
       {required this.devicesList, required this.manager});
 
   Future<List<Device>> loadDevices() async {
+    await stateDatabase.init();
+
     if (loaded) {
       deviceListStreamController.add(devicesList);
       return devicesList;
@@ -62,6 +67,19 @@ class DeviceManager {
     loaded = true;
     sort();
     deviceListStreamController.add(devicesList);
+    List<IobrokerObject> ioBObjects = [];
+    for (Device d in devicesList) {
+      for (DataPoint dataPoint in d.dataPoints ?? []) {
+        if (ioBObjects.any(
+          (element) => element.id == dataPoint.id,
+        )) {
+          continue;
+        }
+        ioBObjects.add(IobrokerObject(
+            id: dataPoint.id, name: dataPoint.name, parent: null));
+      }
+    }
+    stateDatabase.insertBatch(ioBObjects, deleteOldData: true);
     return devicesList;
   }
 
@@ -307,5 +325,33 @@ class DeviceManager {
       return t.stream;
     }
     return null;
+  }
+
+  void updateObjects(ConnectionManager connectionManager) async {
+    if (connectionManager.stateUpdateClientStub != null) {
+      Manager().talker.debug("DeviceManager | updateStates");
+      //TODO Possible filter
+      AllObjectsResults allObjectsResults = await connectionManager
+          .stateUpdateClientStub!
+          .getAllObjects(AllObjectRequest())
+          .onError(
+        (error, stackTrace) {
+          Manager()
+              .talker
+              .error("DeviceManager | updateStates $error", stackTrace);
+          return AllObjectsResults(states: {});
+        },
+      );
+      Manager().talker.debug(
+          "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects");
+      stateDatabase.insertBatch(
+          allObjectsResults.states
+              .map(
+                (e) => IobrokerObject(
+                    id: e.stateId, name: e.common.name, parent: null),
+              )
+              .toList(),
+          deleteOldData: true);
+    }
   }
 }
