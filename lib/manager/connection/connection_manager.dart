@@ -426,6 +426,7 @@ class ConnectionManager with WidgetsBindingObserver {
     _registerOtherServices();
     connectionStatusStreamController.add(ConnectionStatus.loggedIn);
     deviceManager.subscribeToDataPointsIoB(this);
+    deviceManager.updateObjects(this);
   }
 
   void _onLoginKey(String? key) {

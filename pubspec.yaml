@@ -83,6 +83,8 @@ dependencies:
   talker_flutter: ^4.4.0
   flutter_localization: ^0.2.1
   grpc: ^4.0.1
+  sqflite: ^2.4.1
+  path_provider: ^2.1.5
 
  
 
@@ -101,6 +103,7 @@ dev_dependencies:
   freezed: ^2.5.2
   json_serializable: ^6.8.0
   test: any
+  sqflite_common_ffi: ^2.3.4+4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

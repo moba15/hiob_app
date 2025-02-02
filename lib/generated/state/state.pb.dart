@@ -18,6 +18,97 @@ import 'state.pbenum.dart';
 
 export 'state.pbenum.dart';
 
+class AllObjectsResults extends $pb.GeneratedMessage {
+  factory AllObjectsResults({
+    $core.Iterable<State>? states,
+  }) {
+    final $result = create();
+    if (states != null) {
+      $result.states.addAll(states);
+    }
+    return $result;
+  }
+  AllObjectsResults._() : super();
+  factory AllObjectsResults.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AllObjectsResults.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'AllObjectsResults',
+      createEmptyInstance: create)
+    ..pc<State>(1, _omitFieldNames ? '' : 'states', $pb.PbFieldType.PM,
+        subBuilder: State.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  AllObjectsResults clone() => AllObjectsResults()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  AllObjectsResults copyWith(void Function(AllObjectsResults) updates) =>
+      super.copyWith((message) => updates(message as AllObjectsResults))
+          as AllObjectsResults;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AllObjectsResults create() => AllObjectsResults._();
+  AllObjectsResults createEmptyInstance() => create();
+  static $pb.PbList<AllObjectsResults> createRepeated() =>
+      $pb.PbList<AllObjectsResults>();
+  @$core.pragma('dart2js:noInline')
+  static AllObjectsResults getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AllObjectsResults>(create);
+  static AllObjectsResults? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<State> get states => $_getList(0);
+}
+
+class AllObjectRequest extends $pb.GeneratedMessage {
+  factory AllObjectRequest() => create();
+  AllObjectRequest._() : super();
+  factory AllObjectRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AllObjectRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'AllObjectRequest',
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  AllObjectRequest clone() => AllObjectRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  AllObjectRequest copyWith(void Function(AllObjectRequest) updates) =>
+      super.copyWith((message) => updates(message as AllObjectRequest))
+          as AllObjectRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AllObjectRequest create() => AllObjectRequest._();
+  AllObjectRequest createEmptyInstance() => create();
+  static $pb.PbList<AllObjectRequest> createRepeated() =>
+      $pb.PbList<AllObjectRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AllObjectRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AllObjectRequest>(create);
+  static AllObjectRequest? _defaultInstance;
+}
+
 class StatesValueUpdate extends $pb.GeneratedMessage {
   factory StatesValueUpdate({
     $core.Iterable<StateValueUpdate>? stateUpdates,
@@ -561,8 +652,8 @@ class StateSubscribtion extends $pb.GeneratedMessage {
   $core.List<$core.String> get stateIds => $_getList(1);
 }
 
-class SearchState extends $pb.GeneratedMessage {
-  factory SearchState({
+class SearchStateRequest extends $pb.GeneratedMessage {
+  factory SearchStateRequest({
     $core.String? userId,
     $core.String? query,
   }) {
@@ -575,16 +666,16 @@ class SearchState extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  SearchState._() : super();
-  factory SearchState.fromBuffer($core.List<$core.int> i,
+  SearchStateRequest._() : super();
+  factory SearchStateRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory SearchState.fromJson($core.String i,
+  factory SearchStateRequest.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'SearchState',
+      _omitMessageNames ? '' : 'SearchStateRequest',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
     ..aOS(2, _omitFieldNames ? '' : 'query')
@@ -593,24 +684,25 @@ class SearchState extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  SearchState clone() => SearchState()..mergeFromMessage(this);
+  SearchStateRequest clone() => SearchStateRequest()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  SearchState copyWith(void Function(SearchState) updates) =>
-      super.copyWith((message) => updates(message as SearchState))
-          as SearchState;
+  SearchStateRequest copyWith(void Function(SearchStateRequest) updates) =>
+      super.copyWith((message) => updates(message as SearchStateRequest))
+          as SearchStateRequest;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SearchState create() => SearchState._();
-  SearchState createEmptyInstance() => create();
-  static $pb.PbList<SearchState> createRepeated() => $pb.PbList<SearchState>();
+  static SearchStateRequest create() => SearchStateRequest._();
+  SearchStateRequest createEmptyInstance() => create();
+  static $pb.PbList<SearchStateRequest> createRepeated() =>
+      $pb.PbList<SearchStateRequest>();
   @$core.pragma('dart2js:noInline')
-  static SearchState getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<SearchState>(create);
-  static SearchState? _defaultInstance;
+  static SearchStateRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SearchStateRequest>(create);
+  static SearchStateRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get userId => $_getSZ(0);
