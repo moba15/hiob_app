@@ -107,7 +107,15 @@ class _CustomTableWidgetSettingsViewState
                         c.update(widget.customSliderWidget);
                       },
                       inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      if (int.tryParse(newValue.text) == null &&
+                          newValue.text != "" &&
+                          newValue.text != "-") {
+                        return oldValue;
+                      } else {
+                        return newValue;
+                      }
+                    })
                   ])),
               const Gap(10),
               Expanded(
@@ -119,7 +127,17 @@ class _CustomTableWidgetSettingsViewState
                   },
                   decoration: const InputDecoration(label: Text("Max")),
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  inputFormatters: [
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      if (int.tryParse(newValue.text) == null &&
+                          newValue.text != "" &&
+                          newValue.text != "-") {
+                        return oldValue;
+                      } else {
+                        return newValue;
+                      }
+                    })
+                  ],
                 ),
               ),
               const Gap(10),
@@ -132,7 +150,17 @@ class _CustomTableWidgetSettingsViewState
                   c.update(widget.customSliderWidget);
                 },
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                inputFormatters: [
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    if (int.tryParse(newValue.text) == null &&
+                        newValue.text != "" &&
+                        newValue.text != "-") {
+                      return oldValue;
+                    } else {
+                      return newValue;
+                    }
+                  })
+                ],
               ))
             ],
           )),
