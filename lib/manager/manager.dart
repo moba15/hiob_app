@@ -63,6 +63,8 @@ class Manager {
 
   final Talker talker = TalkerFlutter.init();
 
+  final Talker talker = TalkerFlutter.init();
+
   ManagerStatus status = ManagerStatus.loading;
 
   String versionNumber;
@@ -162,6 +164,7 @@ class Manager {
   }
 
   void _initManagerAfter() {
+    talker.configure(filter: generalManager.customLoggerFilter);
     talker.configure(filter: generalManager.customLoggerFilter);
     notificationManager = NotificationManager(fileManager: fileManager);
     backgroundRunner = BackgroundRunner(
