@@ -16,12 +16,22 @@ class FileManager {
 
   FileManager({required this.pref, required this.manager}) {
     //_init();
+    _createBackup();
   }
 
   /*void _init() async {
     pref = await SharedPreferences.getInstance();
     isLoaded = true;
   }*/
+  void _createBackup() {
+    for (String key in pref.getKeys()) {
+      if (pref.containsKey("${key}_backup")) {
+        if (key.contains("backup")) {
+          continue;
+        }
+      }
+    }
+  }
 
   Future<void> reload() async {
     await pref.reload();
@@ -65,21 +75,43 @@ class FileManager {
 
   Future<Map<String, dynamic>?> getMap(String key) async {
     if (pref.getString(key) != null) {
-      return jsonDecode(pref.getString(key)!);
+      Manager()
+          .talker
+          .verbose("FileManager | getMap $key:${pref.getString(key)}");
+      try {
+        Map<String, dynamic>? m = jsonDecode(pref.getString(key)!);
+        return m;
+      } catch (e) {
+        Manager()
+            .talker
+            .error("FileManager | getMap error during decode: $e for key $key");
+        return null;
+      }
     }
+    Manager().talker.debug("FileManager | getMap key $key does not exists");
     return null;
   }
 
   Future<List<dynamic>?> getList(String key) async {
     if (pref.containsKey(key)) {
-      return jsonDecode(pref.getString(key)!);
+      Manager()
+          .talker
+          .verbose("FileManager | getList $key:${pref.getString(key)}");
+      try {
+        List<dynamic> l = jsonDecode(pref.getString(key)!);
+        return l;
+      } catch (e) {
+        Manager().talker.error(
+            "FileManager | getList error during decode: $e for key $key");
+        return null;
+      }
     } else {
+      Manager().talker.debug("FileManager | getList key $key does not exists");
       return null;
     }
   }
 
   void export(BuildContext context) async {
-    //TODO: Add IOS Support
     String? result = await FilePicker.platform.getDirectoryPath(
         dialogTitle: 'Please select an output file:',
         initialDirectory: "Download");

@@ -43,8 +43,14 @@ class ScreenManager {
     } else {
       for (dynamic rawScreens in l) {
         Map<String, dynamic> rawMap = rawScreens;
-        Screen s = Screen.fromJSON(rawMap);
-        screens.add(s);
+        try {
+          Screen s = Screen.fromJSON(rawMap);
+          Manager().talker.debug("ScreenManager | loadScreen | ${s.id}");
+          screens.add(s);
+        } catch (e) {
+          Manager().talker.error(
+              "ScreenManager | loadScreen | error while Screen.fromJSON $rawMap");
+        }
       }
     }
     loaded = true;

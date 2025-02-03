@@ -23,28 +23,24 @@ class ChangeLogScreen extends StatelessWidget {
               "What's new? ${manager.versionNumber}(${manager.buildNumber})"),
         ),
         body: Markdown(
-          data: _changelogComplete(),
+          data: _changelog(),
         ));
   }
 
   String _changelog() {
     return """
 # Templates \n
-- fixed some bugs
-- added label for slider
+- Slider can now have negative values \n
+
+# Short information
+- Currently I have some exams and my bachelor, so updates may be infrequent until the end of March.
   """;
   }
 
   String _changelogComplete() {
     return """
-- Integrating new workflow
-- Fixed copy of the new templates
-- Fixed Inputfield datatype issues
-- Added background reconnection, if the app loses connection in the background 
-    - new Adapater version maybe needed: Will be available in ioBroker in the next week!
-- Muted connection Notification
-- Add option for slider update strategy: onChange or onFinish
-- Fixed some other bugs
+- Possible fix for crashed 
+- Added more logging
   """;
   }
 }
