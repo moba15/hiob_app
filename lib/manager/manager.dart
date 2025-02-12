@@ -63,7 +63,6 @@ class Manager {
 
   final Talker talker = TalkerFlutter.init();
 
-  final Talker talker = TalkerFlutter.init();
 
   ManagerStatus status = ManagerStatus.loading;
 
