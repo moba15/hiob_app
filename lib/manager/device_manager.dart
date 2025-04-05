@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:ffi';
 
 import 'package:grpc/grpc.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -76,7 +77,7 @@ class DeviceManager {
           continue;
         }
         ioBObjects.add(IobrokerObject(
-            id: dataPoint.id, name: dataPoint.name, parent: null));
+            id: dataPoint.id, name: dataPoint.name, parent: null, desc: "No desc", stateType: 999));
       }
     }
     stateDatabase.insertBatch(ioBObjects, deleteOldData: true);
@@ -348,7 +349,7 @@ class DeviceManager {
           allObjectsResults.states
               .map(
                 (e) => IobrokerObject(
-                    id: e.stateId, name: e.common.name, parent: null),
+                    id: e.stateId, name: e.common.name, parent: null, desc: e.common.desc, stateType: e.common.type.value),
               )
               .toList(),
           deleteOldData: true);
