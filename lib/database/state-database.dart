@@ -20,12 +20,12 @@ class StateDatabase {
     db = await databaseFactory.openDatabase(dbPath);
 
     await db!.execute(
-        "CREATE TABLE IF NOT Exists states (id TEXT PRIMARY KEY, name TEXT, parent_id TEXT)");
+        "CREATE TABLE IF NOT Exists states (id TEXT PRIMARY KEY, state_name TEXT, parent_id TEXT, state_desc TEXT, stateType INTEGER)");
 
     Manager().talker.debug("StateDatabase | init $dbPath");
   }
 
-  insertBatch(List<IobrokerObject> objects, {bool deleteOldData = false}) {
+  insertBatch(List<IobrokerObject> objects, {bool deleteOldData = false}) async {
     Manager()
         .talker
         .debug("StateDatabse | insertBatch deletOldData=$deleteOldData");
@@ -40,8 +40,14 @@ class StateDatabase {
     for (IobrokerObject object in objects) {
       //TODO Auto generated code for this sort of stuff, just like toJSON
       batch.insert("states",
-          {"id": object.id, "name": object.name, "parent_id": object.parent});
+          {"id": object.id, "state_name": object.name, "parent_id": object.parent,"state_desc": object.desc, "stateType": object.stateType});
     }
-    batch.commit(exclusive: true);
+    await batch.commit(exclusive: true).onError( (error, stackTrace) async {
+      Manager().talker.error("StateDatabase | insertBatch error :$error");
+      return [];
+   },);
+   
+   Manager().talker.debug("StateDatabase | insertBatch insereted ${objects.length} objects");
+    
   }
 }
