@@ -35,28 +35,4 @@ class StateSubscribtion_SubscriptionType extends $pb.ProtobufEnum {
       : super(v, n);
 }
 
-class State_StateCommon_StateType extends $pb.ProtobufEnum {
-  static const State_StateCommon_StateType boolean =
-      State_StateCommon_StateType._(0, _omitEnumNames ? '' : 'boolean');
-  static const State_StateCommon_StateType str =
-      State_StateCommon_StateType._(1, _omitEnumNames ? '' : 'str');
-  static const State_StateCommon_StateType number =
-      State_StateCommon_StateType._(2, _omitEnumNames ? '' : 'number');
-
-  static const $core.List<State_StateCommon_StateType> values =
-      <State_StateCommon_StateType>[
-    boolean,
-    str,
-    number,
-  ];
-
-  static final $core.Map<$core.int, State_StateCommon_StateType> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static State_StateCommon_StateType? valueOf($core.int value) =>
-      _byValue[value];
-
-  const State_StateCommon_StateType._($core.int v, $core.String n)
-      : super(v, n);
-}
-
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

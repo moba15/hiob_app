@@ -205,14 +205,7 @@ const State_StateCommon$json = {
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'desc', '3': 2, '4': 1, '5': 9, '10': 'desc'},
-    {
-      '1': 'type',
-      '3': 3,
-      '4': 1,
-      '5': 14,
-      '6': '.State.StateCommon.StateType',
-      '10': 'type'
-    },
+    {'1': 'type', '3': 3, '4': 1, '5': 9, '10': 'type'},
     {'1': 'read', '3': 4, '4': 1, '5': 8, '10': 'read'},
     {'1': 'write', '3': 5, '4': 1, '5': 8, '10': 'write'},
     {'1': 'role', '3': 6, '4': 1, '5': 9, '10': 'role'},
@@ -221,7 +214,6 @@ const State_StateCommon$json = {
     {'1': 'min', '3': 9, '4': 1, '5': 5, '9': 2, '10': 'min', '17': true},
     {'1': 'max', '3': 10, '4': 1, '5': 5, '9': 3, '10': 'max', '17': true},
   ],
-  '4': [State_StateCommon_StateType$json],
   '8': [
     {'1': '_unit'},
     {'1': '_step'},
@@ -230,26 +222,14 @@ const State_StateCommon$json = {
   ],
 };
 
-@$core.Deprecated('Use stateDescriptor instead')
-const State_StateCommon_StateType$json = {
-  '1': 'StateType',
-  '2': [
-    {'1': 'boolean', '2': 0},
-    {'1': 'str', '2': 1},
-    {'1': 'number', '2': 2},
-  ],
-};
-
 /// Descriptor for `State`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List stateDescriptor = $convert.base64Decode(
     'CgVTdGF0ZRIYCgdzdGF0ZUlkGAEgASgJUgdzdGF0ZUlkEiIKC3N0cmluZ1ZhbHVlGAMgASgJSA'
     'BSC3N0cmluZ1ZhbHVlEh4KCWJvb2xWYWx1ZRgEIAEoCEgAUglib29sVmFsdWUSIgoLZG91Ymxl'
     'VmFsdWUYBSABKAFIAFILZG91YmxlVmFsdWUSFgoFb3RoZXIYYyABKAlIAFIFb3RoZXISLwoGY2'
-    '9tbW9uGAYgASgLMhIuU3RhdGUuU3RhdGVDb21tb25IAVIGY29tbW9uiAEBGtYCCgtTdGF0ZUNv'
-    'bW1vbhISCgRuYW1lGAEgASgJUgRuYW1lEhIKBGRlc2MYAiABKAlSBGRlc2MSMAoEdHlwZRgDIA'
-    'EoDjIcLlN0YXRlLlN0YXRlQ29tbW9uLlN0YXRlVHlwZVIEdHlwZRISCgRyZWFkGAQgASgIUgRy'
-    'ZWFkEhQKBXdyaXRlGAUgASgIUgV3cml0ZRISCgRyb2xlGAYgASgJUgRyb2xlEhcKBHVuaXQYBy'
-    'ABKAlIAFIEdW5pdIgBARIXCgRzdGVwGAggASgFSAFSBHN0ZXCIAQESFQoDbWluGAkgASgFSAJS'
-    'A21pbogBARIVCgNtYXgYCiABKAVIA1IDbWF4iAEBIi0KCVN0YXRlVHlwZRILCgdib29sZWFuEA'
-    'ASBwoDc3RyEAESCgoGbnVtYmVyEAJCBwoFX3VuaXRCBwoFX3N0ZXBCBgoEX21pbkIGCgRfbWF4'
-    'QgcKBXZhbHVlQgkKB19jb21tb24=');
+    '9tbW9uGAYgASgLMhIuU3RhdGUuU3RhdGVDb21tb25IAVIGY29tbW9uiAEBGokCCgtTdGF0ZUNv'
+    'bW1vbhISCgRuYW1lGAEgASgJUgRuYW1lEhIKBGRlc2MYAiABKAlSBGRlc2MSEgoEdHlwZRgDIA'
+    'EoCVIEdHlwZRISCgRyZWFkGAQgASgIUgRyZWFkEhQKBXdyaXRlGAUgASgIUgV3cml0ZRISCgRy'
+    'b2xlGAYgASgJUgRyb2xlEhcKBHVuaXQYByABKAlIAFIEdW5pdIgBARIXCgRzdGVwGAggASgFSA'
+    'FSBHN0ZXCIAQESFQoDbWluGAkgASgFSAJSA21pbogBARIVCgNtYXgYCiABKAVIA1IDbWF4iAEB'
+    'QgcKBV91bml0QgcKBV9zdGVwQgYKBF9taW5CBgoEX21heEIHCgV2YWx1ZUIJCgdfY29tbW9u');

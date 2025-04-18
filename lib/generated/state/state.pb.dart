@@ -785,7 +785,7 @@ class State_StateCommon extends $pb.GeneratedMessage {
   factory State_StateCommon({
     $core.String? name,
     $core.String? desc,
-    State_StateCommon_StateType? type,
+    $core.String? type,
     $core.bool? read,
     $core.bool? write,
     $core.String? role,
@@ -840,11 +840,7 @@ class State_StateCommon extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'desc')
-    ..e<State_StateCommon_StateType>(
-        3, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
-        defaultOrMaker: State_StateCommon_StateType.boolean,
-        valueOf: State_StateCommon_StateType.valueOf,
-        enumValues: State_StateCommon_StateType.values)
+    ..aOS(3, _omitFieldNames ? '' : 'type')
     ..aOB(4, _omitFieldNames ? '' : 'read')
     ..aOB(5, _omitFieldNames ? '' : 'write')
     ..aOS(6, _omitFieldNames ? '' : 'role')
@@ -902,10 +898,10 @@ class State_StateCommon extends $pb.GeneratedMessage {
   void clearDesc() => clearField(2);
 
   @$pb.TagNumber(3)
-  State_StateCommon_StateType get type => $_getN(2);
+  $core.String get type => $_getSZ(2);
   @$pb.TagNumber(3)
-  set type(State_StateCommon_StateType v) {
-    setField(3, v);
+  set type($core.String v) {
+    $_setString(2, v);
   }
 
   @$pb.TagNumber(3)
