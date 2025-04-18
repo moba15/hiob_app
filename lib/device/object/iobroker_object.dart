@@ -3,6 +3,12 @@ class IobrokerObject {
   String name;
   String? parent;
   String? desc;
-  int stateType;
-  IobrokerObject({required this.id, required this.name, required this.parent, required this.desc, required this.stateType});
+  String? stateType;
+  bool? read;
+  bool? write;
+  String? role;
+  int? step;
+  int? min;
+  int? max;
+  IobrokerObject({required this.id, required this.name, required this.parent, required this.desc, required this.stateType, required this.read, required this.write, required this.role, required this.max, required this.min, required this.step});
 }
