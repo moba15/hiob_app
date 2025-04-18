@@ -76,11 +76,11 @@ class DeviceManager {
         )) {
           continue;
         }
-        ioBObjects.add(IobrokerObject(
-            id: dataPoint.id, name: dataPoint.name, parent: null, desc: "No desc", stateType: 999));
+       // ioBObjects.add(IobrokerObject(
+          //  id: dataPoint.id, name: dataPoint.name, parent: null, desc: "No desc", stateType: null));
       }
     }
-    stateDatabase.insertBatch(ioBObjects, deleteOldData: true);
+   // stateDatabase.insertBatch(ioBObjects, deleteOldData: true);
     return devicesList;
   }
 
@@ -349,7 +349,7 @@ class DeviceManager {
           allObjectsResults.states
               .map(
                 (e) => IobrokerObject(
-                    id: e.stateId, name: e.common.name, parent: null, desc: e.common.desc, stateType: e.common.type.value),
+                    id: e.stateId, name: e.common.name, parent: null, desc: e.common.desc, stateType: e.common.type, role: e.common.type, read: e.common.read, write: e.common.write, min: e.common.min, max: e.common.max, step: e.common.step),
               )
               .toList(),
           deleteOldData: true);
