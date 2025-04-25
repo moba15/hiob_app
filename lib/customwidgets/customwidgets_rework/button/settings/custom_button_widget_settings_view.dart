@@ -6,6 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomButtonWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
@@ -67,17 +68,7 @@ class _CustomButtonWidgetSettingsViewState
               c.update(widget.customButtonWidget)
             },
           )),
-          InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) => {c.update(widget.customButtonWidget)},
-            onDataPointSelected: (d) => {
-              widget.customButtonWidget.dataPoint = d,
-              c.update(widget.customButtonWidget)
-            },
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customButtonWidget.dataPoint,
-            selectedDevice: widget.customButtonWidget.dataPoint?.device,
-          )),
+          InputFieldContainer.inputContainer(child: StateSearchBar()),
           InputFieldContainer.inputContainer(
               child: TextField(
             controller: buttonLabelEditingController,
