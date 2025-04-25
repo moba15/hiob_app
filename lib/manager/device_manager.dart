@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:ffi';
 
+import 'package:drift/drift.dart';
 import 'package:grpc/grpc.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
-import 'package:smart_home/database/state-database.dart';
+import 'package:smart_home/database/app-database.dart';
+import 'package:smart_home/database/tables/states-table-database.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/device/iobroker_device.dart';
@@ -18,7 +20,7 @@ import 'manager.dart';
 
 class DeviceManager {
   FileManager fileManager;
-  StateDatabase stateDatabase = StateDatabase();
+  AppDatabase appDatabase = AppDatabase(null);
   Manager manager;
   List<Device> devicesList;
   StreamController deviceListStreamController = StreamController.broadcast();
@@ -31,7 +33,6 @@ class DeviceManager {
       {required this.devicesList, required this.manager});
 
   Future<List<Device>> loadDevices() async {
-    await stateDatabase.init();
 
     if (loaded) {
       deviceListStreamController.add(devicesList);
@@ -76,11 +77,11 @@ class DeviceManager {
         )) {
           continue;
         }
-       // ioBObjects.add(IobrokerObject(
-          //  id: dataPoint.id, name: dataPoint.name, parent: null, desc: "No desc", stateType: null));
+        // ioBObjects.add(IobrokerObject(
+        //  id: dataPoint.id, name: dataPoint.name, parent: null, desc: "No desc", stateType: null));
       }
     }
-   // stateDatabase.insertBatch(ioBObjects, deleteOldData: true);
+    // stateDatabase.insertBatch(ioBObjects, deleteOldData: true);
     return devicesList;
   }
 
@@ -343,16 +344,22 @@ class DeviceManager {
           return AllObjectsResults(states: {});
         },
       );
+      await appDatabase.statesTable.deleteAll();
+      Manager().talker.debug("DeviceManager | updateStates cleared statesTable");
       Manager().talker.debug(
           "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects");
-      stateDatabase.insertBatch(
-          allObjectsResults.states
-              .map(
-                (e) => IobrokerObject(
-                    id: e.stateId, name: e.common.name, parent: null, desc: e.common.desc, stateType: e.common.type, role: e.common.type, read: e.common.read, write: e.common.write, min: e.common.min, max: e.common.max, step: e.common.step),
-              )
-              .toList(),
-          deleteOldData: true);
+          List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((e)  {
+            return StatesTableCompanion.insert(id: e.stateId, read: e.common.read, write: e.common.write);
+          }).toList();
+      appDatabase.batch((batch) {
+        batch.insertAll(appDatabase.statesTable, [
+          ...rowsToInsert
+        ]);
+      },).onError((error, stackTrace) {
+        Manager().talker.error("DeviceManager | updateStates batch insert error; $error", stackTrace);
+      },).then((value) async {
+        Manager().talker.debug("DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}");
+      },);
     }
   }
 }
