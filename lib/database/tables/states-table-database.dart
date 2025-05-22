@@ -12,6 +12,5 @@ class StatesTable extends Table {
   TextColumn get unit => text().nullable()();
   IntColumn get step => integer().nullable()();
   IntColumn get max => integer().nullable()();
-  IntColumn get min => integer().nullable()(); 
-
+  IntColumn get min => integer().nullable()();
 }
