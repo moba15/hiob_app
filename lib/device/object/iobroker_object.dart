@@ -1,6 +1,6 @@
 class IobrokerObject {
   String id;
-  String name;
+  String? name;
   String? parent;
   String? desc;
   String? stateType;

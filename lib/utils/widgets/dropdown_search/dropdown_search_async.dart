@@ -1,14 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:smart_home/utils/theme.dart';
 
 class GroupedItems {}
 
 class DropdownSearchAsync<T> extends StatefulWidget {
-  final T Function(String) onSearch;
-  final String Function(T) toText;
+  final Future<List<T>> Function(String) onSearch;
+  final Widget Function(T, String) toWidget;
   const DropdownSearchAsync(
-      {Key? key, required this.onSearch, required this.toText})
+      {Key? key, required this.onSearch, required this.toWidget})
       : super(key: key);
 
   @override
@@ -17,6 +18,15 @@ class DropdownSearchAsync<T> extends StatefulWidget {
 
 class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
   List<T> items = [];
+  final _controller = StreamController<List<T>>.broadcast();
+  String currentSearch = "";
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -44,32 +54,63 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
   void _onTap() {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      isDismissible: true,
+      showDragHandle: true,
+      enableDrag: true,
       builder: (context) {
-        return BottomSheet(
-          onClosing: () {},
-          builder: (context) {
-            return Container(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Column(
-                  children: [
-                    Gap(20),
-                    TextFormField(
-                      onChanged: (value) {
-                        widget.onSearch(value);
+        return DraggableScrollableSheet(
+          expand: false,
+          builder: (context, scrollController) {
+            return Column(
+              children: [
+                Gap(0),
+                TextFormField(
+                  onChanged: (value) async {
+                    widget.onSearch(value).then(
+                      (result) {
+                        _controller.sink.add(result);
+                        items = result;
+                        currentSearch=value;
+                        setState(() {
+                          print("set state");
+                        });
                       },
-                      onSaved: (newValue) {
-                        print("saved");
-                      },
-                      onEditingComplete: () {
-                        print("complete");
-                      },
-                      onFieldSubmitted: (a) {
-                        print("onSubmit");
-                      },
-                      decoration: InputDecoration(label: Text("Search")),
-                    ),
-                  ],
-                ));
+                    );
+                  },
+                  onSaved: (newValue) {
+                    print("saved");
+                  },
+                  onEditingComplete: () {
+                    print("complete");
+                  },
+                  onFieldSubmitted: (a) {
+                    print("onSubmit");
+                  },
+                  decoration: InputDecoration(label: Text("Search")),
+                ),
+                Text("Result"),
+                StreamBuilder(
+                  stream: _controller.stream,
+                  builder: (context, snapshot) {
+                    List<T>? items = snapshot.data;
+                    if (items == null) {
+                      return Text("Error");
+                    }
+                    return Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: items.length,
+                        itemBuilder: (_, index) {
+                          final item = items[index];
+                          return widget.toWidget(item, currentSearch);
+                        },
+                      ),
+                    );
+                  },
+                )
+              ],
+            );
           },
         );
       },
