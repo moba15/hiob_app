@@ -33,7 +33,6 @@ class DeviceManager {
       {required this.devicesList, required this.manager});
 
   Future<List<Device>> loadDevices() async {
-
     if (loaded) {
       deviceListStreamController.add(devicesList);
       return devicesList;
@@ -329,6 +328,35 @@ class DeviceManager {
     return null;
   }
 
+  Future<List<IobrokerObject>> searchIobrokerObjects(String search,
+      {bool regex = false}) async {
+    String query = regex
+        ? "SELECT * from ${appDatabase.statesTable.actualTableName} where id REGEXP ? or state_name REGEXP ? or state_desc REGEXP ? LIMIT 250"
+        : "SELECT * from ${appDatabase.statesTable.actualTableName} where id LIKE ? or state_name LIKE ? or state_desc LIKE ? LIMIT 250";
+    List<QueryRow> resultRaw = await appDatabase.customSelect(query,
+        variables: [Variable<String>(regex ? "$search" : "%$search%"), Variable<String>(regex ? "$search" : "%$search%"), Variable<String>(regex ? "$search" : "%$search%")]).get();
+
+    List<IobrokerObject> result = resultRaw.map(
+      (e) {
+        return IobrokerObject(
+            id: e.data["id"],
+            name: e.data["state_name"],
+            parent: e.data["parent"],
+            desc: e.data["state_desc"],
+            stateType: e.data["stateType"],
+            read: e.data["read"] == 1 ? true : false,
+            write: e.data["write"] == 1 ? true : false,
+            role: e.data["role"] ?? "No Role",
+            max: e.data["max"],
+            min: e.data["min"],
+            step: e.data["step"]);
+      },
+    ).toList();
+    Manager().talker.verbose(
+        "DeviceManager | searchIobrokerObjects found ${result.length} results for $search");
+    return result;
+  }
+
   void updateObjects(ConnectionManager connectionManager) async {
     if (connectionManager.stateUpdateClientStub != null) {
       Manager().talker.debug("DeviceManager | updateStates");
@@ -345,21 +373,36 @@ class DeviceManager {
         },
       );
       await appDatabase.statesTable.deleteAll();
-      Manager().talker.debug("DeviceManager | updateStates cleared statesTable");
+      Manager()
+          .talker
+          .debug("DeviceManager | updateStates cleared statesTable");
       Manager().talker.debug(
           "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects");
-          List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((e)  {
-            return StatesTableCompanion.insert(id: e.stateId, read: e.common.read, write: e.common.write);
-          }).toList();
-      appDatabase.batch((batch) {
-        batch.insertAll(appDatabase.statesTable, [
-          ...rowsToInsert
-        ]);
-      },).onError((error, stackTrace) {
-        Manager().talker.error("DeviceManager | updateStates batch insert error; $error", stackTrace);
-      },).then((value) async {
-        Manager().talker.debug("DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}");
-      },);
+      List<StatesTableCompanion> rowsToInsert =
+          allObjectsResults.states.map((e) {
+        return StatesTableCompanion.insert(
+            id: e.stateId,
+            read: e.common.read,
+            write: e.common.write,
+            stateName: Value(e.common.name),
+            stateDesc: Value(e.common.desc));
+      }).toList();
+      appDatabase.batch(
+        (batch) {
+          batch.insertAll(appDatabase.statesTable, [...rowsToInsert]);
+        },
+      ).onError(
+        (error, stackTrace) {
+          Manager().talker.error(
+              "DeviceManager | updateStates batch insert error; $error",
+              stackTrace);
+        },
+      ).then(
+        (value) async {
+          Manager().talker.debug(
+              "DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}");
+        },
+      );
     }
   }
 }
