@@ -22,7 +22,6 @@ class DeviceManager {
   StreamController deviceListStreamController = StreamController.broadcast();
   bool loaded = false;
   final String key = "devices";
-  //TODO
   HashMap<String, dynamic> currentValues = HashMap<String, dynamic>();
   StreamController<Pair<String, dynamic>> objectValueStreams =
       StreamController.broadcast();
@@ -126,6 +125,7 @@ class DeviceManager {
     if (dataPoint == null) {
       return;
     }
+    currentValues[dataPoint.id] = value;
     //TODO valueChange
     objectValueStreams.sink
         .add(Pair<String, dynamic>(first: dataPoint.id, second: value));
@@ -135,8 +135,7 @@ class DeviceManager {
   }
 
   T? getCurrentValue<T>(String dataPointID) {
-    //TODO getCurrentValue
-    return null;
+    return currentValues[dataPointID] as T?;
   }
 
   void subscribeToDataPointsIoB(ConnectionManager connectionManager) {
