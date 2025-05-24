@@ -43,9 +43,7 @@ class _CustomButtonWidgetSettingsViewState
       valueTextEditingController;
   late CustomWidgetBlocCubit c;
 
-
   bool _valueTextManuallyChanged = false;
-
 
   @override
   void initState() {
@@ -66,10 +64,8 @@ class _CustomButtonWidgetSettingsViewState
               child: TextField(
             controller: valueTextEditingController,
             decoration: const InputDecoration(label: Text("Label (optional)")),
-            onChanged: (s) => {
-              _valueTextManuallyChanged = true,
-              valueTextChanged(s)
-            },
+            onChanged: (s) =>
+                {_valueTextManuallyChanged = true, valueTextChanged(s)},
           )),
           InputFieldContainer.inputContainer(
               child: StateSearchBar(
@@ -80,9 +76,7 @@ class _CustomButtonWidgetSettingsViewState
             controller: buttonLabelEditingController,
             decoration:
                 const InputDecoration(label: Text("Button label (optional)")),
-            onChanged: (s) => {
-              buttonLabelChanged(s)
-            },
+            onChanged: (s) => {buttonLabelChanged(s)},
           ))
         ]));
   }
@@ -90,11 +84,10 @@ class _CustomButtonWidgetSettingsViewState
   void onSelect(IobrokerObject iobrokerObject) {
     widget.customButtonWidget.dataPoint = iobrokerObject.id;
     c.update(widget.customButtonWidget);
-    if(valueTextEditingController.text.isEmpty || !_valueTextManuallyChanged) {
+    if (valueTextEditingController.text.isEmpty || !_valueTextManuallyChanged) {
       valueTextChanged("${iobrokerObject.name ?? iobrokerObject.id} Button");
       valueTextEditingController.text = widget.customButtonWidget.label!;
       _valueTextManuallyChanged = false;
-      
     }
   }
 

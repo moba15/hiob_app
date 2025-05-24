@@ -6,8 +6,7 @@ import 'package:smart_home/settings/screen_setting/screen_list/view/screen_list_
 class ScreenListSettingsScreen extends StatelessWidget {
   final ScreenManager screenManager;
 
-  const ScreenListSettingsScreen({Key? key, required this.screenManager})
-      : super(key: key);
+  const ScreenListSettingsScreen({super.key, required this.screenManager});
 
   @override
   Widget build(BuildContext context) {

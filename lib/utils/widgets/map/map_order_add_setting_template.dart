@@ -14,7 +14,7 @@ class MapOrderSettingTemplate<V> extends StatefulWidget {
   final String valueTileText;
 
   const MapOrderSettingTemplate(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.data,
       required this.onChange,
@@ -24,8 +24,7 @@ class MapOrderSettingTemplate<V> extends StatefulWidget {
       required this.alertKeyText,
       required this.alertValueText,
       required this.keyTileText,
-      required this.valueTileText})
-      : super(key: key);
+      required this.valueTileText});
 
   @override
   State<MapOrderSettingTemplate> createState() =>
@@ -191,14 +190,12 @@ class _AddAlertDialog extends StatelessWidget {
   final TextEditingController valueController = TextEditingController();
 
   _AddAlertDialog(
-      {Key? key,
-      required this.title,
+      {required this.title,
       required this.onAdd,
       required this.valueLabelText,
       required this.keyLabelText,
       this.keyValue = "",
-      this.valueValue = ""})
-      : super(key: key) {
+      this.valueValue = ""}) {
     keyController.text = keyValue;
     valueController.text = valueValue;
   }

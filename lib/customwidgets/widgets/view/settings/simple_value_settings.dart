@@ -19,8 +19,7 @@ class CustomSimpleValueWidgetSettingWidget
   final GlobalKey unitKey = GlobalKey();
   final GlobalKey deviceDatapointKey = GlobalKey();
   CustomSimpleValueWidgetSettingWidget(
-      {Key? key, required this.customSimpleValueWidget})
-      : super(key: key);
+      {super.key, required this.customSimpleValueWidget});
 
   @override
   State<CustomSimpleValueWidgetSettingWidget> createState() =>

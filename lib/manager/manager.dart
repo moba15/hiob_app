@@ -143,11 +143,11 @@ class Manager {
 
   void onLoaded(String name) {
     loadingState += 1;
-     talker.debug(
-          "Manager | onLoaded | $name: $loadingState / $maxLoadingState");
+    talker
+        .debug("Manager | onLoaded | $name: $loadingState / $maxLoadingState");
     if (loadingState == maxLoadingState - 1) {
       status = ManagerStatus.finished;
-     
+
       managerStatusStreamController.add(ManagerStatus.finished);
       connectionManager.connectIoB();
     }

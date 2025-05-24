@@ -13,8 +13,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class App extends StatelessWidget {
   final Manager manager;
   final ScreenManager screenManager;
-  const App({Key? key, required this.manager, required this.screenManager})
-      : super(key: key);
+  const App({super.key, required this.manager, required this.screenManager});
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class CustomDeviceAttribute extends CustomAttribute<Device> {
 }
 
 class CustomDeviceSetting extends StatelessWidget {
-  const CustomDeviceSetting({Key? key}) : super(key: key);
+  const CustomDeviceSetting({super.key});
 
   @override
   Widget build(BuildContext context) {

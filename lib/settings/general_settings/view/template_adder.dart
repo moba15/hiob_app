@@ -31,7 +31,7 @@ class TemplateAdder extends StatefulWidget {
   //!Change to call by refernce for better performance
   final List<dynamic> templates;
   const TemplateAdder({
-    Key? key,
+    super.key,
     required this.title,
     required this.name,
     required this.toggle,
@@ -46,7 +46,7 @@ class TemplateAdder extends StatefulWidget {
     required this.removeTemplate,
     required this.templates,
     required this.iconDataChange,
-  }) : super(key: key);
+  });
 
   @override
   State<TemplateAdder> createState() => _TemplateAdderState();
@@ -245,8 +245,7 @@ class _SaveDialog extends StatelessWidget {
   final Function onSave;
   final Function cancel;
 
-  const _SaveDialog({Key? key, required this.onSave, required this.cancel})
-      : super(key: key);
+  const _SaveDialog({required this.onSave, required this.cancel});
 
   @override
   Widget build(BuildContext context) {
@@ -273,7 +272,7 @@ class _SaveDialog extends StatelessWidget {
 class AddGroupAlertDialog extends StatefulWidget {
   final Function(CustomGroupWidget) onAdd;
 
-  const AddGroupAlertDialog({Key? key, required this.onAdd}) : super(key: key);
+  const AddGroupAlertDialog({super.key, required this.onAdd});
 
   @override
   State<AddGroupAlertDialog> createState() => _AddGroupAlertDialogState();
@@ -317,12 +316,11 @@ class WidgetTemplateListPage extends StatelessWidget {
   final Function(int index) removeTemplate;
 
   const WidgetTemplateListPage(
-      {Key? key,
+      {super.key,
       required this.screenManager,
       required this.widgetTemplates,
       required this.onReorder,
-      required this.removeTemplate})
-      : super(key: key);
+      required this.removeTemplate});
 
   @override
   Widget build(BuildContext context) {
@@ -422,7 +420,7 @@ class _AddDivisionLineTemplate extends StatelessWidget {
   final Function(CustomDivisionLineWidget) onAdd;
   int thickness = 2;
 
-  _AddDivisionLineTemplate({Key? key, required this.onAdd}) : super(key: key);
+  _AddDivisionLineTemplate({required this.onAdd});
 
   @override
   Widget build(BuildContext context) {

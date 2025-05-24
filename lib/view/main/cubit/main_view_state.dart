@@ -11,19 +11,12 @@ abstract class MainViewState {
 }
 
 class MainViewStateInitial extends MainViewState {
-  const MainViewStateInitial({required ConnectionStatus connectionStatus})
-      : super(
-            connectionStatus: connectionStatus,
-            screens: const [],
-            currentScreen: 0);
+  const MainViewStateInitial({required super.connectionStatus})
+      : super(screens: const [], currentScreen: 0);
 }
 
 class MainViewStateLoaded extends MainViewState {
   const MainViewStateLoaded(
-      {required List<Screen> screens,
-      required ConnectionStatus connectionStatus})
-      : super(
-            connectionStatus: connectionStatus,
-            screens: screens,
-            currentScreen: 0);
+      {required super.screens, required super.connectionStatus})
+      : super(currentScreen: 0);
 }

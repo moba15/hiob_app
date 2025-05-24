@@ -20,7 +20,7 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
   bool shadesSelection;
 
   CustomColorPaletteWidget(
-      {required String? name,
+      {required super.name,
       this.value,
       required this.pickersEnabled,
       this.dataPoint,
@@ -28,10 +28,7 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
       this.prefix = "0x",
       this.alpha = false,
       this.shadesSelection = true})
-      : super(
-            name: name,
-            type: CustomWidgetTypeDeprecated.colorPallete,
-            settings: {}) {
+      : super(type: CustomWidgetTypeDeprecated.colorPallete, settings: {}) {
     for (ColorPickerType type in ColorPickerType.values) {
       if (!pickersEnabled.containsKey(type) && type != ColorPickerType.custom) {
         pickersEnabled[type] = false;
@@ -85,7 +82,7 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
         alpha: json["alpha"] ?? false,
         shadesSelection: json["shadesSelection"] ?? true,
         dataPoint: Manager.instance.deviceManager
-            .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? ""),
+            .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? ""),
         device: Manager.instance.deviceManager.getDevice(json["device"] ?? ""),
         pickersEnabled: pickersEnabledRaw.map((key, value) => MapEntry(
             ColorPickerType.values
@@ -98,7 +95,7 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
     return CustomColorPickerWidget(
         id: id,
         name: name,
-        dataPoint: dataPoint,
+        dataPoint: dataPoint?.id,
         alpha: alpha,
         label: value,
         prefix: prefix,

@@ -13,21 +13,25 @@ class DropdownSearchAsync<T> extends StatefulWidget {
   final String title;
   final String subtitle;
   const DropdownSearchAsync(
-      {super.key, required this.title, this.subtitle = "Tap to search", required this.onSearch, required this.toWidget, required this.loadInitialValues, this.selectedObject});
+      {super.key,
+      required this.title,
+      this.subtitle = "Tap to search",
+      required this.onSearch,
+      required this.toWidget,
+      required this.loadInitialValues,
+      this.selectedObject});
 
   @override
   State<DropdownSearchAsync<T>> createState() => _DropdownSearchAsyncState<T>();
 }
 
 class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
-  
   List<T> items = [];
   final _controller = StreamController<List<T>>.broadcast();
   String currentSearch = "";
 
   @override
   void initState() {
-   
     super.initState();
     widget.loadInitialValues().then((value) {
       items = value;
@@ -44,23 +48,24 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _onTap,
-      child: InputDecorator(
-        decoration: InputDecoration(
-          hintText: "hintText",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Colors.grey),
+        onTap: _onTap,
+        child: InputDecorator(
+          decoration: InputDecoration(
+            hintText: "hintText",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-        ),
-        child: widget.selectedObject ?? ListTile(
-          title: Text( widget.title),
-          subtitle: Text(widget.subtitle),
-          trailing: const Icon(Icons.arrow_drop_down),
-      ),)
-    );
+          child: widget.selectedObject ??
+              ListTile(
+                title: Text(widget.title),
+                subtitle: Text(widget.subtitle),
+                trailing: const Icon(Icons.arrow_drop_down),
+              ),
+        ));
   }
 
   void _onTap() {
@@ -85,33 +90,24 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                         _controller.sink.add(result);
                         items = result;
                         currentSearch = value;
-                        setState(() {
-                         
-                        });
+                        setState(() {});
                       },
                     );
                   },
-                  onSaved: (newValue) {
-                    
-                  },
-                  onEditingComplete: () {
-                  
-                  },
-                  onFieldSubmitted: (a) {
-              
-                  },
+                  onSaved: (newValue) {},
+                  onEditingComplete: () {},
+                  onFieldSubmitted: (a) {},
                   decoration: InputDecoration(label: Text("Search")),
                 ),
                 Text("Result"),
                 StreamBuilder(
                   stream: _controller.stream,
                   builder: (context, snapshot) {
-                    if(snapshot.hasData) {
+                    if (snapshot.hasData) {
                       items = snapshot.data!;
                     }
-                   
-                   
-                    if(items.isEmpty) {
+
+                    if (items.isEmpty) {
                       return Center(
                         child: Text("No results found"),
                       );

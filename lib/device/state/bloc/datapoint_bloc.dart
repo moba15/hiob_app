@@ -17,8 +17,8 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
     Manager().deviceManager.objectValueStreams.stream.listen((event) {
       if (event.first == objectId) {
-          add(DataPointValueUpdate(value: event.second));
-        }
+        add(DataPointValueUpdate(value: event.second));
+      }
     });
     //TODO
     /* _deviceValueSubscription =

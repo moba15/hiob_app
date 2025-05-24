@@ -10,7 +10,5 @@ class NotificationsInitial extends NotificationsState {
 }
 
 class NotificationsLoaded extends NotificationsState {
-  const NotificationsLoaded(
-      {required List<CustomNotification> customNotification})
-      : super(customNotification: customNotification);
+  const NotificationsLoaded({required super.customNotification});
 }

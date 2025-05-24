@@ -24,8 +24,8 @@ class DeviceManager {
   final String key = "devices";
   //TODO
   HashMap<String, dynamic> currentValues = HashMap<String, dynamic>();
-  StreamController<Pair<String, dynamic>> objectValueStreams = StreamController.broadcast();
-
+  StreamController<Pair<String, dynamic>> objectValueStreams =
+      StreamController.broadcast();
 
   DeviceManager(this.fileManager,
       {required this.devicesList, required this.manager});
@@ -85,12 +85,13 @@ class DeviceManager {
     return null;
   }
 
- Future<List<IobrokerObject>> getAllIobrokerObjects({required int limit}) async {
+  Future<List<IobrokerObject>> getAllIobrokerObjects(
+      {required int limit}) async {
     String query =
         "SELECT * from ${appDatabase.statesTable.actualTableName} LIMIT $limit";
-    List<QueryRow> resultRaw = await appDatabase
-        .customSelect(query, variables: []).get();
-        List<IobrokerObject> result = resultRaw.map(
+    List<QueryRow> resultRaw =
+        await appDatabase.customSelect(query, variables: []).get();
+    List<IobrokerObject> result = resultRaw.map(
       (e) {
         return IobrokerObject(
             id: e.data["id"],
@@ -107,7 +108,6 @@ class DeviceManager {
       },
     ).toList();
     return result;
-
   }
 
   List<DataPoint>? getIoBrokerDataPointsByObjectID(String objectID) {
@@ -129,8 +129,9 @@ class DeviceManager {
     //TODO valueChange
     objectValueStreams.sink
         .add(Pair<String, dynamic>(first: dataPoint.id, second: value));
-    Manager().talker.verbose(
-        "DeviceManager | valueChange | ${dataPoint.id} to $value");
+    Manager()
+        .talker
+        .verbose("DeviceManager | valueChange | ${dataPoint.id} to $value");
   }
 
   T? getCurrentValue<T>(String dataPointID) {
@@ -288,6 +289,4 @@ class DeviceManager {
       );
     }
   }
-
-  
 }

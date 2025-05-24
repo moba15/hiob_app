@@ -6,8 +6,8 @@ import 'package:smart_home/screen/screen.dart';
 class ScreenView extends StatelessWidget {
   final Screen screen;
   final int numberOfRows;
-  const ScreenView({Key? key, required this.screen, required this.numberOfRows})
-      : super(key: key);
+  const ScreenView(
+      {super.key, required this.screen, required this.numberOfRows});
 
   @override
   Widget build(BuildContext context) {

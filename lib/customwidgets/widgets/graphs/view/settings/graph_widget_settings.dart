@@ -14,8 +14,7 @@ import 'package:smart_home/manager/manager.dart';
 
 class GraphWidgetSettings extends CustomWidgetSettingStatefulWidget {
   final GraphWidget graphWidget;
-  const GraphWidgetSettings({Key? key, required this.graphWidget})
-      : super(key: key);
+  const GraphWidgetSettings({super.key, required this.graphWidget});
 
   @override
   State<GraphWidgetSettings> createState() => _GraphWidgetSettingsState();
@@ -241,11 +240,7 @@ class _AxisListTile extends StatelessWidget {
   final Function(GraphAxis) onSave;
   final GraphWidget graphWidget;
   const _AxisListTile(
-      {Key? key,
-      required this.axis,
-      required this.onSave,
-      required this.graphWidget})
-      : super(key: key);
+      {required this.axis, required this.onSave, required this.graphWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -271,11 +266,7 @@ class _GraphLineListTile extends StatelessWidget {
   final GraphLine line;
   final Function(GraphLine) onSave;
   const _GraphLineListTile(
-      {Key? key,
-      required this.line,
-      required this.graphWidget,
-      required this.onSave})
-      : super(key: key);
+      {required this.line, required this.graphWidget, required this.onSave});
 
   @override
   Widget build(BuildContext context) {
@@ -299,7 +290,7 @@ class _GraphLineListTile extends StatelessWidget {
 class _LineExpansionTile extends StatefulWidget {
   final GraphWidget graphWidget;
   GraphLine? graphLine;
-  _LineExpansionTile({Key? key, required this.graphWidget}) : super(key: key);
+  _LineExpansionTile({required this.graphWidget});
 
   @override
   State<_LineExpansionTile> createState() => _LineExpansionTileState();

@@ -13,13 +13,12 @@ import 'package:smart_home/settings/view/screen_setting_screen.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
-import 'device_setting_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainSettingsScreen extends StatelessWidget {
   final Manager manager;
 
-  const MainSettingsScreen({Key? key, required this.manager}) : super(key: key);
+  const MainSettingsScreen({super.key, required this.manager});
 
   @override
   Widget build(BuildContext context) {
@@ -54,20 +53,6 @@ class MainSettingsScreen extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => WidgetTemplateListPage(
                         customWidgetManager: manager.customWidgetManager)),
-              )
-            },
-          ),
-          ListTile(
-            title: Text(
-                AppLocalizations.of(context)!.settings_page_device_setting),
-            leading: const Icon(Icons.device_unknown),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        DeviceSettingsScreen(manager: manager.deviceManager)),
               )
             },
           ),

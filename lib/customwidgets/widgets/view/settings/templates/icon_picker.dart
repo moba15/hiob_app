@@ -7,12 +7,11 @@ class IconPickerTemplate extends StatefulWidget {
   final IconWrapper selected;
   final bool reset;
   const IconPickerTemplate(
-      {Key? key,
+      {super.key,
       required this.onChange,
       this.selected = const IconWrapper(
           iconData: Icons.home, iconDataType: IconDataType.flutterIcons),
-      this.reset = false})
-      : super(key: key);
+      this.reset = false});
 
   @override
   State<IconPickerTemplate> createState() => _IconPickerTemplateState();
