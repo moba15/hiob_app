@@ -176,6 +176,9 @@ class DeviceManager {
         Manager()
             .talker
             .error("DeviceManager | stateSubscriptionStream  | onError: $e");
+            Manager().connectionManager .changeConnectionStatus(
+                ConnectionStatus.error, message: "State subscription error: $e");
+
       });
       if (subscription == null) {
         Manager().talker.error(
@@ -255,6 +258,12 @@ class DeviceManager {
           return AllObjectsResults(states: {});
         },
       );
+
+    Set<String> localId = (await appDatabase.customSelect("SELECT id from (${appDatabase.statesTable.actualTableName})").get()).map((e) => e.data["id"] as String).toSet();
+    Set<String> serverIds = allObjectsResults.states.map((e) => e.stateId).toSet();
+    Set<String> toDelete = localId.difference(serverIds);
+
+
       await appDatabase.statesTable.deleteAll();
       Manager()
           .talker
@@ -272,7 +281,12 @@ class DeviceManager {
       }).toList();
       appDatabase.batch(
         (batch) {
-          batch.insertAll(appDatabase.statesTable, [...rowsToInsert]);
+
+          if(toDelete.isNotEmpty) {
+            batch.deleteWhere(appDatabase.statesTable, (t) => t.id.isIn(toDelete.toList()));
+          }
+
+          batch.insertAll(appDatabase.statesTable, [...rowsToInsert], mode: InsertMode.insertOrReplace);
         },
       ).onError(
         (error, stackTrace) {
