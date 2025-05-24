@@ -376,7 +376,15 @@ class ConnectionManager with WidgetsBindingObserver {
             user: ioBrokerManager.user))
         .catchError((Object e) async {
       Manager().talker.error("ConnectionManager | errorLogin", e);
+      return LoginResponse(
+          status: LoginResponse_Status.error,
+          errorMsg: "Error during login: ${e.toString()}");
     });
+    if(response.status == LoginResponse_Status.error) {
+      Manager().talker.error("ConnectionManager | Login error: ${response.errorMsg}");
+      connectionStatusStreamController.add(ConnectionStatus.error);
+      return;
+    }
 
     if (response.status != LoginResponse_Status.succesfull) {
       _onLoginDeclined(response.status);
@@ -391,6 +399,15 @@ class ConnectionManager with WidgetsBindingObserver {
     _requestApproval();
 
     connectionStatusStreamController.add(ConnectionStatus.loginDeclined);
+  }
+
+  void changeConnectionStatus(
+      ConnectionStatus status, {
+      String? message,
+    }) {
+    Manager().talker.debug(
+        "ConnectionManager | Change connection status to ${status.name} | $message");
+    connectionStatusStreamController.add(status);
   }
 
   void _requestApproval() async {
