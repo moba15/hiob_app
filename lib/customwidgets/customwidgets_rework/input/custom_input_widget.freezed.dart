@@ -29,10 +29,8 @@ mixin _$CustomInputWidget {
   set name(String value) => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  DataPoint? get dataPoint => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
   String? get hintText => throw _privateConstructorUsedError;
   set hintText(String? value) => throw _privateConstructorUsedError;
   String? get suffix => throw _privateConstructorUsedError;
@@ -77,7 +75,7 @@ abstract class $CustomInputWidgetCopyWith<$Res> {
       String id,
       String name,
       String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
+      String? dataPoint,
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
@@ -137,7 +135,7 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
+              as String?,
       hintText: freezed == hintText
           ? _value.hintText
           : hintText // ignore: cast_nullable_to_non_nullable
@@ -197,7 +195,7 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
       String id,
       String name,
       String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
+      String? dataPoint,
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
@@ -256,7 +254,7 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
       dataPoint: freezed == dataPoint
           ? _value.dataPoint
           : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
+              as String?,
       hintText: freezed == hintText
           ? _value.hintText
           : hintText // ignore: cast_nullable_to_non_nullable
@@ -297,7 +295,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
       required this.id,
       required this.name,
       this.label,
-      @DataPointIdConverter() required this.dataPoint,
+      required this.dataPoint,
       this.hintText,
       this.suffix,
       this.customPopupmenu,
@@ -320,8 +318,7 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   @override
   String? label;
   @override
-  @DataPointIdConverter()
-  DataPoint? dataPoint;
+  String? dataPoint;
   @override
   String? hintText;
   @override
@@ -368,7 +365,7 @@ abstract class _CustomInputWidget extends CustomInputWidget
       required String id,
       required String name,
       String? label,
-      @DataPointIdConverter() required DataPoint? dataPoint,
+      required String? dataPoint,
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
@@ -394,10 +391,8 @@ abstract class _CustomInputWidget extends CustomInputWidget
   String? get label;
   set label(String? value);
   @override
-  @DataPointIdConverter()
-  DataPoint? get dataPoint;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value);
+  String? get dataPoint;
+  set dataPoint(String? value);
   @override
   String? get hintText;
   set hintText(String? value);

@@ -4,17 +4,16 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/widgets/map/map_order_add_setting_template.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomMultiselectionWidgetSettingsView
     extends CustomWidgetSettingStatefulWidget {
   final CustomMultiselectionWidget customMultiselectionWidget;
   const CustomMultiselectionWidgetSettingsView(
-      {Key? key, required this.customMultiselectionWidget})
-      : super(key: key);
+      {super.key, required this.customMultiselectionWidget});
 
   @override
   State<CustomMultiselectionWidgetSettingsView> createState() =>
@@ -67,16 +66,8 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) =>
-                {c.update(widget.customMultiselectionWidget)},
-            onDataPointSelected: (d) => {
-              widget.customMultiselectionWidget.dataPoint = d,
-              c.update(widget.customMultiselectionWidget)
-            },
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customMultiselectionWidget.dataPoint,
-            selectedDevice: widget.customMultiselectionWidget.dataPoint?.device,
+              child: StateSearchBar(
+            onSelected: onSelect,
           )),
           InputFieldContainer.inputContainer(
               child: TextField(
@@ -110,5 +101,10 @@ class _CustomTableWidgetSettingsViewState
         ],
       ),
     );
+  }
+
+  void onSelect(IobrokerObject iobrokerObject) {
+    widget.customMultiselectionWidget.dataPoint = iobrokerObject.id;
+    c.update(widget.customMultiselectionWidget);
   }
 }

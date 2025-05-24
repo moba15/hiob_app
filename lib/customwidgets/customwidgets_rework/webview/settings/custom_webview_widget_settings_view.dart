@@ -4,15 +4,14 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomWebViewWidgetSettingView extends CustomWidgetSettingStatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
   const CustomWebViewWidgetSettingView(
-      {Key? key, required this.customWebViewWidget})
-      : super(key: key);
+      {super.key, required this.customWebViewWidget});
 
   @override
   State<CustomWebViewWidgetSettingView> createState() =>
@@ -65,17 +64,8 @@ class _CustomWebViewWidgetSettingViewState
         margin: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: Column(children: [
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) => {c.update(widget.customWebViewWidget)},
-            onDataPointSelected: (d) => {
-              widget.customWebViewWidget.dataPoint = d,
-              c.update(widget.customWebViewWidget)
-            },
-            dataPointLabel: "Datapoint (optional)",
-            deviceLabel: "Device (optional)",
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customWebViewWidget.dataPoint,
-            selectedDevice: widget.customWebViewWidget.dataPoint?.device,
+              child: StateSearchBar(
+            onSelected: onSelect,
           )),
           InputFieldContainer.inputContainer(
               child: TextField(
@@ -101,5 +91,10 @@ class _CustomWebViewWidgetSettingViewState
             divisions: 1900,
           ))
         ]));
+  }
+
+  void onSelect(IobrokerObject? iobrokerObject) {
+    widget.customWebViewWidget.dataPoint = iobrokerObject?.id;
+    c.update(widget.customWebViewWidget);
   }
 }

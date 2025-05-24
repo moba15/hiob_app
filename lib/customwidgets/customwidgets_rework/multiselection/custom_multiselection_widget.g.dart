@@ -14,8 +14,7 @@ _$CustomMultiselectionWidgetImpl _$$CustomMultiselectionWidgetImplFromJson(
           CustomWidgetTypeDeprecated.multiselection,
       id: json['id'] as String,
       name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
+      dataPoint: json['dataPoint'] as String?,
       label: json['label'] as String?,
       selections: Map<String, String>.from(json['selections'] as Map),
       dropdownMenuMode: $enumDecodeNullable(
@@ -35,7 +34,7 @@ Map<String, dynamic> _$$CustomMultiselectionWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+      'dataPoint': instance.dataPoint,
       'label': instance.label,
       'selections': instance.selections,
       'dropdownMenuMode': _$DropdownMenuModeEnumMap[instance.dropdownMenuMode]!,
@@ -69,12 +68,6 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
 
 const _$DropdownMenuModeEnumMap = {
   DropdownMenuMode.bottomSheet: 'bottomSheet',

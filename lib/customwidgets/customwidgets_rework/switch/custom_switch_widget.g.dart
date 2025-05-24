@@ -14,8 +14,7 @@ _$CustomSwitchWidgetImpl _$$CustomSwitchWidgetImplFromJson(
           CustomWidgetTypeDeprecated.switchWidget,
       id: json['id'] as String,
       name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
+      dataPoint: json['dataPoint'] as String?,
       label: json['label'] as String?,
       sendIfOn: json['sendIfOn'] as String? ?? "true",
       sendIfOff: json['sendIfOff'] as String? ?? "false",
@@ -33,7 +32,7 @@ Map<String, dynamic> _$$CustomSwitchWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+      'dataPoint': instance.dataPoint,
       'label': instance.label,
       'sendIfOn': instance.sendIfOn,
       'sendIfOff': instance.sendIfOff,
@@ -67,9 +66,3 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);

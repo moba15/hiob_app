@@ -7,19 +7,33 @@ class GroupedItems {}
 
 class DropdownSearchAsync<T> extends StatefulWidget {
   final Future<List<T>> Function(String) onSearch;
+  final Future<List<T>> Function() loadInitialValues;
   final Widget Function(T, String) toWidget;
+  final Widget? selectedObject;
+  final String title;
+  final String subtitle;
   const DropdownSearchAsync(
-      {Key? key, required this.onSearch, required this.toWidget})
-      : super(key: key);
+      {super.key, required this.title, this.subtitle = "Tap to search", required this.onSearch, required this.toWidget, required this.loadInitialValues, this.selectedObject});
 
   @override
   State<DropdownSearchAsync<T>> createState() => _DropdownSearchAsyncState<T>();
 }
 
 class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
+  
   List<T> items = [];
   final _controller = StreamController<List<T>>.broadcast();
   String currentSearch = "";
+
+  @override
+  void initState() {
+   
+    super.initState();
+    widget.loadInitialValues().then((value) {
+      items = value;
+      _controller.sink.add(items);
+    });
+  }
 
   @override
   void dispose() {
@@ -41,13 +55,11 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         ),
-        child: Text(
-          "value",
-          style: TextStyle(
-            color: "value" == null ? Colors.grey : Colors.black,
-          ),
-        ),
-      ),
+        child: widget.selectedObject ?? ListTile(
+          title: Text( widget.title),
+          subtitle: Text(widget.subtitle),
+          trailing: const Icon(Icons.arrow_drop_down),
+      ),)
     );
   }
 
@@ -66,26 +78,27 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
               children: [
                 Gap(0),
                 TextFormField(
+                  initialValue: currentSearch,
                   onChanged: (value) async {
                     widget.onSearch(value).then(
                       (result) {
                         _controller.sink.add(result);
                         items = result;
-                        currentSearch=value;
+                        currentSearch = value;
                         setState(() {
-                          print("set state");
+                         
                         });
                       },
                     );
                   },
                   onSaved: (newValue) {
-                    print("saved");
+                    
                   },
                   onEditingComplete: () {
-                    print("complete");
+                  
                   },
                   onFieldSubmitted: (a) {
-                    print("onSubmit");
+              
                   },
                   decoration: InputDecoration(label: Text("Search")),
                 ),
@@ -93,9 +106,15 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                 StreamBuilder(
                   stream: _controller.stream,
                   builder: (context, snapshot) {
-                    List<T>? items = snapshot.data;
-                    if (items == null) {
-                      return Text("Error");
+                    if(snapshot.hasData) {
+                      items = snapshot.data!;
+                    }
+                   
+                   
+                    if(items.isEmpty) {
+                      return Center(
+                        child: Text("No results found"),
+                      );
                     }
                     return Expanded(
                       child: ListView.builder(

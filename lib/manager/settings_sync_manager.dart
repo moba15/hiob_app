@@ -98,9 +98,7 @@ class SettingsSyncManager {
   void loadGotTemplate(String? devices, String? screens, String? widgets) {
     Manager manager = Manager.instance;
 
-    if (devices != null) {
-      fileManager.pref.setString(manager.deviceManager.key, devices);
-    }
+    //INFO: Devices are loaded from the adapter
     if (widgets != null) {
       fileManager.pref
           .setString(manager.customWidgetManager.templateKey, widgets);
@@ -108,8 +106,7 @@ class SettingsSyncManager {
     if (screens != null) {
       fileManager.pref.setString(manager.screenManager.key, screens);
     }
-    manager.deviceManager.reload();
-    manager.screenManager.reload();
+
     loadedSuccessStreamController.add(true);
   }
 }

@@ -11,8 +11,7 @@ class ButtonTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey datapointKey = GlobalKey();
   final GlobalKey datapointLabel = GlobalKey();
 
-  ButtonTriggerActionSettings({Key? key, required this.buttonTriggerAction})
-      : super(key: key);
+  ButtonTriggerActionSettings({super.key, required this.buttonTriggerAction});
 
   @override
   Widget build(BuildContext context) {

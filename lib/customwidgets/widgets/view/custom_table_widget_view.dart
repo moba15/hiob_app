@@ -1,15 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart';
-
-import '../../../device/state/bloc/datapoint_bloc.dart';
 
 class CustomTableWidgetView extends StatefulWidget {
   final CustomTableWidget customTableWidget;
-  const CustomTableWidgetView({Key? key, required this.customTableWidget})
-      : super(key: key);
+  const CustomTableWidgetView({super.key, required this.customTableWidget});
 
   @override
   State<CustomTableWidgetView> createState() => _CustomTableWidgetViewState();
@@ -32,46 +26,47 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.customTableWidget.dataPoint == null) {
-      return const ListTile(
-        title: Text("Error 404: Device Not found"),
-      );
-    }
-    return BlocBuilder<DataPointBloc, DataPointState>(
-      bloc: DataPointBloc(widget.customTableWidget.dataPoint!),
-      builder: (c, state) {
-        List<Map<String, dynamic>> data = [];
-        List<dynamic> raw = jsonDecode(state.value ?? "[]");
-        for (Map m in raw) {
-          data.add(Map.from(m));
-        }
-        int rowsPerPage = (widget.customTableWidget.elementsPerPage <= 0
-            ? data.length
-            : widget.customTableWidget.elementsPerPage);
-        if (rowsPerPage <= 0) {
-          rowsPerPage = 1;
-        }
-        return PaginatedDataTable(
-          header: Text(widget.customTableWidget.header),
-          headingRowHeight: 30,
-          sortColumnIndex: sortedColumn,
-          sortAscending: sortedAsc,
-          rowsPerPage: rowsPerPage,
-          columns: widget.customTableWidget.columns.entries
-              .map((e) => DataColumn(
-                  label: Text(e.value),
-                  onSort: (i, asc) => _sortByKey(i, data, asc,
-                      widget.customTableWidget.columns.keys.toList())))
-              .toList(),
-          source: _DataSource(
-              data: data,
-              columnKeys: widget.customTableWidget.columns.keys.toList(),
-              asc: sortedAsc,
-              sort: sort,
-              sortCol: sortedColumn),
-        );
-      },
-    );
+    return const Text("Error");
+    // if (widget.customTableWidget.dataPoint == null) {
+    //   return const ListTile(
+    //     title: Text("Error 404: Device Not found"),
+    //   );
+    // }
+    // return BlocBuilder<DataPointBloc, DataPointState>(
+    //   bloc: DataPointBloc(widget.customTableWidget.dataPoint!),
+    //   builder: (c, state) {
+    //     List<Map<String, dynamic>> data = [];
+    //     List<dynamic> raw = jsonDecode(state.value ?? "[]");
+    //     for (Map m in raw) {
+    //       data.add(Map.from(m));
+    //     }
+    //     int rowsPerPage = (widget.customTableWidget.elementsPerPage <= 0
+    //         ? data.length
+    //         : widget.customTableWidget.elementsPerPage);
+    //     if (rowsPerPage <= 0) {
+    //       rowsPerPage = 1;
+    //     }
+    //     return PaginatedDataTable(
+    //       header: Text(widget.customTableWidget.header),
+    //       headingRowHeight: 30,
+    //       sortColumnIndex: sortedColumn,
+    //       sortAscending: sortedAsc,
+    //       rowsPerPage: rowsPerPage,
+    //       columns: widget.customTableWidget.columns.entries
+    //           .map((e) => DataColumn(
+    //               label: Text(e.value),
+    //               onSort: (i, asc) => _sortByKey(i, data, asc,
+    //                   widget.customTableWidget.columns.keys.toList())))
+    //           .toList(),
+    //       source: _DataSource(
+    //           data: data,
+    //           columnKeys: widget.customTableWidget.columns.keys.toList(),
+    //           asc: sortedAsc,
+    //           sort: sort,
+    //           sortCol: sortedColumn),
+    //     );
+    //   },
+    // );
   }
 
   void _sortByKey(int index, List<Map<String, dynamic>> data, bool asc,

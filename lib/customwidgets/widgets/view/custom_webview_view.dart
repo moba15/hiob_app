@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
-import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
 
 class CustomWebViewView extends StatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
-  const CustomWebViewView({Key? key, required this.customWebViewWidget})
-      : super(key: key);
+  const CustomWebViewView({super.key, required this.customWebViewWidget});
 
   @override
   State<CustomWebViewView> createState() => _CustomWebViewViewState();

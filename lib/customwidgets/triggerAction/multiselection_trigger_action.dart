@@ -24,7 +24,7 @@ class MultiSelectionTriggerAction extends TriggerAction {
 
   factory MultiSelectionTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     return MultiSelectionTriggerAction(
         dataPoint: dataPoint,
         selections: Map.from(jsonDecode(json["selections"])));
@@ -104,6 +104,6 @@ class MultiSelectionTriggerAction extends TriggerAction {
       },
     );
     return new_widget.CustomMultiselectionWidget(
-        id: id, name: name, dataPoint: dataPoint, selections: sel);
+        id: id, name: name, dataPoint: dataPoint?.id, selections: sel);
   }
 }

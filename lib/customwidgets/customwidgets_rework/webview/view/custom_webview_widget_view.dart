@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/manager/manager.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CustomWebViewWidgetView extends StatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
-  const CustomWebViewWidgetView({Key? key, required this.customWebViewWidget})
-      : super(key: key);
+  const CustomWebViewWidgetView({super.key, required this.customWebViewWidget});
 
   @override
   State<CustomWebViewWidgetView> createState() =>
@@ -21,8 +21,12 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
 
   @override
   void initState() {
+    //TODO Value
     if (widget.customWebViewWidget.dataPoint != null) {
-      if (widget.customWebViewWidget.dataPoint!.value == null) {
+      final dataPointValue = Manager()
+          .deviceManager
+          .getCurrentValue(widget.customWebViewWidget.dataPoint!);
+      if (dataPointValue == null) {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
           ..loadRequest(Uri.parse("https://github.com/asdasdasd/adasdasd"));
@@ -30,8 +34,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
       } else {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse(
-              widget.customWebViewWidget.dataPoint!.value.toString()));
+          ..loadRequest(Uri.parse(dataPointValue.toString()));
         bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
       }
     } else {

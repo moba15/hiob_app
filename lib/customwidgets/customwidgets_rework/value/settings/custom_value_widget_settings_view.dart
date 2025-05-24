@@ -6,16 +6,15 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/widgets/map/map_order_add_setting_template.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomValueWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomValueWidget customValueWidget;
   const CustomValueWidgetSettingsView(
-      {Key? key, required this.customValueWidget})
-      : super(key: key);
+      {super.key, required this.customValueWidget});
 
   @override
   State<CustomValueWidgetSettingsView> createState() =>
@@ -76,15 +75,8 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) => {c.update(widget.customValueWidget)},
-            onDataPointSelected: (d) => {
-              widget.customValueWidget.dataPoint = d,
-              c.update(widget.customValueWidget)
-            },
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customValueWidget.dataPoint,
-            selectedDevice: widget.customValueWidget.dataPoint?.device,
+              child: StateSearchBar(
+            onSelected: onSelect,
           )),
           InputFieldContainer.inputContainer(
               child: TextField(
@@ -155,5 +147,10 @@ class _CustomTableWidgetSettingsViewState
         ],
       ),
     );
+  }
+
+  void onSelect(IobrokerObject iobrokerObject) {
+    widget.customValueWidget.dataPoint = iobrokerObject.id;
+    c.update(widget.customValueWidget);
   }
 }

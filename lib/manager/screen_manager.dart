@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -187,5 +188,21 @@ class ScreenManager {
 
   void templateEdited(CustomWidgetWrapper template) {
     screenStreamController.add(screens);
+  }
+
+  List<String> getgetDependentDataPoints() {
+    List<String> dataPoints = [];
+    for (Screen s in screens) {
+      List<CustomWidgetWrapper> customWidgtes = s.widgetTemplates
+          .whereType<CustomWidgetWrapper>()
+          .map((t) => t)
+          .toList();
+      for (CustomWidgetWrapper c in customWidgtes) {
+        if (c is CustomWidget) {
+          dataPoints.addAll(c.dependentDataPoints);
+        }
+      }
+    }
+    return dataPoints;
   }
 }

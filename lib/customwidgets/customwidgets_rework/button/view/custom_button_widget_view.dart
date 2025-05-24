@@ -4,16 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 
 class CustomButtonWidgetView extends StatelessWidget {
   final CustomButtonWidget customButtonWidget;
 
-  const CustomButtonWidgetView({Key? key, required this.customButtonWidget})
-      : super(key: key);
+  const CustomButtonWidgetView({super.key, required this.customButtonWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +24,9 @@ class CustomButtonWidgetView extends StatelessWidget {
         },
       );
     }
-    DataPoint? dataPoint = customButtonWidget.dataPoint;
+    String? dataPointId = customButtonWidget.dataPoint;
 
-    if (dataPoint == null) {
+    if (dataPointId == null) {
       return SwitchListTile(
         visualDensity: VisualDensity.compact,
         value: false,
@@ -43,14 +40,14 @@ class CustomButtonWidgetView extends StatelessWidget {
       if (e.dataPoint == customButtonWidget.dataPoint) return e;
       throw ErrorDescription("No datapoint bloc was found");
     });*/
-    DataPointBloc dataPointBloc = DataPointBloc(dataPoint);
+    DataPointBloc dataPointBloc = DataPointBloc(dataPointId);
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: dataPointBloc,
       builder: (context, state) {
         return CustomButtonWidgetDeviceView(
           text: customButtonWidget.labelOrName,
           buttonLabel: customButtonWidget.buttonLabel ?? "Press",
-          dataPoint: customButtonWidget.dataPoint!,
+          dataPointId: customButtonWidget.dataPoint!,
           tryOpenPopup: customButtonWidget.tryOpenPopupmenu,
           customButtonWidgetTheme:
               customButtonWidget.customTheme as CustomButtonWidgetTheme?,
@@ -65,15 +62,14 @@ class CustomButtonWidgetDeviceView extends StatefulWidget {
   final String buttonLabel;
   final CustomButtonWidgetTheme? customButtonWidgetTheme;
   final bool Function(BuildContext) tryOpenPopup;
-  final DataPoint dataPoint;
+  final String dataPointId;
   const CustomButtonWidgetDeviceView(
-      {Key? key,
+      {super.key,
       required this.text,
       required this.buttonLabel,
-      required this.dataPoint,
+      required this.dataPointId,
       required this.tryOpenPopup,
-      required this.customButtonWidgetTheme})
-      : super(key: key);
+      required this.customButtonWidgetTheme});
 
   @override
   State<CustomButtonWidgetDeviceView> createState() =>
@@ -92,7 +88,7 @@ class _CustomButtonWidgetDeviceViewState
         duration: const Duration(milliseconds: 80),
         lowerBound: 0,
         upperBound: 0.15);
-    _bloc = DataPointBloc(widget.dataPoint);
+    _bloc = DataPointBloc(widget.dataPointId);
     super.initState();
   }
 
@@ -134,15 +130,16 @@ class _CustomButtonWidgetDeviceViewState
                           widget.customButtonWidgetTheme?.labelTheme.textStyle,
                     ),
                   ),
-                  if (_bloc.dataPoint.device?.getDeviceStatus() !=
-                      DeviceStatus.ready)
-                    const Flexible(
-                      child: Text(
-                        " U/A",
-                        style: TextStyle(color: Colors.red),
-                        overflow: TextOverflow.clip,
-                      ),
-                    )
+                  //TODO add status
+                  // if (_bloc.dataPoint.device?.getDeviceStatus() !=
+                  //     DeviceStatus.ready)
+                  //   const Flexible(
+                  //     child: Text(
+                  //       " U/A",
+                  //       style: TextStyle(color: Colors.red),
+                  //       overflow: TextOverflow.clip,
+                  //     ),
+                  //   )
                 ],
               ),
               //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,

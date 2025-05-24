@@ -14,8 +14,7 @@ _$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
           CustomWidgetTypeDeprecated.webViewNew,
       id: json['id'] as String,
       name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
+      dataPoint: json['dataPoint'] as String?,
       url: json['url'] as String?,
       height: (json['height'] as num?)?.toInt() ?? 500,
       customPopupmenu: json['customPopupmenu'] == null
@@ -34,7 +33,7 @@ Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+      'dataPoint': instance.dataPoint,
       'url': instance.url,
       'height': instance.height,
       'customPopupmenu': instance.customPopupmenu,
@@ -66,9 +65,3 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
