@@ -10,11 +10,10 @@ class ScreenListTile extends StatelessWidget {
   final bool selected;
 
   const ScreenListTile(
-      {Key? key,
+      {super.key,
       required this.screen,
       required this.screenManager,
-      this.selected = false})
-      : super(key: key);
+      this.selected = false});
 
   @override
   Widget build(BuildContext context) {

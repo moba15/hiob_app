@@ -7,7 +7,7 @@ import 'package:smart_home/settings/config_settings/bloc/config_bloc.dart';
 class ConfigSettingsPage extends StatelessWidget {
   final ConfigBloc _configBloc = ConfigBloc();
 
-  ConfigSettingsPage({Key? key}) : super(key: key);
+  ConfigSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class _AddSettingTemplateDialog extends StatelessWidget {
   final Function(String, BuildContext) onAdd;
   final TextEditingController textEditingController = TextEditingController();
 
-  _AddSettingTemplateDialog({Key? key, required this.onAdd}) : super(key: key);
+  _AddSettingTemplateDialog({required this.onAdd});
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +113,7 @@ class _AddSettingTemplateDialog extends StatelessWidget {
 class _ConfigsListView extends StatefulWidget {
   final ConfigBloc configBloc;
 
-  const _ConfigsListView({Key? key, required this.configBloc})
-      : super(key: key);
+  const _ConfigsListView({required this.configBloc});
 
   @override
   State<_ConfigsListView> createState() => _ConfigsListViewState();
@@ -151,8 +150,7 @@ class _ConfigCard extends StatelessWidget {
   final PreConfig preConfig;
   final bool selected;
 
-  const _ConfigCard({Key? key, required this.preConfig, required this.selected})
-      : super(key: key);
+  const _ConfigCard({required this.preConfig, required this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -213,9 +211,7 @@ class _ConfigLoadingDialog extends StatefulWidget {
   final PreConfig preConfig;
   final bool upload;
 
-  const _ConfigLoadingDialog(
-      {Key? key, required this.preConfig, required this.upload})
-      : super(key: key);
+  const _ConfigLoadingDialog({required this.preConfig, required this.upload});
 
   @override
   State<_ConfigLoadingDialog> createState() => _ConfigLoadingDialogState();

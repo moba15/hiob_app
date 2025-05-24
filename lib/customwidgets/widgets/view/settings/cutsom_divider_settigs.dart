@@ -8,8 +8,7 @@ import 'package:smart_home/utils/theme.dart';
 class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
   final CustomDivisionLineWidget customDivisionLineWidget;
   const CustomDividerSettings(
-      {Key? key, required this.customDivisionLineWidget})
-      : super(key: key);
+      {super.key, required this.customDivisionLineWidget});
 
   @override
   Widget build(BuildContext context) {

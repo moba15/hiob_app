@@ -15,8 +15,7 @@ class CustomWebViewWidgetSettingWidget
   final GlobalKey heightKey = GlobalKey();
   final GlobalKey javascriptKey = GlobalKey();
   CustomWebViewWidgetSettingWidget(
-      {Key? key, required this.customWebViewWidget})
-      : super(key: key);
+      {super.key, required this.customWebViewWidget});
 
   @override
   State<CustomWebViewWidgetSettingWidget> createState() =>

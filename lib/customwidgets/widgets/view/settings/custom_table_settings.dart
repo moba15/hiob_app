@@ -18,8 +18,7 @@ class CustomTableSettings extends CustomWidgetSettingStatefulWidget {
   final GlobalKey dataPointKey = GlobalKey();
   final GlobalKey columnsKey = GlobalKey();
 
-  CustomTableSettings({Key? key, required this.customTableWidget})
-      : super(key: key);
+  CustomTableSettings({super.key, required this.customTableWidget});
 
   @override
   State<CustomTableSettings> createState() => _CustomTableSettingsState();

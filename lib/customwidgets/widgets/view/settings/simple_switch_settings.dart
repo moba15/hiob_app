@@ -17,8 +17,7 @@ class CustomSwitchWidgetSettingWidget
   final GlobalKey buttonTextKey = GlobalKey();
   final GlobalKey deviceDatapointKey = GlobalKey();
   CustomSwitchWidgetSettingWidget(
-      {Key? key, required this.customSimpleSwitchWidget})
-      : super(key: key);
+      {super.key, required this.customSimpleSwitchWidget});
 
   @override
   State<CustomSwitchWidgetSettingWidget> createState() =>

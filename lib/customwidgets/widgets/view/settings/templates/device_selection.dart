@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/generated/state/state.pb.dart' as grpc;
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/utils/widgets/dropdown_search/dropdown_search_async.dart';
 
 import '../../../../../device/device.dart';
 
@@ -20,7 +18,7 @@ class DeviceSelection extends StatefulWidget {
   final DataPoint? selectedDataPoint;
   final String? preferredRole;
   const DeviceSelection(
-      {Key? key,
+      {super.key,
       required this.onDeviceSelected,
       required this.onDataPointSelected,
       required this.customWidgetManager,
@@ -28,8 +26,7 @@ class DeviceSelection extends StatefulWidget {
       this.dataPointLabel = "Datapoint",
       this.selectedDataPoint,
       this.selectedDevice,
-      this.preferredRole})
-      : super(key: key);
+      this.preferredRole});
 
   @override
   State<DeviceSelection> createState() => _DeviceSelectionState();

@@ -9,7 +9,7 @@ import '../screen.dart';
 class ScreenTabBarPage extends StatelessWidget {
   final Manager manager;
 
-  const ScreenTabBarPage({Key? key, required this.manager}) : super(key: key);
+  const ScreenTabBarPage({super.key, required this.manager});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,7 @@ class ScreenTabBarPage extends StatelessWidget {
 class ScreenTabView extends StatelessWidget {
   final ScreenManager screenManager;
 
-  const ScreenTabView({Key? key, required this.screenManager})
-      : super(key: key);
+  const ScreenTabView({super.key, required this.screenManager});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +40,7 @@ class ScreenTabView extends StatelessWidget {
 class ScreenTabBar extends StatefulWidget {
   final List<Screen> screens;
 
-  const ScreenTabBar({Key? key, required this.screens}) : super(key: key);
+  const ScreenTabBar({super.key, required this.screens});
 
   @override
   State<ScreenTabBar> createState() => _ScreenTabBarState();
@@ -83,7 +82,7 @@ class _ScreenTabBarState extends State<ScreenTabBar>
 class ScreenTab extends StatelessWidget {
   final Screen screen;
 
-  const ScreenTab({Key? key, required this.screen}) : super(key: key);
+  const ScreenTab({super.key, required this.screen});
 
   @override
   Widget build(BuildContext context) {
