@@ -115,8 +115,7 @@ class ConnectionManager with WidgetsBindingObserver {
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure()));
 
-    loginClientStub = LoginClient(channel!,
-        options: CallOptions(metadata: {"x-auth": "asdasdasdasd"}));
+    loginClientStub = LoginClient(channel!);
     channel!.onConnectionStateChanged.listen(
       (event) {
         Manager().talker.debug(
