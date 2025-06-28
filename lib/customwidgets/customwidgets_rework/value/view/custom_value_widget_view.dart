@@ -4,6 +4,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/manager/manager.dart';
 
 class CustomValueWidgetView extends StatefulWidget {
   final CustomValueWidget customValueWidget;
@@ -173,7 +174,8 @@ class _ValueDialog extends StatelessWidget {
       ],
       title: Text(title),
       content: Text(
-        "dataPointId.value.toString()",
+        Manager().deviceManager.getCurrentValue(dataPointId) ??
+            "No value found",
         style: const TextStyle(fontSize: 17),
       ),
     );
