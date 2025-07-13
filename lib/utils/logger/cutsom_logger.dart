@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart' as fp;
-import 'package:my_logger/core/constants.dart';
-import 'package:my_logger/logger.dart';
 import 'package:smart_home/manager/file_manager.dart';
 
 class CustomLogger {
@@ -11,40 +9,17 @@ class CustomLogger {
   late File file;
   CustomLogger({required this.fileManager});
 
-  static void logInfoNotification(
-      {required String methodname, required String logMessage}) {
-    MyLogger.log(
-        text: logMessage,
-        type: LogLevel.INFO,
-        methodName: methodname,
-        className: "Notifications");
-  }
+  static void logInfoNotification({
+    required String methodname,
+    required String logMessage,
+  }) {}
 
-  static void logInfoBackgroundRunner(
-      {required String methodname, required String logMessage}) {
-    MyLogger.log(
-        text: logMessage,
-        type: LogLevel.INFO,
-        methodName: methodname,
-        className: "Backgroundrunner");
-  }
+  static void logInfoBackgroundRunner({
+    required String methodname,
+    required String logMessage,
+  }) {}
 
-  static void exportInfoLogs() async {
-    File fileExport = await MyLogger.logs.export(
-      fileName: "export-all-logs",
-      exportType: FileType.TXT,
-      filter: LogFilter.last24Hours(),
-    );
+  static void exportInfoLogs() async {}
 
-    String? result = await fp.FilePicker.platform.getDirectoryPath(
-        dialogTitle: 'Please select an output file:',
-        initialDirectory: "Download");
-
-    File file = await fileExport.copy("$result/export-all-logs.txt");
-    file.createSync();
-  }
-
-  static void deletAll() {
-    MyLogger.logs.deleteAll();
-  }
+  static void deletAll() {}
 }

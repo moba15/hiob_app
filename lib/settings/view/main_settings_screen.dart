@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/custom_theme/settings/custom_theme_settings_page.dart';
+import 'package:smart_home/l10n/app_localizations.dart' show AppLocalizations;
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
 import 'package:smart_home/settings/documenation/documentation_view.dart';
@@ -14,7 +15,6 @@ import 'package:talker_flutter/talker_flutter.dart';
 
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
 import 'device_setting_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainSettingsScreen extends StatelessWidget {
   final Manager manager;
@@ -24,111 +24,124 @@ class MainSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-      ),
+      appBar: AppBar(title: const Text("Settings")),
       body: ListView(
         children: [
           ListTile(
             title: Text(
-                AppLocalizations.of(context)!.settings_page_screen_setting),
+              AppLocalizations.of(context)!.settings_page_screen_setting,
+            ),
             leading: const Icon(Icons.add_to_home_screen_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ScreenListSettingsScreen(
-                        screenManager: manager.screenManager)),
-              )
+                  builder: (context) => ScreenListSettingsScreen(
+                    screenManager: manager.screenManager,
+                  ),
+                ),
+              ),
             },
           ),
           ListTile(
             title: Text(
-                AppLocalizations.of(context)!.settings_page_widget_setting),
+              AppLocalizations.of(context)!.settings_page_widget_setting,
+            ),
             leading: const Icon(Icons.widgets_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => WidgetTemplateListPage(
-                        customWidgetManager: manager.customWidgetManager)),
-              )
+                  builder: (context) => WidgetTemplateListPage(
+                    customWidgetManager: manager.customWidgetManager,
+                  ),
+                ),
+              ),
             },
           ),
           ListTile(
             title: Text(
-                AppLocalizations.of(context)!.settings_page_device_setting),
+              AppLocalizations.of(context)!.settings_page_device_setting,
+            ),
             leading: const Icon(Icons.device_unknown),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        DeviceSettingsScreen(manager: manager.deviceManager)),
-              )
+                  builder: (context) =>
+                      DeviceSettingsScreen(manager: manager.deviceManager),
+                ),
+              ),
             },
           ),
           ListTile(
             title: Text(
-                AppLocalizations.of(context)!.settings_page_iobroker_settings),
+              AppLocalizations.of(context)!.settings_page_iobroker_settings,
+            ),
             leading: const Icon(Icons.stream),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => RepositoryProvider.value(
-                          value: manager,
-                          child: const IoBrokerSettingsPage(),
-                        )),
-              )
+                  builder: (context) => RepositoryProvider.value(
+                    value: manager,
+                    child: const IoBrokerSettingsPage(),
+                  ),
+                ),
+              ),
             },
           ),
           ListTile(
             title: Text(
-                AppLocalizations.of(context)!.settings_page_general_settings),
+              AppLocalizations.of(context)!.settings_page_general_settings,
+            ),
             leading: const Icon(Icons.settings_rounded),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => RepositoryProvider.value(
-                          value: manager,
-                          child: const GeneralSettingsPage(),
-                        )),
-              )
+                  builder: (context) => RepositoryProvider.value(
+                    value: manager,
+                    child: const GeneralSettingsPage(),
+                  ),
+                ),
+              ),
             },
           ),
           ListTile(
-            title:
-                Text(AppLocalizations.of(context)!.settings_page_config_sync),
+            title: Text(
+              AppLocalizations.of(context)!.settings_page_config_sync,
+            ),
             leading: const Icon(Icons.cloud),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ConfigSettingsPage()),
-              )
+              ),
             },
           ),
           ListTile(
             title: Text(
-                AppLocalizations.of(context)!.custom_theme_settings_page_title),
+              AppLocalizations.of(context)!.custom_theme_settings_page_title,
+            ),
             leading: const Icon(Icons.color_lens),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => RepositoryProvider<Manager>.value(
-                          value: Manager(),
-                          child: const CustomThemeSettingsPage(),
-                        )),
-              )
+                  builder: (context) => RepositoryProvider<Manager>.value(
+                    value: Manager(),
+                    child: const CustomThemeSettingsPage(),
+                  ),
+                ),
+              ),
             },
           ),
           ListTile(
@@ -137,14 +150,12 @@ class MainSettingsScreen extends StatelessWidget {
                 Text("Notifications"),
                 Gap(10),
                 Chip(
-                  label: Text(
-                    "beta",
-                    style: TextStyle(color: Colors.green),
-                  ),
+                  label: Text("beta", style: TextStyle(color: Colors.green)),
                   visualDensity: VisualDensity(horizontal: -2, vertical: -4),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                )
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                ),
               ],
             ),
             leading: const Icon(Icons.notifications),
@@ -153,11 +164,12 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => RepositoryProvider<Manager>.value(
-                          value: Manager(),
-                          child: const NotificationSettingsPage(),
-                        )),
-              )
+                  builder: (context) => RepositoryProvider<Manager>.value(
+                    value: Manager(),
+                    child: const NotificationSettingsPage(),
+                  ),
+                ),
+              ),
             },
           ),
           ListTile(
@@ -166,11 +178,12 @@ class MainSettingsScreen extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
               showLicensePage(
-                  context: context,
-                  applicationName: "HIoB",
-                  applicationVersion: Manager.instance.versionNumber,
-                  applicationLegalese: "LICENCE MIT",
-                  applicationIcon: const Icon(Icons.smartphone_sharp))
+                context: context,
+                applicationName: "HIoB",
+                applicationVersion: Manager.instance.versionNumber,
+                applicationLegalese: "LICENCE MIT",
+                applicationIcon: const Icon(Icons.smartphone_sharp),
+              ),
             },
           ),
           ListTile(
@@ -178,13 +191,14 @@ class MainSettingsScreen extends StatelessWidget {
             leading: const Icon(Icons.document_scanner_outlined),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return const DocumentationView(
-                    currentPage: "README.md",
-                  );
-                },
-              ))
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const DocumentationView(currentPage: "README.md");
+                  },
+                ),
+              ),
             },
           ),
           ListTile(
@@ -192,11 +206,14 @@ class MainSettingsScreen extends StatelessWidget {
             leading: const Icon(Icons.update),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return ChangeLogScreen(manager: manager);
-                },
-              ))
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ChangeLogScreen(manager: manager);
+                  },
+                ),
+              ),
             },
           ),
           ListTile(
@@ -204,13 +221,16 @@ class MainSettingsScreen extends StatelessWidget {
             leading: const Icon(Icons.print),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return TalkerScreen(talker: manager.talker);
-                },
-              ))
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return TalkerScreen(talker: manager.talker);
+                  },
+                ),
+              ),
             },
-          )
+          ),
         ],
       ),
     );
