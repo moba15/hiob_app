@@ -22,8 +22,10 @@ import '../background/background_runner.dart';
 
 class Manager {
   //@Deprecated("Please use the Context")
-  static final Manager instance =
-      Manager._internal(versionNumber: "0.0.706", buildNumber: "210");
+  static final Manager instance = Manager._internal(
+    versionNumber: "0.0.707",
+    buildNumber: "215",
+  );
   static final navigatorKey = GlobalKey<NavigatorState>();
   //@Deprecated("Please use the Context")
   factory Manager() => instance;
@@ -63,7 +65,6 @@ class Manager {
 
   final Talker talker = TalkerFlutter.init();
 
-
   ManagerStatus status = ManagerStatus.loading;
 
   String versionNumber;
@@ -90,31 +91,40 @@ class Manager {
       ..load();
 
     connectionManager = ConnectionManager(
-        deviceManager: deviceManager,
-        ioBrokerManager: ioBrokerManager,
-        generalManager: generalManager);
+      deviceManager: deviceManager,
+      ioBrokerManager: ioBrokerManager,
+      generalManager: generalManager,
+    );
 
     historyManager = HistoryManager(connectionManager: connectionManager);
 
     customWidgetManager = CustomWidgetManager(
-        fileManager: fileManager, deviceManager: deviceManager, manager: this);
-    screenManager =
-        ScreenManager(fileManager: fileManager, screens: [], manager: this)
-          ..loadScreens();
+      fileManager: fileManager,
+      deviceManager: deviceManager,
+      manager: this,
+    );
+    screenManager = ScreenManager(
+      fileManager: fileManager,
+      screens: [],
+      manager: this,
+    )..loadScreens();
 
     settingsSyncManager = SettingsSyncManager(
-        connectionManager: connectionManager, fileManager: fileManager)
-      ..loadSettings();
+      connectionManager: connectionManager,
+      fileManager: fileManager,
+    )..loadSettings();
 
     themeManager = ThemeManager(manager: this)..loadTheme();
 
-    subscription1 =
-        customWidgetManager.templatesStreamController.stream.listen((event) {
-      onLoaded();
-    });
+    subscription1 = customWidgetManager.templatesStreamController.stream.listen(
+      (event) {
+        onLoaded();
+      },
+    );
 
-    subscription2 =
-        deviceManager.deviceListStreamController.stream.listen((event) {
+    subscription2 = deviceManager.deviceListStreamController.stream.listen((
+      event,
+    ) {
       onLoaded();
     });
 
@@ -122,17 +132,20 @@ class Manager {
       onLoaded();
     });
 
-    subscription4 =
-        ioBrokerManager.statusStreamController.stream.listen((event) {
+    subscription4 = ioBrokerManager.statusStreamController.stream.listen((
+      event,
+    ) {
       onLoaded();
     });
 
-    subscription5 =
-        connectionManager.statusStreamController.stream.listen((event) {
+    subscription5 = connectionManager.statusStreamController.stream.listen((
+      event,
+    ) {
       onLoaded();
     });
-    subscription6 =
-        generalManager.statusStreamController.stream.listen((event) {
+    subscription6 = generalManager.statusStreamController.stream.listen((
+      event,
+    ) {
       onLoaded();
     });
   }
@@ -167,7 +180,8 @@ class Manager {
     talker.configure(filter: generalManager.customLoggerFilter);
     notificationManager = NotificationManager(fileManager: fileManager);
     backgroundRunner = BackgroundRunner(
-        generalManager: generalManager, ioBrokerManager: ioBrokerManager)
-      ..init();
+      generalManager: generalManager,
+      ioBrokerManager: ioBrokerManager,
+    )..init();
   }
 }

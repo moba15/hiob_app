@@ -5,6 +5,10 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
+## 0.0707
+- Update android compileSdk, minSdk, targetSdk to fulfill googles new guidelines
+- Update flutter version
+
 ## 0.0706
 - Slider can now have negative values
 
