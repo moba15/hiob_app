@@ -47,7 +47,7 @@ dependencies:
   dropdown_search: ^5.0.3
   web_socket_channel: ^2.4.0
   icon_picker: ^2.1.0
-  file_picker: ^6.1.1
+  file_picker: ^9.1.0
   font_awesome_flutter: ^10.7.0
   community_material_icon: ^5.9.55
   webview_flutter: ^4.0.1
@@ -59,9 +59,9 @@ dependencies:
   network_info_plus: ^4.0.2
   uuid: ^4.3.3
   flex_color_picker: ^3.2.2
-  workmanager: ^0.5.2
+  workmanager: ^0.8.0
   flutter_background_service: any
-  flutter_background_service_android: "6.1.0" #! in futre use newer version
+  flutter_background_service_android: "6.3.0" #! in futre use newer version
   awesome_notifications_core: ^0.10.0
   awesome_notifications: any # <~ this version is managed by awesome_notifications_core package
   flutter_svg: ^2.0.10+1
