@@ -10,30 +10,30 @@ class ChangeLogScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            manager.status = ManagerStatus.finished;
-            manager.managerStatusStreamController.sink
-                .add(ManagerStatus.finished);
-          },
-          child: const Icon(Icons.visibility),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          manager.status = ManagerStatus.finished;
+          manager.managerStatusStreamController.sink.add(
+            ManagerStatus.finished,
+          );
+        },
+        child: const Icon(Icons.visibility),
+      ),
+      appBar: AppBar(
+        title: Text(
+          "What's new? ${manager.versionNumber}(${manager.buildNumber})",
         ),
-        appBar: AppBar(
-          title: Text(
-              "What's new? ${manager.versionNumber}(${manager.buildNumber})"),
-        ),
-        body: Markdown(
-          data: _changelog(),
-        ));
+      ),
+      body: Markdown(data: _changelog()),
+    );
   }
 
   String _changelog() {
     return """
-# Templates \n
-- Slider can now have negative values \n
-
-# Short information
-- Currently I have some exams and my bachelor, so updates may be infrequent until the end of March.
+- Update android compileSdk, minSdk, targetSdk to fulfill googles new guidelines
+- Update flutter version
+- other smaller bug fixes
+- **Note**: New major version incoming (start of Q4/25 at the latest)
   """;
   }
 
