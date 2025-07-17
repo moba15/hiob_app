@@ -168,4 +168,4 @@ flutter:
 
 
 scripts: 
-  generate: rm -rf lib/generated && mkdir lib/generated && protoc -I=hiob_protobuf --dart_out=grpc:"./lib/generated" hiob_protobuf/packages.proto hiob_protobuf/state/state.proto  hiob_protobuf/login/login.proto && dart format lib/generated/
+  generate: rm -rf lib/generated && mkdir lib/generated && protoc -I=/usr/include --dart_out=grpc:./lib/generated /usr/include/google/protobuf/struct.proto && protoc -I=hiob_protobuf --dart_out=grpc:"./lib/generated" hiob_protobuf/packages.proto hiob_protobuf/state/state.proto  hiob_protobuf/login/login.proto hiob_protobuf/config_sync/config_sync.proto && dart format lib/generated/

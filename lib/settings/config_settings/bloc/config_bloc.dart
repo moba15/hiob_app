@@ -14,7 +14,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
         _onConfigAdded(emit);
       } else if (event is ConfigLoadedEvent) {
         emit(ConfigStateLoading());
-        emit(ConfigState(configs: (event).list));
+        emit(ConfigState(configs: event.list));
       } else if (event is ConfigReloadEvent) {
         _fetch();
       }
@@ -22,14 +22,14 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   }
 
   void _fetch() async {
-    List<PreConfig> list =
+    List<String> list =
         await Manager.instance.settingsSyncManager.fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));
   }
 
   void _onConfigAdded(emit) async {
-    List<PreConfig> list =
+    List<String> list =
         await Manager.instance.settingsSyncManager.fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));

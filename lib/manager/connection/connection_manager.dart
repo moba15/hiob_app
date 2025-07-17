@@ -7,6 +7,7 @@ import 'package:grpc/grpc.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
 import 'package:smart_home/generated/login/login.pbgrpc.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
 import 'package:smart_home/manager/device_manager.dart';
@@ -77,6 +78,7 @@ class ConnectionManager with WidgetsBindingObserver {
   ClientChannel? channel;
   LoginClient? loginClientStub;
   StateUpdateClient? stateUpdateClientStub;
+  ConfigSyncClient? configSyncStub;
 
   final StreamController statusStreamController = StreamController();
   final DeviceManager deviceManager;
@@ -116,6 +118,7 @@ class ConnectionManager with WidgetsBindingObserver {
             const ChannelOptions(credentials: ChannelCredentials.insecure()));
 
     loginClientStub = LoginClient(channel!);
+    configSyncStub = ConfigSyncClient(channel!);
     channel!.onConnectionStateChanged.listen(
       (event) {
         Manager().talker.debug(
@@ -310,8 +313,8 @@ class ConnectionManager with WidgetsBindingObserver {
             .add(true);
         break;
       case DataPackageType.getTemplatesSetting:
-        Manager.instance.settingsSyncManager.loadGotTemplate(
-            rawMap["devices"], rawMap["screens"], rawMap["widget"]);
+        Manager.instance.settingsSyncManager
+            .loadGotTemplate(rawMap["screens"], rawMap["widget"]);
         break;
       case DataPackageType.answerSubscribeToDataPoints:
         _onAnswerSubscribeToDataPoints(rawMap["value"]);
@@ -379,8 +382,10 @@ class ConnectionManager with WidgetsBindingObserver {
           status: LoginResponse_Status.error,
           errorMsg: "Error during login: ${e.toString()}");
     });
-    if(response.status == LoginResponse_Status.error) {
-      Manager().talker.error("ConnectionManager | Login error: ${response.errorMsg}");
+    if (response.status == LoginResponse_Status.error) {
+      Manager()
+          .talker
+          .error("ConnectionManager | Login error: ${response.errorMsg}");
       connectionStatusStreamController.add(ConnectionStatus.error);
       return;
     }
@@ -401,9 +406,9 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void changeConnectionStatus(
-      ConnectionStatus status, {
-      String? message,
-    }) {
+    ConnectionStatus status, {
+    String? message,
+  }) {
     Manager().talker.debug(
         "ConnectionManager | Change connection status to ${status.name} | $message");
     connectionStatusStreamController.add(status);
@@ -465,6 +470,8 @@ class ConnectionManager with WidgetsBindingObserver {
     };
     stateUpdateClientStub =
         StateUpdateClient(channel!, options: CallOptions(metadata: header));
+    configSyncStub =
+        ConfigSyncClient(channel!, options: CallOptions(metadata: header));
   }
 
   void sendMsg(DataPackage dataPackage) {
