@@ -78,7 +78,7 @@ dependencies:
   markdown_widget: ^2.3.2+6
   talker: ^4.4.1
   talker_flutter: ^4.4.0
-  flutter_localization: ^0.2.1
+  flutter_localization: ^0.3.3
 
  
 
