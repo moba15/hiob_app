@@ -13,8 +13,7 @@ class SliderTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey datapointKey = GlobalKey();
   final GlobalKey sliderKey = GlobalKey();
 
-  SliderTriggerActionSettings({Key? key, required this.sliderTriggerAction})
-      : super(key: key);
+  SliderTriggerActionSettings({super.key, required this.sliderTriggerAction});
 
   @override
   Widget build(BuildContext context) {

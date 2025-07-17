@@ -8,8 +8,7 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomTableWidgetView extends StatefulWidget {
   final CustomTableWidget customTableWidget;
-  const CustomTableWidgetView({Key? key, required this.customTableWidget})
-      : super(key: key);
+  const CustomTableWidgetView({super.key, required this.customTableWidget});
 
   @override
   State<CustomTableWidgetView> createState() => _CustomTableWidgetViewState();

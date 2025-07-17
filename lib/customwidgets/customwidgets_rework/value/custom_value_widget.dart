@@ -7,8 +7,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/settings/custom_value_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/view/custom_value_widget_view.dart';
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
 
 part 'custom_value_widget.freezed.dart';
 part 'custom_value_widget.g.dart';
@@ -50,7 +48,7 @@ class CustomValueWidget with _$CustomValueWidget implements CustomWidget {
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? label,
     @Default({}) Map<String, String> valueMapper,
     @Default(2) int round,
@@ -66,7 +64,7 @@ class CustomValueWidget with _$CustomValueWidget implements CustomWidget {
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

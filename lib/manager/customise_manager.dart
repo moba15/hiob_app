@@ -28,7 +28,6 @@ import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
     as depc_web_view;
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
-import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -122,7 +121,7 @@ class CustomWidgetManager {
           customWidget = depc_table.CustomTableWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.graph:
-          customWidget = GraphWidget.fromJson(widgetRaw);
+          //customWidget = GraphWidget.fromJson(widgetRaw);
           break;
         case CustomWidgetTypeDeprecated.colorPallete:
           customWidget = CustomColorPaletteWidget.fromJson(widgetRaw);

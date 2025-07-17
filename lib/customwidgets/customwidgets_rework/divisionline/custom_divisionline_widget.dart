@@ -6,7 +6,6 @@ import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/settings/custom_divisionline_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/view/custom_divisionline_widget_view.dart';
-import 'package:smart_home/device/state/state.dart';
 
 part 'custom_divisionline_widget.freezed.dart';
 part 'custom_divisionline_widget.g.dart';
@@ -39,7 +38,7 @@ class CustomDivisionlineWidget
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return [];
   }
 

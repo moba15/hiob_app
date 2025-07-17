@@ -13,8 +13,7 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey sendOnKey = GlobalKey();
   final GlobalKey sendOffKey = GlobalKey();
 
-  SwitchTriggerActionSettings({Key? key, required this.switchTriggerAction})
-      : super(key: key);
+  SwitchTriggerActionSettings({super.key, required this.switchTriggerAction});
 
   @override
   Widget build(BuildContext context) {

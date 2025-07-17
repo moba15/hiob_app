@@ -23,7 +23,7 @@ class NoneTriggerAction extends TriggerAction {
 
   factory NoneTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     return NoneTriggerAction(
         dataPoint: dataPoint,
         displayRules: Map.from(jsonDecode(json["displayRules"]) ?? {}),
@@ -72,7 +72,7 @@ class NoneTriggerAction extends TriggerAction {
     return new_widget.CustomValueWidget(
         id: id,
         name: name,
-        dataPoint: dataPoint,
+        dataPoint: dataPoint?.id,
         valueMapper: displayRules ?? {},
         round: round,
         suffix: " $unit");

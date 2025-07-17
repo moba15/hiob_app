@@ -8,9 +8,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/slider/settings/cu
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/view/custom_slider_widget_view.dart';
 
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
-
 part 'custom_slider_widget.freezed.dart';
 part 'custom_slider_widget.g.dart';
 
@@ -53,7 +50,7 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
     required String id,
     required String name,
     String? label,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     @Default(100) int max,
     @Default(0) int min,
     @Default(10) int step,
@@ -69,7 +66,7 @@ class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

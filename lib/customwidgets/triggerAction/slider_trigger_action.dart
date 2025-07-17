@@ -18,7 +18,7 @@ class SliderTriggerAction extends TriggerAction {
 
   factory SliderTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     return SliderTriggerAction(
         dataPoint: dataPoint,
         min: json["min"],
@@ -64,7 +64,7 @@ class SliderTriggerAction extends TriggerAction {
     return new_widget.CustomSliderWidget(
         id: id,
         name: name,
-        dataPoint: dataPoint,
+        dataPoint: dataPoint?.id,
         min: min,
         max: max,
         step: steps);

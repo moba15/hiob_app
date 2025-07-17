@@ -14,8 +14,7 @@ _$CustomColorPickerWidgetImpl _$$CustomColorPickerWidgetImplFromJson(
           CustomWidgetTypeDeprecated.colorPicker,
       id: json['id'] as String,
       name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
+      dataPoint: json['dataPoint'] as String?,
       label: json['label'] as String?,
       prefix: json['prefix'] as String? ?? "0x",
       alpha: json['alpha'] ?? false,
@@ -39,7 +38,7 @@ Map<String, dynamic> _$$CustomColorPickerWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+      'dataPoint': instance.dataPoint,
       'label': instance.label,
       'prefix': instance.prefix,
       'alpha': instance.alpha,
@@ -76,12 +75,6 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
 
 const _$ColorPickerTypeEnumMap = {
   ColorPickerType.both: 'both',

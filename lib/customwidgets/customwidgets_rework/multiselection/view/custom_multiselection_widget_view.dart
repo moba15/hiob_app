@@ -7,8 +7,7 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 class CustomMultiselectionWidgetView extends StatefulWidget {
   final CustomMultiselectionWidget customMultiselectionWidget;
   const CustomMultiselectionWidgetView(
-      {Key? key, required this.customMultiselectionWidget})
-      : super(key: key);
+      {super.key, required this.customMultiselectionWidget});
 
   @override
   State<CustomMultiselectionWidgetView> createState() =>

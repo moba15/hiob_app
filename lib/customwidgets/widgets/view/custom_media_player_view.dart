@@ -7,8 +7,7 @@ import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart
 class CustomMediaPlayerWidgetView extends StatefulWidget {
   final CustomMediaPlayerWidget customMediaPlayerWidget;
   const CustomMediaPlayerWidgetView(
-      {Key? key, required this.customMediaPlayerWidget})
-      : super(key: key);
+      {super.key, required this.customMediaPlayerWidget});
 
   @override
   State<CustomMediaPlayerWidgetView> createState() =>

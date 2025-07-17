@@ -14,8 +14,7 @@ _$CustomTableWidgetImpl _$$CustomTableWidgetImplFromJson(
           CustomWidgetTypeDeprecated.tableNew,
       id: json['id'] as String,
       name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
+      dataPoint: json['dataPoint'] as String?,
       header: json['header'] as String?,
       sortAsc: json['sortAsc'] as bool? ?? false,
       initalSortColumn: (json['initalSortColumn'] as num?)?.toInt() ?? 0,
@@ -38,7 +37,7 @@ Map<String, dynamic> _$$CustomTableWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+      'dataPoint': instance.dataPoint,
       'header': instance.header,
       'sortAsc': instance.sortAsc,
       'initalSortColumn': instance.initalSortColumn,
@@ -74,9 +73,3 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);

@@ -5,8 +5,7 @@ class SwitchTriggerView extends StatelessWidget {
   final SwitchTriggerAction switchTriggerAction;
   final VoidCallback onLongTab;
   const SwitchTriggerView(
-      {Key? key, required this.switchTriggerAction, required this.onLongTab})
-      : super(key: key);
+      {super.key, required this.switchTriggerAction, required this.onLongTab});
 
   @override
   Widget build(BuildContext context) {

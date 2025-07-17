@@ -16,13 +16,12 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
   DataPoint? dataPoint;
 
   CustomWebViewWidget(
-      {required String? name,
+      {required super.name,
       required this.url,
       required this.dataPoint,
       this.height = 300,
       this.javaScript = false})
-      : super(
-            name: name, type: CustomWidgetTypeDeprecated.webView, settings: {});
+      : super(type: CustomWidgetTypeDeprecated.webView, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -42,7 +41,7 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
     DataPoint? dataPoint;
     if (json["dataPoint"] != null) {
       dataPoint = Manager.instance.deviceManager
-          .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+          .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     } else {
       dataPoint = null;
     }
@@ -70,6 +69,6 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomWebViewWidget(
-        id: id, name: name, dataPoint: dataPoint, url: url, height: height);
+        id: id, name: name, dataPoint: dataPoint?.id, url: url, height: height);
   }
 }

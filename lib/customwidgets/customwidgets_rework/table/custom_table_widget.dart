@@ -7,9 +7,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/table/settings/custom_table_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/view/custom_table_widget_view.dart';
 
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
-
 part 'custom_table_widget.freezed.dart';
 part 'custom_table_widget.g.dart';
 
@@ -28,7 +25,7 @@ class CustomTableWidget with _$CustomTableWidget implements CustomWidget {
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? header,
     @Default(false) bool sortAsc,
     @Default(0) int initalSortColumn,
@@ -45,7 +42,7 @@ class CustomTableWidget with _$CustomTableWidget implements CustomWidget {
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 
