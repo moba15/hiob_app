@@ -3,11 +3,6 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
-plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
-}
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
