@@ -24,7 +24,7 @@ jobs:
           channel: 'stable'
           flutter-version: 3.32.6
       - name: Check format
-        run: dart format --set-exit-if-changed
+        run: dart format --set-exit-if-changed .
   build-appbundle:
     runs-on: ubuntu-latest
     steps:
