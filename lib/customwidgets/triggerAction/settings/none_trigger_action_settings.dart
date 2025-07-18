@@ -32,52 +32,60 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           ),
         ),
         Showcase(
-            key: roundToKey,
-            title: "Round",
-            description:
-                "If the value of the datapoint is a number it will be round to x decimals",
-            child: InputFieldContainer.inputContainer(
-              child: TextField(
-                controller: TextEditingController.fromValue(
-                    TextEditingValue(text: noneTriggerAction.round.toString())),
-                decoration: const InputDecoration(labelText: "Round to"),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                onChanged: (v) =>
-                    noneTriggerAction.round = int.tryParse(v) ?? 2,
+          key: roundToKey,
+          title: "Round",
+          description:
+              "If the value of the datapoint is a number it will be round to x decimals",
+          child: InputFieldContainer.inputContainer(
+            child: TextField(
+              controller: TextEditingController.fromValue(
+                TextEditingValue(text: noneTriggerAction.round.toString()),
               ),
-            )),
+              decoration: const InputDecoration(labelText: "Round to"),
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (v) => noneTriggerAction.round = int.tryParse(v) ?? 2,
+            ),
+          ),
+        ),
         Showcase(
-            key: unitKey,
-            title: "Unit",
-            description:
-                "If set this will be written behind the actual value of the datapoint",
-            child: InputFieldContainer.inputContainer(
-              child: TextField(
-                  controller: TextEditingController.fromValue(
-                      TextEditingValue(text: noneTriggerAction.unit ?? "")),
-                  decoration:
-                      const InputDecoration(labelText: "Unit (optional)"),
-                  maxLength: 10,
-                  onChanged: (v) => {
-                        noneTriggerAction.unit = v,
-                        if (v.isEmpty) noneTriggerAction.unit = null
-                      }),
-            )),
+          key: unitKey,
+          title: "Unit",
+          description:
+              "If set this will be written behind the actual value of the datapoint",
+          child: InputFieldContainer.inputContainer(
+            child: TextField(
+              controller: TextEditingController.fromValue(
+                TextEditingValue(text: noneTriggerAction.unit ?? ""),
+              ),
+              decoration: const InputDecoration(labelText: "Unit (optional)"),
+              maxLength: 10,
+              onChanged: (v) => {
+                noneTriggerAction.unit = v,
+                if (v.isEmpty) noneTriggerAction.unit = null,
+              },
+            ),
+          ),
+        ),
         Showcase(
           key: textRulesKey,
           title: "Text Rules",
           description: "Here you can map one value to an other",
           child: InputFieldContainer.inputContainer(
-              child: _RulesSettings(noneTriggerAction: noneTriggerAction)),
-        )
+            child: _RulesSettings(noneTriggerAction: noneTriggerAction),
+          ),
+        ),
       ],
     );
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [dataPointKey, roundToKey, unitKey, textRulesKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    dataPointKey,
+    roundToKey,
+    unitKey,
+    textRulesKey,
+  ];
 }
 
 class _RulesSettings extends StatefulWidget {
@@ -98,32 +106,31 @@ class _RulesSettingsState extends State<_RulesSettings> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
-            "Text Rules: ",
-            style: TextStyle(fontSize: 17),
-          ),
+          const Text("Text Rules: ", style: TextStyle(fontSize: 17)),
           TextButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => _RuleAddEditAlertDialog(
-                          onAdd: (key, value) {
-                            if (widget.noneTriggerAction.displayRules
-                                    ?.containsKey(key) ??
-                                false) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text("Rule Already exists!")));
-                            }
-                            setState(() {
-                              widget.noneTriggerAction.displayRules ??= {};
-                              widget.noneTriggerAction.displayRules?[key] =
-                                  value;
-                            });
-                          },
-                        ));
-              },
-              child: const Text("Add"))
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => _RuleAddEditAlertDialog(
+                  onAdd: (key, value) {
+                    if (widget.noneTriggerAction.displayRules?.containsKey(
+                          key,
+                        ) ??
+                        false) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Rule Already exists!")),
+                      );
+                    }
+                    setState(() {
+                      widget.noneTriggerAction.displayRules ??= {};
+                      widget.noneTriggerAction.displayRules?[key] = value;
+                    });
+                  },
+                ),
+              );
+            },
+            child: const Text("Add"),
+          ),
         ],
       ),
       children: [
@@ -155,26 +162,25 @@ class _RulesSettingsState extends State<_RulesSettings> {
             child: ListTile(
               onTap: () {
                 showDialog(
-                    context: context,
-                    builder: (c) => _RuleAddEditAlertDialog(
-                          onAdd: (key, value) {
-                            setState(() {
-                              widget.noneTriggerAction.displayRules
-                                  ?.remove(keyRule);
-                              widget.noneTriggerAction.displayRules?[key] =
-                                  value;
-                            });
-                          },
-                          newValue:
-                              widget.noneTriggerAction.displayRules![keyRule]!,
-                          oldValue: keyRule,
-                        ));
+                  context: context,
+                  builder: (c) => _RuleAddEditAlertDialog(
+                    onAdd: (key, value) {
+                      setState(() {
+                        widget.noneTriggerAction.displayRules?.remove(keyRule);
+                        widget.noneTriggerAction.displayRules?[key] = value;
+                      });
+                    },
+                    newValue: widget.noneTriggerAction.displayRules![keyRule]!,
+                    oldValue: keyRule,
+                  ),
+                );
               },
-              title: Text(widget.noneTriggerAction.displayRules![keyRule] ??
-                  "Not Found"),
+              title: Text(
+                widget.noneTriggerAction.displayRules![keyRule] ?? "Not Found",
+              ),
               subtitle: Text(keyRule),
             ),
-          )
+          ),
       ],
     );
   }
@@ -186,8 +192,11 @@ class _RuleAddEditAlertDialog extends StatelessWidget {
   final TextEditingController valueController = TextEditingController();
   final String oldValue;
   final String newValue;
-  _RuleAddEditAlertDialog(
-      {required this.onAdd, this.oldValue = "", this.newValue = ""}) {
+  _RuleAddEditAlertDialog({
+    required this.onAdd,
+    this.oldValue = "",
+    this.newValue = "",
+  }) {
     keyController.text = oldValue;
     valueController.text = newValue;
   }
@@ -197,14 +206,16 @@ class _RuleAddEditAlertDialog extends StatelessWidget {
       title: const Text("Rule"),
       actions: [
         TextButton(
-            onPressed: () => {
-                  onAdd(keyController.text, valueController.text),
-                  Navigator.pop(context)
-                },
-            child: const Text("Save")),
+          onPressed: () => {
+            onAdd(keyController.text, valueController.text),
+            Navigator.pop(context),
+          },
+          child: const Text("Save"),
+        ),
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"))
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Cancel"),
+        ),
       ],
       content: Column(
         mainAxisSize: MainAxisSize.min,

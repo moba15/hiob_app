@@ -58,14 +58,16 @@ class AdvancedWidgetView extends StatelessWidget {
     }
     if (Manager().generalManager.useBottomSheet) {
       showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) =>
-              advancedCustomWidget.customAlertDialogWidget!.widget);
+        context: context,
+        isScrollControlled: true,
+        builder: (context) =>
+            advancedCustomWidget.customAlertDialogWidget!.widget,
+      );
     } else {
       showDialog(
-          context: context,
-          builder: (_) => advancedCustomWidget.customAlertDialogWidget!.widget);
+        context: context,
+        builder: (_) => advancedCustomWidget.customAlertDialogWidget!.widget,
+      );
     }
   }
 }

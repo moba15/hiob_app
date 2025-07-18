@@ -21,17 +21,17 @@ class CustomLightWidget extends CustomWidgetDeprecated {
   String briDisplay = "Brightness";
   String reachableDisplay = "Reachable";
 
-  CustomLightWidget(
-      {required super.name,
-      this.onDataPoint,
-      this.briDataPoint,
-      this.briMax = 100,
-      this.briMin = 0,
-      this.reachableDataPoint,
-      this.briSteps = 10,
-      this.value,
-      this.briDisplay = "Brightness"})
-      : super(type: CustomWidgetTypeDeprecated.light, settings: {});
+  CustomLightWidget({
+    required super.name,
+    this.onDataPoint,
+    this.briDataPoint,
+    this.briMax = 100,
+    this.briMin = 0,
+    this.reachableDataPoint,
+    this.briSteps = 10,
+    this.value,
+    this.briDisplay = "Brightness",
+  }) : super(type: CustomWidgetTypeDeprecated.light, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -42,12 +42,14 @@ class CustomLightWidget extends CustomWidgetDeprecated {
         .getIoBrokerDataPointByObjectIDSync(json["onDataPointID"] ?? "");
     DataPoint? briDataPoint = json["briDataPointID"] == null
         ? null
-        : Manager.instance.deviceManager
-            .getIoBrokerDataPointByObjectIDSync(json["briDataPointID"]);
+        : Manager.instance.deviceManager.getIoBrokerDataPointByObjectIDSync(
+            json["briDataPointID"],
+          );
     DataPoint? reachableDataPoint = json["reachableDataPointID"] == null
         ? null
-        : Manager.instance.deviceManager
-            .getIoBrokerDataPointByObjectIDSync(json["reachableDataPointID"]);
+        : Manager.instance.deviceManager.getIoBrokerDataPointByObjectIDSync(
+            json["reachableDataPointID"],
+          );
 
     return CustomLightWidget(
       name: json["name"],
@@ -64,23 +66,21 @@ class CustomLightWidget extends CustomWidgetDeprecated {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "name": name,
-        "onDataPointID": onDataPoint?.id,
-        "briDataPointID": briDataPoint?.id,
-        "reachableDataPointID": reachableDataPoint?.id,
-        "briMax": briMax,
-        "briMin": briMin,
-        "briSteps": briSteps,
-        "briDisplay": briDisplay,
-        "reachableDisplay": reachableDisplay,
-        "value": value,
-      };
+    "type": type.toString(),
+    "name": name,
+    "onDataPointID": onDataPoint?.id,
+    "briDataPointID": briDataPoint?.id,
+    "reachableDataPointID": reachableDataPoint?.id,
+    "briMax": briMax,
+    "briMin": briMin,
+    "briSteps": briSteps,
+    "briDisplay": briDisplay,
+    "reachableDisplay": reachableDisplay,
+    "value": value,
+  };
 
   @override
-  Widget get widget => CustomLightWidgetView(
-        customLightWidget: this,
-      );
+  Widget get widget => CustomLightWidgetView(customLightWidget: this);
 
   @override
   CustomWidgetDeprecated clone() {
@@ -100,15 +100,19 @@ class CustomLightWidget extends CustomWidgetDeprecated {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomSwitchWidget(
-        id: id,
-        name: name,
-        dataPoint: onDataPoint?.id,
-        label: value,
-        customPopupmenu: CustomPopupmenu(customWidgets: [
+      id: id,
+      name: name,
+      dataPoint: onDataPoint?.id,
+      label: value,
+      customPopupmenu: CustomPopupmenu(
+        customWidgets: [
           CustomSliderWidget(
-              id: Manager().getRandString(12),
-              name: "Brightness",
-              dataPoint: briDataPoint?.id)
-        ]));
+            id: Manager().getRandString(12),
+            name: "Brightness",
+            dataPoint: briDataPoint?.id,
+          ),
+        ],
+      ),
+    );
   }
 }

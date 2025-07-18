@@ -12,10 +12,12 @@ part of 'custom_networkplayer_widget.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomNetworkPlayerWidget _$CustomNetworkPlayerWidgetFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomNetworkPlayerWidget.fromJson(json);
 }
 
@@ -50,25 +52,29 @@ mixin _$CustomNetworkPlayerWidget {
 
 /// @nodoc
 abstract class $CustomNetworkPlayerWidgetCopyWith<$Res> {
-  factory $CustomNetworkPlayerWidgetCopyWith(CustomNetworkPlayerWidget value,
-          $Res Function(CustomNetworkPlayerWidget) then) =
-      _$CustomNetworkPlayerWidgetCopyWithImpl<$Res, CustomNetworkPlayerWidget>;
+  factory $CustomNetworkPlayerWidgetCopyWith(
+    CustomNetworkPlayerWidget value,
+    $Res Function(CustomNetworkPlayerWidget) then,
+  ) = _$CustomNetworkPlayerWidgetCopyWithImpl<$Res, CustomNetworkPlayerWidget>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String? url,
-      int height,
-      int width,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+  $Res call({
+    String id,
+    String name,
+    String? url,
+    int height,
+    int width,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  });
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
 
 /// @nodoc
-class _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
-        $Val extends CustomNetworkPlayerWidget>
+class _$CustomNetworkPlayerWidgetCopyWithImpl<
+  $Res,
+  $Val extends CustomNetworkPlayerWidget
+>
     implements $CustomNetworkPlayerWidgetCopyWith<$Res> {
   _$CustomNetworkPlayerWidgetCopyWithImpl(this._value, this._then);
 
@@ -90,36 +96,39 @@ class _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      height: null == height
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as int,
-      width: null == width
-          ? _value.width
-          : width // ignore: cast_nullable_to_non_nullable
-              as int,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            url: freezed == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            height: null == height
+                ? _value.height
+                : height // ignore: cast_nullable_to_non_nullable
+                      as int,
+            width: null == width
+                ? _value.width
+                : width // ignore: cast_nullable_to_non_nullable
+                      as int,
+            customPopupmenu: freezed == customPopupmenu
+                ? _value.customPopupmenu
+                : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                      as CustomPopupmenu?,
+            customTheme: freezed == customTheme
+                ? _value.customTheme
+                : customTheme // ignore: cast_nullable_to_non_nullable
+                      as CustomThemeForWidget?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomNetworkPlayerWidget
@@ -141,19 +150,20 @@ class _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
 abstract class _$$CustomNetworkPlayerWidgetImplCopyWith<$Res>
     implements $CustomNetworkPlayerWidgetCopyWith<$Res> {
   factory _$$CustomNetworkPlayerWidgetImplCopyWith(
-          _$CustomNetworkPlayerWidgetImpl value,
-          $Res Function(_$CustomNetworkPlayerWidgetImpl) then) =
-      __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>;
+    _$CustomNetworkPlayerWidgetImpl value,
+    $Res Function(_$CustomNetworkPlayerWidgetImpl) then,
+  ) = __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String? url,
-      int height,
-      int width,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+  $Res call({
+    String id,
+    String name,
+    String? url,
+    int height,
+    int width,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  });
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -161,13 +171,16 @@ abstract class _$$CustomNetworkPlayerWidgetImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
-    extends _$CustomNetworkPlayerWidgetCopyWithImpl<$Res,
-        _$CustomNetworkPlayerWidgetImpl>
+    extends
+        _$CustomNetworkPlayerWidgetCopyWithImpl<
+          $Res,
+          _$CustomNetworkPlayerWidgetImpl
+        >
     implements _$$CustomNetworkPlayerWidgetImplCopyWith<$Res> {
   __$$CustomNetworkPlayerWidgetImplCopyWithImpl(
-      _$CustomNetworkPlayerWidgetImpl _value,
-      $Res Function(_$CustomNetworkPlayerWidgetImpl) _then)
-      : super(_value, _then);
+    _$CustomNetworkPlayerWidgetImpl _value,
+    $Res Function(_$CustomNetworkPlayerWidgetImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomNetworkPlayerWidget
   /// with the given fields replaced by the non-null parameter values.
@@ -182,51 +195,53 @@ class __$$CustomNetworkPlayerWidgetImplCopyWithImpl<$Res>
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_$CustomNetworkPlayerWidgetImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      height: null == height
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as int,
-      width: null == width
-          ? _value.width
-          : width // ignore: cast_nullable_to_non_nullable
-              as int,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ));
+    return _then(
+      _$CustomNetworkPlayerWidgetImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        url: freezed == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        height: null == height
+            ? _value.height
+            : height // ignore: cast_nullable_to_non_nullable
+                  as int,
+        width: null == width
+            ? _value.width
+            : width // ignore: cast_nullable_to_non_nullable
+                  as int,
+        customPopupmenu: freezed == customPopupmenu
+            ? _value.customPopupmenu
+            : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                  as CustomPopupmenu?,
+        customTheme: freezed == customTheme
+            ? _value.customTheme
+            : customTheme // ignore: cast_nullable_to_non_nullable
+                  as CustomThemeForWidget?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
-  _$CustomNetworkPlayerWidgetImpl(
-      {required this.id,
-      required this.name,
-      this.url,
-      this.height = 9,
-      this.width = 16,
-      this.customPopupmenu,
-      this.customTheme})
-      : super._();
+  _$CustomNetworkPlayerWidgetImpl({
+    required this.id,
+    required this.name,
+    this.url,
+    this.height = 9,
+    this.width = 16,
+    this.customPopupmenu,
+    this.customTheme,
+  }) : super._();
 
   factory _$CustomNetworkPlayerWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomNetworkPlayerWidgetImplFromJson(json);
@@ -259,27 +274,28 @@ class _$CustomNetworkPlayerWidgetImpl extends _CustomNetworkPlayerWidget {
   @override
   @pragma('vm:prefer-inline')
   _$$CustomNetworkPlayerWidgetImplCopyWith<_$CustomNetworkPlayerWidgetImpl>
-      get copyWith => __$$CustomNetworkPlayerWidgetImplCopyWithImpl<
-          _$CustomNetworkPlayerWidgetImpl>(this, _$identity);
+  get copyWith =>
+      __$$CustomNetworkPlayerWidgetImplCopyWithImpl<
+        _$CustomNetworkPlayerWidgetImpl
+      >(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomNetworkPlayerWidgetImplToJson(
-      this,
-    );
+    return _$$CustomNetworkPlayerWidgetImplToJson(this);
   }
 }
 
 abstract class _CustomNetworkPlayerWidget extends CustomNetworkPlayerWidget
     implements CustomWidget {
-  factory _CustomNetworkPlayerWidget(
-      {required String id,
-      required String name,
-      String? url,
-      int height,
-      int width,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme}) = _$CustomNetworkPlayerWidgetImpl;
+  factory _CustomNetworkPlayerWidget({
+    required String id,
+    required String name,
+    String? url,
+    int height,
+    int width,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  }) = _$CustomNetworkPlayerWidgetImpl;
   _CustomNetworkPlayerWidget._() : super._();
 
   factory _CustomNetworkPlayerWidget.fromJson(Map<String, dynamic> json) =
@@ -312,5 +328,5 @@ abstract class _CustomNetworkPlayerWidget extends CustomNetworkPlayerWidget
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomNetworkPlayerWidgetImplCopyWith<_$CustomNetworkPlayerWidgetImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -17,47 +17,48 @@ class CustomSimpleSwitchWidget extends CustomWidgetDeprecated {
   DataPoint? dataPoint;
   String? buttonText;
 
-  CustomSimpleSwitchWidget(
-      {required this.value,
-      required name,
-      required this.device,
-      this.dataPoint,
-      this.buttonText})
-      : super(
-            name: name,
-            type: CustomWidgetTypeDeprecated.simpleSwitch,
-            settings: {"text": value, "device": device?.id});
+  CustomSimpleSwitchWidget({
+    required this.value,
+    required name,
+    required this.device,
+    this.dataPoint,
+    this.buttonText,
+  }) : super(
+         name: name,
+         type: CustomWidgetTypeDeprecated.simpleSwitch,
+         settings: {"text": value, "device": device?.id},
+       );
 
   CustomSimpleSwitchWidget.edit()
-      : super.edit(type: CustomWidgetTypeDeprecated.simpleSwitch);
+    : super.edit(type: CustomWidgetTypeDeprecated.simpleSwitch);
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "value": value,
-        "device": device?.id, //Device ID
-        "dataPoint": dataPoint?.id, // DataPoint ID
-        "name": name,
-        "buttonText": buttonText,
-      };
+    "type": type.toString(),
+    "value": value,
+    "device": device?.id, //Device ID
+    "dataPoint": dataPoint?.id, // DataPoint ID
+    "name": name,
+    "buttonText": buttonText,
+  };
 
   factory CustomSimpleSwitchWidget.fromJson(Map<String, dynamic> json) {
-    Device? device =
-        Manager.instance.deviceManager.getDevice(json["device"] ?? "");
+    Device? device = Manager.instance.deviceManager.getDevice(
+      json["device"] ?? "",
+    );
     //DataPoint? onDataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"]);
     return CustomSimpleSwitchWidget(
-        value: json["value"],
-        name: json["name"],
-        device: device,
-        dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
-        buttonText: json["buttonText"]);
+      value: json["value"],
+      name: json["name"],
+      device: device,
+      dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
+      buttonText: json["buttonText"],
+    );
   }
 
   @override
   CustomWidgetSettingWidget get settingWidget {
-    return CustomSwitchWidgetSettingWidget(
-      customSimpleSwitchWidget: this,
-    );
+    return CustomSwitchWidgetSettingWidget(customSimpleSwitchWidget: this);
   }
 
   @override
@@ -77,10 +78,11 @@ class CustomSimpleSwitchWidget extends CustomWidgetDeprecated {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomButtonWidget(
-        id: id,
-        name: name,
-        dataPoint: dataPoint?.id,
-        label: value,
-        buttonLabel: buttonText);
+      id: id,
+      name: name,
+      dataPoint: dataPoint?.id,
+      label: value,
+      buttonLabel: buttonText,
+    );
   }
 }

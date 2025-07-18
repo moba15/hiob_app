@@ -86,7 +86,7 @@ class IoBrokerManager {
       "secondaryAddress": secondaryAddress,
       "useSecondaryAddress": useSecondaryAddress,
       "usePWD": usePwd,
-      "useSecureConnection": useSecureConnection
+      "useSecureConnection": useSecureConnection,
     });
   }
 

@@ -22,15 +22,15 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   }
 
   void _fetch() async {
-    List<String> list =
-        await Manager.instance.settingsSyncManager.fetchTemplatesFromAdapter();
+    List<String> list = await Manager.instance.settingsSyncManager
+        .fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));
   }
 
   void _onConfigAdded(emit) async {
-    List<String> list =
-        await Manager.instance.settingsSyncManager.fetchTemplatesFromAdapter();
+    List<String> list = await Manager.instance.settingsSyncManager
+        .fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));
   }

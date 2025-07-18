@@ -16,12 +16,12 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
   bool isExtended;
   IconWrapper? iconWrapper;
 
-  CustomGroupWidget(
-      {required super.name,
-      this.templates = const [],
-      this.isExtended = true,
-      this.iconWrapper})
-      : super(type: CustomWidgetTypeDeprecated.group, settings: {});
+  CustomGroupWidget({
+    required super.name,
+    this.templates = const [],
+    this.isExtended = true,
+    this.iconWrapper,
+  }) : super(type: CustomWidgetTypeDeprecated.group, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();
@@ -41,10 +41,7 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
           w.customWidget is CustomDivisionLineWidget) {
         widgets.add(w.customWidget.toJson());
       } else if (w is CustomWidgetWrapper) {
-        widgets.add({
-          "widget": w.name,
-          "id": w.id,
-        });
+        widgets.add({"widget": w.name, "id": w.id});
       }
     }
     map["templates"] = widgets;
@@ -64,33 +61,46 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
   }
 
   factory CustomGroupWidget.fromJSON(
-      Map<String, dynamic> json, List<CustomWidgetWrapper> allTemplates) {
+    Map<String, dynamic> json,
+    List<CustomWidgetWrapper> allTemplates,
+  ) {
     List<dynamic> templates = [];
     if (json["templates"] != null) {
-      for (Map<String, dynamic> templatesRaw in json["templates"] is String
-          ? jsonDecode(json["templates"])
-          : json["templates"]) {
+      for (Map<String, dynamic> templatesRaw
+          in json["templates"] is String
+              ? jsonDecode(json["templates"])
+              : json["templates"]) {
         if (templatesRaw.containsKey("widget")) {
-          if (!allTemplates
-              .any((element) => element.id == templatesRaw["id"])) {
+          if (!allTemplates.any(
+            (element) => element.id == templatesRaw["id"],
+          )) {
             continue; //TODO: Delete From file
           }
-          templates.add(allTemplates
-              .firstWhere((element) => element.id == templatesRaw["id"]));
+          templates.add(
+            allTemplates.firstWhere(
+              (element) => element.id == templatesRaw["id"],
+            ),
+          );
         } else if (templatesRaw.containsKey("isExtended")) {
           templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
         } else if (templatesRaw["type"] ==
             CustomWidgetTypeDeprecated.line.toString()) {
-          templates.add(CustomWidgetTemplate(
+          templates.add(
+            CustomWidgetTemplate(
               id: Manager.instance.getRandString(12),
               name: "Line",
-              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw)));
+              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw),
+            ),
+          );
         } else {
           //!maintain for downward compatibility
-          templates.add(CustomWidgetTemplate(
+          templates.add(
+            CustomWidgetTemplate(
               id: Manager.instance.getRandString(12),
               name: "Line",
-              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw)));
+              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw),
+            ),
+          );
           //Is a Line Widget
           //templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
         }
@@ -100,26 +110,31 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
     IconWrapper iconWrapper = const IconWrapper();
     if (json["iconID"] != null) {
       iconWrapper = IconWrapper(
-          iconDataType: IconDataType.flutterIcons,
-          iconData: IconData(int.parse(json["iconID"], radix: 16),
-              fontFamily: "MaterialIcons"));
+        iconDataType: IconDataType.flutterIcons,
+        iconData: IconData(
+          int.parse(json["iconID"], radix: 16),
+          fontFamily: "MaterialIcons",
+        ),
+      );
     } else if (json["iconWrapper"] != null) {
       iconWrapper = IconWrapper.fromJSON(json["iconWrapper"]);
     }
     return CustomGroupWidget(
-        name: json["name"],
-        templates: templates,
-        isExtended: json["isExtended"] ?? true,
-        iconWrapper: iconWrapper);
+      name: json["name"],
+      templates: templates,
+      isExtended: json["isExtended"] ?? true,
+      iconWrapper: iconWrapper,
+    );
   }
 
   @override
   CustomGroupWidget clone() {
     return CustomGroupWidget(
-        name: name,
-        templates: List.from(templates),
-        isExtended: isExtended,
-        iconWrapper: iconWrapper);
+      name: name,
+      templates: List.from(templates),
+      isExtended: isExtended,
+      iconWrapper: iconWrapper,
+    );
   }
 
   void addTemplates(List<CustomWidgetWrapper> templates) {

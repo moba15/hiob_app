@@ -69,8 +69,12 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
     // );
   }
 
-  void _sortByKey(int index, List<Map<String, dynamic>> data, bool asc,
-      List<String> columns) {
+  void _sortByKey(
+    int index,
+    List<Map<String, dynamic>> data,
+    bool asc,
+    List<String> columns,
+  ) {
     setState(() {
       sortedAsc = asc;
       sortedColumn = index;
@@ -85,12 +89,13 @@ class _DataSource extends DataTableSource {
   int? sortCol;
   bool sort;
   bool asc;
-  _DataSource(
-      {required this.data,
-      required this.columnKeys,
-      required this.sortCol,
-      required this.asc,
-      required this.sort}) {
+  _DataSource({
+    required this.data,
+    required this.columnKeys,
+    required this.sortCol,
+    required this.asc,
+    required this.sort,
+  }) {
     if (sortCol != null && sort) {
       _sortByKey(sortCol!, data, asc, columnKeys);
     }
@@ -102,33 +107,35 @@ class _DataSource extends DataTableSource {
     return DataRow.byIndex(index: index, cells: getCells(row));
   }
 
-  void _sortByKey(int index, List<Map<String, dynamic>> data, bool asc,
-      List<String> columns) {
+  void _sortByKey(
+    int index,
+    List<Map<String, dynamic>> data,
+    bool asc,
+    List<String> columns,
+  ) {
     String colToSort = columns[index];
-    data.sort(
-      (a, b) {
-        dynamic valueA = a[colToSort];
-        dynamic valueB = b[colToSort];
-        if (valueA == null && valueB != null) {
-          if (asc) {
-            return -1;
-          }
-          return 1;
-        } else if (valueA != null && valueB == null) {
-          if (asc) {
-            return 1;
-          }
+    data.sort((a, b) {
+      dynamic valueA = a[colToSort];
+      dynamic valueB = b[colToSort];
+      if (valueA == null && valueB != null) {
+        if (asc) {
           return -1;
-        } else if (valueA == null && valueB == null) {
-          return 0;
         }
-        if (!asc) {
-          return valueA.toString().compareTo(valueB.toString());
-        } else {
-          return valueB.toString().compareTo(valueA.toString());
+        return 1;
+      } else if (valueA != null && valueB == null) {
+        if (asc) {
+          return 1;
         }
-      },
-    );
+        return -1;
+      } else if (valueA == null && valueB == null) {
+        return 0;
+      }
+      if (!asc) {
+        return valueA.toString().compareTo(valueB.toString());
+      } else {
+        return valueB.toString().compareTo(valueA.toString());
+      }
+    });
   }
 
   @override

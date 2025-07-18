@@ -10,31 +10,35 @@ class CustomMediaPlayerWidget extends CustomWidgetDeprecated {
   String? url;
   int width = 16;
   int height = 9;
-  CustomMediaPlayerWidget(
-      {required super.name,
-      required this.url,
-      this.width = 16,
-      this.height = 9})
-      : super(type: CustomWidgetTypeDeprecated.mediaPlayer, settings: {});
+  CustomMediaPlayerWidget({
+    required super.name,
+    required this.url,
+    this.width = 16,
+    this.height = 9,
+  }) : super(type: CustomWidgetTypeDeprecated.mediaPlayer, settings: {});
 
   factory CustomMediaPlayerWidget.fromJSON(Map<String, dynamic> json) {
     return CustomMediaPlayerWidget(
-        name: json["name"],
-        url: json["url"],
-        width: json["width"] ?? 16,
-        height: json["height"] ?? 9);
+      name: json["name"],
+      url: json["url"],
+      width: json["width"] ?? 16,
+      height: json["height"] ?? 9,
+    );
   }
 
   @override
   CustomWidgetDeprecated clone() {
     return CustomMediaPlayerWidget(
-        name: name, url: url, width: width, height: height);
+      name: name,
+      url: url,
+      width: width,
+      height: height,
+    );
   }
 
   @override
-  CustomWidgetSettingWidget get settingWidget => CustomMediaPlayerSettings(
-        customMediaPlayerWidget: this,
-      );
+  CustomWidgetSettingWidget get settingWidget =>
+      CustomMediaPlayerSettings(customMediaPlayerWidget: this);
 
   @override
   Map<String, dynamic> toJson() {
@@ -42,18 +46,22 @@ class CustomMediaPlayerWidget extends CustomWidgetDeprecated {
       "url": url,
       "type": type.toString(),
       "height": height,
-      "width": width
+      "width": width,
     };
   }
 
   @override
-  Widget get widget => CustomMediaPlayerWidgetView(
-        customMediaPlayerWidget: this,
-      );
+  Widget get widget =>
+      CustomMediaPlayerWidgetView(customMediaPlayerWidget: this);
 
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomNetworkPlayerWidget(
-        id: id, name: name, height: height, url: url, width: width);
+      id: id,
+      name: name,
+      height: height,
+      url: url,
+      width: width,
+    );
   }
 }

@@ -21,13 +21,14 @@ class DataPoint {
 
   StreamController valueStreamController = StreamController.broadcast();
 
-  DataPoint(
-      {required this.name,
-      required this.id,
-      this.device,
-      this.role,
-      this.type,
-      this.otherDetails});
+  DataPoint({
+    required this.name,
+    required this.id,
+    this.device,
+    this.role,
+    this.type,
+    this.otherDetails,
+  });
 
   set setValue(dynamic value) {
     if (value != this.value) {

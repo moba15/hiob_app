@@ -11,10 +11,8 @@ part 'custom_colorpicker_widget_theme.g.dart';
 class CustomColorpickerWidgetTheme with _$CustomColorpickerWidgetTheme {
   CustomColorpickerWidgetTheme._();
   @Implements<CustomThemeForWidget>()
-  factory CustomColorpickerWidgetTheme(
-    String id,
-    LabelTheme labelTheme,
-  ) = _CustomColorpickerWidgetTheme;
+  factory CustomColorpickerWidgetTheme(String id, LabelTheme labelTheme) =
+      _CustomColorpickerWidgetTheme;
 
   Widget get settingWidget {
     return labelTheme.settingWidget;

@@ -11,10 +11,8 @@ part 'custom_switch_widget_theme.g.dart';
 class CustomSwitchWidgetTheme with _$CustomSwitchWidgetTheme {
   CustomSwitchWidgetTheme._();
   @Implements<CustomThemeForWidget>()
-  factory CustomSwitchWidgetTheme(
-    String id,
-    LabelTheme labelTheme,
-  ) = _CustomSwitchWidgetTheme;
+  factory CustomSwitchWidgetTheme(String id, LabelTheme labelTheme) =
+      _CustomSwitchWidgetTheme;
 
   Widget get settingWidget {
     return labelTheme.settingWidget;

@@ -7,34 +7,36 @@ part of 'custom_divisionline_widget.dart';
 // **************************************************************************
 
 _$CustomDivisionlineWidgetImpl _$$CustomDivisionlineWidgetImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomDivisionlineWidgetImpl(
-      type: $enumDecodeNullable(
-              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.divisionLine,
-      id: json['id'] as String,
-      name: json['name'] as String,
-      thickness: json['thickness'] ?? 1,
-      customPopupmenu: json['customPopupmenu'] == null
-          ? null
-          : CustomPopupmenu.fromJson(
-              json['customPopupmenu'] as Map<String, dynamic>),
-      customTheme: json['customTheme'] == null
-          ? null
-          : CustomThemeForWidget.fromJson(
-              json['customTheme'] as Map<String, dynamic>),
-    );
+  Map<String, dynamic> json,
+) => _$CustomDivisionlineWidgetImpl(
+  type:
+      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+      CustomWidgetTypeDeprecated.divisionLine,
+  id: json['id'] as String,
+  name: json['name'] as String,
+  thickness: json['thickness'] ?? 1,
+  customPopupmenu: json['customPopupmenu'] == null
+      ? null
+      : CustomPopupmenu.fromJson(
+          json['customPopupmenu'] as Map<String, dynamic>,
+        ),
+  customTheme: json['customTheme'] == null
+      ? null
+      : CustomThemeForWidget.fromJson(
+          json['customTheme'] as Map<String, dynamic>,
+        ),
+);
 
 Map<String, dynamic> _$$CustomDivisionlineWidgetImplToJson(
-        _$CustomDivisionlineWidgetImpl instance) =>
-    <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
-      'id': instance.id,
-      'name': instance.name,
-      'thickness': instance.thickness,
-      'customPopupmenu': instance.customPopupmenu,
-      'customTheme': instance.customTheme,
-    };
+  _$CustomDivisionlineWidgetImpl instance,
+) => <String, dynamic>{
+  'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+  'id': instance.id,
+  'name': instance.name,
+  'thickness': instance.thickness,
+  'customPopupmenu': instance.customPopupmenu,
+  'customTheme': instance.customTheme,
+};
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',

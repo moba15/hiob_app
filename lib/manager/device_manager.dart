@@ -26,8 +26,11 @@ class DeviceManager {
   StreamController<Pair<String, dynamic>> objectValueStreams =
       StreamController.broadcast();
 
-  DeviceManager(this.fileManager,
-      {required this.devicesList, required this.manager});
+  DeviceManager(
+    this.fileManager, {
+    required this.devicesList,
+    required this.manager,
+  });
 
   Future<List<Device>> loadDevices() async {
     //TODO Load devices from ioBroker sever if possible
@@ -71,41 +74,45 @@ class DeviceManager {
     String query =
         "SELECT * from ${appDatabase.statesTable.actualTableName} where id = ? LIMIT 1";
     List<QueryRow> resultRaw = await appDatabase
-        .customSelect(query, variables: [Variable<String>(objectID)]).get();
+        .customSelect(query, variables: [Variable<String>(objectID)])
+        .get();
     if (resultRaw.isNotEmpty) {
       return DataPoint(
-          id: resultRaw[0].data["id"],
-          name: resultRaw[0].data["state_name"],
-          role: resultRaw[0].data["role"] ?? "No Role");
+        id: resultRaw[0].data["id"],
+        name: resultRaw[0].data["state_name"],
+        role: resultRaw[0].data["role"] ?? "No Role",
+      );
     }
 
     Manager().talker.error(
-        "DeviceManager | getIoBrokerDataPointByObjectID | $objectID not found");
+      "DeviceManager | getIoBrokerDataPointByObjectID | $objectID not found",
+    );
     return null;
   }
 
-  Future<List<IobrokerObject>> getAllIobrokerObjects(
-      {required int limit}) async {
+  Future<List<IobrokerObject>> getAllIobrokerObjects({
+    required int limit,
+  }) async {
     String query =
         "SELECT * from ${appDatabase.statesTable.actualTableName} LIMIT $limit";
-    List<QueryRow> resultRaw =
-        await appDatabase.customSelect(query, variables: []).get();
-    List<IobrokerObject> result = resultRaw.map(
-      (e) {
-        return IobrokerObject(
-            id: e.data["id"],
-            name: e.data["state_name"],
-            parent: e.data["parent"],
-            desc: e.data["state_desc"],
-            stateType: e.data["stateType"],
-            read: e.data["read"] == 1 ? true : false,
-            write: e.data["write"] == 1 ? true : false,
-            role: e.data["role"] ?? "No Role",
-            max: e.data["max"],
-            min: e.data["min"],
-            step: e.data["step"]);
-      },
-    ).toList();
+    List<QueryRow> resultRaw = await appDatabase
+        .customSelect(query, variables: [])
+        .get();
+    List<IobrokerObject> result = resultRaw.map((e) {
+      return IobrokerObject(
+        id: e.data["id"],
+        name: e.data["state_name"],
+        parent: e.data["parent"],
+        desc: e.data["state_desc"],
+        stateType: e.data["stateType"],
+        read: e.data["read"] == 1 ? true : false,
+        write: e.data["write"] == 1 ? true : false,
+        role: e.data["role"] ?? "No Role",
+        max: e.data["max"],
+        min: e.data["min"],
+        step: e.data["step"],
+      );
+    }).toList();
     return result;
   }
 
@@ -127,11 +134,12 @@ class DeviceManager {
     }
     currentValues[dataPoint.id] = value;
     //TODO valueChange
-    objectValueStreams.sink
-        .add(Pair<String, dynamic>(first: dataPoint.id, second: value));
-    Manager()
-        .talker
-        .verbose("DeviceManager | valueChange | ${dataPoint.id} to $value");
+    objectValueStreams.sink.add(
+      Pair<String, dynamic>(first: dataPoint.id, second: value),
+    );
+    Manager().talker.verbose(
+      "DeviceManager | valueChange | ${dataPoint.id} to $value",
+    );
   }
 
   T? getCurrentValue<T>(String dataPointID) {
@@ -140,8 +148,8 @@ class DeviceManager {
 
   void subscribeToDataPointsIoB(ConnectionManager connectionManager) {
     if (connectionManager.stateUpdateClientStub != null) {
-      List<String> dataPoints =
-          Manager().screenManager.getgetDependentDataPoints();
+      List<String> dataPoints = Manager().screenManager
+          .getgetDependentDataPoints();
       for (Device device in devicesList) {
         if (device is IoBrokerDevice) {
           for (DataPoint dataPoint in device.dataPoints ?? []) {
@@ -150,96 +158,115 @@ class DeviceManager {
         }
       }
       manager.talker.debug(
-          "DeviceManager | subscribe to ${dataPoints.length} datapoints");
+        "DeviceManager | subscribe to ${dataPoints.length} datapoints",
+      );
       StreamSubscription<StatesValueUpdate>? subscription = connectionManager
           .stateUpdateClientStub
-          ?.subscibe(StateSubscribtion(
+          ?.subscibe(
+            StateSubscribtion(
               type: StateSubscribtion_SubscriptionType.subscripe,
-              stateIds: dataPoints))
-          .listen((value) async {
-        Manager().talker.debug(
-            "DeviceManager | stateSubscriptionStream | Recieved update from ${value.stateUpdates.length} states");
-        Manager().talker.verbose(
-                "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map(
-              (e) {
-                return "${e.stateId}: [${e.boolValue}, ${e.doubleValue}, ${e.stringValue}]";
-              },
-            )}");
+              stateIds: dataPoints,
+            ),
+          )
+          .listen(
+            (value) async {
+              Manager().talker.debug(
+                "DeviceManager | stateSubscriptionStream | Recieved update from ${value.stateUpdates.length} states",
+              );
+              Manager().talker.verbose(
+                "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map((e) {
+                  return "${e.stateId}: [${e.boolValue}, ${e.doubleValue}, ${e.stringValue}]";
+                })}",
+              );
 
-        for (StateValueUpdate update in value.stateUpdates) {
-          DataPoint? d = await getIoBrokerDataPointByObjectID(update.stateId);
-          if (d != null) {
-            valueChange(d, update.stringValue);
-          }
-        }
-      }, onError: (e) {
-        Manager()
-            .talker
-            .error("DeviceManager | stateSubscriptionStream  | onError: $e");
-            Manager().connectionManager .changeConnectionStatus(
-                ConnectionStatus.error, message: "State subscription error: $e");
-
-      });
+              for (StateValueUpdate update in value.stateUpdates) {
+                DataPoint? d = await getIoBrokerDataPointByObjectID(
+                  update.stateId,
+                );
+                if (d != null) {
+                  valueChange(d, update.stringValue);
+                }
+              }
+            },
+            onError: (e) {
+              Manager().talker.error(
+                "DeviceManager | stateSubscriptionStream  | onError: $e",
+              );
+              Manager().connectionManager.changeConnectionStatus(
+                ConnectionStatus.error,
+                message: "State subscription error: $e",
+              );
+            },
+          );
       if (subscription == null) {
         Manager().talker.error(
-            "DeviceManager | unable to create StreamSubscription for subscribed Datapoints");
+          "DeviceManager | unable to create StreamSubscription for subscribed Datapoints",
+        );
       }
     }
   }
 
   Stream<SearchStateResponse>? startSearch(
-      Stream<SearchStateRequest> searchStream) {
+    Stream<SearchStateRequest> searchStream,
+  ) {
     Manager().talker.debug("DeviceManager | startSearch ");
     if (manager.connectionManager.stateUpdateClientStub != null) {
       StreamController<SearchStateResponse> t = StreamController();
       //TODO Close streams
 
       StreamSubscription<SearchStateResponse> subscription = manager
-          .connectionManager.stateUpdateClientStub!
+          .connectionManager
+          .stateUpdateClientStub!
           .searchStateStream(searchStream)
-          .listen(
-        (value) {
-          Manager().talker.verbose(value.states.map((e) => e.stateId).reduce(
-                (value, element) => "$value,$element",
-              ));
-          t.sink.add(value);
-        },
-      );
+          .listen((value) {
+            Manager().talker.verbose(
+              value.states
+                  .map((e) => e.stateId)
+                  .reduce((value, element) => "$value,$element"),
+            );
+            t.sink.add(value);
+          });
       return t.stream;
     }
     return null;
   }
 
-  Future<List<IobrokerObject>> searchIobrokerObjects(String search,
-      {bool regex = false}) async {
+  Future<List<IobrokerObject>> searchIobrokerObjects(
+    String search, {
+    bool regex = false,
+  }) async {
     String query = regex
         ? "SELECT * from ${appDatabase.statesTable.actualTableName} where id REGEXP ? or state_name REGEXP ? or state_desc REGEXP ? LIMIT 250"
         : "SELECT * from ${appDatabase.statesTable.actualTableName} where id LIKE ? or state_name LIKE ? or state_desc LIKE ? LIMIT 250";
-    List<QueryRow> resultRaw =
-        await appDatabase.customSelect(query, variables: [
-      Variable<String>(regex ? search : "%$search%"),
-      Variable<String>(regex ? search : "%$search%"),
-      Variable<String>(regex ? search : "%$search%")
-    ]).get();
+    List<QueryRow> resultRaw = await appDatabase
+        .customSelect(
+          query,
+          variables: [
+            Variable<String>(regex ? search : "%$search%"),
+            Variable<String>(regex ? search : "%$search%"),
+            Variable<String>(regex ? search : "%$search%"),
+          ],
+        )
+        .get();
 
-    List<IobrokerObject> result = resultRaw.map(
-      (e) {
-        return IobrokerObject(
-            id: e.data["id"],
-            name: e.data["state_name"],
-            parent: e.data["parent"],
-            desc: e.data["state_desc"],
-            stateType: e.data["stateType"],
-            read: e.data["read"] == 1 ? true : false,
-            write: e.data["write"] == 1 ? true : false,
-            role: e.data["role"] ?? "No Role",
-            max: e.data["max"],
-            min: e.data["min"],
-            step: e.data["step"]);
-      },
-    ).toList();
+    List<IobrokerObject> result = resultRaw.map((e) {
+      return IobrokerObject(
+        id: e.data["id"],
+        name: e.data["state_name"],
+        parent: e.data["parent"],
+        desc: e.data["state_desc"],
+        stateType: e.data["stateType"],
+        read: e.data["read"] == 1 ? true : false,
+        write: e.data["write"] == 1 ? true : false,
+        role: e.data["role"] ?? "No Role",
+        max: e.data["max"],
+        min: e.data["min"],
+        step: e.data["step"],
+      );
+    }).toList();
     Manager().talker.verbose(
-        "DeviceManager | searchIobrokerObjects found ${result.length} results for $search");
+      "DeviceManager | searchIobrokerObjects found ${result.length} results for $search",
+    );
     return result;
   }
 
@@ -250,56 +277,69 @@ class DeviceManager {
       AllObjectsResults allObjectsResults = await connectionManager
           .stateUpdateClientStub!
           .getAllObjects(AllObjectRequest())
-          .onError(
-        (error, stackTrace) {
-          Manager()
-              .talker
-              .error("DeviceManager | updateStates $error", stackTrace);
-          return AllObjectsResults(states: {});
-        },
-      );
+          .onError((error, stackTrace) {
+            Manager().talker.error(
+              "DeviceManager | updateStates $error",
+              stackTrace,
+            );
+            return AllObjectsResults(states: {});
+          });
 
-    Set<String> localId = (await appDatabase.customSelect("SELECT id from (${appDatabase.statesTable.actualTableName})").get()).map((e) => e.data["id"] as String).toSet();
-    Set<String> serverIds = allObjectsResults.states.map((e) => e.stateId).toSet();
-    Set<String> toDelete = localId.difference(serverIds);
-
+      Set<String> localId =
+          (await appDatabase
+                  .customSelect(
+                    "SELECT id from (${appDatabase.statesTable.actualTableName})",
+                  )
+                  .get())
+              .map((e) => e.data["id"] as String)
+              .toSet();
+      Set<String> serverIds = allObjectsResults.states
+          .map((e) => e.stateId)
+          .toSet();
+      Set<String> toDelete = localId.difference(serverIds);
 
       await appDatabase.statesTable.deleteAll();
-      Manager()
-          .talker
-          .debug("DeviceManager | updateStates cleared statesTable");
       Manager().talker.debug(
-          "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects");
-      List<StatesTableCompanion> rowsToInsert =
-          allObjectsResults.states.map((e) {
-        return StatesTableCompanion.insert(
-            id: e.stateId,
-            read: e.common.read,
-            write: e.common.write,
-            stateName: Value(e.common.name),
-            stateDesc: Value(e.common.desc));
-      }).toList();
-      appDatabase.batch(
-        (batch) {
-
-          if(toDelete.isNotEmpty) {
-            batch.deleteWhere(appDatabase.statesTable, (t) => t.id.isIn(toDelete.toList()));
-          }
-
-          batch.insertAll(appDatabase.statesTable, [...rowsToInsert], mode: InsertMode.insertOrReplace);
-        },
-      ).onError(
-        (error, stackTrace) {
-          Manager().talker.error(
-              "DeviceManager | updateStates batch insert error; $error",
-              stackTrace);
-        },
-      ).then(
-        (value) async {
-          Manager().talker.debug(
-              "DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}");
-        },
+        "DeviceManager | updateStates cleared statesTable",
       );
+      Manager().talker.debug(
+        "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects",
+      );
+      List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((
+        e,
+      ) {
+        return StatesTableCompanion.insert(
+          id: e.stateId,
+          read: e.common.read,
+          write: e.common.write,
+          stateName: Value(e.common.name),
+          stateDesc: Value(e.common.desc),
+        );
+      }).toList();
+      appDatabase
+          .batch((batch) {
+            if (toDelete.isNotEmpty) {
+              batch.deleteWhere(
+                appDatabase.statesTable,
+                (t) => t.id.isIn(toDelete.toList()),
+              );
+            }
+
+            batch.insertAll(appDatabase.statesTable, [
+              ...rowsToInsert,
+            ], mode: InsertMode.insertOrReplace);
+          })
+          .onError((error, stackTrace) {
+            Manager().talker.error(
+              "DeviceManager | updateStates batch insert error; $error",
+              stackTrace,
+            );
+          })
+          .then((value) async {
+            Manager().talker.debug(
+              "DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}",
+            );
+          });
     }
   }
 }

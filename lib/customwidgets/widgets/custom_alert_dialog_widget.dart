@@ -11,21 +11,27 @@ class CustomAlertDialogWidget extends CustomWidgetDeprecated {
   String? title;
 
   CustomAlertDialogWidget({required super.name, this.templates, this.title})
-      : super(type: CustomWidgetTypeDeprecated.alertDialog, settings: {});
+    : super(type: CustomWidgetTypeDeprecated.alertDialog, settings: {});
 
   factory CustomAlertDialogWidget.fromJSON(Map<String, dynamic> json) {
-    List<Map<String, dynamic>> rawTemplates =
-        List.from(json["templates"] ?? []);
-    List<CustomWidgetWrapper> t =
-        Manager.instance.customWidgetManager.loadTemplate(rawTemplates);
+    List<Map<String, dynamic>> rawTemplates = List.from(
+      json["templates"] ?? [],
+    );
+    List<CustomWidgetWrapper> t = Manager.instance.customWidgetManager
+        .loadTemplate(rawTemplates);
     return CustomAlertDialogWidget(
-        name: json["name"], templates: t, title: json["title"]);
+      name: json["name"],
+      templates: t,
+      title: json["title"],
+    );
   }
 
   @override
   CustomWidgetDeprecated clone() {
     return CustomAlertDialogWidget(
-        name: name, templates: List.from(templates ?? []));
+      name: name,
+      templates: List.from(templates ?? []),
+    );
   }
 
   @override
@@ -35,11 +41,11 @@ class CustomAlertDialogWidget extends CustomWidgetDeprecated {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "name": name,
-        "templates": templates,
-        "title": title,
-      };
+    "type": type.toString(),
+    "name": name,
+    "templates": templates,
+    "title": title,
+  };
 
   @override
   // TODO: implement widget

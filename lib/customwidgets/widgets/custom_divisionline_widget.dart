@@ -8,9 +8,11 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
   Color color;
   int thickness;
 
-  CustomDivisionLineWidget(
-      {required super.name, this.color = Colors.black, this.thickness = 3})
-      : super(type: CustomWidgetTypeDeprecated.line, settings: {});
+  CustomDivisionLineWidget({
+    required super.name,
+    this.color = Colors.black,
+    this.thickness = 3,
+  }) : super(type: CustomWidgetTypeDeprecated.line, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -18,31 +20,32 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "name": name,
-        "colorR": color.red,
-        "colorB": color.blue,
-        "colorG": color.green,
-        "thickness": thickness,
-      };
+    "type": type.toString(),
+    "name": name,
+    "colorR": color.red,
+    "colorB": color.blue,
+    "colorG": color.green,
+    "thickness": thickness,
+  };
 
   factory CustomDivisionLineWidget.fromJson(Map<String, dynamic> json) {
     return CustomDivisionLineWidget(
-        name: json["name"],
-        color:
-            Color.fromRGBO(json["colorR"], json["colorG"], json["colorB"], 1),
-        thickness: json["thickness"]);
+      name: json["name"],
+      color: Color.fromRGBO(json["colorR"], json["colorG"], json["colorB"], 1),
+      thickness: json["thickness"],
+    );
   }
 
   @override
-  Widget get widget => Divider(
-        thickness: thickness.toDouble(),
-      );
+  Widget get widget => Divider(thickness: thickness.toDouble());
 
   @override
   CustomWidgetDeprecated clone() {
     return CustomDivisionLineWidget(
-        name: name, color: color, thickness: thickness);
+      name: name,
+      color: color,
+      thickness: thickness,
+    );
   }
 
   @override

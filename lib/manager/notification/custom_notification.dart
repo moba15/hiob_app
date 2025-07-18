@@ -13,15 +13,16 @@ class CustomNotification {
 
   DateTime? dateTime;
 
-  CustomNotification(
-      {this.title,
-      this.bodyText,
-      this.color,
-      this.id,
-      this.group = false,
-      this.locked = false,
-      this.dateTime,
-      this.read = false}) {
+  CustomNotification({
+    this.title,
+    this.bodyText,
+    this.color,
+    this.id,
+    this.group = false,
+    this.locked = false,
+    this.dateTime,
+    this.read = false,
+  }) {
     dateTime ??= DateTime.now();
   }
 
@@ -39,14 +40,15 @@ class CustomNotification {
       dateTime = DateTime.fromMillisecondsSinceEpoch(content["dateTime"]);
     }
     return CustomNotification(
-        title: content["title"],
-        bodyText: content["body"],
-        color: color,
-        id: id,
-        group: content["group"] ?? false,
-        locked: content["locked"] ?? false,
-        dateTime: dateTime,
-        read: content["read"] ?? false);
+      title: content["title"],
+      bodyText: content["body"],
+      color: color,
+      id: id,
+      group: content["group"] ?? false,
+      locked: content["locked"] ?? false,
+      dateTime: dateTime,
+      read: content["read"] ?? false,
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -59,17 +61,21 @@ class CustomNotification {
     };
   }
 
-  NotificationContent getNotificationContent(
-      {required id, required String channelKey, required String groupKey}) {
+  NotificationContent getNotificationContent({
+    required id,
+    required String channelKey,
+    required String groupKey,
+  }) {
     return NotificationContent(
-        id: this.id ?? id,
-        channelKey: channelKey,
-        groupKey: group ? groupKey : null,
-        title: title,
-        body: bodyText,
-        color: color,
-        locked: locked,
-        icon: "");
+      id: this.id ?? id,
+      channelKey: channelKey,
+      groupKey: group ? groupKey : null,
+      title: title,
+      body: bodyText,
+      color: color,
+      locked: locked,
+      icon: "",
+    );
   }
 
   Widget getDateWidget() {
@@ -91,7 +97,7 @@ class CustomNotification {
           Text(
             "${dateTime!.hour}:${dateTime!.minute < 10 ? ('0${dateTime!.minute}') : dateTime!.minute}:${dateTime!.second < 10 ? ('0${dateTime!.second}') : dateTime!.second}",
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          )
+          ),
         ],
       );
     }

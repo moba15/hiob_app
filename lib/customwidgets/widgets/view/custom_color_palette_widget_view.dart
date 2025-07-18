@@ -5,8 +5,10 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomColorPaletteWidgetView extends StatelessWidget {
   final CustomColorPaletteWidget colorPaletteWidget;
-  const CustomColorPaletteWidgetView(
-      {super.key, required this.colorPaletteWidget});
+  const CustomColorPaletteWidgetView({
+    super.key,
+    required this.colorPaletteWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -89,36 +91,42 @@ class CustomColorPaletteWidgetView extends StatelessWidget {
   }
 
   Future<Color> colorPickerDialog(
-      BuildContext context, DataPointBloc bloc, Color selectedColor) async {
-    return showColorPickerDialog(context, selectedColor,
-        width: 40,
-        height: 40,
-        borderRadius: 4,
-        spacing: 5,
-        runSpacing: 5,
-        wheelDiameter: 155,
-        heading: Text(
-          'Select color',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        subheading: Text(
-          'Select color shade',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        wheelSubheading: Text(
-          'Selected color and its shades',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        maxRecentColors: 2,
-        showRecentColors: false,
-        showMaterialName: false,
-        showColorName: false,
-        showColorCode: false,
-        enableTonalPalette: true,
-        enableShadesSelection: colorPaletteWidget.shadesSelection,
-        materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
-        colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
-        colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
-        pickersEnabled: colorPaletteWidget.pickersEnabled);
+    BuildContext context,
+    DataPointBloc bloc,
+    Color selectedColor,
+  ) async {
+    return showColorPickerDialog(
+      context,
+      selectedColor,
+      width: 40,
+      height: 40,
+      borderRadius: 4,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 155,
+      heading: Text(
+        'Select color',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      subheading: Text(
+        'Select color shade',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      wheelSubheading: Text(
+        'Selected color and its shades',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      maxRecentColors: 2,
+      showRecentColors: false,
+      showMaterialName: false,
+      showColorName: false,
+      showColorCode: false,
+      enableTonalPalette: true,
+      enableShadesSelection: colorPaletteWidget.shadesSelection,
+      materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
+      pickersEnabled: colorPaletteWidget.pickersEnabled,
+    );
   }
 }

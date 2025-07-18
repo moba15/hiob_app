@@ -12,7 +12,8 @@ part of 'custom_table_widget.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomTableWidget _$CustomTableWidgetFromJson(Map<String, dynamic> json) {
   return _CustomTableWidget.fromJson(json);
@@ -61,22 +62,24 @@ mixin _$CustomTableWidget {
 /// @nodoc
 abstract class $CustomTableWidgetCopyWith<$Res> {
   factory $CustomTableWidgetCopyWith(
-          CustomTableWidget value, $Res Function(CustomTableWidget) then) =
-      _$CustomTableWidgetCopyWithImpl<$Res, CustomTableWidget>;
+    CustomTableWidget value,
+    $Res Function(CustomTableWidget) then,
+  ) = _$CustomTableWidgetCopyWithImpl<$Res, CustomTableWidget>;
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      String? dataPoint,
-      String? header,
-      bool sortAsc,
-      int initalSortColumn,
-      bool initialSortEnabled,
-      int elementsPerPage,
-      Map<String, String> columns,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? dataPoint,
+    String? header,
+    bool sortAsc,
+    int initalSortColumn,
+    bool initialSortEnabled,
+    int elementsPerPage,
+    Map<String, String> columns,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  });
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -109,56 +112,59 @@ class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as String?,
-      header: freezed == header
-          ? _value.header
-          : header // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sortAsc: null == sortAsc
-          ? _value.sortAsc
-          : sortAsc // ignore: cast_nullable_to_non_nullable
-              as bool,
-      initalSortColumn: null == initalSortColumn
-          ? _value.initalSortColumn
-          : initalSortColumn // ignore: cast_nullable_to_non_nullable
-              as int,
-      initialSortEnabled: null == initialSortEnabled
-          ? _value.initialSortEnabled
-          : initialSortEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      elementsPerPage: null == elementsPerPage
-          ? _value.elementsPerPage
-          : elementsPerPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      columns: null == columns
-          ? _value.columns
-          : columns // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as CustomWidgetTypeDeprecated,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            dataPoint: freezed == dataPoint
+                ? _value.dataPoint
+                : dataPoint // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            header: freezed == header
+                ? _value.header
+                : header // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            sortAsc: null == sortAsc
+                ? _value.sortAsc
+                : sortAsc // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            initalSortColumn: null == initalSortColumn
+                ? _value.initalSortColumn
+                : initalSortColumn // ignore: cast_nullable_to_non_nullable
+                      as int,
+            initialSortEnabled: null == initialSortEnabled
+                ? _value.initialSortEnabled
+                : initialSortEnabled // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            elementsPerPage: null == elementsPerPage
+                ? _value.elementsPerPage
+                : elementsPerPage // ignore: cast_nullable_to_non_nullable
+                      as int,
+            columns: null == columns
+                ? _value.columns
+                : columns // ignore: cast_nullable_to_non_nullable
+                      as Map<String, String>,
+            customPopupmenu: freezed == customPopupmenu
+                ? _value.customPopupmenu
+                : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                      as CustomPopupmenu?,
+            customTheme: freezed == customTheme
+                ? _value.customTheme
+                : customTheme // ignore: cast_nullable_to_non_nullable
+                      as CustomThemeForWidget?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomTableWidget
@@ -179,24 +185,26 @@ class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
 /// @nodoc
 abstract class _$$CustomTableWidgetImplCopyWith<$Res>
     implements $CustomTableWidgetCopyWith<$Res> {
-  factory _$$CustomTableWidgetImplCopyWith(_$CustomTableWidgetImpl value,
-          $Res Function(_$CustomTableWidgetImpl) then) =
-      __$$CustomTableWidgetImplCopyWithImpl<$Res>;
+  factory _$$CustomTableWidgetImplCopyWith(
+    _$CustomTableWidgetImpl value,
+    $Res Function(_$CustomTableWidgetImpl) then,
+  ) = __$$CustomTableWidgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      String? dataPoint,
-      String? header,
-      bool sortAsc,
-      int initalSortColumn,
-      bool initialSortEnabled,
-      int elementsPerPage,
-      Map<String, String> columns,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? dataPoint,
+    String? header,
+    bool sortAsc,
+    int initalSortColumn,
+    bool initialSortEnabled,
+    int elementsPerPage,
+    Map<String, String> columns,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  });
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -206,9 +214,10 @@ abstract class _$$CustomTableWidgetImplCopyWith<$Res>
 class __$$CustomTableWidgetImplCopyWithImpl<$Res>
     extends _$CustomTableWidgetCopyWithImpl<$Res, _$CustomTableWidgetImpl>
     implements _$$CustomTableWidgetImplCopyWith<$Res> {
-  __$$CustomTableWidgetImplCopyWithImpl(_$CustomTableWidgetImpl _value,
-      $Res Function(_$CustomTableWidgetImpl) _then)
-      : super(_value, _then);
+  __$$CustomTableWidgetImplCopyWithImpl(
+    _$CustomTableWidgetImpl _value,
+    $Res Function(_$CustomTableWidgetImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomTableWidget
   /// with the given fields replaced by the non-null parameter values.
@@ -228,76 +237,78 @@ class __$$CustomTableWidgetImplCopyWithImpl<$Res>
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_$CustomTableWidgetImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as String?,
-      header: freezed == header
-          ? _value.header
-          : header // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sortAsc: null == sortAsc
-          ? _value.sortAsc
-          : sortAsc // ignore: cast_nullable_to_non_nullable
-              as bool,
-      initalSortColumn: null == initalSortColumn
-          ? _value.initalSortColumn
-          : initalSortColumn // ignore: cast_nullable_to_non_nullable
-              as int,
-      initialSortEnabled: null == initialSortEnabled
-          ? _value.initialSortEnabled
-          : initialSortEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      elementsPerPage: null == elementsPerPage
-          ? _value.elementsPerPage
-          : elementsPerPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      columns: null == columns
-          ? _value.columns
-          : columns // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ));
+    return _then(
+      _$CustomTableWidgetImpl(
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as CustomWidgetTypeDeprecated,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        dataPoint: freezed == dataPoint
+            ? _value.dataPoint
+            : dataPoint // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        header: freezed == header
+            ? _value.header
+            : header // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        sortAsc: null == sortAsc
+            ? _value.sortAsc
+            : sortAsc // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        initalSortColumn: null == initalSortColumn
+            ? _value.initalSortColumn
+            : initalSortColumn // ignore: cast_nullable_to_non_nullable
+                  as int,
+        initialSortEnabled: null == initialSortEnabled
+            ? _value.initialSortEnabled
+            : initialSortEnabled // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        elementsPerPage: null == elementsPerPage
+            ? _value.elementsPerPage
+            : elementsPerPage // ignore: cast_nullable_to_non_nullable
+                  as int,
+        columns: null == columns
+            ? _value.columns
+            : columns // ignore: cast_nullable_to_non_nullable
+                  as Map<String, String>,
+        customPopupmenu: freezed == customPopupmenu
+            ? _value.customPopupmenu
+            : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                  as CustomPopupmenu?,
+        customTheme: freezed == customTheme
+            ? _value.customTheme
+            : customTheme // ignore: cast_nullable_to_non_nullable
+                  as CustomThemeForWidget?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CustomTableWidgetImpl extends _CustomTableWidget {
-  _$CustomTableWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.tableNew,
-      required this.id,
-      required this.name,
-      required this.dataPoint,
-      this.header,
-      this.sortAsc = false,
-      this.initalSortColumn = 0,
-      this.initialSortEnabled = false,
-      this.elementsPerPage = 10,
-      required this.columns,
-      this.customPopupmenu,
-      this.customTheme})
-      : super._();
+  _$CustomTableWidgetImpl({
+    this.type = CustomWidgetTypeDeprecated.tableNew,
+    required this.id,
+    required this.name,
+    required this.dataPoint,
+    this.header,
+    this.sortAsc = false,
+    this.initalSortColumn = 0,
+    this.initialSortEnabled = false,
+    this.elementsPerPage = 10,
+    required this.columns,
+    this.customPopupmenu,
+    this.customTheme,
+  }) : super._();
 
   factory _$CustomTableWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomTableWidgetImplFromJson(json);
@@ -344,31 +355,32 @@ class _$CustomTableWidgetImpl extends _CustomTableWidget {
   @pragma('vm:prefer-inline')
   _$$CustomTableWidgetImplCopyWith<_$CustomTableWidgetImpl> get copyWith =>
       __$$CustomTableWidgetImplCopyWithImpl<_$CustomTableWidgetImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomTableWidgetImplToJson(
-      this,
-    );
+    return _$$CustomTableWidgetImplToJson(this);
   }
 }
 
 abstract class _CustomTableWidget extends CustomTableWidget
     implements CustomWidget {
-  factory _CustomTableWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      required String? dataPoint,
-      String? header,
-      bool sortAsc,
-      int initalSortColumn,
-      bool initialSortEnabled,
-      int elementsPerPage,
-      required Map<String, String> columns,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme}) = _$CustomTableWidgetImpl;
+  factory _CustomTableWidget({
+    CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    required String? dataPoint,
+    String? header,
+    bool sortAsc,
+    int initalSortColumn,
+    bool initialSortEnabled,
+    int elementsPerPage,
+    required Map<String, String> columns,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  }) = _$CustomTableWidgetImpl;
   _CustomTableWidget._() : super._();
 
   factory _CustomTableWidget.fromJson(Map<String, dynamic> json) =

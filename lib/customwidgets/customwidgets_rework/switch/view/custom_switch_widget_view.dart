@@ -18,7 +18,8 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
   DataPointBloc? bloc;
   @override
   void initState() {
-    title = widget.customSwitchWidget.label == null ||
+    title =
+        widget.customSwitchWidget.label == null ||
             widget.customSwitchWidget.label!.isEmpty
         ? widget.customSwitchWidget.name
         : widget.customSwitchWidget.label!;
@@ -32,7 +33,8 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
   @override
   void didUpdateWidget(covariant CustomSwitchWidgetView oldWidget) {
     setState(() {
-      title = widget.customSwitchWidget.label == null ||
+      title =
+          widget.customSwitchWidget.label == null ||
               widget.customSwitchWidget.label!.isEmpty
           ? widget.customSwitchWidget.name
           : widget.customSwitchWidget.label!;
@@ -66,25 +68,36 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
           child: SwitchListTile(
             title: Text(
               title,
-              style: (widget.customSwitchWidget.customTheme
-                      as CustomSwitchWidgetTheme?)
-                  ?.labelTheme
-                  .textStyle,
+              style:
+                  (widget.customSwitchWidget.customTheme
+                          as CustomSwitchWidgetTheme?)
+                      ?.labelTheme
+                      .textStyle,
             ),
             onChanged: (value) {
               if (value) {
                 //TODO
-                bloc?.add(DataPointValueUpdateRequest(
-                    value: bool.tryParse(
-                            widget.customSwitchWidget.sendIfOn.trim()) ??
+                bloc?.add(
+                  DataPointValueUpdateRequest(
+                    value:
+                        bool.tryParse(
+                          widget.customSwitchWidget.sendIfOn.trim(),
+                        ) ??
                         widget.customSwitchWidget.sendIfOn,
-                    oldValue: value));
+                    oldValue: value,
+                  ),
+                );
               } else {
-                bloc?.add(DataPointValueUpdateRequest(
-                    value: bool.tryParse(
-                            widget.customSwitchWidget.sendIfOff.trim()) ??
+                bloc?.add(
+                  DataPointValueUpdateRequest(
+                    value:
+                        bool.tryParse(
+                          widget.customSwitchWidget.sendIfOff.trim(),
+                        ) ??
                         widget.customSwitchWidget.sendIfOn,
-                    oldValue: value));
+                    oldValue: value,
+                  ),
+                );
               }
             },
             value: widget.customSwitchWidget.sendIfOn == state.value.toString(),

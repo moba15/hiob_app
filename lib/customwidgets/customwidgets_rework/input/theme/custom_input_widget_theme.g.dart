@@ -7,15 +7,12 @@ part of 'custom_input_widget_theme.dart';
 // **************************************************************************
 
 _$CustomInputWidgetThemeImpl _$$CustomInputWidgetThemeImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomInputWidgetThemeImpl(
-      json['id'] as String,
-      LabelTheme.fromJson(json['labelTheme'] as Map<String, dynamic>),
-    );
+  Map<String, dynamic> json,
+) => _$CustomInputWidgetThemeImpl(
+  json['id'] as String,
+  LabelTheme.fromJson(json['labelTheme'] as Map<String, dynamic>),
+);
 
 Map<String, dynamic> _$$CustomInputWidgetThemeImplToJson(
-        _$CustomInputWidgetThemeImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'labelTheme': instance.labelTheme,
-    };
+  _$CustomInputWidgetThemeImpl instance,
+) => <String, dynamic>{'id': instance.id, 'labelTheme': instance.labelTheme};

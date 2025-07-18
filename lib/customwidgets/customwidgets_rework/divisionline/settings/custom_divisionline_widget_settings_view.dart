@@ -10,8 +10,10 @@ import 'package:smart_home/utils/theme.dart';
 class CustomDivisionlineWidgetSettingsView
     extends CustomWidgetSettingStatefulWidget {
   final CustomDivisionlineWidget customDivisionlineWidget;
-  const CustomDivisionlineWidgetSettingsView(
-      {super.key, required this.customDivisionlineWidget});
+  const CustomDivisionlineWidgetSettingsView({
+    super.key,
+    required this.customDivisionlineWidget,
+  });
 
   @override
   State<CustomDivisionlineWidgetSettingsView> createState() =>
@@ -63,17 +65,18 @@ class _CustomDivisionlineWidgetSettingsViewState
               onChanged: (s) => {
                 widget.customDivisionlineWidget.thickness =
                     int.tryParse(s) ?? 3,
-                c.update(widget.customDivisionlineWidget)
+                c.update(widget.customDivisionlineWidget),
               },
               decoration: const InputDecoration(labelText: "Thickness"),
               controller: TextEditingController(
-                  text: widget.customDivisionlineWidget.thickness.toString()),
+                text: widget.customDivisionlineWidget.thickness.toString(),
+              ),
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.digitsOnly,
               ],
             ),
-          )
+          ),
         ],
       ),
     );

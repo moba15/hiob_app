@@ -19,16 +19,16 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
 
   bool shadesSelection;
 
-  CustomColorPaletteWidget(
-      {required super.name,
-      this.value,
-      required this.pickersEnabled,
-      this.dataPoint,
-      this.device,
-      this.prefix = "0x",
-      this.alpha = false,
-      this.shadesSelection = true})
-      : super(type: CustomWidgetTypeDeprecated.colorPallete, settings: {}) {
+  CustomColorPaletteWidget({
+    required super.name,
+    this.value,
+    required this.pickersEnabled,
+    this.dataPoint,
+    this.device,
+    this.prefix = "0x",
+    this.alpha = false,
+    this.shadesSelection = true,
+  }) : super(type: CustomWidgetTypeDeprecated.colorPallete, settings: {}) {
     for (ColorPickerType type in ColorPickerType.values) {
       if (!pickersEnabled.containsKey(type) && type != ColorPickerType.custom) {
         pickersEnabled[type] = false;
@@ -39,13 +39,14 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
   @override
   CustomWidgetDeprecated clone() {
     return CustomColorPaletteWidget(
-        name: name,
-        value: value,
-        pickersEnabled: pickersEnabled,
-        dataPoint: dataPoint,
-        device: device,
-        prefix: prefix,
-        alpha: alpha);
+      name: name,
+      value: value,
+      pickersEnabled: pickersEnabled,
+      dataPoint: dataPoint,
+      device: device,
+      prefix: prefix,
+      alpha: alpha,
+    );
   }
 
   @override
@@ -54,8 +55,9 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
 
   @override
   Map<String, dynamic> toJson() {
-    Map<String, bool> m =
-        pickersEnabled.map((key, value) => MapEntry(key.toString(), value));
+    Map<String, bool> m = pickersEnabled.map(
+      (key, value) => MapEntry(key.toString(), value),
+    );
     return {
       "type": type.toString(),
       "name": name,
@@ -76,30 +78,36 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
     Map<String, dynamic> pickersEnabledRaw = json["pickersEnabled"] ?? {};
 
     return CustomColorPaletteWidget(
-        name: json["name"],
-        value: json["value"],
-        prefix: json["prefix"] ?? "0x",
-        alpha: json["alpha"] ?? false,
-        shadesSelection: json["shadesSelection"] ?? true,
-        dataPoint: Manager.instance.deviceManager
-            .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? ""),
-        device: Manager.instance.deviceManager.getDevice(json["device"] ?? ""),
-        pickersEnabled: pickersEnabledRaw.map((key, value) => MapEntry(
-            ColorPickerType.values
-                .firstWhere((element) => element.toString() == key),
-            value)));
+      name: json["name"],
+      value: json["value"],
+      prefix: json["prefix"] ?? "0x",
+      alpha: json["alpha"] ?? false,
+      shadesSelection: json["shadesSelection"] ?? true,
+      dataPoint: Manager.instance.deviceManager
+          .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? ""),
+      device: Manager.instance.deviceManager.getDevice(json["device"] ?? ""),
+      pickersEnabled: pickersEnabledRaw.map(
+        (key, value) => MapEntry(
+          ColorPickerType.values.firstWhere(
+            (element) => element.toString() == key,
+          ),
+          value,
+        ),
+      ),
+    );
   }
 
   @override
   CustomWidget migrate({required String id, required String name}) {
     return CustomColorPickerWidget(
-        id: id,
-        name: name,
-        dataPoint: dataPoint?.id,
-        alpha: alpha,
-        label: value,
-        prefix: prefix,
-        pickersEnabled: pickersEnabled,
-        shadesSelection: shadesSelection);
+      id: id,
+      name: name,
+      dataPoint: dataPoint?.id,
+      alpha: alpha,
+      label: value,
+      prefix: prefix,
+      pickersEnabled: pickersEnabled,
+      shadesSelection: shadesSelection,
+    );
   }
 }

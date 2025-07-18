@@ -13,7 +13,7 @@ enum TriggerActionType {
   slider,
   multiSelection,
 
-  none //VALUE,
+  none, //VALUE,
 }
 
 extension TriggerActionTypeExtension on TriggerActionType {
@@ -41,7 +41,9 @@ extension TriggerActionTypeExtension on TriggerActionType {
         return SwitchTriggerAction(dataPoint: null);
       case TriggerActionType.multiSelection:
         return MultiSelectionTriggerAction(
-            dataPoint: null, selections: Map.from({}));
+          dataPoint: null,
+          selections: Map.from({}),
+        );
       case TriggerActionType.slider:
         return SliderTriggerAction(dataPoint: null);
       case TriggerActionType.none:
@@ -68,8 +70,9 @@ abstract class TriggerAction {
       return NoneTriggerAction(dataPoint: null, displayRules: null);
     }
     TriggerActionType type = TriggerActionType.values.firstWhere(
-        (element) => element.toString() == typeRaw,
-        orElse: () => TriggerActionType.none);
+      (element) => element.toString() == typeRaw,
+      orElse: () => TriggerActionType.none,
+    );
     switch (type) {
       case TriggerActionType.none:
         return NoneTriggerAction.fromJSON(map);

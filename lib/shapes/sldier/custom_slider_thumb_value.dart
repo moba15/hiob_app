@@ -5,8 +5,11 @@ class CustomSliderThumbValueCircle extends SliderComponentShape {
   final int max;
   final int min;
 
-  CustomSliderThumbValueCircle(
-      {required this.thumbRadius, this.max = 100, this.min = 0});
+  CustomSliderThumbValueCircle({
+    required this.thumbRadius,
+    this.max = 100,
+    this.min = 0,
+  });
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
@@ -14,21 +17,27 @@ class CustomSliderThumbValueCircle extends SliderComponentShape {
   }
 
   @override
-  void paint(PaintingContext context, Offset center,
-      {required Animation<double> activationAnimation,
-      required Animation<double> enableAnimation,
-      required bool isDiscrete,
-      required TextPainter labelPainter,
-      required RenderBox parentBox,
-      required SliderThemeData sliderTheme,
-      required TextDirection textDirection,
-      required double value,
-      required double textScaleFactor,
-      required Size sizeWithOverflow}) {
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
     final Canvas canvas = context.canvas;
 
     final paint = Paint()
-      ..color = sliderTheme.thumbColor ?? Colors.blue //Thumb Background Color
+      ..color =
+          sliderTheme.thumbColor ??
+          Colors
+              .blue //Thumb Background Color
       ..style = PaintingStyle.fill;
 
     TextSpan span = TextSpan(
@@ -41,10 +50,15 @@ class CustomSliderThumbValueCircle extends SliderComponentShape {
     );
 
     TextPainter tp = TextPainter(
-        text: span, textAlign: TextAlign.center, textDirection: textDirection);
+      text: span,
+      textAlign: TextAlign.center,
+      textDirection: textDirection,
+    );
     tp.layout();
-    Offset textCenter =
-        Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
+    Offset textCenter = Offset(
+      center.dx - (tp.width / 2),
+      center.dy - (tp.height / 2),
+    );
 
     canvas.drawCircle(center, thumbRadius * .9, paint);
     tp.paint(canvas, textCenter);

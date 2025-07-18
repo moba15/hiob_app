@@ -11,9 +11,12 @@ class ConnectionCubit extends Cubit<ConnectionStatus> {
 
   ConnectionCubit({required ConnectionStatus status}) : super(status) {
     connectionSub = Manager
-        .instance.connectionManager.connectionStatusStreamController.stream
+        .instance
+        .connectionManager
+        .connectionStatusStreamController
+        .stream
         .listen((event) {
-      emit(event);
-    });
+          emit(event);
+        });
   }
 }

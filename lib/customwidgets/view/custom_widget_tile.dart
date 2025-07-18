@@ -13,21 +13,20 @@ class CustomWidgetTemplateTile extends StatelessWidget {
   final bool selected;
   //Set null if no selection should be supported
   final Function()? toggleSelect;
-  const CustomWidgetTemplateTile(
-      {super.key,
-      required this.customWidget,
-      required this.customWidgetManager,
-      required this.toggleSelect,
-      this.selectedMode = false,
-      this.selected = false,
-      this.onSave});
+  const CustomWidgetTemplateTile({
+    super.key,
+    required this.customWidget,
+    required this.customWidgetManager,
+    required this.toggleSelect,
+    this.selectedMode = false,
+    this.selected = false,
+    this.onSave,
+  });
 
   @override
   Widget build(BuildContext context) {
-    CustomWidgetTypeDeprecated? type =
-        CustomWidgetTypeDeprecated.values.firstWhere(
-      (element) => element.name == customWidget.type?.name,
-    );
+    CustomWidgetTypeDeprecated? type = CustomWidgetTypeDeprecated.values
+        .firstWhere((element) => element.name == customWidget.type?.name);
     return ListTile(
       title: Text(customWidget.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
@@ -40,7 +39,8 @@ class CustomWidgetTemplateTile extends StatelessWidget {
                 if (toggleSelect != null) {
                   toggleSelect!();
                 }
-              })
+              },
+            )
           : null,
       onLongPress: toggleSelect,
       onTap: () {
@@ -51,13 +51,15 @@ class CustomWidgetTemplateTile extends StatelessWidget {
           return;
         }
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (c) => TemplateAddPage(
-                      customWidgetManager: customWidgetManager,
-                      preSelectedTemplate: customWidget,
-                      onSave: onSave,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (c) => TemplateAddPage(
+              customWidgetManager: customWidgetManager,
+              preSelectedTemplate: customWidget,
+              onSave: onSave,
+            ),
+          ),
+        );
       },
     );
   }

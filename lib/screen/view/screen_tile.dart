@@ -9,11 +9,12 @@ class ScreenListTile extends StatelessWidget {
   final ScreenManager screenManager;
   final bool selected;
 
-  const ScreenListTile(
-      {super.key,
-      required this.screen,
-      required this.screenManager,
-      this.selected = false});
+  const ScreenListTile({
+    super.key,
+    required this.screen,
+    required this.screenManager,
+    this.selected = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +26,12 @@ class ScreenListTile extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward_ios_sharp),
       onTap: () => {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ScreenEditPage(
-                      screen: screen,
-                      screenManager: screenManager,
-                    )))
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ScreenEditPage(screen: screen, screenManager: screenManager),
+          ),
+        ),
       },
     );
   }

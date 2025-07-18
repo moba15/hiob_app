@@ -18,17 +18,24 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
   Device device;
 
   DeviceBloc(this.device, {required DateTime t})
-      : super(DeviceInitial(
-            t: t, value: device.value, status: device.getDeviceStatus())) {
+    : super(
+        DeviceInitial(
+          t: t,
+          value: device.value,
+          status: device.getDeviceStatus(),
+        ),
+      ) {
     on<DeviceValueUpdate>(_onValueUpdated);
     on<DeviceIdle>(_onDeviceIdle);
     on<DeviceValueUpdateRequest>(_onValueUpdateRequest);
-    deviceValueSubscription =
-        device.valueStreamController.stream.listen((event) {
+    deviceValueSubscription = device.valueStreamController.stream.listen((
+      event,
+    ) {
       add(DeviceValueUpdate(value: event));
     });
-    deviceIdleSubscription =
-        device.lastUpdatedStreamController.stream.listen((event) {
+    deviceIdleSubscription = device.lastUpdatedStreamController.stream.listen((
+      event,
+    ) {
       add(DeviceIdle(lastUpdated: event));
     });
   }
@@ -41,31 +48,46 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
   }
 
   void _onValueUpdated(DeviceValueUpdate event, Emitter<DeviceState> emit) {
-    emit(DeviceState(
+    emit(
+      DeviceState(
         value: event.value,
         lastUpdated: DateTime.now(),
-        status: DeviceStatus.ready));
+        status: DeviceStatus.ready,
+      ),
+    );
     device.value = event.value;
     device.lastUpdated = DateTime.now();
   }
 
   void _onValueUpdateRequest(
-      DeviceValueUpdateRequest event, Emitter<DeviceState> emit) {
-    emit(DeviceState(
+    DeviceValueUpdateRequest event,
+    Emitter<DeviceState> emit,
+  ) {
+    emit(
+      DeviceState(
         value: event.value,
         lastUpdated: DateTime.now(),
-        status: DeviceStatus.ready));
+        status: DeviceStatus.ready,
+      ),
+    );
     device.value = event.value;
     if (device is IoBrokerDevice) {
-      Manager.instance.connectionManager.sendMsg(StateChangeRequestIobPackage(
-          stateID: (device as IoBrokerDevice).objectID, value: event.value));
+      Manager.instance.connectionManager.sendMsg(
+        StateChangeRequestIobPackage(
+          stateID: (device as IoBrokerDevice).objectID,
+          value: event.value,
+        ),
+      );
     }
   }
 
   void _onDeviceIdle(DeviceIdle event, Emitter<DeviceState> emit) {
-    emit(DeviceState(
+    emit(
+      DeviceState(
         value: state.value,
         lastUpdated: event.lastUpdated,
-        status: state.status));
+        status: state.status,
+      ),
+    );
   }
 }

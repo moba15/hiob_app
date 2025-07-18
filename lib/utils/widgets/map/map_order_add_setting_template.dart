@@ -13,18 +13,19 @@ class MapOrderSettingTemplate<V> extends StatefulWidget {
   final String keyTileText;
   final String valueTileText;
 
-  const MapOrderSettingTemplate(
-      {super.key,
-      required this.title,
-      required this.data,
-      required this.onChange,
-      required this.toStr,
-      required this.fromStr,
-      required this.alertTitle,
-      required this.alertKeyText,
-      required this.alertValueText,
-      required this.keyTileText,
-      required this.valueTileText});
+  const MapOrderSettingTemplate({
+    super.key,
+    required this.title,
+    required this.data,
+    required this.onChange,
+    required this.toStr,
+    required this.fromStr,
+    required this.alertTitle,
+    required this.alertKeyText,
+    required this.alertValueText,
+    required this.keyTileText,
+    required this.valueTileText,
+  });
 
   @override
   State<MapOrderSettingTemplate> createState() =>
@@ -51,22 +52,24 @@ class _MapOrderSettingTemplateState<V>
         children: [
           widget.title,
           TextButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => _AddAlertDialog(
-                          title: widget.alertTitle,
-                          valueLabelText: widget.alertValueText,
-                          keyLabelText: widget.alertKeyText,
-                          onAdd: (key, value) {
-                            setState(() {
-                              data[key] = widget.fromStr(value);
-                            });
-                            widget.onChange(data);
-                          },
-                        ));
-              },
-              child: const Text("Add")),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => _AddAlertDialog(
+                  title: widget.alertTitle,
+                  valueLabelText: widget.alertValueText,
+                  keyLabelText: widget.alertKeyText,
+                  onAdd: (key, value) {
+                    setState(() {
+                      data[key] = widget.fromStr(value);
+                    });
+                    widget.onChange(data);
+                  },
+                ),
+              );
+            },
+            child: const Text("Add"),
+          ),
         ],
       ),
       children: [
@@ -128,7 +131,7 @@ class _MapOrderSettingTemplateState<V>
           },
           onReorder: reorder,
           itemCount: data.length,
-        )
+        ),
       ],
     );
   }
@@ -189,13 +192,14 @@ class _AddAlertDialog extends StatelessWidget {
   final TextEditingController keyController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
 
-  _AddAlertDialog(
-      {required this.title,
-      required this.onAdd,
-      required this.valueLabelText,
-      required this.keyLabelText,
-      this.keyValue = "",
-      this.valueValue = ""}) {
+  _AddAlertDialog({
+    required this.title,
+    required this.onAdd,
+    required this.valueLabelText,
+    required this.keyLabelText,
+    this.keyValue = "",
+    this.valueValue = "",
+  }) {
     keyController.text = keyValue;
     valueController.text = valueValue;
   }
@@ -206,14 +210,16 @@ class _AddAlertDialog extends StatelessWidget {
       title: title,
       actions: [
         TextButton(
-            onPressed: () => {
-                  onAdd(keyController.text, valueController.text),
-                  Navigator.pop(context)
-                },
-            child: const Text("Save")),
+          onPressed: () => {
+            onAdd(keyController.text, valueController.text),
+            Navigator.pop(context),
+          },
+          child: const Text("Save"),
+        ),
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"))
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Cancel"),
+        ),
       ],
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -227,7 +233,7 @@ class _AddAlertDialog extends StatelessWidget {
               decoration: InputDecoration(labelText: valueLabelText),
               controller: valueController,
             ),
-          )
+          ),
         ],
       ),
     );

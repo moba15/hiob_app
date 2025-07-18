@@ -22,9 +22,9 @@ part 'custom_popupmenu.g.dart';
 class CustomPopupmenu with _$CustomPopupmenu {
   CustomPopupmenu._();
 
-  factory CustomPopupmenu(
-      {@CustomWidgetConverter()
-      required List<CustomWidget> customWidgets}) = _CustomPopupmenu;
+  factory CustomPopupmenu({
+    @CustomWidgetConverter() required List<CustomWidget> customWidgets,
+  }) = _CustomPopupmenu;
 
   factory CustomPopupmenu.fromJson(Map<String, dynamic> json) =>
       _$CustomPopupmenuFromJson(json);
@@ -35,9 +35,10 @@ class CustomPopupmenu with _$CustomPopupmenu {
     }
 
     showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) => CutsomPopupmenuView(customPopupmenu: this));
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => CutsomPopupmenuView(customPopupmenu: this),
+    );
 
     return true;
   }
@@ -51,8 +52,11 @@ class CustomPopupmenu with _$CustomPopupmenu {
   }
 
   void reorder(int oldIndex, int newIndex) {
-    ReorderHelper.rorderList(customWidgets,
-        oldIndex: oldIndex, newIndex: newIndex);
+    ReorderHelper.rorderList(
+      customWidgets,
+      oldIndex: oldIndex,
+      newIndex: newIndex,
+    );
   }
 }
 
@@ -82,9 +86,10 @@ class CustomWidgetConverter
         return CustomSwitchWidget.fromJson(json);
       default:
         return CustomValueWidget(
-            id: Manager().getRandString(12),
-            name: "Please only use new widgets",
-            dataPoint: null);
+          id: Manager().getRandString(12),
+          name: "Please only use new widgets",
+          dataPoint: null,
+        );
     }
   }
 

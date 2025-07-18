@@ -10,8 +10,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomButtonWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomButtonWidget customButtonWidget;
-  const CustomButtonWidgetSettingsView(
-      {super.key, required this.customButtonWidget});
+  const CustomButtonWidgetSettingsView({
+    super.key,
+    required this.customButtonWidget,
+  });
 
   @override
   State<CustomButtonWidgetSettingsView> createState() =>
@@ -47,10 +49,12 @@ class _CustomButtonWidgetSettingsViewState
 
   @override
   void initState() {
-    buttonLabelEditingController =
-        TextEditingController(text: widget.customButtonWidget.buttonLabel);
-    valueTextEditingController =
-        TextEditingController(text: widget.customButtonWidget.label);
+    buttonLabelEditingController = TextEditingController(
+      text: widget.customButtonWidget.buttonLabel,
+    );
+    valueTextEditingController = TextEditingController(
+      text: widget.customButtonWidget.label,
+    );
     super.initState();
   }
 
@@ -58,27 +62,36 @@ class _CustomButtonWidgetSettingsViewState
   Widget build(BuildContext context) {
     c = context.read<CustomWidgetBlocCubit>();
     return Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(children: [
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: valueTextEditingController,
-            decoration: const InputDecoration(label: Text("Label (optional)")),
-            onChanged: (s) =>
-                {_valueTextManuallyChanged = true, valueTextChanged(s)},
-          )),
+            child: TextField(
+              controller: valueTextEditingController,
+              decoration: const InputDecoration(
+                label: Text("Label (optional)"),
+              ),
+              onChanged: (s) => {
+                _valueTextManuallyChanged = true,
+                valueTextChanged(s),
+              },
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: StateSearchBar(
-            onSelected: onSelect,
-          )),
+            child: StateSearchBar(onSelected: onSelect),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: buttonLabelEditingController,
-            decoration:
-                const InputDecoration(label: Text("Button label (optional)")),
-            onChanged: (s) => {buttonLabelChanged(s)},
-          ))
-        ]));
+            child: TextField(
+              controller: buttonLabelEditingController,
+              decoration: const InputDecoration(
+                label: Text("Button label (optional)"),
+              ),
+              onChanged: (s) => {buttonLabelChanged(s)},
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void onSelect(IobrokerObject iobrokerObject) {

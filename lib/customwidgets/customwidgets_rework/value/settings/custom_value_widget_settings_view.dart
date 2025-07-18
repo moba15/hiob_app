@@ -13,8 +13,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomValueWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomValueWidget customValueWidget;
-  const CustomValueWidgetSettingsView(
-      {super.key, required this.customValueWidget});
+  const CustomValueWidgetSettingsView({
+    super.key,
+    required this.customValueWidget,
+  });
 
   @override
   State<CustomValueWidgetSettingsView> createState() =>
@@ -50,14 +52,18 @@ class _CustomTableWidgetSettingsViewState
 
   @override
   void initState() {
-    _labelController =
-        TextEditingController(text: widget.customValueWidget.label);
-    _suffixController =
-        TextEditingController(text: widget.customValueWidget.suffix);
-    _prefixController =
-        TextEditingController(text: widget.customValueWidget.prefix);
-    _roundController =
-        TextEditingController(text: widget.customValueWidget.round.toString());
+    _labelController = TextEditingController(
+      text: widget.customValueWidget.label,
+    );
+    _suffixController = TextEditingController(
+      text: widget.customValueWidget.suffix,
+    );
+    _prefixController = TextEditingController(
+      text: widget.customValueWidget.prefix,
+    );
+    _roundController = TextEditingController(
+      text: widget.customValueWidget.round.toString(),
+    );
     super.initState();
   }
 
@@ -75,75 +81,84 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: StateSearchBar(
-            onSelected: onSelect,
-          )),
+            child: StateSearchBar(onSelected: onSelect),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: _labelController,
-            onChanged: (d) => {
-              widget.customValueWidget.label = d,
-              c.update(widget.customValueWidget)
-            },
-            decoration: const InputDecoration(label: Text("Label (optional)")),
-          )),
-          InputFieldContainer.inputContainer(
-              child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _prefixController,
-                  onChanged: (d) => {
-                    widget.customValueWidget.prefix = d,
-                    c.update(widget.customValueWidget)
-                  },
-                  decoration:
-                      const InputDecoration(label: Text("Prefix (optional)")),
-                ),
+            child: TextField(
+              controller: _labelController,
+              onChanged: (d) => {
+                widget.customValueWidget.label = d,
+                c.update(widget.customValueWidget),
+              },
+              decoration: const InputDecoration(
+                label: Text("Label (optional)"),
               ),
-              const Gap(10),
-              Expanded(
+            ),
+          ),
+          InputFieldContainer.inputContainer(
+            child: Row(
+              children: [
+                Expanded(
                   child: TextField(
-                controller: _suffixController,
-                onChanged: (d) => {
-                  widget.customValueWidget.suffix = d,
-                  c.update(widget.customValueWidget)
-                },
-                decoration:
-                    const InputDecoration(label: Text("Suffix (optional)")),
-              ))
-            ],
-          )),
+                    controller: _prefixController,
+                    onChanged: (d) => {
+                      widget.customValueWidget.prefix = d,
+                      c.update(widget.customValueWidget),
+                    },
+                    decoration: const InputDecoration(
+                      label: Text("Prefix (optional)"),
+                    ),
+                  ),
+                ),
+                const Gap(10),
+                Expanded(
+                  child: TextField(
+                    controller: _suffixController,
+                    onChanged: (d) => {
+                      widget.customValueWidget.suffix = d,
+                      c.update(widget.customValueWidget),
+                    },
+                    decoration: const InputDecoration(
+                      label: Text("Suffix (optional)"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: _roundController,
-            onChanged: (d) => {
-              widget.customValueWidget.round = int.tryParse(d) ?? 0,
-              c.update(widget.customValueWidget)
-            },
-            decoration: const InputDecoration(label: Text("Round")),
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          )),
+            child: TextField(
+              controller: _roundController,
+              onChanged: (d) => {
+                widget.customValueWidget.round = int.tryParse(d) ?? 0,
+                c.update(widget.customValueWidget),
+              },
+              decoration: const InputDecoration(label: Text("Round")),
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: MapOrderSettingTemplate<String>(
-                  title: const Text("Value mapper"),
-                  data: Map.from(widget.customValueWidget.valueMapper),
-                  onChange: (p0) {
-                    widget.customValueWidget.valueMapper = p0;
-                    c.update(widget.customValueWidget);
-                  },
-                  toStr: (p0) {
-                    return p0.toString();
-                  },
-                  fromStr: (p0) {
-                    return p0;
-                  },
-                  alertTitle: const Text("Value Mapper (optional)"),
-                  alertKeyText: "Value to map from",
-                  alertValueText: "Value to map to",
-                  keyTileText: "Map from: ",
-                  valueTileText: "Map to: ")),
+            child: MapOrderSettingTemplate<String>(
+              title: const Text("Value mapper"),
+              data: Map.from(widget.customValueWidget.valueMapper),
+              onChange: (p0) {
+                widget.customValueWidget.valueMapper = p0;
+                c.update(widget.customValueWidget);
+              },
+              toStr: (p0) {
+                return p0.toString();
+              },
+              fromStr: (p0) {
+                return p0;
+              },
+              alertTitle: const Text("Value Mapper (optional)"),
+              alertKeyText: "Value to map from",
+              alertValueText: "Value to map to",
+              keyTileText: "Map from: ",
+              valueTileText: "Map to: ",
+            ),
+          ),
         ],
       ),
     );

@@ -7,10 +7,11 @@ class Enum {
   List<String> members;
   List<DataPoint> dataPointMembers;
 
-  Enum(
-      {required this.name,
-      required this.id,
-      required this.icon,
-      required this.members,
-      required this.dataPointMembers});
+  Enum({
+    required this.name,
+    required this.id,
+    required this.icon,
+    required this.members,
+    required this.dataPointMembers,
+  });
 }

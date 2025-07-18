@@ -30,7 +30,7 @@ enum ConnectionStatus {
   loginDeclined,
   newAesKey,
   wrongAesKey,
-  wrongAdapterVersion
+  wrongAdapterVersion,
 }
 
 extension ConnectionStatusExtension on ConnectionStatus {
@@ -42,17 +42,19 @@ extension ConnectionStatusExtension on ConnectionStatus {
 
 class ConnectionManager with WidgetsBindingObserver {
   /// Static so it can be used by the background runner
-  static Map<String, dynamic> decryptAes(
-      {required Map<String, dynamic> rawMap,
-      required String secureKey,
-      StreamController<ConnectionStatus>? connectionStatusStreamController,
-      Function? onError}) {
+  static Map<String, dynamic> decryptAes({
+    required Map<String, dynamic> rawMap,
+    required String secureKey,
+    StreamController<ConnectionStatus>? connectionStatusStreamController,
+    Function? onError,
+  }) {
     String pass = rawMap["type"];
     if (secureKey.isNotEmpty && rawMap["content"].runtimeType == String) {
       pass = secureKey + pass;
       try {
-        rawMap["content"] =
-            jsonDecode(decryptAESCryptoJS(rawMap["content"], pass));
+        rawMap["content"] = jsonDecode(
+          decryptAESCryptoJS(rawMap["content"], pass),
+        );
       } catch (e) {
         connectionStatusStreamController?.add(ConnectionStatus.emptyAES);
         if (onError != null) {
@@ -90,10 +92,11 @@ class ConnectionManager with WidgetsBindingObserver {
       StreamController.broadcast(); //TODO: Kein Broadcast
   int tries = 0;
 
-  ConnectionManager(
-      {required this.deviceManager,
-      required this.ioBrokerManager,
-      required this.generalManager}) {
+  ConnectionManager({
+    required this.deviceManager,
+    required this.ioBrokerManager,
+    required this.generalManager,
+  }) {
     WidgetsBinding.instance.addObserver(this);
     connectionStatusStreamController.stream.listen((event) {
       connectionStatus = event;
@@ -107,24 +110,25 @@ class ConnectionManager with WidgetsBindingObserver {
       return Uri.parse(ioBrokerManager.secondaryAddress);
     }
     return Uri.parse(
-        "${ioBrokerManager.useSecureConnection ? "wss://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}");
+      "${ioBrokerManager.useSecureConnection ? "wss://" : "ws://"}${ioBrokerManager.mainIp}:${ioBrokerManager.port}",
+    );
   }
 
   Future<void> connectIoB() async {
     Uri url = await getUrl();
-    channel = ClientChannel(url.host,
-        port: url.port,
-        options:
-            const ChannelOptions(credentials: ChannelCredentials.insecure()));
+    channel = ClientChannel(
+      url.host,
+      port: url.port,
+      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+    );
 
     loginClientStub = LoginClient(channel!);
     configSyncStub = ConfigSyncClient(channel!);
-    channel!.onConnectionStateChanged.listen(
-      (event) {
-        Manager().talker.debug(
-            "ConnectionManager | onConnectionStateChanged | ${event.name}");
-      },
-    );
+    channel!.onConnectionStateChanged.listen((event) {
+      Manager().talker.debug(
+        "ConnectionManager | onConnectionStateChanged | ${event.name}",
+      );
+    });
 
     channel!.createConnection();
 
@@ -180,23 +184,24 @@ class ConnectionManager with WidgetsBindingObserver {
     tries++;
     if (tries > 10) {
       Manager().talker.debug(
-          "ConnectionManager | reconnect | More than 10 tries, not reconnecting");
+        "ConnectionManager | reconnect | More than 10 tries, not reconnecting",
+      );
       return;
     }
     Manager().talker.debug("ConnectionManager | reconnect | reconnecting");
 
-    channel = ClientChannel(url.host,
-        port: url.port,
-        options:
-            const ChannelOptions(credentials: ChannelCredentials.insecure()));
+    channel = ClientChannel(
+      url.host,
+      port: url.port,
+      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+    );
 
     loginClientStub = LoginClient(channel!);
-    channel!.onConnectionStateChanged.listen(
-      (event) {
-        Manager().talker.debug(
-            "ConnectionManager | onConnectionStateChanged | ${event.name}");
-      },
-    );
+    channel!.onConnectionStateChanged.listen((event) {
+      Manager().talker.debug(
+        "ConnectionManager | onConnectionStateChanged | ${event.name}",
+      );
+    });
 
     channel!.createConnection();
 
@@ -231,20 +236,23 @@ class ConnectionManager with WidgetsBindingObserver {
     Map<String, dynamic> rawMap = jsonDecode(msg);
     if (ioBrokerManager.secureBox) {
       rawMap = decryptAes(
-          rawMap: rawMap,
-          secureKey: ioBrokerManager.secureKey,
-          connectionStatusStreamController: connectionStatusStreamController,
-          onError: () {
-            generalManager.dialogStreamController.sink
-                .add((p0) => const AlertDialog(
-                      title: Text("Error"),
-                      content: Text("Parse Error - Please check the AES Key!"),
-                    ));
-          });
+        rawMap: rawMap,
+        secureKey: ioBrokerManager.secureKey,
+        connectionStatusStreamController: connectionStatusStreamController,
+        onError: () {
+          generalManager.dialogStreamController.sink.add(
+            (p0) => const AlertDialog(
+              title: Text("Error"),
+              content: Text("Parse Error - Please check the AES Key!"),
+            ),
+          );
+        },
+      );
     }
     //print(rawMap["content"]);
-    DataPackageType packageType = DataPackageType.values
-        .firstWhere((element) => element.name == rawMap["type"]);
+    DataPackageType packageType = DataPackageType.values.firstWhere(
+      (element) => element.name == rawMap["type"],
+    );
     if (rawMap["content"] == null) {
       //Give the user information that they need a new version (comp. with older vesions)
       _onWrongAdapterVersion();
@@ -258,24 +266,27 @@ class ConnectionManager with WidgetsBindingObserver {
       return;
     }
     Manager().talker.debug(
-        "ConnectionManager | Recieved package ${packageType.name} | ${jsonEncode(rawMap)}");
+      "ConnectionManager | Recieved package ${packageType.name} | ${jsonEncode(rawMap)}",
+    );
     rawMap = rawMap["content"];
     switch (packageType) {
       case DataPackageType.iobStateChanged:
         stateChangedPackage(
-            objectID: rawMap["objectID"], value: rawMap["value"]);
+          objectID: rawMap["objectID"],
+          value: rawMap["value"],
+        );
         break;
       case DataPackageType.enumUpdate:
         Manager().talker.error("EnumUpdate not implemented");
         //ioBrokerManager.enumUpdate(rawData: rawMap);
         break;
       case DataPackageType.firstPingFromIob:
-        generalManager.dialogStreamController.sink
-            .add((p0) => const AlertDialog(
-                  title: Text("Error"),
-                  content:
-                      Text("Make sure you installed the newest Hiob adapter"),
-                ));
+        generalManager.dialogStreamController.sink.add(
+          (p0) => const AlertDialog(
+            title: Text("Error"),
+            content: Text("Make sure you installed the newest Hiob adapter"),
+          ),
+        );
         break;
       case DataPackageType.firstPingFromIob2:
         _onFirstPing();
@@ -287,8 +298,9 @@ class ConnectionManager with WidgetsBindingObserver {
         _onWrongAesKey();
         break;
       case DataPackageType.historyDataUpdate:
-        Manager.instance.historyManager
-            .onHistoryUpdate(data: jsonDecode(rawMap["data"]));
+        Manager.instance.historyManager.onHistoryUpdate(
+          data: jsonDecode(rawMap["data"]),
+        );
         break;
       case DataPackageType.loginDeclined:
         //_onLoginDeclined();
@@ -304,7 +316,10 @@ class ConnectionManager with WidgetsBindingObserver {
         break;
       case DataPackageType.requestTemplatesSettings:
         Manager
-            .instance.settingsSyncManager.fetchedConfigListStreamController.sink
+            .instance
+            .settingsSyncManager
+            .fetchedConfigListStreamController
+            .sink
             .add(List<String>.from(rawMap["settings"]));
         break;
 
@@ -313,15 +328,18 @@ class ConnectionManager with WidgetsBindingObserver {
             .add(true);
         break;
       case DataPackageType.getTemplatesSetting:
-        Manager.instance.settingsSyncManager
-            .loadGotTemplate(rawMap["screens"], rawMap["widget"]);
+        Manager.instance.settingsSyncManager.loadGotTemplate(
+          rawMap["screens"],
+          rawMap["widget"],
+        );
         break;
       case DataPackageType.answerSubscribeToDataPoints:
         _onAnswerSubscribeToDataPoints(rawMap["value"]);
         break;
       case DataPackageType.notification:
-        Manager.instance.notificationManager
-            .showIoBNotificationInForeground(rawMap["content"]);
+        Manager.instance.notificationManager.showIoBNotificationInForeground(
+          rawMap["content"],
+        );
         break;
       default:
         throw UnimplementedError("Error");
@@ -329,8 +347,8 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void stateChangedPackage({required String objectID, required dynamic value}) {
-    List<DataPoint>? iobDataPoints =
-        deviceManager.getIoBrokerDataPointsByObjectID(objectID);
+    List<DataPoint>? iobDataPoints = deviceManager
+        .getIoBrokerDataPointsByObjectID(objectID);
     for (DataPoint dataPoint in iobDataPoints ?? []) {
       deviceManager.valueChange(dataPoint, value);
     }
@@ -340,7 +358,9 @@ class ConnectionManager with WidgetsBindingObserver {
     if (dataValues != null) {
       for (Map<String, dynamic> dataValue in dataValues) {
         stateChangedPackage(
-            objectID: dataValue["objectID"], value: dataValue["value"]);
+          objectID: dataValue["objectID"],
+          value: dataValue["value"],
+        );
       }
     }
   }
@@ -366,26 +386,31 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void _requestLogin() async {
     Manager().talker.debug(
-        "ConnectionManager | Request login ${generalManager.deviceName}:${generalManager.deviceID}");
+      "ConnectionManager | Request login ${generalManager.deviceName}:${generalManager.deviceID}",
+    );
     connectionStatusStreamController.add(ConnectionStatus.loggingIn);
 
     LoginResponse response = await loginClientStub!
-        .login(LoginRequest(
+        .login(
+          LoginRequest(
             deviceId: generalManager.deviceID,
             deviceName: generalManager.deviceName,
             key: generalManager.loginKey,
             password: ioBrokerManager.password,
-            user: ioBrokerManager.user))
+            user: ioBrokerManager.user,
+          ),
+        )
         .catchError((Object e) async {
-      Manager().talker.error("ConnectionManager | errorLogin", e);
-      return LoginResponse(
-          status: LoginResponse_Status.error,
-          errorMsg: "Error during login: ${e.toString()}");
-    });
+          Manager().talker.error("ConnectionManager | errorLogin", e);
+          return LoginResponse(
+            status: LoginResponse_Status.error,
+            errorMsg: "Error during login: ${e.toString()}",
+          );
+        });
     if (response.status == LoginResponse_Status.error) {
-      Manager()
-          .talker
-          .error("ConnectionManager | Login error: ${response.errorMsg}");
+      Manager().talker.error(
+        "ConnectionManager | Login error: ${response.errorMsg}",
+      );
       connectionStatusStreamController.add(ConnectionStatus.error);
       return;
     }
@@ -405,29 +430,29 @@ class ConnectionManager with WidgetsBindingObserver {
     connectionStatusStreamController.add(ConnectionStatus.loginDeclined);
   }
 
-  void changeConnectionStatus(
-    ConnectionStatus status, {
-    String? message,
-  }) {
+  void changeConnectionStatus(ConnectionStatus status, {String? message}) {
     Manager().talker.debug(
-        "ConnectionManager | Change connection status to ${status.name} | $message");
+      "ConnectionManager | Change connection status to ${status.name} | $message",
+    );
     connectionStatusStreamController.add(status);
   }
 
   void _requestApproval() async {
     Manager().talker.debug("ConnectionManager | Requesting approval");
     ApprovalResponse response = await loginClientStub!.requestApproval(
-        ApprovalRequest(
-            deviceId: generalManager.deviceID,
-            deviceName: generalManager.deviceName));
+      ApprovalRequest(
+        deviceId: generalManager.deviceID,
+        deviceName: generalManager.deviceName,
+      ),
+    );
     if (response.status == ApprovalResponse_Status.timeout) {
-      Manager()
-          .talker
-          .debug("ConnectionManager | Requesting approval: timeout");
+      Manager().talker.debug(
+        "ConnectionManager | Requesting approval: timeout",
+      );
     } else if (response.status == ApprovalResponse_Status.aprroved) {
-      Manager()
-          .talker
-          .debug("ConnectionManager | Requesting approval: successfull");
+      Manager().talker.debug(
+        "ConnectionManager | Requesting approval: successfull",
+      );
       _onLoginKey(response.key);
     }
   }
@@ -466,12 +491,16 @@ class ConnectionManager with WidgetsBindingObserver {
     }
     Map<String, String> header = {
       "token": generalManager.loginKey ?? "",
-      "deviceId": generalManager.deviceID ?? ""
+      "deviceId": generalManager.deviceID ?? "",
     };
-    stateUpdateClientStub =
-        StateUpdateClient(channel!, options: CallOptions(metadata: header));
-    configSyncStub =
-        ConfigSyncClient(channel!, options: CallOptions(metadata: header));
+    stateUpdateClientStub = StateUpdateClient(
+      channel!,
+      options: CallOptions(metadata: header),
+    );
+    configSyncStub = ConfigSyncClient(
+      channel!,
+      options: CallOptions(metadata: header),
+    );
   }
 
   void sendMsg(DataPackage dataPackage) {
@@ -497,7 +526,8 @@ class ConnectionManager with WidgetsBindingObserver {
       }
     }
     _webSocket?.sink.add(
-        jsonEncode({"type": dataPackage.type.name, "content": sendContent}));
+      jsonEncode({"type": dataPackage.type.name, "content": sendContent}),
+    );
   }
 
   void _onTemplateSettingCreate() {

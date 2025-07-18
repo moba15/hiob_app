@@ -48,8 +48,5 @@ void main() async {
   Manager manager = Manager();
   await manager.load();
   //TODO:
-  runApp(App(
-    manager: manager,
-    screenManager: manager.screenManager,
-  ));
+  runApp(App(manager: manager, screenManager: manager.screenManager));
 }

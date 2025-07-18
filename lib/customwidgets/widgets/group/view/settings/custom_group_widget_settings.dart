@@ -200,8 +200,11 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
 class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
   final CustomGroupWidget customGroupWidget;
   final Stream stream;
-  const CustomGroupWidgetSettings(
-      {super.key, required this.customGroupWidget, required this.stream});
+  const CustomGroupWidgetSettings({
+    super.key,
+    required this.customGroupWidget,
+    required this.stream,
+  });
 
   @override
   State<CustomGroupWidgetSettings> createState() =>
@@ -237,8 +240,9 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
       setState(() {
         if (event is List<dynamic>) {
           List<dynamic> e = event;
-          widget.customGroupWidget
-              .addTemplates(List<CustomWidgetTemplate>.from(e));
+          widget.customGroupWidget.addTemplates(
+            List<CustomWidgetTemplate>.from(e),
+          );
         } else {
           // widget.customGroupWidget.addLine(event);
         }
@@ -263,23 +267,18 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
           style: const TextStyle(fontSize: 16),
           decoration: const InputDecoration(labelText: "Group Name"),
         ),
-        Container(
-          height: 15,
-        ),
+        Container(height: 15),
         IconPickerTemplate(
-            onChange: (d) => {
-                  if (d == null) widget.customGroupWidget.iconWrapper == null,
-                  if (d != null) widget.customGroupWidget.iconWrapper = d
-                },
-            reset: true,
-            selected:
-                widget.customGroupWidget.iconWrapper ?? const IconWrapper()),
+          onChange: (d) => {
+            if (d == null) widget.customGroupWidget.iconWrapper == null,
+            if (d != null) widget.customGroupWidget.iconWrapper = d,
+          },
+          reset: true,
+          selected: widget.customGroupWidget.iconWrapper ?? const IconWrapper(),
+        ),
         Row(
           children: [
-            const Text(
-              "Expanded: ",
-              style: TextStyle(fontSize: 17),
-            ),
+            const Text("Expanded: ", style: TextStyle(fontSize: 17)),
             Checkbox(
               visualDensity: VisualDensity.compact,
               onChanged: (v) {
@@ -288,26 +287,23 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                 });
               },
               value: widget.customGroupWidget.isExtended,
-            )
+            ),
           ],
         ),
         Row(
           children: [
-            const Text(
-              "Templates:",
-              style: TextStyle(fontSize: 17),
-            ),
-            Container(
-              width: 16,
-            ),
+            const Text("Templates:", style: TextStyle(fontSize: 17)),
+            Container(width: 16),
           ],
         ),
         Expanded(
           child: ReorderableListView.builder(
             onReorder: (oldIndex, newIndex) {
               setState(() {
-                widget.customGroupWidget
-                    .reorder(oldIndex: oldIndex, newIndex: newIndex);
+                widget.customGroupWidget.reorder(
+                  oldIndex: oldIndex,
+                  newIndex: newIndex,
+                );
               });
             },
             itemCount: widget.customGroupWidget.templates.length,
@@ -318,7 +314,8 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   onDismissed: (d) {
                     setState(() {
                       widget.customGroupWidget.removeTemplate(
-                          widget.customGroupWidget.templates[index]);
+                        widget.customGroupWidget.templates[index],
+                      );
                     });
                   },
                   background: Container(
@@ -340,10 +337,10 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   direction: DismissDirection.endToStart,
                   key: ValueKey(widget.customGroupWidget.templates[index].id),
                   child: CustomWidgetTemplateTile(
-                      toggleSelect: () => {},
-                      customWidget: widget.customGroupWidget.templates[index],
-                      customWidgetManager:
-                          Manager.instance.customWidgetManager),
+                    toggleSelect: () => {},
+                    customWidget: widget.customGroupWidget.templates[index],
+                    customWidgetManager: Manager.instance.customWidgetManager,
+                  ),
                 );
               } else {
                 return Dismissible(
@@ -367,14 +364,16 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   onDismissed: (d) {
                     setState(() {
                       widget.customGroupWidget.removeTemplate(
-                          widget.customGroupWidget.templates[index]);
+                        widget.customGroupWidget.templates[index],
+                      );
                     });
                   },
                   key: ValueKey(widget.customGroupWidget.templates[index]),
                   child: ListTile(
                     title: const Text("Line"),
                     subtitle: Text(
-                        "Thickness: ${(widget.customGroupWidget.templates[index] as CustomDivisionLineWidget).thickness}"),
+                      "Thickness: ${(widget.customGroupWidget.templates[index] as CustomDivisionLineWidget).thickness}",
+                    ),
                   ),
                 );
               }
@@ -390,11 +389,12 @@ class AddTemplateAlertDialog extends StatefulWidget {
   final CustomGroupWidget customGroupWidget;
   final ScreenManager screenManager;
   final Function(List<CustomWidgetWrapper>) onAdded;
-  const AddTemplateAlertDialog(
-      {super.key,
-      required this.customGroupWidget,
-      required this.screenManager,
-      required this.onAdded});
+  const AddTemplateAlertDialog({
+    super.key,
+    required this.customGroupWidget,
+    required this.screenManager,
+    required this.onAdded,
+  });
 
   @override
   State<AddTemplateAlertDialog> createState() => _AddTemplateAlertDialogState();
@@ -405,10 +405,12 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetWrapper> templates =
-        List.of(widget.screenManager.manager.customWidgetManager.templates);
+    List<CustomWidgetWrapper> templates = List.of(
+      widget.screenManager.manager.customWidgetManager.templates,
+    );
     templates.removeWhere(
-        (element) => widget.customGroupWidget.templates.contains(element));
+      (element) => widget.customGroupWidget.templates.contains(element),
+    );
     return AlertDialog(
       title: const Text("Select Widget Template"),
       actions: [
@@ -419,15 +421,19 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
         child: Column(
           children: [
             for (CustomWidgetTypeDeprecated type
-                in CustomWidgetTypeDeprecated.values.where((element) =>
-                    element.name != CustomWidgetTypeDeprecated.group.name))
+                in CustomWidgetTypeDeprecated.values.where(
+                  (element) =>
+                      element.name != CustomWidgetTypeDeprecated.group.name,
+                ))
               if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(
-                      "${type.name} (${templates.where((element) => element.type?.name == type.name).length})"),
+                    "${type.name} (${templates.where((element) => element.type?.name == type.name).length})",
+                  ),
                   children: [
-                    for (CustomWidgetWrapper t in templates
-                        .where((element) => element.type?.name == type.name))
+                    for (CustomWidgetWrapper t in templates.where(
+                      (element) => element.type?.name == type.name,
+                    ))
                       ListTile(
                         selected: selected.contains(t),
                         leading: Checkbox(
@@ -444,7 +450,7 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
                         ),
                         title: Text(t.name),
                         subtitle: Text(t.type?.name ?? "Error"),
-                      )
+                      ),
                   ],
                 ),
           ],
@@ -480,12 +486,15 @@ class _AddDivisionLineTemplate extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            onAdd(CustomDivisionLineWidget(
+            onAdd(
+              CustomDivisionLineWidget(
                 thickness: thickness,
-                name: "Line (t: ${thickness.toString()}  )"));
+                name: "Line (t: ${thickness.toString()}  )",
+              ),
+            );
           },
           child: const Text("Add"),
-        )
+        ),
       ],
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -508,7 +517,7 @@ class _AddDivisionLineTemplate extends StatelessWidget {
                 value: value.toDouble(),
               );
             },
-          )
+          ),
         ],
       ),
     );
@@ -526,17 +535,17 @@ class _SaveDialog extends StatelessWidget {
       title: const Text("Changes not saved"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("Do you want exit without exit!"),
-        ],
+        children: [Text("Do you want exit without exit!")],
       ),
       actions: [
         TextButton(
-            onPressed: () => {Navigator.pop(context), cancel()},
-            child: const Text("Exit")),
+          onPressed: () => {Navigator.pop(context), cancel()},
+          child: const Text("Exit"),
+        ),
         TextButton(
-            onPressed: () => {Navigator.pop(context), onSave()},
-            child: const Text("Save")),
+          onPressed: () => {Navigator.pop(context), onSave()},
+          child: const Text("Save"),
+        ),
       ],
     );
   }

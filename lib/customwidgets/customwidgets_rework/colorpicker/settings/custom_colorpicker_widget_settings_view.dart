@@ -13,8 +13,10 @@ import 'package:smart_home/utils/theme.dart';
 class CustomColorPickerWidgetSettingsView
     extends CustomWidgetSettingStatefulWidget {
   final CustomColorPickerWidget customColorPickerWidget;
-  const CustomColorPickerWidgetSettingsView(
-      {super.key, required this.customColorPickerWidget});
+  const CustomColorPickerWidgetSettingsView({
+    super.key,
+    required this.customColorPickerWidget,
+  });
 
   @override
   State<CustomColorPickerWidgetSettingsView> createState() =>
@@ -56,8 +58,9 @@ class _CustomColorPickerWidgetSettingsViewState
         widget.customColorPickerWidget.pickersEnabled[type] = false;
       }
     }
-    _labelController =
-        TextEditingController(text: widget.customColorPickerWidget.label);
+    _labelController = TextEditingController(
+      text: widget.customColorPickerWidget.label,
+    );
 
     super.initState();
   }
@@ -76,76 +79,88 @@ class _CustomColorPickerWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: StateSearchBar(
-            onSelected: onSelect,
-          )),
+            child: StateSearchBar(onSelected: onSelect),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: _labelController,
-            onChanged: (d) => {
-              widget.customColorPickerWidget.label = d,
-              c.update(widget.customColorPickerWidget)
-            },
-            decoration: const InputDecoration(label: Text("Label (optional)")),
-          )),
+            child: TextField(
+              controller: _labelController,
+              onChanged: (d) => {
+                widget.customColorPickerWidget.label = d,
+                c.update(widget.customColorPickerWidget),
+              },
+              decoration: const InputDecoration(
+                label: Text("Label (optional)"),
+              ),
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextFormField(
-            onChanged: (s) => {widget.customColorPickerWidget.prefix = s},
-            initialValue: widget.customColorPickerWidget.prefix,
-            decoration:
-                const InputDecoration(label: Text("Hex prefix (optional)")),
-          )),
+            child: TextFormField(
+              onChanged: (s) => {widget.customColorPickerWidget.prefix = s},
+              initialValue: widget.customColorPickerWidget.prefix,
+              decoration: const InputDecoration(
+                label: Text("Hex prefix (optional)"),
+              ),
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: CheckboxListTile(
-            onChanged: (s) {
-              setState(() {
-                widget.customColorPickerWidget.alpha = s ?? false;
-              });
-            },
-            value: widget.customColorPickerWidget.alpha ?? false,
-            title: const Text("Include Alpha Value"),
-          )),
+            child: CheckboxListTile(
+              onChanged: (s) {
+                setState(() {
+                  widget.customColorPickerWidget.alpha = s ?? false;
+                });
+              },
+              value: widget.customColorPickerWidget.alpha ?? false,
+              title: const Text("Include Alpha Value"),
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: CheckboxListTile(
-            onChanged: (s) {
-              setState(() {
-                widget.customColorPickerWidget.shadesSelection = s ?? false;
-              });
-            },
-            value: widget.customColorPickerWidget.shadesSelection,
-            title: const Text("Shades selection"),
-          )),
+            child: CheckboxListTile(
+              onChanged: (s) {
+                setState(() {
+                  widget.customColorPickerWidget.shadesSelection = s ?? false;
+                });
+              },
+              value: widget.customColorPickerWidget.shadesSelection,
+              title: const Text("Shades selection"),
+            ),
+          ),
           const Gap(20),
           Container(
             alignment: Alignment.centerLeft,
-            child: const Text(
-              "Types",
-              style: TextStyle(fontSize: 23),
-            ),
+            child: const Text("Types", style: TextStyle(fontSize: 23)),
           ),
           ListView.builder(
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return CheckboxListTile(
                 key: ValueKey(ColorPickerType.values[index]),
-                value: widget.customColorPickerWidget.pickersEnabled[widget
-                    .customColorPickerWidget.pickersEnabled.keys
-                    .elementAt(index)],
+                value:
+                    widget.customColorPickerWidget.pickersEnabled[widget
+                        .customColorPickerWidget
+                        .pickersEnabled
+                        .keys
+                        .elementAt(index)],
                 onChanged: (s) {
                   setState(() {
                     widget.customColorPickerWidget.pickersEnabled[widget
-                        .customColorPickerWidget.pickersEnabled.keys
-                        .elementAt(index)] = s ?? false;
+                            .customColorPickerWidget
+                            .pickersEnabled
+                            .keys
+                            .elementAt(index)] =
+                        s ?? false;
                   });
                 },
-                title: Text(_mapTypeToName(widget
-                    .customColorPickerWidget.pickersEnabled.keys
-                    .elementAt(index))),
+                title: Text(
+                  _mapTypeToName(
+                    widget.customColorPickerWidget.pickersEnabled.keys
+                        .elementAt(index),
+                  ),
+                ),
               );
             },
             itemCount:
                 widget.customColorPickerWidget.pickersEnabled.keys.length,
-          )
+          ),
         ],
       ),
     );

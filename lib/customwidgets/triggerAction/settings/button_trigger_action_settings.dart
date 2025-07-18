@@ -22,8 +22,9 @@ class ButtonTriggerActionSettings extends TriggerActionSetting {
           title: "Datapoint",
           description: "The Datapoint which will be controlled by the Button",
           child: DeviceSelection(
-            onDeviceSelected: (d) =>
-                {if (d == null) buttonTriggerAction.dataPoint = null},
+            onDeviceSelected: (d) => {
+              if (d == null) buttonTriggerAction.dataPoint = null,
+            },
             onDataPointSelected: (d) => buttonTriggerAction.dataPoint = d,
             customWidgetManager: Manager.instance.customWidgetManager,
             deviceLabel: "Device",
@@ -33,25 +34,30 @@ class ButtonTriggerActionSettings extends TriggerActionSetting {
           ),
         ),
         Showcase(
-            key: datapointLabel,
-            title: "Button Text",
-            description: "The Text inside the Pressable Button (e.g. On/Off)",
-            child: InputFieldContainer.inputContainer(
-              child: TextFormField(
-                initialValue: buttonTriggerAction.label,
-                onChanged: (v) => {
-                  buttonTriggerAction.label = v,
-                  if (v.isEmpty) buttonTriggerAction.label = null
-                },
-                decoration: const InputDecoration(
-                    label: Text("Button Label"), hintText: "Button Label"),
+          key: datapointLabel,
+          title: "Button Text",
+          description: "The Text inside the Pressable Button (e.g. On/Off)",
+          child: InputFieldContainer.inputContainer(
+            child: TextFormField(
+              initialValue: buttonTriggerAction.label,
+              onChanged: (v) => {
+                buttonTriggerAction.label = v,
+                if (v.isEmpty) buttonTriggerAction.label = null,
+              },
+              decoration: const InputDecoration(
+                label: Text("Button Label"),
+                hintText: "Button Label",
               ),
-            ))
+            ),
+          ),
+        ),
       ],
     );
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [datapointKey, datapointLabel];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    datapointKey,
+    datapointLabel,
+  ];
 }

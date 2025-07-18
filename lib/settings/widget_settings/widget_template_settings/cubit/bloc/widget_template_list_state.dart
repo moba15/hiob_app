@@ -5,8 +5,9 @@ class WidgetTemplateListState {
   final ListStatus status;
   final bool toggleSelection;
 
-  const WidgetTemplateListState(
-      {required this.templates,
-      required this.status,
-      required this.toggleSelection});
+  const WidgetTemplateListState({
+    required this.templates,
+    required this.status,
+    required this.toggleSelection,
+  });
 }

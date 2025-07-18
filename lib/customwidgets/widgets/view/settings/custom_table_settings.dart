@@ -30,8 +30,13 @@ class CustomTableSettings extends CustomWidgetSettingStatefulWidget {
   CustomWidget get customWidget => throw UnimplementedError();
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [headerKey, elementsPerPageKey, initialSortKey, dataPointKey, columnsKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    headerKey,
+    elementsPerPageKey,
+    initialSortKey,
+    dataPointKey,
+    columnsKey,
+  ];
 
   @override
   bool validate() {
@@ -52,37 +57,41 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
       child: Column(
         children: [
           Showcase(
-              key: widget.headerKey,
-              title: "Header",
-              description: "The Header will be displayed above the Table",
-              child: InputFieldContainer.inputContainer(
-                child: TextFormField(
-                  initialValue: widget.customTableWidget.header,
-                  onChanged: (s) => widget.customTableWidget.header = s,
-                  decoration: const InputDecoration(labelText: "Header"),
-                ),
-              )),
+            key: widget.headerKey,
+            title: "Header",
+            description: "The Header will be displayed above the Table",
+            child: InputFieldContainer.inputContainer(
+              child: TextFormField(
+                initialValue: widget.customTableWidget.header,
+                onChanged: (s) => widget.customTableWidget.header = s,
+                decoration: const InputDecoration(labelText: "Header"),
+              ),
+            ),
+          ),
           Showcase(
-              key: widget.elementsPerPageKey,
-              title: "Elements per Page",
-              description:
-                  "How many Rows does one Page contains (Set it to 0 to show all Elements on the first page)",
-              child: InputFieldContainer.inputContainer(
-                child: TextFormField(
-                  initialValue:
-                      widget.customTableWidget.elementsPerPage.toString(),
-                  onChanged: (s) {
-                    widget.customTableWidget.elementsPerPage =
-                        int.tryParse(s) ?? 0;
-                  },
-                  decoration: const InputDecoration(
-                      labelText: "Elements per Page ", hintText: "0: All"),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+            key: widget.elementsPerPageKey,
+            title: "Elements per Page",
+            description:
+                "How many Rows does one Page contains (Set it to 0 to show all Elements on the first page)",
+            child: InputFieldContainer.inputContainer(
+              child: TextFormField(
+                initialValue: widget.customTableWidget.elementsPerPage
+                    .toString(),
+                onChanged: (s) {
+                  widget.customTableWidget.elementsPerPage =
+                      int.tryParse(s) ?? 0;
+                },
+                decoration: const InputDecoration(
+                  labelText: "Elements per Page ",
+                  hintText: "0: All",
                 ),
-              )),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+              ),
+            ),
+          ),
           Showcase(
             key: widget.initialSortKey,
             title: "Initial sort",
@@ -93,18 +102,16 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Initial sort: ",
-                    style: TextStyle(fontSize: 17),
-                  ),
+                  const Text("Initial sort: ", style: TextStyle(fontSize: 17)),
                   Checkbox(
-                      value: widget.customTableWidget.initialSortEnabled,
-                      onChanged: (d) {
-                        setState(() {
-                          widget.customTableWidget.initialSortEnabled =
-                              d ?? false;
-                        });
-                      }),
+                    value: widget.customTableWidget.initialSortEnabled,
+                    onChanged: (d) {
+                      setState(() {
+                        widget.customTableWidget.initialSortEnabled =
+                            d ?? false;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
@@ -116,17 +123,15 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
                   flex: 40,
                   child: Row(
                     children: [
-                      const Text(
-                        "Ascending: ",
-                        style: TextStyle(fontSize: 17),
-                      ),
+                      const Text("Ascending: ", style: TextStyle(fontSize: 17)),
                       Checkbox(
-                          value: widget.customTableWidget.sortAsc,
-                          onChanged: (d) {
-                            setState(() {
-                              widget.customTableWidget.sortAsc = d ?? false;
-                            });
-                          }),
+                        value: widget.customTableWidget.sortAsc,
+                        onChanged: (d) {
+                          setState(() {
+                            widget.customTableWidget.sortAsc = d ?? false;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -134,8 +139,8 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
                 Expanded(
                   flex: 60,
                   child: TextFormField(
-                    initialValue:
-                        widget.customTableWidget.initialSortColumn.toString(),
+                    initialValue: widget.customTableWidget.initialSortColumn
+                        .toString(),
                     onChanged: (s) {
                       widget.customTableWidget.initialSortColumn =
                           int.tryParse(s) ?? 0;
@@ -143,10 +148,10 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
                     decoration: const InputDecoration(labelText: "Column"),
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
+                      FilteringTextInputFormatter.digitsOnly,
                     ],
                   ),
-                )
+                ),
             ],
           ),
           Showcase(

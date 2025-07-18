@@ -72,24 +72,25 @@ class _TemplateAdderState extends State<TemplateAdder> {
           title: Text(widget.title),
           actions: [
             IconButton(
-                onPressed: () {
-                  if (!_isSaved()) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => _SaveDialog(
-                              onSave: () => {
-                                _save(),
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst)
-                              },
-                              cancel: () => Navigator.popUntil(
-                                  context, (route) => route.isFirst),
-                            ));
-                    return;
-                  }
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                },
-                icon: const Icon(Icons.home)),
+              onPressed: () {
+                if (!_isSaved()) {
+                  showDialog(
+                    context: context,
+                    builder: (_) => _SaveDialog(
+                      onSave: () => {
+                        _save(),
+                        Navigator.popUntil(context, (route) => route.isFirst),
+                      },
+                      cancel: () =>
+                          Navigator.popUntil(context, (route) => route.isFirst),
+                    ),
+                  );
+                  return;
+                }
+                Navigator.popUntil(context, (route) => route.isFirst);
+              },
+              icon: const Icon(Icons.home),
+            ),
           ],
         ),
         floatingActionButton: Stack(
@@ -140,36 +141,40 @@ class _TemplateAdderState extends State<TemplateAdder> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
                 child: TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: "Name",
-                  ),
+                  decoration: const InputDecoration(labelText: "Name"),
                   keyboardType: TextInputType.text,
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, top: 10, bottom: 5),
-                  child: IconPickerTemplate(
-                    onChange: (IconWrapper? iconWrapper) {
-                      widget.iconDataChange(iconWrapper);
-                    },
-                    selected: currentIconWrapper ?? const IconWrapper(),
-                  )),
+                margin: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20.0,
+                  top: 10,
+                  bottom: 5,
+                ),
+                child: IconPickerTemplate(
+                  onChange: (IconWrapper? iconWrapper) {
+                    widget.iconDataChange(iconWrapper);
+                  },
+                  selected: currentIconWrapper ?? const IconWrapper(),
+                ),
+              ),
               if (widget.toggle != null) widget.toggle!,
               Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: BlocProvider(
-                  create: (_) =>
-                      ScreenListCubit(screenManager: widget.screenManager),
-                  child: WidgetTemplateListPage(
-                    screenManager: widget.screenManager,
-                    widgetTemplates: widget.templates,
-                    onReorder: widget.reorderTemplate,
-                    removeTemplate: widget.removeTemplate,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: BlocProvider(
+                    create: (_) =>
+                        ScreenListCubit(screenManager: widget.screenManager),
+                    child: WidgetTemplateListPage(
+                      screenManager: widget.screenManager,
+                      widgetTemplates: widget.templates,
+                      onReorder: widget.reorderTemplate,
+                      removeTemplate: widget.removeTemplate,
+                    ),
                   ),
                 ),
-              )),
+              ),
             ],
           ),
         ),
@@ -177,11 +182,12 @@ class _TemplateAdderState extends State<TemplateAdder> {
       onWillPop: () async {
         if (!_isSaved()) {
           showDialog(
-              context: context,
-              builder: (_) => _SaveDialog(
-                    onSave: () => {_save(), Navigator.pop(context)},
-                    cancel: () => Navigator.pop(context),
-                  ));
+            context: context,
+            builder: (_) => _SaveDialog(
+              onSave: () => {_save(), Navigator.pop(context)},
+              cancel: () => Navigator.pop(context),
+            ),
+          );
           return false;
         }
         return true;
@@ -200,44 +206,50 @@ class _TemplateAdderState extends State<TemplateAdder> {
   void addTemplate() {
     //widget.screen.addWidgetTemplate(widget.screenManager, CustomWidgetTemplate(id: "id", name: "name", customWidget: CustomTextWidget(name: "", text: CustomTextAttribute(data: ""))));
     showDialog(
-        context: context,
-        builder: (context) => TemplateSelectionAlertDialog(
-              screenManager: widget.screenManager,
-              selected: widget.templates,
-              onSelect: (List<CustomWidgetWrapper> templates) {
-                setState(() {
-                  widget.addTemplates(templates);
-                });
-              },
-            ));
+      context: context,
+      builder: (context) => TemplateSelectionAlertDialog(
+        screenManager: widget.screenManager,
+        selected: widget.templates,
+        onSelect: (List<CustomWidgetWrapper> templates) {
+          setState(() {
+            widget.addTemplates(templates);
+          });
+        },
+      ),
+    );
   }
 
   //TODO In future: Use the Bloc pattern
   void addGroup() {
     showDialog(
-        context: context,
-        builder: (context) => AddGroupAlertDialog(
-              onAdd: (CustomGroupWidget customGroupWidget) {
-                setState(() {
-                  widget.addGroup(customGroupWidget);
-                });
-              },
-            ));
+      context: context,
+      builder: (context) => AddGroupAlertDialog(
+        onAdd: (CustomGroupWidget customGroupWidget) {
+          setState(() {
+            widget.addGroup(customGroupWidget);
+          });
+        },
+      ),
+    );
   }
 
   void addLine() {
     showDialog(
-        context: context,
-        builder: (context) => _AddDivisionLineTemplate(
-              onAdd: (CustomDivisionLineWidget c) {
-                setState(() {
-                  widget.addLine(CustomWidgetTemplate(
-                      id: Manager.instance.getRandString(12),
-                      name: "Line",
-                      customWidget: c));
-                });
-              },
-            ));
+      context: context,
+      builder: (context) => _AddDivisionLineTemplate(
+        onAdd: (CustomDivisionLineWidget c) {
+          setState(() {
+            widget.addLine(
+              CustomWidgetTemplate(
+                id: Manager.instance.getRandString(12),
+                name: "Line",
+                customWidget: c,
+              ),
+            );
+          });
+        },
+      ),
+    );
   }
 }
 
@@ -253,17 +265,17 @@ class _SaveDialog extends StatelessWidget {
       title: Text(getAppLocalizations(context).not_saved_alert_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(getAppLocalizations(context).want_to_exit_alert),
-        ],
+        children: [Text(getAppLocalizations(context).want_to_exit_alert)],
       ),
       actions: [
         TextButton(
-            onPressed: () => {Navigator.pop(context), cancel()},
-            child: Text(getAppLocalizations(context).exit)),
+          onPressed: () => {Navigator.pop(context), cancel()},
+          child: Text(getAppLocalizations(context).exit),
+        ),
         TextButton(
-            onPressed: () => {Navigator.pop(context), onSave()},
-            child: Text(getAppLocalizations(context).save)),
+          onPressed: () => {Navigator.pop(context), onSave()},
+          child: Text(getAppLocalizations(context).save),
+        ),
       ],
     );
   }
@@ -284,19 +296,24 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: Text(getAppLocalizations(context).add_group_alert_title),
-        actions: [
-          TextButton(
-              onPressed: cancel,
-              child: Text(getAppLocalizations(context).cancel)),
-          TextButton(
-              onPressed: add, child: Text(getAppLocalizations(context).add)),
-        ],
-        content: TextField(
-          controller: _nameController,
-          decoration: InputDecoration(
-              labelText: getAppLocalizations(context).group_name),
-        ));
+      title: Text(getAppLocalizations(context).add_group_alert_title),
+      actions: [
+        TextButton(
+          onPressed: cancel,
+          child: Text(getAppLocalizations(context).cancel),
+        ),
+        TextButton(
+          onPressed: add,
+          child: Text(getAppLocalizations(context).add),
+        ),
+      ],
+      content: TextField(
+        controller: _nameController,
+        decoration: InputDecoration(
+          labelText: getAppLocalizations(context).group_name,
+        ),
+      ),
+    );
   }
 
   void add() {
@@ -315,104 +332,108 @@ class WidgetTemplateListPage extends StatelessWidget {
   final Function(int oldIndex, int newIndex) onReorder;
   final Function(int index) removeTemplate;
 
-  const WidgetTemplateListPage(
-      {super.key,
-      required this.screenManager,
-      required this.widgetTemplates,
-      required this.onReorder,
-      required this.removeTemplate});
+  const WidgetTemplateListPage({
+    super.key,
+    required this.screenManager,
+    required this.widgetTemplates,
+    required this.onReorder,
+    required this.removeTemplate,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ReorderableListView.builder(
-        itemCount: widgetTemplates.length,
-        onReorder: (int oldIndex, int newIndex) {
-          onReorder(oldIndex, newIndex);
-        },
-        itemBuilder: (BuildContext context, int index) {
-          if (widgetTemplates.length > index &&
-              widgetTemplates[index] is CustomWidgetWrapper) {
-            return Dismissible(
-                background: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Icon(Icons.delete_forever),
-                  ),
-                ),
-                secondaryBackground: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Icon(Icons.delete_forever),
-                  ),
-                ),
-                direction: DismissDirection.endToStart,
-                onDismissed: (d) => removeTemplate(index),
-                key: ValueKey(widgetTemplates[index]),
-                child: CustomWidgetTemplateTile(
-                  toggleSelect: null,
-                  customWidget: widgetTemplates[index],
-                  customWidgetManager:
-                      screenManager.manager.customWidgetManager,
-                ));
-          } else if (widgetTemplates.length > index &&
-              widgetTemplates[index] is CustomGroupWidget) {
-            return Dismissible(
-              key: ValueKey(widgetTemplates[index]),
-              onDismissed: (d) => removeTemplate(index),
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: const Icon(Icons.delete_forever),
-                ),
+      itemCount: widgetTemplates.length,
+      onReorder: (int oldIndex, int newIndex) {
+        onReorder(oldIndex, newIndex);
+      },
+      itemBuilder: (BuildContext context, int index) {
+        if (widgetTemplates.length > index &&
+            widgetTemplates[index] is CustomWidgetWrapper) {
+          return Dismissible(
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
               ),
-              secondaryBackground: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: const Icon(Icons.delete_forever),
-                ),
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
               ),
-              child: CustomGroupWidgetTile(
-                  customGroupWidget: widgetTemplates[index]),
-            );
-          } else {
-            return Dismissible(
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: const Icon(Icons.delete_forever),
-                ),
+            ),
+            direction: DismissDirection.endToStart,
+            onDismissed: (d) => removeTemplate(index),
+            key: ValueKey(widgetTemplates[index]),
+            child: CustomWidgetTemplateTile(
+              toggleSelect: null,
+              customWidget: widgetTemplates[index],
+              customWidgetManager: screenManager.manager.customWidgetManager,
+            ),
+          );
+        } else if (widgetTemplates.length > index &&
+            widgetTemplates[index] is CustomGroupWidget) {
+          return Dismissible(
+            key: ValueKey(widgetTemplates[index]),
+            onDismissed: (d) => removeTemplate(index),
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
               ),
-              secondaryBackground: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: const Icon(Icons.delete_forever),
-                ),
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
               ),
-              direction: DismissDirection.endToStart,
-              onDismissed: (d) {
-                removeTemplate(index);
-              },
-              key: ValueKey(widgetTemplates[index]),
-              child: ListTile(
-                title: const Text("Line"),
-                subtitle: Text(
-                    "Thickness: ${(widgetTemplates[index] as CustomDivisionLineWidget).thickness}"),
+            ),
+            child: CustomGroupWidgetTile(
+              customGroupWidget: widgetTemplates[index],
+            ),
+          );
+        } else {
+          return Dismissible(
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
               ),
-            );
-          }
-        });
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
+            ),
+            direction: DismissDirection.endToStart,
+            onDismissed: (d) {
+              removeTemplate(index);
+            },
+            key: ValueKey(widgetTemplates[index]),
+            child: ListTile(
+              title: const Text("Line"),
+              subtitle: Text(
+                "Thickness: ${(widgetTemplates[index] as CustomDivisionLineWidget).thickness}",
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 }
 
@@ -433,12 +454,15 @@ class _AddDivisionLineTemplate extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            onAdd(CustomDivisionLineWidget(
+            onAdd(
+              CustomDivisionLineWidget(
                 thickness: thickness,
-                name: 'Line (t: ' + thickness.toString() + ")"));
+                name: 'Line (t: ' + thickness.toString() + ")",
+              ),
+            );
           },
           child: Text(getAppLocalizations(context).add),
-        )
+        ),
       ],
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -461,7 +485,7 @@ class _AddDivisionLineTemplate extends StatelessWidget {
                 value: value.toDouble(),
               );
             },
-          )
+          ),
         ],
       ),
     );

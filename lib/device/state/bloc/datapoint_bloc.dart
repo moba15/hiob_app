@@ -34,16 +34,21 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   }
 
   void _onValueUpdated(
-      DataPointValueUpdate event, Emitter<DataPointState> emit) {
+    DataPointValueUpdate event,
+    Emitter<DataPointState> emit,
+  ) {
     emit(DataPointState(value: event.value));
     //TODO
   }
 
   void _onValueUpdateRequest(
-      DataPointValueUpdateRequest event, Emitter<DataPointState> emit) {
+    DataPointValueUpdateRequest event,
+    Emitter<DataPointState> emit,
+  ) {
     dynamic value = event.value;
-    double? parsedValue =
-        double.tryParse(value.toString().replaceAll(",", "."));
+    double? parsedValue = double.tryParse(
+      value.toString().replaceAll(",", "."),
+    );
     if (parsedValue != null) {
       value = parsedValue;
     }

@@ -34,82 +34,87 @@ class SliderTriggerActionSettings extends TriggerActionSetting {
           ),
         ),
         Showcase(
-            key: sliderKey,
-            title: "Slider Settings",
-            description: "Different settings for the Slider",
-            child: InputFieldContainer.inputContainer(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: TextEditingController.fromValue(
-                          TextEditingValue(
-                              text: sliderTriggerAction.min.toString())),
-                      decoration: const InputDecoration(labelText: "Min"),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        TextInputFormatter.withFunction((oldValue, newValue) {
-                          if (int.tryParse(newValue.text) == null &&
-                              newValue.text != "" &&
-                              newValue.text != "-") {
-                            return oldValue;
-                          } else {
-                            return newValue;
-                          }
-                        })
-                      ],
-                      onChanged: (v) =>
-                          sliderTriggerAction.min = int.tryParse(v) ?? 0,
+          key: sliderKey,
+          title: "Slider Settings",
+          description: "Different settings for the Slider",
+          child: InputFieldContainer.inputContainer(
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: sliderTriggerAction.min.toString(),
+                      ),
                     ),
+                    decoration: const InputDecoration(labelText: "Min"),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        if (int.tryParse(newValue.text) == null &&
+                            newValue.text != "" &&
+                            newValue.text != "-") {
+                          return oldValue;
+                        } else {
+                          return newValue;
+                        }
+                      }),
+                    ],
+                    onChanged: (v) =>
+                        sliderTriggerAction.min = int.tryParse(v) ?? 0,
                   ),
-                  Container(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: TextEditingController.fromValue(
-                          TextEditingValue(
-                              text: sliderTriggerAction.max.toString())),
-                      decoration: const InputDecoration(labelText: "Max"),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        TextInputFormatter.withFunction((oldValue, newValue) {
-                          if (int.tryParse(newValue.text) == null &&
-                              newValue.text != "" &&
-                              newValue.text != "-") {
-                            return oldValue;
-                          } else {
-                            return newValue;
-                          }
-                        })
-                      ],
-                      onChanged: (v) =>
-                          sliderTriggerAction.max = int.tryParse(v) ?? 0,
+                ),
+                Container(width: 10),
+                Expanded(
+                  child: TextField(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: sliderTriggerAction.max.toString(),
+                      ),
                     ),
+                    decoration: const InputDecoration(labelText: "Max"),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        if (int.tryParse(newValue.text) == null &&
+                            newValue.text != "" &&
+                            newValue.text != "-") {
+                          return oldValue;
+                        } else {
+                          return newValue;
+                        }
+                      }),
+                    ],
+                    onChanged: (v) =>
+                        sliderTriggerAction.max = int.tryParse(v) ?? 0,
                   ),
-                  Container(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: TextEditingController.fromValue(
-                          TextEditingValue(
-                              text: sliderTriggerAction.steps.toString())),
-                      decoration: const InputDecoration(labelText: "Division"),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (v) =>
-                          sliderTriggerAction.steps = int.tryParse(v) ?? 0,
+                ),
+                Container(width: 10),
+                Expanded(
+                  child: TextField(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: sliderTriggerAction.steps.toString(),
+                      ),
                     ),
-                  )
-                ],
-              ),
-            )),
+                    decoration: const InputDecoration(labelText: "Division"),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    onChanged: (v) =>
+                        sliderTriggerAction.steps = int.tryParse(v) ?? 0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [datapointKey, sliderKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    datapointKey,
+    sliderKey,
+  ];
 }

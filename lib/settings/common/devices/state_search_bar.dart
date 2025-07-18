@@ -46,12 +46,12 @@ class _StateSearchBarState extends State<StateSearchBar> {
           ),
           subtitle: p0.name == null
               ? (p0.desc != null
-                  ? SubstringHighlightWidget(
-                      text: p0.desc!,
-                      exp: regexExp,
-                      highlightedGroup: 2,
-                    )
-                  : null)
+                    ? SubstringHighlightWidget(
+                        text: p0.desc!,
+                        exp: regexExp,
+                        highlightedGroup: 2,
+                      )
+                    : null)
               : (SubstringHighlightWidget(
                   text: "${p0.id}: ${p0.desc}",
                   exp: regexExp,

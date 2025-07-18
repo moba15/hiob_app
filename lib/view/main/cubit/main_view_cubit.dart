@@ -8,17 +8,22 @@ part 'main_view_state.dart';
 
 class MainViewCubit extends Cubit<MainViewState> {
   MainViewCubit()
-      : super(MainViewStateInitial(
-            connectionStatus:
-                Manager.instance.connectionManager.connectionStatus)) {
+    : super(
+        MainViewStateInitial(
+          connectionStatus: Manager.instance.connectionManager.connectionStatus,
+        ),
+      ) {
     _fetchList();
   }
 
   void _fetchList() async {
     List<Screen> screens = await Manager().screenManager.loadScreens();
-    emit(MainViewStateLoaded(
+    emit(
+      MainViewStateLoaded(
         screens: screens,
-        connectionStatus: Manager.instance.connectionManager.connectionStatus));
+        connectionStatus: Manager.instance.connectionManager.connectionStatus,
+      ),
+    );
     _listenToConnectionChanges();
     _listenToScreenChanges();
   }
@@ -26,24 +31,37 @@ class MainViewCubit extends Cubit<MainViewState> {
   void _listenToConnectionChanges() {
     Manager.instance.connectionManager.connectionStatusStreamController.stream
         .listen((event) {
-      emit(
-          MainViewStateLoaded(screens: state.screens, connectionStatus: event));
-    });
+          emit(
+            MainViewStateLoaded(
+              screens: state.screens,
+              connectionStatus: event,
+            ),
+          );
+        });
   }
 
   void _listenToScreenChanges() {
-    Manager.instance.screenManager.screenStreamController.stream
-        .listen((event) {
-      emit(MainViewStateLoaded(
-          screens: event, connectionStatus: state.connectionStatus));
+    Manager.instance.screenManager.screenStreamController.stream.listen((
+      event,
+    ) {
+      emit(
+        MainViewStateLoaded(
+          screens: event,
+          connectionStatus: state.connectionStatus,
+        ),
+      );
     });
   }
 
   void listenToTemplateChanges() {
     Manager.instance.customWidgetManager.templatesStreamController.stream
         .listen((event) {
-      emit(MainViewStateLoaded(
-          screens: state.screens, connectionStatus: state.connectionStatus));
-    });
+          emit(
+            MainViewStateLoaded(
+              screens: state.screens,
+              connectionStatus: state.connectionStatus,
+            ),
+          );
+        });
   }
 }

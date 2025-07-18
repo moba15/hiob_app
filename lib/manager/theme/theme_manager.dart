@@ -6,8 +6,9 @@ import 'package:smart_home/manager/manager.dart';
 class ThemeManager {
   final Manager manager;
   CustomTheme _loadedCustomTheme = CustomTheme(
-      customThemeBrightness: CustomThemeBrightness.system,
-      customThemeMaterialVersion: CustomThemeMaterialVersion.material3);
+    customThemeBrightness: CustomThemeBrightness.system,
+    customThemeMaterialVersion: CustomThemeMaterialVersion.material3,
+  );
   final StreamController<CustomTheme> _themeStreamSubscription =
       StreamController<CustomTheme>.broadcast();
 
@@ -16,7 +17,7 @@ class ThemeManager {
   void loadTheme() async {
     Map<String, dynamic> customThemeJson =
         await manager.fileManager.getMap("customTheme") ??
-            _loadedCustomTheme.toJson();
+        _loadedCustomTheme.toJson();
     _loadedCustomTheme = CustomTheme.fromJson(customThemeJson);
   }
 

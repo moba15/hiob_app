@@ -5,8 +5,10 @@ import 'package:smart_home/manager/manager.dart';
 
 class AlterDialogWidgetView extends StatelessWidget {
   final CustomAlertDialogWidget customAlertDialogWidget;
-  const AlterDialogWidgetView(
-      {super.key, required this.customAlertDialogWidget});
+  const AlterDialogWidgetView({
+    super.key,
+    required this.customAlertDialogWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +23,14 @@ class AlterDialogWidgetView extends StatelessWidget {
           children: customAlertDialogWidget.templates == null
               ? []
               : customAlertDialogWidget.templates!
-                  .map((e) => Card(
-                        child: e.widget,
-                      ))
-                  .toList(growable: false),
+                    .map((e) => Card(child: e.widget))
+                    .toList(growable: false),
         ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Back"))
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Back"),
+          ),
         ],
         scrollable: true,
       ),
@@ -44,39 +45,42 @@ class BottomSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-        value: Manager.instance,
-        child: DraggableScrollableSheet(
-            expand: false,
-            maxChildSize: 0.9,
-            minChildSize: 0.1,
-            initialChildSize: 0.3,
-            builder: (context, scrollController) => SingleChildScrollView(
-                controller: scrollController,
-                child: Stack(
-                  alignment: AlignmentDirectional.topCenter,
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                        top: -15,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)),
-                          width: 70,
-                          height: 7,
-                        )),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: customAlertDialogWidget.templates == null
-                          ? []
-                          : customAlertDialogWidget.templates!
-                              .map((e) => Card(
-                                    child: e.widget,
-                                  ))
-                              .toList(growable: false),
-                    ),
-                  ],
-                ))));
+      value: Manager.instance,
+      child: DraggableScrollableSheet(
+        expand: false,
+        maxChildSize: 0.9,
+        minChildSize: 0.1,
+        initialChildSize: 0.3,
+        builder: (context, scrollController) => SingleChildScrollView(
+          controller: scrollController,
+          child: Stack(
+            alignment: AlignmentDirectional.topCenter,
+            clipBehavior: Clip.none,
+            children: [
+              Positioned(
+                top: -15,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  width: 70,
+                  height: 7,
+                ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: customAlertDialogWidget.templates == null
+                    ? []
+                    : customAlertDialogWidget.templates!
+                          .map((e) => Card(child: e.widget))
+                          .toList(growable: false),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

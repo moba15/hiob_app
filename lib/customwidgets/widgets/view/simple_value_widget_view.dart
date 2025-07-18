@@ -5,8 +5,10 @@ import 'package:smart_home/device/state/state.dart';
 class SimpleValueWidgetView extends StatelessWidget {
   final CustomSimpleValueWidget customSimpleValueWidget;
 
-  const SimpleValueWidgetView(
-      {super.key, required this.customSimpleValueWidget});
+  const SimpleValueWidgetView({
+    super.key,
+    required this.customSimpleValueWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,13 +97,15 @@ class SimpleValueWidgetView extends StatelessWidget {
 
   void onTab(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (c) => _ValueDialog(
-              title: customSimpleValueWidget.value ??
-                  customSimpleValueWidget.name ??
-                  "No Name Found",
-              dataPoint: customSimpleValueWidget.dataPoint!,
-            ));
+      context: context,
+      builder: (c) => _ValueDialog(
+        title:
+            customSimpleValueWidget.value ??
+            customSimpleValueWidget.name ??
+            "No Name Found",
+        dataPoint: customSimpleValueWidget.dataPoint!,
+      ),
+    );
   }
 }
 
@@ -116,7 +120,9 @@ class _ValueDialog extends StatelessWidget {
       scrollable: true,
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context), child: const Text("Back"))
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Back"),
+        ),
       ],
       title: Text(title),
       content: Text(

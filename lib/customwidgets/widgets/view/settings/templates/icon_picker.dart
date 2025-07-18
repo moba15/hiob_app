@@ -6,12 +6,15 @@ class IconPickerTemplate extends StatefulWidget {
   final Function(IconWrapper? iconWrapper) onChange;
   final IconWrapper selected;
   final bool reset;
-  const IconPickerTemplate(
-      {super.key,
-      required this.onChange,
-      this.selected = const IconWrapper(
-          iconData: Icons.home, iconDataType: IconDataType.flutterIcons),
-      this.reset = false});
+  const IconPickerTemplate({
+    super.key,
+    required this.onChange,
+    this.selected = const IconWrapper(
+      iconData: Icons.home,
+      iconDataType: IconDataType.flutterIcons,
+    ),
+    this.reset = false,
+  });
 
   @override
   State<IconPickerTemplate> createState() => _IconPickerTemplateState();
@@ -22,35 +25,30 @@ class _IconPickerTemplateState extends State<IconPickerTemplate> {
   Widget build(BuildContext context) {
     return DropdownSearch<String>(
       dropdownDecoratorProps: const DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          labelText: "Icon",
-        ),
+        dropdownSearchDecoration: InputDecoration(labelText: "Icon"),
       ),
       onChanged: (s) => widget.onChange(icons[s]),
       items: icons.keys.toList()..sort(),
       selectedItem: icons.keys.firstWhere(
-          (element) =>
-              icons[element]?.iconData.codePoint ==
-              widget.selected.iconData.codePoint,
-          orElse: () => "home"),
+        (element) =>
+            icons[element]?.iconData.codePoint ==
+            widget.selected.iconData.codePoint,
+        orElse: () => "home",
+      ),
       dropdownBuilder: (context, iconKey) {
         return iconKey != null
             ? (icons[iconKey]?.icon ?? const Icon(Icons.home))
             : const Text("");
       },
-      clearButtonProps: ClearButtonProps(
-        isVisible: widget.reset,
-      ),
+      clearButtonProps: ClearButtonProps(isVisible: widget.reset),
       popupProps: PopupProps.modalBottomSheet(
         modalBottomSheetProps: ModalBottomSheetProps(
-            backgroundColor: Theme.of(context).colorScheme.surface),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+        ),
         showSelectedItems: true,
         searchDelay: const Duration(seconds: 0),
         showSearchBox: true,
-        title: const Text(
-          "Icon",
-          style: TextStyle(fontSize: 17.5),
-        ),
+        title: const Text("Icon", style: TextStyle(fontSize: 17.5)),
         itemBuilder: (context, iconKey, b) {
           return ListTile(
             title: icons[iconKey]?.icon ?? const Icon(Icons.question_answer),

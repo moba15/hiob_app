@@ -10,8 +10,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomSwitchWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomSwitchWidget customSwitchWidget;
-  const CustomSwitchWidgetSettingsView(
-      {super.key, required this.customSwitchWidget});
+  const CustomSwitchWidgetSettingsView({
+    super.key,
+    required this.customSwitchWidget,
+  });
 
   @override
   State<CustomSwitchWidgetSettingsView> createState() =>
@@ -44,12 +46,15 @@ class _CustomSwitchWidgetSettingsViewState
 
   @override
   void initState() {
-    _labelController =
-        TextEditingController(text: widget.customSwitchWidget.label);
-    _offController =
-        TextEditingController(text: widget.customSwitchWidget.sendIfOff);
-    _onController =
-        TextEditingController(text: widget.customSwitchWidget.sendIfOn);
+    _labelController = TextEditingController(
+      text: widget.customSwitchWidget.label,
+    );
+    _offController = TextEditingController(
+      text: widget.customSwitchWidget.sendIfOff,
+    );
+    _onController = TextEditingController(
+      text: widget.customSwitchWidget.sendIfOn,
+    );
     super.initState();
   }
 
@@ -69,36 +74,40 @@ class _CustomSwitchWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: StateSearchBar(
-            onSelected: onSelect,
-          )),
+            child: StateSearchBar(onSelected: onSelect),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: _labelController,
-            onChanged: (d) => {
-              widget.customSwitchWidget.label = d,
-              c.update(widget.customSwitchWidget)
-            },
-            decoration: const InputDecoration(label: Text("Label (optional)")),
-          )),
+            child: TextField(
+              controller: _labelController,
+              onChanged: (d) => {
+                widget.customSwitchWidget.label = d,
+                c.update(widget.customSwitchWidget),
+              },
+              decoration: const InputDecoration(
+                label: Text("Label (optional)"),
+              ),
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: _onController,
-            onChanged: (d) => {
-              widget.customSwitchWidget.sendIfOn = d,
-              c.update(widget.customSwitchWidget)
-            },
-            decoration: const InputDecoration(label: Text("Send if on")),
-          )),
+            child: TextField(
+              controller: _onController,
+              onChanged: (d) => {
+                widget.customSwitchWidget.sendIfOn = d,
+                c.update(widget.customSwitchWidget),
+              },
+              decoration: const InputDecoration(label: Text("Send if on")),
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: _offController,
-            onChanged: (d) => {
-              widget.customSwitchWidget.sendIfOff = d,
-              c.update(widget.customSwitchWidget)
-            },
-            decoration: const InputDecoration(label: Text("Send if off")),
-          )),
+            child: TextField(
+              controller: _offController,
+              onChanged: (d) => {
+                widget.customSwitchWidget.sendIfOff = d,
+                c.update(widget.customSwitchWidget),
+              },
+              decoration: const InputDecoration(label: Text("Send if off")),
+            ),
+          ),
         ],
       ),
     );

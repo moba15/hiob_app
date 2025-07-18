@@ -12,10 +12,12 @@ part of 'custom_colorpicker_widget_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomColorpickerWidgetTheme _$CustomColorpickerWidgetThemeFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomColorpickerWidgetTheme.fromJson(json);
 }
 
@@ -33,16 +35,19 @@ mixin _$CustomColorpickerWidgetTheme {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomColorpickerWidgetThemeCopyWith<CustomColorpickerWidgetTheme>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CustomColorpickerWidgetThemeCopyWith<$Res> {
   factory $CustomColorpickerWidgetThemeCopyWith(
-          CustomColorpickerWidgetTheme value,
-          $Res Function(CustomColorpickerWidgetTheme) then) =
-      _$CustomColorpickerWidgetThemeCopyWithImpl<$Res,
-          CustomColorpickerWidgetTheme>;
+    CustomColorpickerWidgetTheme value,
+    $Res Function(CustomColorpickerWidgetTheme) then,
+  ) =
+      _$CustomColorpickerWidgetThemeCopyWithImpl<
+        $Res,
+        CustomColorpickerWidgetTheme
+      >;
   @useResult
   $Res call({String id, LabelTheme labelTheme});
 
@@ -50,8 +55,10 @@ abstract class $CustomColorpickerWidgetThemeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomColorpickerWidgetThemeCopyWithImpl<$Res,
-        $Val extends CustomColorpickerWidgetTheme>
+class _$CustomColorpickerWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomColorpickerWidgetTheme
+>
     implements $CustomColorpickerWidgetThemeCopyWith<$Res> {
   _$CustomColorpickerWidgetThemeCopyWithImpl(this._value, this._then);
 
@@ -64,20 +71,20 @@ class _$CustomColorpickerWidgetThemeCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      labelTheme: null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ) as $Val);
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomColorpickerWidgetTheme
@@ -95,9 +102,9 @@ class _$CustomColorpickerWidgetThemeCopyWithImpl<$Res,
 abstract class _$$CustomColorpickerWidgetThemeImplCopyWith<$Res>
     implements $CustomColorpickerWidgetThemeCopyWith<$Res> {
   factory _$$CustomColorpickerWidgetThemeImplCopyWith(
-          _$CustomColorpickerWidgetThemeImpl value,
-          $Res Function(_$CustomColorpickerWidgetThemeImpl) then) =
-      __$$CustomColorpickerWidgetThemeImplCopyWithImpl<$Res>;
+    _$CustomColorpickerWidgetThemeImpl value,
+    $Res Function(_$CustomColorpickerWidgetThemeImpl) then,
+  ) = __$$CustomColorpickerWidgetThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, LabelTheme labelTheme});
@@ -108,32 +115,34 @@ abstract class _$$CustomColorpickerWidgetThemeImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomColorpickerWidgetThemeImplCopyWithImpl<$Res>
-    extends _$CustomColorpickerWidgetThemeCopyWithImpl<$Res,
-        _$CustomColorpickerWidgetThemeImpl>
+    extends
+        _$CustomColorpickerWidgetThemeCopyWithImpl<
+          $Res,
+          _$CustomColorpickerWidgetThemeImpl
+        >
     implements _$$CustomColorpickerWidgetThemeImplCopyWith<$Res> {
   __$$CustomColorpickerWidgetThemeImplCopyWithImpl(
-      _$CustomColorpickerWidgetThemeImpl _value,
-      $Res Function(_$CustomColorpickerWidgetThemeImpl) _then)
-      : super(_value, _then);
+    _$CustomColorpickerWidgetThemeImpl _value,
+    $Res Function(_$CustomColorpickerWidgetThemeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomColorpickerWidgetTheme
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_$CustomColorpickerWidgetThemeImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ));
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomColorpickerWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
   }
 }
 
@@ -143,8 +152,8 @@ class _$CustomColorpickerWidgetThemeImpl extends _CustomColorpickerWidgetTheme {
   _$CustomColorpickerWidgetThemeImpl(this.id, this.labelTheme) : super._();
 
   factory _$CustomColorpickerWidgetThemeImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$CustomColorpickerWidgetThemeImplFromJson(json);
+    Map<String, dynamic> json,
+  ) => _$$CustomColorpickerWidgetThemeImplFromJson(json);
 
   @override
   String id;
@@ -162,20 +171,22 @@ class _$CustomColorpickerWidgetThemeImpl extends _CustomColorpickerWidgetTheme {
   @override
   @pragma('vm:prefer-inline')
   _$$CustomColorpickerWidgetThemeImplCopyWith<
-          _$CustomColorpickerWidgetThemeImpl>
-      get copyWith => __$$CustomColorpickerWidgetThemeImplCopyWithImpl<
-          _$CustomColorpickerWidgetThemeImpl>(this, _$identity);
+    _$CustomColorpickerWidgetThemeImpl
+  >
+  get copyWith =>
+      __$$CustomColorpickerWidgetThemeImplCopyWithImpl<
+        _$CustomColorpickerWidgetThemeImpl
+      >(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomColorpickerWidgetThemeImplToJson(
-      this,
-    );
+    return _$$CustomColorpickerWidgetThemeImplToJson(this);
   }
 }
 
 abstract class _CustomColorpickerWidgetTheme
-    extends CustomColorpickerWidgetTheme implements CustomThemeForWidget {
+    extends CustomColorpickerWidgetTheme
+    implements CustomThemeForWidget {
   factory _CustomColorpickerWidgetTheme(String id, LabelTheme labelTheme) =
       _$CustomColorpickerWidgetThemeImpl;
   _CustomColorpickerWidgetTheme._() : super._();
@@ -195,6 +206,7 @@ abstract class _CustomColorpickerWidgetTheme
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomColorpickerWidgetThemeImplCopyWith<
-          _$CustomColorpickerWidgetThemeImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$CustomColorpickerWidgetThemeImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -8,11 +8,12 @@ class CustomLoggerFilter extends TalkerFilter {
   bool logInfo = true;
   bool logError = true;
   bool logVerbose = false;
-  CustomLoggerFilter(
-      {this.logDebug = false,
-      this.logError = true,
-      this.logInfo = false,
-      this.logVerbose = false});
+  CustomLoggerFilter({
+    this.logDebug = false,
+    this.logError = true,
+    this.logInfo = false,
+    this.logVerbose = false,
+  });
   @override
   bool filter(TalkerData item) {
     switch (item.logLevel) {

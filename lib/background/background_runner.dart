@@ -31,16 +31,18 @@ class BackgroundRunner {
   static late FlutterBackgroundService service;
   bool isServiceRunning = false;
 
-  BackgroundRunner(
-      {required this.generalManager, required this.ioBrokerManager});
+  BackgroundRunner({
+    required this.generalManager,
+    required this.ioBrokerManager,
+  });
   init() {
     return;
     NotificationManager.init();
     if (!Platform.isAndroid) {
       log("Platfrom is not Android -> disabled Background runner", level: 1);
-      Manager()
-          .talker
-          .info("Backgroundrunner | init | not supported on this platform");
+      Manager().talker.info(
+        "Backgroundrunner | init | not supported on this platform",
+      );
       return;
     }
     log("OK");
@@ -72,10 +74,12 @@ class BackgroundRunner {
     log("Stop Background service");
     talker?.log("Backgroundrunner | stopservice");
 
-    NotificationManager.awesomeNotifications
-        .dismiss(NotificationManager.ioBrokerConnectionNotificationId);
+    NotificationManager.awesomeNotifications.dismiss(
+      NotificationManager.ioBrokerConnectionNotificationId,
+    );
     NotificationManager.awesomeNotifications.dismissNotificationsByChannelKey(
-        NotificationManager.ioBrokerConnectionNotificationChannelKey);
+      NotificationManager.ioBrokerConnectionNotificationChannelKey,
+    );
     service.invoke("stop");
   }
 
@@ -97,14 +101,13 @@ class BackgroundRunner {
     service.invoke("start", {
       "url": url.toString(),
       "loginPackage": RequestLoginPackage(
-              deviceName: generalManager.deviceName,
-              deviceID: generalManager.deviceID,
-              key: generalManager.loginKey,
-              password:
-                  ioBrokerManager.usePwd ? ioBrokerManager.password : null,
-              user: ioBrokerManager.user,
-              version: Manager.instance.versionNumber)
-          .content,
+        deviceName: generalManager.deviceName,
+        deviceID: generalManager.deviceID,
+        key: generalManager.loginKey,
+        password: ioBrokerManager.usePwd ? ioBrokerManager.password : null,
+        user: ioBrokerManager.user,
+        version: Manager.instance.versionNumber,
+      ).content,
       "secureKey": ioBrokerManager.secureKey,
       "aes_enabled": ioBrokerManager.secureBox,
     });
@@ -133,14 +136,21 @@ class BackgroundRunner {
     HttpOverrides.global = MyHttpOverrides();
     log("event: ${jsonEncode(event)}");
 
-    webSocketChannel = IOWebSocketChannel.connect(event!["url"],
-        pingInterval: const Duration(seconds: 5));
+    webSocketChannel = IOWebSocketChannel.connect(
+      event!["url"],
+      pingInterval: const Duration(seconds: 5),
+    );
 
     webSocketChannel!.stream.listen(
-        (e) => onData(
-            e, event["loginPackage"], event["aes_enabled"], event["secureKey"]),
-        onError: (e) => onError(s, e),
-        onDone: () => onDone(s, event));
+      (e) => onData(
+        e,
+        event["loginPackage"],
+        event["aes_enabled"],
+        event["secureKey"],
+      ),
+      onError: (e) => onError(s, e),
+      onDone: () => onDone(s, event),
+    );
   }
 
   static void onError(ServiceInstance s, dynamic e) async {
@@ -158,49 +168,69 @@ class BackgroundRunner {
     s.invoke("start");
   }
 
-  static void onData(event, Map<String, dynamic> requestLoginPackage,
-      bool aesEnabled, String secureKey) {
+  static void onData(
+    event,
+    Map<String, dynamic> requestLoginPackage,
+    bool aesEnabled,
+    String secureKey,
+  ) {
     CustomLogger.logInfoBackgroundRunner(
-        methodname: "onData", logMessage: "Service got data");
+      methodname: "onData",
+      logMessage: "Service got data",
+    );
     CustomLogger.logInfoBackgroundRunner(
-        methodname: "onData", logMessage: "Service got data $event");
+      methodname: "onData",
+      logMessage: "Service got data $event",
+    );
     Map<String, dynamic> rawMap = jsonDecode(event);
     if (aesEnabled) {
-      event =
-          ConnectionManager.decryptAes(rawMap: rawMap, secureKey: secureKey);
+      event = ConnectionManager.decryptAes(
+        rawMap: rawMap,
+        secureKey: secureKey,
+      );
       CustomLogger.logInfoBackgroundRunner(
-          methodname: "onData", logMessage: "Decrypt data");
+        methodname: "onData",
+        logMessage: "Decrypt data",
+      );
     }
 
-    DataPackageType packageType = DataPackageType.values
-        .firstWhere((element) => element.name == rawMap["type"]);
+    DataPackageType packageType = DataPackageType.values.firstWhere(
+      (element) => element.name == rawMap["type"],
+    );
 
     if (packageType == DataPackageType.firstPingFromIob2 ||
         packageType == DataPackageType.firstPingFromIob) {
-      webSocketChannel?.sink.add(jsonEncode({
-        "type": DataPackageType.requestLogin.name,
-        "content": requestLoginPackage
-      }));
+      webSocketChannel?.sink.add(
+        jsonEncode({
+          "type": DataPackageType.requestLogin.name,
+          "content": requestLoginPackage,
+        }),
+      );
     } else if (packageType == DataPackageType.loginApproved) {
-      webSocketChannel?.sink.add(jsonEncode({
-        "type": DataPackageType.notification.name,
-        "content": {"onlySendNotification": true}
-      }));
+      webSocketChannel?.sink.add(
+        jsonEncode({
+          "type": DataPackageType.notification.name,
+          "content": {"onlySendNotification": true},
+        }),
+      );
       NotificationManager.showConnectionNotification("Connected");
     } else if (packageType == DataPackageType.loginDeclined) {
       NotificationManager.showConnectionNotification(
-          "Failed to login please open the app");
+        "Failed to login please open the app",
+      );
     } else if (packageType == DataPackageType.notification) {
       //TODO Create class
       NotificationManager.showIoBNotificationInBackground(
-          (rawMap["content"]["content"]));
+        (rawMap["content"]["content"]),
+      );
     }
   }
 
   static void onDone(ServiceInstance s, Map<String, dynamic>? event) async {
     Talker().error("Background | onDone");
     NotificationManager.showConnectionNotification(
-        "Disconnected please open app to connect");
+      "Disconnected please open app to connect",
+    );
     if (reconnectTries > maxReconnectTries) {
       s.stopSelf();
       s.invoke("stop");

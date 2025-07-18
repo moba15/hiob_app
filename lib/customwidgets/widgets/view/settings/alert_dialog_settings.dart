@@ -40,8 +40,10 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
     return Column(
       children: [
         TextFormField(
-          decoration:
-              const InputDecoration(hintText: "Title", labelText: "Title"),
+          decoration: const InputDecoration(
+            hintText: "Title",
+            labelText: "Title",
+          ),
           initialValue: widget.customAlertDialogWidget.name,
           onChanged: (v) => {
             widget.customAlertDialogWidget.name = v,
@@ -102,29 +104,27 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
           ],
         ),
         ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (c) => TemplateAddPage(
-                            customWidgetManager:
-                                Manager.instance.customWidgetManager,
-                            onSave: (template) {
-                              setState(() {
-                                if (widget.customAlertDialogWidget.templates ==
-                                    null) {
-                                  widget.customAlertDialogWidget.templates = [
-                                    template
-                                  ];
-                                } else {
-                                  widget.customAlertDialogWidget.templates!
-                                      .add(template);
-                                }
-                              });
-                            },
-                          )));
-            },
-            child: const Text("Add Widget to Dialog"))
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (c) => TemplateAddPage(
+                  customWidgetManager: Manager.instance.customWidgetManager,
+                  onSave: (template) {
+                    setState(() {
+                      if (widget.customAlertDialogWidget.templates == null) {
+                        widget.customAlertDialogWidget.templates = [template];
+                      } else {
+                        widget.customAlertDialogWidget.templates!.add(template);
+                      }
+                    });
+                  },
+                ),
+              ),
+            );
+          },
+          child: const Text("Add Widget to Dialog"),
+        ),
       ],
     );
   }

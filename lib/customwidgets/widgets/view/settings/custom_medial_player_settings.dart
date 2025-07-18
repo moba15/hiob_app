@@ -6,8 +6,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomMediaPlayerSettings extends CustomWidgetSettingStatefulWidget {
   final CustomMediaPlayerWidget customMediaPlayerWidget;
-  const CustomMediaPlayerSettings(
-      {super.key, required this.customMediaPlayerWidget});
+  const CustomMediaPlayerSettings({
+    super.key,
+    required this.customMediaPlayerWidget,
+  });
 
   @override
   State<CustomMediaPlayerSettings> createState() =>
@@ -36,8 +38,9 @@ class _CustomMediaPlayerSettingsState extends State<CustomMediaPlayerSettings> {
   TextEditingController? _urlTextEditingController;
   @override
   void initState() {
-    _urlTextEditingController =
-        TextEditingController(text: widget.customMediaPlayerWidget.url);
+    _urlTextEditingController = TextEditingController(
+      text: widget.customMediaPlayerWidget.url,
+    );
 
     super.initState();
   }
@@ -45,61 +48,63 @@ class _CustomMediaPlayerSettingsState extends State<CustomMediaPlayerSettings> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(
-          children: [
-            InputFieldContainer.inputContainer(
-                child: TextFormField(
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
+          InputFieldContainer.inputContainer(
+            child: TextFormField(
               controller: _urlTextEditingController,
               onChanged: (s) {
                 widget.customMediaPlayerWidget.url = s;
               },
               decoration: const InputDecoration(
-                  labelText: "Media URL",
-                  suffix: Icon(Icons.settings_system_daydream_rounded)),
-            )),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Aspect ratio",
-                style: TextStyle(fontSize: 20),
+                labelText: "Media URL",
+                suffix: Icon(Icons.settings_system_daydream_rounded),
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Slider(
-                      value: widget.customMediaPlayerWidget.width.toDouble(),
-                      max: 20,
-                      min: 5,
-                      divisions: 15,
-                      label: widget.customMediaPlayerWidget.width.toString(),
-                      onChanged: (s) {
-                        setState(() {
-                          widget.customMediaPlayerWidget.width = s.round();
-                        });
-                      }),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: const Text("Aspect ratio", style: TextStyle(fontSize: 20)),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Slider(
+                  value: widget.customMediaPlayerWidget.width.toDouble(),
+                  max: 20,
+                  min: 5,
+                  divisions: 15,
+                  label: widget.customMediaPlayerWidget.width.toString(),
+                  onChanged: (s) {
+                    setState(() {
+                      widget.customMediaPlayerWidget.width = s.round();
+                    });
+                  },
                 ),
-                const Text(
-                  "\\",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+              ),
+              const Text(
+                "\\",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+              ),
+              Expanded(
+                child: Slider(
+                  value: widget.customMediaPlayerWidget.height.toDouble(),
+                  max: 20,
+                  min: 5,
+                  divisions: 15,
+                  label: widget.customMediaPlayerWidget.height.toString(),
+                  onChanged: (s) {
+                    setState(() {
+                      widget.customMediaPlayerWidget.height = s.round();
+                    });
+                  },
                 ),
-                Expanded(
-                  child: Slider(
-                      value: widget.customMediaPlayerWidget.height.toDouble(),
-                      max: 20,
-                      min: 5,
-                      divisions: 15,
-                      label: widget.customMediaPlayerWidget.height.toString(),
-                      onChanged: (s) {
-                        setState(() {
-                          widget.customMediaPlayerWidget.height = s.round();
-                        });
-                      }),
-                )
-              ],
-            )
-          ],
-        ));
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -11,43 +11,51 @@ class MultiSelectionTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey datapointKey = GlobalKey();
   final GlobalKey selectionsKey = GlobalKey();
 
-  MultiSelectionTriggerActionSettings(
-      {super.key, required this.multiSelectionTriggerAction});
+  MultiSelectionTriggerActionSettings({
+    super.key,
+    required this.multiSelectionTriggerAction,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Showcase(
-            key: datapointKey,
-            title: "Datapoint",
-            description: "The Datapoint which will be controlled by the Widget",
-            child: InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-                customWidgetManager: Manager.instance.customWidgetManager,
-                onDataPointSelected: (d) =>
-                    {multiSelectionTriggerAction.dataPoint = d},
-                onDeviceSelected: (d) =>
-                    {multiSelectionTriggerAction.dataPoint == null},
-                selectedDataPoint: multiSelectionTriggerAction.dataPoint,
-                selectedDevice: multiSelectionTriggerAction.dataPoint?.device,
-              ),
-            )),
+          key: datapointKey,
+          title: "Datapoint",
+          description: "The Datapoint which will be controlled by the Widget",
+          child: InputFieldContainer.inputContainer(
+            child: DeviceSelection(
+              customWidgetManager: Manager.instance.customWidgetManager,
+              onDataPointSelected: (d) => {
+                multiSelectionTriggerAction.dataPoint = d,
+              },
+              onDeviceSelected: (d) => {
+                multiSelectionTriggerAction.dataPoint == null,
+              },
+              selectedDataPoint: multiSelectionTriggerAction.dataPoint,
+              selectedDevice: multiSelectionTriggerAction.dataPoint?.device,
+            ),
+          ),
+        ),
         Showcase(
           key: selectionsKey,
           title: "Selection",
           description:
               "Here you can setup the different selection you want to be able to choose later, to control the Device",
           child: _SelectionSettings(
-              multiSelectionTriggerAction: multiSelectionTriggerAction),
-        )
+            multiSelectionTriggerAction: multiSelectionTriggerAction,
+          ),
+        ),
       ],
     );
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [datapointKey, selectionsKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    datapointKey,
+    selectionsKey,
+  ];
 }
 
 class _SelectionSettings extends StatefulWidget {
@@ -70,102 +78,111 @@ class _SelectionSettingsState extends State<_SelectionSettings> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
-            "Selections: ",
-            style: TextStyle(fontSize: 17),
-          ),
+          const Text("Selections: ", style: TextStyle(fontSize: 17)),
           TextButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => _SelectionAddAlertDialog(
-                          onAdd: (key, value) {
-                            if (widget.multiSelectionTriggerAction.selections
-                                .containsKey(key)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text("Selection already exists!")));
-                            }
-                            setState(() {
-                              widget.multiSelectionTriggerAction
-                                  .selections[key] = value;
-                            });
-                          },
-                        ));
-              },
-              child: const Text("Add"))
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => _SelectionAddAlertDialog(
+                  onAdd: (key, value) {
+                    if (widget.multiSelectionTriggerAction.selections
+                        .containsKey(key)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Selection already exists!"),
+                        ),
+                      );
+                    }
+                    setState(() {
+                      widget.multiSelectionTriggerAction.selections[key] =
+                          value;
+                    });
+                  },
+                ),
+              );
+            },
+            child: const Text("Add"),
+          ),
         ],
       ),
       children: [
         ReorderableListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              String selectionKey = keys.elementAt(index);
-              return Dismissible(
-                onDismissed: (d) {
-                  setState(() {
-                    widget.multiSelectionTriggerAction.selections
-                        .remove(selectionKey);
-                  });
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            String selectionKey = keys.elementAt(index);
+            return Dismissible(
+              onDismissed: (d) {
+                setState(() {
+                  widget.multiSelectionTriggerAction.selections.remove(
+                    selectionKey,
+                  );
+                });
+              },
+              key: ValueKey(selectionKey),
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
+              ),
+              secondaryBackground: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: const Icon(Icons.delete_forever),
+                ),
+              ),
+              direction: DismissDirection.endToStart,
+              child: ListTile(
+                title: Text("View: $selectionKey"),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (c) => _SelectionAddAlertDialog(
+                      onAdd: (key, value) {
+                        setState(() {
+                          widget.multiSelectionTriggerAction.selections.remove(
+                            selectionKey,
+                          );
+                          widget.multiSelectionTriggerAction.selections[key] =
+                              value;
+                          widget.multiSelectionTriggerAction.reorderSelection(
+                            widget
+                                    .multiSelectionTriggerAction
+                                    .selections
+                                    .length -
+                                1,
+                            index,
+                          );
+                        });
+                      },
+                      newValue: widget
+                          .multiSelectionTriggerAction
+                          .selections[selectionKey]!,
+                      oldValue: selectionKey,
+                    ),
+                  );
                 },
-                key: ValueKey(selectionKey),
-                background: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Icon(Icons.delete_forever),
-                  ),
+                subtitle: Text(
+                  "Value: ${widget.multiSelectionTriggerAction.selections[selectionKey]}",
                 ),
-                secondaryBackground: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Icon(Icons.delete_forever),
-                  ),
-                ),
-                direction: DismissDirection.endToStart,
-                child: ListTile(
-                  title: Text("View: $selectionKey"),
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (c) => _SelectionAddAlertDialog(
-                              onAdd: (key, value) {
-                                setState(() {
-                                  widget.multiSelectionTriggerAction.selections
-                                      .remove(selectionKey);
-                                  widget.multiSelectionTriggerAction
-                                      .selections[key] = value;
-                                  widget.multiSelectionTriggerAction
-                                      .reorderSelection(
-                                          widget.multiSelectionTriggerAction
-                                                  .selections.length -
-                                              1,
-                                          index);
-                                });
-                              },
-                              newValue: widget.multiSelectionTriggerAction
-                                  .selections[selectionKey]!,
-                              oldValue: selectionKey,
-                            ));
-                  },
-                  subtitle: Text(
-                      "Value: ${widget.multiSelectionTriggerAction.selections[selectionKey]}"),
-                ),
+              ),
+            );
+          },
+          itemCount: widget.multiSelectionTriggerAction.selections.keys.length,
+          onReorder: (oldIndex, newIndex) {
+            setState(() {
+              widget.multiSelectionTriggerAction.reorderSelection(
+                oldIndex,
+                newIndex,
               );
-            },
-            itemCount:
-                widget.multiSelectionTriggerAction.selections.keys.length,
-            onReorder: (oldIndex, newIndex) {
-              setState(() {
-                widget.multiSelectionTriggerAction
-                    .reorderSelection(oldIndex, newIndex);
-              });
-            })
+            });
+          },
+        ),
       ],
     );
   }
@@ -177,8 +194,11 @@ class _SelectionAddAlertDialog extends StatelessWidget {
   final TextEditingController valueController = TextEditingController();
   final String oldValue, newValue;
 
-  _SelectionAddAlertDialog(
-      {required this.onAdd, this.oldValue = "", this.newValue = ""}) {
+  _SelectionAddAlertDialog({
+    required this.onAdd,
+    this.oldValue = "",
+    this.newValue = "",
+  }) {
     keyController.text = oldValue;
     valueController.text = newValue;
   }
@@ -189,14 +209,16 @@ class _SelectionAddAlertDialog extends StatelessWidget {
       title: const Text("Selection"),
       actions: [
         TextButton(
-            onPressed: () => {
-                  onAdd(keyController.text, valueController.text),
-                  Navigator.pop(context)
-                },
-            child: const Text("Save")),
+          onPressed: () => {
+            onAdd(keyController.text, valueController.text),
+            Navigator.pop(context),
+          },
+          child: const Text("Save"),
+        ),
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"))
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Cancel"),
+        ),
       ],
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -210,7 +232,7 @@ class _SelectionAddAlertDialog extends StatelessWidget {
               decoration: const InputDecoration(labelText: "Datapoint value"),
               controller: valueController,
             ),
-          )
+          ),
         ],
       ),
     );

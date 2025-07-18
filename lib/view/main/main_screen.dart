@@ -24,9 +24,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainScreen(
-      manager: context.read<Manager>(),
-    );
+    return MainScreen(manager: context.read<Manager>());
   }
 }
 
@@ -42,35 +40,40 @@ class MainScreen extends StatelessWidget {
         switch (state.status) {
           case ManagerStatus.loading:
             return Scaffold(
-                appBar: AppBar(
-                  title: const Text("Loading"),
-                  actions: [
-                    IconButton(
-                        onPressed: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const NotificationLogViewScreen()),
-                              )
-                            },
-                        icon: const Icon(Icons.notifications)),
-                    IconButton(
-                        onPressed: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MainSettingsScreen(manager: manager)),
-                              )
-                            },
-                        icon: const Icon(Icons.settings)),
-                  ],
-                ),
-                body: Center(
-                  key: GlobalKey(),
-                  child: const CircularProgressIndicator(),
-                ));
+              appBar: AppBar(
+                title: const Text("Loading"),
+                actions: [
+                  IconButton(
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const NotificationLogViewScreen(),
+                        ),
+                      ),
+                    },
+                    icon: const Icon(Icons.notifications),
+                  ),
+                  IconButton(
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              MainSettingsScreen(manager: manager),
+                        ),
+                      ),
+                    },
+                    icon: const Icon(Icons.settings),
+                  ),
+                ],
+              ),
+              body: Center(
+                key: GlobalKey(),
+                child: const CircularProgressIndicator(),
+              ),
+            );
           case ManagerStatus.changeLog:
             return ChangeLogScreen(manager: manager);
           default:
@@ -100,75 +103,83 @@ class MainView extends StatelessWidget {
       bloc: MainViewCubit(),
       builder: (context, state) {
         return DefaultTabController(
-            length: state.screens.length,
-            child: Scaffold(
-              appBar: AppBar(
-                toolbarHeight: 90,
-                centerTitle: true,
-                leading: MainViewAppBarLeading(
-                  connectionStatus: state.connectionStatus,
-                ),
-                title: MainViewBarTitle(
-                  screens: state.screens,
-                ),
-                bottom: TabBar(
-                    tabAlignment: TabAlignment.start,
-                    onTap: (i) {},
-                    indicatorWeight: 3,
-                    isScrollable: true,
-                    tabs: state.screens
-                        .map<ScreenTab>(
-                          (e) => ScreenTab(screen: e),
-                        )
-                        .toList()),
-                actions: [
-                  StreamBuilder(
-                    stream:
-                        Manager.instance.notificationManager.notificationStream,
-                    builder: (context, state) {
-                      return Badge(
-                        isLabelVisible: Manager.instance.notificationManager
-                                .unreadNotifications >
-                            0,
-                        label: Manager.instance.notificationManager
-                                    .unreadNotifications >
-                                0
-                            ? Text(
-                                "${Manager.instance.notificationManager.unreadNotifications}")
-                            : null,
-                        child: IconButton(
-                          onPressed: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const NotificationLogViewScreen())),
-                          },
-                          icon: const Icon(Icons.notifications),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MainSettingsScreen(manager: Manager())),
-                      )
-                    },
-                    icon: const Icon(Icons.settings),
-                  ),
-                ],
+          length: state.screens.length,
+          child: Scaffold(
+            appBar: AppBar(
+              toolbarHeight: 90,
+              centerTitle: true,
+              leading: MainViewAppBarLeading(
+                connectionStatus: state.connectionStatus,
               ),
-              body: TabBarView(
-                  key: GlobalKey(),
-                  children: state.screens
-                      .map((t) =>
-                          ScreenView(screen: t, numberOfRows: numberOfRows))
-                      .toList()),
-            ));
+              title: MainViewBarTitle(screens: state.screens),
+              bottom: TabBar(
+                tabAlignment: TabAlignment.start,
+                onTap: (i) {},
+                indicatorWeight: 3,
+                isScrollable: true,
+                tabs: state.screens
+                    .map<ScreenTab>((e) => ScreenTab(screen: e))
+                    .toList(),
+              ),
+              actions: [
+                StreamBuilder(
+                  stream:
+                      Manager.instance.notificationManager.notificationStream,
+                  builder: (context, state) {
+                    return Badge(
+                      isLabelVisible:
+                          Manager
+                              .instance
+                              .notificationManager
+                              .unreadNotifications >
+                          0,
+                      label:
+                          Manager
+                                  .instance
+                                  .notificationManager
+                                  .unreadNotifications >
+                              0
+                          ? Text(
+                              "${Manager.instance.notificationManager.unreadNotifications}",
+                            )
+                          : null,
+                      child: IconButton(
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const NotificationLogViewScreen(),
+                            ),
+                          ),
+                        },
+                        icon: const Icon(Icons.notifications),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MainSettingsScreen(manager: Manager()),
+                      ),
+                    ),
+                  },
+                  icon: const Icon(Icons.settings),
+                ),
+              ],
+            ),
+            body: TabBarView(
+              key: GlobalKey(),
+              children: state.screens
+                  .map((t) => ScreenView(screen: t, numberOfRows: numberOfRows))
+                  .toList(),
+            ),
+          ),
+        );
       },
     );
   }
@@ -252,10 +263,7 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
       case man.ConnectionStatus.loggingIn:
         blinkingWidget = BlinkingWidget(
           vsync: this,
-          child: const Icon(
-            Icons.login,
-            color: Colors.orange,
-          ),
+          child: const Icon(Icons.login, color: Colors.orange),
         );
         break;
       case man.ConnectionStatus.loginDeclined:
@@ -287,13 +295,16 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: IconButton(
-              icon: const Icon(
-                  Icons.signal_wifi_connected_no_internet_4_outlined,
-                  color: Colors.red),
-              onPressed: () => {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (c) => const IoBrokerSettingsPage()))
-                  }),
+            icon: const Icon(
+              Icons.signal_wifi_connected_no_internet_4_outlined,
+              color: Colors.red,
+            ),
+            onPressed: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (c) => const IoBrokerSettingsPage()),
+              ),
+            },
+          ),
         );
     }
     return blinkingWidget;
@@ -320,20 +331,13 @@ class _MainViewOldState extends State<MainViewOld>
   void initState() {
     _controller = StreamController.broadcast();
     ioConnected = context.read<Manager>().connectionManager.ioBConnected;
-    context
-        .read<Manager>()
-        .generalManager
-        .dialogStreamController
-        .stream
-        .listen((event) {
-      showDialog(context: context, builder: event);
-    });
-
-    _tabController = TabController(
-      initialIndex: 0,
-      length: 1,
-      vsync: this,
+    context.read<Manager>().generalManager.dialogStreamController.stream.listen(
+      (event) {
+        showDialog(context: context, builder: event);
+      },
     );
+
+    _tabController = TabController(initialIndex: 0, length: 1, vsync: this);
 
     super.initState();
   }
@@ -366,8 +370,9 @@ class _MainViewOldState extends State<MainViewOld>
     return BlocBuilder<MainViewCubit, MainViewState>(
       bloc: MainViewCubit(),
       builder: (context, state) {
-        List<Screen> screens =
-            state.screens.where((element) => element.enabled).toList();
+        List<Screen> screens = state.screens
+            .where((element) => element.enabled)
+            .toList();
         _tabController = TabController(
           initialIndex: _tabController.index,
           length: screens.length,
@@ -382,86 +387,92 @@ class _MainViewOldState extends State<MainViewOld>
           );
         }*/
         return Scaffold(
-            appBar: AppBar(
-              toolbarHeight: 90,
-              centerTitle: true,
-              leading: Container(
-                child: _getAppBarStatus(state.connectionStatus),
-              ),
-              title: screens.isEmpty
-                  ? const Text("Loading")
-                  : StreamBuilder<int>(
-                      stream: _controller.stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text("Error");
-                        }
-                        return Text(screens[snapshot.data ?? 0].name);
+          appBar: AppBar(
+            toolbarHeight: 90,
+            centerTitle: true,
+            leading: Container(child: _getAppBarStatus(state.connectionStatus)),
+            title: screens.isEmpty
+                ? const Text("Loading")
+                : StreamBuilder<int>(
+                    stream: _controller.stream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text("Error");
+                      }
+                      return Text(screens[snapshot.data ?? 0].name);
+                    },
+                  ),
+            actions: [
+              StreamBuilder(
+                stream: Manager.instance.notificationManager.notificationStream,
+                builder: (context, state) {
+                  return Badge(
+                    isLabelVisible:
+                        Manager
+                            .instance
+                            .notificationManager
+                            .unreadNotifications >
+                        0,
+                    label:
+                        Manager
+                                .instance
+                                .notificationManager
+                                .unreadNotifications >
+                            0
+                        ? Text(
+                            "${Manager.instance.notificationManager.unreadNotifications}",
+                          )
+                        : null,
+                    child: IconButton(
+                      onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const NotificationLogViewScreen(),
+                          ),
+                        ),
                       },
+                      icon: const Icon(Icons.notifications),
                     ),
-              actions: [
-                StreamBuilder(
-                  stream:
-                      Manager.instance.notificationManager.notificationStream,
-                  builder: (context, state) {
-                    return Badge(
-                      isLabelVisible: Manager.instance.notificationManager
-                              .unreadNotifications >
-                          0,
-                      label: Manager.instance.notificationManager
-                                  .unreadNotifications >
-                              0
-                          ? Text(
-                              "${Manager.instance.notificationManager.unreadNotifications}")
-                          : null,
-                      child: IconButton(
-                        onPressed: () => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NotificationLogViewScreen())),
-                        },
-                        icon: const Icon(Icons.notifications),
-                      ),
-                    );
-                  },
-                ),
-                IconButton(
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              MainSettingsScreen(manager: manager)),
-                    )
-                  },
-                  icon: const Icon(Icons.settings),
-                ),
-              ],
-              automaticallyImplyLeading: false,
-              bottom: TabBar(
-                tabAlignment: TabAlignment.start,
-                onTap: (i) {
-                  _controller.add(i);
+                  );
                 },
-                indicatorWeight: 3,
-                isScrollable: true,
-                controller: _tabController,
-                tabs: [
-                  for (int i = 0; i < screens.length; i++)
-                    ScreenTab(
-                      screen: screens[i],
-                    ),
-                ],
               ),
+              IconButton(
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          MainSettingsScreen(manager: manager),
+                    ),
+                  ),
+                },
+                icon: const Icon(Icons.settings),
+              ),
+            ],
+            automaticallyImplyLeading: false,
+            bottom: TabBar(
+              tabAlignment: TabAlignment.start,
+              onTap: (i) {
+                _controller.add(i);
+              },
+              indicatorWeight: 3,
+              isScrollable: true,
+              controller: _tabController,
+              tabs: [
+                for (int i = 0; i < screens.length; i++)
+                  ScreenTab(screen: screens[i]),
+              ],
             ),
-            body: TabBarView(
-                controller: _tabController,
-                children: screens
-                    .map((t) =>
-                        ScreenView(screen: t, numberOfRows: numberOfRows))
-                    .toList()));
+          ),
+          body: TabBarView(
+            controller: _tabController,
+            children: screens
+                .map((t) => ScreenView(screen: t, numberOfRows: numberOfRows))
+                .toList(),
+          ),
+        );
       },
     );
   }
@@ -482,10 +493,7 @@ class _MainViewOldState extends State<MainViewOld>
       case man.ConnectionStatus.loggingIn:
         blinkingWidget = BlinkingWidget(
           vsync: this,
-          child: const Icon(
-            Icons.login,
-            color: Colors.orange,
-          ),
+          child: const Icon(Icons.login, color: Colors.orange),
         );
         break;
       case man.ConnectionStatus.loginDeclined:
@@ -517,13 +525,16 @@ class _MainViewOldState extends State<MainViewOld>
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: IconButton(
-              icon: const Icon(
-                  Icons.signal_wifi_connected_no_internet_4_outlined,
-                  color: Colors.red),
-              onPressed: () => {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (c) => const IoBrokerSettingsPage()))
-                  }),
+            icon: const Icon(
+              Icons.signal_wifi_connected_no_internet_4_outlined,
+              color: Colors.red,
+            ),
+            onPressed: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (c) => const IoBrokerSettingsPage()),
+              ),
+            },
+          ),
         );
     }
     return blinkingWidget;

@@ -5,11 +5,12 @@ class BoolSelectionTemplate extends StatefulWidget {
   final bool startValue;
   final String title;
 
-  const BoolSelectionTemplate(
-      {super.key,
-      required this.onChange,
-      this.startValue = false,
-      this.title = "No titlle"});
+  const BoolSelectionTemplate({
+    super.key,
+    required this.onChange,
+    this.startValue = false,
+    this.title = "No titlle",
+  });
 
   @override
   State<BoolSelectionTemplate> createState() => _BoolSelectionTemplateState();

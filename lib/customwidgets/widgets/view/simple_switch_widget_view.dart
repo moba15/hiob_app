@@ -5,8 +5,10 @@ import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
 class SimpleSwitchWidgetView extends StatelessWidget {
   final CustomSimpleSwitchWidget customSimpleSwitchWidget;
 
-  const SimpleSwitchWidgetView(
-      {super.key, required this.customSimpleSwitchWidget});
+  const SimpleSwitchWidgetView({
+    super.key,
+    required this.customSimpleSwitchWidget,
+  });
 
   @override
   Widget build(BuildContext context) {

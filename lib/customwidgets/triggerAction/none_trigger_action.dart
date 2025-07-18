@@ -15,20 +15,22 @@ class NoneTriggerAction extends TriggerAction {
   int round;
   Map<String, String>? displayRules;
   String? unit;
-  NoneTriggerAction(
-      {required this.dataPoint,
-      required this.displayRules,
-      this.round = 2,
-      this.unit});
+  NoneTriggerAction({
+    required this.dataPoint,
+    required this.displayRules,
+    this.round = 2,
+    this.unit,
+  });
 
   factory NoneTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     return NoneTriggerAction(
-        dataPoint: dataPoint,
-        displayRules: Map.from(jsonDecode(json["displayRules"]) ?? {}),
-        round: json["round"] ?? 2,
-        unit: json["unit"]);
+      dataPoint: dataPoint,
+      displayRules: Map.from(jsonDecode(json["displayRules"]) ?? {}),
+      round: json["round"] ?? 2,
+      unit: json["unit"],
+    );
   }
   @override
   bool isTypeAllowed(value) {
@@ -41,12 +43,12 @@ class NoneTriggerAction extends TriggerAction {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "dataPoint": dataPoint?.id,
-        "displayRules": jsonEncode(displayRules),
-        "round": round,
-        "unit": unit,
-      };
+    "type": type.toString(),
+    "dataPoint": dataPoint?.id,
+    "displayRules": jsonEncode(displayRules),
+    "round": round,
+    "unit": unit,
+  };
 
   @override
   TriggerActionType get type => TriggerActionType.none;
@@ -70,11 +72,12 @@ class NoneTriggerAction extends TriggerAction {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomValueWidget(
-        id: id,
-        name: name,
-        dataPoint: dataPoint?.id,
-        valueMapper: displayRules ?? {},
-        round: round,
-        suffix: " $unit");
+      id: id,
+      name: name,
+      dataPoint: dataPoint?.id,
+      valueMapper: displayRules ?? {},
+      round: round,
+      suffix: " $unit",
+    );
   }
 }

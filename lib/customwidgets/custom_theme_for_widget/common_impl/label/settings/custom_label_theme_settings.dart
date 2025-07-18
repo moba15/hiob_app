@@ -22,9 +22,10 @@ class _CustomLabelThemeSettingsState extends State<CustomLabelThemeSettings> {
   @override
   void initState() {
     _fontSizeController = TextEditingController(
-        text: widget.labelTheme.labelFonSize == null
-            ? ""
-            : widget.labelTheme.labelFonSize.toString());
+      text: widget.labelTheme.labelFonSize == null
+          ? ""
+          : widget.labelTheme.labelFonSize.toString(),
+    );
 
     super.initState();
   }
@@ -39,50 +40,35 @@ class _CustomLabelThemeSettingsState extends State<CustomLabelThemeSettings> {
   Widget build(BuildContext context) {
     c = context.read<CustomWidgetBlocCubit>();
     return InputFieldContainer.inputContainer(
-        child: Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: ExpansionTile(title: const Text("General"), children: [
-              const Gap(10),
-              Row(
-                children: [
-                  Expanded(
-                    child: _labelTextSize(),
-                  ),
-                  const Gap(5),
-                  Expanded(child: _labelFontWeightSelection())
-                ],
-              ),
-              _labelColorPicker(context)
-            ])));
+      child: Container(
+        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: ExpansionTile(
+          title: const Text("General"),
+          children: [
+            const Gap(10),
+            Row(
+              children: [
+                Expanded(child: _labelTextSize()),
+                const Gap(5),
+                Expanded(child: _labelFontWeightSelection()),
+              ],
+            ),
+            _labelColorPicker(context),
+          ],
+        ),
+      ),
+    );
   }
 
   DropdownButtonFormField<FontWeight> _labelFontWeightSelection() {
     return DropdownButtonFormField<FontWeight>(
       items: const [
-        DropdownMenuItem(
-          value: FontWeight.w300,
-          child: Text("w300"),
-        ),
-        DropdownMenuItem(
-          value: FontWeight.normal,
-          child: Text("Normal"),
-        ),
-        DropdownMenuItem(
-          value: FontWeight.w600,
-          child: Text("w600"),
-        ),
-        DropdownMenuItem(
-          value: FontWeight.bold,
-          child: Text("Bold"),
-        ),
-        DropdownMenuItem(
-          value: FontWeight.w800,
-          child: Text("w800"),
-        ),
-        DropdownMenuItem(
-          value: FontWeight.w900,
-          child: Text("w900"),
-        ),
+        DropdownMenuItem(value: FontWeight.w300, child: Text("w300")),
+        DropdownMenuItem(value: FontWeight.normal, child: Text("Normal")),
+        DropdownMenuItem(value: FontWeight.w600, child: Text("w600")),
+        DropdownMenuItem(value: FontWeight.bold, child: Text("Bold")),
+        DropdownMenuItem(value: FontWeight.w800, child: Text("w800")),
+        DropdownMenuItem(value: FontWeight.w900, child: Text("w900")),
       ],
       value: widget.labelTheme.labelFontWeight ?? FontWeight.normal,
       onChanged: (value) {
@@ -112,28 +98,31 @@ class _CustomLabelThemeSettingsState extends State<CustomLabelThemeSettings> {
         children: [
           const Text("Label text color"),
           TextButton(
-              onPressed: () {
-                setState(() {
-                  widget.labelTheme.labelColor = null;
-                });
-                c.update(null);
-              },
-              child: const Text("Reset")),
+            onPressed: () {
+              setState(() {
+                widget.labelTheme.labelColor = null;
+              });
+              c.update(null);
+            },
+            child: const Text("Reset"),
+          ),
         ],
       ),
       onTap: () async {
         Color color = await showColorPickerDialog(
-            context,
-            widget.labelTheme.labelColor ??
-                (Theme.of(context).textTheme.headlineLarge?.color ??
-                    Colors.black));
+          context,
+          widget.labelTheme.labelColor ??
+              (Theme.of(context).textTheme.headlineLarge?.color ??
+                  Colors.black),
+        );
         setState(() {
           widget.labelTheme.labelColor = color;
         });
         c.update(null);
       },
       trailing: ColorIndicator(
-        color: widget.labelTheme.labelColor ??
+        color:
+            widget.labelTheme.labelColor ??
             (Theme.of(context).textTheme.headlineLarge?.color ?? Colors.black),
       ),
     );

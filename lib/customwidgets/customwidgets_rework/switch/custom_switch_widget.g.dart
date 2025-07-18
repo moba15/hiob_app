@@ -7,39 +7,42 @@ part of 'custom_switch_widget.dart';
 // **************************************************************************
 
 _$CustomSwitchWidgetImpl _$$CustomSwitchWidgetImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomSwitchWidgetImpl(
-      type: $enumDecodeNullable(
-              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.switchWidget,
-      id: json['id'] as String,
-      name: json['name'] as String,
-      dataPoint: json['dataPoint'] as String?,
-      label: json['label'] as String?,
-      sendIfOn: json['sendIfOn'] as String? ?? "true",
-      sendIfOff: json['sendIfOff'] as String? ?? "false",
-      customPopupmenu: json['customPopupmenu'] == null
-          ? null
-          : CustomPopupmenu.fromJson(
-              json['customPopupmenu'] as Map<String, dynamic>),
-      customTheme: const _CustomSwitchThemeConverter()
-          .fromJson(json['customTheme'] as Map<String, dynamic>?),
-    );
+  Map<String, dynamic> json,
+) => _$CustomSwitchWidgetImpl(
+  type:
+      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+      CustomWidgetTypeDeprecated.switchWidget,
+  id: json['id'] as String,
+  name: json['name'] as String,
+  dataPoint: json['dataPoint'] as String?,
+  label: json['label'] as String?,
+  sendIfOn: json['sendIfOn'] as String? ?? "true",
+  sendIfOff: json['sendIfOff'] as String? ?? "false",
+  customPopupmenu: json['customPopupmenu'] == null
+      ? null
+      : CustomPopupmenu.fromJson(
+          json['customPopupmenu'] as Map<String, dynamic>,
+        ),
+  customTheme: const _CustomSwitchThemeConverter().fromJson(
+    json['customTheme'] as Map<String, dynamic>?,
+  ),
+);
 
 Map<String, dynamic> _$$CustomSwitchWidgetImplToJson(
-        _$CustomSwitchWidgetImpl instance) =>
-    <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
-      'id': instance.id,
-      'name': instance.name,
-      'dataPoint': instance.dataPoint,
-      'label': instance.label,
-      'sendIfOn': instance.sendIfOn,
-      'sendIfOff': instance.sendIfOff,
-      'customPopupmenu': instance.customPopupmenu,
-      'customTheme':
-          const _CustomSwitchThemeConverter().toJson(instance.customTheme),
-    };
+  _$CustomSwitchWidgetImpl instance,
+) => <String, dynamic>{
+  'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+  'id': instance.id,
+  'name': instance.name,
+  'dataPoint': instance.dataPoint,
+  'label': instance.label,
+  'sendIfOn': instance.sendIfOn,
+  'sendIfOff': instance.sendIfOff,
+  'customPopupmenu': instance.customPopupmenu,
+  'customTheme': const _CustomSwitchThemeConverter().toJson(
+    instance.customTheme,
+  ),
+};
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',

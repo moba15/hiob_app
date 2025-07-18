@@ -21,8 +21,11 @@ class ScreenEditPage extends StatefulWidget {
   final Screen screen;
   final ScreenManager screenManager;
 
-  const ScreenEditPage(
-      {super.key, required this.screen, required this.screenManager});
+  const ScreenEditPage({
+    super.key,
+    required this.screen,
+    required this.screenManager,
+  });
 
   @override
   State<ScreenEditPage> createState() => _ScreenEditPageState();
@@ -199,13 +202,17 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   void _save(String name) {
     widget.screen.widgetTemplates = screen.widgetTemplates;
     widget.screenManager.editScreen(
-        screen: widget.screen,
-        name: name,
-        iconWrapper: currentIconWrapper ??
-            const IconWrapper(
-                iconDataType: IconDataType.flutterIcons, iconData: Icons.home),
-        index: 1,
-        enabled: enabled ?? true);
+      screen: widget.screen,
+      name: name,
+      iconWrapper:
+          currentIconWrapper ??
+          const IconWrapper(
+            iconDataType: IconDataType.flutterIcons,
+            iconData: Icons.home,
+          ),
+      index: 1,
+      enabled: enabled ?? true,
+    );
   }
 
   void _addTemplates(List<CustomWidgetWrapper> templates) {
@@ -222,9 +229,10 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
 
   void _reorderTemplate(int oldIndex, int newIndex) {
     screen.reorderWidgetTemplates(
-        oldIndex: oldIndex,
-        newIndex: newIndex,
-        screenManager: widget.screenManager);
+      oldIndex: oldIndex,
+      newIndex: newIndex,
+      screenManager: widget.screenManager,
+    );
   }
 
   void _removeTemplate(int index) {
@@ -268,17 +276,17 @@ class _SaveDialog extends StatelessWidget {
       title: Text(getAppLocalizations(context).not_saved_alert_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(getAppLocalizations(context).want_to_exit_alert),
-        ],
+        children: [Text(getAppLocalizations(context).want_to_exit_alert)],
       ),
       actions: [
         TextButton(
-            onPressed: () => {Navigator.pop(context), cancel()},
-            child: Text(getAppLocalizations(context).exit)),
+          onPressed: () => {Navigator.pop(context), cancel()},
+          child: Text(getAppLocalizations(context).exit),
+        ),
         TextButton(
-            onPressed: () => {Navigator.pop(context), onSave()},
-            child: Text(getAppLocalizations(context).save)),
+          onPressed: () => {Navigator.pop(context), onSave()},
+          child: Text(getAppLocalizations(context).save),
+        ),
       ],
     );
   }
@@ -289,8 +297,11 @@ class _AddTemplateAlertDialog extends StatefulWidget {
   final ScreenManager screenManager;
   final Function(List<CustomWidgetWrapper>) onAdd;
 
-  const _AddTemplateAlertDialog(
-      {required this.screen, required this.screenManager, required this.onAdd});
+  const _AddTemplateAlertDialog({
+    required this.screen,
+    required this.screenManager,
+    required this.onAdd,
+  });
 
   @override
   State<_AddTemplateAlertDialog> createState() =>
@@ -302,33 +313,42 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetWrapper> templates =
-        List.of(widget.screenManager.manager.customWidgetManager.templates);
+    List<CustomWidgetWrapper> templates = List.of(
+      widget.screenManager.manager.customWidgetManager.templates,
+    );
     templates.removeWhere(
-        (element) => widget.screen.widgetTemplates.contains(element));
+      (element) => widget.screen.widgetTemplates.contains(element),
+    );
     return AlertDialog(
-      title:
-          Text(getAppLocalizations(context).select_widget_template_alert_title),
+      title: Text(
+        getAppLocalizations(context).select_widget_template_alert_title,
+      ),
       actions: [
         TextButton(
-            onPressed: cancel,
-            child: Text(getAppLocalizations(context).cancel)),
+          onPressed: cancel,
+          child: Text(getAppLocalizations(context).cancel),
+        ),
         TextButton(
-            onPressed: add, child: Text(getAppLocalizations(context).add)),
+          onPressed: add,
+          child: Text(getAppLocalizations(context).add),
+        ),
       ],
       content: SizedBox(
         child: Column(
           children: [
             for (CustomWidgetTypeDeprecated type
                 in CustomWidgetTypeDeprecated.values.where(
-                    (element) => element != CustomWidgetTypeDeprecated.group))
+                  (element) => element != CustomWidgetTypeDeprecated.group,
+                ))
               if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(
-                      "${type.name} (${templates.where((element) => element.type?.name == type.name).length})"),
+                    "${type.name} (${templates.where((element) => element.type?.name == type.name).length})",
+                  ),
                   children: [
-                    for (CustomWidgetWrapper t in templates
-                        .where((element) => element.type?.name == type.name))
+                    for (CustomWidgetWrapper t in templates.where(
+                      (element) => element.type?.name == type.name,
+                    ))
                       ListTile(
                         selected: selected.contains(t),
                         leading: Checkbox(
@@ -345,7 +365,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
                         ),
                         title: Text(t.name),
                         subtitle: Text(t.type?.name ?? "Error"),
-                      )
+                      ),
                   ],
                 ),
           ],
@@ -380,19 +400,24 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: Text(getAppLocalizations(context).add_group_alert_title),
-        actions: [
-          TextButton(
-              onPressed: cancel,
-              child: Text(getAppLocalizations(context).cancel)),
-          TextButton(
-              onPressed: add, child: Text(getAppLocalizations(context).add)),
-        ],
-        content: TextField(
-          controller: _nameController,
-          decoration: InputDecoration(
-              labelText: getAppLocalizations(context).group_name),
-        ));
+      title: Text(getAppLocalizations(context).add_group_alert_title),
+      actions: [
+        TextButton(
+          onPressed: cancel,
+          child: Text(getAppLocalizations(context).cancel),
+        ),
+        TextButton(
+          onPressed: add,
+          child: Text(getAppLocalizations(context).add),
+        ),
+      ],
+      content: TextField(
+        controller: _nameController,
+        decoration: InputDecoration(
+          labelText: getAppLocalizations(context).group_name,
+        ),
+      ),
+    );
   }
 
   void add() {
@@ -409,60 +434,65 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
   final Screen screen;
   final ScreenManager screenManager;
 
-  const ScreenWidgetTemplateListPage(
-      {super.key, required this.screen, required this.screenManager});
+  const ScreenWidgetTemplateListPage({
+    super.key,
+    required this.screen,
+    required this.screenManager,
+  });
 
   @override
   Widget build(BuildContext context) {
     List<dynamic> templates = screen.widgetTemplates;
 
     return ReorderableListView.builder(
-        itemCount: templates.length,
-        onReorder: (int oldIndex, int newIndex) {
-          screen.reorderWidgetTemplates(
-              oldIndex: oldIndex,
-              newIndex: newIndex,
-              screenManager: screenManager);
-        },
-        itemBuilder: (BuildContext context, int index) {
-          if (templates.length > index &&
-              templates[index] is CustomWidgetTemplate) {
-            return Dismissible(
-                background: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Icon(Icons.delete_forever),
-                  ),
-                ),
-                secondaryBackground: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                    child: const Icon(Icons.delete_forever),
-                  ),
-                ),
-                direction: DismissDirection.endToStart,
-                onDismissed: (d) => screen.removeWidgetTemplate(
-                    screenManager, templates[index]),
-                key: ValueKey(templates[index]),
-                child: CustomWidgetTemplateTile(
-                  toggleSelect: () => {}, //TODO
-                  customWidget: templates[index],
-                  customWidgetManager:
-                      screenManager.manager.customWidgetManager,
-                ));
-          } else {
-            return Dismissible(
-              key: ValueKey(templates[index]),
-              onDismissed: (d) =>
-                  screen.removeWidgetTemplate(screenManager, templates[index]),
-              child: CustomGroupWidgetTile(customGroupWidget: templates[index]),
-            );
-          }
-        });
+      itemCount: templates.length,
+      onReorder: (int oldIndex, int newIndex) {
+        screen.reorderWidgetTemplates(
+          oldIndex: oldIndex,
+          newIndex: newIndex,
+          screenManager: screenManager,
+        );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        if (templates.length > index &&
+            templates[index] is CustomWidgetTemplate) {
+          return Dismissible(
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: const Icon(Icons.delete_forever),
+              ),
+            ),
+            direction: DismissDirection.endToStart,
+            onDismissed: (d) =>
+                screen.removeWidgetTemplate(screenManager, templates[index]),
+            key: ValueKey(templates[index]),
+            child: CustomWidgetTemplateTile(
+              toggleSelect: () => {}, //TODO
+              customWidget: templates[index],
+              customWidgetManager: screenManager.manager.customWidgetManager,
+            ),
+          );
+        } else {
+          return Dismissible(
+            key: ValueKey(templates[index]),
+            onDismissed: (d) =>
+                screen.removeWidgetTemplate(screenManager, templates[index]),
+            child: CustomGroupWidgetTile(customGroupWidget: templates[index]),
+          );
+        }
+      },
+    );
   }
 }
 
@@ -483,12 +513,15 @@ class _AddDivisionLineTemplate extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            onAdd(CustomDivisionLineWidget(
+            onAdd(
+              CustomDivisionLineWidget(
                 thickness: thickness,
-                name: 'Line (t: ' + thickness.toString() + ")"));
+                name: 'Line (t: ' + thickness.toString() + ")",
+              ),
+            );
           },
           child: Text(getAppLocalizations(context).add),
-        )
+        ),
       ],
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -511,7 +544,7 @@ class _AddDivisionLineTemplate extends StatelessWidget {
                 value: value.toDouble(),
               );
             },
-          )
+          ),
         ],
       ),
     );

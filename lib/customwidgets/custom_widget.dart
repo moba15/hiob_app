@@ -56,7 +56,7 @@ enum CustomWidgetTypeDeprecated {
   networkPlayer,
   colorPicker,
   switchWidget,
-  divisionLine
+  divisionLine,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
@@ -75,30 +75,40 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
       case CustomWidgetTypeDeprecated.advanced:
         return AdvancedCustomWidget.edit().settingWidget;
       case CustomWidgetTypeDeprecated.webView:
-        return depc.CustomWebViewWidget(name: null, url: null, dataPoint: null)
-            .settingWidget;
+        return depc.CustomWebViewWidget(
+          name: null,
+          url: null,
+          dataPoint: null,
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.alertDialog:
         return CustomAlertDialogWidget(name: "").settingWidget;
       case CustomWidgetTypeDeprecated.table:
         return depc_table.CustomTableWidget(
-            name: "",
-            header: "",
-            sortAsc: true,
-            initialSortColumn: 1,
-            initialSortEnabled: false,
-            elementsPerPage: 10,
-            columns: {}).settingWidget;
+          name: "",
+          header: "",
+          sortAsc: true,
+          initialSortColumn: 1,
+          initialSortEnabled: false,
+          elementsPerPage: 10,
+          columns: {},
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.graph:
         return GraphWidget(name: "name").settingWidget;
       case CustomWidgetTypeDeprecated.colorPallete:
-        return CustomColorPaletteWidget(name: "", pickersEnabled: {})
-            .settingWidget;
+        return CustomColorPaletteWidget(
+          name: "",
+          pickersEnabled: {},
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.mediaPlayer:
         return CustomMediaPlayerWidget(name: "", url: "").settingWidget;
       case CustomWidgetTypeDeprecated.input:
         return CustomInputWidget(
-                id: "", name: "", hintText: "", dataPoint: null, suffix: "")
-            .settingWidget;
+          id: "",
+          name: "",
+          hintText: "",
+          dataPoint: null,
+          suffix: "",
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.button:
         return CustomButtonWidget(
           id: "",
@@ -106,28 +116,51 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
           dataPoint: null,
         ).settingWidget;
       case CustomWidgetTypeDeprecated.webViewNew:
-        return CustomWebViewWidget(id: "id", name: "", dataPoint: null)
-            .settingWidget;
+        return CustomWebViewWidget(
+          id: "id",
+          name: "",
+          dataPoint: null,
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.tableNew:
-        return CustomTableWidget(id: "", name: "", dataPoint: null, columns: {})
-            .settingWidget;
+        return CustomTableWidget(
+          id: "",
+          name: "",
+          dataPoint: null,
+          columns: {},
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.valueNew:
-        return CustomValueWidget(id: "", name: "", dataPoint: null)
-            .settingWidget;
+        return CustomValueWidget(
+          id: "",
+          name: "",
+          dataPoint: null,
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.multiselection:
         return CustomMultiselectionWidget(
-            id: "", name: "", dataPoint: null, selections: {}).settingWidget;
+          id: "",
+          name: "",
+          dataPoint: null,
+          selections: {},
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.slider:
-        return CustomSliderWidget(id: "", name: "", dataPoint: null)
-            .settingWidget;
+        return CustomSliderWidget(
+          id: "",
+          name: "",
+          dataPoint: null,
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.networkPlayer:
         return CustomNetworkPlayerWidget(id: "", name: "name").settingWidget;
       case CustomWidgetTypeDeprecated.colorPicker:
-        return CustomColorPickerWidget(id: "", name: "", dataPoint: null)
-            .settingWidget;
+        return CustomColorPickerWidget(
+          id: "",
+          name: "",
+          dataPoint: null,
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.switchWidget:
-        return CustomSwitchWidget(id: "id", name: "", dataPoint: null)
-            .settingWidget;
+        return CustomSwitchWidget(
+          id: "id",
+          name: "",
+          dataPoint: null,
+        ).settingWidget;
       case CustomWidgetTypeDeprecated.divisionLine:
         return CustomDivisionLineWidget(name: "").settingWidget;
     }
@@ -137,34 +170,48 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
     switch (this) {
       case CustomWidgetTypeDeprecated.valueNew:
         return CustomValueWidgetTheme(
-            "not set",
-            LabelTheme("not set", null, null, null, null),
-            null,
-            null,
-            null) as CustomThemeForWidget;
+              "not set",
+              LabelTheme("not set", null, null, null, null),
+              null,
+              null,
+              null,
+            )
+            as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.switchWidget:
         return CustomSwitchWidgetTheme(
-                "not set", LabelTheme("not set", null, null, null, null))
+              "not set",
+              LabelTheme("not set", null, null, null, null),
+            )
             as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.button:
         return CustomButtonWidgetTheme(
-                "not set", LabelTheme("not set", null, null, null, null))
+              "not set",
+              LabelTheme("not set", null, null, null, null),
+            )
             as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.input:
         return CustomInputWidgetTheme(
-                "not set", LabelTheme("not set", null, null, null, null))
+              "not set",
+              LabelTheme("not set", null, null, null, null),
+            )
             as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.multiselection:
         return CustomMultiselectionWidgetTheme(
-                "not set", LabelTheme("not set", null, null, null, null))
+              "not set",
+              LabelTheme("not set", null, null, null, null),
+            )
             as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.colorPicker:
         return CustomColorpickerWidgetTheme(
-                "not set", LabelTheme("not set", null, null, null, null))
+              "not set",
+              LabelTheme("not set", null, null, null, null),
+            )
             as CustomThemeForWidget;
       case CustomWidgetTypeDeprecated.slider:
         return CustomSliderWidgetTheme(
-                "not set", LabelTheme("not set", null, null, null, null))
+              "not set",
+              LabelTheme("not set", null, null, null, null),
+            )
             as CustomThemeForWidget;
 
       default:
@@ -228,8 +275,11 @@ abstract class CustomWidgetDeprecated {
   CustomWidgetTypeDeprecated? type;
   Map<String, dynamic>? settings;
 
-  CustomWidgetDeprecated(
-      {required this.name, required this.type, required this.settings});
+  CustomWidgetDeprecated({
+    required this.name,
+    required this.type,
+    required this.settings,
+  });
 
   CustomWidgetDeprecated.edit({required this.type});
 

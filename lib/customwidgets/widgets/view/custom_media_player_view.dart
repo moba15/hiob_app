@@ -6,8 +6,10 @@ import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart
 
 class CustomMediaPlayerWidgetView extends StatefulWidget {
   final CustomMediaPlayerWidget customMediaPlayerWidget;
-  const CustomMediaPlayerWidgetView(
-      {super.key, required this.customMediaPlayerWidget});
+  const CustomMediaPlayerWidgetView({
+    super.key,
+    required this.customMediaPlayerWidget,
+  });
 
   @override
   State<CustomMediaPlayerWidgetView> createState() =>
@@ -19,8 +21,9 @@ class _CustomMediaPlayerWidgetViewState
   late VlcPlayerController _vlcPlayerController;
   @override
   void initState() {
-    _vlcPlayerController =
-        VlcPlayerController.network(widget.customMediaPlayerWidget.url ?? "ok");
+    _vlcPlayerController = VlcPlayerController.network(
+      widget.customMediaPlayerWidget.url ?? "ok",
+    );
 
     super.initState();
   }
@@ -28,16 +31,15 @@ class _CustomMediaPlayerWidgetViewState
   @override
   Widget build(BuildContext context) {
     if (!Platform.isAndroid) {
-      return const Center(
-        child: Text("Only Supported on android"),
-      );
+      return const Center(child: Text("Only Supported on android"));
     }
     if (widget.customMediaPlayerWidget.url == null) {
       return const Text("Emtpy url");
     }
     return VlcPlayer(
       controller: _vlcPlayerController,
-      aspectRatio: widget.customMediaPlayerWidget.width *
+      aspectRatio:
+          widget.customMediaPlayerWidget.width *
           1.0 /
           widget.customMediaPlayerWidget.height,
       placeholder: const Center(child: CircularProgressIndicator()),

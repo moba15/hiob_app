@@ -5,6 +5,8 @@ class WidgetTemplateListState {
   final List<CustomWidgetWrapper> templates;
   final ListStatus status;
 
-  const WidgetTemplateListState(
-      {required this.templates, required this.status});
+  const WidgetTemplateListState({
+    required this.templates,
+    required this.status,
+  });
 }

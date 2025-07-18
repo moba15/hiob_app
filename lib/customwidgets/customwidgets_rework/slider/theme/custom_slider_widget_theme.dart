@@ -11,10 +11,8 @@ part 'custom_slider_widget_theme.g.dart';
 class CustomSliderWidgetTheme with _$CustomSliderWidgetTheme {
   CustomSliderWidgetTheme._();
   @Implements<CustomThemeForWidget>()
-  factory CustomSliderWidgetTheme(
-    String id,
-    LabelTheme labelTheme,
-  ) = _CustomSliderWidgetTheme;
+  factory CustomSliderWidgetTheme(String id, LabelTheme labelTheme) =
+      _CustomSliderWidgetTheme;
 
   Widget get settingWidget {
     return labelTheme.settingWidget;

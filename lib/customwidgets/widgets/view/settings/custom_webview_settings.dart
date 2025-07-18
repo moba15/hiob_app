@@ -14,8 +14,10 @@ class CustomWebViewWidgetSettingWidget
   final GlobalKey datapointKey = GlobalKey();
   final GlobalKey heightKey = GlobalKey();
   final GlobalKey javascriptKey = GlobalKey();
-  CustomWebViewWidgetSettingWidget(
-      {super.key, required this.customWebViewWidget});
+  CustomWebViewWidgetSettingWidget({
+    super.key,
+    required this.customWebViewWidget,
+  });
 
   @override
   State<CustomWebViewWidgetSettingWidget> createState() =>
@@ -34,8 +36,12 @@ class CustomWebViewWidgetSettingWidget
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [urlKey, datapointKey, heightKey, javascriptKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    urlKey,
+    datapointKey,
+    heightKey,
+    javascriptKey,
+  ];
 
   @override
   // TODO: implement deprecated
@@ -65,48 +71,47 @@ class _CustomSimpleValueWidgetSettingWidgetState
       child: Column(
         children: [
           Showcase(
-              key: widget.urlKey,
-              title: "Url",
-              description: "The url you want to load into this widget",
-              child: InputFieldContainer.inputContainer(
-                child: TextField(
-                  decoration: const InputDecoration(labelText: "Url"),
-                  onChanged: (s) => {
-                    widget.customWebViewWidget.url = s,
-                    if (s.isEmpty) widget.customWebViewWidget.url = null
-                  },
-                  controller: _urlController,
-                ),
-              )),
+            key: widget.urlKey,
+            title: "Url",
+            description: "The url you want to load into this widget",
+            child: InputFieldContainer.inputContainer(
+              child: TextField(
+                decoration: const InputDecoration(labelText: "Url"),
+                onChanged: (s) => {
+                  widget.customWebViewWidget.url = s,
+                  if (s.isEmpty) widget.customWebViewWidget.url = null,
+                },
+                controller: _urlController,
+              ),
+            ),
+          ),
           Showcase(
-              key: widget.datapointKey,
-              title: "Datapoint",
-              description:
-                  "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
-              child: InputFieldContainer.inputContainer(
-                child: DeviceSelection(
-                  onDataPointSelected: (d) =>
-                      widget.customWebViewWidget.dataPoint = d,
-                  selectedDataPoint: widget.customWebViewWidget.dataPoint,
-                  selectedDevice: widget.customWebViewWidget.dataPoint?.device,
-                  onDeviceSelected: (d) {
-                    if (d == null) {
-                      widget.customWebViewWidget.dataPoint = null;
-                    }
-                  },
-                  customWidgetManager: Manager.instance.customWidgetManager,
-                ),
-              )),
+            key: widget.datapointKey,
+            title: "Datapoint",
+            description:
+                "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
+            child: InputFieldContainer.inputContainer(
+              child: DeviceSelection(
+                onDataPointSelected: (d) =>
+                    widget.customWebViewWidget.dataPoint = d,
+                selectedDataPoint: widget.customWebViewWidget.dataPoint,
+                selectedDevice: widget.customWebViewWidget.dataPoint?.device,
+                onDeviceSelected: (d) {
+                  if (d == null) {
+                    widget.customWebViewWidget.dataPoint = null;
+                  }
+                },
+                customWidgetManager: Manager.instance.customWidgetManager,
+              ),
+            ),
+          ),
           Showcase(
             key: widget.heightKey,
             title: "Height",
             description: "Height of the Web View",
             child: Row(
               children: [
-                const Text(
-                  "Height: ",
-                  style: TextStyle(fontSize: 17),
-                ),
+                const Text("Height: ", style: TextStyle(fontSize: 17)),
                 Expanded(
                   child: Slider(
                     value: widget.customWebViewWidget.height.toDouble(),
@@ -120,7 +125,7 @@ class _CustomSimpleValueWidgetSettingWidgetState
                     },
                     label: widget.customWebViewWidget.height.toString(),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -135,12 +140,13 @@ class _CustomSimpleValueWidgetSettingWidgetState
                   style: TextStyle(fontSize: 17),
                 ),
                 Checkbox(
-                    value: widget.customWebViewWidget.javaScript,
-                    onChanged: (d) {
-                      setState(() {
-                        widget.customWebViewWidget.javaScript = d ?? false;
-                      });
-                    }),
+                  value: widget.customWebViewWidget.javaScript,
+                  onChanged: (d) {
+                    setState(() {
+                      widget.customWebViewWidget.javaScript = d ?? false;
+                    });
+                  },
+                ),
               ],
             ),
           ),

@@ -4,8 +4,10 @@ import 'package:smart_home/customwidgets/triggerAction/multiselection_trigger_ac
 class MultiSelectionTriggerActionView extends StatelessWidget {
   final MultiSelectionTriggerAction multiSelectionTriggerAction;
 
-  const MultiSelectionTriggerActionView(
-      {super.key, required this.multiSelectionTriggerAction});
+  const MultiSelectionTriggerActionView({
+    super.key,
+    required this.multiSelectionTriggerAction,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -12,10 +12,12 @@ part of 'custom_multiselection_widget_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomMultiselectionWidgetTheme _$CustomMultiselectionWidgetThemeFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomMultiselectionWidgetTheme.fromJson(json);
 }
 
@@ -33,16 +35,19 @@ mixin _$CustomMultiselectionWidgetTheme {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomMultiselectionWidgetThemeCopyWith<CustomMultiselectionWidgetTheme>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CustomMultiselectionWidgetThemeCopyWith<$Res> {
   factory $CustomMultiselectionWidgetThemeCopyWith(
-          CustomMultiselectionWidgetTheme value,
-          $Res Function(CustomMultiselectionWidgetTheme) then) =
-      _$CustomMultiselectionWidgetThemeCopyWithImpl<$Res,
-          CustomMultiselectionWidgetTheme>;
+    CustomMultiselectionWidgetTheme value,
+    $Res Function(CustomMultiselectionWidgetTheme) then,
+  ) =
+      _$CustomMultiselectionWidgetThemeCopyWithImpl<
+        $Res,
+        CustomMultiselectionWidgetTheme
+      >;
   @useResult
   $Res call({String id, LabelTheme labelTheme});
 
@@ -50,8 +55,10 @@ abstract class $CustomMultiselectionWidgetThemeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomMultiselectionWidgetThemeCopyWithImpl<$Res,
-        $Val extends CustomMultiselectionWidgetTheme>
+class _$CustomMultiselectionWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomMultiselectionWidgetTheme
+>
     implements $CustomMultiselectionWidgetThemeCopyWith<$Res> {
   _$CustomMultiselectionWidgetThemeCopyWithImpl(this._value, this._then);
 
@@ -64,20 +71,20 @@ class _$CustomMultiselectionWidgetThemeCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      labelTheme: null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ) as $Val);
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomMultiselectionWidgetTheme
@@ -95,9 +102,9 @@ class _$CustomMultiselectionWidgetThemeCopyWithImpl<$Res,
 abstract class _$$CustomMultiselectionWidgetThemeImplCopyWith<$Res>
     implements $CustomMultiselectionWidgetThemeCopyWith<$Res> {
   factory _$$CustomMultiselectionWidgetThemeImplCopyWith(
-          _$CustomMultiselectionWidgetThemeImpl value,
-          $Res Function(_$CustomMultiselectionWidgetThemeImpl) then) =
-      __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<$Res>;
+    _$CustomMultiselectionWidgetThemeImpl value,
+    $Res Function(_$CustomMultiselectionWidgetThemeImpl) then,
+  ) = __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, LabelTheme labelTheme});
@@ -108,32 +115,34 @@ abstract class _$$CustomMultiselectionWidgetThemeImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<$Res>
-    extends _$CustomMultiselectionWidgetThemeCopyWithImpl<$Res,
-        _$CustomMultiselectionWidgetThemeImpl>
+    extends
+        _$CustomMultiselectionWidgetThemeCopyWithImpl<
+          $Res,
+          _$CustomMultiselectionWidgetThemeImpl
+        >
     implements _$$CustomMultiselectionWidgetThemeImplCopyWith<$Res> {
   __$$CustomMultiselectionWidgetThemeImplCopyWithImpl(
-      _$CustomMultiselectionWidgetThemeImpl _value,
-      $Res Function(_$CustomMultiselectionWidgetThemeImpl) _then)
-      : super(_value, _then);
+    _$CustomMultiselectionWidgetThemeImpl _value,
+    $Res Function(_$CustomMultiselectionWidgetThemeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomMultiselectionWidgetTheme
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_$CustomMultiselectionWidgetThemeImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ));
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomMultiselectionWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
   }
 }
 
@@ -144,8 +153,8 @@ class _$CustomMultiselectionWidgetThemeImpl
   _$CustomMultiselectionWidgetThemeImpl(this.id, this.labelTheme) : super._();
 
   factory _$CustomMultiselectionWidgetThemeImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$CustomMultiselectionWidgetThemeImplFromJson(json);
+    Map<String, dynamic> json,
+  ) => _$$CustomMultiselectionWidgetThemeImplFromJson(json);
 
   @override
   String id;
@@ -163,20 +172,22 @@ class _$CustomMultiselectionWidgetThemeImpl
   @override
   @pragma('vm:prefer-inline')
   _$$CustomMultiselectionWidgetThemeImplCopyWith<
-          _$CustomMultiselectionWidgetThemeImpl>
-      get copyWith => __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<
-          _$CustomMultiselectionWidgetThemeImpl>(this, _$identity);
+    _$CustomMultiselectionWidgetThemeImpl
+  >
+  get copyWith =>
+      __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<
+        _$CustomMultiselectionWidgetThemeImpl
+      >(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomMultiselectionWidgetThemeImplToJson(
-      this,
-    );
+    return _$$CustomMultiselectionWidgetThemeImplToJson(this);
   }
 }
 
 abstract class _CustomMultiselectionWidgetTheme
-    extends CustomMultiselectionWidgetTheme implements CustomThemeForWidget {
+    extends CustomMultiselectionWidgetTheme
+    implements CustomThemeForWidget {
   factory _CustomMultiselectionWidgetTheme(String id, LabelTheme labelTheme) =
       _$CustomMultiselectionWidgetThemeImpl;
   _CustomMultiselectionWidgetTheme._() : super._();
@@ -196,6 +207,7 @@ abstract class _CustomMultiselectionWidgetTheme
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomMultiselectionWidgetThemeImplCopyWith<
-          _$CustomMultiselectionWidgetThemeImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$CustomMultiselectionWidgetThemeImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }

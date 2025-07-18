@@ -13,17 +13,22 @@ class SliderTriggerAction extends TriggerAction {
   int max;
   int min;
   int steps;
-  SliderTriggerAction(
-      {required this.dataPoint, this.min = 0, this.max = 100, this.steps = 1});
+  SliderTriggerAction({
+    required this.dataPoint,
+    this.min = 0,
+    this.max = 100,
+    this.steps = 1,
+  });
 
   factory SliderTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     return SliderTriggerAction(
-        dataPoint: dataPoint,
-        min: json["min"],
-        max: json["max"],
-        steps: json["steps"]);
+      dataPoint: dataPoint,
+      min: json["min"],
+      max: json["max"],
+      steps: json["steps"],
+    );
   }
 
   @override
@@ -37,12 +42,12 @@ class SliderTriggerAction extends TriggerAction {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "dataPoint": dataPoint?.id,
-        "min": min,
-        "max": max,
-        "steps": steps
-      };
+    "type": type.toString(),
+    "dataPoint": dataPoint?.id,
+    "min": min,
+    "max": max,
+    "steps": steps,
+  };
 
   @override
   void trigger() {}
@@ -62,11 +67,12 @@ class SliderTriggerAction extends TriggerAction {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomSliderWidget(
-        id: id,
-        name: name,
-        dataPoint: dataPoint?.id,
-        min: min,
-        max: max,
-        step: steps);
+      id: id,
+      name: name,
+      dataPoint: dataPoint?.id,
+      min: min,
+      max: max,
+      step: steps,
+    );
   }
 }

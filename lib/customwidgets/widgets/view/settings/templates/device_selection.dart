@@ -17,16 +17,17 @@ class DeviceSelection extends StatefulWidget {
   final Device? selectedDevice;
   final DataPoint? selectedDataPoint;
   final String? preferredRole;
-  const DeviceSelection(
-      {super.key,
-      required this.onDeviceSelected,
-      required this.onDataPointSelected,
-      required this.customWidgetManager,
-      this.deviceLabel = "Device",
-      this.dataPointLabel = "Datapoint",
-      this.selectedDataPoint,
-      this.selectedDevice,
-      this.preferredRole});
+  const DeviceSelection({
+    super.key,
+    required this.onDeviceSelected,
+    required this.onDataPointSelected,
+    required this.customWidgetManager,
+    this.deviceLabel = "Device",
+    this.dataPointLabel = "Datapoint",
+    this.selectedDataPoint,
+    this.selectedDevice,
+    this.preferredRole,
+  });
 
   @override
   State<DeviceSelection> createState() => _DeviceSelectionState();
@@ -45,13 +46,12 @@ class _DeviceSelectionState extends State<DeviceSelection> {
     _currentDataPoint = widget.selectedDataPoint;
     searchInputStream = StreamController();
 
-    searchOutputStream =
-        Manager().deviceManager.startSearch(searchInputStream!.stream);
-    searchOutputStream!.listen(
-      (event) {
-        _onResult(event);
-      },
+    searchOutputStream = Manager().deviceManager.startSearch(
+      searchInputStream!.stream,
     );
+    searchOutputStream!.listen((event) {
+      _onResult(event);
+    });
     super.initState();
   }
 

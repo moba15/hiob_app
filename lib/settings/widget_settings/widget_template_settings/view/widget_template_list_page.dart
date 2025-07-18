@@ -19,27 +19,29 @@ class WidgetTemplateListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetTemplateListBloc bloc =
-        WidgetTemplateListBloc(customWidgetManager: customWidgetManager)
-          ..fetchList();
+    WidgetTemplateListBloc bloc = WidgetTemplateListBloc(
+      customWidgetManager: customWidgetManager,
+    )..fetchList();
     return BlocProvider(
-        create: (_) => bloc,
-        child: Scaffold(
-          appBar: const _WidgetTemplateListAppBar(),
-          body: const _WidgetTemplateListView(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (c) => TemplateAddPage(
-                            customWidgetManager: customWidgetManager,
-                          )));
-            },
-            tooltip: "Neues Template hinzufügen",
-            child: const Icon(Icons.add),
-          ),
-        ));
+      create: (_) => bloc,
+      child: Scaffold(
+        appBar: const _WidgetTemplateListAppBar(),
+        body: const _WidgetTemplateListView(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (c) =>
+                    TemplateAddPage(customWidgetManager: customWidgetManager),
+              ),
+            );
+          },
+          tooltip: "Neues Template hinzufügen",
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
   }
 }
 
@@ -51,19 +53,18 @@ class _WidgetTemplateListAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     final bloc = context.watch<WidgetTemplateListBloc>();
 
-    return AppBar(
-      actions: _getActions(bloc, context),
-    );
+    return AppBar(actions: _getActions(bloc, context));
   }
 
   List<Widget> _getActions(WidgetTemplateListBloc bloc, BuildContext context) {
     if (!bloc.state.toggleSelection) {
       return [
         IconButton(
-            onPressed: () {
-              Navigator.popUntil(context, (route) => route.isFirst);
-            },
-            icon: const Icon(Icons.home))
+          onPressed: () {
+            Navigator.popUntil(context, (route) => route.isFirst);
+          },
+          icon: const Icon(Icons.home),
+        ),
       ];
     }
     IconButton deleteSelected = IconButton(
@@ -72,8 +73,9 @@ class _WidgetTemplateListAppBar extends StatelessWidget
     );
 
     IconButton copySelected = IconButton(
-        onPressed: () => _copySelectedWidgets(bloc),
-        icon: const Icon(Icons.copy_all));
+      onPressed: () => _copySelectedWidgets(bloc),
+      icon: const Icon(Icons.copy_all),
+    );
 
     return [copySelected, deleteSelected];
   }
@@ -98,13 +100,9 @@ class _WidgetTemplateListView extends StatelessWidget {
     final state = context.watch<WidgetTemplateListBloc>().state;
     switch (state.status) {
       case ListStatus.loading:
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const Center(child: CircularProgressIndicator());
       case ListStatus.failure:
-        return const Center(
-          child: Text("Ups da ist ein fehler aufgetreten"),
-        );
+        return const Center(child: Text("Ups da ist ein fehler aufgetreten"));
       case ListStatus.success:
         return TemplatesView(templates: state.templates);
     }
@@ -127,8 +125,11 @@ class _TemplatesViewState extends State<TemplatesView> {
   @override
   void initState() {
     types.addAll(CustomWidgetTypeDeprecated.values);
-    types.removeWhere((type) => !widget.templates.keys
-        .any((template) => template.type?.name == type.name));
+    types.removeWhere(
+      (type) => !widget.templates.keys.any(
+        (template) => template.type?.name == type.name,
+      ),
+    );
 
     super.initState();
   }
@@ -137,9 +138,7 @@ class _TemplatesViewState extends State<TemplatesView> {
   Widget build(BuildContext context) {
     WidgetTemplateListBloc bloc = context.read<WidgetTemplateListBloc>();
     return widget.templates.isEmpty
-        ? Center(
-            child: Text(getAppLocalizations(context).no_templates_found),
-          )
+        ? Center(child: Text(getAppLocalizations(context).no_templates_found))
         : ListView(
             children: [
               ListTile(
@@ -149,12 +148,13 @@ class _TemplatesViewState extends State<TemplatesView> {
                   style: TextStyle(color: Colors.red),
                 ),
                 trailing: TextButton(
-                    onPressed: () {
-                      _startMigration();
-                    },
-                    child: const Text("Start")),
+                  onPressed: () {
+                    _startMigration();
+                  },
+                  child: const Text("Start"),
+                ),
               ),
-              ...templates(bloc)
+              ...templates(bloc),
             ],
           );
   }
@@ -163,8 +163,9 @@ class _TemplatesViewState extends State<TemplatesView> {
     List<Widget> templates = [];
     for (CustomWidgetTypeDeprecated type in CustomWidgetTypeDeprecated.values) {
       List<Dismissible> children = [];
-      for (CustomWidgetWrapper t in widget.templates.keys
-          .where((element) => element.type?.name == type.name)) {
+      for (CustomWidgetWrapper t in widget.templates.keys.where(
+        (element) => element.type?.name == type.name,
+      )) {
         children.add(
           Dismissible(
             background: Container(
@@ -187,17 +188,19 @@ class _TemplatesViewState extends State<TemplatesView> {
             key: ValueKey(t),
             onDismissed: (d) => {_delete(t)},
             child: CustomWidgetTemplateTile(
-                customWidget: t,
-                customWidgetManager: bloc.customWidgetManager,
-                selectedMode: bloc.state.toggleSelection,
-                selected: bloc.state.templates[t] ?? false,
-                toggleSelect: () => toogleSelect(t, bloc)),
+              customWidget: t,
+              customWidgetManager: bloc.customWidgetManager,
+              selectedMode: bloc.state.toggleSelection,
+              selected: bloc.state.templates[t] ?? false,
+              toggleSelect: () => toogleSelect(t, bloc),
+            ),
           ),
         );
       }
       ExpansionTile t = ExpansionTile(
         title: Text(
-            "${type.name} (${widget.templates.keys.where((element) => element.type?.name == type.name).length})"),
+          "${type.name} (${widget.templates.keys.where((element) => element.type?.name == type.name).length})",
+        ),
         children: children,
       );
       if (children.isNotEmpty) {
@@ -215,8 +218,12 @@ class _TemplatesViewState extends State<TemplatesView> {
     if (!selectionMode) {
       bloc.add(const WidgetTemplateListToggleSelectionEvent(selection: true));
     }
-    bloc.add(WidgetTemplateToggleSelectEvent(
-        template: t, selection: !(bloc.state.templates[t] ?? false)));
+    bloc.add(
+      WidgetTemplateToggleSelectEvent(
+        template: t,
+        selection: !(bloc.state.templates[t] ?? false),
+      ),
+    );
     widget.templates[t] = !(widget.templates[t] ?? false);
     if (!bloc.state.templates.values.contains(true)) {
       bloc.add(const WidgetTemplateListToggleSelectionEvent(selection: false));

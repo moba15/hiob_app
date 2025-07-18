@@ -67,48 +67,53 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
             const onChanged = null;
             final onSubmitted =
                 widget.customInputWidget.customInputSendMethod ==
-                        CustomInputSendMethod.onSubmitted
-                    ? send
-                    : null;
+                    CustomInputSendMethod.onSubmitted
+                ? send
+                : null;
             final hintText =
                 widget.customInputWidget.customInputDisplayConentType ==
-                        CustomInputDisplayConentType.hintText
-                    ? state.value.toString()
-                    : null;
-            final String labelText = widget.customInputWidget.label == null ||
+                    CustomInputDisplayConentType.hintText
+                ? state.value.toString()
+                : null;
+            final String labelText =
+                widget.customInputWidget.label == null ||
                     widget.customInputWidget.label!.isEmpty
                 ? widget.customInputWidget.name
                 : widget.customInputWidget.label!;
             final Text label = Text(
               labelText,
-              style: (widget.customInputWidget.customTheme
-                      as CustomInputWidgetTheme?)
-                  ?.labelTheme
-                  .textStyle,
+              style:
+                  (widget.customInputWidget.customTheme
+                          as CustomInputWidgetTheme?)
+                      ?.labelTheme
+                      .textStyle,
             );
             return ListTile(
-                onLongPress: () {
-                  widget.customInputWidget.customPopupmenu?.tryOpen(context);
-                },
-                title: label,
-                trailing: FractionallySizedBox(
-                  widthFactor: 0.4,
-                  child: TextField(
-                    controller: textEditingController,
-                    onChanged: (v) =>
-                        onChanged != null ? onChanged(v, bloc) : null,
-                    onSubmitted: (v) =>
-                        onSubmitted != null ? onSubmitted(v, bloc!) : null,
-                    decoration: InputDecoration(
-                        hintText: hintText,
-                        labelStyle: (widget.customInputWidget.customTheme
+              onLongPress: () {
+                widget.customInputWidget.customPopupmenu?.tryOpen(context);
+              },
+              title: label,
+              trailing: FractionallySizedBox(
+                widthFactor: 0.4,
+                child: TextField(
+                  controller: textEditingController,
+                  onChanged: (v) =>
+                      onChanged != null ? onChanged(v, bloc) : null,
+                  onSubmitted: (v) =>
+                      onSubmitted != null ? onSubmitted(v, bloc!) : null,
+                  decoration: InputDecoration(
+                    hintText: hintText,
+                    labelStyle:
+                        (widget.customInputWidget.customTheme
                                 as CustomInputWidgetTheme?)
                             ?.labelTheme
                             .textStyle,
-                        labelText: labelText,
-                        floatingLabelBehavior: FloatingLabelBehavior.always),
+                    labelText: labelText,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
-                ));
+                ),
+              ),
+            );
           },
         ),
       );
@@ -127,29 +132,32 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
             const onChanged = null;
             final onSubmitted =
                 widget.customInputWidget.customInputSendMethod ==
-                        CustomInputSendMethod.onSubmitted
-                    ? send
-                    : null;
+                    CustomInputSendMethod.onSubmitted
+                ? send
+                : null;
             final hintText =
                 widget.customInputWidget.customInputDisplayConentType ==
-                        CustomInputDisplayConentType.hintText
-                    ? state.value.toString()
-                    : null;
-            final Text label = widget.customInputWidget.label == null ||
+                    CustomInputDisplayConentType.hintText
+                ? state.value.toString()
+                : null;
+            final Text label =
+                widget.customInputWidget.label == null ||
                     widget.customInputWidget.label!.isEmpty
                 ? Text(
                     widget.customInputWidget.name,
-                    style: (widget.customInputWidget.customTheme
-                            as CustomInputWidgetTheme?)
-                        ?.labelTheme
-                        .textStyle,
+                    style:
+                        (widget.customInputWidget.customTheme
+                                as CustomInputWidgetTheme?)
+                            ?.labelTheme
+                            .textStyle,
                   )
                 : Text(
                     widget.customInputWidget.label!,
-                    style: (widget.customInputWidget.customTheme
-                            as CustomInputWidgetTheme?)
-                        ?.labelTheme
-                        .textStyle,
+                    style:
+                        (widget.customInputWidget.customTheme
+                                as CustomInputWidgetTheme?)
+                            ?.labelTheme
+                            .textStyle,
                   );
             return TextField(
               controller: textEditingController,
@@ -157,9 +165,10 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
               onSubmitted: (v) =>
                   onSubmitted != null ? onSubmitted(v, bloc!) : null,
               decoration: InputDecoration(
-                  hintText: hintText,
-                  label: label,
-                  floatingLabelBehavior: FloatingLabelBehavior.always),
+                hintText: hintText,
+                label: label,
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
             );
           },
         ),

@@ -12,8 +12,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomTableWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomTableWidget customTableWidget;
-  const CustomTableWidgetSettingsView(
-      {super.key, required this.customTableWidget});
+  const CustomTableWidgetSettingsView({
+    super.key,
+    required this.customTableWidget,
+  });
 
   @override
   State<CustomTableWidgetSettingsView> createState() =>
@@ -47,10 +49,12 @@ class _CustomTableWidgetSettingsViewState
 
   @override
   void initState() {
-    _headerController =
-        TextEditingController(text: widget.customTableWidget.header);
+    _headerController = TextEditingController(
+      text: widget.customTableWidget.header,
+    );
     _initalSortColumn = TextEditingController(
-        text: widget.customTableWidget.initalSortColumn.toString());
+      text: widget.customTableWidget.initalSortColumn.toString(),
+    );
     super.initState();
   }
 
@@ -68,62 +72,73 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: StateSearchBar(
-            onSelected: onSelect,
-          )),
+            child: StateSearchBar(onSelected: onSelect),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller:
-                TextEditingController(text: widget.customTableWidget.header),
-            onChanged: (d) => {
-              widget.customTableWidget.header = d,
-              c.update(widget.customTableWidget)
-            },
-            decoration: const InputDecoration(label: Text("Header (optional)")),
-          )),
+            child: TextField(
+              controller: TextEditingController(
+                text: widget.customTableWidget.header,
+              ),
+              onChanged: (d) => {
+                widget.customTableWidget.header = d,
+                c.update(widget.customTableWidget),
+              },
+              decoration: const InputDecoration(
+                label: Text("Header (optional)"),
+              ),
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: MapOrderSettingTemplate<String>(
-                  title: const Text("Columns"),
-                  data: widget.customTableWidget.columns,
-                  onChange: (p0) {
-                    widget.customTableWidget.columns = p0;
-                    c.update(widget.customTableWidget);
-                  },
-                  toStr: (p0) {
-                    return p0.toString();
-                  },
-                  fromStr: (p0) {
-                    return p0;
-                  },
-                  alertTitle: const Text("Column"),
-                  alertKeyText: "Column key from json",
-                  alertValueText: "Column name",
-                  keyTileText: "Column json: ",
-                  valueTileText: "Column name: ")),
+            child: MapOrderSettingTemplate<String>(
+              title: const Text("Columns"),
+              data: widget.customTableWidget.columns,
+              onChange: (p0) {
+                widget.customTableWidget.columns = p0;
+                c.update(widget.customTableWidget);
+              },
+              toStr: (p0) {
+                return p0.toString();
+              },
+              fromStr: (p0) {
+                return p0;
+              },
+              alertTitle: const Text("Column"),
+              alertKeyText: "Column key from json",
+              alertValueText: "Column name",
+              keyTileText: "Column json: ",
+              valueTileText: "Column name: ",
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: SwitchListTile(
-            title: const Text("Initial sort"),
-            value: widget.customTableWidget.initialSortEnabled,
-            onChanged: (value) {
-              setState(() {
-                widget.customTableWidget.initialSortEnabled = value;
-              });
-            },
-          )),
+            child: SwitchListTile(
+              title: const Text("Initial sort"),
+              value: widget.customTableWidget.initialSortEnabled,
+              onChanged: (value) {
+                setState(() {
+                  widget.customTableWidget.initialSortEnabled = value;
+                });
+              },
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: _initalSortColumn,
-            onChanged: (d) => {
-              widget.customTableWidget.initalSortColumn = int.tryParse(d) ?? 0,
-              _initalSortColumn.text =
-                  widget.customTableWidget.initalSortColumn.toString(),
-              c.update(widget.customTableWidget)
-            },
-            decoration: const InputDecoration(
-                label: Text("Initial sort column (optional)")),
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            keyboardType: TextInputType.number,
-          )),
+            child: TextField(
+              controller: _initalSortColumn,
+              onChanged: (d) => {
+                widget.customTableWidget.initalSortColumn =
+                    int.tryParse(d) ?? 0,
+                _initalSortColumn.text = widget
+                    .customTableWidget
+                    .initalSortColumn
+                    .toString(),
+                c.update(widget.customTableWidget),
+              },
+              decoration: const InputDecoration(
+                label: Text("Initial sort column (optional)"),
+              ),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              keyboardType: TextInputType.number,
+            ),
+          ),
         ],
       ),
     );

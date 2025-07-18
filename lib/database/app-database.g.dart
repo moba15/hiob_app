@@ -12,100 +12,152 @@ class $StatesTableTable extends StatesTable
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
   static const VerificationMeta _parentMeta = const VerificationMeta('parent');
   @override
   late final GeneratedColumn<String> parent = GeneratedColumn<String>(
-      'parent', aliasedName, true,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES states_table (id)'));
-  static const VerificationMeta _stateNameMeta =
-      const VerificationMeta('stateName');
+    'parent',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES states_table (id)',
+    ),
+  );
+  static const VerificationMeta _stateNameMeta = const VerificationMeta(
+    'stateName',
+  );
   @override
   late final GeneratedColumn<String> stateName = GeneratedColumn<String>(
-      'state_name', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _stateDescMeta =
-      const VerificationMeta('stateDesc');
+    'state_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _stateDescMeta = const VerificationMeta(
+    'stateDesc',
+  );
   @override
   late final GeneratedColumn<String> stateDesc = GeneratedColumn<String>(
-      'state_desc', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _stateTypeMeta =
-      const VerificationMeta('stateType');
+    'state_desc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _stateTypeMeta = const VerificationMeta(
+    'stateType',
+  );
   @override
   late final GeneratedColumn<String> stateType = GeneratedColumn<String>(
-      'state_type', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+    'state_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _readMeta = const VerificationMeta('read');
   @override
   late final GeneratedColumn<bool> read = GeneratedColumn<bool>(
-      'read', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("read" IN (0, 1))'));
+    'read',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("read" IN (0, 1))',
+    ),
+  );
   static const VerificationMeta _writeMeta = const VerificationMeta('write');
   @override
   late final GeneratedColumn<bool> write = GeneratedColumn<bool>(
-      'write', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("write" IN (0, 1))'));
+    'write',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("write" IN (0, 1))',
+    ),
+  );
   static const VerificationMeta _roleMeta = const VerificationMeta('role');
   @override
   late final GeneratedColumn<String> role = GeneratedColumn<String>(
-      'role', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+    'role',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _unitMeta = const VerificationMeta('unit');
   @override
   late final GeneratedColumn<String> unit = GeneratedColumn<String>(
-      'unit', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+    'unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _stepMeta = const VerificationMeta('step');
   @override
   late final GeneratedColumn<int> step = GeneratedColumn<int>(
-      'step', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+    'step',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _maxMeta = const VerificationMeta('max');
   @override
   late final GeneratedColumn<int> max = GeneratedColumn<int>(
-      'max', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+    'max',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _minMeta = const VerificationMeta('min');
   @override
   late final GeneratedColumn<int> min = GeneratedColumn<int>(
-      'min', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+    'min',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        parent,
-        stateName,
-        stateDesc,
-        stateType,
-        read,
-        write,
-        role,
-        unit,
-        step,
-        max,
-        min
-      ];
+    id,
+    parent,
+    stateName,
+    stateDesc,
+    stateType,
+    read,
+    write,
+    role,
+    unit,
+    step,
+    max,
+    min,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'states_table';
   @override
-  VerificationContext validateIntegrity(Insertable<StatesTableData> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<StatesTableData> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -114,52 +166,74 @@ class $StatesTableTable extends StatesTable
       context.missing(_idMeta);
     }
     if (data.containsKey('parent')) {
-      context.handle(_parentMeta,
-          parent.isAcceptableOrUnknown(data['parent']!, _parentMeta));
+      context.handle(
+        _parentMeta,
+        parent.isAcceptableOrUnknown(data['parent']!, _parentMeta),
+      );
     }
     if (data.containsKey('state_name')) {
-      context.handle(_stateNameMeta,
-          stateName.isAcceptableOrUnknown(data['state_name']!, _stateNameMeta));
+      context.handle(
+        _stateNameMeta,
+        stateName.isAcceptableOrUnknown(data['state_name']!, _stateNameMeta),
+      );
     }
     if (data.containsKey('state_desc')) {
-      context.handle(_stateDescMeta,
-          stateDesc.isAcceptableOrUnknown(data['state_desc']!, _stateDescMeta));
+      context.handle(
+        _stateDescMeta,
+        stateDesc.isAcceptableOrUnknown(data['state_desc']!, _stateDescMeta),
+      );
     }
     if (data.containsKey('state_type')) {
-      context.handle(_stateTypeMeta,
-          stateType.isAcceptableOrUnknown(data['state_type']!, _stateTypeMeta));
+      context.handle(
+        _stateTypeMeta,
+        stateType.isAcceptableOrUnknown(data['state_type']!, _stateTypeMeta),
+      );
     }
     if (data.containsKey('read')) {
       context.handle(
-          _readMeta, read.isAcceptableOrUnknown(data['read']!, _readMeta));
+        _readMeta,
+        read.isAcceptableOrUnknown(data['read']!, _readMeta),
+      );
     } else if (isInserting) {
       context.missing(_readMeta);
     }
     if (data.containsKey('write')) {
       context.handle(
-          _writeMeta, write.isAcceptableOrUnknown(data['write']!, _writeMeta));
+        _writeMeta,
+        write.isAcceptableOrUnknown(data['write']!, _writeMeta),
+      );
     } else if (isInserting) {
       context.missing(_writeMeta);
     }
     if (data.containsKey('role')) {
       context.handle(
-          _roleMeta, role.isAcceptableOrUnknown(data['role']!, _roleMeta));
+        _roleMeta,
+        role.isAcceptableOrUnknown(data['role']!, _roleMeta),
+      );
     }
     if (data.containsKey('unit')) {
       context.handle(
-          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
     }
     if (data.containsKey('step')) {
       context.handle(
-          _stepMeta, step.isAcceptableOrUnknown(data['step']!, _stepMeta));
+        _stepMeta,
+        step.isAcceptableOrUnknown(data['step']!, _stepMeta),
+      );
     }
     if (data.containsKey('max')) {
       context.handle(
-          _maxMeta, max.isAcceptableOrUnknown(data['max']!, _maxMeta));
+        _maxMeta,
+        max.isAcceptableOrUnknown(data['max']!, _maxMeta),
+      );
     }
     if (data.containsKey('min')) {
       context.handle(
-          _minMeta, min.isAcceptableOrUnknown(data['min']!, _minMeta));
+        _minMeta,
+        min.isAcceptableOrUnknown(data['min']!, _minMeta),
+      );
     }
     return context;
   }
@@ -170,30 +244,54 @@ class $StatesTableTable extends StatesTable
   StatesTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return StatesTableData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      parent: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}parent']),
-      stateName: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}state_name']),
-      stateDesc: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}state_desc']),
-      stateType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}state_type']),
-      read: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}read'])!,
-      write: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}write'])!,
-      role: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}role']),
-      unit: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}unit']),
-      step: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}step']),
-      max: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}max']),
-      min: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}min']),
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      parent: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent'],
+      ),
+      stateName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state_name'],
+      ),
+      stateDesc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state_desc'],
+      ),
+      stateType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state_type'],
+      ),
+      read: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}read'],
+      )!,
+      write: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}write'],
+      )!,
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      ),
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      ),
+      step: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}step'],
+      ),
+      max: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}max'],
+      ),
+      min: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}min'],
+      ),
     );
   }
 
@@ -216,19 +314,20 @@ class StatesTableData extends DataClass implements Insertable<StatesTableData> {
   final int? step;
   final int? max;
   final int? min;
-  const StatesTableData(
-      {required this.id,
-      this.parent,
-      this.stateName,
-      this.stateDesc,
-      this.stateType,
-      required this.read,
-      required this.write,
-      this.role,
-      this.unit,
-      this.step,
-      this.max,
-      this.min});
+  const StatesTableData({
+    required this.id,
+    this.parent,
+    this.stateName,
+    this.stateDesc,
+    this.stateType,
+    required this.read,
+    required this.write,
+    this.role,
+    this.unit,
+    this.step,
+    this.max,
+    this.min,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -268,8 +367,9 @@ class StatesTableData extends DataClass implements Insertable<StatesTableData> {
   StatesTableCompanion toCompanion(bool nullToAbsent) {
     return StatesTableCompanion(
       id: Value(id),
-      parent:
-          parent == null && nullToAbsent ? const Value.absent() : Value(parent),
+      parent: parent == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parent),
       stateName: stateName == null && nullToAbsent
           ? const Value.absent()
           : Value(stateName),
@@ -289,8 +389,10 @@ class StatesTableData extends DataClass implements Insertable<StatesTableData> {
     );
   }
 
-  factory StatesTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory StatesTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return StatesTableData(
       id: serializer.fromJson<String>(json['id']),
@@ -326,33 +428,33 @@ class StatesTableData extends DataClass implements Insertable<StatesTableData> {
     };
   }
 
-  StatesTableData copyWith(
-          {String? id,
-          Value<String?> parent = const Value.absent(),
-          Value<String?> stateName = const Value.absent(),
-          Value<String?> stateDesc = const Value.absent(),
-          Value<String?> stateType = const Value.absent(),
-          bool? read,
-          bool? write,
-          Value<String?> role = const Value.absent(),
-          Value<String?> unit = const Value.absent(),
-          Value<int?> step = const Value.absent(),
-          Value<int?> max = const Value.absent(),
-          Value<int?> min = const Value.absent()}) =>
-      StatesTableData(
-        id: id ?? this.id,
-        parent: parent.present ? parent.value : this.parent,
-        stateName: stateName.present ? stateName.value : this.stateName,
-        stateDesc: stateDesc.present ? stateDesc.value : this.stateDesc,
-        stateType: stateType.present ? stateType.value : this.stateType,
-        read: read ?? this.read,
-        write: write ?? this.write,
-        role: role.present ? role.value : this.role,
-        unit: unit.present ? unit.value : this.unit,
-        step: step.present ? step.value : this.step,
-        max: max.present ? max.value : this.max,
-        min: min.present ? min.value : this.min,
-      );
+  StatesTableData copyWith({
+    String? id,
+    Value<String?> parent = const Value.absent(),
+    Value<String?> stateName = const Value.absent(),
+    Value<String?> stateDesc = const Value.absent(),
+    Value<String?> stateType = const Value.absent(),
+    bool? read,
+    bool? write,
+    Value<String?> role = const Value.absent(),
+    Value<String?> unit = const Value.absent(),
+    Value<int?> step = const Value.absent(),
+    Value<int?> max = const Value.absent(),
+    Value<int?> min = const Value.absent(),
+  }) => StatesTableData(
+    id: id ?? this.id,
+    parent: parent.present ? parent.value : this.parent,
+    stateName: stateName.present ? stateName.value : this.stateName,
+    stateDesc: stateDesc.present ? stateDesc.value : this.stateDesc,
+    stateType: stateType.present ? stateType.value : this.stateType,
+    read: read ?? this.read,
+    write: write ?? this.write,
+    role: role.present ? role.value : this.role,
+    unit: unit.present ? unit.value : this.unit,
+    step: step.present ? step.value : this.step,
+    max: max.present ? max.value : this.max,
+    min: min.present ? min.value : this.min,
+  );
   StatesTableData copyWithCompanion(StatesTableCompanion data) {
     return StatesTableData(
       id: data.id.present ? data.id.value : this.id,
@@ -390,8 +492,20 @@ class StatesTableData extends DataClass implements Insertable<StatesTableData> {
   }
 
   @override
-  int get hashCode => Object.hash(id, parent, stateName, stateDesc, stateType,
-      read, write, role, unit, step, max, min);
+  int get hashCode => Object.hash(
+    id,
+    parent,
+    stateName,
+    stateDesc,
+    stateType,
+    read,
+    write,
+    role,
+    unit,
+    step,
+    max,
+    min,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -453,9 +567,9 @@ class StatesTableCompanion extends UpdateCompanion<StatesTableData> {
     this.max = const Value.absent(),
     this.min = const Value.absent(),
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        read = Value(read),
-        write = Value(write);
+  }) : id = Value(id),
+       read = Value(read),
+       write = Value(write);
   static Insertable<StatesTableData> custom({
     Expression<String>? id,
     Expression<String>? parent,
@@ -488,20 +602,21 @@ class StatesTableCompanion extends UpdateCompanion<StatesTableData> {
     });
   }
 
-  StatesTableCompanion copyWith(
-      {Value<String>? id,
-      Value<String?>? parent,
-      Value<String?>? stateName,
-      Value<String?>? stateDesc,
-      Value<String?>? stateType,
-      Value<bool>? read,
-      Value<bool>? write,
-      Value<String?>? role,
-      Value<String?>? unit,
-      Value<int?>? step,
-      Value<int?>? max,
-      Value<int?>? min,
-      Value<int>? rowid}) {
+  StatesTableCompanion copyWith({
+    Value<String>? id,
+    Value<String?>? parent,
+    Value<String?>? stateName,
+    Value<String?>? stateDesc,
+    Value<String?>? stateType,
+    Value<bool>? read,
+    Value<bool>? write,
+    Value<String?>? role,
+    Value<String?>? unit,
+    Value<int?>? step,
+    Value<int?>? max,
+    Value<int?>? min,
+    Value<int>? rowid,
+  }) {
     return StatesTableCompanion(
       id: id ?? this.id,
       parent: parent ?? this.parent,
@@ -596,38 +711,38 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [statesTable];
 }
 
-typedef $$StatesTableTableCreateCompanionBuilder = StatesTableCompanion
-    Function({
-  required String id,
-  Value<String?> parent,
-  Value<String?> stateName,
-  Value<String?> stateDesc,
-  Value<String?> stateType,
-  required bool read,
-  required bool write,
-  Value<String?> role,
-  Value<String?> unit,
-  Value<int?> step,
-  Value<int?> max,
-  Value<int?> min,
-  Value<int> rowid,
-});
-typedef $$StatesTableTableUpdateCompanionBuilder = StatesTableCompanion
-    Function({
-  Value<String> id,
-  Value<String?> parent,
-  Value<String?> stateName,
-  Value<String?> stateDesc,
-  Value<String?> stateType,
-  Value<bool> read,
-  Value<bool> write,
-  Value<String?> role,
-  Value<String?> unit,
-  Value<int?> step,
-  Value<int?> max,
-  Value<int?> min,
-  Value<int> rowid,
-});
+typedef $$StatesTableTableCreateCompanionBuilder =
+    StatesTableCompanion Function({
+      required String id,
+      Value<String?> parent,
+      Value<String?> stateName,
+      Value<String?> stateDesc,
+      Value<String?> stateType,
+      required bool read,
+      required bool write,
+      Value<String?> role,
+      Value<String?> unit,
+      Value<int?> step,
+      Value<int?> max,
+      Value<int?> min,
+      Value<int> rowid,
+    });
+typedef $$StatesTableTableUpdateCompanionBuilder =
+    StatesTableCompanion Function({
+      Value<String> id,
+      Value<String?> parent,
+      Value<String?> stateName,
+      Value<String?> stateDesc,
+      Value<String?> stateType,
+      Value<bool> read,
+      Value<bool> write,
+      Value<String?> role,
+      Value<String?> unit,
+      Value<int?> step,
+      Value<int?> max,
+      Value<int?> min,
+      Value<int> rowid,
+    });
 
 final class $$StatesTableTableReferences
     extends BaseReferences<_$AppDatabase, $StatesTableTable, StatesTableData> {
@@ -635,17 +750,21 @@ final class $$StatesTableTableReferences
 
   static $StatesTableTable _parentTable(_$AppDatabase db) =>
       db.statesTable.createAlias(
-          $_aliasNameGenerator(db.statesTable.parent, db.statesTable.id));
+        $_aliasNameGenerator(db.statesTable.parent, db.statesTable.id),
+      );
 
   $$StatesTableTableProcessedTableManager? get parent {
     final $_column = $_itemColumn<String>('parent');
     if ($_column == null) return null;
-    final manager = $$StatesTableTableTableManager($_db, $_db.statesTable)
-        .filter((f) => f.id.sqlEquals($_column));
+    final manager = $$StatesTableTableTableManager(
+      $_db,
+      $_db.statesTable,
+    ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_parentTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
   }
 }
 
@@ -659,55 +778,80 @@ class $$StatesTableTableFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get stateName => $composableBuilder(
-      column: $table.stateName, builder: (column) => ColumnFilters(column));
+    column: $table.stateName,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get stateDesc => $composableBuilder(
-      column: $table.stateDesc, builder: (column) => ColumnFilters(column));
+    column: $table.stateDesc,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get stateType => $composableBuilder(
-      column: $table.stateType, builder: (column) => ColumnFilters(column));
+    column: $table.stateType,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<bool> get read => $composableBuilder(
-      column: $table.read, builder: (column) => ColumnFilters(column));
+    column: $table.read,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<bool> get write => $composableBuilder(
-      column: $table.write, builder: (column) => ColumnFilters(column));
+    column: $table.write,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get role => $composableBuilder(
-      column: $table.role, builder: (column) => ColumnFilters(column));
+    column: $table.role,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnFilters(column));
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<int> get step => $composableBuilder(
-      column: $table.step, builder: (column) => ColumnFilters(column));
+    column: $table.step,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<int> get max => $composableBuilder(
-      column: $table.max, builder: (column) => ColumnFilters(column));
+    column: $table.max,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<int> get min => $composableBuilder(
-      column: $table.min, builder: (column) => ColumnFilters(column));
+    column: $table.min,
+    builder: (column) => ColumnFilters(column),
+  );
 
   $$StatesTableTableFilterComposer get parent {
     final $$StatesTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.parent,
-        referencedTable: $db.statesTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$StatesTableTableFilterComposer(
-              $db: $db,
-              $table: $db.statesTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.parent,
+      referencedTable: $db.statesTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$StatesTableTableFilterComposer(
+            $db: $db,
+            $table: $db.statesTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
@@ -722,55 +866,80 @@ class $$StatesTableTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get stateName => $composableBuilder(
-      column: $table.stateName, builder: (column) => ColumnOrderings(column));
+    column: $table.stateName,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get stateDesc => $composableBuilder(
-      column: $table.stateDesc, builder: (column) => ColumnOrderings(column));
+    column: $table.stateDesc,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get stateType => $composableBuilder(
-      column: $table.stateType, builder: (column) => ColumnOrderings(column));
+    column: $table.stateType,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<bool> get read => $composableBuilder(
-      column: $table.read, builder: (column) => ColumnOrderings(column));
+    column: $table.read,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<bool> get write => $composableBuilder(
-      column: $table.write, builder: (column) => ColumnOrderings(column));
+    column: $table.write,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get role => $composableBuilder(
-      column: $table.role, builder: (column) => ColumnOrderings(column));
+    column: $table.role,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnOrderings(column));
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<int> get step => $composableBuilder(
-      column: $table.step, builder: (column) => ColumnOrderings(column));
+    column: $table.step,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<int> get max => $composableBuilder(
-      column: $table.max, builder: (column) => ColumnOrderings(column));
+    column: $table.max,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<int> get min => $composableBuilder(
-      column: $table.min, builder: (column) => ColumnOrderings(column));
+    column: $table.min,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   $$StatesTableTableOrderingComposer get parent {
     final $$StatesTableTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.parent,
-        referencedTable: $db.statesTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$StatesTableTableOrderingComposer(
-              $db: $db,
-              $table: $db.statesTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.parent,
+      referencedTable: $db.statesTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$StatesTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.statesTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
@@ -819,39 +988,46 @@ class $$StatesTableTableAnnotationComposer
 
   $$StatesTableTableAnnotationComposer get parent {
     final $$StatesTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.parent,
-        referencedTable: $db.statesTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$StatesTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.statesTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+      composer: this,
+      getCurrentColumn: (t) => t.parent,
+      referencedTable: $db.statesTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$StatesTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.statesTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return composer;
   }
 }
 
-class $$StatesTableTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $StatesTableTable,
-    StatesTableData,
-    $$StatesTableTableFilterComposer,
-    $$StatesTableTableOrderingComposer,
-    $$StatesTableTableAnnotationComposer,
-    $$StatesTableTableCreateCompanionBuilder,
-    $$StatesTableTableUpdateCompanionBuilder,
-    (StatesTableData, $$StatesTableTableReferences),
-    StatesTableData,
-    PrefetchHooks Function({bool parent})> {
+class $$StatesTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $StatesTableTable,
+          StatesTableData,
+          $$StatesTableTableFilterComposer,
+          $$StatesTableTableOrderingComposer,
+          $$StatesTableTableAnnotationComposer,
+          $$StatesTableTableCreateCompanionBuilder,
+          $$StatesTableTableUpdateCompanionBuilder,
+          (StatesTableData, $$StatesTableTableReferences),
+          StatesTableData,
+          PrefetchHooks Function({bool parent})
+        > {
   $$StatesTableTableTableManager(_$AppDatabase db, $StatesTableTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
@@ -860,78 +1036,81 @@ class $$StatesTableTableTableManager extends RootTableManager<
               $$StatesTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$StatesTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String?> parent = const Value.absent(),
-            Value<String?> stateName = const Value.absent(),
-            Value<String?> stateDesc = const Value.absent(),
-            Value<String?> stateType = const Value.absent(),
-            Value<bool> read = const Value.absent(),
-            Value<bool> write = const Value.absent(),
-            Value<String?> role = const Value.absent(),
-            Value<String?> unit = const Value.absent(),
-            Value<int?> step = const Value.absent(),
-            Value<int?> max = const Value.absent(),
-            Value<int?> min = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              StatesTableCompanion(
-            id: id,
-            parent: parent,
-            stateName: stateName,
-            stateDesc: stateDesc,
-            stateType: stateType,
-            read: read,
-            write: write,
-            role: role,
-            unit: unit,
-            step: step,
-            max: max,
-            min: min,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            Value<String?> parent = const Value.absent(),
-            Value<String?> stateName = const Value.absent(),
-            Value<String?> stateDesc = const Value.absent(),
-            Value<String?> stateType = const Value.absent(),
-            required bool read,
-            required bool write,
-            Value<String?> role = const Value.absent(),
-            Value<String?> unit = const Value.absent(),
-            Value<int?> step = const Value.absent(),
-            Value<int?> max = const Value.absent(),
-            Value<int?> min = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              StatesTableCompanion.insert(
-            id: id,
-            parent: parent,
-            stateName: stateName,
-            stateDesc: stateDesc,
-            stateType: stateType,
-            read: read,
-            write: write,
-            role: role,
-            unit: unit,
-            step: step,
-            max: max,
-            min: min,
-            rowid: rowid,
-          ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String?> parent = const Value.absent(),
+                Value<String?> stateName = const Value.absent(),
+                Value<String?> stateDesc = const Value.absent(),
+                Value<String?> stateType = const Value.absent(),
+                Value<bool> read = const Value.absent(),
+                Value<bool> write = const Value.absent(),
+                Value<String?> role = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<int?> step = const Value.absent(),
+                Value<int?> max = const Value.absent(),
+                Value<int?> min = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => StatesTableCompanion(
+                id: id,
+                parent: parent,
+                stateName: stateName,
+                stateDesc: stateDesc,
+                stateType: stateType,
+                read: read,
+                write: write,
+                role: role,
+                unit: unit,
+                step: step,
+                max: max,
+                min: min,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                Value<String?> parent = const Value.absent(),
+                Value<String?> stateName = const Value.absent(),
+                Value<String?> stateDesc = const Value.absent(),
+                Value<String?> stateType = const Value.absent(),
+                required bool read,
+                required bool write,
+                Value<String?> role = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<int?> step = const Value.absent(),
+                Value<int?> max = const Value.absent(),
+                Value<int?> min = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => StatesTableCompanion.insert(
+                id: id,
+                parent: parent,
+                stateName: stateName,
+                stateDesc: stateDesc,
+                stateType: stateType,
+                read: read,
+                write: write,
+                role: role,
+                unit: unit,
+                step: step,
+                max: max,
+                min: min,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$StatesTableTableReferences(db, table, e)
-                  ))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$StatesTableTableReferences(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: ({parent = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
+              addJoins:
+                  <
+                    T extends TableManagerState<
                       dynamic,
                       dynamic,
                       dynamic,
@@ -942,40 +1121,48 @@ class $$StatesTableTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic,
-                      dynamic>>(state) {
-                if (parent) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.parent,
-                    referencedTable:
-                        $$StatesTableTableReferences._parentTable(db),
-                    referencedColumn:
-                        $$StatesTableTableReferences._parentTable(db).id,
-                  ) as T;
-                }
+                      dynamic
+                    >
+                  >(state) {
+                    if (parent) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.parent,
+                                referencedTable: $$StatesTableTableReferences
+                                    ._parentTable(db),
+                                referencedColumn: $$StatesTableTableReferences
+                                    ._parentTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [];
               },
             );
           },
-        ));
+        ),
+      );
 }
 
-typedef $$StatesTableTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $StatesTableTable,
-    StatesTableData,
-    $$StatesTableTableFilterComposer,
-    $$StatesTableTableOrderingComposer,
-    $$StatesTableTableAnnotationComposer,
-    $$StatesTableTableCreateCompanionBuilder,
-    $$StatesTableTableUpdateCompanionBuilder,
-    (StatesTableData, $$StatesTableTableReferences),
-    StatesTableData,
-    PrefetchHooks Function({bool parent})>;
+typedef $$StatesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $StatesTableTable,
+      StatesTableData,
+      $$StatesTableTableFilterComposer,
+      $$StatesTableTableOrderingComposer,
+      $$StatesTableTableAnnotationComposer,
+      $$StatesTableTableCreateCompanionBuilder,
+      $$StatesTableTableUpdateCompanionBuilder,
+      (StatesTableData, $$StatesTableTableReferences),
+      StatesTableData,
+      PrefetchHooks Function({bool parent})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;

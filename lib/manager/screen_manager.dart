@@ -18,10 +18,11 @@ class ScreenManager {
   StreamController screenStreamController = StreamController.broadcast();
   bool loaded = false;
 
-  ScreenManager(
-      {required this.fileManager,
-      required this.screens,
-      required this.manager});
+  ScreenManager({
+    required this.fileManager,
+    required this.screens,
+    required this.manager,
+  });
 
   Future<List<Screen>> loadScreens() async {
     //await fileManager.writeJSONList(key, screens);
@@ -35,10 +36,12 @@ class ScreenManager {
 
     List<dynamic>? l = await fileManager.getList(key);
 
-    developer.log("Screens Raw Loaded $l",
-        name: "de.bachmaiers/screen_manager.dart",
-        time: DateTime.now(),
-        zone: Zone.current);
+    developer.log(
+      "Screens Raw Loaded $l",
+      name: "de.bachmaiers/screen_manager.dart",
+      time: DateTime.now(),
+      zone: Zone.current,
+    );
     if (l == null) {
       screens = [];
     } else {
@@ -50,20 +53,26 @@ class ScreenManager {
           screens.add(s);
         } catch (e) {
           Manager().talker.error(
-              "ScreenManager | loadScreen | error while Screen.fromJSON $rawMap");
+            "ScreenManager | loadScreen | error while Screen.fromJSON $rawMap",
+          );
         }
       }
     }
     loaded = true;
     if (screens.isEmpty) {
-      screens.add(Screen(
+      screens.add(
+        Screen(
           id: Manager.instance.getRandString(15),
           name: "Template",
           iconWrapper: const IconWrapper(
-              iconData: Icons.abc, iconDataType: IconDataType.flutterIcons),
+            iconData: Icons.abc,
+            iconDataType: IconDataType.flutterIcons,
+          ),
           index: 1,
           widgetTemplates: [],
-          enabled: true));
+          enabled: true,
+        ),
+      );
     }
     screenStreamController.add(screens);
 
@@ -87,14 +96,19 @@ class ScreenManager {
     }
     loaded = true;
     if (screens.isEmpty) {
-      screens.add(Screen(
+      screens.add(
+        Screen(
           id: "testID11&",
           name: "Template",
           iconWrapper: const IconWrapper(
-              iconData: Icons.abc, iconDataType: IconDataType.flutterIcons),
+            iconData: Icons.abc,
+            iconDataType: IconDataType.flutterIcons,
+          ),
           index: 1,
           widgetTemplates: [],
-          enabled: true));
+          enabled: true,
+        ),
+      );
     }
     screenStreamController.add(screens);
   }
@@ -112,14 +126,19 @@ class ScreenManager {
   void removeScreen(Screen screen) async {
     screens.remove(screen);
     if (screens.isEmpty) {
-      screens.add(Screen(
+      screens.add(
+        Screen(
           id: "testID11&",
           name: "Template",
           iconWrapper: const IconWrapper(
-              iconData: Icons.abc, iconDataType: IconDataType.flutterIcons),
+            iconData: Icons.abc,
+            iconDataType: IconDataType.flutterIcons,
+          ),
           index: 1,
           widgetTemplates: [],
-          enabled: true));
+          enabled: true,
+        ),
+      );
     }
     screenStreamController.add(screens);
     bool suc = await fileManager.writeJSONList(key, screens);
@@ -144,23 +163,25 @@ class ScreenManager {
     }
   }
 
-  void editScreen(
-      {required Screen screen,
-      required String name,
-      required IconWrapper iconWrapper,
-      required int index,
-      required bool enabled}) async {
+  void editScreen({
+    required Screen screen,
+    required String name,
+    required IconWrapper iconWrapper,
+    required int index,
+    required bool enabled,
+  }) async {
     int z = -1;
     for (int i = 0; i < screens.length; i++) {
       if (screens[i] == screen) {
         z = i;
         screens[i] = Screen(
-            id: screen.id,
-            name: name,
-            iconWrapper: iconWrapper,
-            index: index,
-            widgetTemplates: screen.widgetTemplates,
-            enabled: enabled);
+          id: screen.id,
+          name: name,
+          iconWrapper: iconWrapper,
+          index: index,
+          widgetTemplates: screen.widgetTemplates,
+          enabled: enabled,
+        );
         break;
       }
     }

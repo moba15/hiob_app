@@ -63,7 +63,8 @@ class CustomMultiselectionWidget
   @override
   CustomWidgetSettingWidget get settingWidget {
     return CustomMultiselectionWidgetSettingsView(
-        customMultiselectionWidget: this);
+      customMultiselectionWidget: this,
+    );
   }
 
   @override

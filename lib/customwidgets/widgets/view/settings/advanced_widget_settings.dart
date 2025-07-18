@@ -44,16 +44,15 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
             child: TextField(
               onChanged: (v) => {
                 advancedCustomWidget.value = v,
-                if (v.isEmpty) advancedCustomWidget.value = null
+                if (v.isEmpty) advancedCustomWidget.value = null,
               },
-              controller:
-                  TextEditingController(text: advancedCustomWidget.value),
+              controller: TextEditingController(
+                text: advancedCustomWidget.value,
+              ),
               decoration: const InputDecoration(labelText: "Value"),
             ),
           ),
-          Container(
-            height: 20,
-          ),
+          Container(height: 20),
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -67,14 +66,14 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
             description:
                 "Here you can setup the main body of this widget, you can choose between a lot different widget types",
             child: TriggerActionSelectionTemplate(
-              onChange: (trigger, settings) =>
-                  {advancedCustomWidget.mainBody = trigger, setting = settings},
+              onChange: (trigger, settings) => {
+                advancedCustomWidget.mainBody = trigger,
+                setting = settings,
+              },
               preSelectedTriggerAction: advancedCustomWidget.mainBody,
             ),
           ),
-          Container(
-            height: 20,
-          ),
+          Container(height: 20),
           Showcase(
             key: popupKey,
             title: "Popup Menu",
@@ -89,9 +88,12 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.only(left: 15, right: 15),
-                  child: (advancedCustomWidget
-                          .customAlertDialogWidget?.settingWidget ??
-                      const Text("Error 404")) as Widget,
+                  child:
+                      (advancedCustomWidget
+                                  .customAlertDialogWidget
+                                  ?.settingWidget ??
+                              const Text("Error 404"))
+                          as Widget,
                 ),
               ],
             ),

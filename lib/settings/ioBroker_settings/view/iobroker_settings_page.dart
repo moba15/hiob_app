@@ -20,10 +20,11 @@ class IoBrokerSettingsPage extends StatelessWidget {
         title: const Text("IoBroker Settings"),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.popUntil(context, (route) => route.isFirst);
-              },
-              icon: const Icon(Icons.home)),
+            onPressed: () {
+              Navigator.popUntil(context, (route) => route.isFirst);
+            },
+            icon: const Icon(Icons.home),
+          ),
         ],
       ),
       body: IoBrokerSettingsView(),
@@ -41,8 +42,9 @@ class IoBrokerSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     IoBrokerManager ioBrokerManager = Manager().ioBrokerManager;
     ipController.value = TextEditingValue(text: ioBrokerManager.mainIp);
-    portController.value =
-        TextEditingValue(text: ioBrokerManager.port.toString());
+    portController.value = TextEditingValue(
+      text: ioBrokerManager.port.toString(),
+    );
     return ListView(
       children: [
         Row(
@@ -72,7 +74,7 @@ class IoBrokerSettingsView extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
         BlocBuilder<ConnectionCubit, ConnectionStatus>(
@@ -80,46 +82,64 @@ class IoBrokerSettingsView extends StatelessWidget {
             Text text;
             switch (state) {
               case ConnectionStatus.error:
-                text = Text("Error",
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.error));
+                text = Text(
+                  "Error",
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                );
                 break;
               case ConnectionStatus.disconnected:
-                text = Text("Disconnected",
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.error));
+                text = Text(
+                  "Disconnected",
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                );
                 break;
               case ConnectionStatus.connecting:
-                text = const Text("Connecting",
-                    style: TextStyle(color: Colors.orange));
+                text = const Text(
+                  "Connecting",
+                  style: TextStyle(color: Colors.orange),
+                );
                 break;
               case ConnectionStatus.connected:
-                text = const Text("Connected",
-                    style: TextStyle(color: Colors.green));
+                text = const Text(
+                  "Connected",
+                  style: TextStyle(color: Colors.green),
+                );
                 break;
               case ConnectionStatus.loggingIn:
-                text = const Text("Logging in...",
-                    style: TextStyle(color: Colors.orange));
+                text = const Text(
+                  "Logging in...",
+                  style: TextStyle(color: Colors.orange),
+                );
                 break;
               case ConnectionStatus.loggedIn:
-                text = const Text("Logged in",
-                    style: TextStyle(color: Colors.green));
+                text = const Text(
+                  "Logged in",
+                  style: TextStyle(color: Colors.green),
+                );
                 break;
               case ConnectionStatus.loginDeclined:
-                text = const Text("Login declined (need approval)",
-                    style: TextStyle(color: Colors.redAccent));
+                text = const Text(
+                  "Login declined (need approval)",
+                  style: TextStyle(color: Colors.redAccent),
+                );
                 break;
               case ConnectionStatus.newAesKey:
-                text = const Text("New AES key available",
-                    style: TextStyle(color: Colors.redAccent));
+                text = const Text(
+                  "New AES key available",
+                  style: TextStyle(color: Colors.redAccent),
+                );
                 break;
               case ConnectionStatus.emptyAES:
-                text = const Text("Missing or wrong AES Key",
-                    style: TextStyle(color: Colors.redAccent));
+                text = const Text(
+                  "Missing or wrong AES Key",
+                  style: TextStyle(color: Colors.redAccent),
+                );
                 break;
               case ConnectionStatus.tryAgain:
-                text = const Text("Trying again...",
-                    style: TextStyle(color: Colors.orange));
+                text = const Text(
+                  "Trying again...",
+                  style: TextStyle(color: Colors.orange),
+                );
                 break;
               case ConnectionStatus.wrongAdapterVersion:
                 text = const Text(
@@ -135,16 +155,19 @@ class IoBrokerSettingsView extends StatelessWidget {
             }
 
             return Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: text);
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: text,
+            );
           },
           bloc: ConnectionCubit(
-              status: Manager.instance.connectionManager.connectionStatus),
+            status: Manager.instance.connectionManager.connectionStatus,
+          ),
         ),
         Center(
           child: ElevatedButton(
-            onPressed: () =>
-                {context.read<Manager>().connectionManager.reconnect()},
+            onPressed: () => {
+              context.read<Manager>().connectionManager.reconnect(),
+            },
             child: const Text("Reconnect"),
           ),
         ),
@@ -156,7 +179,8 @@ class IoBrokerSettingsView extends StatelessWidget {
                   value: ioBrokerManager.useSecureConnection,
                   onChanged: (b) {
                     setState(
-                        () => ioBrokerManager.changeUseSecureCon(b ?? true));
+                      () => ioBrokerManager.changeUseSecureCon(b ?? true),
+                    );
                   },
                   title: const Text("Use wss Connection"),
                 ),
@@ -224,8 +248,11 @@ class IoBrokerSettingsView extends StatelessWidget {
                   ),
                 if (ioBrokerManager.usePwd)
                   Container(
-                    margin:
-                        const EdgeInsets.only(left: 30.0, right: 20.0, top: 10),
+                    margin: const EdgeInsets.only(
+                      left: 30.0,
+                      right: 20.0,
+                      top: 10,
+                    ),
                     child: TextFormField(
                       initialValue: ioBrokerManager.password,
                       decoration: const InputDecoration(labelText: "Password"),
@@ -237,9 +264,7 @@ class IoBrokerSettingsView extends StatelessWidget {
             );
           },
         ),
-        _SecondaryAddressSettings(
-          ioBrokerManager: ioBrokerManager,
-        ),
+        _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager),
       ],
     );
   }
@@ -269,19 +294,22 @@ class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
               var status = await Permission.location.status;
               if (status.isDenied) {
                 showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Missing Permissions"),
-                        content: const Text(
-                            "To use this feature this app needd access to your location in order to check the current Wifi name"),
-                        actions: [
-                          TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text("Back"))
-                        ],
-                      );
-                    });
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Missing Permissions"),
+                      content: const Text(
+                        "To use this feature this app needd access to your location in order to check the current Wifi name",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text("Back"),
+                        ),
+                      ],
+                    );
+                  },
+                );
                 return;
               }
             }
@@ -308,7 +336,7 @@ class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
             enabled: widget.ioBrokerManager.useSecondaryAddress,
             onChanged: (v) => widget.ioBrokerManager.changeSecondaryAddress(v),
           ),
-        )
+        ),
       ],
     );
   }

@@ -34,8 +34,10 @@ class SettingsSyncManager {
   StreamController<bool> loadedSuccessStreamController =
       StreamController.broadcast();
 
-  SettingsSyncManager(
-      {required this.connectionManager, required this.fileManager});
+  SettingsSyncManager({
+    required this.connectionManager,
+    required this.fileManager,
+  });
 
   void loadSettings() async {
     if (!await fileManager.containsKey(settingsSyncKey)) {
@@ -48,63 +50,73 @@ class SettingsSyncManager {
     autoUpdateToAdapter = settings["autoUpdateToAdapter"];
   }
 
-  void uploadSettings(String preConfig,
-      {required bool widget, required bool screen}) {
+  void uploadSettings(
+    String preConfig, {
+    required bool widget,
+    required bool screen,
+  }) {
     if (connectionManager.configSyncStub == null) {
       Manager().talker.error(
-          "ConfigSyncStub is null, cannot create new settings template.");
+        "ConfigSyncStub is null, cannot create new settings template.",
+      );
     }
     String? widgetsJSON = !widget
         ? null
         : jsonEncode(Manager.instance.customWidgetManager.templates);
 
-    String? screensJSON =
-        !screen ? null : jsonEncode(Manager.instance.screenManager.screens);
+    String? screensJSON = !screen
+        ? null
+        : jsonEncode(Manager.instance.screenManager.screens);
 
     ConfigSyncUpRequest configSyncUpRequest = ConfigSyncUpRequest(
-        config: Config(
-            name: preConfig, screens: screensJSON, templates: widgetsJSON));
+      config: Config(
+        name: preConfig,
+        screens: screensJSON,
+        templates: widgetsJSON,
+      ),
+    );
     connectionManager.configSyncStub!.configSyncUp(configSyncUpRequest);
   }
 
   Future<ConfigCreateDeleteResponse> createNewSettingsTemplate(
-      String name) async {
+    String name,
+  ) async {
     if (connectionManager.configSyncStub == null) {
       Manager().talker.error(
-          "ConfigSyncStub is null, cannot create new settings template.");
+        "ConfigSyncStub is null, cannot create new settings template.",
+      );
     }
-    ConfigCreateDeleteResponse response =
-        await connectionManager.configSyncStub!
-            .configCreateDelete(ConfigCreateDeleteRequest(
-      configName: name,
-      delete: false,
-    ))
-            .onError(
-      (error, stackTrace) {
-        Manager()
-            .talker
-            .error("Error creating new settings template: $error, $stackTrace");
+    ConfigCreateDeleteResponse response = await connectionManager
+        .configSyncStub!
+        .configCreateDelete(
+          ConfigCreateDeleteRequest(configName: name, delete: false),
+        )
+        .onError((error, stackTrace) {
+          Manager().talker.error(
+            "Error creating new settings template: $error, $stackTrace",
+          );
 
-        return ConfigCreateDeleteResponse(success: false);
-      },
-    );
+          return ConfigCreateDeleteResponse(success: false);
+        });
     return response;
   }
 
   Future<List<String>> fetchTemplatesFromAdapter() async {
     if (connectionManager.configSyncStub == null) {
       Manager().talker.error(
-          "SettingsSyncManager | fetchTemplatesFromAdapter | ConfigSyncStub is null, cannot fetch templates from adapter.");
+        "SettingsSyncManager | fetchTemplatesFromAdapter | ConfigSyncStub is null, cannot fetch templates from adapter.",
+      );
       return [];
     }
 
     AvailableConfigsResponse response = await connectionManager.configSyncStub!
         .getAvailableConfigs(AvailableConfigsRequest())
         .onError((error, stackTrace) {
-      Manager().talker.error(
-          "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace");
-      return AvailableConfigsResponse(configNames: []);
-    });
+          Manager().talker.error(
+            "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
+          );
+          return AvailableConfigsResponse(configNames: []);
+        });
 
     return response.configNames;
   }
@@ -121,11 +133,15 @@ class SettingsSyncManager {
     configAddedStreamController.sink.add(true);
   }
 
-  void getTemplateSettings(String preConfig,
-      {required bool widget, required bool screen}) async {
+  void getTemplateSettings(
+    String preConfig, {
+    required bool widget,
+    required bool screen,
+  }) async {
     if (connectionManager.configSyncStub == null) {
       Manager().talker.error(
-          "SettingsSyncManager | getTemplateSettings | ConfigSyncStub is null.");
+        "SettingsSyncManager | getTemplateSettings | ConfigSyncStub is null.",
+      );
       return;
     }
     SyncType syncType = SyncType.SYNC_ALL;
@@ -134,15 +150,18 @@ class SettingsSyncManager {
     } else if (!widget && screen) {
       syncType = SyncType.SYNC_SCREENS;
     }
-    ConfigSyncDownRequest request =
-        ConfigSyncDownRequest(configName: preConfig, syncType: syncType);
+    ConfigSyncDownRequest request = ConfigSyncDownRequest(
+      configName: preConfig,
+      syncType: syncType,
+    );
     Config config = await connectionManager.configSyncStub!
         .configSyncDown(request)
         .onError((error, stackTrace) {
-      Manager().talker.error(
-          "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace");
-      return Config();
-    });
+          Manager().talker.error(
+            "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
+          );
+          return Config();
+        });
     if (config.name.isNotEmpty) {
       loadGotTemplate(config.screens, config.templates);
     }
@@ -153,8 +172,10 @@ class SettingsSyncManager {
 
     //INFO: Devices are loaded from the adapter
     if (widgets != null) {
-      fileManager.pref
-          .setString(manager.customWidgetManager.templateKey, widgets);
+      fileManager.pref.setString(
+        manager.customWidgetManager.templateKey,
+        widgets,
+      );
     }
     if (screens != null) {
       fileManager.pref.setString(manager.screenManager.key, screens);

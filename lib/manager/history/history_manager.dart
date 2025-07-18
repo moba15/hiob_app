@@ -12,10 +12,15 @@ class HistoryManager {
   HistoryManager({required this.connectionManager});
 
   void subscribeToHistorySmart(
-      DataPoint dataPoint, int start, int end, int interval) {
+    DataPoint dataPoint,
+    int start,
+    int end,
+    int interval,
+  ) {
     if (subscriptions.containsKey(dataPoint)) {
-      if (subscriptions[dataPoint]!
-          .any((element) => element.type == SubType.smart)) {
+      if (subscriptions[dataPoint]!.any(
+        (element) => element.type == SubType.smart,
+      )) {
       } else {
         subscriptions[dataPoint] = [HistorySubscription(type: SubType.smart)];
       }
@@ -41,7 +46,11 @@ class HistoryManager {
       //Send request
       SubscribeSmartHistoryPackage smartHistoryPackage =
           SubscribeSmartHistoryPackage(
-              dataPoint: dataPoint, start: start, end: end, interval: interval);
+            dataPoint: dataPoint,
+            start: start,
+            end: end,
+            interval: interval,
+          );
       if (historyData.historyInterval.end < end) {
         historyData.historyInterval.end = end;
       }
@@ -56,8 +65,9 @@ class HistoryManager {
   void onHistoryUpdate({required List data}) {
     for (Map rawDate in data) {
       String id = rawDate["id"];
-      DataPoint dataPoint =
-          subscriptions.keys.firstWhere((element) => element.id == id);
+      DataPoint dataPoint = subscriptions.keys.firstWhere(
+        (element) => element.id == id,
+      );
       dataPoint.historyData.addData(rawDate["ts"], rawDate["val"]);
     }
   }

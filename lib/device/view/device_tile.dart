@@ -10,8 +10,9 @@ class DeviceTileApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => DeviceBloc(device, t: device.lastUpdated),
-        child: const DeviceTile());
+      create: (_) => DeviceBloc(device, t: device.lastUpdated),
+      child: const DeviceTile(),
+    );
   }
 }
 
@@ -20,8 +21,9 @@ class DeviceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lastUpdated =
-        context.select((DeviceBloc bloc) => bloc.state.lastUpdated);
+    final lastUpdated = context.select(
+      (DeviceBloc bloc) => bloc.state.lastUpdated,
+    );
 
     final status = context.select((DeviceBloc bloc) => bloc.state.status);
     final device = context.select((DeviceBloc bloc) => bloc.device);

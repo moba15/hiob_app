@@ -11,18 +11,17 @@ class LineSettingsPage extends StatelessWidget {
   final GraphWidget graphWidget;
   final GraphLine graphLine;
   final Function(GraphLine) onSave;
-  const LineSettingsPage(
-      {super.key,
-      required this.graphWidget,
-      required this.graphLine,
-      required this.onSave});
+  const LineSettingsPage({
+    super.key,
+    required this.graphWidget,
+    required this.graphLine,
+    required this.onSave,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Graph Line"),
-      ),
+      appBar: AppBar(title: const Text("Graph Line")),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.save),
         onPressed: () => _save(context),
@@ -84,8 +83,9 @@ class _LineSettingsBody extends StatelessWidget {
                 graphLine.minInterval = int.tryParse(v) ?? 1;
               }
             },
-            decoration:
-                const InputDecoration(labelText: "Min time for next Update"),
+            decoration: const InputDecoration(
+              labelText: "Min time for next Update",
+            ),
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
@@ -111,15 +111,17 @@ class _LineSettingsBody extends StatelessWidget {
   Widget _buildGraphLineTypeSelector() {
     return DropdownSearch<GraphLineType>(
       popupProps: PopupProps.menu(
-          showSelectedItems: true,
-          disabledItemFn: (f) => f == GraphLineType.bar),
+        showSelectedItems: true,
+        disabledItemFn: (f) => f == GraphLineType.bar,
+      ),
       compareFn: (i, i1) => i == i1,
       itemAsString: (i) => i.toString(),
       items: GraphLineType.values,
       onChanged: (v) => graphLine.type = v,
       selectedItem: graphLine.type,
       dropdownDecoratorProps: const DropDownDecoratorProps(
-          dropdownSearchDecoration: InputDecoration(labelText: "Line Type")),
+        dropdownSearchDecoration: InputDecoration(labelText: "Line Type"),
+      ),
     );
   }
 
@@ -129,34 +131,30 @@ class _LineSettingsBody extends StatelessWidget {
         Expanded(
           child: DropdownSearch<GraphAxis>(
             items: graphWidget.xAxes ?? [],
-            popupProps: const PopupProps.menu(
-              showSelectedItems: true,
-            ),
+            popupProps: const PopupProps.menu(showSelectedItems: true),
             itemAsString: (i) => i.description ?? "No Name found",
             compareFn: (i, i2) => i == i2,
             dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(labelText: "X axes")),
+              dropdownSearchDecoration: InputDecoration(labelText: "X axes"),
+            ),
             onChanged: (v) => {graphLine.xAxis = v, graphLine.xAxisId = v?.id},
             selectedItem: graphLine.xAxis,
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-        ),
+        Container(margin: const EdgeInsets.only(left: 15, right: 15)),
         Expanded(
           child: DropdownSearch<GraphAxis>(
             items: graphWidget.yAxes ?? [],
-            popupProps: const PopupProps.menu(
-              showSelectedItems: true,
-            ),
+            popupProps: const PopupProps.menu(showSelectedItems: true),
             itemAsString: (i) => i.description ?? "No Name found",
             compareFn: (i, i2) => i == i2,
             dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(labelText: "Y axes")),
+              dropdownSearchDecoration: InputDecoration(labelText: "Y axes"),
+            ),
             onChanged: (v) => {graphLine.yAxis = v, graphLine.yAxisId = v?.id},
             selectedItem: graphLine.yAxis,
           ),
-        )
+        ),
       ],
     );
   }

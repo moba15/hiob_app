@@ -11,10 +11,8 @@ part 'custom_button_widget_theme.g.dart';
 class CustomButtonWidgetTheme with _$CustomButtonWidgetTheme {
   CustomButtonWidgetTheme._();
   @Implements<CustomThemeForWidget>()
-  factory CustomButtonWidgetTheme(
-    String id,
-    LabelTheme labelTheme,
-  ) = _CustomButtonWidgetTheme;
+  factory CustomButtonWidgetTheme(String id, LabelTheme labelTheme) =
+      _CustomButtonWidgetTheme;
 
   Widget get settingWidget {
     return labelTheme.settingWidget;

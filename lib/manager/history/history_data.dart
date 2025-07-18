@@ -38,6 +38,9 @@ class HistoryInterval {
   int end;
   bool complete;
 
-  HistoryInterval(
-      {required this.start, required this.end, this.complete = true});
+  HistoryInterval({
+    required this.start,
+    required this.end,
+    this.complete = true,
+  });
 }

@@ -13,11 +13,12 @@ class ScreenListCubit extends Cubit<ScreenListState> {
   ScreenManager screenManager;
 
   ScreenListCubit({required this.screenManager})
-      : super(const ScreenListState.loading()) {
-    screenListSubscription =
-        screenManager.screenStreamController.stream.listen((event) {
-      update(event);
-    });
+    : super(const ScreenListState.loading()) {
+    screenListSubscription = screenManager.screenStreamController.stream.listen(
+      (event) {
+        update(event);
+      },
+    );
   }
 
   @override

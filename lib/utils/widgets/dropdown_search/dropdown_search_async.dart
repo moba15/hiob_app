@@ -12,14 +12,15 @@ class DropdownSearchAsync<T> extends StatefulWidget {
   final Widget? selectedObject;
   final String title;
   final String subtitle;
-  const DropdownSearchAsync(
-      {super.key,
-      required this.title,
-      this.subtitle = "Tap to search",
-      required this.onSearch,
-      required this.toWidget,
-      required this.loadInitialValues,
-      this.selectedObject});
+  const DropdownSearchAsync({
+    super.key,
+    required this.title,
+    this.subtitle = "Tap to search",
+    required this.onSearch,
+    required this.toWidget,
+    required this.loadInitialValues,
+    this.selectedObject,
+  });
 
   @override
   State<DropdownSearchAsync<T>> createState() => _DropdownSearchAsyncState<T>();
@@ -48,24 +49,28 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: _onTap,
-        child: InputDecorator(
-          decoration: InputDecoration(
-            hintText: "hintText",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+      onTap: _onTap,
+      child: InputDecorator(
+        decoration: InputDecoration(
+          hintText: "hintText",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: Colors.grey),
           ),
-          child: widget.selectedObject ??
-              ListTile(
-                title: Text(widget.title),
-                subtitle: Text(widget.subtitle),
-                trailing: const Icon(Icons.arrow_drop_down),
-              ),
-        ));
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 14,
+          ),
+        ),
+        child:
+            widget.selectedObject ??
+            ListTile(
+              title: Text(widget.title),
+              subtitle: Text(widget.subtitle),
+              trailing: const Icon(Icons.arrow_drop_down),
+            ),
+      ),
+    );
   }
 
   void _onTap() {
@@ -85,14 +90,12 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                 TextFormField(
                   initialValue: currentSearch,
                   onChanged: (value) async {
-                    widget.onSearch(value).then(
-                      (result) {
-                        _controller.sink.add(result);
-                        items = result;
-                        currentSearch = value;
-                        setState(() {});
-                      },
-                    );
+                    widget.onSearch(value).then((result) {
+                      _controller.sink.add(result);
+                      items = result;
+                      currentSearch = value;
+                      setState(() {});
+                    });
                   },
                   onSaved: (newValue) {},
                   onEditingComplete: () {},
@@ -108,9 +111,7 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                     }
 
                     if (items.isEmpty) {
-                      return Center(
-                        child: Text("No results found"),
-                      );
+                      return Center(child: Text("No results found"));
                     }
                     return Expanded(
                       child: ListView.builder(
@@ -123,7 +124,7 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                       ),
                     );
                   },
-                )
+                ),
               ],
             );
           },

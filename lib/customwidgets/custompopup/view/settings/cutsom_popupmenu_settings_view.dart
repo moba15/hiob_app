@@ -13,8 +13,11 @@ import 'package:smart_home/utils/theme.dart';
 class CustomPopupmenuSettingsView extends StatefulWidget {
   final CustomWidget customWidget;
   final CustomPopupmenu customPopupmenu;
-  const CustomPopupmenuSettingsView(
-      {super.key, required this.customWidget, required this.customPopupmenu});
+  const CustomPopupmenuSettingsView({
+    super.key,
+    required this.customWidget,
+    required this.customPopupmenu,
+  });
 
   @override
   State<CustomPopupmenuSettingsView> createState() =>
@@ -30,10 +33,8 @@ class _CustomPopupmenuSettingsViewState
     return Column(
       children: [
         InputFieldContainer.inputContainer(
-            child: const Text(
-          "Widgtes",
-          style: TextStyle(fontSize: 15),
-        )),
+          child: const Text("Widgtes", style: TextStyle(fontSize: 15)),
+        ),
         ReorderableListView(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -42,11 +43,9 @@ class _CustomPopupmenuSettingsViewState
               widget.customPopupmenu.reorder(oldIndex, newIndex);
             });
           },
-          children: [
-            ..._widgetList(),
-          ],
+          children: [..._widgetList()],
         ),
-        _addWidgetButton()
+        _addWidgetButton(),
       ],
     );
   }
@@ -54,7 +53,8 @@ class _CustomPopupmenuSettingsViewState
   List<Widget> _widgetList() {
     List<Widget> list = [];
     for (CustomWidget customWidget in widget.customPopupmenu.customWidgets) {
-      list.add(Dismissible(
+      list.add(
+        Dismissible(
           key: ValueKey(customWidget.id),
           background: Container(
             color: Colors.red,
@@ -79,31 +79,39 @@ class _CustomPopupmenuSettingsViewState
             });
           },
           child: CustomWidgetTemplateTile(
-              customWidget: customWidget,
-              customWidgetManager: Manager().customWidgetManager,
-              toggleSelect: null)));
+            customWidget: customWidget,
+            customWidgetManager: Manager().customWidgetManager,
+            toggleSelect: null,
+          ),
+        ),
+      );
     }
     return list;
   }
 
   Widget _addWidgetButton() {
     return OutlinedButton(
-        onPressed: _onAddPress, child: const Text("Add Widget"));
+      onPressed: _onAddPress,
+      child: const Text("Add Widget"),
+    );
   }
 
   void _onAddPress() {
     //TODO Open
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return TemplateAddPage(
-          customWidgetManager: Manager().customWidgetManager,
-          onSave: _onWidgetSave,
-          filter: (CustomWidgetTypeDeprecated p0) {
-            return !p0.settingWidget.deprecated;
-          },
-        );
-      },
-    ));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return TemplateAddPage(
+            customWidgetManager: Manager().customWidgetManager,
+            onSave: _onWidgetSave,
+            filter: (CustomWidgetTypeDeprecated p0) {
+              return !p0.settingWidget.deprecated;
+            },
+          );
+        },
+      ),
+    );
   }
 
   _onWidgetSave(CustomWidgetWrapper p1) {
@@ -114,7 +122,8 @@ class _CustomPopupmenuSettingsViewState
       c.update(widget.customWidget);
     } else {
       throw ErrorDescription(
-          "This is only supported for the new type of widgets");
+        "This is only supported for the new type of widgets",
+      );
     }
   }
 }
