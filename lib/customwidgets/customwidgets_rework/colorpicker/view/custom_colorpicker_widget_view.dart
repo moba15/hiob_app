@@ -8,9 +8,10 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomColorPickerWidgetView extends StatefulWidget {
   final CustomColorPickerWidget customColorPickerWidget;
-  const CustomColorPickerWidgetView(
-      {Key? key, required this.customColorPickerWidget})
-      : super(key: key);
+  const CustomColorPickerWidgetView({
+    Key? key,
+    required this.customColorPickerWidget,
+  }) : super(key: key);
 
   @override
   State<CustomColorPickerWidgetView> createState() =>
@@ -28,12 +29,14 @@ class _CustomColorPickerWidgetViewState
     if (widget.customColorPickerWidget.dataPoint != null) {
       _bloc = DataPointBloc(widget.customColorPickerWidget.dataPoint!);
     }
-    _label = widget.customColorPickerWidget.label != null &&
+    _label =
+        widget.customColorPickerWidget.label != null &&
             widget.customColorPickerWidget.label!.isNotEmpty
         ? widget.customColorPickerWidget.label!
         : widget.customColorPickerWidget.name;
-    theme = widget.customColorPickerWidget.customTheme
-        as CustomColorpickerWidgetTheme?;
+    theme =
+        widget.customColorPickerWidget.customTheme
+            as CustomColorpickerWidgetTheme?;
     super.initState();
   }
 
@@ -44,12 +47,14 @@ class _CustomColorPickerWidgetViewState
       if (widget.customColorPickerWidget.dataPoint != null) {
         _bloc = DataPointBloc(widget.customColorPickerWidget.dataPoint!);
       }
-      _label = widget.customColorPickerWidget.label != null &&
+      _label =
+          widget.customColorPickerWidget.label != null &&
               widget.customColorPickerWidget.label!.isNotEmpty
           ? widget.customColorPickerWidget.label!
           : widget.customColorPickerWidget.name;
-      theme = widget.customColorPickerWidget.customTheme
-          as CustomColorpickerWidgetTheme?;
+      theme =
+          widget.customColorPickerWidget.customTheme
+              as CustomColorpickerWidgetTheme?;
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -63,9 +68,7 @@ class _CustomColorPickerWidgetViewState
   @override
   Widget build(BuildContext context) {
     if (_bloc == null) {
-      return const ListTile(
-        title: Text("Error 404: Device Not found"),
-      );
+      return const ListTile(title: Text("Error 404: Device Not found"));
     }
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: _bloc!,
@@ -84,13 +87,13 @@ class _CustomColorPickerWidgetViewState
             (regExp.allMatches(value).length != 6 &&
                 regExp.allMatches(value).length != 8)) {
           return ListTile(
-            title: Text(
-              _label,
-              style: theme?.labelTheme.textStyle,
-            ),
+            title: Text(_label, style: theme?.labelTheme.textStyle),
             trailing: Text("Not supported value: $value"),
             onTap: () => colorPickerDialog(
-                context, _bloc!, const Color.fromARGB(0, 0, 0, 0)),
+              context,
+              _bloc!,
+              const Color.fromARGB(0, 0, 0, 0),
+            ),
           );
         }
         int? alpha;
@@ -110,64 +113,70 @@ class _CustomColorPickerWidgetViewState
         }
 
         return ListTile(
-            title: Text(
-              _label,
-              style: theme?.labelTheme.textStyle,
-            ),
-            trailing: alpha == null ||
-                    red == null ||
-                    blue == null ||
-                    green == null
-                ? Text(
-                    "Currently only hex values are supported: ${state.value}")
-                : ColorIndicator(
-                    color: Color.fromARGB(alpha, red, green, blue),
-                  ),
-            onTap: () async {
-              Color newColor = await colorPickerDialog(context, _bloc!,
-                  Color.fromARGB(alpha ?? 0, red ?? 0, green ?? 0, blue ?? 0));
-              _bloc?.add(DataPointValueUpdateRequest(
-                  value: widget.customColorPickerWidget.prefix +
-                      (widget.customColorPickerWidget.alpha == true
-                          ? newColor.hexAlpha
-                          : newColor.hex),
-                  oldValue: newColor.hex));
-            });
+          title: Text(_label, style: theme?.labelTheme.textStyle),
+          trailing:
+              alpha == null || red == null || blue == null || green == null
+              ? Text("Currently only hex values are supported: ${state.value}")
+              : ColorIndicator(color: Color.fromARGB(alpha, red, green, blue)),
+          onTap: () async {
+            Color newColor = await colorPickerDialog(
+              context,
+              _bloc!,
+              Color.fromARGB(alpha ?? 0, red ?? 0, green ?? 0, blue ?? 0),
+            );
+            _bloc?.add(
+              DataPointValueUpdateRequest(
+                value:
+                    widget.customColorPickerWidget.prefix +
+                    (widget.customColorPickerWidget.alpha == true
+                        ? newColor.hexAlpha
+                        : newColor.hex),
+                oldValue: newColor.hex,
+              ),
+            );
+          },
+        );
       },
     );
   }
 
   Future<Color> colorPickerDialog(
-      BuildContext context, DataPointBloc bloc, Color selectedColor) async {
-    return showColorPickerDialog(context, selectedColor,
-        width: 40,
-        height: 40,
-        borderRadius: 4,
-        spacing: 5,
-        runSpacing: 5,
-        wheelDiameter: 155,
-        heading: Text(
-          'Select color',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        subheading: Text(
-          'Select color shade',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        wheelSubheading: Text(
-          'Selected color and its shades',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        maxRecentColors: 2,
-        showRecentColors: false,
-        showMaterialName: false,
-        showColorName: false,
-        showColorCode: false,
-        enableTonalPalette: true,
-        enableShadesSelection: widget.customColorPickerWidget.shadesSelection,
-        materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
-        colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
-        colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
-        pickersEnabled: widget.customColorPickerWidget.pickersEnabled);
+    BuildContext context,
+    DataPointBloc bloc,
+    Color selectedColor,
+  ) async {
+    return showColorPickerDialog(
+      context,
+      selectedColor,
+      width: 40,
+      height: 40,
+      borderRadius: 4,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 155,
+      heading: Text(
+        'Select color',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      subheading: Text(
+        'Select color shade',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      wheelSubheading: Text(
+        'Selected color and its shades',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      maxRecentColors: 2,
+      showRecentColors: false,
+      showMaterialName: false,
+      showColorName: false,
+      showColorCode: false,
+      enableTonalPalette: true,
+      enableShadesSelection: widget.customColorPickerWidget.shadesSelection,
+      materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
+      pickersEnabled: widget.customColorPickerWidget.pickersEnabled,
+    );
   }
 }

@@ -3,9 +3,10 @@ import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custo
 
 class CustomDivisionlineWidgetView extends StatefulWidget {
   final CustomDivisionlineWidget customDivisionlineWidget;
-  const CustomDivisionlineWidgetView(
-      {Key? key, required this.customDivisionlineWidget})
-      : super(key: key);
+  const CustomDivisionlineWidgetView({
+    Key? key,
+    required this.customDivisionlineWidget,
+  }) : super(key: key);
 
   @override
   State<CustomDivisionlineWidgetView> createState() =>

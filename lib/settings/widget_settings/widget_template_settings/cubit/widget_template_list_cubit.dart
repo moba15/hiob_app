@@ -13,12 +13,18 @@ class WidgetTemplateListCubit extends Cubit<WidgetTemplateListState> {
   StreamSubscription? templateListSubscription;
 
   WidgetTemplateListCubit({required this.customWidgetManager})
-      : super(const WidgetTemplateListState(
-            templates: [], status: ListStatus.loading)) {
-    templateListSubscription =
-        customWidgetManager.templatesStreamController.stream.listen((event) {
-      update(event);
-    });
+    : super(
+        const WidgetTemplateListState(
+          templates: [],
+          status: ListStatus.loading,
+        ),
+      ) {
+    templateListSubscription = customWidgetManager
+        .templatesStreamController
+        .stream
+        .listen((event) {
+          update(event);
+        });
   }
 
   @override
@@ -32,7 +38,8 @@ class WidgetTemplateListCubit extends Cubit<WidgetTemplateListState> {
   }
 
   void update(List<CustomWidgetWrapper> templates) {
-    emit(WidgetTemplateListState(
-        templates: templates, status: ListStatus.success));
+    emit(
+      WidgetTemplateListState(templates: templates, status: ListStatus.success),
+    );
   }
 }

@@ -5,7 +5,7 @@ import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart';
 class CustomWebViewView extends StatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
   const CustomWebViewView({Key? key, required this.customWebViewWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<CustomWebViewView> createState() => _CustomWebViewViewState();

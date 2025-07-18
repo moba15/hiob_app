@@ -15,8 +15,9 @@ class CustomThemeSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(getAppLocalizations(context).custom_theme_settings_page_title),
+        title: Text(
+          getAppLocalizations(context).custom_theme_settings_page_title,
+        ),
       ),
       body: _CustomThemeSettingsBody(),
     );
@@ -40,10 +41,7 @@ class _CustomThemeSettingsBody extends StatelessWidget {
           const Divider(),
           const Text("App Bar Elevation"),
           _appBarElevationSlider(),
-          const Text(
-            "Textscale (beta)",
-            style: TextStyle(color: Colors.green),
-          ),
+          const Text("Textscale (beta)", style: TextStyle(color: Colors.green)),
           _scaleSlider(),
           _seedColorPicker(),
         ],
@@ -53,50 +51,53 @@ class _CustomThemeSettingsBody extends StatelessWidget {
 
   Widget _selectBrightnessMode() {
     return InputFieldContainer.inputContainer(
-        child: DropdownButtonFormField<CustomThemeBrightness>(
-      decoration: const InputDecoration(border: OutlineInputBorder()),
-      value: themeManager.loadedCustomTheme.customThemeBrightness,
-      items: [
-        DropdownMenuItem(
-          value: CustomThemeBrightness.light,
-          child: Row(
-            children: [
-              const Icon(Icons.light_mode),
-              Container(margin: const EdgeInsets.only(left: 10)),
-              const Text("Light"),
-            ],
+      child: DropdownButtonFormField<CustomThemeBrightness>(
+        decoration: const InputDecoration(border: OutlineInputBorder()),
+        value: themeManager.loadedCustomTheme.customThemeBrightness,
+        items: [
+          DropdownMenuItem(
+            value: CustomThemeBrightness.light,
+            child: Row(
+              children: [
+                const Icon(Icons.light_mode),
+                Container(margin: const EdgeInsets.only(left: 10)),
+                const Text("Light"),
+              ],
+            ),
           ),
-        ),
-        DropdownMenuItem(
-          value: CustomThemeBrightness.dark,
-          child: Row(
-            children: [
-              const Icon(Icons.dark_mode),
-              Container(margin: const EdgeInsets.only(left: 10)),
-              const Text("Dark"),
-            ],
+          DropdownMenuItem(
+            value: CustomThemeBrightness.dark,
+            child: Row(
+              children: [
+                const Icon(Icons.dark_mode),
+                Container(margin: const EdgeInsets.only(left: 10)),
+                const Text("Dark"),
+              ],
+            ),
           ),
-        ),
-        DropdownMenuItem(
-          value: CustomThemeBrightness.system,
-          child: Row(
-            children: [
-              const Icon(Icons.sync),
-              Container(margin: const EdgeInsets.only(left: 10)),
-              const Text("System"),
-            ],
+          DropdownMenuItem(
+            value: CustomThemeBrightness.system,
+            child: Row(
+              children: [
+                const Icon(Icons.sync),
+                Container(margin: const EdgeInsets.only(left: 10)),
+                const Text("System"),
+              ],
+            ),
           ),
-        )
-      ],
-      onChanged: (bri) {
-        if (bri == null) {
-        } else {
-          themeManager.changeTheme(
-              customTheme: themeManager.loadedCustomTheme
-                  .copyOf(customThemeBrightness: bri));
-        }
-      },
-    ));
+        ],
+        onChanged: (bri) {
+          if (bri == null) {
+          } else {
+            themeManager.changeTheme(
+              customTheme: themeManager.loadedCustomTheme.copyOf(
+                customThemeBrightness: bri,
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 
   Widget _appBarElevationSlider() {
@@ -106,14 +107,17 @@ class _CustomThemeSettingsBody extends StatelessWidget {
           value: themeManager.loadedCustomTheme.appBarElevation,
           min: 0,
           max: 100,
-          label:
-              themeManager.loadedCustomTheme.appBarElevation.round().toString(),
+          label: themeManager.loadedCustomTheme.appBarElevation
+              .round()
+              .toString(),
           divisions: 20,
           onChanged: (d) {
             setState(() {
               themeManager.changeTheme(
-                  customTheme: themeManager.loadedCustomTheme
-                      .copyOf(appBarElevation: d));
+                customTheme: themeManager.loadedCustomTheme.copyOf(
+                  appBarElevation: d,
+                ),
+              );
             });
           },
         );
@@ -133,8 +137,10 @@ class _CustomThemeSettingsBody extends StatelessWidget {
           onChanged: (d) {
             setState(() {
               themeManager.changeTheme(
-                  customTheme:
-                      themeManager.loadedCustomTheme.copyOf(textScale: d));
+                customTheme: themeManager.loadedCustomTheme.copyOf(
+                  textScale: d,
+                ),
+              );
             });
           },
         );
@@ -158,17 +164,19 @@ class _ColorPickerListTileState extends State<_ColorPickerListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading: const Icon(Icons.color_lens),
-        title: const Text("Seed color"),
-        trailing: BlocBuilder<CustomThemeCubit, CustomThemeState>(
-          bloc: CustomThemeCubit(manager: Manager())..loadTheme(),
-          builder: (context, state) {
-            return ColorIndicator(
-                color: state.customTheme.customColorScheme.color,
-                onSelect: () =>
-                    _colorPicker(state.customTheme.customColorScheme.color));
-          },
-        ));
+      leading: const Icon(Icons.color_lens),
+      title: const Text("Seed color"),
+      trailing: BlocBuilder<CustomThemeCubit, CustomThemeState>(
+        bloc: CustomThemeCubit(manager: Manager())..loadTheme(),
+        builder: (context, state) {
+          return ColorIndicator(
+            color: state.customTheme.customColorScheme.color,
+            onSelect: () =>
+                _colorPicker(state.customTheme.customColorScheme.color),
+          );
+        },
+      ),
+    );
   }
 
   void _colorPicker(Color color) {
@@ -186,10 +194,13 @@ class _ColorPickerListTileState extends State<_ColorPickerListTile> {
       },
       onColorChanged: (value) {
         Manager().themeManager.changeTheme(
-            customTheme: Manager().themeManager.loadedCustomTheme.copyOf(
-                customColorScheme: CustomColorScheme(
-                    customColorSchemeMode: CustomColorSchemeMode.fromSeed,
-                    color: value)));
+          customTheme: Manager().themeManager.loadedCustomTheme.copyOf(
+            customColorScheme: CustomColorScheme(
+              customColorSchemeMode: CustomColorSchemeMode.fromSeed,
+              color: value,
+            ),
+          ),
+        );
       },
     ).showPickerDialog(context);
   }

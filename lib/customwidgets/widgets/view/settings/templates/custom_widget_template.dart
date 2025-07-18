@@ -9,14 +9,17 @@ class CustomWidgetTemplate extends CustomWidgetWrapper {
   @override
   String name;
 
-  CustomWidgetTemplate(
-      {required this.id, required this.name, required this.customWidget});
+  CustomWidgetTemplate({
+    required this.id,
+    required this.name,
+    required this.customWidget,
+  });
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "widget": customWidget.toJson(),
-      };
+    "id": id,
+    "name": name,
+    "widget": customWidget.toJson(),
+  };
 
   @override
   CustomWidgetTypeDeprecated? get type {

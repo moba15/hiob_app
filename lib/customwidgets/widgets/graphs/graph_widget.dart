@@ -14,16 +14,15 @@ class GraphWidget extends CustomWidgetDeprecated {
   List<GraphLine>? graphLines;
   GraphUpdateType? updateType;
   bool? trackBall;
-  GraphWidget(
-      {required String? name,
-      this.title,
-      this.yAxes,
-      this.xAxes,
-      this.graphLines,
-      this.updateType,
-      this.trackBall})
-      : super(
-            name: name, type: CustomWidgetTypeDeprecated.graph, settings: {}) {
+  GraphWidget({
+    required String? name,
+    this.title,
+    this.yAxes,
+    this.xAxes,
+    this.graphLines,
+    this.updateType,
+    this.trackBall,
+  }) : super(name: name, type: CustomWidgetTypeDeprecated.graph, settings: {}) {
     if (graphLines != null &&
         graphLines!.isNotEmpty &&
         yAxes != null &&
@@ -39,13 +38,14 @@ class GraphWidget extends CustomWidgetDeprecated {
   @override
   CustomWidgetDeprecated clone() {
     return GraphWidget(
-        name: name,
-        title: title,
-        yAxes: yAxes,
-        xAxes: xAxes,
-        graphLines: graphLines,
-        updateType: updateType,
-        trackBall: trackBall);
+      name: name,
+      title: title,
+      yAxes: yAxes,
+      xAxes: xAxes,
+      graphLines: graphLines,
+      updateType: updateType,
+      trackBall: trackBall,
+    );
   }
 
   @override
@@ -70,21 +70,22 @@ class GraphWidget extends CustomWidgetDeprecated {
   Widget get widget => GraphView(graphWidget: this);
 
   factory GraphWidget.fromJson(Map<String, dynamic> json) {
-    List<GraphAxis> xAxes = List.of(json["xAxes"])
-        .map((v) => GraphAxis.fromJson(Map.of(v)))
-        .toList();
-    List<GraphAxis> yAxes = List.of(json["yAxes"])
-        .map((v) => GraphAxis.fromJson(Map.of(v)))
-        .toList();
+    List<GraphAxis> xAxes = List.of(
+      json["xAxes"],
+    ).map((v) => GraphAxis.fromJson(Map.of(v))).toList();
+    List<GraphAxis> yAxes = List.of(
+      json["yAxes"],
+    ).map((v) => GraphAxis.fromJson(Map.of(v))).toList();
     return GraphWidget(
-        name: json["name"],
-        title: json["title"],
-        yAxes: yAxes,
-        xAxes: xAxes,
-        graphLines: List.of(json["graphLines"] ?? [])
-            .map((e) => GraphLine.fromJson(Map.of(e), xAxes, yAxes))
-            .toList(),
-        trackBall: json["trackBall"]);
+      name: json["name"],
+      title: json["title"],
+      yAxes: yAxes,
+      xAxes: xAxes,
+      graphLines: List.of(
+        json["graphLines"] ?? [],
+      ).map((e) => GraphLine.fromJson(Map.of(e), xAxes, yAxes)).toList(),
+      trackBall: json["trackBall"],
+    );
   }
 
   void fetchAllData() {}

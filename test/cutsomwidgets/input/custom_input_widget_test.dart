@@ -14,7 +14,7 @@ import 'custom_input_widget_test.mocks.dart';
 @GenerateNiceMocks([
   MockSpec<DataPoint>(),
   MockSpec<DataPointBloc>(),
-  MockSpec<DataPointState>()
+  MockSpec<DataPointState>(),
 ])
 void main() {
   late CustomInputWidget customInputWidget;
@@ -24,10 +24,11 @@ void main() {
   setUp(() {
     mockDataPoint = MockDataPoint();
     customInputWidget = CustomInputWidget(
-        id: "id",
-        name: "name",
-        dataPoint: mockDataPoint,
-        customInputDisplayConentType: CustomInputDisplayConentType.hintText);
+      id: "id",
+      name: "name",
+      dataPoint: mockDataPoint,
+      customInputDisplayConentType: CustomInputDisplayConentType.hintText,
+    );
     mockDataPointBloc = MockDataPointBloc();
     mockDataPointState = MockDataPointState();
 
@@ -37,20 +38,28 @@ void main() {
 
     when(mockDataPoint.value).thenReturn("asdasd");
 
-    when(mockDataPoint.valueStreamController)
-        .thenReturn(StreamController.broadcast());
+    when(
+      mockDataPoint.valueStreamController,
+    ).thenReturn(StreamController.broadcast());
   });
 
   group("Test basic features", () {
     testWidgets("Test null datapoint", (tester) async {
       when(mockDataPointState.value).thenReturn("asdasd");
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
             body: CustomInputWidgetView(
-                customInputWidget: CustomInputWidget(
-                    id: "id", name: "name", dataPoint: null))),
-      ));
+              customInputWidget: CustomInputWidget(
+                id: "id",
+                name: "name",
+                dataPoint: null,
+              ),
+            ),
+          ),
+        ),
+      );
       await tester.pump();
 
       expect(find.byType(Text), findsOneWidget);
@@ -62,16 +71,21 @@ void main() {
     testWidgets("Test nummber value", (tester) async {
       when(mockDataPointState.value).thenReturn(1);
 
-      await tester.pumpWidget(MaterialApp(
+      await tester.pumpWidget(
+        MaterialApp(
           home: Scaffold(
-        body: CustomInputWidgetView(
-            customInputWidget: CustomInputWidget(
-          id: "id",
-          name: "name",
-          dataPoint: mockDataPoint,
-          customInputDisplayConentType: CustomInputDisplayConentType.hintText,
-        )),
-      )));
+            body: CustomInputWidgetView(
+              customInputWidget: CustomInputWidget(
+                id: "id",
+                name: "name",
+                dataPoint: mockDataPoint,
+                customInputDisplayConentType:
+                    CustomInputDisplayConentType.hintText,
+              ),
+            ),
+          ),
+        ),
+      );
       await tester.pump();
 
       expect(find.byType(TextField), findsOneWidget);
@@ -82,26 +96,29 @@ void main() {
     testWidgets("Test label fullsize false", (tester) async {
       when(mockDataPointState.value).thenReturn("asdasd");
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
             body: CustomInputWidgetView(
-                customInputWidget: CustomInputWidget(
-                    id: "id",
-                    name: "name",
-                    dataPoint: mockDataPoint,
-                    customInputDisplayConentType:
-                        CustomInputDisplayConentType.noShow,
-                    label: "asd"))),
-      ));
+              customInputWidget: CustomInputWidget(
+                id: "id",
+                name: "name",
+                dataPoint: mockDataPoint,
+                customInputDisplayConentType:
+                    CustomInputDisplayConentType.noShow,
+                label: "asd",
+              ),
+            ),
+          ),
+        ),
+      );
       await tester.pump();
 
       expect(find.byType(TextField), findsOneWidget);
       expect(
-          tester
-              .widget<TextField>(find.byType(TextField))
-              .decoration!
-              .labelText,
-          "asd");
+        tester.widget<TextField>(find.byType(TextField)).decoration!.labelText,
+        "asd",
+      );
 
       await tester.pumpAndSettle();
     });
@@ -109,26 +126,32 @@ void main() {
     testWidgets("Test label fullsize true", (tester) async {
       when(mockDataPointState.value).thenReturn("asdasd");
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
             body: CustomInputWidgetView(
-                customInputWidget: CustomInputWidget(
-                    id: "id",
-                    name: "name",
-                    fullSize: true,
-                    dataPoint: mockDataPoint,
-                    customInputDisplayConentType:
-                        CustomInputDisplayConentType.noShow,
-                    label: "asd"))),
-      ));
+              customInputWidget: CustomInputWidget(
+                id: "id",
+                name: "name",
+                fullSize: true,
+                dataPoint: mockDataPoint,
+                customInputDisplayConentType:
+                    CustomInputDisplayConentType.noShow,
+                label: "asd",
+              ),
+            ),
+          ),
+        ),
+      );
       await tester.pump();
 
       expect(find.byType(TextField), findsOneWidget);
       expect(
-          (tester.widget<TextField>(find.byType(TextField)).decoration!.label
-                  as Text)
-              .data,
-          "asd");
+        (tester.widget<TextField>(find.byType(TextField)).decoration!.label
+                as Text)
+            .data,
+        "asd",
+      );
 
       await tester.pumpAndSettle();
     });
@@ -140,17 +163,20 @@ void main() {
       String value = "asdasd";
       when(mockDataPoint.value).thenReturn(value);
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomInputWidgetView(customInputWidget: customInputWidget),
+          ),
         ),
-      ));
+      );
       await tester.pump();
 
       expect(find.byType(TextField), findsOneWidget);
       expect(
-          tester.widget<TextField>(find.byType(TextField)).decoration!.hintText,
-          value);
+        tester.widget<TextField>(find.byType(TextField)).decoration!.hintText,
+        value,
+      );
 
       await tester.pumpAndSettle();
     });
@@ -161,21 +187,20 @@ void main() {
       String value = "asdasd";
       when(mockDataPoint.value).thenReturn(value);
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomInputWidgetView(customInputWidget: customInputWidget),
+          ),
         ),
-      ));
+      );
       await tester.pump();
 
       expect(find.byType(TextField), findsOneWidget);
       expect(
-          tester
-              .widget<TextField>(find.byType(TextField))
-              .controller!
-              .value
-              .text,
-          value);
+        tester.widget<TextField>(find.byType(TextField)).controller!.value.text,
+        value,
+      );
 
       await tester.pumpAndSettle();
     });
@@ -185,24 +210,25 @@ void main() {
           CustomInputDisplayConentType.noShow;
       String value = "asdasd";
       when(mockDataPoint.value).thenReturn(value);
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomInputWidgetView(customInputWidget: customInputWidget),
+          ),
         ),
-      ));
+      );
       await tester.pump();
 
       expect(find.byType(TextField), findsOneWidget);
       expect(
-          tester
-              .widget<TextField>(find.byType(TextField))
-              .controller!
-              .value
-              .text,
-          "");
+        tester.widget<TextField>(find.byType(TextField)).controller!.value.text,
+        "",
+      );
 
-      expect(tester.widget<TextField>(find.byType(TextField)).decoration!.label,
-          null);
+      expect(
+        tester.widget<TextField>(find.byType(TextField)).decoration!.label,
+        null,
+      );
 
       await tester.pumpAndSettle();
     });
@@ -213,11 +239,13 @@ void main() {
           CustomInputSendMethod.onSubmitted;
       when(mockDataPointState.value).thenReturn("home");
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomInputWidgetView(customInputWidget: customInputWidget),
+          ),
         ),
-      ));
+      );
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();
       verifyNever(mockDataPoint.value = "text");
@@ -230,11 +258,13 @@ void main() {
       customInputWidget.customInputSendMethod = null;
       when(mockDataPointState.value).thenReturn("home");
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomInputWidgetView(customInputWidget: customInputWidget),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomInputWidgetView(customInputWidget: customInputWidget),
+          ),
         ),
-      ));
+      );
       await tester.enterText(find.byType(TextField), "text");
       await tester.pump();
       await tester.testTextInput.receiveAction(TextInputAction.done);

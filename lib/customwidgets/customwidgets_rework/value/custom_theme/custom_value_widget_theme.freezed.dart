@@ -12,10 +12,12 @@ part of 'custom_value_widget_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomValueWidgetTheme _$CustomValueWidgetThemeFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomValueWidgetTheme.fromJson(json);
 }
 
@@ -49,23 +51,27 @@ mixin _$CustomValueWidgetTheme {
 
 /// @nodoc
 abstract class $CustomValueWidgetThemeCopyWith<$Res> {
-  factory $CustomValueWidgetThemeCopyWith(CustomValueWidgetTheme value,
-          $Res Function(CustomValueWidgetTheme) then) =
-      _$CustomValueWidgetThemeCopyWithImpl<$Res, CustomValueWidgetTheme>;
+  factory $CustomValueWidgetThemeCopyWith(
+    CustomValueWidgetTheme value,
+    $Res Function(CustomValueWidgetTheme) then,
+  ) = _$CustomValueWidgetThemeCopyWithImpl<$Res, CustomValueWidgetTheme>;
   @useResult
-  $Res call(
-      {String id,
-      LabelTheme labelTheme,
-      @MaterialColorConverter() Color? valueTextColor,
-      double? valueTextFonSize,
-      @FontWeightConverter() FontWeight? valueTextFontWeight});
+  $Res call({
+    String id,
+    LabelTheme labelTheme,
+    @MaterialColorConverter() Color? valueTextColor,
+    double? valueTextFonSize,
+    @FontWeightConverter() FontWeight? valueTextFontWeight,
+  });
 
   $LabelThemeCopyWith<$Res> get labelTheme;
 }
 
 /// @nodoc
-class _$CustomValueWidgetThemeCopyWithImpl<$Res,
-        $Val extends CustomValueWidgetTheme>
+class _$CustomValueWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomValueWidgetTheme
+>
     implements $CustomValueWidgetThemeCopyWith<$Res> {
   _$CustomValueWidgetThemeCopyWithImpl(this._value, this._then);
 
@@ -85,28 +91,31 @@ class _$CustomValueWidgetThemeCopyWithImpl<$Res,
     Object? valueTextFonSize = freezed,
     Object? valueTextFontWeight = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      labelTheme: null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-      valueTextColor: freezed == valueTextColor
-          ? _value.valueTextColor
-          : valueTextColor // ignore: cast_nullable_to_non_nullable
-              as Color?,
-      valueTextFonSize: freezed == valueTextFonSize
-          ? _value.valueTextFonSize
-          : valueTextFonSize // ignore: cast_nullable_to_non_nullable
-              as double?,
-      valueTextFontWeight: freezed == valueTextFontWeight
-          ? _value.valueTextFontWeight
-          : valueTextFontWeight // ignore: cast_nullable_to_non_nullable
-              as FontWeight?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+            valueTextColor: freezed == valueTextColor
+                ? _value.valueTextColor
+                : valueTextColor // ignore: cast_nullable_to_non_nullable
+                      as Color?,
+            valueTextFonSize: freezed == valueTextFonSize
+                ? _value.valueTextFonSize
+                : valueTextFonSize // ignore: cast_nullable_to_non_nullable
+                      as double?,
+            valueTextFontWeight: freezed == valueTextFontWeight
+                ? _value.valueTextFontWeight
+                : valueTextFontWeight // ignore: cast_nullable_to_non_nullable
+                      as FontWeight?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomValueWidgetTheme
@@ -124,17 +133,18 @@ class _$CustomValueWidgetThemeCopyWithImpl<$Res,
 abstract class _$$CustomValueWidgetThemeImplCopyWith<$Res>
     implements $CustomValueWidgetThemeCopyWith<$Res> {
   factory _$$CustomValueWidgetThemeImplCopyWith(
-          _$CustomValueWidgetThemeImpl value,
-          $Res Function(_$CustomValueWidgetThemeImpl) then) =
-      __$$CustomValueWidgetThemeImplCopyWithImpl<$Res>;
+    _$CustomValueWidgetThemeImpl value,
+    $Res Function(_$CustomValueWidgetThemeImpl) then,
+  ) = __$$CustomValueWidgetThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      LabelTheme labelTheme,
-      @MaterialColorConverter() Color? valueTextColor,
-      double? valueTextFonSize,
-      @FontWeightConverter() FontWeight? valueTextFontWeight});
+  $Res call({
+    String id,
+    LabelTheme labelTheme,
+    @MaterialColorConverter() Color? valueTextColor,
+    double? valueTextFonSize,
+    @FontWeightConverter() FontWeight? valueTextFontWeight,
+  });
 
   @override
   $LabelThemeCopyWith<$Res> get labelTheme;
@@ -142,13 +152,13 @@ abstract class _$$CustomValueWidgetThemeImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomValueWidgetThemeImplCopyWithImpl<$Res>
-    extends _$CustomValueWidgetThemeCopyWithImpl<$Res,
-        _$CustomValueWidgetThemeImpl>
+    extends
+        _$CustomValueWidgetThemeCopyWithImpl<$Res, _$CustomValueWidgetThemeImpl>
     implements _$$CustomValueWidgetThemeImplCopyWith<$Res> {
   __$$CustomValueWidgetThemeImplCopyWithImpl(
-      _$CustomValueWidgetThemeImpl _value,
-      $Res Function(_$CustomValueWidgetThemeImpl) _then)
-      : super(_value, _then);
+    _$CustomValueWidgetThemeImpl _value,
+    $Res Function(_$CustomValueWidgetThemeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomValueWidgetTheme
   /// with the given fields replaced by the non-null parameter values.
@@ -161,28 +171,30 @@ class __$$CustomValueWidgetThemeImplCopyWithImpl<$Res>
     Object? valueTextFonSize = freezed,
     Object? valueTextFontWeight = freezed,
   }) {
-    return _then(_$CustomValueWidgetThemeImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-      freezed == valueTextColor
-          ? _value.valueTextColor
-          : valueTextColor // ignore: cast_nullable_to_non_nullable
-              as Color?,
-      freezed == valueTextFonSize
-          ? _value.valueTextFonSize
-          : valueTextFonSize // ignore: cast_nullable_to_non_nullable
-              as double?,
-      freezed == valueTextFontWeight
-          ? _value.valueTextFontWeight
-          : valueTextFontWeight // ignore: cast_nullable_to_non_nullable
-              as FontWeight?,
-    ));
+    return _then(
+      _$CustomValueWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+        freezed == valueTextColor
+            ? _value.valueTextColor
+            : valueTextColor // ignore: cast_nullable_to_non_nullable
+                  as Color?,
+        freezed == valueTextFonSize
+            ? _value.valueTextFonSize
+            : valueTextFonSize // ignore: cast_nullable_to_non_nullable
+                  as double?,
+        freezed == valueTextFontWeight
+            ? _value.valueTextFontWeight
+            : valueTextFontWeight // ignore: cast_nullable_to_non_nullable
+                  as FontWeight?,
+      ),
+    );
   }
 }
 
@@ -190,12 +202,12 @@ class __$$CustomValueWidgetThemeImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomValueWidgetThemeImpl extends _CustomValueWidgetTheme {
   _$CustomValueWidgetThemeImpl(
-      this.id,
-      this.labelTheme,
-      @MaterialColorConverter() this.valueTextColor,
-      this.valueTextFonSize,
-      @FontWeightConverter() this.valueTextFontWeight)
-      : super._();
+    this.id,
+    this.labelTheme,
+    @MaterialColorConverter() this.valueTextColor,
+    this.valueTextFonSize,
+    @FontWeightConverter() this.valueTextFontWeight,
+  ) : super._();
 
   factory _$CustomValueWidgetThemeImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomValueWidgetThemeImplFromJson(json);
@@ -224,26 +236,27 @@ class _$CustomValueWidgetThemeImpl extends _CustomValueWidgetTheme {
   @override
   @pragma('vm:prefer-inline')
   _$$CustomValueWidgetThemeImplCopyWith<_$CustomValueWidgetThemeImpl>
-      get copyWith => __$$CustomValueWidgetThemeImplCopyWithImpl<
-          _$CustomValueWidgetThemeImpl>(this, _$identity);
+  get copyWith =>
+      __$$CustomValueWidgetThemeImplCopyWithImpl<_$CustomValueWidgetThemeImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomValueWidgetThemeImplToJson(
-      this,
-    );
+    return _$$CustomValueWidgetThemeImplToJson(this);
   }
 }
 
 abstract class _CustomValueWidgetTheme extends CustomValueWidgetTheme
     implements CustomThemeForWidget {
   factory _CustomValueWidgetTheme(
-          String id,
-          LabelTheme labelTheme,
-          @MaterialColorConverter() Color? valueTextColor,
-          double? valueTextFonSize,
-          @FontWeightConverter() FontWeight? valueTextFontWeight) =
-      _$CustomValueWidgetThemeImpl;
+    String id,
+    LabelTheme labelTheme,
+    @MaterialColorConverter() Color? valueTextColor,
+    double? valueTextFonSize,
+    @FontWeightConverter() FontWeight? valueTextFontWeight,
+  ) = _$CustomValueWidgetThemeImpl;
   _CustomValueWidgetTheme._() : super._();
 
   factory _CustomValueWidgetTheme.fromJson(Map<String, dynamic> json) =
@@ -274,5 +287,5 @@ abstract class _CustomValueWidgetTheme extends CustomValueWidgetTheme
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomValueWidgetThemeImplCopyWith<_$CustomValueWidgetThemeImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -7,7 +7,7 @@ class ScreenView extends StatelessWidget {
   final Screen screen;
   final int numberOfRows;
   const ScreenView({Key? key, required this.screen, required this.numberOfRows})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +32,15 @@ class ScreenView extends StatelessWidget {
                 child: Column(
                   children: t.map((e) {
                     if (e is CustomWidgetWrapper) {
-                      return Card(
-                        child: e.widget,
-                      );
+                      return Card(child: e.widget);
                     } else if (e is CustomGroupWidget) {
-                      return Card(
-                        child: e.widget,
-                      );
+                      return Card(child: e.widget);
                     } else {
                       return const Text("Error 404");
                     }
                   }).toList(),
                 ),
-              )
+              ),
           ],
         );
       },

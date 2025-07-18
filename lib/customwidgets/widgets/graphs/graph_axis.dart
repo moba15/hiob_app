@@ -24,29 +24,31 @@ class GraphAxis {
   int scope = 1;
   UnitOfTime scopeUnit = UnitOfTime.hour;
 
-  GraphAxis(
-      {this.id,
-      this.description,
-      this.dataType,
-      this.color,
-      this.dataInterval,
-      this.max,
-      this.min,
-      this.timeAxisEnd = TimeAxisEnd.now,
-      this.scope = 1,
-      this.scopeUnit = UnitOfTime.hour});
+  GraphAxis({
+    this.id,
+    this.description,
+    this.dataType,
+    this.color,
+    this.dataInterval,
+    this.max,
+    this.min,
+    this.timeAxisEnd = TimeAxisEnd.now,
+    this.scope = 1,
+    this.scopeUnit = UnitOfTime.hour,
+  });
 
   GraphAxis clone() => GraphAxis(
-      description: description,
-      dataType: dataType,
-      dataInterval: dataInterval,
-      max: max,
-      min: min,
-      color: color,
-      id: id,
-      timeAxisEnd: timeAxisEnd,
-      scope: scope,
-      scopeUnit: scopeUnit);
+    description: description,
+    dataType: dataType,
+    dataInterval: dataInterval,
+    max: max,
+    min: min,
+    color: color,
+    id: id,
+    timeAxisEnd: timeAxisEnd,
+    scope: scope,
+    scopeUnit: scopeUnit,
+  );
 
   Map<String, dynamic> toJson() {
     return {
@@ -65,19 +67,23 @@ class GraphAxis {
 
   factory GraphAxis.fromJson(Map<String, dynamic> json) {
     return GraphAxis(
-        id: json["id"],
-        description: json["description"],
-        dataType: AxisDataType.values
-            .firstWhere((element) => element.toString() == json["dataType"]),
-        color: json["color"],
-        dataInterval: json["dataInterval"],
-        max: json["max"],
-        min: json["min"],
-        timeAxisEnd: TimeAxisEnd.values
-            .firstWhere((element) => element.toString() == json["timeAxisEnd"]),
-        scopeUnit: UnitOfTime.values
-            .firstWhere((element) => element.toString() == json["scopeUnit"]),
-        scope: json["scope"]);
+      id: json["id"],
+      description: json["description"],
+      dataType: AxisDataType.values.firstWhere(
+        (element) => element.toString() == json["dataType"],
+      ),
+      color: json["color"],
+      dataInterval: json["dataInterval"],
+      max: json["max"],
+      min: json["min"],
+      timeAxisEnd: TimeAxisEnd.values.firstWhere(
+        (element) => element.toString() == json["timeAxisEnd"],
+      ),
+      scopeUnit: UnitOfTime.values.firstWhere(
+        (element) => element.toString() == json["scopeUnit"],
+      ),
+      scope: json["scope"],
+    );
   }
 
   Map<String, DateTime> getStartEnd() {

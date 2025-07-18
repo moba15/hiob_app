@@ -11,7 +11,7 @@ import '../../../shapes/sldier/custom_slider_thumb_value.dart';
 class CustomLightWidgetView extends StatefulWidget {
   final CustomLightWidget customLightWidget;
   const CustomLightWidgetView({Key? key, required this.customLightWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<CustomLightWidgetView> createState() => _CustomLightWidgetViewState();
@@ -33,7 +33,8 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
         title: Text(name),
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Error Device Not Found")));
+            const SnackBar(content: Text("Error Device Not Found")),
+          );
         },
       );
     }
@@ -48,8 +49,12 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
           trailing: Switch(
             onChanged: (v) {
               currentValue = v;
-              onBloc.add(DataPointValueUpdateRequest(
-                  value: v, oldValue: state.value == true));
+              onBloc.add(
+                DataPointValueUpdateRequest(
+                  value: v,
+                  oldValue: state.value == true,
+                ),
+              );
               if (context.read<Manager>().generalManager.vibrateEnabled) {
                 //Vibrate.feedback(FeedbackType.light);
               }
@@ -58,26 +63,27 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
           ),
           title: Row(
             children: [
-              Flexible(
-                  child: Text(
-                name,
-                overflow: TextOverflow.clip,
-              )),
+              Flexible(child: Text(name, overflow: TextOverflow.clip)),
               if (onBloc.dataPoint.device?.getDeviceStatus() !=
                   DeviceStatus.ready)
                 const Flexible(
-                    child: Text(
-                  " U/A",
-                  style: TextStyle(color: Colors.red),
-                  overflow: TextOverflow.clip,
-                ))
+                  child: Text(
+                    " U/A",
+                    style: TextStyle(color: Colors.red),
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
             ],
           ),
           onLongPress: onTab,
           //subtitle: onBloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
           onTap: () {
-            onBloc.add(DataPointValueUpdateRequest(
-                value: !currentValue, oldValue: state.value == true));
+            onBloc.add(
+              DataPointValueUpdateRequest(
+                value: !currentValue,
+                oldValue: state.value == true,
+              ),
+            );
             if (context.read<Manager>().generalManager.vibrateEnabled) {
               //  Vibrate.feedback(FeedbackType.light);
             }
@@ -92,7 +98,8 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
       showDialog(
         context: context,
         builder: (context) => _CustomLightWidgetAlert(
-            customLightWidget: widget.customLightWidget),
+          customLightWidget: widget.customLightWidget,
+        ),
       );
     }
   }
@@ -101,7 +108,7 @@ class _CustomLightWidgetViewState extends State<CustomLightWidgetView> {
 class _CustomLightWidgetAlert extends StatefulWidget {
   final CustomLightWidget customLightWidget;
   const _CustomLightWidgetAlert({Key? key, required this.customLightWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<_CustomLightWidgetAlert> createState() =>
@@ -125,12 +132,15 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
       ),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context), child: const Text("Back"))
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Back"),
+        ),
       ],
       insetPadding: EdgeInsets.zero,
       contentPadding: const EdgeInsets.all(10),
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -140,58 +150,66 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
             child: Text(widget.customLightWidget.briDisplay),
           ),
           Container(
-              padding: EdgeInsets.zero,
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.zero,
-              width: double.infinity,
-              child: BlocBuilder<DataPointBloc, DataPointState>(
-                bloc: briBloc,
-                builder: (context, state) {
-                  return SliderTheme(
-                    data: SliderThemeData(
-                      thumbShape: CustomSliderThumbValueCircle(
-                          thumbRadius: 16,
-                          max: widget.customLightWidget.briMax,
-                          min: widget.customLightWidget.briMin),
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.zero,
+            width: double.infinity,
+            child: BlocBuilder<DataPointBloc, DataPointState>(
+              bloc: briBloc,
+              builder: (context, state) {
+                return SliderTheme(
+                  data: SliderThemeData(
+                    thumbShape: CustomSliderThumbValueCircle(
+                      thumbRadius: 16,
+                      max: widget.customLightWidget.briMax,
+                      min: widget.customLightWidget.briMin,
                     ),
-                    child: Slider(
-                      value: state.value != null
-                          ? briTemp?.toDouble() ?? (state.value)?.toDouble()
-                          : briTemp?.toDouble() ?? 0.0,
-                      label: (state.value != null
-                              ? briTemp?.round() ?? (state.value)?.round()
-                              : briTemp ?? 0)
-                          .toString(),
-                      divisions: widget.customLightWidget.briSteps,
-                      onChangeStart: (d) {
-                        setState(() {
-                          briTemp = d.round();
-                        });
-                      },
-                      onChanged: (d) {
-                        setState(() {
-                          briTemp = d.round();
-                        });
-                        // Vibrate.feedback(FeedbackType.light);
-                      },
-                      onChangeEnd: (d) => {
-                        briBloc.add(DataPointValueUpdateRequest(
-                            value: d.round(), oldValue: state.value)),
-                      },
-                      max: (state.value != null
-                                  ? briTemp?.toDouble() ??
+                  ),
+                  child: Slider(
+                    value: state.value != null
+                        ? briTemp?.toDouble() ?? (state.value)?.toDouble()
+                        : briTemp?.toDouble() ?? 0.0,
+                    label:
+                        (state.value != null
+                                ? briTemp?.round() ?? (state.value)?.round()
+                                : briTemp ?? 0)
+                            .toString(),
+                    divisions: widget.customLightWidget.briSteps,
+                    onChangeStart: (d) {
+                      setState(() {
+                        briTemp = d.round();
+                      });
+                    },
+                    onChanged: (d) {
+                      setState(() {
+                        briTemp = d.round();
+                      });
+                      // Vibrate.feedback(FeedbackType.light);
+                    },
+                    onChangeEnd: (d) => {
+                      briBloc.add(
+                        DataPointValueUpdateRequest(
+                          value: d.round(),
+                          oldValue: state.value,
+                        ),
+                      ),
+                    },
+                    max:
+                        (state.value != null
+                                ? briTemp?.toDouble() ??
                                       (state.value)?.toDouble()
-                                  : briTemp ?? 0) >
-                              widget.customLightWidget.briMax
-                          ? (state.value != null
+                                : briTemp ?? 0) >
+                            widget.customLightWidget.briMax
+                        ? (state.value != null
                               ? briTemp?.toDouble() ?? (state.value)?.toDouble()
                               : briTemp ?? 0)
-                          : widget.customLightWidget.briMax.toDouble(),
-                      min: widget.customLightWidget.briMin.toDouble(),
-                    ),
-                  );
-                },
-              )),
+                        : widget.customLightWidget.briMax.toDouble(),
+                    min: widget.customLightWidget.briMin.toDouble(),
+                  ),
+                );
+              },
+            ),
+          ),
           if (widget.customLightWidget.reachableDataPoint != null)
             BlocBuilder<DataPointBloc, DataPointState>(
               bloc: DataPointBloc(widget.customLightWidget.reachableDataPoint!),
@@ -201,7 +219,8 @@ class _CustomLightWidgetAlertState extends State<_CustomLightWidgetAlert> {
                   trailing: Text(
                     state.value.toString(),
                     style: TextStyle(
-                        color: state.value == true ? Colors.green : Colors.red),
+                      color: state.value == true ? Colors.green : Colors.red,
+                    ),
                   ),
                   onTap: () => {},
                   leading: const Icon(Icons.wb_incandescent),

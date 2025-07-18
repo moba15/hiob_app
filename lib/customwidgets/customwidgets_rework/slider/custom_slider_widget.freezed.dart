@@ -12,7 +12,8 @@ part of 'custom_slider_widget.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomSliderWidget _$CustomSliderWidgetFromJson(Map<String, dynamic> json) {
   return _CustomSliderWidget.fromJson(json);
@@ -42,8 +43,8 @@ mixin _$CustomSliderWidget {
   CustomSliderWidgetUpdateStrategy? get customSliderWidgetUpdateStrategy =>
       throw _privateConstructorUsedError;
   set customSliderWidgetUpdateStrategy(
-          CustomSliderWidgetUpdateStrategy? value) =>
-      throw _privateConstructorUsedError;
+    CustomSliderWidgetUpdateStrategy? value,
+  ) => throw _privateConstructorUsedError;
   CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
   set customPopupmenu(CustomPopupmenu? value) =>
       throw _privateConstructorUsedError;
@@ -66,21 +67,23 @@ mixin _$CustomSliderWidget {
 /// @nodoc
 abstract class $CustomSliderWidgetCopyWith<$Res> {
   factory $CustomSliderWidgetCopyWith(
-          CustomSliderWidget value, $Res Function(CustomSliderWidget) then) =
-      _$CustomSliderWidgetCopyWithImpl<$Res, CustomSliderWidget>;
+    CustomSliderWidget value,
+    $Res Function(CustomSliderWidget) then,
+  ) = _$CustomSliderWidgetCopyWithImpl<$Res, CustomSliderWidget>;
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      int max,
-      int min,
-      int step,
-      CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? label,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    int max,
+    int min,
+    int step,
+    CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme,
+  });
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -112,53 +115,56 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      label: freezed == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      max: null == max
-          ? _value.max
-          : max // ignore: cast_nullable_to_non_nullable
-              as int,
-      min: null == min
-          ? _value.min
-          : min // ignore: cast_nullable_to_non_nullable
-              as int,
-      step: null == step
-          ? _value.step
-          : step // ignore: cast_nullable_to_non_nullable
-              as int,
-      customSliderWidgetUpdateStrategy: freezed ==
-              customSliderWidgetUpdateStrategy
-          ? _value.customSliderWidgetUpdateStrategy
-          : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
-              as CustomSliderWidgetUpdateStrategy?,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as CustomWidgetTypeDeprecated,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            label: freezed == label
+                ? _value.label
+                : label // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            dataPoint: freezed == dataPoint
+                ? _value.dataPoint
+                : dataPoint // ignore: cast_nullable_to_non_nullable
+                      as DataPoint?,
+            max: null == max
+                ? _value.max
+                : max // ignore: cast_nullable_to_non_nullable
+                      as int,
+            min: null == min
+                ? _value.min
+                : min // ignore: cast_nullable_to_non_nullable
+                      as int,
+            step: null == step
+                ? _value.step
+                : step // ignore: cast_nullable_to_non_nullable
+                      as int,
+            customSliderWidgetUpdateStrategy:
+                freezed == customSliderWidgetUpdateStrategy
+                ? _value.customSliderWidgetUpdateStrategy
+                : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
+                      as CustomSliderWidgetUpdateStrategy?,
+            customPopupmenu: freezed == customPopupmenu
+                ? _value.customPopupmenu
+                : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                      as CustomPopupmenu?,
+            customTheme: freezed == customTheme
+                ? _value.customTheme
+                : customTheme // ignore: cast_nullable_to_non_nullable
+                      as CustomThemeForWidget?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomSliderWidget
@@ -179,23 +185,25 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
 /// @nodoc
 abstract class _$$CustomSliderWidgetImplCopyWith<$Res>
     implements $CustomSliderWidgetCopyWith<$Res> {
-  factory _$$CustomSliderWidgetImplCopyWith(_$CustomSliderWidgetImpl value,
-          $Res Function(_$CustomSliderWidgetImpl) then) =
-      __$$CustomSliderWidgetImplCopyWithImpl<$Res>;
+  factory _$$CustomSliderWidgetImplCopyWith(
+    _$CustomSliderWidgetImpl value,
+    $Res Function(_$CustomSliderWidgetImpl) then,
+  ) = __$$CustomSliderWidgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      int max,
-      int min,
-      int step,
-      CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? label,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    int max,
+    int min,
+    int step,
+    CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme,
+  });
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -205,9 +213,10 @@ abstract class _$$CustomSliderWidgetImplCopyWith<$Res>
 class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
     extends _$CustomSliderWidgetCopyWithImpl<$Res, _$CustomSliderWidgetImpl>
     implements _$$CustomSliderWidgetImplCopyWith<$Res> {
-  __$$CustomSliderWidgetImplCopyWithImpl(_$CustomSliderWidgetImpl _value,
-      $Res Function(_$CustomSliderWidgetImpl) _then)
-      : super(_value, _then);
+  __$$CustomSliderWidgetImplCopyWithImpl(
+    _$CustomSliderWidgetImpl _value,
+    $Res Function(_$CustomSliderWidgetImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomSliderWidget
   /// with the given fields replaced by the non-null parameter values.
@@ -226,73 +235,75 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_$CustomSliderWidgetImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      label: freezed == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      max: null == max
-          ? _value.max
-          : max // ignore: cast_nullable_to_non_nullable
-              as int,
-      min: null == min
-          ? _value.min
-          : min // ignore: cast_nullable_to_non_nullable
-              as int,
-      step: null == step
-          ? _value.step
-          : step // ignore: cast_nullable_to_non_nullable
-              as int,
-      customSliderWidgetUpdateStrategy: freezed ==
-              customSliderWidgetUpdateStrategy
-          ? _value.customSliderWidgetUpdateStrategy
-          : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
-              as CustomSliderWidgetUpdateStrategy?,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ));
+    return _then(
+      _$CustomSliderWidgetImpl(
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as CustomWidgetTypeDeprecated,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        label: freezed == label
+            ? _value.label
+            : label // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        dataPoint: freezed == dataPoint
+            ? _value.dataPoint
+            : dataPoint // ignore: cast_nullable_to_non_nullable
+                  as DataPoint?,
+        max: null == max
+            ? _value.max
+            : max // ignore: cast_nullable_to_non_nullable
+                  as int,
+        min: null == min
+            ? _value.min
+            : min // ignore: cast_nullable_to_non_nullable
+                  as int,
+        step: null == step
+            ? _value.step
+            : step // ignore: cast_nullable_to_non_nullable
+                  as int,
+        customSliderWidgetUpdateStrategy:
+            freezed == customSliderWidgetUpdateStrategy
+            ? _value.customSliderWidgetUpdateStrategy
+            : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
+                  as CustomSliderWidgetUpdateStrategy?,
+        customPopupmenu: freezed == customPopupmenu
+            ? _value.customPopupmenu
+            : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                  as CustomPopupmenu?,
+        customTheme: freezed == customTheme
+            ? _value.customTheme
+            : customTheme // ignore: cast_nullable_to_non_nullable
+                  as CustomThemeForWidget?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
-  _$CustomSliderWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.slider,
-      required this.id,
-      required this.name,
-      this.label,
-      @DataPointIdConverter() required this.dataPoint,
-      this.max = 100,
-      this.min = 0,
-      this.step = 10,
-      this.customSliderWidgetUpdateStrategy =
-          CustomSliderWidgetUpdateStrategy.onFinish,
-      this.customPopupmenu,
-      @_CustomSliderThemeConverter() this.customTheme})
-      : super._();
+  _$CustomSliderWidgetImpl({
+    this.type = CustomWidgetTypeDeprecated.slider,
+    required this.id,
+    required this.name,
+    this.label,
+    @DataPointIdConverter() required this.dataPoint,
+    this.max = 100,
+    this.min = 0,
+    this.step = 10,
+    this.customSliderWidgetUpdateStrategy =
+        CustomSliderWidgetUpdateStrategy.onFinish,
+    this.customPopupmenu,
+    @_CustomSliderThemeConverter() this.customTheme,
+  }) : super._();
 
   factory _$CustomSliderWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomSliderWidgetImplFromJson(json);
@@ -339,31 +350,31 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
   @pragma('vm:prefer-inline')
   _$$CustomSliderWidgetImplCopyWith<_$CustomSliderWidgetImpl> get copyWith =>
       __$$CustomSliderWidgetImplCopyWithImpl<_$CustomSliderWidgetImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomSliderWidgetImplToJson(
-      this,
-    );
+    return _$$CustomSliderWidgetImplToJson(this);
   }
 }
 
 abstract class _CustomSliderWidget extends CustomSliderWidget
     implements CustomWidget {
-  factory _CustomSliderWidget(
-          {CustomWidgetTypeDeprecated type,
-          required String id,
-          required String name,
-          String? label,
-          @DataPointIdConverter() required DataPoint? dataPoint,
-          int max,
-          int min,
-          int step,
-          CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
-          CustomPopupmenu? customPopupmenu,
-          @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme}) =
-      _$CustomSliderWidgetImpl;
+  factory _CustomSliderWidget({
+    CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    String? label,
+    @DataPointIdConverter() required DataPoint? dataPoint,
+    int max,
+    int min,
+    int step,
+    CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme,
+  }) = _$CustomSliderWidgetImpl;
   _CustomSliderWidget._() : super._();
 
   factory _CustomSliderWidget.fromJson(Map<String, dynamic> json) =

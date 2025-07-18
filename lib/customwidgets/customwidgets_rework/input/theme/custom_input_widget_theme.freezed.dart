@@ -12,10 +12,12 @@ part of 'custom_input_widget_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomInputWidgetTheme _$CustomInputWidgetThemeFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomInputWidgetTheme.fromJson(json);
 }
 
@@ -38,9 +40,10 @@ mixin _$CustomInputWidgetTheme {
 
 /// @nodoc
 abstract class $CustomInputWidgetThemeCopyWith<$Res> {
-  factory $CustomInputWidgetThemeCopyWith(CustomInputWidgetTheme value,
-          $Res Function(CustomInputWidgetTheme) then) =
-      _$CustomInputWidgetThemeCopyWithImpl<$Res, CustomInputWidgetTheme>;
+  factory $CustomInputWidgetThemeCopyWith(
+    CustomInputWidgetTheme value,
+    $Res Function(CustomInputWidgetTheme) then,
+  ) = _$CustomInputWidgetThemeCopyWithImpl<$Res, CustomInputWidgetTheme>;
   @useResult
   $Res call({String id, LabelTheme labelTheme});
 
@@ -48,8 +51,10 @@ abstract class $CustomInputWidgetThemeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomInputWidgetThemeCopyWithImpl<$Res,
-        $Val extends CustomInputWidgetTheme>
+class _$CustomInputWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomInputWidgetTheme
+>
     implements $CustomInputWidgetThemeCopyWith<$Res> {
   _$CustomInputWidgetThemeCopyWithImpl(this._value, this._then);
 
@@ -62,20 +67,20 @@ class _$CustomInputWidgetThemeCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      labelTheme: null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ) as $Val);
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomInputWidgetTheme
@@ -93,9 +98,9 @@ class _$CustomInputWidgetThemeCopyWithImpl<$Res,
 abstract class _$$CustomInputWidgetThemeImplCopyWith<$Res>
     implements $CustomInputWidgetThemeCopyWith<$Res> {
   factory _$$CustomInputWidgetThemeImplCopyWith(
-          _$CustomInputWidgetThemeImpl value,
-          $Res Function(_$CustomInputWidgetThemeImpl) then) =
-      __$$CustomInputWidgetThemeImplCopyWithImpl<$Res>;
+    _$CustomInputWidgetThemeImpl value,
+    $Res Function(_$CustomInputWidgetThemeImpl) then,
+  ) = __$$CustomInputWidgetThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, LabelTheme labelTheme});
@@ -106,32 +111,31 @@ abstract class _$$CustomInputWidgetThemeImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomInputWidgetThemeImplCopyWithImpl<$Res>
-    extends _$CustomInputWidgetThemeCopyWithImpl<$Res,
-        _$CustomInputWidgetThemeImpl>
+    extends
+        _$CustomInputWidgetThemeCopyWithImpl<$Res, _$CustomInputWidgetThemeImpl>
     implements _$$CustomInputWidgetThemeImplCopyWith<$Res> {
   __$$CustomInputWidgetThemeImplCopyWithImpl(
-      _$CustomInputWidgetThemeImpl _value,
-      $Res Function(_$CustomInputWidgetThemeImpl) _then)
-      : super(_value, _then);
+    _$CustomInputWidgetThemeImpl _value,
+    $Res Function(_$CustomInputWidgetThemeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomInputWidgetTheme
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_$CustomInputWidgetThemeImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ));
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomInputWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
   }
 }
 
@@ -159,14 +163,15 @@ class _$CustomInputWidgetThemeImpl extends _CustomInputWidgetTheme {
   @override
   @pragma('vm:prefer-inline')
   _$$CustomInputWidgetThemeImplCopyWith<_$CustomInputWidgetThemeImpl>
-      get copyWith => __$$CustomInputWidgetThemeImplCopyWithImpl<
-          _$CustomInputWidgetThemeImpl>(this, _$identity);
+  get copyWith =>
+      __$$CustomInputWidgetThemeImplCopyWithImpl<_$CustomInputWidgetThemeImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomInputWidgetThemeImplToJson(
-      this,
-    );
+    return _$$CustomInputWidgetThemeImplToJson(this);
   }
 }
 
@@ -191,5 +196,5 @@ abstract class _CustomInputWidgetTheme extends CustomInputWidgetTheme
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomInputWidgetThemeImplCopyWith<_$CustomInputWidgetThemeImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

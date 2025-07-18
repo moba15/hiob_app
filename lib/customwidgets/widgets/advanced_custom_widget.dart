@@ -21,42 +21,46 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
   String? subTitle;
   DataPoint? subTitleDataPoint;
 
-  CustomAlertDialogWidget? customAlertDialogWidget =
-      CustomAlertDialogWidget(name: "", title: "");
+  CustomAlertDialogWidget? customAlertDialogWidget = CustomAlertDialogWidget(
+    name: "",
+    title: "",
+  );
 
-  AdvancedCustomWidget(
-      {required name,
-      this.value,
-      this.mainBody,
-      this.subTitle,
-      this.subTitleDataPoint,
-      this.bodyIconID,
-      this.customAlertDialogWidget})
-      : super(
-            name: name,
-            type: CustomWidgetTypeDeprecated.advanced,
-            settings: {});
+  AdvancedCustomWidget({
+    required name,
+    this.value,
+    this.mainBody,
+    this.subTitle,
+    this.subTitleDataPoint,
+    this.bodyIconID,
+    this.customAlertDialogWidget,
+  }) : super(
+         name: name,
+         type: CustomWidgetTypeDeprecated.advanced,
+         settings: {},
+       );
 
   AdvancedCustomWidget.edit()
-      : super.edit(type: CustomWidgetTypeDeprecated.advanced);
+    : super.edit(type: CustomWidgetTypeDeprecated.advanced);
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": CustomWidgetTypeDeprecated.advanced.toString(),
-        "mainBody": jsonEncode(mainBody?.toJson()),
-        "subTitle": subTitle,
-        "subTitleDataPoint": subTitleDataPoint?.id,
-        "name": name,
-        "value": value,
-        "bodyIconID": bodyIconID,
-        "customAlertDialogWidget": customAlertDialogWidget,
-      };
+    "type": CustomWidgetTypeDeprecated.advanced.toString(),
+    "mainBody": jsonEncode(mainBody?.toJson()),
+    "subTitle": subTitle,
+    "subTitleDataPoint": subTitleDataPoint?.id,
+    "name": name,
+    "value": value,
+    "bodyIconID": bodyIconID,
+    "customAlertDialogWidget": customAlertDialogWidget,
+  };
 
   factory AdvancedCustomWidget.fromJson(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["subTitleDataPoint"].toString());
     TriggerAction triggerAction = TriggerAction.fromJSON(
-        jsonDecode(json["bodyTriggerAction"] ?? (json["mainBody"] ?? "{}")));
+      jsonDecode(json["bodyTriggerAction"] ?? (json["mainBody"] ?? "{}")),
+    );
     return AdvancedCustomWidget(
       name: json["name"],
       subTitle: json["subTitle"],
@@ -65,34 +69,29 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
       value: json["value"],
       bodyIconID: json["bodyIconID"],
       customAlertDialogWidget: json["customAlertDialogWidget"] == null
-          ? CustomAlertDialogWidget(
-              name: "Not Set",
-            )
+          ? CustomAlertDialogWidget(name: "Not Set")
           : CustomAlertDialogWidget.fromJSON(json["customAlertDialogWidget"]),
     );
   }
   @override
   CustomWidgetSettingWidget get settingWidget {
-    return AdvancedWidgetSettings(
-      advancedCustomWidget: this,
-    );
+    return AdvancedWidgetSettings(advancedCustomWidget: this);
   }
 
   @override
-  Widget get widget => AdvancedWidgetView(
-        advancedCustomWidget: this,
-      );
+  Widget get widget => AdvancedWidgetView(advancedCustomWidget: this);
 
   @override
   CustomWidgetDeprecated clone() {
     return AdvancedCustomWidget(
-        name: name,
-        value: value,
-        mainBody: mainBody,
-        subTitle: subTitle,
-        subTitleDataPoint: subTitleDataPoint,
-        bodyIconID: bodyIconID,
-        customAlertDialogWidget: customAlertDialogWidget);
+      name: name,
+      value: value,
+      mainBody: mainBody,
+      subTitle: subTitle,
+      subTitleDataPoint: subTitleDataPoint,
+      bodyIconID: bodyIconID,
+      customAlertDialogWidget: customAlertDialogWidget,
+    );
   }
 
   @override
@@ -102,17 +101,18 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
       throw ErrorDescription("MainBody is null");
     }
     List<CustomWidget> popupWidgets = [];
-    customAlertDialogWidget?.templates?.forEach(
-      (element) {
-        if (element.settingWidget.deprecated) {
-          popupWidgets.add((element as CustomWidgetTemplate)
-              .customWidget
-              .migrate(id: element.id, name: element.name));
-        } else {
-          popupWidgets.add(element as CustomWidget);
-        }
-      },
-    );
+    customAlertDialogWidget?.templates?.forEach((element) {
+      if (element.settingWidget.deprecated) {
+        popupWidgets.add(
+          (element as CustomWidgetTemplate).customWidget.migrate(
+            id: element.id,
+            name: element.name,
+          ),
+        );
+      } else {
+        popupWidgets.add(element as CustomWidget);
+      }
+    });
     body.customPopupmenu = CustomPopupmenu(customWidgets: popupWidgets);
 
     return body;

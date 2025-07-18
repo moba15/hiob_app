@@ -8,8 +8,9 @@ part 'custom_theme_state.dart';
 class CustomThemeCubit extends Cubit<CustomThemeState> {
   final Manager manager;
   CustomThemeCubit({required this.manager})
-      : super(CustomThemeState(
-            customTheme: manager.themeManager.loadedCustomTheme));
+    : super(
+        CustomThemeState(customTheme: manager.themeManager.loadedCustomTheme),
+      );
 
   void loadTheme() async {
     manager.themeManager.stream.listen((event) {

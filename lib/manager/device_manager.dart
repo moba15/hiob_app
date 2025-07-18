@@ -20,8 +20,11 @@ class DeviceManager {
 
   List<DataPoint> possibleDataPoints = [];
 
-  DeviceManager(this.fileManager,
-      {required this.devicesList, required this.manager});
+  DeviceManager(
+    this.fileManager, {
+    required this.devicesList,
+    required this.manager,
+  });
 
   Future<List<Device>> loadDevices() async {
     if (loaded) {
@@ -31,10 +34,12 @@ class DeviceManager {
 
     List<dynamic>? l = await fileManager.getList(key);
 
-    developer.log("Devices Raw Loaded $l",
-        name: "de.bachmaiers/device_manager.dart",
-        time: DateTime.now(),
-        zone: Zone.current);
+    developer.log(
+      "Devices Raw Loaded $l",
+      name: "de.bachmaiers/device_manager.dart",
+      time: DateTime.now(),
+      zone: Zone.current,
+    );
     if (l == null) {
       loaded = true;
       devicesList = [];
@@ -63,9 +68,7 @@ class DeviceManager {
   }
 
   void sort() {
-    devicesList.sort(
-      (a, b) => a.name.compareTo(b.name),
-    );
+    devicesList.sort((a, b) => a.name.compareTo(b.name));
   }
 
   void reload() async {
@@ -129,8 +132,11 @@ class DeviceManager {
     }
     deviceListStreamController.add(devicesList);
     if (device.dataPoints != null && device.dataPoints!.isNotEmpty && send) {
-      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
-          dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+      manager.connectionManager.sendMsg(
+        SubscribeToDataPointsIobPackage(
+          dataPoints: device.dataPoints!.map((e) => e.id).toList(),
+        ),
+      );
     }
 
     return suc;
@@ -141,8 +147,11 @@ class DeviceManager {
     bool suc = await fileManager.writeJSONList(key, devicesList);
     deviceListStreamController.add(devicesList);
     if (device.dataPoints != null && device.dataPoints!.isNotEmpty && send) {
-      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
-          dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+      manager.connectionManager.sendMsg(
+        SubscribeToDataPointsIobPackage(
+          dataPoints: device.dataPoints!.map((e) => e.id).toList(),
+        ),
+      );
     }
 
     return suc;
@@ -173,8 +182,11 @@ class DeviceManager {
     }
     deviceListStreamController.add(devicesList);
     if (device.dataPoints != null && device.dataPoints!.isNotEmpty) {
-      manager.connectionManager.sendMsg(SubscribeToDataPointsIobPackage(
-          dataPoints: device.dataPoints!.map((e) => e.id).toList()));
+      manager.connectionManager.sendMsg(
+        SubscribeToDataPointsIobPackage(
+          dataPoints: device.dataPoints!.map((e) => e.id).toList(),
+        ),
+      );
     }
 
     return suc;
@@ -247,7 +259,8 @@ class DeviceManager {
         }
       }
     }
-    connectionManager
-        .sendMsg(SubscribeToDataPointsIobPackage(dataPoints: dataPoints));
+    connectionManager.sendMsg(
+      SubscribeToDataPointsIobPackage(dataPoints: dataPoints),
+    );
   }
 }

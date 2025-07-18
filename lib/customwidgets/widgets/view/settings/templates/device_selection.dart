@@ -14,17 +14,17 @@ class DeviceSelection extends StatefulWidget {
   final Device? selectedDevice;
   final DataPoint? selectedDataPoint;
   final String? preferredRole;
-  const DeviceSelection(
-      {Key? key,
-      required this.onDeviceSelected,
-      required this.onDataPointSelected,
-      required this.customWidgetManager,
-      this.deviceLabel = "Device",
-      this.dataPointLabel = "Datapoint",
-      this.selectedDataPoint,
-      this.selectedDevice,
-      this.preferredRole})
-      : super(key: key);
+  const DeviceSelection({
+    Key? key,
+    required this.onDeviceSelected,
+    required this.onDataPointSelected,
+    required this.customWidgetManager,
+    this.deviceLabel = "Device",
+    this.dataPointLabel = "Datapoint",
+    this.selectedDataPoint,
+    this.selectedDevice,
+    this.preferredRole,
+  }) : super(key: key);
 
   @override
   State<DeviceSelection> createState() => _DeviceSelectionState();
@@ -48,16 +48,18 @@ class _DeviceSelectionState extends State<DeviceSelection> {
         Expanded(
           child: DropdownSearch<Device>(
             popupProps: PopupProps.modalBottomSheet(
-                showSelectedItems: true,
-                title: Text(
-                  widget.deviceLabel,
-                  style: const TextStyle(fontSize: 17.5),
-                ),
-                showSearchBox: true,
-                isFilterOnline: false,
-                searchDelay: const Duration(seconds: 0),
-                modalBottomSheetProps: ModalBottomSheetProps(
-                    backgroundColor: Theme.of(context).colorScheme.surface)),
+              showSelectedItems: true,
+              title: Text(
+                widget.deviceLabel,
+                style: const TextStyle(fontSize: 17.5),
+              ),
+              showSearchBox: true,
+              isFilterOnline: false,
+              searchDelay: const Duration(seconds: 0),
+              modalBottomSheetProps: ModalBottomSheetProps(
+                backgroundColor: Theme.of(context).colorScheme.surface,
+              ),
+            ),
             //popupTitle: Text(widget.deviceLabel, style: const TextStyle(fontSize: 17.5),),
             items: widget.customWidgetManager.manager.deviceManager.devicesList,
             itemAsString: (e) => e.name,
@@ -95,14 +97,13 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             selectedItem: _currentDevice,
           ),
         ),
-        Container(
-          width: 10,
-        ),
+        Container(width: 10),
         Expanded(
           child: DropdownSearch<DataPoint>(
             popupProps: PopupProps.modalBottomSheet(
               modalBottomSheetProps: ModalBottomSheetProps(
-                  backgroundColor: Theme.of(context).colorScheme.surface),
+                backgroundColor: Theme.of(context).colorScheme.surface,
+              ),
               showSelectedItems: true,
               searchDelay: const Duration(seconds: 0),
               showSearchBox: true,
@@ -127,7 +128,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             },
             onChanged: (e) => {
               _currentDataPoint = e,
-              widget.onDataPointSelected(_currentDataPoint)
+              widget.onDataPointSelected(_currentDataPoint),
             },
             clearButtonProps: const ClearButtonProps(isVisible: true),
             filterFn: (d, s) {
@@ -144,7 +145,7 @@ class _DeviceSelectionState extends State<DeviceSelection> {
             showSearchBox: true,*/
             selectedItem: _currentDataPoint,
           ),
-        )
+        ),
       ],
     );
   }

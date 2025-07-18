@@ -11,7 +11,7 @@ import '../../../custom_widget.dart';
 class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   final CustomAlertDialogWidget customAlertDialogWidget;
   const AlertDialogSettings({Key? key, required this.customAlertDialogWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<AlertDialogSettings> createState() => _AlertDialogSettingsState();
@@ -41,8 +41,10 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
     return Column(
       children: [
         TextFormField(
-          decoration:
-              const InputDecoration(hintText: "Title", labelText: "Title"),
+          decoration: const InputDecoration(
+            hintText: "Title",
+            labelText: "Title",
+          ),
           initialValue: widget.customAlertDialogWidget.name,
           onChanged: (v) => {
             widget.customAlertDialogWidget.name = v,
@@ -103,29 +105,27 @@ class _AlertDialogSettingsState extends State<AlertDialogSettings> {
           ],
         ),
         ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (c) => TemplateAddPage(
-                            customWidgetManager:
-                                Manager.instance.customWidgetManager,
-                            onSave: (template) {
-                              setState(() {
-                                if (widget.customAlertDialogWidget.templates ==
-                                    null) {
-                                  widget.customAlertDialogWidget.templates = [
-                                    template
-                                  ];
-                                } else {
-                                  widget.customAlertDialogWidget.templates!
-                                      .add(template);
-                                }
-                              });
-                            },
-                          )));
-            },
-            child: const Text("Add Widget to Dialog"))
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (c) => TemplateAddPage(
+                  customWidgetManager: Manager.instance.customWidgetManager,
+                  onSave: (template) {
+                    setState(() {
+                      if (widget.customAlertDialogWidget.templates == null) {
+                        widget.customAlertDialogWidget.templates = [template];
+                      } else {
+                        widget.customAlertDialogWidget.templates!.add(template);
+                      }
+                    });
+                  },
+                ),
+              ),
+            );
+          },
+          child: const Text("Add Widget to Dialog"),
+        ),
       ],
     );
   }

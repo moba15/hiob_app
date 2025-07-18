@@ -19,7 +19,7 @@ import 'cutsom_button_widget_test.mocks.dart';
   MockSpec<DataPointBloc>(),
   MockSpec<DataPointState>(),
   MockSpec<Manager>(),
-  MockSpec<GeneralManager>()
+  MockSpec<GeneralManager>(),
 ])
 void main() {
   late CustomButtonWidget customButtonWidget;
@@ -35,11 +35,12 @@ void main() {
     mockGeneralManager = MockGeneralManager();
     mockDataPointState = MockDataPointState();
     customButtonWidget = CustomButtonWidget(
-        id: "id",
-        name: "name",
-        dataPoint: mockDataPoint,
-        label: "Label",
-        buttonLabel: "Button");
+      id: "id",
+      name: "name",
+      dataPoint: mockDataPoint,
+      label: "Label",
+      buttonLabel: "Button",
+    );
 
     when(mockDataPointBloc.dataPoint).thenReturn(mockDataPoint);
 
@@ -47,19 +48,25 @@ void main() {
     when(mockDataPoint.id).thenReturn("expected");
     when(mockManger.generalManager).thenReturn(mockGeneralManager);
     when(mockGeneralManager.vibrateEnabled).thenReturn(false);
-    when(mockDataPoint.valueStreamController)
-        .thenReturn(StreamController.broadcast());
+    when(
+      mockDataPoint.valueStreamController,
+    ).thenReturn(StreamController.broadcast());
   });
   group("Test basic", () {
     testWidgets("Test null datapoint", (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomButtonWidgetView(
-            customButtonWidget:
-                CustomButtonWidget(id: "id", name: "name", dataPoint: null),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomButtonWidgetView(
+              customButtonWidget: CustomButtonWidget(
+                id: "id",
+                name: "name",
+                dataPoint: null,
+              ),
+            ),
           ),
         ),
-      ));
+      );
 
       await tester.pump();
       expect(find.byType(OutlinedButton), findsNothing);
@@ -69,13 +76,15 @@ void main() {
     });
 
     testWidgets("Test button label", (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: CustomButtonWidgetView(
-            customButtonWidget: customButtonWidget,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomButtonWidgetView(
+              customButtonWidget: customButtonWidget,
+            ),
           ),
         ),
-      ));
+      );
 
       await tester.pump();
 
@@ -85,10 +94,11 @@ void main() {
       expect(find.text("Button"), findsOne);
       expect(find.text("Label"), findsOne);
       expect(
-          (tester.widget<OutlinedButton>(find.byType(OutlinedButton)).child!
-                  as Text)
-              .data,
-          "Button");
+        (tester.widget<OutlinedButton>(find.byType(OutlinedButton)).child!
+                as Text)
+            .data,
+        "Button",
+      );
 
       await tester.pumpAndSettle();
     });
@@ -96,18 +106,20 @@ void main() {
 
   group("Test interactions ", () {
     testWidgets("Test button press", (tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: RepositoryProvider<Manager>(
-            create: (context) {
-              return mockManger;
-            },
-            child: CustomButtonWidgetView(
-              customButtonWidget: customButtonWidget,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: RepositoryProvider<Manager>(
+              create: (context) {
+                return mockManger;
+              },
+              child: CustomButtonWidgetView(
+                customButtonWidget: customButtonWidget,
+              ),
             ),
           ),
         ),
-      ));
+      );
 
       await tester.pump();
 

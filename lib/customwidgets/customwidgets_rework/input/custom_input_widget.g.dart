@@ -7,51 +7,60 @@ part of 'custom_input_widget.dart';
 // **************************************************************************
 
 _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomInputWidgetImpl(
-      type: $enumDecodeNullable(
-              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.input,
-      id: json['id'] as String,
-      name: json['name'] as String,
-      label: json['label'] as String?,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
-      hintText: json['hintText'] as String?,
-      suffix: json['suffix'] as String?,
-      customPopupmenu: json['customPopupmenu'] == null
-          ? null
-          : CustomPopupmenu.fromJson(
-              json['customPopupmenu'] as Map<String, dynamic>),
-      customTheme: const _CustomInputThemeConverter()
-          .fromJson(json['customTheme'] as Map<String, dynamic>?),
-      customInputSendMethod: $enumDecodeNullable(
-          _$CustomInputSendMethodEnumMap, json['customInputSendMethod']),
-      customInputDisplayConentType: $enumDecodeNullable(
-          _$CustomInputDisplayConentTypeEnumMap,
-          json['customInputDisplayConentType']),
-      fullSize: json['fullSize'] as bool? ?? false,
-    );
+  Map<String, dynamic> json,
+) => _$CustomInputWidgetImpl(
+  type:
+      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+      CustomWidgetTypeDeprecated.input,
+  id: json['id'] as String,
+  name: json['name'] as String,
+  label: json['label'] as String?,
+  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
+    json['dataPoint'],
+    const DataPointIdConverter().fromJson,
+  ),
+  hintText: json['hintText'] as String?,
+  suffix: json['suffix'] as String?,
+  customPopupmenu: json['customPopupmenu'] == null
+      ? null
+      : CustomPopupmenu.fromJson(
+          json['customPopupmenu'] as Map<String, dynamic>,
+        ),
+  customTheme: const _CustomInputThemeConverter().fromJson(
+    json['customTheme'] as Map<String, dynamic>?,
+  ),
+  customInputSendMethod: $enumDecodeNullable(
+    _$CustomInputSendMethodEnumMap,
+    json['customInputSendMethod'],
+  ),
+  customInputDisplayConentType: $enumDecodeNullable(
+    _$CustomInputDisplayConentTypeEnumMap,
+    json['customInputDisplayConentType'],
+  ),
+  fullSize: json['fullSize'] as bool? ?? false,
+);
 
 Map<String, dynamic> _$$CustomInputWidgetImplToJson(
-        _$CustomInputWidgetImpl instance) =>
-    <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
-      'id': instance.id,
-      'name': instance.name,
-      'label': instance.label,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
-      'hintText': instance.hintText,
-      'suffix': instance.suffix,
-      'customPopupmenu': instance.customPopupmenu,
-      'customTheme':
-          const _CustomInputThemeConverter().toJson(instance.customTheme),
-      'customInputSendMethod':
-          _$CustomInputSendMethodEnumMap[instance.customInputSendMethod],
-      'customInputDisplayConentType': _$CustomInputDisplayConentTypeEnumMap[
-          instance.customInputDisplayConentType],
-      'fullSize': instance.fullSize,
-    };
+  _$CustomInputWidgetImpl instance,
+) => <String, dynamic>{
+  'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+  'id': instance.id,
+  'name': instance.name,
+  'label': instance.label,
+  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'hintText': instance.hintText,
+  'suffix': instance.suffix,
+  'customPopupmenu': instance.customPopupmenu,
+  'customTheme': const _CustomInputThemeConverter().toJson(
+    instance.customTheme,
+  ),
+  'customInputSendMethod':
+      _$CustomInputSendMethodEnumMap[instance.customInputSendMethod],
+  'customInputDisplayConentType':
+      _$CustomInputDisplayConentTypeEnumMap[instance
+          .customInputDisplayConentType],
+  'fullSize': instance.fullSize,
+};
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',
@@ -82,8 +91,7 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,
   Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+) => json == null ? null : fromJson(json as Json);
 
 const _$CustomInputSendMethodEnumMap = {
   CustomInputSendMethod.onSubmitted: 'onSubmitted',

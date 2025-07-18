@@ -14,56 +14,83 @@ class WidgetTemplateListBloc
   final CustomWidgetManager customWidgetManager;
   StreamSubscription? templateListSubscription;
   WidgetTemplateListBloc({required this.customWidgetManager})
-      : super(const WidgetTemplateListState(
-            templates: {},
-            status: ListStatus.loading,
-            toggleSelection: false)) {
+    : super(
+        const WidgetTemplateListState(
+          templates: {},
+          status: ListStatus.loading,
+          toggleSelection: false,
+        ),
+      ) {
     on<WidgetTemplateListToggleSelectionEvent>((event, emit) {
-      emit(WidgetTemplateListState(
+      emit(
+        WidgetTemplateListState(
           templates: state.templates,
           status: state.status,
-          toggleSelection: event.selection));
+          toggleSelection: event.selection,
+        ),
+      );
     });
 
     on<WidgetTemplateLoadedEvent>((event, emit) {
-      emit(WidgetTemplateListState(
-          templates:
-              Map.fromEntries(event.templates.map((e) => MapEntry(e, false))),
+      emit(
+        WidgetTemplateListState(
+          templates: Map.fromEntries(
+            event.templates.map((e) => MapEntry(e, false)),
+          ),
           status: ListStatus.success,
-          toggleSelection: state.toggleSelection));
+          toggleSelection: state.toggleSelection,
+        ),
+      );
     });
 
     on<WidgetTemplateToggleSelectEvent>(((event, emit) {
-      emit(WidgetTemplateListState(
+      emit(
+        WidgetTemplateListState(
           templates: state.templates,
           status: ListStatus.success,
-          toggleSelection: state.toggleSelection));
+          toggleSelection: state.toggleSelection,
+        ),
+      );
     }));
 
     on<WidgetTemplateDeletSelectedEvent>((event, emit) {
-      customWidgetManager.removeTemplates(state.templates.keys
-          .where((element) => state.templates[element] ?? false)
-          .toList());
-      emit(WidgetTemplateListState(
+      customWidgetManager.removeTemplates(
+        state.templates.keys
+            .where((element) => state.templates[element] ?? false)
+            .toList(),
+      );
+      emit(
+        WidgetTemplateListState(
           templates: Map.fromEntries(
-              customWidgetManager.templates.map((e) => MapEntry(e, false))),
+            customWidgetManager.templates.map((e) => MapEntry(e, false)),
+          ),
           status: ListStatus.success,
-          toggleSelection: false));
+          toggleSelection: false,
+        ),
+      );
     });
     on<WidgetTemplateCopySelectedEvent>((event, emit) {
-      customWidgetManager.copyTemplates(state.templates.keys
-          .where((element) => state.templates[element] ?? false)
-          .toList());
-      emit(WidgetTemplateListState(
+      customWidgetManager.copyTemplates(
+        state.templates.keys
+            .where((element) => state.templates[element] ?? false)
+            .toList(),
+      );
+      emit(
+        WidgetTemplateListState(
           templates: Map.fromEntries(
-              customWidgetManager.templates.map((e) => MapEntry(e, false))),
+            customWidgetManager.templates.map((e) => MapEntry(e, false)),
+          ),
           status: ListStatus.success,
-          toggleSelection: false));
+          toggleSelection: false,
+        ),
+      );
     });
-    templateListSubscription =
-        customWidgetManager.templatesStreamController.stream.listen((event) {
-      update(event);
-    });
+    templateListSubscription = customWidgetManager
+        .templatesStreamController
+        .stream
+        .listen((event) {
+          update(event);
+        });
   }
 
   @override

@@ -25,10 +25,13 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       deleteAllNotifications(emit);
     });
 
-    _streamSubscription =
-        Manager.instance.notificationManager.notificationStream.listen((event) {
-      add(NotificationsGetEvent());
-    });
+    _streamSubscription = Manager
+        .instance
+        .notificationManager
+        .notificationStream
+        .listen((event) {
+          add(NotificationsGetEvent());
+        });
   }
 
   @override
@@ -38,8 +41,11 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   void loadNotifications(Emitter<NotificationsState> emit) {
-    emit(NotificationsLoaded(
-        customNotification: NotificationManager.notificationsLog));
+    emit(
+      NotificationsLoaded(
+        customNotification: NotificationManager.notificationsLog,
+      ),
+    );
   }
 
   void readAllNotifications(Emitter<NotificationsState> emit) {
@@ -47,11 +53,15 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   void removeNotification(
-      NotificationsRemoveEvent event, Emitter<NotificationsState> emit) {
-    Manager.instance.notificationManager
-        .removeNotificationLog(index: event.index);
+    NotificationsRemoveEvent event,
+    Emitter<NotificationsState> emit,
+  ) {
+    Manager.instance.notificationManager.removeNotificationLog(
+      index: event.index,
+    );
     NotificationsLoaded newState = NotificationsLoaded(
-        customNotification: NotificationManager.notificationsLog);
+      customNotification: NotificationManager.notificationsLog,
+    );
     emit(newState);
   }
 

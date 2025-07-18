@@ -12,10 +12,12 @@ part of 'custom_switch_widget_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomSwitchWidgetTheme _$CustomSwitchWidgetThemeFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomSwitchWidgetTheme.fromJson(json);
 }
 
@@ -38,9 +40,10 @@ mixin _$CustomSwitchWidgetTheme {
 
 /// @nodoc
 abstract class $CustomSwitchWidgetThemeCopyWith<$Res> {
-  factory $CustomSwitchWidgetThemeCopyWith(CustomSwitchWidgetTheme value,
-          $Res Function(CustomSwitchWidgetTheme) then) =
-      _$CustomSwitchWidgetThemeCopyWithImpl<$Res, CustomSwitchWidgetTheme>;
+  factory $CustomSwitchWidgetThemeCopyWith(
+    CustomSwitchWidgetTheme value,
+    $Res Function(CustomSwitchWidgetTheme) then,
+  ) = _$CustomSwitchWidgetThemeCopyWithImpl<$Res, CustomSwitchWidgetTheme>;
   @useResult
   $Res call({String id, LabelTheme labelTheme});
 
@@ -48,8 +51,10 @@ abstract class $CustomSwitchWidgetThemeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomSwitchWidgetThemeCopyWithImpl<$Res,
-        $Val extends CustomSwitchWidgetTheme>
+class _$CustomSwitchWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomSwitchWidgetTheme
+>
     implements $CustomSwitchWidgetThemeCopyWith<$Res> {
   _$CustomSwitchWidgetThemeCopyWithImpl(this._value, this._then);
 
@@ -62,20 +67,20 @@ class _$CustomSwitchWidgetThemeCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      labelTheme: null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ) as $Val);
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomSwitchWidgetTheme
@@ -93,9 +98,9 @@ class _$CustomSwitchWidgetThemeCopyWithImpl<$Res,
 abstract class _$$CustomSwitchWidgetThemeImplCopyWith<$Res>
     implements $CustomSwitchWidgetThemeCopyWith<$Res> {
   factory _$$CustomSwitchWidgetThemeImplCopyWith(
-          _$CustomSwitchWidgetThemeImpl value,
-          $Res Function(_$CustomSwitchWidgetThemeImpl) then) =
-      __$$CustomSwitchWidgetThemeImplCopyWithImpl<$Res>;
+    _$CustomSwitchWidgetThemeImpl value,
+    $Res Function(_$CustomSwitchWidgetThemeImpl) then,
+  ) = __$$CustomSwitchWidgetThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, LabelTheme labelTheme});
@@ -106,32 +111,34 @@ abstract class _$$CustomSwitchWidgetThemeImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomSwitchWidgetThemeImplCopyWithImpl<$Res>
-    extends _$CustomSwitchWidgetThemeCopyWithImpl<$Res,
-        _$CustomSwitchWidgetThemeImpl>
+    extends
+        _$CustomSwitchWidgetThemeCopyWithImpl<
+          $Res,
+          _$CustomSwitchWidgetThemeImpl
+        >
     implements _$$CustomSwitchWidgetThemeImplCopyWith<$Res> {
   __$$CustomSwitchWidgetThemeImplCopyWithImpl(
-      _$CustomSwitchWidgetThemeImpl _value,
-      $Res Function(_$CustomSwitchWidgetThemeImpl) _then)
-      : super(_value, _then);
+    _$CustomSwitchWidgetThemeImpl _value,
+    $Res Function(_$CustomSwitchWidgetThemeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomSwitchWidgetTheme
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_$CustomSwitchWidgetThemeImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ));
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomSwitchWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
   }
 }
 
@@ -159,14 +166,14 @@ class _$CustomSwitchWidgetThemeImpl extends _CustomSwitchWidgetTheme {
   @override
   @pragma('vm:prefer-inline')
   _$$CustomSwitchWidgetThemeImplCopyWith<_$CustomSwitchWidgetThemeImpl>
-      get copyWith => __$$CustomSwitchWidgetThemeImplCopyWithImpl<
-          _$CustomSwitchWidgetThemeImpl>(this, _$identity);
+  get copyWith =>
+      __$$CustomSwitchWidgetThemeImplCopyWithImpl<
+        _$CustomSwitchWidgetThemeImpl
+      >(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomSwitchWidgetThemeImplToJson(
-      this,
-    );
+    return _$$CustomSwitchWidgetThemeImplToJson(this);
   }
 }
 
@@ -191,5 +198,5 @@ abstract class _CustomSwitchWidgetTheme extends CustomSwitchWidgetTheme
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomSwitchWidgetThemeImplCopyWith<_$CustomSwitchWidgetThemeImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

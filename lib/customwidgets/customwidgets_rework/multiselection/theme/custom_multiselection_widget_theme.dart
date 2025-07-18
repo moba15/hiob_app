@@ -11,10 +11,8 @@ part 'custom_multiselection_widget_theme.g.dart';
 class CustomMultiselectionWidgetTheme with _$CustomMultiselectionWidgetTheme {
   CustomMultiselectionWidgetTheme._();
   @Implements<CustomThemeForWidget>()
-  factory CustomMultiselectionWidgetTheme(
-    String id,
-    LabelTheme labelTheme,
-  ) = _CustomMultiselectionWidgetTheme;
+  factory CustomMultiselectionWidgetTheme(String id, LabelTheme labelTheme) =
+      _CustomMultiselectionWidgetTheme;
 
   Widget get settingWidget {
     return labelTheme.settingWidget;

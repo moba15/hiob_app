@@ -21,20 +21,21 @@ class GraphLine {
   String? yAxisId;
   int? minInterval;
 
-  GraphLine(
-      {this.name,
-      this.type,
-      this.dataPoint,
-      this.color,
-      this.showDataDots,
-      this.background,
-      this.backgroundOpacity,
-      this.data,
-      this.xAxis,
-      this.yAxis,
-      this.xAxisId,
-      this.yAxisId,
-      this.minInterval});
+  GraphLine({
+    this.name,
+    this.type,
+    this.dataPoint,
+    this.color,
+    this.showDataDots,
+    this.background,
+    this.backgroundOpacity,
+    this.data,
+    this.xAxis,
+    this.yAxis,
+    this.xAxisId,
+    this.yAxisId,
+    this.minInterval,
+  });
 
   void getData(int from, int to) {}
 
@@ -52,19 +53,20 @@ class GraphLine {
 
   GraphLine clone() {
     return GraphLine(
-        name: name,
-        type: type,
-        color: color,
-        data: data,
-        dataPoint: dataPoint,
-        background: background,
-        backgroundOpacity: backgroundOpacity,
-        showDataDots: showDataDots,
-        xAxis: xAxis,
-        yAxis: yAxis,
-        xAxisId: xAxisId,
-        yAxisId: yAxisId,
-        minInterval: minInterval);
+      name: name,
+      type: type,
+      color: color,
+      data: data,
+      dataPoint: dataPoint,
+      background: background,
+      backgroundOpacity: backgroundOpacity,
+      showDataDots: showDataDots,
+      xAxis: xAxis,
+      yAxis: yAxis,
+      xAxisId: xAxisId,
+      yAxisId: yAxisId,
+      minInterval: minInterval,
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -84,11 +86,15 @@ class GraphLine {
   }
 
   factory GraphLine.fromJson(
-      Map<String, dynamic> json, List<GraphAxis> xAxes, List<GraphAxis> yAxes) {
+    Map<String, dynamic> json,
+    List<GraphAxis> xAxes,
+    List<GraphAxis> yAxes,
+  ) {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
-    if (!GraphLineType.values
-        .any((element) => element.toString() == json["type"])) {
+    if (!GraphLineType.values.any(
+      (element) => element.toString() == json["type"],
+    )) {
       json["type"] = GraphLineType.normal.toString();
     }
     String? yAxisId = json["yAxis"];
@@ -104,20 +110,22 @@ class GraphLine {
       yAxis = yAxes.firstWhere((element) => element.id == yAxisId);
     }
     return GraphLine(
-        minInterval: json["minInterval"],
-        name: json["name"],
-        type: GraphLineType.values
-            .firstWhere((element) => element.toString() == json["type"]),
-        color: json["color"],
-        data: json["data"],
-        dataPoint: dataPoint,
-        background: json["background"],
-        backgroundOpacity: json["backgroundOpacity"],
-        yAxisId: json["yAxis"],
-        xAxis: xAxis,
-        yAxis: yAxis,
-        xAxisId: json["xAxis"],
-        showDataDots: json["showDataDots"]);
+      minInterval: json["minInterval"],
+      name: json["name"],
+      type: GraphLineType.values.firstWhere(
+        (element) => element.toString() == json["type"],
+      ),
+      color: json["color"],
+      data: json["data"],
+      dataPoint: dataPoint,
+      background: json["background"],
+      backgroundOpacity: json["backgroundOpacity"],
+      yAxisId: json["yAxis"],
+      xAxis: xAxis,
+      yAxis: yAxis,
+      xAxisId: json["xAxis"],
+      showDataDots: json["showDataDots"],
+    );
   }
 
   Map<String, DateTime> getStartEnd(GraphWidget graphWidget) {
@@ -141,10 +149,11 @@ class GraphLine {
       DateTime start = startEndMap["start"];
       DateTime end = startEndMap["end"];
       Manager.instance.historyManager.subscribeToHistorySmart(
-          dataPoint!,
-          start.millisecondsSinceEpoch,
-          end.millisecondsSinceEpoch,
-          minInterval ?? 0);
+        dataPoint!,
+        start.millisecondsSinceEpoch,
+        end.millisecondsSinceEpoch,
+        minInterval ?? 0,
+      );
     }
   }
 }

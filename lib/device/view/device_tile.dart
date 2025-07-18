@@ -14,8 +14,9 @@ class DeviceTileApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => DeviceBloc(device, t: device.lastUpdated),
-        child: const DeviceTile());
+      create: (_) => DeviceBloc(device, t: device.lastUpdated),
+      child: const DeviceTile(),
+    );
   }
 }
 
@@ -24,8 +25,9 @@ class DeviceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lastUpdated =
-        context.select((DeviceBloc bloc) => bloc.state.lastUpdated);
+    final lastUpdated = context.select(
+      (DeviceBloc bloc) => bloc.state.lastUpdated,
+    );
 
     final status = context.select((DeviceBloc bloc) => bloc.state.status);
     final device = context.select((DeviceBloc bloc) => bloc.device);
@@ -36,28 +38,26 @@ class DeviceTile extends StatelessWidget {
           ? Text("${device.name} (IoBroker)")
           : Text("${device.name} "),
       trailing: status == DeviceStatus.ready
-          ? const Icon(
-              Icons.signal_cellular_4_bar,
-              color: Colors.green,
-            )
-          : const Icon(
-              Icons.signal_cellular_off,
-              color: Colors.red,
-            ),
+          ? const Icon(Icons.signal_cellular_4_bar, color: Colors.green)
+          : const Icon(Icons.signal_cellular_off, color: Colors.red),
       subtitle: Text(
         "Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} ${device.getBatteryLevel() != null ? "\nBattery: ${device.getBatteryLevel()}%" : ""}",
         style: TextStyle(
-            color: status == DeviceStatus.ready ? Colors.green : Colors.red,
-            fontSize: 13),
+          color: status == DeviceStatus.ready ? Colors.green : Colors.red,
+          fontSize: 13,
+        ),
       ),
       isThreeLine: device.getBatteryLevel() != null,
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (c) => DeviceEditPage(
-                    deviceManager: Manager.instance.deviceManager,
-                    device: device)));
+          context,
+          MaterialPageRoute(
+            builder: (c) => DeviceEditPage(
+              deviceManager: Manager.instance.deviceManager,
+              device: device,
+            ),
+          ),
+        );
       },
     );
   }

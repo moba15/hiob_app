@@ -13,12 +13,14 @@ class GeneralSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(getAppLocalizations(context).settings_page_general_settings),
+        title: Text(
+          getAppLocalizations(context).settings_page_general_settings,
+        ),
         actions: [
           IconButton(
-            onPressed: () =>
-                {Navigator.popUntil(context, (route) => route.isFirst)},
+            onPressed: () => {
+              Navigator.popUntil(context, (route) => route.isFirst),
+            },
             icon: const Icon(Icons.home),
           ),
         ],
@@ -40,13 +42,9 @@ class _GeneralSettingsView extends StatelessWidget {
           title: Text(getAppLocalizations(context).export),
           trailing: IconButton(
             icon: const Icon(Icons.import_export),
-            onPressed: () => {
-              manager.fileManager.export(context),
-            },
+            onPressed: () => {manager.fileManager.export(context)},
           ),
-          onTap: () => {
-            manager.fileManager.export(context),
-          },
+          onTap: () => {manager.fileManager.export(context)},
         ),
         ListTile(
           title: Text(getAppLocalizations(context).import),
@@ -56,9 +54,7 @@ class _GeneralSettingsView extends StatelessWidget {
               context.read<Manager>().fileManager.import(context),
             },
           ),
-          onTap: () => {
-            context.read<Manager>().fileManager.import(context),
-          },
+          onTap: () => {context.read<Manager>().fileManager.import(context)},
         ),
         StatefulBuilder(
           builder: (_, setState) {
@@ -97,23 +93,23 @@ class _DeviceInfo extends StatelessWidget {
                   enabled: false,
                   initialValue: Manager.instance.generalManager.deviceName,
                   decoration: InputDecoration(
-                      labelText: getAppLocalizations(context).device_name),
+                    labelText: getAppLocalizations(context).device_name,
+                  ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 5),
-              ),
+              Container(margin: const EdgeInsets.only(left: 10, right: 5)),
               Expanded(
                 flex: 1,
                 child: TextFormField(
                   enabled: false,
                   initialValue: Manager.instance.generalManager.deviceID,
                   decoration: InputDecoration(
-                      labelText: getAppLocalizations(context).device_id),
+                    labelText: getAppLocalizations(context).device_id,
+                  ),
                 ),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

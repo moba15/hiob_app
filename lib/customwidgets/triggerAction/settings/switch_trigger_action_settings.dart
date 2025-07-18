@@ -14,7 +14,7 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey sendOffKey = GlobalKey();
 
   SwitchTriggerActionSettings({Key? key, required this.switchTriggerAction})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,35 +42,40 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                  flex: 8,
-                  child: InputFieldContainer.inputContainer(
-                    child: TextFormField(
-                      controller: TextEditingController.fromValue(
-                          TextEditingValue(
-                              text: switchTriggerAction.switchTrue.toString())),
-                      decoration: const InputDecoration(
-                          hintText: "true", labelText: "Send if on"),
-                      autocorrect: false,
-                      onChanged: (v) {
-                        if (v.isEmpty) {
-                          switchTriggerAction.switchTrue = null;
+                flex: 8,
+                child: InputFieldContainer.inputContainer(
+                  child: TextFormField(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: switchTriggerAction.switchTrue.toString(),
+                      ),
+                    ),
+                    decoration: const InputDecoration(
+                      hintText: "true",
+                      labelText: "Send if on",
+                    ),
+                    autocorrect: false,
+                    onChanged: (v) {
+                      if (v.isEmpty) {
+                        switchTriggerAction.switchTrue = null;
+                      } else {
+                        int? i = int.tryParse(v.trim());
+                        if (i != null) {
+                          switchTriggerAction.switchTrue = i;
                         } else {
-                          int? i = int.tryParse(v.trim());
-                          if (i != null) {
-                            switchTriggerAction.switchTrue = i;
+                          if (v.trim() == "true") {
+                            switchTriggerAction.switchTrue = true;
+                          } else if (v.trim() == "false") {
+                            switchTriggerAction.switchTrue = false;
                           } else {
-                            if (v.trim() == "true") {
-                              switchTriggerAction.switchTrue = true;
-                            } else if (v.trim() == "false") {
-                              switchTriggerAction.switchTrue = false;
-                            } else {
-                              switchTriggerAction.switchTrue = v;
-                            }
+                            switchTriggerAction.switchTrue = v;
                           }
                         }
-                      },
-                    ),
-                  ))
+                      }
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -81,41 +86,50 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
           child: Row(
             children: [
               Expanded(
-                  child: InputFieldContainer.inputContainer(
-                child: TextFormField(
-                  controller: TextEditingController.fromValue(TextEditingValue(
-                      text: switchTriggerAction.switchFalse.toString())),
-                  decoration: const InputDecoration(
-                      hintText: "false", labelText: "Send if off"),
-                  autocorrect: false,
-                  onChanged: (v) {
-                    if (v.isEmpty) {
-                      switchTriggerAction.switchFalse = null;
-                    } else {
-                      int? i = int.tryParse(v.trim());
-                      if (i != null) {
-                        switchTriggerAction.switchFalse = i;
+                child: InputFieldContainer.inputContainer(
+                  child: TextFormField(
+                    controller: TextEditingController.fromValue(
+                      TextEditingValue(
+                        text: switchTriggerAction.switchFalse.toString(),
+                      ),
+                    ),
+                    decoration: const InputDecoration(
+                      hintText: "false",
+                      labelText: "Send if off",
+                    ),
+                    autocorrect: false,
+                    onChanged: (v) {
+                      if (v.isEmpty) {
+                        switchTriggerAction.switchFalse = null;
                       } else {
-                        if (v.trim() == "true") {
-                          switchTriggerAction.switchFalse = true;
-                        } else if (v.trim() == "false") {
-                          switchTriggerAction.switchFalse = false;
+                        int? i = int.tryParse(v.trim());
+                        if (i != null) {
+                          switchTriggerAction.switchFalse = i;
                         } else {
-                          switchTriggerAction.switchFalse = v;
+                          if (v.trim() == "true") {
+                            switchTriggerAction.switchFalse = true;
+                          } else if (v.trim() == "false") {
+                            switchTriggerAction.switchFalse = false;
+                          } else {
+                            switchTriggerAction.switchFalse = v;
+                          }
                         }
                       }
-                    }
-                  },
+                    },
+                  ),
                 ),
-              ))
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [datapointKey, sendOnKey, sendOffKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    datapointKey,
+    sendOnKey,
+    sendOffKey,
+  ];
 }

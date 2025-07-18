@@ -7,38 +7,43 @@ part of 'custom_button_widget.dart';
 // **************************************************************************
 
 _$CustomButtonWidgetImpl _$$CustomButtonWidgetImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomButtonWidgetImpl(
-      type: $enumDecodeNullable(
-              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.button,
-      id: json['id'] as String,
-      name: json['name'] as String,
-      customPopupmenu: json['customPopupmenu'] == null
-          ? null
-          : CustomPopupmenu.fromJson(
-              json['customPopupmenu'] as Map<String, dynamic>),
-      customTheme: const _CustomButtonThemeConverter()
-          .fromJson(json['customTheme'] as Map<String, dynamic>?),
-      label: json['label'] as String?,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
-      buttonLabel: json['buttonLabel'] as String?,
-    );
+  Map<String, dynamic> json,
+) => _$CustomButtonWidgetImpl(
+  type:
+      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+      CustomWidgetTypeDeprecated.button,
+  id: json['id'] as String,
+  name: json['name'] as String,
+  customPopupmenu: json['customPopupmenu'] == null
+      ? null
+      : CustomPopupmenu.fromJson(
+          json['customPopupmenu'] as Map<String, dynamic>,
+        ),
+  customTheme: const _CustomButtonThemeConverter().fromJson(
+    json['customTheme'] as Map<String, dynamic>?,
+  ),
+  label: json['label'] as String?,
+  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
+    json['dataPoint'],
+    const DataPointIdConverter().fromJson,
+  ),
+  buttonLabel: json['buttonLabel'] as String?,
+);
 
 Map<String, dynamic> _$$CustomButtonWidgetImplToJson(
-        _$CustomButtonWidgetImpl instance) =>
-    <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
-      'id': instance.id,
-      'name': instance.name,
-      'customPopupmenu': instance.customPopupmenu,
-      'customTheme':
-          const _CustomButtonThemeConverter().toJson(instance.customTheme),
-      'label': instance.label,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
-      'buttonLabel': instance.buttonLabel,
-    };
+  _$CustomButtonWidgetImpl instance,
+) => <String, dynamic>{
+  'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+  'id': instance.id,
+  'name': instance.name,
+  'customPopupmenu': instance.customPopupmenu,
+  'customTheme': const _CustomButtonThemeConverter().toJson(
+    instance.customTheme,
+  ),
+  'label': instance.label,
+  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'buttonLabel': instance.buttonLabel,
+};
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',
@@ -69,5 +74,4 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,
   Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+) => json == null ? null : fromJson(json as Json);

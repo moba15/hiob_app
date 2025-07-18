@@ -6,10 +6,7 @@ class CustomTextAttribute extends CustomAttribute<String> {
   CustomTextAttribute({String data = "Error 401"}) : super(data: data);
 
   @override
-  Map<String, dynamic> toJson() => {
-        "type": typeID,
-        "value": data,
-      };
+  Map<String, dynamic> toJson() => {"type": typeID, "value": data};
 
   @override
   Widget get getSettingWidget => const CustomTextSetting();

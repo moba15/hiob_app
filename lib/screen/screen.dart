@@ -22,35 +22,48 @@ class Screen {
   bool enabled;
   List<dynamic> widgetTemplates;
 
-  Screen(
-      {required this.id,
-      required this.name,
-      required this.iconWrapper,
-      required this.index,
-      required this.widgetTemplates,
-      required this.enabled});
+  Screen({
+    required this.id,
+    required this.name,
+    required this.iconWrapper,
+    required this.index,
+    required this.widgetTemplates,
+    required this.enabled,
+  });
 
   factory Screen.fromJSON(Map<String, dynamic> json) {
     List<dynamic> widgetTemplates = [];
-    for (Map<String, dynamic> templateRaw in json["widgetIds"] is String
-        ? jsonDecode(json["widgetIds"])
-        : json["widgetIds"]) {
+    for (Map<String, dynamic> templateRaw
+        in json["widgetIds"] is String
+            ? jsonDecode(json["widgetIds"])
+            : json["widgetIds"]) {
       if (templateRaw.containsKey("widget")) {
-        if (!Manager.instance.customWidgetManager.templates
-            .any((element) => element.id == templateRaw["id"])) {
+        if (!Manager.instance.customWidgetManager.templates.any(
+          (element) => element.id == templateRaw["id"],
+        )) {
           continue;
         }
-        widgetTemplates.add(Manager.instance.customWidgetManager.templates
-            .firstWhere((element) => element.id == templateRaw["id"]));
+        widgetTemplates.add(
+          Manager.instance.customWidgetManager.templates.firstWhere(
+            (element) => element.id == templateRaw["id"],
+          ),
+        );
       } else {
         if (templateRaw["type"] == CustomWidgetTypeDeprecated.line.toString()) {
-          widgetTemplates.add(CustomWidgetTemplate(
+          widgetTemplates.add(
+            CustomWidgetTemplate(
               id: Manager.instance.getRandString(12),
               name: "Line",
-              customWidget: CustomDivisionLineWidget.fromJson(templateRaw)));
+              customWidget: CustomDivisionLineWidget.fromJson(templateRaw),
+            ),
+          );
         } else {
-          widgetTemplates.add(CustomGroupWidget.fromJSON(
-              templateRaw, Manager.instance.customWidgetManager.templates));
+          widgetTemplates.add(
+            CustomGroupWidget.fromJSON(
+              templateRaw,
+              Manager.instance.customWidgetManager.templates,
+            ),
+          );
         }
       }
     }
@@ -58,9 +71,12 @@ class Screen {
     IconWrapper iconWrapper;
     if (json["iconID"] != null) {
       iconWrapper = IconWrapper(
-          iconDataType: IconDataType.flutterIcons,
-          iconData: IconData(int.parse(json["iconID"], radix: 16),
-              fontFamily: "MaterialIcons"));
+        iconDataType: IconDataType.flutterIcons,
+        iconData: IconData(
+          int.parse(json["iconID"], radix: 16),
+          fontFamily: "MaterialIcons",
+        ),
+      );
     } else if (json["iconWrapper"] != null) {
       iconWrapper = IconWrapper.fromJSON(json["iconWrapper"]);
     } else {
@@ -93,10 +109,7 @@ class Screen {
           w.customWidget is CustomDivisionLineWidget) {
         widgets.add(w.customWidget.toJson());
       } else if (w is CustomWidgetWrapper) {
-        widgets.add({
-          "widget": w.name,
-          "id": w.id,
-        });
+        widgets.add({"widget": w.name, "id": w.id});
       }
     }
     map["widgetIds"] = widgets;
@@ -104,14 +117,18 @@ class Screen {
     return map;
   }
 
-  void addWidgetTemplate(ScreenManager screenManager,
-      CustomWidgetTemplate customWidgetTemplate) async {
+  void addWidgetTemplate(
+    ScreenManager screenManager,
+    CustomWidgetTemplate customWidgetTemplate,
+  ) async {
     widgetTemplates.add(customWidgetTemplate);
     screenManager.update();
   }
 
-  void addWidgetTemplates(ScreenManager screenManager,
-      List<CustomWidgetWrapper> customWidgetTemplates) async {
+  void addWidgetTemplates(
+    ScreenManager screenManager,
+    List<CustomWidgetWrapper> customWidgetTemplates,
+  ) async {
     for (CustomWidgetWrapper t in customWidgetTemplates) {
       if (!widgetTemplates.contains(t)) {
         widgetTemplates.add(t);
@@ -121,7 +138,9 @@ class Screen {
   }
 
   void addGroup(
-      CustomGroupWidget customGroupWidget, ScreenManager screenManager) {
+    CustomGroupWidget customGroupWidget,
+    ScreenManager screenManager,
+  ) {
     if (!widgetTemplates.contains(customGroupWidget)) {
       widgetTemplates.add(customGroupWidget);
     }
@@ -130,11 +149,14 @@ class Screen {
 
   void removeWidgetTemplate(ScreenManager screenManager, dynamic template) {
     if (template is CustomWidgetTemplate) {
-      widgetTemplates.removeWhere((element) =>
-          (element is CustomWidgetTemplate) && element.id == template.id);
+      widgetTemplates.removeWhere(
+        (element) =>
+            (element is CustomWidgetTemplate) && element.id == template.id,
+      );
     } else {
       widgetTemplates.removeWhere(
-          (element) => (element is CustomGroupWidget) && element == template);
+        (element) => (element is CustomGroupWidget) && element == template,
+      );
     }
   }
 
@@ -143,10 +165,11 @@ class Screen {
     screenManager.update();
   }
 
-  void reorderWidgetTemplates(
-      {required int oldIndex,
-      required int newIndex,
-      required ScreenManager screenManager}) {
+  void reorderWidgetTemplates({
+    required int oldIndex,
+    required int newIndex,
+    required ScreenManager screenManager,
+  }) {
     dynamic widget = widgetTemplates[oldIndex];
     int length = widgetTemplates.length;
 
@@ -170,8 +193,10 @@ class Screen {
 
   List<DataPoint> getDependentDataPoints() {
     List<DataPoint> dataPoints = [];
-    List<CustomWidget> customWidgtes =
-        widgetTemplates.whereType<CustomWidget>().map((t) => t).toList();
+    List<CustomWidget> customWidgtes = widgetTemplates
+        .whereType<CustomWidget>()
+        .map((t) => t)
+        .toList();
     for (CustomWidget c in customWidgtes) {
       dataPoints.addAll(c.dependentDataPoints);
     }
@@ -181,11 +206,12 @@ class Screen {
 
   Screen clone() {
     return Screen(
-        id: id,
-        name: name,
-        iconWrapper: iconWrapper,
-        index: index,
-        widgetTemplates: List.of(widgetTemplates),
-        enabled: enabled);
+      id: id,
+      name: name,
+      iconWrapper: iconWrapper,
+      index: index,
+      widgetTemplates: List.of(widgetTemplates),
+      enabled: enabled,
+    );
   }
 }

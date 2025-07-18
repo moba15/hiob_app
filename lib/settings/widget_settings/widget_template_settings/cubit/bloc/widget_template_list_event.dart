@@ -21,8 +21,10 @@ class WidgetTemplateToggleSelectEvent extends WidgetTemplateListEvent {
   final CustomWidgetWrapper template;
   final bool selection;
 
-  const WidgetTemplateToggleSelectEvent(
-      {required this.template, required this.selection});
+  const WidgetTemplateToggleSelectEvent({
+    required this.template,
+    required this.selection,
+  });
 }
 
 class WidgetTemplateDeletSelectedEvent extends WidgetTemplateListEvent {}

@@ -7,11 +7,13 @@ class ScreenListSettingsScreen extends StatelessWidget {
   final ScreenManager screenManager;
 
   const ScreenListSettingsScreen({Key? key, required this.screenManager})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-        value: screenManager, child: const ScreenListPage());
+      value: screenManager,
+      child: const ScreenListPage(),
+    );
   }
 }

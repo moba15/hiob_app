@@ -8,27 +8,22 @@ class AxisSettingsPage extends StatelessWidget {
   final GraphWidget graphWidget;
   final GraphAxis graphAxis;
   final Function(GraphAxis) onSave;
-  const AxisSettingsPage(
-      {Key? key,
-      required this.graphWidget,
-      required this.graphAxis,
-      required this.onSave})
-      : super(key: key);
+  const AxisSettingsPage({
+    Key? key,
+    required this.graphWidget,
+    required this.graphAxis,
+    required this.onSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add Axis"),
-      ),
+      appBar: AppBar(title: const Text("Add Axis")),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _save(context),
         child: const Icon(Icons.save),
       ),
-      body: _AxisSettingsBody(
-        graphWidget: graphWidget,
-        graphAxis: graphAxis,
-      ),
+      body: _AxisSettingsBody(graphWidget: graphWidget, graphAxis: graphAxis),
     );
   }
 
@@ -50,9 +45,11 @@ class AxisSettingsPage extends StatelessWidget {
 class _AxisSettingsBody extends StatefulWidget {
   final GraphWidget graphWidget;
   final GraphAxis graphAxis;
-  const _AxisSettingsBody(
-      {Key? key, required this.graphWidget, required this.graphAxis})
-      : super(key: key);
+  const _AxisSettingsBody({
+    Key? key,
+    required this.graphWidget,
+    required this.graphAxis,
+  }) : super(key: key);
 
   @override
   State<_AxisSettingsBody> createState() => _AxisSettingsBodyState();
@@ -73,7 +70,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
           if (widget.graphAxis.dataType == AxisDataType.time)
             _timeAxisSettings(),
           if (widget.graphAxis.dataType == AxisDataType.numbers)
-            _dataAxisSettings()
+            _dataAxisSettings(),
         ],
 
         //TODO: Color picker
@@ -99,9 +96,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(left: 10, right: 10),
-        ),
+        Container(margin: const EdgeInsets.only(left: 10, right: 10)),
         Expanded(
           child: TextFormField(
             initialValue: widget.graphAxis.max?.toString() ?? "",
@@ -117,9 +112,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(left: 10, right: 10),
-        ),
+        Container(margin: const EdgeInsets.only(left: 10, right: 10)),
         Expanded(
           child: TextFormField(
             initialValue: widget.graphAxis.dataInterval?.toString() ?? "",
@@ -134,7 +127,7 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
-        )
+        ),
       ],
     );
   }
@@ -151,19 +144,16 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
           items: TimeAxisEnd.values,
           itemAsString: (i) => i.name,
           popupProps: PopupProps.modalBottomSheet(
-              showSelectedItems: true,
-              searchDelay: const Duration(seconds: 0),
-              showSearchBox: true,
-              title: const Text(
-                "End of axis",
-                style: TextStyle(fontSize: 17.5),
-              ),
-              modalBottomSheetProps: ModalBottomSheetProps(
-                  backgroundColor: Theme.of(context).colorScheme.surface)),
-          dropdownDecoratorProps: const DropDownDecoratorProps(
-            dropdownSearchDecoration: InputDecoration(
-              labelText: "End of axis",
+            showSelectedItems: true,
+            searchDelay: const Duration(seconds: 0),
+            showSearchBox: true,
+            title: const Text("End of axis", style: TextStyle(fontSize: 17.5)),
+            modalBottomSheetProps: ModalBottomSheetProps(
+              backgroundColor: Theme.of(context).colorScheme.surface,
             ),
+          ),
+          dropdownDecoratorProps: const DropDownDecoratorProps(
+            dropdownSearchDecoration: InputDecoration(labelText: "End of axis"),
           ),
           compareFn: (i, i1) => i == i1,
           selectedItem: widget.graphAxis.timeAxisEnd,
@@ -185,18 +175,16 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(left: 15, right: 15),
-            ),
+            Container(margin: const EdgeInsets.only(left: 15, right: 15)),
             Expanded(
-                child: DropdownSearch<UnitOfTime>(
-              selectedItem: widget.graphAxis.scopeUnit,
-              compareFn: (i, i1) => i1 == i,
-              itemAsString: (i) => i.name,
-              items: UnitOfTime.values,
-              onChanged: (u) =>
-                  widget.graphAxis.scopeUnit = u ?? UnitOfTime.hour,
-              popupProps: PopupProps.modalBottomSheet(
+              child: DropdownSearch<UnitOfTime>(
+                selectedItem: widget.graphAxis.scopeUnit,
+                compareFn: (i, i1) => i1 == i,
+                itemAsString: (i) => i.name,
+                items: UnitOfTime.values,
+                onChanged: (u) =>
+                    widget.graphAxis.scopeUnit = u ?? UnitOfTime.hour,
+                popupProps: PopupProps.modalBottomSheet(
                   showSelectedItems: true,
                   searchDelay: const Duration(seconds: 0),
                   showSearchBox: true,
@@ -206,15 +194,17 @@ class _AxisSettingsBodyState extends State<_AxisSettingsBody> {
                   ),
                   modalBottomSheetProps: ModalBottomSheetProps(
                     backgroundColor: Theme.of(context).colorScheme.surface,
-                  )),
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Scope Unit",
+                  ),
+                ),
+                dropdownDecoratorProps: const DropDownDecoratorProps(
+                  dropdownSearchDecoration: InputDecoration(
+                    labelText: "Scope Unit",
+                  ),
                 ),
               ),
-            )),
+            ),
           ],
-        )
+        ),
       ],
     );
   }

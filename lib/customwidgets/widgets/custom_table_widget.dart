@@ -17,27 +17,28 @@ class CustomTableWidget extends CustomWidgetDeprecated {
   int elementsPerPage;
   Map<String, String> columns;
 
-  CustomTableWidget(
-      {required String? name,
-      required this.header,
-      required this.sortAsc,
-      required this.initialSortColumn,
-      required this.initialSortEnabled,
-      required this.elementsPerPage,
-      required this.columns,
-      this.dataPoint})
-      : super(name: name, type: CustomWidgetTypeDeprecated.table, settings: {});
+  CustomTableWidget({
+    required String? name,
+    required this.header,
+    required this.sortAsc,
+    required this.initialSortColumn,
+    required this.initialSortEnabled,
+    required this.elementsPerPage,
+    required this.columns,
+    this.dataPoint,
+  }) : super(name: name, type: CustomWidgetTypeDeprecated.table, settings: {});
 
   @override
   CustomWidgetDeprecated clone() => CustomTableWidget(
-      name: name,
-      header: header,
-      sortAsc: sortAsc,
-      initialSortColumn: initialSortColumn,
-      initialSortEnabled: initialSortEnabled,
-      elementsPerPage: elementsPerPage,
-      dataPoint: dataPoint,
-      columns: columns);
+    name: name,
+    header: header,
+    sortAsc: sortAsc,
+    initialSortColumn: initialSortColumn,
+    initialSortEnabled: initialSortEnabled,
+    elementsPerPage: elementsPerPage,
+    dataPoint: dataPoint,
+    columns: columns,
+  );
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -45,28 +46,30 @@ class CustomTableWidget extends CustomWidgetDeprecated {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "name": name,
-        "header": header,
-        "sortAsc": sortAsc,
-        "initialSortColumn": initialSortColumn,
-        "initialSortEnabled": initialSortEnabled,
-        "elementsPerPage": elementsPerPage,
-        "dataPoint": dataPoint?.id,
-        "columns": columns
-      };
+    "type": type.toString(),
+    "name": name,
+    "header": header,
+    "sortAsc": sortAsc,
+    "initialSortColumn": initialSortColumn,
+    "initialSortEnabled": initialSortEnabled,
+    "elementsPerPage": elementsPerPage,
+    "dataPoint": dataPoint?.id,
+    "columns": columns,
+  };
 
   factory CustomTableWidget.fromJson(Map<String, dynamic> json) {
     return CustomTableWidget(
-        name: json["name"],
-        header: json["header"],
-        sortAsc: json["sortAsc"],
-        initialSortColumn: json["initialSortColumn"],
-        initialSortEnabled: json["initialSortEnabled"],
-        elementsPerPage: json["elementsPerPage"],
-        dataPoint: Manager.instance.deviceManager
-            .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? ""),
-        columns: Map<String, String>.from(json["columns"]));
+      name: json["name"],
+      header: json["header"],
+      sortAsc: json["sortAsc"],
+      initialSortColumn: json["initialSortColumn"],
+      initialSortEnabled: json["initialSortEnabled"],
+      elementsPerPage: json["elementsPerPage"],
+      dataPoint: Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(
+        json["dataPoint"] ?? "",
+      ),
+      columns: Map<String, String>.from(json["columns"]),
+    );
   }
 
   @override
@@ -75,14 +78,15 @@ class CustomTableWidget extends CustomWidgetDeprecated {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomTableWidget(
-        id: id,
-        name: name,
-        dataPoint: dataPoint,
-        columns: columns,
-        initalSortColumn: initialSortColumn,
-        elementsPerPage: elementsPerPage,
-        header: header,
-        sortAsc: sortAsc,
-        initialSortEnabled: initialSortEnabled);
+      id: id,
+      name: name,
+      dataPoint: dataPoint,
+      columns: columns,
+      initalSortColumn: initialSortColumn,
+      elementsPerPage: elementsPerPage,
+      header: header,
+      sortAsc: sortAsc,
+      initialSortEnabled: initialSortEnabled,
+    );
   }
 }

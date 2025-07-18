@@ -12,7 +12,8 @@ part of 'custom_button_widget.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomButtonWidget _$CustomButtonWidgetFromJson(Map<String, dynamic> json) {
   return _CustomButtonWidget.fromJson(json);
@@ -57,18 +58,20 @@ mixin _$CustomButtonWidget {
 /// @nodoc
 abstract class $CustomButtonWidgetCopyWith<$Res> {
   factory $CustomButtonWidgetCopyWith(
-          CustomButtonWidget value, $Res Function(CustomButtonWidget) then) =
-      _$CustomButtonWidgetCopyWithImpl<$Res, CustomButtonWidget>;
+    CustomButtonWidget value,
+    $Res Function(CustomButtonWidget) then,
+  ) = _$CustomButtonWidgetCopyWithImpl<$Res, CustomButtonWidget>;
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
-      String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      String? buttonLabel});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
+    String? label,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    String? buttonLabel,
+  });
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -97,40 +100,43 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
     Object? dataPoint = freezed,
     Object? buttonLabel = freezed,
   }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-      label: freezed == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      buttonLabel: freezed == buttonLabel
-          ? _value.buttonLabel
-          : buttonLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as CustomWidgetTypeDeprecated,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            customPopupmenu: freezed == customPopupmenu
+                ? _value.customPopupmenu
+                : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                      as CustomPopupmenu?,
+            customTheme: freezed == customTheme
+                ? _value.customTheme
+                : customTheme // ignore: cast_nullable_to_non_nullable
+                      as CustomThemeForWidget?,
+            label: freezed == label
+                ? _value.label
+                : label // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            dataPoint: freezed == dataPoint
+                ? _value.dataPoint
+                : dataPoint // ignore: cast_nullable_to_non_nullable
+                      as DataPoint?,
+            buttonLabel: freezed == buttonLabel
+                ? _value.buttonLabel
+                : buttonLabel // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomButtonWidget
@@ -151,20 +157,22 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
 /// @nodoc
 abstract class _$$CustomButtonWidgetImplCopyWith<$Res>
     implements $CustomButtonWidgetCopyWith<$Res> {
-  factory _$$CustomButtonWidgetImplCopyWith(_$CustomButtonWidgetImpl value,
-          $Res Function(_$CustomButtonWidgetImpl) then) =
-      __$$CustomButtonWidgetImplCopyWithImpl<$Res>;
+  factory _$$CustomButtonWidgetImplCopyWith(
+    _$CustomButtonWidgetImpl value,
+    $Res Function(_$CustomButtonWidgetImpl) then,
+  ) = __$$CustomButtonWidgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
-      String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      String? buttonLabel});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
+    String? label,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    String? buttonLabel,
+  });
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -174,9 +182,10 @@ abstract class _$$CustomButtonWidgetImplCopyWith<$Res>
 class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
     extends _$CustomButtonWidgetCopyWithImpl<$Res, _$CustomButtonWidgetImpl>
     implements _$$CustomButtonWidgetImplCopyWith<$Res> {
-  __$$CustomButtonWidgetImplCopyWithImpl(_$CustomButtonWidgetImpl _value,
-      $Res Function(_$CustomButtonWidgetImpl) _then)
-      : super(_value, _then);
+  __$$CustomButtonWidgetImplCopyWithImpl(
+    _$CustomButtonWidgetImpl _value,
+    $Res Function(_$CustomButtonWidgetImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomButtonWidget
   /// with the given fields replaced by the non-null parameter values.
@@ -192,56 +201,58 @@ class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
     Object? dataPoint = freezed,
     Object? buttonLabel = freezed,
   }) {
-    return _then(_$CustomButtonWidgetImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-      label: freezed == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      buttonLabel: freezed == buttonLabel
-          ? _value.buttonLabel
-          : buttonLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$CustomButtonWidgetImpl(
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as CustomWidgetTypeDeprecated,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        customPopupmenu: freezed == customPopupmenu
+            ? _value.customPopupmenu
+            : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                  as CustomPopupmenu?,
+        customTheme: freezed == customTheme
+            ? _value.customTheme
+            : customTheme // ignore: cast_nullable_to_non_nullable
+                  as CustomThemeForWidget?,
+        label: freezed == label
+            ? _value.label
+            : label // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        dataPoint: freezed == dataPoint
+            ? _value.dataPoint
+            : dataPoint // ignore: cast_nullable_to_non_nullable
+                  as DataPoint?,
+        buttonLabel: freezed == buttonLabel
+            ? _value.buttonLabel
+            : buttonLabel // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
-  _$CustomButtonWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.button,
-      required this.id,
-      required this.name,
-      this.customPopupmenu,
-      @_CustomButtonThemeConverter() this.customTheme,
-      this.label,
-      @DataPointIdConverter() required this.dataPoint,
-      this.buttonLabel})
-      : super._();
+  _$CustomButtonWidgetImpl({
+    this.type = CustomWidgetTypeDeprecated.button,
+    required this.id,
+    required this.name,
+    this.customPopupmenu,
+    @_CustomButtonThemeConverter() this.customTheme,
+    this.label,
+    @DataPointIdConverter() required this.dataPoint,
+    this.buttonLabel,
+  }) : super._();
 
   factory _$CustomButtonWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomButtonWidgetImplFromJson(json);
@@ -278,27 +289,28 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
   @pragma('vm:prefer-inline')
   _$$CustomButtonWidgetImplCopyWith<_$CustomButtonWidgetImpl> get copyWith =>
       __$$CustomButtonWidgetImplCopyWithImpl<_$CustomButtonWidgetImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomButtonWidgetImplToJson(
-      this,
-    );
+    return _$$CustomButtonWidgetImplToJson(this);
   }
 }
 
 abstract class _CustomButtonWidget extends CustomButtonWidget
     implements CustomWidget {
-  factory _CustomButtonWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
-      String? label,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      String? buttonLabel}) = _$CustomButtonWidgetImpl;
+  factory _CustomButtonWidget({
+    CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
+    String? label,
+    @DataPointIdConverter() required DataPoint? dataPoint,
+    String? buttonLabel,
+  }) = _$CustomButtonWidgetImpl;
   _CustomButtonWidget._() : super._();
 
   factory _CustomButtonWidget.fromJson(Map<String, dynamic> json) =

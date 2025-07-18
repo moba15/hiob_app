@@ -17,15 +17,16 @@ class Device {
   List<DataPoint>? dataPoints;
   bool overrideDeviceStatus;
 
-  Device(
-      {required this.id,
-      required this.name,
-      required this.iconWrapper,
-      this.value,
-      required this.lastUpdated,
-      required this.type,
-      required this.overrideDeviceStatus,
-      this.dataPoints = const []});
+  Device({
+    required this.id,
+    required this.name,
+    required this.iconWrapper,
+    this.value,
+    required this.lastUpdated,
+    required this.type,
+    required this.overrideDeviceStatus,
+    this.dataPoints = const [],
+  });
 
   StreamController<dynamic> valueStreamController =
       StreamController.broadcast();
@@ -53,8 +54,9 @@ class Device {
   }
 
   void idle() {
-    lastUpdatedStreamController.add(DateTime.fromMillisecondsSinceEpoch(
-        lastUpdated.millisecondsSinceEpoch));
+    lastUpdatedStreamController.add(
+      DateTime.fromMillisecondsSinceEpoch(lastUpdated.millisecondsSinceEpoch),
+    );
   }
 
   void addDataPoint(DataPoint dataPoint) {
@@ -149,10 +151,7 @@ extension DeviceExtension on DeviceType {
           children: [
             Container(
               margin: const EdgeInsets.only(right: 20.0),
-              child: const SizedBox(
-                width: 50,
-                child: Text("Adr.:"),
-              ),
+              child: const SizedBox(width: 50, child: Text("Adr.:")),
             ),
             Expanded(
               child: TextField(
@@ -160,7 +159,7 @@ extension DeviceExtension on DeviceType {
                 controller: controller,
                 decoration: const InputDecoration(hintText: "Address"),
               ),
-            )
+            ),
           ],
         );
       default:

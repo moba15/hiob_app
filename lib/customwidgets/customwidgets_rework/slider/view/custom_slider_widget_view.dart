@@ -9,7 +9,7 @@ import 'package:smart_home/shapes/sldier/custom_slider_thumb_value.dart';
 class CustomSliderWidgetView extends StatefulWidget {
   final CustomSliderWidget customSliderWidget;
   const CustomSliderWidgetView({Key? key, required this.customSliderWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<CustomSliderWidgetView> createState() => _CustomSliderWidgetViewState();
@@ -59,13 +59,15 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
       bloc: bloc,
       builder: (context, state) {
         double min = math.min(
-            widget.customSliderWidget.min.toDouble(),
-            double.tryParse(state.value.toString()) ??
-                widget.customSliderWidget.min.toDouble());
+          widget.customSliderWidget.min.toDouble(),
+          double.tryParse(state.value.toString()) ??
+              widget.customSliderWidget.min.toDouble(),
+        );
         double max = math.max(
-            widget.customSliderWidget.max.toDouble(),
-            double.tryParse(state.value.toString()) ??
-                widget.customSliderWidget.max.toDouble());
+          widget.customSliderWidget.max.toDouble(),
+          double.tryParse(state.value.toString()) ??
+              widget.customSliderWidget.max.toDouble(),
+        );
         int divisons =
             (max.toInt() - min.toInt()) ~/ widget.customSliderWidget.step;
 
@@ -77,7 +79,10 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
           subtitle: SliderTheme(
             data: SliderTheme.of(context).copyWith(
               thumbShape: CustomSliderThumbValueCircle(
-                  thumbRadius: 16, max: max.toInt(), min: min.toInt()),
+                thumbRadius: 16,
+                max: max.toInt(),
+                min: min.toInt(),
+              ),
             ),
             child: Slider(
               value: _getSliderValue(state, min),
@@ -92,26 +97,30 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
                   _currentlyChanging = false;
                 });
                 if (widget
-                        .customSliderWidget.customSliderWidgetUpdateStrategy ==
+                        .customSliderWidget
+                        .customSliderWidgetUpdateStrategy ==
                     CustomSliderWidgetUpdateStrategy.onFinish) {
-                  bloc?.add(DataPointValueUpdateRequest(
-                      value: value, oldValue: value));
+                  bloc?.add(
+                    DataPointValueUpdateRequest(value: value, oldValue: value),
+                  );
                 }
               },
               onChanged: (value) {
                 if (widget
-                        .customSliderWidget.customSliderWidgetUpdateStrategy ==
+                        .customSliderWidget
+                        .customSliderWidgetUpdateStrategy ==
                     CustomSliderWidgetUpdateStrategy.onChange) {
-                  bloc?.add(DataPointValueUpdateRequest(
-                      value: value, oldValue: value));
+                  bloc?.add(
+                    DataPointValueUpdateRequest(value: value, oldValue: value),
+                  );
                 } else {
                   setState(() {
                     _tmpValue = value;
                   });
                 }
               },
-              label:
-                  (double.tryParse(state.value.toString()) ?? min).toString(),
+              label: (double.tryParse(state.value.toString()) ?? min)
+                  .toString(),
             ),
           ),
         );

@@ -23,7 +23,8 @@ class _GraphViewState extends State<GraphView> {
       return const Text("Error 404");
     }
     historyDataBloc ??= HistoryDataBloc(
-        dataPoint: widget.graphWidget.graphLines!.first.dataPoint!);
+      dataPoint: widget.graphWidget.graphLines!.first.dataPoint!,
+    );
     return const Placeholder();
   }
 

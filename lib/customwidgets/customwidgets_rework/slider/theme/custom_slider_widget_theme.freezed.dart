@@ -12,10 +12,12 @@ part of 'custom_slider_widget_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomSliderWidgetTheme _$CustomSliderWidgetThemeFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomSliderWidgetTheme.fromJson(json);
 }
 
@@ -38,9 +40,10 @@ mixin _$CustomSliderWidgetTheme {
 
 /// @nodoc
 abstract class $CustomSliderWidgetThemeCopyWith<$Res> {
-  factory $CustomSliderWidgetThemeCopyWith(CustomSliderWidgetTheme value,
-          $Res Function(CustomSliderWidgetTheme) then) =
-      _$CustomSliderWidgetThemeCopyWithImpl<$Res, CustomSliderWidgetTheme>;
+  factory $CustomSliderWidgetThemeCopyWith(
+    CustomSliderWidgetTheme value,
+    $Res Function(CustomSliderWidgetTheme) then,
+  ) = _$CustomSliderWidgetThemeCopyWithImpl<$Res, CustomSliderWidgetTheme>;
   @useResult
   $Res call({String id, LabelTheme labelTheme});
 
@@ -48,8 +51,10 @@ abstract class $CustomSliderWidgetThemeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomSliderWidgetThemeCopyWithImpl<$Res,
-        $Val extends CustomSliderWidgetTheme>
+class _$CustomSliderWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomSliderWidgetTheme
+>
     implements $CustomSliderWidgetThemeCopyWith<$Res> {
   _$CustomSliderWidgetThemeCopyWithImpl(this._value, this._then);
 
@@ -62,20 +67,20 @@ class _$CustomSliderWidgetThemeCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      labelTheme: null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ) as $Val);
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomSliderWidgetTheme
@@ -93,9 +98,9 @@ class _$CustomSliderWidgetThemeCopyWithImpl<$Res,
 abstract class _$$CustomSliderWidgetThemeImplCopyWith<$Res>
     implements $CustomSliderWidgetThemeCopyWith<$Res> {
   factory _$$CustomSliderWidgetThemeImplCopyWith(
-          _$CustomSliderWidgetThemeImpl value,
-          $Res Function(_$CustomSliderWidgetThemeImpl) then) =
-      __$$CustomSliderWidgetThemeImplCopyWithImpl<$Res>;
+    _$CustomSliderWidgetThemeImpl value,
+    $Res Function(_$CustomSliderWidgetThemeImpl) then,
+  ) = __$$CustomSliderWidgetThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, LabelTheme labelTheme});
@@ -106,32 +111,34 @@ abstract class _$$CustomSliderWidgetThemeImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomSliderWidgetThemeImplCopyWithImpl<$Res>
-    extends _$CustomSliderWidgetThemeCopyWithImpl<$Res,
-        _$CustomSliderWidgetThemeImpl>
+    extends
+        _$CustomSliderWidgetThemeCopyWithImpl<
+          $Res,
+          _$CustomSliderWidgetThemeImpl
+        >
     implements _$$CustomSliderWidgetThemeImplCopyWith<$Res> {
   __$$CustomSliderWidgetThemeImplCopyWithImpl(
-      _$CustomSliderWidgetThemeImpl _value,
-      $Res Function(_$CustomSliderWidgetThemeImpl) _then)
-      : super(_value, _then);
+    _$CustomSliderWidgetThemeImpl _value,
+    $Res Function(_$CustomSliderWidgetThemeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomSliderWidgetTheme
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_$CustomSliderWidgetThemeImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ));
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomSliderWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
   }
 }
 
@@ -159,14 +166,14 @@ class _$CustomSliderWidgetThemeImpl extends _CustomSliderWidgetTheme {
   @override
   @pragma('vm:prefer-inline')
   _$$CustomSliderWidgetThemeImplCopyWith<_$CustomSliderWidgetThemeImpl>
-      get copyWith => __$$CustomSliderWidgetThemeImplCopyWithImpl<
-          _$CustomSliderWidgetThemeImpl>(this, _$identity);
+  get copyWith =>
+      __$$CustomSliderWidgetThemeImplCopyWithImpl<
+        _$CustomSliderWidgetThemeImpl
+      >(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomSliderWidgetThemeImplToJson(
-      this,
-    );
+    return _$$CustomSliderWidgetThemeImplToJson(this);
   }
 }
 
@@ -191,5 +198,5 @@ abstract class _CustomSliderWidgetTheme extends CustomSliderWidgetTheme
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomSliderWidgetThemeImplCopyWith<_$CustomSliderWidgetThemeImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

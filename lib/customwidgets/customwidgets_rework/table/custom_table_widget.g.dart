@@ -7,47 +7,51 @@ part of 'custom_table_widget.dart';
 // **************************************************************************
 
 _$CustomTableWidgetImpl _$$CustomTableWidgetImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomTableWidgetImpl(
-      type: $enumDecodeNullable(
-              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.tableNew,
-      id: json['id'] as String,
-      name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
-      header: json['header'] as String?,
-      sortAsc: json['sortAsc'] as bool? ?? false,
-      initalSortColumn: (json['initalSortColumn'] as num?)?.toInt() ?? 0,
-      initialSortEnabled: json['initialSortEnabled'] as bool? ?? false,
-      elementsPerPage: (json['elementsPerPage'] as num?)?.toInt() ?? 10,
-      columns: Map<String, String>.from(json['columns'] as Map),
-      customPopupmenu: json['customPopupmenu'] == null
-          ? null
-          : CustomPopupmenu.fromJson(
-              json['customPopupmenu'] as Map<String, dynamic>),
-      customTheme: json['customTheme'] == null
-          ? null
-          : CustomThemeForWidget.fromJson(
-              json['customTheme'] as Map<String, dynamic>),
-    );
+  Map<String, dynamic> json,
+) => _$CustomTableWidgetImpl(
+  type:
+      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+      CustomWidgetTypeDeprecated.tableNew,
+  id: json['id'] as String,
+  name: json['name'] as String,
+  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
+    json['dataPoint'],
+    const DataPointIdConverter().fromJson,
+  ),
+  header: json['header'] as String?,
+  sortAsc: json['sortAsc'] as bool? ?? false,
+  initalSortColumn: (json['initalSortColumn'] as num?)?.toInt() ?? 0,
+  initialSortEnabled: json['initialSortEnabled'] as bool? ?? false,
+  elementsPerPage: (json['elementsPerPage'] as num?)?.toInt() ?? 10,
+  columns: Map<String, String>.from(json['columns'] as Map),
+  customPopupmenu: json['customPopupmenu'] == null
+      ? null
+      : CustomPopupmenu.fromJson(
+          json['customPopupmenu'] as Map<String, dynamic>,
+        ),
+  customTheme: json['customTheme'] == null
+      ? null
+      : CustomThemeForWidget.fromJson(
+          json['customTheme'] as Map<String, dynamic>,
+        ),
+);
 
 Map<String, dynamic> _$$CustomTableWidgetImplToJson(
-        _$CustomTableWidgetImpl instance) =>
-    <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
-      'id': instance.id,
-      'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
-      'header': instance.header,
-      'sortAsc': instance.sortAsc,
-      'initalSortColumn': instance.initalSortColumn,
-      'initialSortEnabled': instance.initialSortEnabled,
-      'elementsPerPage': instance.elementsPerPage,
-      'columns': instance.columns,
-      'customPopupmenu': instance.customPopupmenu,
-      'customTheme': instance.customTheme,
-    };
+  _$CustomTableWidgetImpl instance,
+) => <String, dynamic>{
+  'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+  'id': instance.id,
+  'name': instance.name,
+  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'header': instance.header,
+  'sortAsc': instance.sortAsc,
+  'initalSortColumn': instance.initalSortColumn,
+  'initialSortEnabled': instance.initialSortEnabled,
+  'elementsPerPage': instance.elementsPerPage,
+  'columns': instance.columns,
+  'customPopupmenu': instance.customPopupmenu,
+  'customTheme': instance.customTheme,
+};
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',
@@ -78,5 +82,4 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,
   Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+) => json == null ? null : fromJson(json as Json);

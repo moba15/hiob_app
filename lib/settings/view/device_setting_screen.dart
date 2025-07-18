@@ -9,7 +9,7 @@ class DeviceSettingsScreen extends StatelessWidget {
   final DeviceManager manager;
 
   const DeviceSettingsScreen({Key? key, required this.manager})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {

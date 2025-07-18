@@ -7,33 +7,39 @@ import 'package:smart_home/utils/icon_data_wrapper.dart';
 import 'device.dart';
 
 class IoBrokerDevice extends Device {
-  IoBrokerDevice(
-      {required String id,
-      required String name,
-      required IconWrapper iconWrapper,
-      required DateTime lastUpdated,
-      required bool overrideDeviceStatus,
-      required this.objectID,
-      List<DataPoint>? dataPoints = const []})
-      : super(
-            id: id,
-            name: name,
-            iconWrapper: iconWrapper,
-            overrideDeviceStatus: overrideDeviceStatus,
-            lastUpdated: lastUpdated,
-            type: DeviceType.ioBroker,
-            dataPoints: dataPoints);
+  IoBrokerDevice({
+    required String id,
+    required String name,
+    required IconWrapper iconWrapper,
+    required DateTime lastUpdated,
+    required bool overrideDeviceStatus,
+    required this.objectID,
+    List<DataPoint>? dataPoints = const [],
+  }) : super(
+         id: id,
+         name: name,
+         iconWrapper: iconWrapper,
+         overrideDeviceStatus: overrideDeviceStatus,
+         lastUpdated: lastUpdated,
+         type: DeviceType.ioBroker,
+         dataPoints: dataPoints,
+       );
   String objectID;
 
   factory IoBrokerDevice.fromJSON(Map<String, dynamic> json) {
     IconWrapper iconWrapper = const IconWrapper(
-        iconDataType: IconDataType.flutterIcons, iconData: Icons.home);
+      iconDataType: IconDataType.flutterIcons,
+      iconData: Icons.home,
+    );
     //!Support for older versions
     if (json["iconID"] != null) {
       iconWrapper = IconWrapper(
-          iconDataType: IconDataType.flutterIcons,
-          iconData: IconData(int.parse(json["iconID"], radix: 16),
-              fontFamily: "MaterialIcons"));
+        iconDataType: IconDataType.flutterIcons,
+        iconData: IconData(
+          int.parse(json["iconID"], radix: 16),
+          fontFamily: "MaterialIcons",
+        ),
+      );
     } else if (json["iconWrapper"] != null) {
       iconWrapper = IconWrapper.fromJSON(json["iconWrapper"]);
     }
@@ -61,14 +67,14 @@ class IoBrokerDevice extends Device {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "iconWrapper": iconWrapper,
-        "objectID": objectID,
-        "type": type.index,
-        "dataPoints": dataPoints?.map((e) => e.toJson()).toList(),
-        "overrideDeviceStatus": overrideDeviceStatus,
-      };
+    "id": id,
+    "name": name,
+    "iconWrapper": iconWrapper,
+    "objectID": objectID,
+    "type": type.index,
+    "dataPoints": dataPoints?.map((e) => e.toJson()).toList(),
+    "overrideDeviceStatus": overrideDeviceStatus,
+  };
 
   @override
   String toString() {

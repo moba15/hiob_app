@@ -18,9 +18,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Notifications"),
-      ),
+      appBar: AppBar(title: const Text("Notifications")),
       body: const _NotificationSettingsBody(),
     );
   }
@@ -37,20 +35,22 @@ class _NotificationSettingsBody extends StatefulWidget {
 class __NotificationSettingsBodyState extends State<_NotificationSettingsBody> {
   @override
   Widget build(BuildContext context) {
-    NotificationManager notificationManager =
-        context.read<Manager>().notificationManager;
+    NotificationManager notificationManager = context
+        .read<Manager>()
+        .notificationManager;
     return SwitchListTile(
-        value: NotificationManager.backgroundNotificationsEnabled,
-        title: Text(getAppLocalizations(context).background_notifications),
-        onChanged: (value) => setState(() {
-              notificationManager.changeBackgroundNotificationsEnabled(value);
-              if (value) {
-                showDialog(
-                  context: context,
-                  builder: (context) => const _InfoAlertDialog(),
-                );
-              }
-            }));
+      value: NotificationManager.backgroundNotificationsEnabled,
+      title: Text(getAppLocalizations(context).background_notifications),
+      onChanged: (value) => setState(() {
+        notificationManager.changeBackgroundNotificationsEnabled(value);
+        if (value) {
+          showDialog(
+            context: context,
+            builder: (context) => const _InfoAlertDialog(),
+          );
+        }
+      }),
+    );
   }
 }
 
@@ -60,57 +60,72 @@ class _InfoAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        icon: const Icon(Icons.info),
-        title: const Text(
-          "Important",
-          style: TextStyle(color: Colors.red),
-        ),
-        content: RichText(
-          text: TextSpan(children: [
+      icon: const Icon(Icons.info),
+      title: const Text("Important", style: TextStyle(color: Colors.red)),
+      content: RichText(
+        text: TextSpan(
+          children: [
             const TextSpan(text: "This a ", style: TextStyle(fontSize: 25)),
             const TextSpan(
-                text: "beta",
-                style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25)),
+              text: "beta",
+              style: TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+            ),
             const TextSpan(text: " feature!", style: TextStyle(fontSize: 25)),
             const TextSpan(
-                text: "Please read the ", style: TextStyle(fontSize: 25)),
+              text: "Please read the ",
+              style: TextStyle(fontSize: 25),
+            ),
             TextSpan(
-                text: "docs",
-                style: const TextStyle(
-                    fontSize: 25,
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    launchUrl(Uri.https("github.com",
-                        "/moba15/ioBroker.hiob/tree/development/docs"));
-                  }),
+              text: "docs",
+              style: const TextStyle(
+                fontSize: 25,
+                color: Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launchUrl(
+                    Uri.https(
+                      "github.com",
+                      "/moba15/ioBroker.hiob/tree/development/docs",
+                    ),
+                  );
+                },
+            ),
             const TextSpan(text: "."),
             TextSpan(
-                text:
-                    "\nhttps://github.com/moba15/ioBroker.hiob/tree/development/docs\n\n",
-                style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    launchUrl(Uri.https("github.com",
-                        "/moba15/ioBroker.hiob/tree/development/docs"));
-                  }),
+              text:
+                  "\nhttps://github.com/moba15/ioBroker.hiob/tree/development/docs\n\n",
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launchUrl(
+                    Uri.https(
+                      "github.com",
+                      "/moba15/ioBroker.hiob/tree/development/docs",
+                    ),
+                  );
+                },
+            ),
             const TextSpan(
-                text: "\nYou need minimum Adapter version:\n",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+              text: "\nYou need minimum Adapter version:\n",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            ),
             const TextSpan(
-                text: "0.0.66-beta.0",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.orange,
-                ))
-          ]),
-        ));
+              text: "0.0.66-beta.0",
+              style: TextStyle(fontSize: 25, color: Colors.orange),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

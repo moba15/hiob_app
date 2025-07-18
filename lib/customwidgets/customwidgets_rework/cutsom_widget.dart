@@ -20,14 +20,15 @@ abstract class CustomWidget extends CustomWidgetWrapper {
   CustomPopupmenu? customPopupmenu;
   CustomThemeForWidget? customTheme;
 
-  CustomWidget(
-      {required this.type,
-      required this.id,
-      required this.name,
-      required this.isAbleToPopupMenu,
-      required this.hasCustomTheme,
-      required this.customPopupmenu,
-      required this.customTheme});
+  CustomWidget({
+    required this.type,
+    required this.id,
+    required this.name,
+    required this.isAbleToPopupMenu,
+    required this.hasCustomTheme,
+    required this.customPopupmenu,
+    required this.customTheme,
+  });
 
   @override
   CustomWidgetSettingWidget get settingWidget;

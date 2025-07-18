@@ -21,10 +21,11 @@ class NotificationLogViewScreen extends StatelessWidget {
           title: const Text("Notifications"),
           actions: [
             IconButton(
-                onPressed: () {
-                  bloc.add(NotificationsDeleteAllEvent());
-                },
-                icon: const Icon(Icons.delete_forever))
+              onPressed: () {
+                bloc.add(NotificationsDeleteAllEvent());
+              },
+              icon: const Icon(Icons.delete_forever),
+            ),
           ],
         ),
         body: BlocProvider<NotificationsBloc>(
@@ -52,47 +53,53 @@ class _NotificationLogBody extends StatelessWidget {
         ),
       );
     }
-    List<CustomNotification> notifications =
-        bloc.state.customNotification.reversed.toList();
+    List<CustomNotification> notifications = bloc
+        .state
+        .customNotification
+        .reversed
+        .toList();
     return ListView.builder(
-        itemCount: bloc.state.customNotification.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-              onDismissed: (direction) {
-                bloc.add(NotificationsRemoveEvent(
-                    index: notifications.length - index - 1));
-              },
-              key: ValueKey(notifications[index]),
-              background: Container(
-                color: const Color.fromARGB(255, 239, 235, 235),
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: const Icon(Icons.delete_forever),
-                ),
+      itemCount: bloc.state.customNotification.length,
+      itemBuilder: (context, index) {
+        return Dismissible(
+          onDismissed: (direction) {
+            bloc.add(
+              NotificationsRemoveEvent(index: notifications.length - index - 1),
+            );
+          },
+          key: ValueKey(notifications[index]),
+          background: Container(
+            color: const Color.fromARGB(255, 239, 235, 235),
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              child: const Icon(Icons.delete_forever),
+            ),
+          ),
+          secondaryBackground: Container(
+            color: Colors.red,
+            alignment: Alignment.centerRight,
+            child: Container(
+              margin: const EdgeInsets.only(left: 20, right: 20.0),
+              child: const Icon(Icons.delete_forever),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.notifications_active,
+              color: notifications[index].color,
+            ),
+            trailing: notifications[index].getDateWidget(),
+            title: Text(
+              notifications[index].title ?? "No Title",
+              style: TextStyle(
+                color: notifications[index].read ? null : Colors.lightBlue,
               ),
-              secondaryBackground: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20.0),
-                  child: const Icon(Icons.delete_forever),
-                ),
-              ),
-              child: ListTile(
-                leading: Icon(
-                  Icons.notifications_active,
-                  color: notifications[index].color,
-                ),
-                trailing: notifications[index].getDateWidget(),
-                title: Text(
-                  notifications[index].title ?? "No Title",
-                  style: TextStyle(
-                      color:
-                          notifications[index].read ? null : Colors.lightBlue),
-                ),
-                subtitle: Text(notifications[index].bodyText ?? "No Body"),
-              ));
-        });
+            ),
+            subtitle: Text(notifications[index].bodyText ?? "No Body"),
+          ),
+        );
+      },
+    );
   }
 }

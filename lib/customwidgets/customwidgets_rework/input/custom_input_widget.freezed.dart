@@ -12,7 +12,8 @@ part of 'custom_input_widget.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomInputWidget _$CustomInputWidgetFromJson(Map<String, dynamic> json) {
   return _CustomInputWidget.fromJson(json);
@@ -69,22 +70,24 @@ mixin _$CustomInputWidget {
 /// @nodoc
 abstract class $CustomInputWidgetCopyWith<$Res> {
   factory $CustomInputWidgetCopyWith(
-          CustomInputWidget value, $Res Function(CustomInputWidget) then) =
-      _$CustomInputWidgetCopyWithImpl<$Res, CustomInputWidget>;
+    CustomInputWidget value,
+    $Res Function(CustomInputWidget) then,
+  ) = _$CustomInputWidgetCopyWithImpl<$Res, CustomInputWidget>;
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      String? hintText,
-      String? suffix,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
-      CustomInputSendMethod? customInputSendMethod,
-      CustomInputDisplayConentType? customInputDisplayConentType,
-      bool fullSize});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? label,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    String? hintText,
+    String? suffix,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
+    CustomInputSendMethod? customInputSendMethod,
+    CustomInputDisplayConentType? customInputDisplayConentType,
+    bool fullSize,
+  });
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -117,56 +120,60 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
     Object? customInputDisplayConentType = freezed,
     Object? fullSize = null,
   }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      label: freezed == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      hintText: freezed == hintText
-          ? _value.hintText
-          : hintText // ignore: cast_nullable_to_non_nullable
-              as String?,
-      suffix: freezed == suffix
-          ? _value.suffix
-          : suffix // ignore: cast_nullable_to_non_nullable
-              as String?,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-      customInputSendMethod: freezed == customInputSendMethod
-          ? _value.customInputSendMethod
-          : customInputSendMethod // ignore: cast_nullable_to_non_nullable
-              as CustomInputSendMethod?,
-      customInputDisplayConentType: freezed == customInputDisplayConentType
-          ? _value.customInputDisplayConentType
-          : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
-              as CustomInputDisplayConentType?,
-      fullSize: null == fullSize
-          ? _value.fullSize
-          : fullSize // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as CustomWidgetTypeDeprecated,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            label: freezed == label
+                ? _value.label
+                : label // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            dataPoint: freezed == dataPoint
+                ? _value.dataPoint
+                : dataPoint // ignore: cast_nullable_to_non_nullable
+                      as DataPoint?,
+            hintText: freezed == hintText
+                ? _value.hintText
+                : hintText // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            suffix: freezed == suffix
+                ? _value.suffix
+                : suffix // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            customPopupmenu: freezed == customPopupmenu
+                ? _value.customPopupmenu
+                : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                      as CustomPopupmenu?,
+            customTheme: freezed == customTheme
+                ? _value.customTheme
+                : customTheme // ignore: cast_nullable_to_non_nullable
+                      as CustomThemeForWidget?,
+            customInputSendMethod: freezed == customInputSendMethod
+                ? _value.customInputSendMethod
+                : customInputSendMethod // ignore: cast_nullable_to_non_nullable
+                      as CustomInputSendMethod?,
+            customInputDisplayConentType:
+                freezed == customInputDisplayConentType
+                ? _value.customInputDisplayConentType
+                : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
+                      as CustomInputDisplayConentType?,
+            fullSize: null == fullSize
+                ? _value.fullSize
+                : fullSize // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomInputWidget
@@ -187,24 +194,26 @@ class _$CustomInputWidgetCopyWithImpl<$Res, $Val extends CustomInputWidget>
 /// @nodoc
 abstract class _$$CustomInputWidgetImplCopyWith<$Res>
     implements $CustomInputWidgetCopyWith<$Res> {
-  factory _$$CustomInputWidgetImplCopyWith(_$CustomInputWidgetImpl value,
-          $Res Function(_$CustomInputWidgetImpl) then) =
-      __$$CustomInputWidgetImplCopyWithImpl<$Res>;
+  factory _$$CustomInputWidgetImplCopyWith(
+    _$CustomInputWidgetImpl value,
+    $Res Function(_$CustomInputWidgetImpl) then,
+  ) = __$$CustomInputWidgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      String? label,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      String? hintText,
-      String? suffix,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
-      CustomInputSendMethod? customInputSendMethod,
-      CustomInputDisplayConentType? customInputDisplayConentType,
-      bool fullSize});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? label,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    String? hintText,
+    String? suffix,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
+    CustomInputSendMethod? customInputSendMethod,
+    CustomInputDisplayConentType? customInputDisplayConentType,
+    bool fullSize,
+  });
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -214,9 +223,10 @@ abstract class _$$CustomInputWidgetImplCopyWith<$Res>
 class __$$CustomInputWidgetImplCopyWithImpl<$Res>
     extends _$CustomInputWidgetCopyWithImpl<$Res, _$CustomInputWidgetImpl>
     implements _$$CustomInputWidgetImplCopyWith<$Res> {
-  __$$CustomInputWidgetImplCopyWithImpl(_$CustomInputWidgetImpl _value,
-      $Res Function(_$CustomInputWidgetImpl) _then)
-      : super(_value, _then);
+  __$$CustomInputWidgetImplCopyWithImpl(
+    _$CustomInputWidgetImpl _value,
+    $Res Function(_$CustomInputWidgetImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomInputWidget
   /// with the given fields replaced by the non-null parameter values.
@@ -236,76 +246,78 @@ class __$$CustomInputWidgetImplCopyWithImpl<$Res>
     Object? customInputDisplayConentType = freezed,
     Object? fullSize = null,
   }) {
-    return _then(_$CustomInputWidgetImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      label: freezed == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      hintText: freezed == hintText
-          ? _value.hintText
-          : hintText // ignore: cast_nullable_to_non_nullable
-              as String?,
-      suffix: freezed == suffix
-          ? _value.suffix
-          : suffix // ignore: cast_nullable_to_non_nullable
-              as String?,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-      customInputSendMethod: freezed == customInputSendMethod
-          ? _value.customInputSendMethod
-          : customInputSendMethod // ignore: cast_nullable_to_non_nullable
-              as CustomInputSendMethod?,
-      customInputDisplayConentType: freezed == customInputDisplayConentType
-          ? _value.customInputDisplayConentType
-          : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
-              as CustomInputDisplayConentType?,
-      fullSize: null == fullSize
-          ? _value.fullSize
-          : fullSize // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$CustomInputWidgetImpl(
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as CustomWidgetTypeDeprecated,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        label: freezed == label
+            ? _value.label
+            : label // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        dataPoint: freezed == dataPoint
+            ? _value.dataPoint
+            : dataPoint // ignore: cast_nullable_to_non_nullable
+                  as DataPoint?,
+        hintText: freezed == hintText
+            ? _value.hintText
+            : hintText // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        suffix: freezed == suffix
+            ? _value.suffix
+            : suffix // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        customPopupmenu: freezed == customPopupmenu
+            ? _value.customPopupmenu
+            : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                  as CustomPopupmenu?,
+        customTheme: freezed == customTheme
+            ? _value.customTheme
+            : customTheme // ignore: cast_nullable_to_non_nullable
+                  as CustomThemeForWidget?,
+        customInputSendMethod: freezed == customInputSendMethod
+            ? _value.customInputSendMethod
+            : customInputSendMethod // ignore: cast_nullable_to_non_nullable
+                  as CustomInputSendMethod?,
+        customInputDisplayConentType: freezed == customInputDisplayConentType
+            ? _value.customInputDisplayConentType
+            : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
+                  as CustomInputDisplayConentType?,
+        fullSize: null == fullSize
+            ? _value.fullSize
+            : fullSize // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CustomInputWidgetImpl extends _CustomInputWidget {
-  _$CustomInputWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.input,
-      required this.id,
-      required this.name,
-      this.label,
-      @DataPointIdConverter() required this.dataPoint,
-      this.hintText,
-      this.suffix,
-      this.customPopupmenu,
-      @_CustomInputThemeConverter() this.customTheme,
-      this.customInputSendMethod,
-      this.customInputDisplayConentType,
-      this.fullSize = false})
-      : super._();
+  _$CustomInputWidgetImpl({
+    this.type = CustomWidgetTypeDeprecated.input,
+    required this.id,
+    required this.name,
+    this.label,
+    @DataPointIdConverter() required this.dataPoint,
+    this.hintText,
+    this.suffix,
+    this.customPopupmenu,
+    @_CustomInputThemeConverter() this.customTheme,
+    this.customInputSendMethod,
+    this.customInputDisplayConentType,
+    this.fullSize = false,
+  }) : super._();
 
   factory _$CustomInputWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomInputWidgetImplFromJson(json);
@@ -351,31 +363,32 @@ class _$CustomInputWidgetImpl extends _CustomInputWidget {
   @pragma('vm:prefer-inline')
   _$$CustomInputWidgetImplCopyWith<_$CustomInputWidgetImpl> get copyWith =>
       __$$CustomInputWidgetImplCopyWithImpl<_$CustomInputWidgetImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomInputWidgetImplToJson(
-      this,
-    );
+    return _$$CustomInputWidgetImplToJson(this);
   }
 }
 
 abstract class _CustomInputWidget extends CustomInputWidget
     implements CustomWidget {
-  factory _CustomInputWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      String? label,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      String? hintText,
-      String? suffix,
-      CustomPopupmenu? customPopupmenu,
-      @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
-      CustomInputSendMethod? customInputSendMethod,
-      CustomInputDisplayConentType? customInputDisplayConentType,
-      bool fullSize}) = _$CustomInputWidgetImpl;
+  factory _CustomInputWidget({
+    CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    String? label,
+    @DataPointIdConverter() required DataPoint? dataPoint,
+    String? hintText,
+    String? suffix,
+    CustomPopupmenu? customPopupmenu,
+    @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
+    CustomInputSendMethod? customInputSendMethod,
+    CustomInputDisplayConentType? customInputDisplayConentType,
+    bool fullSize,
+  }) = _$CustomInputWidgetImpl;
   _CustomInputWidget._() : super._();
 
   factory _CustomInputWidget.fromJson(Map<String, dynamic> json) =

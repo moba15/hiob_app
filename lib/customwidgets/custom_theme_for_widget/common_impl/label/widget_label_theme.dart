@@ -30,5 +30,8 @@ class LabelTheme with _$LabelTheme {
       _$LabelThemeFromJson(json);
 
   TextStyle get textStyle => TextStyle(
-      fontSize: labelFonSize, color: labelColor, fontWeight: labelFontWeight);
+    fontSize: labelFonSize,
+    color: labelColor,
+    fontWeight: labelFontWeight,
+  );
 }

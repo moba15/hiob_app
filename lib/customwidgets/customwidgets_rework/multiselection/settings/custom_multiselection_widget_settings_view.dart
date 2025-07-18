@@ -12,9 +12,10 @@ import 'package:smart_home/utils/theme.dart';
 class CustomMultiselectionWidgetSettingsView
     extends CustomWidgetSettingStatefulWidget {
   final CustomMultiselectionWidget customMultiselectionWidget;
-  const CustomMultiselectionWidgetSettingsView(
-      {Key? key, required this.customMultiselectionWidget})
-      : super(key: key);
+  const CustomMultiselectionWidgetSettingsView({
+    Key? key,
+    required this.customMultiselectionWidget,
+  }) : super(key: key);
 
   @override
   State<CustomMultiselectionWidgetSettingsView> createState() =>
@@ -48,8 +49,9 @@ class _CustomTableWidgetSettingsViewState
 
   @override
   void initState() {
-    _headerController =
-        TextEditingController(text: widget.customMultiselectionWidget.label);
+    _headerController = TextEditingController(
+      text: widget.customMultiselectionWidget.label,
+    );
     super.initState();
   }
 
@@ -67,46 +69,55 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) =>
-                {c.update(widget.customMultiselectionWidget)},
-            onDataPointSelected: (d) => {
-              widget.customMultiselectionWidget.dataPoint = d,
-              c.update(widget.customMultiselectionWidget)
-            },
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customMultiselectionWidget.dataPoint,
-            selectedDevice: widget.customMultiselectionWidget.dataPoint?.device,
-          )),
+            child: DeviceSelection(
+              onDeviceSelected: (d) => {
+                c.update(widget.customMultiselectionWidget),
+              },
+              onDataPointSelected: (d) => {
+                widget.customMultiselectionWidget.dataPoint = d,
+                c.update(widget.customMultiselectionWidget),
+              },
+              customWidgetManager: Manager().customWidgetManager,
+              selectedDataPoint: widget.customMultiselectionWidget.dataPoint,
+              selectedDevice:
+                  widget.customMultiselectionWidget.dataPoint?.device,
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: TextEditingController(
-                text: widget.customMultiselectionWidget.label),
-            onChanged: (d) => {
-              widget.customMultiselectionWidget.label = d,
-              c.update(widget.customMultiselectionWidget)
-            },
-            decoration: const InputDecoration(label: Text("Label (optional)")),
-          )),
+            child: TextField(
+              controller: TextEditingController(
+                text: widget.customMultiselectionWidget.label,
+              ),
+              onChanged: (d) => {
+                widget.customMultiselectionWidget.label = d,
+                c.update(widget.customMultiselectionWidget),
+              },
+              decoration: const InputDecoration(
+                label: Text("Label (optional)"),
+              ),
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: MapOrderSettingTemplate<String>(
-                  title: const Text("Selections"),
-                  data: widget.customMultiselectionWidget.selections,
-                  onChange: (p0) {
-                    widget.customMultiselectionWidget.selections = p0;
-                    c.update(widget.customMultiselectionWidget);
-                  },
-                  toStr: (p0) {
-                    return p0.toString();
-                  },
-                  fromStr: (p0) {
-                    return p0;
-                  },
-                  alertTitle: const Text("Selection"),
-                  alertKeyText: "Value",
-                  alertValueText: "Display name",
-                  keyTileText: "Value: ",
-                  valueTileText: "Name: ")),
+            child: MapOrderSettingTemplate<String>(
+              title: const Text("Selections"),
+              data: widget.customMultiselectionWidget.selections,
+              onChange: (p0) {
+                widget.customMultiselectionWidget.selections = p0;
+                c.update(widget.customMultiselectionWidget);
+              },
+              toStr: (p0) {
+                return p0.toString();
+              },
+              fromStr: (p0) {
+                return p0;
+              },
+              alertTitle: const Text("Selection"),
+              alertKeyText: "Value",
+              alertValueText: "Display name",
+              keyTileText: "Value: ",
+              valueTileText: "Name: ",
+            ),
+          ),
         ],
       ),
     );

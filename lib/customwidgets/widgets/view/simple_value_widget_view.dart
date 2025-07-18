@@ -9,7 +9,7 @@ class SimpleValueWidgetView extends StatelessWidget {
   final CustomSimpleValueWidget customSimpleValueWidget;
 
   const SimpleValueWidgetView({Key? key, required this.customSimpleValueWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,8 @@ class SimpleValueWidgetView extends StatelessWidget {
         title: Text(customSimpleValueWidget.name ?? "No Text Found"),
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Error Device Not Found")));
+            const SnackBar(content: Text("Error Device Not Found")),
+          );
         },
       );
     }
@@ -28,9 +29,11 @@ class SimpleValueWidgetView extends StatelessWidget {
     if (dataPoint == null) {
       return ListTile(
         visualDensity: VisualDensity.compact,
-        title: Text(customSimpleValueWidget.value ??
-            customSimpleValueWidget.name ??
-            "No Name Found"),
+        title: Text(
+          customSimpleValueWidget.value ??
+              customSimpleValueWidget.name ??
+              "No Name Found",
+        ),
         subtitle: const Text("No State found"),
       );
     }
@@ -63,14 +66,15 @@ class SimpleValueWidgetView extends StatelessWidget {
                       softWrap: false,
                       maxLines: 1,
                     ),
-                  )
+                  ),
               ],
             ),
             //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
             trailing: state.value is double
                 ? Text(
                     (state.value as double).toStringAsFixed(
-                            customSimpleValueWidget.round ?? 800) +
+                          customSimpleValueWidget.round ?? 800,
+                        ) +
                         (customSimpleValueWidget.unit == null
                             ? ""
                             : " ${customSimpleValueWidget.unit!}"),
@@ -97,13 +101,15 @@ class SimpleValueWidgetView extends StatelessWidget {
 
   void onTab(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (c) => _ValueDialog(
-              title: customSimpleValueWidget.value ??
-                  customSimpleValueWidget.name ??
-                  "No Name Found",
-              dataPoint: customSimpleValueWidget.dataPoint!,
-            ));
+      context: context,
+      builder: (c) => _ValueDialog(
+        title:
+            customSimpleValueWidget.value ??
+            customSimpleValueWidget.name ??
+            "No Name Found",
+        dataPoint: customSimpleValueWidget.dataPoint!,
+      ),
+    );
   }
 }
 
@@ -111,7 +117,7 @@ class _ValueDialog extends StatelessWidget {
   final DataPoint dataPoint;
   final String title;
   const _ValueDialog({Key? key, required this.dataPoint, required this.title})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +125,9 @@ class _ValueDialog extends StatelessWidget {
       scrollable: true,
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context), child: const Text("Back"))
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Back"),
+        ),
       ],
       title: Text(title),
       content: Text(

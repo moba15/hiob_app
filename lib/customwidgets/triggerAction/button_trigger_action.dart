@@ -17,7 +17,9 @@ class ButtonTriggerAction extends TriggerAction {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     return ButtonTriggerAction(
-        dataPoint: dataPoint, label: json["label"] ?? "No Label Set");
+      dataPoint: dataPoint,
+      label: json["label"] ?? "No Label Set",
+    );
   }
 
   @override
@@ -35,10 +37,10 @@ class ButtonTriggerAction extends TriggerAction {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "label": label,
-        "dataPoint": dataPoint?.id,
-      };
+    "type": type.toString(),
+    "label": label,
+    "dataPoint": dataPoint?.id,
+  };
 
   @override
   void trigger() {}
@@ -54,6 +56,10 @@ class ButtonTriggerAction extends TriggerAction {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomButtonWidget(
-        id: id, name: name, dataPoint: dataPoint, buttonLabel: label);
+      id: id,
+      name: name,
+      dataPoint: dataPoint,
+      buttonLabel: label,
+    );
   }
 }

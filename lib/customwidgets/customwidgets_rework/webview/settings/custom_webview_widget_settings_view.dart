@@ -10,9 +10,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomWebViewWidgetSettingView extends CustomWidgetSettingStatefulWidget {
   final CustomWebViewWidget customWebViewWidget;
-  const CustomWebViewWidgetSettingView(
-      {Key? key, required this.customWebViewWidget})
-      : super(key: key);
+  const CustomWebViewWidgetSettingView({
+    Key? key,
+    required this.customWebViewWidget,
+  }) : super(key: key);
 
   @override
   State<CustomWebViewWidgetSettingView> createState() =>
@@ -47,8 +48,9 @@ class _CustomWebViewWidgetSettingViewState
 
   @override
   void initState() {
-    urlLabelEditingController =
-        TextEditingController(text: widget.customWebViewWidget.url);
+    urlLabelEditingController = TextEditingController(
+      text: widget.customWebViewWidget.url,
+    );
     super.initState();
   }
 
@@ -62,44 +64,50 @@ class _CustomWebViewWidgetSettingViewState
   Widget build(BuildContext context) {
     c = context.read<CustomWidgetBlocCubit>();
     return Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(children: [
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) => {c.update(widget.customWebViewWidget)},
-            onDataPointSelected: (d) => {
-              widget.customWebViewWidget.dataPoint = d,
-              c.update(widget.customWebViewWidget)
-            },
-            dataPointLabel: "Datapoint (optional)",
-            deviceLabel: "Device (optional)",
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customWebViewWidget.dataPoint,
-            selectedDevice: widget.customWebViewWidget.dataPoint?.device,
-          )),
+            child: DeviceSelection(
+              onDeviceSelected: (d) => {c.update(widget.customWebViewWidget)},
+              onDataPointSelected: (d) => {
+                widget.customWebViewWidget.dataPoint = d,
+                c.update(widget.customWebViewWidget),
+              },
+              dataPointLabel: "Datapoint (optional)",
+              deviceLabel: "Device (optional)",
+              customWidgetManager: Manager().customWidgetManager,
+              selectedDataPoint: widget.customWebViewWidget.dataPoint,
+              selectedDevice: widget.customWebViewWidget.dataPoint?.device,
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: urlLabelEditingController,
-            decoration: const InputDecoration(label: Text("URL (optional)")),
-            onChanged: (s) => {
-              widget.customWebViewWidget.url = s,
-              c.update(widget.customWebViewWidget)
-            },
-          )),
+            child: TextField(
+              controller: urlLabelEditingController,
+              decoration: const InputDecoration(label: Text("URL (optional)")),
+              onChanged: (s) => {
+                widget.customWebViewWidget.url = s,
+                c.update(widget.customWebViewWidget),
+              },
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: Slider(
-            value: widget.customWebViewWidget.height.toDouble(),
-            onChanged: (d) {
-              setState(() {
-                widget.customWebViewWidget.height = d.toInt();
-              });
-            },
-            max: 2000,
-            min: widget.customWebViewWidget.height.toDouble() < 100
-                ? widget.customWebViewWidget.height.toDouble()
-                : 100,
-            divisions: 1900,
-          ))
-        ]));
+            child: Slider(
+              value: widget.customWebViewWidget.height.toDouble(),
+              onChanged: (d) {
+                setState(() {
+                  widget.customWebViewWidget.height = d.toInt();
+                });
+              },
+              max: 2000,
+              min: widget.customWebViewWidget.height.toDouble() < 100
+                  ? widget.customWebViewWidget.height.toDouble()
+                  : 100,
+              divisions: 1900,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

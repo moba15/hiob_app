@@ -23,22 +23,24 @@ class DataPoint {
 
   StreamController valueStreamController = StreamController.broadcast();
 
-  DataPoint(
-      {required this.name,
-      required this.device,
-      required this.id,
-      this.role,
-      this.type,
-      this.otherDetails});
+  DataPoint({
+    required this.name,
+    required this.device,
+    required this.id,
+    this.role,
+    this.type,
+    this.otherDetails,
+  });
 
   factory DataPoint.fromJSON(Map<String, dynamic> json, Device? device) {
     return DataPoint(
-        name: json["name"].toString(),
-        device: device,
-        id: json["id"],
-        role: json["role"],
-        type: json["valueType"],
-        otherDetails: json);
+      name: json["name"].toString(),
+      device: device,
+      id: json["id"],
+      role: json["role"],
+      type: json["valueType"],
+      otherDetails: json,
+    );
   }
 
   Map<String, dynamic> toJson() {

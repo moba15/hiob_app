@@ -18,6 +18,8 @@ class DataPointValueUpdateRequest extends DataPointEvent {
   final dynamic value;
   final dynamic oldValue;
 
-  const DataPointValueUpdateRequest(
-      {required this.value, required this.oldValue});
+  const DataPointValueUpdateRequest({
+    required this.value,
+    required this.oldValue,
+  });
 }

@@ -12,10 +12,12 @@ part of 'custom_button_widget_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomButtonWidgetTheme _$CustomButtonWidgetThemeFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _CustomButtonWidgetTheme.fromJson(json);
 }
 
@@ -38,9 +40,10 @@ mixin _$CustomButtonWidgetTheme {
 
 /// @nodoc
 abstract class $CustomButtonWidgetThemeCopyWith<$Res> {
-  factory $CustomButtonWidgetThemeCopyWith(CustomButtonWidgetTheme value,
-          $Res Function(CustomButtonWidgetTheme) then) =
-      _$CustomButtonWidgetThemeCopyWithImpl<$Res, CustomButtonWidgetTheme>;
+  factory $CustomButtonWidgetThemeCopyWith(
+    CustomButtonWidgetTheme value,
+    $Res Function(CustomButtonWidgetTheme) then,
+  ) = _$CustomButtonWidgetThemeCopyWithImpl<$Res, CustomButtonWidgetTheme>;
   @useResult
   $Res call({String id, LabelTheme labelTheme});
 
@@ -48,8 +51,10 @@ abstract class $CustomButtonWidgetThemeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomButtonWidgetThemeCopyWithImpl<$Res,
-        $Val extends CustomButtonWidgetTheme>
+class _$CustomButtonWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomButtonWidgetTheme
+>
     implements $CustomButtonWidgetThemeCopyWith<$Res> {
   _$CustomButtonWidgetThemeCopyWithImpl(this._value, this._then);
 
@@ -62,20 +67,20 @@ class _$CustomButtonWidgetThemeCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      labelTheme: null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ) as $Val);
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomButtonWidgetTheme
@@ -93,9 +98,9 @@ class _$CustomButtonWidgetThemeCopyWithImpl<$Res,
 abstract class _$$CustomButtonWidgetThemeImplCopyWith<$Res>
     implements $CustomButtonWidgetThemeCopyWith<$Res> {
   factory _$$CustomButtonWidgetThemeImplCopyWith(
-          _$CustomButtonWidgetThemeImpl value,
-          $Res Function(_$CustomButtonWidgetThemeImpl) then) =
-      __$$CustomButtonWidgetThemeImplCopyWithImpl<$Res>;
+    _$CustomButtonWidgetThemeImpl value,
+    $Res Function(_$CustomButtonWidgetThemeImpl) then,
+  ) = __$$CustomButtonWidgetThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, LabelTheme labelTheme});
@@ -106,32 +111,34 @@ abstract class _$$CustomButtonWidgetThemeImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CustomButtonWidgetThemeImplCopyWithImpl<$Res>
-    extends _$CustomButtonWidgetThemeCopyWithImpl<$Res,
-        _$CustomButtonWidgetThemeImpl>
+    extends
+        _$CustomButtonWidgetThemeCopyWithImpl<
+          $Res,
+          _$CustomButtonWidgetThemeImpl
+        >
     implements _$$CustomButtonWidgetThemeImplCopyWith<$Res> {
   __$$CustomButtonWidgetThemeImplCopyWithImpl(
-      _$CustomButtonWidgetThemeImpl _value,
-      $Res Function(_$CustomButtonWidgetThemeImpl) _then)
-      : super(_value, _then);
+    _$CustomButtonWidgetThemeImpl _value,
+    $Res Function(_$CustomButtonWidgetThemeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomButtonWidgetTheme
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? labelTheme = null,
-  }) {
-    return _then(_$CustomButtonWidgetThemeImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == labelTheme
-          ? _value.labelTheme
-          : labelTheme // ignore: cast_nullable_to_non_nullable
-              as LabelTheme,
-    ));
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomButtonWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
   }
 }
 
@@ -159,14 +166,14 @@ class _$CustomButtonWidgetThemeImpl extends _CustomButtonWidgetTheme {
   @override
   @pragma('vm:prefer-inline')
   _$$CustomButtonWidgetThemeImplCopyWith<_$CustomButtonWidgetThemeImpl>
-      get copyWith => __$$CustomButtonWidgetThemeImplCopyWithImpl<
-          _$CustomButtonWidgetThemeImpl>(this, _$identity);
+  get copyWith =>
+      __$$CustomButtonWidgetThemeImplCopyWithImpl<
+        _$CustomButtonWidgetThemeImpl
+      >(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomButtonWidgetThemeImplToJson(
-      this,
-    );
+    return _$$CustomButtonWidgetThemeImplToJson(this);
   }
 }
 
@@ -191,5 +198,5 @@ abstract class _CustomButtonWidgetTheme extends CustomButtonWidgetTheme
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomButtonWidgetThemeImplCopyWith<_$CustomButtonWidgetThemeImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

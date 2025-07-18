@@ -12,11 +12,11 @@ class DeviceListCubit extends Cubit<DeviceListState> {
   StreamSubscription? deviceListSubscription;
 
   DeviceListCubit({required this.deviceManager})
-      : super(const DeviceListState.loading()) {
-    deviceListSubscription =
-        deviceManager.deviceListStreamController.stream.listen((event) {
-      update(event);
-    });
+    : super(const DeviceListState.loading()) {
+    deviceListSubscription = deviceManager.deviceListStreamController.stream
+        .listen((event) {
+          update(event);
+        });
   }
 
   final DeviceManager deviceManager;

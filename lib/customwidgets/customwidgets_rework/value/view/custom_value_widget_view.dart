@@ -10,7 +10,7 @@ import 'package:smart_home/device/state/state.dart';
 class CustomValueWidgetView extends StatefulWidget {
   final CustomValueWidget customValueWidget;
   const CustomValueWidgetView({Key? key, required this.customValueWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<CustomValueWidgetView> createState() => _CustomValueWidgetViewState();
@@ -21,7 +21,8 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
   DataPointBloc? bloc;
   @override
   void initState() {
-    title = widget.customValueWidget.label == null ||
+    title =
+        widget.customValueWidget.label == null ||
             widget.customValueWidget.label!.isEmpty
         ? widget.customValueWidget.name
         : widget.customValueWidget.label!;
@@ -35,7 +36,8 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
   @override
   void didUpdateWidget(covariant CustomValueWidgetView oldWidget) {
     setState(() {
-      title = widget.customValueWidget.label == null ||
+      title =
+          widget.customValueWidget.label == null ||
               widget.customValueWidget.label!.isEmpty
           ? widget.customValueWidget.name
           : widget.customValueWidget.label!;
@@ -69,8 +71,9 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
           value = widget.customValueWidget.valueMapper[value.trim()].toString();
         } else {
           if (state.value is double) {
-            value = (state.value as double)
-                .toStringAsFixed(widget.customValueWidget.round);
+            value = (state.value as double).toStringAsFixed(
+              widget.customValueWidget.round,
+            );
           } else {
             double? parse = double.tryParse(state.value.toString());
             if (parse != null) {
@@ -79,7 +82,8 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
           }
         }
 
-        value = (widget.customValueWidget.prefix ?? "") +
+        value =
+            (widget.customValueWidget.prefix ?? "") +
             value +
             (widget.customValueWidget.suffix ?? "");
         return ListTile(
@@ -96,9 +100,9 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
                   softWrap: false,
                   style: widget.customValueWidget.customTheme != null
                       ? (widget.customValueWidget.customTheme
-                              as CustomValueWidgetTheme)
-                          .labelTheme
-                          .textStyle
+                                as CustomValueWidgetTheme)
+                            .labelTheme
+                            .textStyle
                       : null,
                 ),
               ),
@@ -113,7 +117,7 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
                     softWrap: false,
                     maxLines: 1,
                   ),
-                )
+                ),
             ],
           ),
           //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
@@ -153,7 +157,9 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
         context: context,
         builder: (context) {
           return _ValueDialog(
-              dataPoint: widget.customValueWidget.dataPoint!, title: title);
+            dataPoint: widget.customValueWidget.dataPoint!,
+            title: title,
+          );
         },
       );
     }
@@ -164,7 +170,7 @@ class _ValueDialog extends StatelessWidget {
   final DataPoint dataPoint;
   final String title;
   const _ValueDialog({Key? key, required this.dataPoint, required this.title})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +178,9 @@ class _ValueDialog extends StatelessWidget {
       scrollable: true,
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context), child: const Text("Back"))
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Back"),
+        ),
       ],
       title: Text(title),
       content: Text(

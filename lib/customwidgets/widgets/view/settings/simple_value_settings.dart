@@ -18,9 +18,10 @@ class CustomSimpleValueWidgetSettingWidget
   final GlobalKey roundKey = GlobalKey();
   final GlobalKey unitKey = GlobalKey();
   final GlobalKey deviceDatapointKey = GlobalKey();
-  CustomSimpleValueWidgetSettingWidget(
-      {Key? key, required this.customSimpleValueWidget})
-      : super(key: key);
+  CustomSimpleValueWidgetSettingWidget({
+    Key? key,
+    required this.customSimpleValueWidget,
+  }) : super(key: key);
 
   @override
   State<CustomSimpleValueWidgetSettingWidget> createState() =>
@@ -41,8 +42,12 @@ class CustomSimpleValueWidgetSettingWidget
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [valueKey, roundKey, unitKey, deviceDatapointKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    valueKey,
+    roundKey,
+    unitKey,
+    deviceDatapointKey,
+  ];
 
   @override
   // TODO: implement deprecated
@@ -72,8 +77,8 @@ class _CustomSimpleValueWidgetSettingWidgetState
 
   @override
   Widget build(BuildContext context) {
-    CustomWidgetManager customWidgetManager =
-        context.read<CustomWidgetManager>();
+    CustomWidgetManager customWidgetManager = context
+        .read<CustomWidgetManager>();
 
     return Column(
       children: [
@@ -86,10 +91,12 @@ class _CustomSimpleValueWidgetSettingWidgetState
             child: TextField(
               onChanged: (s) => {
                 widget.customSimpleValueWidget.value = s,
-                if (s.isEmpty) widget.customSimpleValueWidget.value = null
+                if (s.isEmpty) widget.customSimpleValueWidget.value = null,
               },
               decoration: const InputDecoration(
-                  labelText: "Value (optional)", hintText: "Value"),
+                labelText: "Value (optional)",
+                hintText: "Value",
+              ),
               controller: valueController,
             ),
           ),
@@ -102,14 +109,16 @@ class _CustomSimpleValueWidgetSettingWidgetState
           child: Container(
             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
             child: TextField(
-              onChanged: (s) =>
-                  {widget.customSimpleValueWidget.round = int.tryParse(s) ?? 3},
+              onChanged: (s) => {
+                widget.customSimpleValueWidget.round = int.tryParse(s) ?? 3,
+              },
               decoration: const InputDecoration(labelText: "Round to"),
               controller: TextEditingController(
-                  text: widget.customSimpleValueWidget.round.toString()),
+                text: widget.customSimpleValueWidget.round.toString(),
+              ),
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.digitsOnly,
               ],
             ),
           ),
@@ -124,11 +133,12 @@ class _CustomSimpleValueWidgetSettingWidgetState
             child: TextField(
               onChanged: (s) => {
                 widget.customSimpleValueWidget.unit = s,
-                if (s.isEmpty) widget.customSimpleValueWidget.unit = null
+                if (s.isEmpty) widget.customSimpleValueWidget.unit = null,
               },
               decoration: const InputDecoration(labelText: "Unit (optional)"),
               controller: TextEditingController(
-                  text: widget.customSimpleValueWidget.unit ?? ""),
+                text: widget.customSimpleValueWidget.unit ?? "",
+              ),
             ),
           ),
         ),
@@ -141,27 +151,29 @@ class _CustomSimpleValueWidgetSettingWidgetState
             child: Row(
               children: [
                 Expanded(
-                    child: DeviceSelection(
-                  selectedDataPoint: widget.customSimpleValueWidget.dataPoint,
-                  selectedDevice: widget.customSimpleValueWidget.device,
-                  onDeviceSelected: (Device? d) {
-                    if (d != currentDevice) {
-                      currentDataPoint = null;
-                    }
-                    currentDevice = d;
-                    widget.customSimpleValueWidget.dataPoint = null;
-                    widget.customSimpleValueWidget.device = d;
-                  },
-                  onDataPointSelected: (DataPoint? d) {
-                    widget.customSimpleValueWidget.dataPoint = d;
-                    String? unit = d?.getInformation("unit") ??
-                        widget.customSimpleValueWidget.unit;
-                    setState(() {
-                      widget.customSimpleValueWidget.unit = unit;
-                    });
-                  },
-                  customWidgetManager: customWidgetManager,
-                )),
+                  child: DeviceSelection(
+                    selectedDataPoint: widget.customSimpleValueWidget.dataPoint,
+                    selectedDevice: widget.customSimpleValueWidget.device,
+                    onDeviceSelected: (Device? d) {
+                      if (d != currentDevice) {
+                        currentDataPoint = null;
+                      }
+                      currentDevice = d;
+                      widget.customSimpleValueWidget.dataPoint = null;
+                      widget.customSimpleValueWidget.device = d;
+                    },
+                    onDataPointSelected: (DataPoint? d) {
+                      widget.customSimpleValueWidget.dataPoint = d;
+                      String? unit =
+                          d?.getInformation("unit") ??
+                          widget.customSimpleValueWidget.unit;
+                      setState(() {
+                        widget.customSimpleValueWidget.unit = unit;
+                      });
+                    },
+                    customWidgetManager: customWidgetManager,
+                  ),
+                ),
               ],
             ),
           ),

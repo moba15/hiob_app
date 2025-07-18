@@ -11,10 +11,8 @@ part 'custom_input_widget_theme.g.dart';
 class CustomInputWidgetTheme with _$CustomInputWidgetTheme {
   CustomInputWidgetTheme._();
   @Implements<CustomThemeForWidget>()
-  factory CustomInputWidgetTheme(
-    String id,
-    LabelTheme labelTheme,
-  ) = _CustomInputWidgetTheme;
+  factory CustomInputWidgetTheme(String id, LabelTheme labelTheme) =
+      _CustomInputWidgetTheme;
 
   Widget get settingWidget {
     return labelTheme.settingWidget;

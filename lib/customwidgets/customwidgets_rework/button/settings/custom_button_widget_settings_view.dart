@@ -10,9 +10,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomButtonWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomButtonWidget customButtonWidget;
-  const CustomButtonWidgetSettingsView(
-      {Key? key, required this.customButtonWidget})
-      : super(key: key);
+  const CustomButtonWidgetSettingsView({
+    Key? key,
+    required this.customButtonWidget,
+  }) : super(key: key);
 
   @override
   State<CustomButtonWidgetSettingsView> createState() =>
@@ -45,10 +46,12 @@ class _CustomButtonWidgetSettingsViewState
   late CustomWidgetBlocCubit c;
   @override
   void initState() {
-    buttonLabelEditingController =
-        TextEditingController(text: widget.customButtonWidget.buttonLabel);
-    valueTextEditingController =
-        TextEditingController(text: widget.customButtonWidget.label);
+    buttonLabelEditingController = TextEditingController(
+      text: widget.customButtonWidget.buttonLabel,
+    );
+    valueTextEditingController = TextEditingController(
+      text: widget.customButtonWidget.label,
+    );
     super.initState();
   }
 
@@ -56,38 +59,47 @@ class _CustomButtonWidgetSettingsViewState
   Widget build(BuildContext context) {
     c = context.read<CustomWidgetBlocCubit>();
     return Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(children: [
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: valueTextEditingController,
-            decoration: const InputDecoration(label: Text("Label (optional)")),
-            onChanged: (s) => {
-              widget.customButtonWidget.label = s,
-              c.update(widget.customButtonWidget)
-            },
-          )),
+            child: TextField(
+              controller: valueTextEditingController,
+              decoration: const InputDecoration(
+                label: Text("Label (optional)"),
+              ),
+              onChanged: (s) => {
+                widget.customButtonWidget.label = s,
+                c.update(widget.customButtonWidget),
+              },
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) => {c.update(widget.customButtonWidget)},
-            onDataPointSelected: (d) => {
-              widget.customButtonWidget.dataPoint = d,
-              c.update(widget.customButtonWidget)
-            },
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customButtonWidget.dataPoint,
-            selectedDevice: widget.customButtonWidget.dataPoint?.device,
-          )),
+            child: DeviceSelection(
+              onDeviceSelected: (d) => {c.update(widget.customButtonWidget)},
+              onDataPointSelected: (d) => {
+                widget.customButtonWidget.dataPoint = d,
+                c.update(widget.customButtonWidget),
+              },
+              customWidgetManager: Manager().customWidgetManager,
+              selectedDataPoint: widget.customButtonWidget.dataPoint,
+              selectedDevice: widget.customButtonWidget.dataPoint?.device,
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: buttonLabelEditingController,
-            decoration:
-                const InputDecoration(label: Text("Button label (optional)")),
-            onChanged: (s) => {
-              widget.customButtonWidget.buttonLabel = s,
-              c.update(widget.customButtonWidget)
-            },
-          ))
-        ]));
+            child: TextField(
+              controller: buttonLabelEditingController,
+              decoration: const InputDecoration(
+                label: Text("Button label (optional)"),
+              ),
+              onChanged: (s) => {
+                widget.customButtonWidget.buttonLabel = s,
+                c.update(widget.customButtonWidget),
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

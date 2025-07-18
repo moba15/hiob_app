@@ -6,11 +6,11 @@ import 'package:smart_home/utils/theme.dart';
 class TriggerActionSelectionTemplate extends StatefulWidget {
   final Function(TriggerAction?, TriggerActionSetting?) onChange;
   final TriggerAction? preSelectedTriggerAction;
-  const TriggerActionSelectionTemplate(
-      {Key? key,
-      required this.onChange,
-      required this.preSelectedTriggerAction})
-      : super(key: key);
+  const TriggerActionSelectionTemplate({
+    Key? key,
+    required this.onChange,
+    required this.preSelectedTriggerAction,
+  }) : super(key: key);
 
   @override
   State<TriggerActionSelectionTemplate> createState() =>
@@ -45,7 +45,8 @@ class _TriggerActionSelectionTemplateState
           },
           popupProps: PopupProps.modalBottomSheet(
             modalBottomSheetProps: ModalBottomSheetProps(
-                backgroundColor: Theme.of(context).colorScheme.surface),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+            ),
             showSelectedItems: true,
           ),
           selectedItem: _selectedType,
@@ -54,7 +55,7 @@ class _TriggerActionSelectionTemplateState
             TriggerActionType.multiSelection,
             TriggerActionType.slider,
             TriggerActionType.handleSwitch,
-            TriggerActionType.button
+            TriggerActionType.button,
           ],
           itemAsString: (i) => i.name,
           compareFn: (d, d2) => d == d2,
@@ -63,15 +64,14 @@ class _TriggerActionSelectionTemplateState
           title: const Text("Main Body Settings"),
           leading: const Icon(Icons.settings),
           initiallyExpanded: true,
-          childrenPadding: const EdgeInsets.only(
-            left: 10,
-          ),
+          childrenPadding: const EdgeInsets.only(left: 10),
           expandedAlignment: Alignment.centerLeft,
           children: [
             _triggerActionSetting == null
                 ? const Text("No Settings")
                 : InputFieldContainer.inputContainer(
-                    child: _triggerActionSetting as Widget)
+                    child: _triggerActionSetting as Widget,
+                  ),
           ],
         ),
       ],

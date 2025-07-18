@@ -7,15 +7,12 @@ part of 'custom_switch_widget_theme.dart';
 // **************************************************************************
 
 _$CustomSwitchWidgetThemeImpl _$$CustomSwitchWidgetThemeImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomSwitchWidgetThemeImpl(
-      json['id'] as String,
-      LabelTheme.fromJson(json['labelTheme'] as Map<String, dynamic>),
-    );
+  Map<String, dynamic> json,
+) => _$CustomSwitchWidgetThemeImpl(
+  json['id'] as String,
+  LabelTheme.fromJson(json['labelTheme'] as Map<String, dynamic>),
+);
 
 Map<String, dynamic> _$$CustomSwitchWidgetThemeImplToJson(
-        _$CustomSwitchWidgetThemeImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'labelTheme': instance.labelTheme,
-    };
+  _$CustomSwitchWidgetThemeImpl instance,
+) => <String, dynamic>{'id': instance.id, 'labelTheme': instance.labelTheme};

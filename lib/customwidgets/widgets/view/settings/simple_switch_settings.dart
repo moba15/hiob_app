@@ -16,9 +16,10 @@ class CustomSwitchWidgetSettingWidget
   final GlobalKey valueKey = GlobalKey();
   final GlobalKey buttonTextKey = GlobalKey();
   final GlobalKey deviceDatapointKey = GlobalKey();
-  CustomSwitchWidgetSettingWidget(
-      {Key? key, required this.customSimpleSwitchWidget})
-      : super(key: key);
+  CustomSwitchWidgetSettingWidget({
+    Key? key,
+    required this.customSimpleSwitchWidget,
+  }) : super(key: key);
 
   @override
   State<CustomSwitchWidgetSettingWidget> createState() =>
@@ -37,8 +38,11 @@ class CustomSwitchWidgetSettingWidget
   }
 
   @override
-  List<GlobalKey<State<StatefulWidget>>> get showKeys =>
-      [valueKey, buttonTextKey, deviceDatapointKey];
+  List<GlobalKey<State<StatefulWidget>>> get showKeys => [
+    valueKey,
+    buttonTextKey,
+    deviceDatapointKey,
+  ];
 
   @override
   // TODO: implement deprecated
@@ -54,10 +58,12 @@ class _CustomSwitchWidgetSettingWidgetState
 
   @override
   void initState() {
-    _valueController.value =
-        TextEditingValue(text: widget.customSimpleSwitchWidget.value ?? "");
+    _valueController.value = TextEditingValue(
+      text: widget.customSimpleSwitchWidget.value ?? "",
+    );
     _buttonController.value = TextEditingValue(
-        text: widget.customSimpleSwitchWidget.buttonText ?? "");
+      text: widget.customSimpleSwitchWidget.buttonText ?? "",
+    );
     currentDevice = widget.customSimpleSwitchWidget.device;
     currentDataPoint = widget.customSimpleSwitchWidget.dataPoint;
 
@@ -72,8 +78,8 @@ class _CustomSwitchWidgetSettingWidgetState
 
   @override
   Widget build(BuildContext context) {
-    CustomWidgetManager customWidgetManager =
-        context.read<CustomWidgetManager>();
+    CustomWidgetManager customWidgetManager = context
+        .read<CustomWidgetManager>();
 
     return Column(
       children: [
@@ -86,10 +92,12 @@ class _CustomSwitchWidgetSettingWidgetState
             child: TextField(
               onChanged: (s) => {
                 widget.customSimpleSwitchWidget.value = s,
-                if (s.isEmpty) widget.customSimpleSwitchWidget.value = null
+                if (s.isEmpty) widget.customSimpleSwitchWidget.value = null,
               },
               decoration: const InputDecoration(
-                  labelText: "Value (optional)", hintText: "Value"),
+                labelText: "Value (optional)",
+                hintText: "Value",
+              ),
               controller: _valueController,
             ),
           ),
@@ -103,10 +111,12 @@ class _CustomSwitchWidgetSettingWidgetState
             child: TextField(
               onChanged: (s) => {
                 widget.customSimpleSwitchWidget.buttonText = s,
-                if (s.isEmpty) widget.customSimpleSwitchWidget.buttonText = null
+                if (s.isEmpty)
+                  widget.customSimpleSwitchWidget.buttonText = null,
               },
-              decoration:
-                  const InputDecoration(labelText: "Button Text (optional)"),
+              decoration: const InputDecoration(
+                labelText: "Button Text (optional)",
+              ),
               controller: _buttonController,
             ),
           ),
@@ -120,28 +130,29 @@ class _CustomSwitchWidgetSettingWidgetState
             child: Row(
               children: [
                 Expanded(
-                    child: DeviceSelection(
-                  selectedDevice: currentDevice,
-                  selectedDataPoint: currentDataPoint,
-                  onDeviceSelected: (d) {
-                    if (d == null) {
-                      currentDataPoint = null;
-                    }
-                    currentDevice = d;
-                    currentDevice = d;
-                    widget.customSimpleSwitchWidget.dataPoint =
-                        currentDataPoint;
-                    widget.customSimpleSwitchWidget.device = d;
-                  },
-                  onDataPointSelected: (DataPoint? d) {
-                    widget.customSimpleSwitchWidget.dataPoint = d;
-                  },
-                  customWidgetManager: customWidgetManager,
-                )),
+                  child: DeviceSelection(
+                    selectedDevice: currentDevice,
+                    selectedDataPoint: currentDataPoint,
+                    onDeviceSelected: (d) {
+                      if (d == null) {
+                        currentDataPoint = null;
+                      }
+                      currentDevice = d;
+                      currentDevice = d;
+                      widget.customSimpleSwitchWidget.dataPoint =
+                          currentDataPoint;
+                      widget.customSimpleSwitchWidget.device = d;
+                    },
+                    onDataPointSelected: (DataPoint? d) {
+                      widget.customSimpleSwitchWidget.dataPoint = d;
+                    },
+                    customWidgetManager: customWidgetManager,
+                  ),
+                ),
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

@@ -8,6 +8,7 @@ abstract class CustomThemeForWidget {
   Map<String, dynamic> toJson();
   factory CustomThemeForWidget.fromJson(Map<String, dynamic> json) {
     throw UnimplementedError(
-        "fromJson method not implemented for abstract class");
+      "fromJson method not implemented for abstract class",
+    );
   }
 }

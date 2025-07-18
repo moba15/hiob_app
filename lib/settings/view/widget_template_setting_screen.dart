@@ -6,12 +6,11 @@ import '../widget_settings/widget_template_settings/view/widget_template_list_pa
 
 class WidgetTemplateSettingScreen extends MaterialApp {
   WidgetTemplateSettingScreen({Key? key, required CustomWidgetManager manager})
-      : super(
-          key: key,
-          home: RepositoryProvider.value(
-              value: manager,
-              child: WidgetTemplateListPage(
-                customWidgetManager: manager,
-              )),
-        );
+    : super(
+        key: key,
+        home: RepositoryProvider.value(
+          value: manager,
+          child: WidgetTemplateListPage(customWidgetManager: manager),
+        ),
+      );
 }

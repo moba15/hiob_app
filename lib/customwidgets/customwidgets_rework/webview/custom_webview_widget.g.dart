@@ -7,39 +7,43 @@ part of 'custom_webview_widget.dart';
 // **************************************************************************
 
 _$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CustomWebViewWidgetImpl(
-      type: $enumDecodeNullable(
-              _$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-          CustomWidgetTypeDeprecated.webViewNew,
-      id: json['id'] as String,
-      name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
-      url: json['url'] as String?,
-      height: (json['height'] as num?)?.toInt() ?? 500,
-      customPopupmenu: json['customPopupmenu'] == null
-          ? null
-          : CustomPopupmenu.fromJson(
-              json['customPopupmenu'] as Map<String, dynamic>),
-      customTheme: json['customTheme'] == null
-          ? null
-          : CustomThemeForWidget.fromJson(
-              json['customTheme'] as Map<String, dynamic>),
-    );
+  Map<String, dynamic> json,
+) => _$CustomWebViewWidgetImpl(
+  type:
+      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+      CustomWidgetTypeDeprecated.webViewNew,
+  id: json['id'] as String,
+  name: json['name'] as String,
+  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
+    json['dataPoint'],
+    const DataPointIdConverter().fromJson,
+  ),
+  url: json['url'] as String?,
+  height: (json['height'] as num?)?.toInt() ?? 500,
+  customPopupmenu: json['customPopupmenu'] == null
+      ? null
+      : CustomPopupmenu.fromJson(
+          json['customPopupmenu'] as Map<String, dynamic>,
+        ),
+  customTheme: json['customTheme'] == null
+      ? null
+      : CustomThemeForWidget.fromJson(
+          json['customTheme'] as Map<String, dynamic>,
+        ),
+);
 
 Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
-        _$CustomWebViewWidgetImpl instance) =>
-    <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
-      'id': instance.id,
-      'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
-      'url': instance.url,
-      'height': instance.height,
-      'customPopupmenu': instance.customPopupmenu,
-      'customTheme': instance.customTheme,
-    };
+  _$CustomWebViewWidgetImpl instance,
+) => <String, dynamic>{
+  'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+  'id': instance.id,
+  'name': instance.name,
+  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'url': instance.url,
+  'height': instance.height,
+  'customPopupmenu': instance.customPopupmenu,
+  'customTheme': instance.customTheme,
+};
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',
@@ -70,5 +74,4 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,
   Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+) => json == null ? null : fromJson(json as Json);

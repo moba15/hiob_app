@@ -6,9 +6,10 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomMultiselectionWidgetView extends StatefulWidget {
   final CustomMultiselectionWidget customMultiselectionWidget;
-  const CustomMultiselectionWidgetView(
-      {Key? key, required this.customMultiselectionWidget})
-      : super(key: key);
+  const CustomMultiselectionWidgetView({
+    Key? key,
+    required this.customMultiselectionWidget,
+  }) : super(key: key);
 
   @override
   State<CustomMultiselectionWidgetView> createState() =>
@@ -25,10 +26,12 @@ class _CustomMultiselectionWidgetViewState
     if (widget.customMultiselectionWidget.dataPoint != null) {
       bloc = DataPointBloc(widget.customMultiselectionWidget.dataPoint!);
     }
-    title = widget.customMultiselectionWidget.label ??
+    title =
+        widget.customMultiselectionWidget.label ??
         widget.customMultiselectionWidget.name;
-    theme = widget.customMultiselectionWidget.customTheme
-        as CustomMultiselectionWidgetTheme?;
+    theme =
+        widget.customMultiselectionWidget.customTheme
+            as CustomMultiselectionWidgetTheme?;
     super.initState();
   }
 
@@ -40,10 +43,12 @@ class _CustomMultiselectionWidgetViewState
     } else {
       bloc = null;
     }
-    title = widget.customMultiselectionWidget.label ??
+    title =
+        widget.customMultiselectionWidget.label ??
         widget.customMultiselectionWidget.name;
-    theme = widget.customMultiselectionWidget.customTheme
-        as CustomMultiselectionWidgetTheme?;
+    theme =
+        widget.customMultiselectionWidget.customTheme
+            as CustomMultiselectionWidgetTheme?;
     setState(() {});
     super.didUpdateWidget(oldWidget);
   }
@@ -60,23 +65,23 @@ class _CustomMultiselectionWidgetViewState
       bloc: bloc,
       builder: (context, state) {
         return ListTile(
-            onLongPress: () {
-              widget.customMultiselectionWidget.customPopupmenu
-                  ?.tryOpen(context);
-            },
-            title: Text(
-              title,
-              style: theme?.labelTheme.textStyle,
-            ),
-            trailing: FractionallySizedBox(
-                widthFactor: 0.4, child: getDropdown(state.value.toString())));
+          onLongPress: () {
+            widget.customMultiselectionWidget.customPopupmenu?.tryOpen(context);
+          },
+          title: Text(title, style: theme?.labelTheme.textStyle),
+          trailing: FractionallySizedBox(
+            widthFactor: 0.4,
+            child: getDropdown(state.value.toString()),
+          ),
+        );
       },
     );
   }
 
   Widget getDropdown(String value) {
-    List<String> items =
-        List.of(widget.customMultiselectionWidget.selections.values.toList());
+    List<String> items = List.of(
+      widget.customMultiselectionWidget.selections.values.toList(),
+    );
     String? selected = widget.customMultiselectionWidget.selections[value];
     if (selected == null) {
       selected = "Notfound: $value";
@@ -86,23 +91,16 @@ class _CustomMultiselectionWidgetViewState
       value: selected,
       onChanged: (newValue) {
         String value = "";
-        widget.customMultiselectionWidget.selections.forEach(
-          (key, v) {
-            if (v == newValue) {
-              value = key;
-            }
-          },
-        );
+        widget.customMultiselectionWidget.selections.forEach((key, v) {
+          if (v == newValue) {
+            value = key;
+          }
+        });
         bloc?.add(DataPointValueUpdateRequest(value: value, oldValue: value));
       },
-      items: items.map(
-        (e) {
-          return DropdownMenuItem<String>(
-            value: e,
-            child: Text(e),
-          );
-        },
-      ).toList(),
+      items: items.map((e) {
+        return DropdownMenuItem<String>(value: e, child: Text(e));
+      }).toList(),
     );
   }
 }

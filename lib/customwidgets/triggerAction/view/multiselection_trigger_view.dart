@@ -9,9 +9,10 @@ import '../../../manager/manager.dart';
 class MultiSelectionTriggerActionView extends StatelessWidget {
   final MultiSelectionTriggerAction multiSelectionTriggerAction;
 
-  const MultiSelectionTriggerActionView(
-      {Key? key, required this.multiSelectionTriggerAction})
-      : super(key: key);
+  const MultiSelectionTriggerActionView({
+    Key? key,
+    required this.multiSelectionTriggerAction,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +24,8 @@ class MultiSelectionTriggerActionView extends StatelessWidget {
 
     return BlocBuilder<DataPointBloc, DataPointState>(
       builder: (context, state) {
-        List<String> items =
-            multiSelectionTriggerAction.selections.keys.toList();
+        List<String> items = multiSelectionTriggerAction.selections.keys
+            .toList();
         if (!items.any((element) => element == state.value.toString())) {
           items.add(state.value.toString());
         }
@@ -33,11 +34,13 @@ class MultiSelectionTriggerActionView extends StatelessWidget {
         final ids = <dynamic>{};
 
         var i = items
-            .map((e) => DropdownMenuItem<String>(
-                  value:
-                      multiSelectionTriggerAction.selections[e] ?? e.toString(),
-                  child: Text(e),
-                ))
+            .map(
+              (e) => DropdownMenuItem<String>(
+                value:
+                    multiSelectionTriggerAction.selections[e] ?? e.toString(),
+                child: Text(e),
+              ),
+            )
             .toSet()
             .toList();
         i.retainWhere((element) => ids.add(element.value));
@@ -55,8 +58,12 @@ class MultiSelectionTriggerActionView extends StatelessWidget {
                 value = double.parse(value.toString());
               }
 
-              bloc.add(DataPointValueUpdateRequest(
-                  value: value, oldValue: state.value));
+              bloc.add(
+                DataPointValueUpdateRequest(
+                  value: value,
+                  oldValue: state.value,
+                ),
+              );
               if (context.read<Manager>().generalManager.vibrateEnabled) {
                 HapticFeedback.lightImpact();
               }

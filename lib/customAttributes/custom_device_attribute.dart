@@ -6,10 +6,7 @@ class CustomDeviceAttribute extends CustomAttribute<Device> {
   CustomDeviceAttribute({required Device device}) : super(data: device);
 
   @override
-  Map<String, dynamic> toJson() => {
-        "type": typeID,
-        "device": data,
-      };
+  Map<String, dynamic> toJson() => {"type": typeID, "device": data};
 
   @override
   Widget get getSettingWidget => const CustomTextSetting();

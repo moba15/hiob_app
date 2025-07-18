@@ -67,8 +67,9 @@ class IoBrokerManager {
     if ((await fileManager.containsKey(enumKey))) {
       enumsUpdateStateStreamController.add(EnumUpdateState.loading);
       Map<String, dynamic>? enumsRaw = await fileManager.getMap(enumKey);
-      lastEnumUpdate =
-          DateTime.fromMillisecondsSinceEpoch(enumsRaw?["lastUpdated"]);
+      lastEnumUpdate = DateTime.fromMillisecondsSinceEpoch(
+        enumsRaw?["lastUpdated"],
+      );
       List<dynamic> enumsListRaw = enumsRaw?["enums"] ?? [];
       for (Map<String, dynamic> enumRaw in enumsListRaw) {
         enums.add(Enum.fromJSON(enumRaw));
@@ -112,7 +113,7 @@ class IoBrokerManager {
       "secondaryAddress": secondaryAddress,
       "useSecondaryAddress": useSecondaryAddress,
       "usePWD": usePwd,
-      "useSecureConnection": useSecureConnection
+      "useSecureConnection": useSecureConnection,
     });
   }
 
@@ -170,7 +171,7 @@ class IoBrokerManager {
 
     fileManager.writeJSON(enumKey, {
       "lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch,
-      "enums": enums
+      "enums": enums,
     });
     enumsUpdateStateStreamController.add(EnumUpdateState.finished);
     isUpdating = false;
@@ -182,7 +183,7 @@ class IoBrokerManager {
     lastEnumUpdate = null;
     fileManager.writeJSON(enumKey, {
       "lastUpdated": lastEnumUpdate?.millisecondsSinceEpoch,
-      "enums": enums
+      "enums": enums,
     });
     enumsUpdateStateStreamController.add(EnumUpdateState.finished);
     isUpdating = false;
@@ -199,23 +200,26 @@ class IoBrokerManager {
     DeviceManager deviceManager = Manager.instance.deviceManager;
     for (Enum e in enums) {
       if (e.dataPointMembers.isNotEmpty) {
-        if (!deviceManager.devicesList
-            .any((element) => element.name == e.name)) {
+        if (!deviceManager.devicesList.any(
+          (element) => element.name == e.name,
+        )) {
           IoBrokerDevice device = IoBrokerDevice(
-              id: Manager.instance.getRandString(12),
-              name: e.name,
-              overrideDeviceStatus: false,
-              iconWrapper: const IconWrapper(),
-              lastUpdated: DateTime.now(),
-              objectID: "");
+            id: Manager.instance.getRandString(12),
+            name: e.name,
+            overrideDeviceStatus: false,
+            iconWrapper: const IconWrapper(),
+            lastUpdated: DateTime.now(),
+            objectID: "",
+          );
           device.dataPoints = e.dataPointMembers
             ..forEach((element) {
               element.device = device;
             });
           deviceManager.addDevice(device, false);
         } else {
-          Device device = deviceManager.devicesList
-              .firstWhere((element) => element.name == e.name);
+          Device device = deviceManager.devicesList.firstWhere(
+            (element) => element.name == e.name,
+          );
           if (device is IoBrokerDevice) {
             device.dataPoints ??= [];
             for (DataPoint d in e.dataPointMembers) {
@@ -223,8 +227,9 @@ class IoBrokerManager {
                 device.dataPoints?.add(d..device = device);
                 deviceManager.editDevice(device, false);
               } else {
-                DataPoint dataPoint = device.dataPoints!
-                    .firstWhere((element) => element.id == d.id);
+                DataPoint dataPoint = device.dataPoints!.firstWhere(
+                  (element) => element.id == d.id,
+                );
                 dataPoint.otherDetails = d.otherDetails;
                 dataPoint.name = d.name;
                 dataPoint.type = d.type;
@@ -247,10 +252,12 @@ class IoBrokerManager {
 
       if (device.dataPoints != null && device.dataPoints!.isNotEmpty) {
         deleteDataPoint[device] = device.dataPoints!
-            .where((element) => !enums
-                .firstWhere((e2) => e2.name == device.name)
-                .dataPointMembers
-                .any((e) => e.id == element.id))
+            .where(
+              (element) => !enums
+                  .firstWhere((e2) => e2.name == device.name)
+                  .dataPointMembers
+                  .any((e) => e.id == element.id),
+            )
             .toList();
       }
     }
@@ -262,7 +269,8 @@ class IoBrokerManager {
           deleteDataPoint[d] != null &&
           deleteDataPoint[d]!.isNotEmpty) {
         d.dataPoints!.removeWhere(
-            (element) => deleteDataPoint[d]!.any((e) => e.id == element.id));
+          (element) => deleteDataPoint[d]!.any((e) => e.id == element.id),
+        );
       }
     }
 

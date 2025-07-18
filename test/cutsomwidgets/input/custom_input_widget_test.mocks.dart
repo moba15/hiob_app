@@ -29,45 +29,25 @@ import 'package:smart_home/manager/history/history_data.dart' as _i2;
 // ignore_for_file: subtype_of_sealed_class
 
 class _FakeHistoryData_0 extends _i1.SmartFake implements _i2.HistoryData {
-  _FakeHistoryData_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeHistoryData_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeStreamController_1<T> extends _i1.SmartFake
     implements _i3.StreamController<T> {
-  _FakeStreamController_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeStreamController_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeDataPoint_2 extends _i1.SmartFake implements _i4.DataPoint {
-  _FakeDataPoint_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeDataPoint_2(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeDataPointState_3 extends _i1.SmartFake
     implements _i5.DataPointState {
-  _FakeDataPointState_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeDataPointState_3(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 /// A class which mocks [DataPoint].
@@ -76,185 +56,146 @@ class _FakeDataPointState_3 extends _i1.SmartFake
 class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
   @override
   set value(dynamic _value) => super.noSuchMethod(
-        Invocation.setter(
-          #value,
-          _value,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#value, _value),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set olderValue(dynamic _olderValue) => super.noSuchMethod(
-        Invocation.setter(
-          #olderValue,
-          _olderValue,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#olderValue, _olderValue),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  String get name => (super.noSuchMethod(
-        Invocation.getter(#name),
-        returnValue: _i6.dummyValue<String>(
-          this,
-          Invocation.getter(#name),
-        ),
-        returnValueForMissingStub: _i6.dummyValue<String>(
-          this,
-          Invocation.getter(#name),
-        ),
-      ) as String);
+  String get name =>
+      (super.noSuchMethod(
+            Invocation.getter(#name),
+            returnValue: _i6.dummyValue<String>(this, Invocation.getter(#name)),
+            returnValueForMissingStub: _i6.dummyValue<String>(
+              this,
+              Invocation.getter(#name),
+            ),
+          )
+          as String);
 
   @override
   set name(String? _name) => super.noSuchMethod(
-        Invocation.setter(
-          #name,
-          _name,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#name, _name),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  String get id => (super.noSuchMethod(
-        Invocation.getter(#id),
-        returnValue: _i6.dummyValue<String>(
-          this,
-          Invocation.getter(#id),
-        ),
-        returnValueForMissingStub: _i6.dummyValue<String>(
-          this,
-          Invocation.getter(#id),
-        ),
-      ) as String);
+  String get id =>
+      (super.noSuchMethod(
+            Invocation.getter(#id),
+            returnValue: _i6.dummyValue<String>(this, Invocation.getter(#id)),
+            returnValueForMissingStub: _i6.dummyValue<String>(
+              this,
+              Invocation.getter(#id),
+            ),
+          )
+          as String);
 
   @override
   set id(String? _id) => super.noSuchMethod(
-        Invocation.setter(
-          #id,
-          _id,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#id, _id),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set device(_i7.Device? _device) => super.noSuchMethod(
-        Invocation.setter(
-          #device,
-          _device,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#device, _device),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set type(_i8.StateType? _type) => super.noSuchMethod(
-        Invocation.setter(
-          #type,
-          _type,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#type, _type),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set role(String? _role) => super.noSuchMethod(
-        Invocation.setter(
-          #role,
-          _role,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#role, _role),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set valueType(String? _valueType) => super.noSuchMethod(
-        Invocation.setter(
-          #valueType,
-          _valueType,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#valueType, _valueType),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set otherDetails(Map<String, dynamic>? _otherDetails) => super.noSuchMethod(
-        Invocation.setter(
-          #otherDetails,
-          _otherDetails,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#otherDetails, _otherDetails),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i2.HistoryData get historyData => (super.noSuchMethod(
-        Invocation.getter(#historyData),
-        returnValue: _FakeHistoryData_0(
-          this,
-          Invocation.getter(#historyData),
-        ),
-        returnValueForMissingStub: _FakeHistoryData_0(
-          this,
-          Invocation.getter(#historyData),
-        ),
-      ) as _i2.HistoryData);
+  _i2.HistoryData get historyData =>
+      (super.noSuchMethod(
+            Invocation.getter(#historyData),
+            returnValue: _FakeHistoryData_0(
+              this,
+              Invocation.getter(#historyData),
+            ),
+            returnValueForMissingStub: _FakeHistoryData_0(
+              this,
+              Invocation.getter(#historyData),
+            ),
+          )
+          as _i2.HistoryData);
 
   @override
   set historyData(_i2.HistoryData? _historyData) => super.noSuchMethod(
-        Invocation.setter(
-          #historyData,
-          _historyData,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#historyData, _historyData),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i3.StreamController<dynamic> get valueStreamController =>
       (super.noSuchMethod(
-        Invocation.getter(#valueStreamController),
-        returnValue: _FakeStreamController_1<dynamic>(
-          this,
-          Invocation.getter(#valueStreamController),
-        ),
-        returnValueForMissingStub: _FakeStreamController_1<dynamic>(
-          this,
-          Invocation.getter(#valueStreamController),
-        ),
-      ) as _i3.StreamController<dynamic>);
+            Invocation.getter(#valueStreamController),
+            returnValue: _FakeStreamController_1<dynamic>(
+              this,
+              Invocation.getter(#valueStreamController),
+            ),
+            returnValueForMissingStub: _FakeStreamController_1<dynamic>(
+              this,
+              Invocation.getter(#valueStreamController),
+            ),
+          )
+          as _i3.StreamController<dynamic>);
 
   @override
   set valueStreamController(
-          _i3.StreamController<dynamic>? _valueStreamController) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #valueStreamController,
-          _valueStreamController,
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i3.StreamController<dynamic>? _valueStreamController,
+  ) => super.noSuchMethod(
+    Invocation.setter(#valueStreamController, _valueStreamController),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set setValue(dynamic value) => super.noSuchMethod(
-        Invocation.setter(
-          #setValue,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#setValue, value),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-        returnValueForMissingStub: <String, dynamic>{},
-      ) as Map<String, dynamic>);
+  Map<String, dynamic> toJson() =>
+      (super.noSuchMethod(
+            Invocation.method(#toJson, []),
+            returnValue: <String, dynamic>{},
+            returnValueForMissingStub: <String, dynamic>{},
+          )
+          as Map<String, dynamic>);
 
   @override
   dynamic getInformation(String? key) => super.noSuchMethod(
-        Invocation.method(
-          #getInformation,
-          [key],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#getInformation, [key]),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [DataPointBloc].
@@ -262,156 +203,114 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
 /// See the documentation for Mockito's code generation for more information.
 class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
   @override
-  _i4.DataPoint get dataPoint => (super.noSuchMethod(
-        Invocation.getter(#dataPoint),
-        returnValue: _FakeDataPoint_2(
-          this,
-          Invocation.getter(#dataPoint),
-        ),
-        returnValueForMissingStub: _FakeDataPoint_2(
-          this,
-          Invocation.getter(#dataPoint),
-        ),
-      ) as _i4.DataPoint);
+  _i4.DataPoint get dataPoint =>
+      (super.noSuchMethod(
+            Invocation.getter(#dataPoint),
+            returnValue: _FakeDataPoint_2(this, Invocation.getter(#dataPoint)),
+            returnValueForMissingStub: _FakeDataPoint_2(
+              this,
+              Invocation.getter(#dataPoint),
+            ),
+          )
+          as _i4.DataPoint);
 
   @override
   set dataPoint(_i4.DataPoint? _dataPoint) => super.noSuchMethod(
-        Invocation.setter(
-          #dataPoint,
-          _dataPoint,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#dataPoint, _dataPoint),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i5.DataPointState get state => (super.noSuchMethod(
-        Invocation.getter(#state),
-        returnValue: _FakeDataPointState_3(
-          this,
-          Invocation.getter(#state),
-        ),
-        returnValueForMissingStub: _FakeDataPointState_3(
-          this,
-          Invocation.getter(#state),
-        ),
-      ) as _i5.DataPointState);
+  _i5.DataPointState get state =>
+      (super.noSuchMethod(
+            Invocation.getter(#state),
+            returnValue: _FakeDataPointState_3(this, Invocation.getter(#state)),
+            returnValueForMissingStub: _FakeDataPointState_3(
+              this,
+              Invocation.getter(#state),
+            ),
+          )
+          as _i5.DataPointState);
 
   @override
-  _i3.Stream<_i5.DataPointState> get stream => (super.noSuchMethod(
-        Invocation.getter(#stream),
-        returnValue: _i3.Stream<_i5.DataPointState>.empty(),
-        returnValueForMissingStub: _i3.Stream<_i5.DataPointState>.empty(),
-      ) as _i3.Stream<_i5.DataPointState>);
+  _i3.Stream<_i5.DataPointState> get stream =>
+      (super.noSuchMethod(
+            Invocation.getter(#stream),
+            returnValue: _i3.Stream<_i5.DataPointState>.empty(),
+            returnValueForMissingStub: _i3.Stream<_i5.DataPointState>.empty(),
+          )
+          as _i3.Stream<_i5.DataPointState>);
 
   @override
-  bool get isClosed => (super.noSuchMethod(
-        Invocation.getter(#isClosed),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
+  bool get isClosed =>
+      (super.noSuchMethod(
+            Invocation.getter(#isClosed),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
 
   @override
-  _i3.Future<void> close() => (super.noSuchMethod(
-        Invocation.method(
-          #close,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> close() =>
+      (super.noSuchMethod(
+            Invocation.method(#close, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   void add(_i5.DataPointEvent? event) => super.noSuchMethod(
-        Invocation.method(
-          #add,
-          [event],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#add, [event]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void onEvent(_i5.DataPointEvent? event) => super.noSuchMethod(
-        Invocation.method(
-          #onEvent,
-          [event],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#onEvent, [event]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void emit(_i5.DataPointState? state) => super.noSuchMethod(
-        Invocation.method(
-          #emit,
-          [state],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#emit, [state]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void on<E extends _i5.DataPointEvent>(
     _i9.EventHandler<E, _i5.DataPointState>? handler, {
     _i9.EventTransformer<E>? transformer,
-  }) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #on,
-          [handler],
-          {#transformer: transformer},
-        ),
-        returnValueForMissingStub: null,
-      );
+  }) => super.noSuchMethod(
+    Invocation.method(#on, [handler], {#transformer: transformer}),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void onTransition(
-          _i9.Transition<_i5.DataPointEvent, _i5.DataPointState>? transition) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #onTransition,
-          [transition],
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i9.Transition<_i5.DataPointEvent, _i5.DataPointState>? transition,
+  ) => super.noSuchMethod(
+    Invocation.method(#onTransition, [transition]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void onChange(_i9.Change<_i5.DataPointState>? change) => super.noSuchMethod(
-        Invocation.method(
-          #onChange,
-          [change],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#onChange, [change]),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  void addError(
-    Object? error, [
-    StackTrace? stackTrace,
-  ]) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #addError,
-          [
-            error,
-            stackTrace,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
+  void addError(Object? error, [StackTrace? stackTrace]) => super.noSuchMethod(
+    Invocation.method(#addError, [error, stackTrace]),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  void onError(
-    Object? error,
-    StackTrace? stackTrace,
-  ) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #onError,
-          [
-            error,
-            stackTrace,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
+  void onError(Object? error, StackTrace? stackTrace) => super.noSuchMethod(
+    Invocation.method(#onError, [error, stackTrace]),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [DataPointState].
@@ -419,9 +318,11 @@ class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
 /// See the documentation for Mockito's code generation for more information.
 class MockDataPointState extends _i1.Mock implements _i5.DataPointState {
   @override
-  List<Object?> get props => (super.noSuchMethod(
-        Invocation.getter(#props),
-        returnValue: <Object?>[],
-        returnValueForMissingStub: <Object?>[],
-      ) as List<Object?>);
+  List<Object?> get props =>
+      (super.noSuchMethod(
+            Invocation.getter(#props),
+            returnValue: <Object?>[],
+            returnValueForMissingStub: <Object?>[],
+          )
+          as List<Object?>);
 }

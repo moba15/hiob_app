@@ -12,9 +12,10 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomSliderWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomSliderWidget customSliderWidget;
-  const CustomSliderWidgetSettingsView(
-      {Key? key, required this.customSliderWidget})
-      : super(key: key);
+  const CustomSliderWidgetSettingsView({
+    Key? key,
+    required this.customSliderWidget,
+  }) : super(key: key);
 
   @override
   State<CustomSliderWidgetSettingsView> createState() =>
@@ -48,12 +49,15 @@ class _CustomTableWidgetSettingsViewState
 
   @override
   void initState() {
-    _minController =
-        TextEditingController(text: widget.customSliderWidget.min.toString());
-    _maxController =
-        TextEditingController(text: widget.customSliderWidget.max.toString());
-    _stepController =
-        TextEditingController(text: widget.customSliderWidget.step.toString());
+    _minController = TextEditingController(
+      text: widget.customSliderWidget.min.toString(),
+    );
+    _maxController = TextEditingController(
+      text: widget.customSliderWidget.max.toString(),
+    );
+    _stepController = TextEditingController(
+      text: widget.customSliderWidget.step.toString(),
+    );
     super.initState();
   }
 
@@ -72,118 +76,126 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-              child: TextField(
-                  onChanged: (d) {
-                    widget.customSliderWidget.label = d;
-                    if (d.isEmpty) {
-                      widget.customSliderWidget.label = null;
-                    }
-                    c.update(widget.customSliderWidget);
-                  },
-                  controller: TextEditingController()
-                    ..text = widget.customSliderWidget.label ?? "")),
+            child: TextField(
+              onChanged: (d) {
+                widget.customSliderWidget.label = d;
+                if (d.isEmpty) {
+                  widget.customSliderWidget.label = null;
+                }
+                c.update(widget.customSliderWidget);
+              },
+              controller: TextEditingController()
+                ..text = widget.customSliderWidget.label ?? "",
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) => {c.update(widget.customSliderWidget)},
-            onDataPointSelected: (d) => {
-              widget.customSliderWidget.dataPoint = d,
-              c.update(widget.customSliderWidget)
-            },
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customSliderWidget.dataPoint,
-            selectedDevice: widget.customSliderWidget.dataPoint?.device,
-          )),
+            child: DeviceSelection(
+              onDeviceSelected: (d) => {c.update(widget.customSliderWidget)},
+              onDataPointSelected: (d) => {
+                widget.customSliderWidget.dataPoint = d,
+                c.update(widget.customSliderWidget),
+              },
+              customWidgetManager: Manager().customWidgetManager,
+              selectedDataPoint: widget.customSliderWidget.dataPoint,
+              selectedDevice: widget.customSliderWidget.dataPoint?.device,
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
                   child: TextField(
-                      controller: _minController,
-                      decoration: const InputDecoration(label: Text("Min")),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        widget.customSliderWidget.min = int.parse(value);
-                        c.update(widget.customSliderWidget);
-                      },
-                      inputFormatters: [
-                    TextInputFormatter.withFunction((oldValue, newValue) {
-                      if (int.tryParse(newValue.text) == null &&
-                          newValue.text != "" &&
-                          newValue.text != "-") {
-                        return oldValue;
-                      } else {
-                        return newValue;
-                      }
-                    })
-                  ])),
-              const Gap(10),
-              Expanded(
-                child: TextField(
-                  controller: _maxController,
-                  onChanged: (value) {
-                    widget.customSliderWidget.max = int.parse(value);
-                    c.update(widget.customSliderWidget);
-                  },
-                  decoration: const InputDecoration(label: Text("Max")),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    TextInputFormatter.withFunction((oldValue, newValue) {
-                      if (int.tryParse(newValue.text) == null &&
-                          newValue.text != "" &&
-                          newValue.text != "-") {
-                        return oldValue;
-                      } else {
-                        return newValue;
-                      }
-                    })
-                  ],
+                    controller: _minController,
+                    decoration: const InputDecoration(label: Text("Min")),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      widget.customSliderWidget.min = int.parse(value);
+                      c.update(widget.customSliderWidget);
+                    },
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        if (int.tryParse(newValue.text) == null &&
+                            newValue.text != "" &&
+                            newValue.text != "-") {
+                          return oldValue;
+                        } else {
+                          return newValue;
+                        }
+                      }),
+                    ],
+                  ),
                 ),
-              ),
-              const Gap(10),
-              Expanded(
+                const Gap(10),
+                Expanded(
                   child: TextField(
-                controller: _stepController,
-                decoration: const InputDecoration(label: Text("Step")),
-                onChanged: (value) {
-                  widget.customSliderWidget.step = int.parse(value);
-                  c.update(widget.customSliderWidget);
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  TextInputFormatter.withFunction((oldValue, newValue) {
-                    if (int.tryParse(newValue.text) == null &&
-                        newValue.text != "" &&
-                        newValue.text != "-") {
-                      return oldValue;
-                    } else {
-                      return newValue;
-                    }
-                  })
-                ],
-              ))
-            ],
-          )),
+                    controller: _maxController,
+                    onChanged: (value) {
+                      widget.customSliderWidget.max = int.parse(value);
+                      c.update(widget.customSliderWidget);
+                    },
+                    decoration: const InputDecoration(label: Text("Max")),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        if (int.tryParse(newValue.text) == null &&
+                            newValue.text != "" &&
+                            newValue.text != "-") {
+                          return oldValue;
+                        } else {
+                          return newValue;
+                        }
+                      }),
+                    ],
+                  ),
+                ),
+                const Gap(10),
+                Expanded(
+                  child: TextField(
+                    controller: _stepController,
+                    decoration: const InputDecoration(label: Text("Step")),
+                    onChanged: (value) {
+                      widget.customSliderWidget.step = int.parse(value);
+                      c.update(widget.customSliderWidget);
+                    },
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        if (int.tryParse(newValue.text) == null &&
+                            newValue.text != "" &&
+                            newValue.text != "-") {
+                          return oldValue;
+                        } else {
+                          return newValue;
+                        }
+                      }),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           InputFieldContainer.inputContainer(
-              child: DropdownButtonFormField<CustomSliderWidgetUpdateStrategy>(
-            items: const [
-              DropdownMenuItem(
-                value: CustomSliderWidgetUpdateStrategy.onChange,
-                child: Text("On Change"),
-              ),
-              DropdownMenuItem(
-                value: CustomSliderWidgetUpdateStrategy.onFinish,
-                child: Text("On Finish"),
-              )
-            ],
-            value: widget.customSliderWidget.customSliderWidgetUpdateStrategy,
-            onChanged: (value) {
-              setState(() {
-                widget.customSliderWidget.customSliderWidgetUpdateStrategy =
-                    value ?? CustomSliderWidgetUpdateStrategy.onFinish;
-              });
-            },
-          ))
+            child: DropdownButtonFormField<CustomSliderWidgetUpdateStrategy>(
+              items: const [
+                DropdownMenuItem(
+                  value: CustomSliderWidgetUpdateStrategy.onChange,
+                  child: Text("On Change"),
+                ),
+                DropdownMenuItem(
+                  value: CustomSliderWidgetUpdateStrategy.onFinish,
+                  child: Text("On Finish"),
+                ),
+              ],
+              value: widget.customSliderWidget.customSliderWidgetUpdateStrategy,
+              onChanged: (value) {
+                setState(() {
+                  widget.customSliderWidget.customSliderWidgetUpdateStrategy =
+                      value ?? CustomSliderWidgetUpdateStrategy.onFinish;
+                });
+              },
+            ),
+          ),
         ],
       ),
     );

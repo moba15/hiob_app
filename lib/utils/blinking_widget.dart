@@ -7,13 +7,13 @@ class BlinkingWidget extends StatefulWidget {
   final TickerProvider vsync;
   final Duration? disablerAfter;
   final bool invisibleAfter;
-  const BlinkingWidget(
-      {Key? key,
-      required this.child,
-      required this.vsync,
-      this.disablerAfter,
-      this.invisibleAfter = false})
-      : super(key: key);
+  const BlinkingWidget({
+    Key? key,
+    required this.child,
+    required this.vsync,
+    this.disablerAfter,
+    this.invisibleAfter = false,
+  }) : super(key: key);
 
   @override
   State<BlinkingWidget> createState() => _BlinkingWidgetState();
@@ -25,8 +25,10 @@ class _BlinkingWidgetState extends State<BlinkingWidget>
   Timer? _timer;
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
     _animationController.repeat(reverse: true);
 
     if (widget.disablerAfter != null) {
@@ -48,9 +50,6 @@ class _BlinkingWidgetState extends State<BlinkingWidget>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animationController,
-      child: widget.child,
-    );
+    return FadeTransition(opacity: _animationController, child: widget.child);
   }
 }

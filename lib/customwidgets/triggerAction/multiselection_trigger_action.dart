@@ -14,8 +14,10 @@ class MultiSelectionTriggerAction extends TriggerAction {
   DataPoint? dataPoint;
   Map<String, String> selections;
 
-  MultiSelectionTriggerAction(
-      {required this.dataPoint, required this.selections});
+  MultiSelectionTriggerAction({
+    required this.dataPoint,
+    required this.selections,
+  });
 
   @override
   bool isTypeAllowed(value) {
@@ -26,8 +28,9 @@ class MultiSelectionTriggerAction extends TriggerAction {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     return MultiSelectionTriggerAction(
-        dataPoint: dataPoint,
-        selections: Map.from(jsonDecode(json["selections"])));
+      dataPoint: dataPoint,
+      selections: Map.from(jsonDecode(json["selections"])),
+    );
   }
 
   @override
@@ -36,10 +39,10 @@ class MultiSelectionTriggerAction extends TriggerAction {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "dataPoint": dataPoint?.id,
-        "selections": jsonEncode(selections),
-      };
+    "type": type.toString(),
+    "dataPoint": dataPoint?.id,
+    "selections": jsonEncode(selections),
+  };
 
   @override
   void trigger() {}
@@ -98,12 +101,14 @@ class MultiSelectionTriggerAction extends TriggerAction {
   @override
   CustomWidget migrate({required String id, required String name}) {
     Map<String, String> sel = {};
-    selections.forEach(
-      (key, value) {
-        sel[value] = key;
-      },
-    );
+    selections.forEach((key, value) {
+      sel[value] = key;
+    });
     return new_widget.CustomMultiselectionWidget(
-        id: id, name: name, dataPoint: dataPoint, selections: sel);
+      id: id,
+      name: name,
+      dataPoint: dataPoint,
+      selections: sel,
+    );
   }
 }

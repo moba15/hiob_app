@@ -12,7 +12,8 @@ part of 'custom_popupmenu.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomPopupmenu _$CustomPopupmenuFromJson(Map<String, dynamic> json) {
   return _CustomPopupmenu.fromJson(json);
@@ -39,8 +40,9 @@ mixin _$CustomPopupmenu {
 /// @nodoc
 abstract class $CustomPopupmenuCopyWith<$Res> {
   factory $CustomPopupmenuCopyWith(
-          CustomPopupmenu value, $Res Function(CustomPopupmenu) then) =
-      _$CustomPopupmenuCopyWithImpl<$Res, CustomPopupmenu>;
+    CustomPopupmenu value,
+    $Res Function(CustomPopupmenu) then,
+  ) = _$CustomPopupmenuCopyWithImpl<$Res, CustomPopupmenu>;
   @useResult
   $Res call({@CustomWidgetConverter() List<CustomWidget> customWidgets});
 }
@@ -59,24 +61,26 @@ class _$CustomPopupmenuCopyWithImpl<$Res, $Val extends CustomPopupmenu>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? customWidgets = null,
-  }) {
-    return _then(_value.copyWith(
-      customWidgets: null == customWidgets
-          ? _value.customWidgets
-          : customWidgets // ignore: cast_nullable_to_non_nullable
-              as List<CustomWidget>,
-    ) as $Val);
+  $Res call({Object? customWidgets = null}) {
+    return _then(
+      _value.copyWith(
+            customWidgets: null == customWidgets
+                ? _value.customWidgets
+                : customWidgets // ignore: cast_nullable_to_non_nullable
+                      as List<CustomWidget>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$CustomPopupmenuImplCopyWith<$Res>
     implements $CustomPopupmenuCopyWith<$Res> {
-  factory _$$CustomPopupmenuImplCopyWith(_$CustomPopupmenuImpl value,
-          $Res Function(_$CustomPopupmenuImpl) then) =
-      __$$CustomPopupmenuImplCopyWithImpl<$Res>;
+  factory _$$CustomPopupmenuImplCopyWith(
+    _$CustomPopupmenuImpl value,
+    $Res Function(_$CustomPopupmenuImpl) then,
+  ) = __$$CustomPopupmenuImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@CustomWidgetConverter() List<CustomWidget> customWidgets});
@@ -87,22 +91,23 @@ class __$$CustomPopupmenuImplCopyWithImpl<$Res>
     extends _$CustomPopupmenuCopyWithImpl<$Res, _$CustomPopupmenuImpl>
     implements _$$CustomPopupmenuImplCopyWith<$Res> {
   __$$CustomPopupmenuImplCopyWithImpl(
-      _$CustomPopupmenuImpl _value, $Res Function(_$CustomPopupmenuImpl) _then)
-      : super(_value, _then);
+    _$CustomPopupmenuImpl _value,
+    $Res Function(_$CustomPopupmenuImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomPopupmenu
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? customWidgets = null,
-  }) {
-    return _then(_$CustomPopupmenuImpl(
-      customWidgets: null == customWidgets
-          ? _value.customWidgets
-          : customWidgets // ignore: cast_nullable_to_non_nullable
-              as List<CustomWidget>,
-    ));
+  $Res call({Object? customWidgets = null}) {
+    return _then(
+      _$CustomPopupmenuImpl(
+        customWidgets: null == customWidgets
+            ? _value.customWidgets
+            : customWidgets // ignore: cast_nullable_to_non_nullable
+                  as List<CustomWidget>,
+      ),
+    );
   }
 }
 
@@ -110,7 +115,7 @@ class __$$CustomPopupmenuImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomPopupmenuImpl extends _CustomPopupmenu {
   _$CustomPopupmenuImpl({@CustomWidgetConverter() required this.customWidgets})
-      : super._();
+    : super._();
 
   factory _$CustomPopupmenuImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomPopupmenuImplFromJson(json);
@@ -131,20 +136,20 @@ class _$CustomPopupmenuImpl extends _CustomPopupmenu {
   @pragma('vm:prefer-inline')
   _$$CustomPopupmenuImplCopyWith<_$CustomPopupmenuImpl> get copyWith =>
       __$$CustomPopupmenuImplCopyWithImpl<_$CustomPopupmenuImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomPopupmenuImplToJson(
-      this,
-    );
+    return _$$CustomPopupmenuImplToJson(this);
   }
 }
 
 abstract class _CustomPopupmenu extends CustomPopupmenu {
-  factory _CustomPopupmenu(
-      {@CustomWidgetConverter()
-      required List<CustomWidget> customWidgets}) = _$CustomPopupmenuImpl;
+  factory _CustomPopupmenu({
+    @CustomWidgetConverter() required List<CustomWidget> customWidgets,
+  }) = _$CustomPopupmenuImpl;
   _CustomPopupmenu._() : super._();
 
   factory _CustomPopupmenu.fromJson(Map<String, dynamic> json) =

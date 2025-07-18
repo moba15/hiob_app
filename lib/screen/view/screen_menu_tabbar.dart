@@ -14,10 +14,9 @@ class ScreenTabBarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => ScreenListCubit(screenManager: manager.screenManager),
-        child: ScreenTabView(
-          screenManager: manager.screenManager,
-        ));
+      create: (_) => ScreenListCubit(screenManager: manager.screenManager),
+      child: ScreenTabView(screenManager: manager.screenManager),
+    );
   }
 
   Size get preferredSize => Size.zero;
@@ -27,14 +26,12 @@ class ScreenTabView extends StatelessWidget {
   final ScreenManager screenManager;
 
   const ScreenTabView({Key? key, required this.screenManager})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final state = context.watch<ScreenListCubit>().state;
-    return ScreenTabBar(
-      screens: state.screens,
-    );
+    return ScreenTabBar(screens: state.screens);
   }
 }
 
@@ -69,12 +66,8 @@ class _ScreenTabBarState extends State<ScreenTabBar>
       isScrollable: true,
       controller: _tabController,
       tabs: const [
-        Tab(
-          text: "LOL",
-        ),
-        Tab(
-          text: "LOL",
-        )
+        Tab(text: "LOL"),
+        Tab(text: "LOL"),
       ],
     );
   }
@@ -87,9 +80,6 @@ class ScreenTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tab(
-      text: screen.name,
-      icon: screen.iconWrapper.icon,
-    );
+    return Tab(text: screen.name, icon: screen.iconWrapper.icon);
   }
 }

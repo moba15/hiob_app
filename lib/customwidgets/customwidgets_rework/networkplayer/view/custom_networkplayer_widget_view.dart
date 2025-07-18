@@ -6,9 +6,10 @@ import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/cust
 
 class CustomNetworkPlayerWidgetView extends StatefulWidget {
   final CustomNetworkPlayerWidget customNetworkPlayer;
-  const CustomNetworkPlayerWidgetView(
-      {Key? key, required this.customNetworkPlayer})
-      : super(key: key);
+  const CustomNetworkPlayerWidgetView({
+    Key? key,
+    required this.customNetworkPlayer,
+  }) : super(key: key);
 
   @override
   State<CustomNetworkPlayerWidgetView> createState() =>
@@ -20,8 +21,9 @@ class _CustomNetworkPlayerWidgetViewState
   late VlcPlayerController _vlcPlayerController;
   @override
   void initState() {
-    _vlcPlayerController =
-        VlcPlayerController.network(widget.customNetworkPlayer.url ?? "ok");
+    _vlcPlayerController = VlcPlayerController.network(
+      widget.customNetworkPlayer.url ?? "ok",
+    );
 
     super.initState();
   }
@@ -29,16 +31,15 @@ class _CustomNetworkPlayerWidgetViewState
   @override
   Widget build(BuildContext context) {
     if (!Platform.isAndroid) {
-      return const Center(
-        child: Text("Only Supported on android"),
-      );
+      return const Center(child: Text("Only Supported on android"));
     }
     if (widget.customNetworkPlayer.url == null) {
       return const Text("Emtpy url");
     }
     return VlcPlayer(
       controller: _vlcPlayerController,
-      aspectRatio: widget.customNetworkPlayer.width *
+      aspectRatio:
+          widget.customNetworkPlayer.width *
           1.0 /
           widget.customNetworkPlayer.height,
       placeholder: const Center(child: CircularProgressIndicator()),

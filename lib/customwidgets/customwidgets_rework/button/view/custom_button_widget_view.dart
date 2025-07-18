@@ -13,7 +13,7 @@ class CustomButtonWidgetView extends StatelessWidget {
   final CustomButtonWidget customButtonWidget;
 
   const CustomButtonWidgetView({Key? key, required this.customButtonWidget})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,8 @@ class CustomButtonWidgetView extends StatelessWidget {
         title: Text(customButtonWidget.labelOrName),
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Error Device Not Found")));
+            const SnackBar(content: Text("Error Device Not Found")),
+          );
         },
       );
     }
@@ -66,14 +67,14 @@ class CustomButtonWidgetDeviceView extends StatefulWidget {
   final CustomButtonWidgetTheme? customButtonWidgetTheme;
   final bool Function(BuildContext) tryOpenPopup;
   final DataPoint dataPoint;
-  const CustomButtonWidgetDeviceView(
-      {Key? key,
-      required this.text,
-      required this.buttonLabel,
-      required this.dataPoint,
-      required this.tryOpenPopup,
-      required this.customButtonWidgetTheme})
-      : super(key: key);
+  const CustomButtonWidgetDeviceView({
+    Key? key,
+    required this.text,
+    required this.buttonLabel,
+    required this.dataPoint,
+    required this.tryOpenPopup,
+    required this.customButtonWidgetTheme,
+  }) : super(key: key);
 
   @override
   State<CustomButtonWidgetDeviceView> createState() =>
@@ -88,10 +89,11 @@ class _CustomButtonWidgetDeviceViewState
   @override
   void initState() {
     _animationController = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 80),
-        lowerBound: 0,
-        upperBound: 0.15);
+      vsync: this,
+      duration: const Duration(milliseconds: 80),
+      lowerBound: 0,
+      upperBound: 0.15,
+    );
     _bloc = DataPointBloc(widget.dataPoint);
     super.initState();
   }
@@ -113,60 +115,65 @@ class _CustomButtonWidgetDeviceViewState
           onTapDown: (details) => startAnimation(),
           onTapCancel: () => startAnimationRev(),
           child: ListTile(
-              visualDensity: VisualDensity.compact,
-              onTap: () {
-                if (!widget.tryOpenPopup(context)) {
-                  _bloc.add(DataPointValueUpdateRequest(
-                      value: !(_bloc.state.value == true),
-                      oldValue: _bloc.state.value));
+            visualDensity: VisualDensity.compact,
+            onTap: () {
+              if (!widget.tryOpenPopup(context)) {
+                _bloc.add(
+                  DataPointValueUpdateRequest(
+                    value: !(_bloc.state.value == true),
+                    oldValue: _bloc.state.value,
+                  ),
+                );
+                if (context.read<Manager>().generalManager.vibrateEnabled) {
+                  //    Vibrate.feedback(FeedbackType.light);
+                }
+              }
+            },
+            title: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    widget.text,
+                    overflow: TextOverflow.clip,
+                    style: widget.customButtonWidgetTheme?.labelTheme.textStyle,
+                  ),
+                ),
+                if (_bloc.dataPoint.device?.getDeviceStatus() !=
+                    DeviceStatus.ready)
+                  const Flexible(
+                    child: Text(
+                      " U/A",
+                      style: TextStyle(color: Colors.red),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+              ],
+            ),
+            //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
+            trailing: AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: 1 - _animationController.value,
+                  child: child,
+                );
+              },
+              child: OutlinedButton(
+                child: Text(widget.buttonLabel),
+                onPressed: () async {
+                  _bloc.add(
+                    DataPointValueUpdateRequest(
+                      value: true,
+                      oldValue: _bloc.state.value == true,
+                    ),
+                  );
                   if (context.read<Manager>().generalManager.vibrateEnabled) {
                     //    Vibrate.feedback(FeedbackType.light);
                   }
-                }
-              },
-              title: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      widget.text,
-                      overflow: TextOverflow.clip,
-                      style:
-                          widget.customButtonWidgetTheme?.labelTheme.textStyle,
-                    ),
-                  ),
-                  if (_bloc.dataPoint.device?.getDeviceStatus() !=
-                      DeviceStatus.ready)
-                    const Flexible(
-                      child: Text(
-                        " U/A",
-                        style: TextStyle(color: Colors.red),
-                        overflow: TextOverflow.clip,
-                      ),
-                    )
-                ],
+                },
               ),
-              //subtitle: bloc.dataPoint.device?.getDeviceStatus() != DeviceStatus.ready  ? const  Text("U/A", style: TextStyle(color: Colors.red, fontSize: 12),) : null,
-              trailing: AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: 1 - _animationController.value,
-                      child: child,
-                    );
-                  },
-                  child: OutlinedButton(
-                    child: Text(widget.buttonLabel),
-                    onPressed: () async {
-                      _bloc.add(DataPointValueUpdateRequest(
-                          value: true, oldValue: _bloc.state.value == true));
-                      if (context
-                          .read<Manager>()
-                          .generalManager
-                          .vibrateEnabled) {
-                        //    Vibrate.feedback(FeedbackType.light);
-                      }
-                    },
-                  ))),
+            ),
+          ),
         );
       },
     );

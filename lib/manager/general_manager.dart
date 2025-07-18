@@ -53,15 +53,14 @@ class GeneralManager {
   }
 
   Future<void> setDeviceNameBasedOnSettingAndOS(
-      Map<String, dynamic> settings) async {
+    Map<String, dynamic> settings,
+  ) async {
     deviceName = settings["deviceName"];
     deviceName ??= (await manager.deviceInfo.deviceInfo).data["name"];
     deviceName ??= "No Name found";
   }
 
-  Map<String, dynamic> _loadDefaultSettings() => {
-        "vibrateEnabled": false,
-      };
+  Map<String, dynamic> _loadDefaultSettings() => {"vibrateEnabled": false};
 
   bool get isVibrateEnabled => vibrateEnabled;
 
@@ -71,7 +70,7 @@ class GeneralManager {
       "loginKey": loginKey,
       "id": deviceID,
       "ioBVersion": ioBVersion,
-      "logger": customLoggerFilter
+      "logger": customLoggerFilter,
     };
 
     await fileManager.writeJSON(key, settings);

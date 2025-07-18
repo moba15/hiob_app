@@ -6,9 +6,10 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomColorPaletteWidgetView extends StatelessWidget {
   final CustomColorPaletteWidget colorPaletteWidget;
-  const CustomColorPaletteWidgetView(
-      {Key? key, required this.colorPaletteWidget})
-      : super(key: key);
+  const CustomColorPaletteWidgetView({
+    Key? key,
+    required this.colorPaletteWidget,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +21,7 @@ class CustomColorPaletteWidgetView extends StatelessWidget {
       name = colorPaletteWidget.name!;
     }
     if (colorPaletteWidget.dataPoint == null) {
-      return const ListTile(
-        title: Text("Device not found"),
-      );
+      return const ListTile(title: Text("Device not found"));
     }
     final bloc = DataPointBloc(colorPaletteWidget.dataPoint!);
     return BlocBuilder<DataPointBloc, DataPointState>(
@@ -45,7 +44,10 @@ class CustomColorPaletteWidgetView extends StatelessWidget {
             title: Text(name),
             trailing: Text("Not supported value: $value"),
             onTap: () => colorPickerDialog(
-                context, bloc, const Color.fromARGB(0, 0, 0, 0)),
+              context,
+              bloc,
+              const Color.fromARGB(0, 0, 0, 0),
+            ),
           );
         }
         int? alpha;
@@ -65,61 +67,70 @@ class CustomColorPaletteWidgetView extends StatelessWidget {
         }
 
         return ListTile(
-            title: Text(name),
-            trailing: alpha == null ||
-                    red == null ||
-                    blue == null ||
-                    green == null
-                ? Text(
-                    "Currently only hex values are supported: ${state.value}")
-                : ColorIndicator(
-                    color: Color.fromARGB(alpha, red, green, blue),
-                  ),
-            onTap: () async {
-              Color newColor = await colorPickerDialog(context, bloc,
-                  Color.fromARGB(alpha ?? 0, red ?? 0, green ?? 0, blue ?? 0));
-              bloc.add(DataPointValueUpdateRequest(
-                  value: colorPaletteWidget.prefix +
-                      (colorPaletteWidget.alpha == true
-                          ? newColor.hexAlpha
-                          : newColor.hex),
-                  oldValue: newColor.hex));
-            });
+          title: Text(name),
+          trailing:
+              alpha == null || red == null || blue == null || green == null
+              ? Text("Currently only hex values are supported: ${state.value}")
+              : ColorIndicator(color: Color.fromARGB(alpha, red, green, blue)),
+          onTap: () async {
+            Color newColor = await colorPickerDialog(
+              context,
+              bloc,
+              Color.fromARGB(alpha ?? 0, red ?? 0, green ?? 0, blue ?? 0),
+            );
+            bloc.add(
+              DataPointValueUpdateRequest(
+                value:
+                    colorPaletteWidget.prefix +
+                    (colorPaletteWidget.alpha == true
+                        ? newColor.hexAlpha
+                        : newColor.hex),
+                oldValue: newColor.hex,
+              ),
+            );
+          },
+        );
       },
     );
   }
 
   Future<Color> colorPickerDialog(
-      BuildContext context, DataPointBloc bloc, Color selectedColor) async {
-    return showColorPickerDialog(context, selectedColor,
-        width: 40,
-        height: 40,
-        borderRadius: 4,
-        spacing: 5,
-        runSpacing: 5,
-        wheelDiameter: 155,
-        heading: Text(
-          'Select color',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        subheading: Text(
-          'Select color shade',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        wheelSubheading: Text(
-          'Selected color and its shades',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        maxRecentColors: 2,
-        showRecentColors: false,
-        showMaterialName: false,
-        showColorName: false,
-        showColorCode: false,
-        enableTonalPalette: true,
-        enableShadesSelection: colorPaletteWidget.shadesSelection,
-        materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
-        colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
-        colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
-        pickersEnabled: colorPaletteWidget.pickersEnabled);
+    BuildContext context,
+    DataPointBloc bloc,
+    Color selectedColor,
+  ) async {
+    return showColorPickerDialog(
+      context,
+      selectedColor,
+      width: 40,
+      height: 40,
+      borderRadius: 4,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 155,
+      heading: Text(
+        'Select color',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      subheading: Text(
+        'Select color shade',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      wheelSubheading: Text(
+        'Selected color and its shades',
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      maxRecentColors: 2,
+      showRecentColors: false,
+      showMaterialName: false,
+      showColorName: false,
+      showColorCode: false,
+      enableTonalPalette: true,
+      enableShadesSelection: colorPaletteWidget.shadesSelection,
+      materialNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorNameTextStyle: Theme.of(context).textTheme.bodySmall,
+      colorCodeTextStyle: Theme.of(context).textTheme.bodySmall,
+      pickersEnabled: colorPaletteWidget.pickersEnabled,
+    );
   }
 }

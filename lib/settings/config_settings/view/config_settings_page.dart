@@ -17,24 +17,21 @@ class ConfigSettingsPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () => _configBloc.add(ConfigReloadEvent()),
-            icon: const Icon(
-              Icons.update,
-              size: 30,
-            ),
+            icon: const Icon(Icons.update, size: 30),
             tooltip: "Reload",
-          )
+          ),
         ],
       ),
       body: BlocProvider<ConfigBloc>(
         create: (BuildContext context) {
           return _configBloc;
         },
-        child: _ConfigsListView(
-          configBloc: _configBloc,
-        ),
+        child: _ConfigsListView(configBloc: _configBloc),
       ),
       floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add), onPressed: () => _onPressed(context)),
+        child: const Icon(Icons.add),
+        onPressed: () => _onPressed(context),
+      ),
     );
   }
 
@@ -42,33 +39,38 @@ class ConfigSettingsPage extends StatelessWidget {
     Navigator.pop(context);
 
     if (name.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(seconds: 2),
-        content: Text(
-          "Name can't be empty",
-          style: TextStyle(color: Colors.red),
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 2),
+          content: Text(
+            "Name can't be empty",
+            style: TextStyle(color: Colors.red),
+          ),
         ),
-      ));
+      );
 
       return;
     }
     Manager.instance.settingsSyncManager.createNewSettingsTemplate(name);
     Manager
-        .instance.settingsSyncManager.configAddedStreamController.stream.first
+        .instance
+        .settingsSyncManager
+        .configAddedStreamController
+        .stream
+        .first
         .then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        duration: Duration(milliseconds: 700),
-        behavior: SnackBarBehavior.floating,
-        content: Text(
-          "Added",
-          style: TextStyle(color: Colors.green),
-        ),
-      ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              duration: Duration(milliseconds: 700),
+              behavior: SnackBarBehavior.floating,
+              content: Text("Added", style: TextStyle(color: Colors.green)),
+            ),
+          );
 
-      //TODO: Fetch New list
-      _configBloc.add(ConfigAddedEvent());
-    });
+          //TODO: Fetch New list
+          _configBloc.add(ConfigAddedEvent());
+        });
   }
 
   _onPressed(BuildContext context) {
@@ -76,7 +78,8 @@ class ConfigSettingsPage extends StatelessWidget {
       context: context,
       builder: (context) {
         return _AddSettingTemplateDialog(
-            onAdd: (name, context) => _onAdd(context, name));
+          onAdd: (name, context) => _onAdd(context, name),
+        );
       },
     );
   }
@@ -114,7 +117,7 @@ class _ConfigsListView extends StatefulWidget {
   final ConfigBloc configBloc;
 
   const _ConfigsListView({Key? key, required this.configBloc})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<_ConfigsListView> createState() => _ConfigsListViewState();
@@ -137,8 +140,10 @@ class _ConfigsListViewState extends State<_ConfigsListView> {
             return Container(
               margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
               height: 100,
-              child:
-                  _ConfigCard(preConfig: state.configs[index], selected: false),
+              child: _ConfigCard(
+                preConfig: state.configs[index],
+                selected: false,
+              ),
             );
           },
         );
@@ -152,60 +157,59 @@ class _ConfigCard extends StatelessWidget {
   final bool selected;
 
   const _ConfigCard({Key? key, required this.preConfig, required this.selected})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: selected ? Colors.green : null,
-        child: Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const Spacer(),
-              Text(
-                preConfig.name,
-                style: const TextStyle(fontSize: 22),
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  OutlinedButton(
-                    onPressed: () => showDialog(
-                        context: context,
-                        builder: (c) => _ConfigLoadingDialog(
-                              preConfig: preConfig,
-                              upload: true,
-                            )),
-                    child: const Text("Upload Settings"),
+      color: selected ? Colors.green : null,
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            const Spacer(),
+            Text(preConfig.name, style: const TextStyle(fontSize: 22)),
+            const Spacer(),
+            Row(
+              children: [
+                OutlinedButton(
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (c) => _ConfigLoadingDialog(
+                      preConfig: preConfig,
+                      upload: true,
+                    ),
                   ),
-                  const Spacer(),
-                  OutlinedButton(
-                    onPressed: () => showDialog(
-                        context: context,
-                        builder: (c) => _ConfigLoadingDialog(
-                              preConfig: preConfig,
-                              upload: false,
-                            )),
-                    child: const Text("Load"),
+                  child: const Text("Upload Settings"),
+                ),
+                const Spacer(),
+                OutlinedButton(
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (c) => _ConfigLoadingDialog(
+                      preConfig: preConfig,
+                      upload: false,
+                    ),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ));
+                  child: const Text("Load"),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void showSuccessSnackBar(context, text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 700),
-      behavior: SnackBarBehavior.floating,
-      content: Text(
-        text,
-        style: const TextStyle(color: Colors.green),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(milliseconds: 700),
+        behavior: SnackBarBehavior.floating,
+        content: Text(text, style: const TextStyle(color: Colors.green)),
       ),
-    ));
+    );
   }
 }
 
@@ -213,9 +217,11 @@ class _ConfigLoadingDialog extends StatefulWidget {
   final PreConfig preConfig;
   final bool upload;
 
-  const _ConfigLoadingDialog(
-      {Key? key, required this.preConfig, required this.upload})
-      : super(key: key);
+  const _ConfigLoadingDialog({
+    Key? key,
+    required this.preConfig,
+    required this.upload,
+  }) : super(key: key);
 
   @override
   State<_ConfigLoadingDialog> createState() => _ConfigLoadingDialogState();
@@ -237,31 +243,34 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               buildSelectionCardCard(
-                  name: "Screens",
-                  iconData: Icons.add_to_home_screen,
-                  selected: screens,
-                  onTap: () => setState(() {
-                        screens = !screens;
-                      })),
+                name: "Screens",
+                iconData: Icons.add_to_home_screen,
+                selected: screens,
+                onTap: () => setState(() {
+                  screens = !screens;
+                }),
+              ),
               buildSelectionCardCard(
-                  name: "Widgets",
-                  iconData: Icons.widgets,
-                  selected: widgets,
-                  onTap: () => setState(() {
-                        widgets = !widgets;
-                      })),
+                name: "Widgets",
+                iconData: Icons.widgets,
+                selected: widgets,
+                onTap: () => setState(() {
+                  widgets = !widgets;
+                }),
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               buildSelectionCardCard(
-                  name: "Devices",
-                  iconData: Icons.devices,
-                  selected: device,
-                  onTap: () => setState(() {
-                        device = !device;
-                      })),
+                name: "Devices",
+                iconData: Icons.devices,
+                selected: device,
+                onTap: () => setState(() {
+                  device = !device;
+                }),
+              ),
             ],
           ),
         ],
@@ -279,7 +288,7 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
               widget.upload ? const Text("Upload") : const Text("Load"),
               widget.upload
                   ? const Icon(Icons.upload)
-                  : const Icon(Icons.download)
+                  : const Icon(Icons.download),
             ],
           ),
         ),
@@ -287,11 +296,12 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
     );
   }
 
-  Card buildSelectionCardCard(
-      {required String name,
-      bool selected = true,
-      required VoidCallback onTap,
-      required IconData iconData}) {
+  Card buildSelectionCardCard({
+    required String name,
+    bool selected = true,
+    required VoidCallback onTap,
+    required IconData iconData,
+  }) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -305,29 +315,24 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              iconData,
-              size: 35,
-            ),
+            Icon(iconData, size: 35),
             Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 5),
-                ),
+                Container(margin: const EdgeInsets.only(left: 5)),
                 Text(
                   name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
                 Icon(
                   selected ? Icons.check : Icons.close,
                   color: selected ? Colors.green : Colors.red,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(right: 5),
-                ),
+                Container(margin: const EdgeInsets.only(right: 5)),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -337,29 +342,44 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
   void load() {
     Navigator.pop(context);
     Manager
-        .instance.settingsSyncManager.loadedSuccessStreamController.stream.first
+        .instance
+        .settingsSyncManager
+        .loadedSuccessStreamController
+        .stream
+        .first
         .then((value) => showSuccessSnackBar(context, "Loaded"));
-    Manager.instance.settingsSyncManager.getTemplateSettings(widget.preConfig,
-        device: device, screen: screens, widget: widgets);
+    Manager.instance.settingsSyncManager.getTemplateSettings(
+      widget.preConfig,
+      device: device,
+      screen: screens,
+      widget: widgets,
+    );
   }
 
   void upload() {
     Navigator.pop(context);
     Manager
-        .instance.settingsSyncManager.uploadSuccessStreamController.stream.first
+        .instance
+        .settingsSyncManager
+        .uploadSuccessStreamController
+        .stream
+        .first
         .then((value) => showSuccessSnackBar(context, "Uploaded"));
-    Manager.instance.settingsSyncManager.uploadSettings(widget.preConfig,
-        device: device, screen: screens, widget: widgets);
+    Manager.instance.settingsSyncManager.uploadSettings(
+      widget.preConfig,
+      device: device,
+      screen: screens,
+      widget: widgets,
+    );
   }
 
   void showSuccessSnackBar(context, text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 700),
-      behavior: SnackBarBehavior.floating,
-      content: Text(
-        text,
-        style: const TextStyle(color: Colors.green),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(milliseconds: 700),
+        behavior: SnackBarBehavior.floating,
+        content: Text(text, style: const TextStyle(color: Colors.green)),
       ),
-    ));
+    );
   }
 }

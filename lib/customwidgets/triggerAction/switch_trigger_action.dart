@@ -12,18 +12,20 @@ class SwitchTriggerAction extends TriggerAction {
   dynamic switchTrue;
   dynamic switchFalse;
 
-  SwitchTriggerAction(
-      {required this.dataPoint,
-      this.switchFalse = false,
-      this.switchTrue = true});
+  SwitchTriggerAction({
+    required this.dataPoint,
+    this.switchFalse = false,
+    this.switchTrue = true,
+  });
 
   factory SwitchTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
         .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
     return SwitchTriggerAction(
-        dataPoint: dataPoint,
-        switchFalse: json["switchFalse"],
-        switchTrue: json["switchTrue"]);
+      dataPoint: dataPoint,
+      switchFalse: json["switchFalse"],
+      switchTrue: json["switchTrue"],
+    );
   }
 
   @override
@@ -37,11 +39,11 @@ class SwitchTriggerAction extends TriggerAction {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": type.toString(),
-        "dataPoint": dataPoint?.id,
-        "switchTrue": switchTrue,
-        "switchFalse": switchFalse
-      };
+    "type": type.toString(),
+    "dataPoint": dataPoint?.id,
+    "switchTrue": switchTrue,
+    "switchFalse": switchFalse,
+  };
 
   @override
   void trigger() {}
@@ -60,10 +62,11 @@ class SwitchTriggerAction extends TriggerAction {
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomSwitchWidget(
-        id: id,
-        name: name,
-        dataPoint: dataPoint,
-        sendIfOff: switchFalse.toString(),
-        sendIfOn: switchTrue.toString());
+      id: id,
+      name: name,
+      dataPoint: dataPoint,
+      sendIfOff: switchFalse.toString(),
+      sendIfOn: switchTrue.toString(),
+    );
   }
 }

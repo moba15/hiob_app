@@ -11,14 +11,14 @@ class TemplateSelectionAlertDialog extends StatefulWidget {
   final bool Function(CustomWidgetWrapper)? filter;
   final String selectButton;
 
-  const TemplateSelectionAlertDialog(
-      {Key? key,
-      required this.screenManager,
-      required this.onSelect,
-      required this.selected,
-      this.filter,
-      this.selectButton = "Add"})
-      : super(key: key);
+  const TemplateSelectionAlertDialog({
+    Key? key,
+    required this.screenManager,
+    required this.onSelect,
+    required this.selected,
+    this.filter,
+    this.selectButton = "Add",
+  }) : super(key: key);
 
   @override
   State<TemplateSelectionAlertDialog> createState() =>
@@ -31,17 +31,20 @@ class _TemplateSelectionAlertDialogState
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetWrapper> templates =
-        List.of(widget.screenManager.manager.customWidgetManager.templates);
+    List<CustomWidgetWrapper> templates = List.of(
+      widget.screenManager.manager.customWidgetManager.templates,
+    );
 
     templates.removeWhere((element) => widget.selected.contains(element));
     return AlertDialog(
-      title:
-          Text(getAppLocalizations(context).select_widget_template_alert_title),
+      title: Text(
+        getAppLocalizations(context).select_widget_template_alert_title,
+      ),
       actions: [
         TextButton(
-            onPressed: cancel,
-            child: Text(getAppLocalizations(context).cancel)),
+          onPressed: cancel,
+          child: Text(getAppLocalizations(context).cancel),
+        ),
         TextButton(onPressed: add, child: Text(widget.selectButton)),
       ],
       content: SizedBox(
@@ -49,47 +52,52 @@ class _TemplateSelectionAlertDialogState
           children: [
             for (CustomWidgetTypeDeprecated type
                 in CustomWidgetTypeDeprecated.values.where(
-                    (element) => element != CustomWidgetTypeDeprecated.group))
-              if (templates.any((element) =>
-                  element.type?.name == type.name &&
-                  (widget.filter == null || widget.filter!(element))))
+                  (element) => element != CustomWidgetTypeDeprecated.group,
+                ))
+              if (templates.any(
+                (element) =>
+                    element.type?.name == type.name &&
+                    (widget.filter == null || widget.filter!(element)),
+              ))
                 ExpansionTile(
                   trailing: Checkbox(
-                      value: templates
-                          .where(
-                            (element) =>
-                                element.type?.name == type.name &&
-                                (widget.filter == null ||
-                                    widget.filter!(element)),
-                          )
-                          .where(
-                            (element) => selected.contains(element),
-                          )
-                          .isNotEmpty,
-                      onChanged: (b) {
-                        setState(() {
-                          templates
-                              .where((element) =>
+                    value: templates
+                        .where(
+                          (element) =>
+                              element.type?.name == type.name &&
+                              (widget.filter == null ||
+                                  widget.filter!(element)),
+                        )
+                        .where((element) => selected.contains(element))
+                        .isNotEmpty,
+                    onChanged: (b) {
+                      setState(() {
+                        templates
+                            .where(
+                              (element) =>
                                   element.type?.name == type.name &&
                                   (widget.filter == null ||
-                                      widget.filter!(element)))
-                              .forEach(
-                            (element) {
+                                      widget.filter!(element)),
+                            )
+                            .forEach((element) {
                               if (b ?? false) {
                                 selected.add(element);
                               } else {
                                 selected.remove(element);
                               }
-                            },
-                          );
-                        });
-                      }),
+                            });
+                      });
+                    },
+                  ),
                   title: Text(
-                      "${type.name} (${templates.where((element) => element.type?.name == type.name).length})"),
+                    "${type.name} (${templates.where((element) => element.type?.name == type.name).length})",
+                  ),
                   children: [
-                    for (CustomWidgetWrapper t in templates.where((element) =>
-                        element.type?.name == type.name &&
-                        (widget.filter == null || widget.filter!(element))))
+                    for (CustomWidgetWrapper t in templates.where(
+                      (element) =>
+                          element.type?.name == type.name &&
+                          (widget.filter == null || widget.filter!(element)),
+                    ))
                       ListTile(
                         selected: selected.contains(t),
                         leading: Checkbox(
@@ -106,7 +114,7 @@ class _TemplateSelectionAlertDialogState
                         ),
                         title: Text(t.name),
                         subtitle: Text(t.type?.name ?? "Error"),
-                      )
+                      ),
                   ],
                 ),
           ],

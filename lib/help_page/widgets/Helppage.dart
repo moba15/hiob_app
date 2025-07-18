@@ -11,9 +11,7 @@ class _WidgetHelpPageState extends State<WidgetHelpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Help"),
-      ),
+      appBar: AppBar(title: const Text("Help")),
       body: const Text("TODO"),
     );
   }

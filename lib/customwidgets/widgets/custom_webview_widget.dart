@@ -15,14 +15,17 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
   bool javaScript;
   DataPoint? dataPoint;
 
-  CustomWebViewWidget(
-      {required String? name,
-      required this.url,
-      required this.dataPoint,
-      this.height = 300,
-      this.javaScript = false})
-      : super(
-            name: name, type: CustomWidgetTypeDeprecated.webView, settings: {});
+  CustomWebViewWidget({
+    required String? name,
+    required this.url,
+    required this.dataPoint,
+    this.height = 300,
+    this.javaScript = false,
+  }) : super(
+         name: name,
+         type: CustomWidgetTypeDeprecated.webView,
+         settings: {},
+       );
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -30,28 +33,30 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": CustomWidgetTypeDeprecated.webView.toString(),
-        "name": name,
-        "url": url,
-        "height": height,
-        "javaScript": javaScript,
-        "dataPoint": dataPoint?.id,
-      };
+    "type": CustomWidgetTypeDeprecated.webView.toString(),
+    "name": name,
+    "url": url,
+    "height": height,
+    "javaScript": javaScript,
+    "dataPoint": dataPoint?.id,
+  };
 
   factory CustomWebViewWidget.fromJson(Map<String, dynamic> json) {
     DataPoint? dataPoint;
     if (json["dataPoint"] != null) {
-      dataPoint = Manager.instance.deviceManager
-          .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+      dataPoint = Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(
+        json["dataPoint"] ?? "",
+      );
     } else {
       dataPoint = null;
     }
     return CustomWebViewWidget(
-        name: json["name"],
-        url: json["url"] ?? "",
-        height: json["height"] ?? 300,
-        javaScript: json["javaScript"] ?? false,
-        dataPoint: dataPoint);
+      name: json["name"],
+      url: json["url"] ?? "",
+      height: json["height"] ?? 300,
+      javaScript: json["javaScript"] ?? false,
+      dataPoint: dataPoint,
+    );
   }
 
   @override
@@ -60,16 +65,22 @@ class CustomWebViewWidget extends CustomWidgetDeprecated {
   @override
   CustomWidgetDeprecated clone() {
     return CustomWebViewWidget(
-        name: name,
-        url: url,
-        height: height,
-        javaScript: javaScript,
-        dataPoint: dataPoint);
+      name: name,
+      url: url,
+      height: height,
+      javaScript: javaScript,
+      dataPoint: dataPoint,
+    );
   }
 
   @override
   CustomWidget migrate({required String id, required String name}) {
     return new_widget.CustomWebViewWidget(
-        id: id, name: name, dataPoint: dataPoint, url: url, height: height);
+      id: id,
+      name: name,
+      dataPoint: dataPoint,
+      url: url,
+      height: height,
+    );
   }
 }

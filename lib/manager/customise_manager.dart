@@ -43,10 +43,11 @@ class CustomWidgetManager {
   final StreamController<List<CustomWidgetWrapper>> templatesStreamController =
       StreamController.broadcast();
 
-  CustomWidgetManager(
-      {required this.fileManager,
-      required this.deviceManager,
-      required this.manager});
+  CustomWidgetManager({
+    required this.fileManager,
+    required this.deviceManager,
+    required this.manager,
+  });
 
   Future<void> loadTemplates() async {
     //fileManager.writeJSONList(templateKey, templates);
@@ -57,10 +58,12 @@ class CustomWidgetManager {
     }
 
     List? listRaw = await fileManager.getList(templateKey);
-    developer.log("Widgets Raw Loaded $listRaw",
-        name: "de.bachmaiers/customise_manager.dart",
-        time: DateTime.now(),
-        zone: Zone.current);
+    developer.log(
+      "Widgets Raw Loaded $listRaw",
+      name: "de.bachmaiers/customise_manager.dart",
+      time: DateTime.now(),
+      zone: Zone.current,
+    );
 
     if (listRaw == null) {
       loaded = true;
@@ -87,13 +90,16 @@ class CustomWidgetManager {
       }
       String typeRaw = widgetRaw["type"];
       CustomWidgetTypeDeprecated type = CustomWidgetTypeDeprecated.values
-          .firstWhere((element) =>
-              element.toString() == typeRaw ||
-              element.toString().replaceAll("Deprecated", "") == typeRaw ||
-              element
-                      .toString()
-                      .replaceAll("CustomWidgetTypeDeprecated.", "") ==
-                  typeRaw);
+          .firstWhere(
+            (element) =>
+                element.toString() == typeRaw ||
+                element.toString().replaceAll("Deprecated", "") == typeRaw ||
+                element.toString().replaceAll(
+                      "CustomWidgetTypeDeprecated.",
+                      "",
+                    ) ==
+                    typeRaw,
+          );
       //TODO refactor
       dynamic customWidget;
       switch (type) {
@@ -168,7 +174,10 @@ class CustomWidgetManager {
       }
       if (customWidget is CustomWidgetDeprecated) {
         CustomWidgetTemplate template = CustomWidgetTemplate(
-            name: name, customWidget: customWidget, id: id);
+          name: name,
+          customWidget: customWidget,
+          id: id,
+        );
         templates.add(template);
       } else if (customWidget is CustomWidget) {
         templates.add(customWidget);
@@ -204,7 +213,8 @@ class CustomWidgetManager {
   }
 
   List<CustomWidgetWrapper> getTemplatesByType(
-      CustomWidgetTypeDeprecated type) {
+    CustomWidgetTypeDeprecated type,
+  ) {
     List<CustomWidgetWrapper> tmps = [];
     for (CustomWidgetWrapper t in templates) {
       if (t.type?.name == type.name) {
@@ -264,10 +274,13 @@ class CustomWidgetManager {
     List<CustomWidgetTemplate> renamedTemplatesDepc = templatesToCopy
         .whereType<CustomWidgetTemplate>()
         .map((e) => e)
-        .map((CustomWidgetTemplate e) => CustomWidgetTemplate(
+        .map(
+          (CustomWidgetTemplate e) => CustomWidgetTemplate(
             id: Manager.instance.getRandString(12),
             name: "${e.name}_copy2",
-            customWidget: e.customWidget.clone()..name = ("${e.name}_copy")))
+            customWidget: e.customWidget.clone()..name = ("${e.name}_copy"),
+          ),
+        )
         .toList();
     templates.addAll(renamedTemplatesDepc);
 

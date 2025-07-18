@@ -18,11 +18,12 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   DataPoint dataPoint;
 
   DataPointBloc(this.dataPoint)
-      : super(DataPointInitial(value: dataPoint.value)) {
+    : super(DataPointInitial(value: dataPoint.value)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
-    _deviceValueSubscription =
-        dataPoint.valueStreamController.stream.listen((event) {
+    _deviceValueSubscription = dataPoint.valueStreamController.stream.listen((
+      event,
+    ) {
       add(DataPointValueUpdate(value: event, oldValue: dataPoint.olderValue));
     });
   }
@@ -34,16 +35,21 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   }
 
   void _onValueUpdated(
-      DataPointValueUpdate event, Emitter<DataPointState> emit) {
+    DataPointValueUpdate event,
+    Emitter<DataPointState> emit,
+  ) {
     emit(DataPointState(value: event.value, oldValue: event.oldValue));
     dataPoint.value = event.value;
   }
 
   void _onValueUpdateRequest(
-      DataPointValueUpdateRequest event, Emitter<DataPointState> emit) {
+    DataPointValueUpdateRequest event,
+    Emitter<DataPointState> emit,
+  ) {
     dynamic value = event.value;
-    double? parsedValue =
-        double.tryParse(value.toString().replaceAll(",", "."));
+    double? parsedValue = double.tryParse(
+      value.toString().replaceAll(",", "."),
+    );
     if (parsedValue != null) {
       value = parsedValue;
     }
@@ -53,7 +59,8 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     dataPoint.device?.lastUpdated = DateTime.now();
     if (dataPoint.device is IoBrokerDevice) {
       Manager.instance.connectionManager.sendMsg(
-          StateChangeRequestIobPackage(stateID: dataPoint.id, value: value));
+        StateChangeRequestIobPackage(stateID: dataPoint.id, value: value),
+      );
     }
   }
 }

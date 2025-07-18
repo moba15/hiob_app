@@ -50,235 +50,125 @@ import 'package:uuid/uuid.dart' as _i21;
 // ignore_for_file: subtype_of_sealed_class
 
 class _FakeHistoryData_0 extends _i1.SmartFake implements _i2.HistoryData {
-  _FakeHistoryData_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeHistoryData_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeStreamController_1<T> extends _i1.SmartFake
     implements _i3.StreamController<T> {
-  _FakeStreamController_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeStreamController_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeDataPoint_2 extends _i1.SmartFake implements _i4.DataPoint {
-  _FakeDataPoint_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeDataPoint_2(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeDataPointState_3 extends _i1.SmartFake
     implements _i5.DataPointState {
-  _FakeDataPointState_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeDataPointState_3(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeDeviceInfoPlugin_4 extends _i1.SmartFake
     implements _i6.DeviceInfoPlugin {
-  _FakeDeviceInfoPlugin_4(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeDeviceInfoPlugin_4(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeFileManager_5 extends _i1.SmartFake implements _i7.FileManager {
-  _FakeFileManager_5(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeFileManager_5(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeCustomWidgetManager_6 extends _i1.SmartFake
     implements _i8.CustomWidgetManager {
-  _FakeCustomWidgetManager_6(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeCustomWidgetManager_6(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeDeviceManager_7 extends _i1.SmartFake implements _i9.DeviceManager {
-  _FakeDeviceManager_7(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeDeviceManager_7(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeScreenManager_8 extends _i1.SmartFake implements _i10.ScreenManager {
-  _FakeScreenManager_8(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeScreenManager_8(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeIoBrokerManager_9 extends _i1.SmartFake
     implements _i11.IoBrokerManager {
-  _FakeIoBrokerManager_9(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeIoBrokerManager_9(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeConnectionManager_10 extends _i1.SmartFake
     implements _i12.ConnectionManager {
-  _FakeConnectionManager_10(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeConnectionManager_10(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeGeneralManager_11 extends _i1.SmartFake
     implements _i13.GeneralManager {
-  _FakeGeneralManager_11(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeGeneralManager_11(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeHistoryManager_12 extends _i1.SmartFake
     implements _i14.HistoryManager {
-  _FakeHistoryManager_12(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeHistoryManager_12(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeSettingsSyncManager_13 extends _i1.SmartFake
     implements _i15.SettingsSyncManager {
-  _FakeSettingsSyncManager_13(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeSettingsSyncManager_13(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeThemeManager_14 extends _i1.SmartFake implements _i16.ThemeManager {
-  _FakeThemeManager_14(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeThemeManager_14(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeBackgroundRunner_15 extends _i1.SmartFake
     implements _i17.BackgroundRunner {
-  _FakeBackgroundRunner_15(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeBackgroundRunner_15(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeNotificationManager_16 extends _i1.SmartFake
     implements _i18.NotificationManager {
-  _FakeNotificationManager_16(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeNotificationManager_16(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeTalker_17 extends _i1.SmartFake implements _i19.Talker {
-  _FakeTalker_17(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeTalker_17(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeRandom_18 extends _i1.SmartFake implements _i20.Random {
-  _FakeRandom_18(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeRandom_18(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeUuid_19 extends _i1.SmartFake implements _i21.Uuid {
-  _FakeUuid_19(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeUuid_19(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeManager_20 extends _i1.SmartFake implements _i22.Manager {
-  _FakeManager_20(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeManager_20(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeCustomLoggerFilter_21 extends _i1.SmartFake
     implements _i23.CustomLoggerFilter {
-  _FakeCustomLoggerFilter_21(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeCustomLoggerFilter_21(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 /// A class which mocks [DataPoint].
@@ -287,185 +177,149 @@ class _FakeCustomLoggerFilter_21 extends _i1.SmartFake
 class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
   @override
   set value(dynamic _value) => super.noSuchMethod(
-        Invocation.setter(
-          #value,
-          _value,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#value, _value),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set olderValue(dynamic _olderValue) => super.noSuchMethod(
-        Invocation.setter(
-          #olderValue,
-          _olderValue,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#olderValue, _olderValue),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  String get name => (super.noSuchMethod(
-        Invocation.getter(#name),
-        returnValue: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#name),
-        ),
-        returnValueForMissingStub: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#name),
-        ),
-      ) as String);
+  String get name =>
+      (super.noSuchMethod(
+            Invocation.getter(#name),
+            returnValue: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#name),
+            ),
+            returnValueForMissingStub: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#name),
+            ),
+          )
+          as String);
 
   @override
   set name(String? _name) => super.noSuchMethod(
-        Invocation.setter(
-          #name,
-          _name,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#name, _name),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  String get id => (super.noSuchMethod(
-        Invocation.getter(#id),
-        returnValue: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#id),
-        ),
-        returnValueForMissingStub: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#id),
-        ),
-      ) as String);
+  String get id =>
+      (super.noSuchMethod(
+            Invocation.getter(#id),
+            returnValue: _i24.dummyValue<String>(this, Invocation.getter(#id)),
+            returnValueForMissingStub: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#id),
+            ),
+          )
+          as String);
 
   @override
   set id(String? _id) => super.noSuchMethod(
-        Invocation.setter(
-          #id,
-          _id,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#id, _id),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set device(_i25.Device? _device) => super.noSuchMethod(
-        Invocation.setter(
-          #device,
-          _device,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#device, _device),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set type(_i26.StateType? _type) => super.noSuchMethod(
-        Invocation.setter(
-          #type,
-          _type,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#type, _type),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set role(String? _role) => super.noSuchMethod(
-        Invocation.setter(
-          #role,
-          _role,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#role, _role),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set valueType(String? _valueType) => super.noSuchMethod(
-        Invocation.setter(
-          #valueType,
-          _valueType,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#valueType, _valueType),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set otherDetails(Map<String, dynamic>? _otherDetails) => super.noSuchMethod(
-        Invocation.setter(
-          #otherDetails,
-          _otherDetails,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#otherDetails, _otherDetails),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i2.HistoryData get historyData => (super.noSuchMethod(
-        Invocation.getter(#historyData),
-        returnValue: _FakeHistoryData_0(
-          this,
-          Invocation.getter(#historyData),
-        ),
-        returnValueForMissingStub: _FakeHistoryData_0(
-          this,
-          Invocation.getter(#historyData),
-        ),
-      ) as _i2.HistoryData);
+  _i2.HistoryData get historyData =>
+      (super.noSuchMethod(
+            Invocation.getter(#historyData),
+            returnValue: _FakeHistoryData_0(
+              this,
+              Invocation.getter(#historyData),
+            ),
+            returnValueForMissingStub: _FakeHistoryData_0(
+              this,
+              Invocation.getter(#historyData),
+            ),
+          )
+          as _i2.HistoryData);
 
   @override
   set historyData(_i2.HistoryData? _historyData) => super.noSuchMethod(
-        Invocation.setter(
-          #historyData,
-          _historyData,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#historyData, _historyData),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i3.StreamController<dynamic> get valueStreamController =>
       (super.noSuchMethod(
-        Invocation.getter(#valueStreamController),
-        returnValue: _FakeStreamController_1<dynamic>(
-          this,
-          Invocation.getter(#valueStreamController),
-        ),
-        returnValueForMissingStub: _FakeStreamController_1<dynamic>(
-          this,
-          Invocation.getter(#valueStreamController),
-        ),
-      ) as _i3.StreamController<dynamic>);
+            Invocation.getter(#valueStreamController),
+            returnValue: _FakeStreamController_1<dynamic>(
+              this,
+              Invocation.getter(#valueStreamController),
+            ),
+            returnValueForMissingStub: _FakeStreamController_1<dynamic>(
+              this,
+              Invocation.getter(#valueStreamController),
+            ),
+          )
+          as _i3.StreamController<dynamic>);
 
   @override
   set valueStreamController(
-          _i3.StreamController<dynamic>? _valueStreamController) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #valueStreamController,
-          _valueStreamController,
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i3.StreamController<dynamic>? _valueStreamController,
+  ) => super.noSuchMethod(
+    Invocation.setter(#valueStreamController, _valueStreamController),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set setValue(dynamic value) => super.noSuchMethod(
-        Invocation.setter(
-          #setValue,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#setValue, value),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-        returnValueForMissingStub: <String, dynamic>{},
-      ) as Map<String, dynamic>);
+  Map<String, dynamic> toJson() =>
+      (super.noSuchMethod(
+            Invocation.method(#toJson, []),
+            returnValue: <String, dynamic>{},
+            returnValueForMissingStub: <String, dynamic>{},
+          )
+          as Map<String, dynamic>);
 
   @override
   dynamic getInformation(String? key) => super.noSuchMethod(
-        Invocation.method(
-          #getInformation,
-          [key],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#getInformation, [key]),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [DataPointBloc].
@@ -473,157 +327,114 @@ class MockDataPoint extends _i1.Mock implements _i4.DataPoint {
 /// See the documentation for Mockito's code generation for more information.
 class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
   @override
-  _i4.DataPoint get dataPoint => (super.noSuchMethod(
-        Invocation.getter(#dataPoint),
-        returnValue: _FakeDataPoint_2(
-          this,
-          Invocation.getter(#dataPoint),
-        ),
-        returnValueForMissingStub: _FakeDataPoint_2(
-          this,
-          Invocation.getter(#dataPoint),
-        ),
-      ) as _i4.DataPoint);
+  _i4.DataPoint get dataPoint =>
+      (super.noSuchMethod(
+            Invocation.getter(#dataPoint),
+            returnValue: _FakeDataPoint_2(this, Invocation.getter(#dataPoint)),
+            returnValueForMissingStub: _FakeDataPoint_2(
+              this,
+              Invocation.getter(#dataPoint),
+            ),
+          )
+          as _i4.DataPoint);
 
   @override
   set dataPoint(_i4.DataPoint? _dataPoint) => super.noSuchMethod(
-        Invocation.setter(
-          #dataPoint,
-          _dataPoint,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#dataPoint, _dataPoint),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i5.DataPointState get state => (super.noSuchMethod(
-        Invocation.getter(#state),
-        returnValue: _FakeDataPointState_3(
-          this,
-          Invocation.getter(#state),
-        ),
-        returnValueForMissingStub: _FakeDataPointState_3(
-          this,
-          Invocation.getter(#state),
-        ),
-      ) as _i5.DataPointState);
+  _i5.DataPointState get state =>
+      (super.noSuchMethod(
+            Invocation.getter(#state),
+            returnValue: _FakeDataPointState_3(this, Invocation.getter(#state)),
+            returnValueForMissingStub: _FakeDataPointState_3(
+              this,
+              Invocation.getter(#state),
+            ),
+          )
+          as _i5.DataPointState);
 
   @override
-  _i3.Stream<_i5.DataPointState> get stream => (super.noSuchMethod(
-        Invocation.getter(#stream),
-        returnValue: _i3.Stream<_i5.DataPointState>.empty(),
-        returnValueForMissingStub: _i3.Stream<_i5.DataPointState>.empty(),
-      ) as _i3.Stream<_i5.DataPointState>);
+  _i3.Stream<_i5.DataPointState> get stream =>
+      (super.noSuchMethod(
+            Invocation.getter(#stream),
+            returnValue: _i3.Stream<_i5.DataPointState>.empty(),
+            returnValueForMissingStub: _i3.Stream<_i5.DataPointState>.empty(),
+          )
+          as _i3.Stream<_i5.DataPointState>);
 
   @override
-  bool get isClosed => (super.noSuchMethod(
-        Invocation.getter(#isClosed),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
+  bool get isClosed =>
+      (super.noSuchMethod(
+            Invocation.getter(#isClosed),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
 
   @override
-  _i3.Future<void> close() => (super.noSuchMethod(
-        Invocation.method(
-          #close,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> close() =>
+      (super.noSuchMethod(
+            Invocation.method(#close, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   void add(_i5.DataPointEvent? event) => super.noSuchMethod(
-        Invocation.method(
-          #add,
-          [event],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#add, [event]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void onEvent(_i5.DataPointEvent? event) => super.noSuchMethod(
-        Invocation.method(
-          #onEvent,
-          [event],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#onEvent, [event]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void emit(_i5.DataPointState? state) => super.noSuchMethod(
-        Invocation.method(
-          #emit,
-          [state],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#emit, [state]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void on<E extends _i5.DataPointEvent>(
     _i27.EventHandler<E, _i5.DataPointState>? handler, {
     _i27.EventTransformer<E>? transformer,
-  }) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #on,
-          [handler],
-          {#transformer: transformer},
-        ),
-        returnValueForMissingStub: null,
-      );
+  }) => super.noSuchMethod(
+    Invocation.method(#on, [handler], {#transformer: transformer}),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void onTransition(
-          _i27.Transition<_i5.DataPointEvent, _i5.DataPointState>?
-              transition) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #onTransition,
-          [transition],
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i27.Transition<_i5.DataPointEvent, _i5.DataPointState>? transition,
+  ) => super.noSuchMethod(
+    Invocation.method(#onTransition, [transition]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void onChange(_i27.Change<_i5.DataPointState>? change) => super.noSuchMethod(
-        Invocation.method(
-          #onChange,
-          [change],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#onChange, [change]),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  void addError(
-    Object? error, [
-    StackTrace? stackTrace,
-  ]) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #addError,
-          [
-            error,
-            stackTrace,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
+  void addError(Object? error, [StackTrace? stackTrace]) => super.noSuchMethod(
+    Invocation.method(#addError, [error, stackTrace]),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  void onError(
-    Object? error,
-    StackTrace? stackTrace,
-  ) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #onError,
-          [
-            error,
-            stackTrace,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
+  void onError(Object? error, StackTrace? stackTrace) => super.noSuchMethod(
+    Invocation.method(#onError, [error, stackTrace]),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [DataPointState].
@@ -631,11 +442,13 @@ class MockDataPointBloc extends _i1.Mock implements _i5.DataPointBloc {
 /// See the documentation for Mockito's code generation for more information.
 class MockDataPointState extends _i1.Mock implements _i5.DataPointState {
   @override
-  List<Object?> get props => (super.noSuchMethod(
-        Invocation.getter(#props),
-        returnValue: <Object?>[],
-        returnValueForMissingStub: <Object?>[],
-      ) as List<Object?>);
+  List<Object?> get props =>
+      (super.noSuchMethod(
+            Invocation.getter(#props),
+            returnValue: <Object?>[],
+            returnValueForMissingStub: <Object?>[],
+          )
+          as List<Object?>);
 }
 
 /// A class which mocks [Manager].
@@ -643,562 +456,508 @@ class MockDataPointState extends _i1.Mock implements _i5.DataPointState {
 /// See the documentation for Mockito's code generation for more information.
 class MockManager extends _i1.Mock implements _i22.Manager {
   @override
-  _i6.DeviceInfoPlugin get deviceInfo => (super.noSuchMethod(
-        Invocation.getter(#deviceInfo),
-        returnValue: _FakeDeviceInfoPlugin_4(
-          this,
-          Invocation.getter(#deviceInfo),
-        ),
-        returnValueForMissingStub: _FakeDeviceInfoPlugin_4(
-          this,
-          Invocation.getter(#deviceInfo),
-        ),
-      ) as _i6.DeviceInfoPlugin);
+  _i6.DeviceInfoPlugin get deviceInfo =>
+      (super.noSuchMethod(
+            Invocation.getter(#deviceInfo),
+            returnValue: _FakeDeviceInfoPlugin_4(
+              this,
+              Invocation.getter(#deviceInfo),
+            ),
+            returnValueForMissingStub: _FakeDeviceInfoPlugin_4(
+              this,
+              Invocation.getter(#deviceInfo),
+            ),
+          )
+          as _i6.DeviceInfoPlugin);
 
   @override
   set deviceInfo(_i6.DeviceInfoPlugin? _deviceInfo) => super.noSuchMethod(
-        Invocation.setter(
-          #deviceInfo,
-          _deviceInfo,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#deviceInfo, _deviceInfo),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i7.FileManager get fileManager => (super.noSuchMethod(
-        Invocation.getter(#fileManager),
-        returnValue: _FakeFileManager_5(
-          this,
-          Invocation.getter(#fileManager),
-        ),
-        returnValueForMissingStub: _FakeFileManager_5(
-          this,
-          Invocation.getter(#fileManager),
-        ),
-      ) as _i7.FileManager);
+  _i7.FileManager get fileManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#fileManager),
+            returnValue: _FakeFileManager_5(
+              this,
+              Invocation.getter(#fileManager),
+            ),
+            returnValueForMissingStub: _FakeFileManager_5(
+              this,
+              Invocation.getter(#fileManager),
+            ),
+          )
+          as _i7.FileManager);
 
   @override
   set fileManager(_i7.FileManager? _fileManager) => super.noSuchMethod(
-        Invocation.setter(
-          #fileManager,
-          _fileManager,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#fileManager, _fileManager),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i8.CustomWidgetManager get customWidgetManager => (super.noSuchMethod(
-        Invocation.getter(#customWidgetManager),
-        returnValue: _FakeCustomWidgetManager_6(
-          this,
-          Invocation.getter(#customWidgetManager),
-        ),
-        returnValueForMissingStub: _FakeCustomWidgetManager_6(
-          this,
-          Invocation.getter(#customWidgetManager),
-        ),
-      ) as _i8.CustomWidgetManager);
+  _i8.CustomWidgetManager get customWidgetManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#customWidgetManager),
+            returnValue: _FakeCustomWidgetManager_6(
+              this,
+              Invocation.getter(#customWidgetManager),
+            ),
+            returnValueForMissingStub: _FakeCustomWidgetManager_6(
+              this,
+              Invocation.getter(#customWidgetManager),
+            ),
+          )
+          as _i8.CustomWidgetManager);
 
   @override
   set customWidgetManager(_i8.CustomWidgetManager? _customWidgetManager) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #customWidgetManager,
-          _customWidgetManager,
-        ),
+        Invocation.setter(#customWidgetManager, _customWidgetManager),
         returnValueForMissingStub: null,
       );
 
   @override
   set subscription1(_i3.StreamSubscription<dynamic>? _subscription1) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #subscription1,
-          _subscription1,
-        ),
+        Invocation.setter(#subscription1, _subscription1),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i9.DeviceManager get deviceManager => (super.noSuchMethod(
-        Invocation.getter(#deviceManager),
-        returnValue: _FakeDeviceManager_7(
-          this,
-          Invocation.getter(#deviceManager),
-        ),
-        returnValueForMissingStub: _FakeDeviceManager_7(
-          this,
-          Invocation.getter(#deviceManager),
-        ),
-      ) as _i9.DeviceManager);
+  _i9.DeviceManager get deviceManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#deviceManager),
+            returnValue: _FakeDeviceManager_7(
+              this,
+              Invocation.getter(#deviceManager),
+            ),
+            returnValueForMissingStub: _FakeDeviceManager_7(
+              this,
+              Invocation.getter(#deviceManager),
+            ),
+          )
+          as _i9.DeviceManager);
 
   @override
   set deviceManager(_i9.DeviceManager? _deviceManager) => super.noSuchMethod(
-        Invocation.setter(
-          #deviceManager,
-          _deviceManager,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#deviceManager, _deviceManager),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set subscription2(_i3.StreamSubscription<dynamic>? _subscription2) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #subscription2,
-          _subscription2,
-        ),
+        Invocation.setter(#subscription2, _subscription2),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i10.ScreenManager get screenManager => (super.noSuchMethod(
-        Invocation.getter(#screenManager),
-        returnValue: _FakeScreenManager_8(
-          this,
-          Invocation.getter(#screenManager),
-        ),
-        returnValueForMissingStub: _FakeScreenManager_8(
-          this,
-          Invocation.getter(#screenManager),
-        ),
-      ) as _i10.ScreenManager);
+  _i10.ScreenManager get screenManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#screenManager),
+            returnValue: _FakeScreenManager_8(
+              this,
+              Invocation.getter(#screenManager),
+            ),
+            returnValueForMissingStub: _FakeScreenManager_8(
+              this,
+              Invocation.getter(#screenManager),
+            ),
+          )
+          as _i10.ScreenManager);
 
   @override
   set screenManager(_i10.ScreenManager? _screenManager) => super.noSuchMethod(
-        Invocation.setter(
-          #screenManager,
-          _screenManager,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#screenManager, _screenManager),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set subscription3(_i3.StreamSubscription<dynamic>? _subscription3) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #subscription3,
-          _subscription3,
-        ),
+        Invocation.setter(#subscription3, _subscription3),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i11.IoBrokerManager get ioBrokerManager => (super.noSuchMethod(
-        Invocation.getter(#ioBrokerManager),
-        returnValue: _FakeIoBrokerManager_9(
-          this,
-          Invocation.getter(#ioBrokerManager),
-        ),
-        returnValueForMissingStub: _FakeIoBrokerManager_9(
-          this,
-          Invocation.getter(#ioBrokerManager),
-        ),
-      ) as _i11.IoBrokerManager);
+  _i11.IoBrokerManager get ioBrokerManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#ioBrokerManager),
+            returnValue: _FakeIoBrokerManager_9(
+              this,
+              Invocation.getter(#ioBrokerManager),
+            ),
+            returnValueForMissingStub: _FakeIoBrokerManager_9(
+              this,
+              Invocation.getter(#ioBrokerManager),
+            ),
+          )
+          as _i11.IoBrokerManager);
 
   @override
   set ioBrokerManager(_i11.IoBrokerManager? _ioBrokerManager) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #ioBrokerManager,
-          _ioBrokerManager,
-        ),
+        Invocation.setter(#ioBrokerManager, _ioBrokerManager),
         returnValueForMissingStub: null,
       );
 
   @override
   set subscription4(_i3.StreamSubscription<dynamic>? _subscription4) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #subscription4,
-          _subscription4,
-        ),
+        Invocation.setter(#subscription4, _subscription4),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i12.ConnectionManager get connectionManager => (super.noSuchMethod(
-        Invocation.getter(#connectionManager),
-        returnValue: _FakeConnectionManager_10(
-          this,
-          Invocation.getter(#connectionManager),
-        ),
-        returnValueForMissingStub: _FakeConnectionManager_10(
-          this,
-          Invocation.getter(#connectionManager),
-        ),
-      ) as _i12.ConnectionManager);
+  _i12.ConnectionManager get connectionManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#connectionManager),
+            returnValue: _FakeConnectionManager_10(
+              this,
+              Invocation.getter(#connectionManager),
+            ),
+            returnValueForMissingStub: _FakeConnectionManager_10(
+              this,
+              Invocation.getter(#connectionManager),
+            ),
+          )
+          as _i12.ConnectionManager);
 
   @override
   set connectionManager(_i12.ConnectionManager? _connectionManager) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #connectionManager,
-          _connectionManager,
-        ),
+        Invocation.setter(#connectionManager, _connectionManager),
         returnValueForMissingStub: null,
       );
 
   @override
   set subscription5(_i3.StreamSubscription<dynamic>? _subscription5) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #subscription5,
-          _subscription5,
-        ),
+        Invocation.setter(#subscription5, _subscription5),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i13.GeneralManager get generalManager => (super.noSuchMethod(
-        Invocation.getter(#generalManager),
-        returnValue: _FakeGeneralManager_11(
-          this,
-          Invocation.getter(#generalManager),
-        ),
-        returnValueForMissingStub: _FakeGeneralManager_11(
-          this,
-          Invocation.getter(#generalManager),
-        ),
-      ) as _i13.GeneralManager);
+  _i13.GeneralManager get generalManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#generalManager),
+            returnValue: _FakeGeneralManager_11(
+              this,
+              Invocation.getter(#generalManager),
+            ),
+            returnValueForMissingStub: _FakeGeneralManager_11(
+              this,
+              Invocation.getter(#generalManager),
+            ),
+          )
+          as _i13.GeneralManager);
 
   @override
   set generalManager(_i13.GeneralManager? _generalManager) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #generalManager,
-          _generalManager,
-        ),
+        Invocation.setter(#generalManager, _generalManager),
         returnValueForMissingStub: null,
       );
 
   @override
   set subscription6(_i3.StreamSubscription<dynamic>? _subscription6) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #subscription6,
-          _subscription6,
-        ),
+        Invocation.setter(#subscription6, _subscription6),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i14.HistoryManager get historyManager => (super.noSuchMethod(
-        Invocation.getter(#historyManager),
-        returnValue: _FakeHistoryManager_12(
-          this,
-          Invocation.getter(#historyManager),
-        ),
-        returnValueForMissingStub: _FakeHistoryManager_12(
-          this,
-          Invocation.getter(#historyManager),
-        ),
-      ) as _i14.HistoryManager);
+  _i14.HistoryManager get historyManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#historyManager),
+            returnValue: _FakeHistoryManager_12(
+              this,
+              Invocation.getter(#historyManager),
+            ),
+            returnValueForMissingStub: _FakeHistoryManager_12(
+              this,
+              Invocation.getter(#historyManager),
+            ),
+          )
+          as _i14.HistoryManager);
 
   @override
   set historyManager(_i14.HistoryManager? _historyManager) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #historyManager,
-          _historyManager,
-        ),
+        Invocation.setter(#historyManager, _historyManager),
         returnValueForMissingStub: null,
       );
 
   @override
   set subscription7(_i3.StreamSubscription<dynamic>? _subscription7) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #subscription7,
-          _subscription7,
-        ),
+        Invocation.setter(#subscription7, _subscription7),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i15.SettingsSyncManager get settingsSyncManager => (super.noSuchMethod(
-        Invocation.getter(#settingsSyncManager),
-        returnValue: _FakeSettingsSyncManager_13(
-          this,
-          Invocation.getter(#settingsSyncManager),
-        ),
-        returnValueForMissingStub: _FakeSettingsSyncManager_13(
-          this,
-          Invocation.getter(#settingsSyncManager),
-        ),
-      ) as _i15.SettingsSyncManager);
+  _i15.SettingsSyncManager get settingsSyncManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#settingsSyncManager),
+            returnValue: _FakeSettingsSyncManager_13(
+              this,
+              Invocation.getter(#settingsSyncManager),
+            ),
+            returnValueForMissingStub: _FakeSettingsSyncManager_13(
+              this,
+              Invocation.getter(#settingsSyncManager),
+            ),
+          )
+          as _i15.SettingsSyncManager);
 
   @override
   set settingsSyncManager(_i15.SettingsSyncManager? _settingsSyncManager) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #settingsSyncManager,
-          _settingsSyncManager,
-        ),
+        Invocation.setter(#settingsSyncManager, _settingsSyncManager),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i16.ThemeManager get themeManager => (super.noSuchMethod(
-        Invocation.getter(#themeManager),
-        returnValue: _FakeThemeManager_14(
-          this,
-          Invocation.getter(#themeManager),
-        ),
-        returnValueForMissingStub: _FakeThemeManager_14(
-          this,
-          Invocation.getter(#themeManager),
-        ),
-      ) as _i16.ThemeManager);
+  _i16.ThemeManager get themeManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#themeManager),
+            returnValue: _FakeThemeManager_14(
+              this,
+              Invocation.getter(#themeManager),
+            ),
+            returnValueForMissingStub: _FakeThemeManager_14(
+              this,
+              Invocation.getter(#themeManager),
+            ),
+          )
+          as _i16.ThemeManager);
 
   @override
   set themeManager(_i16.ThemeManager? _themeManager) => super.noSuchMethod(
-        Invocation.setter(
-          #themeManager,
-          _themeManager,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#themeManager, _themeManager),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i17.BackgroundRunner get backgroundRunner => (super.noSuchMethod(
-        Invocation.getter(#backgroundRunner),
-        returnValue: _FakeBackgroundRunner_15(
-          this,
-          Invocation.getter(#backgroundRunner),
-        ),
-        returnValueForMissingStub: _FakeBackgroundRunner_15(
-          this,
-          Invocation.getter(#backgroundRunner),
-        ),
-      ) as _i17.BackgroundRunner);
+  _i17.BackgroundRunner get backgroundRunner =>
+      (super.noSuchMethod(
+            Invocation.getter(#backgroundRunner),
+            returnValue: _FakeBackgroundRunner_15(
+              this,
+              Invocation.getter(#backgroundRunner),
+            ),
+            returnValueForMissingStub: _FakeBackgroundRunner_15(
+              this,
+              Invocation.getter(#backgroundRunner),
+            ),
+          )
+          as _i17.BackgroundRunner);
 
   @override
   set backgroundRunner(_i17.BackgroundRunner? _backgroundRunner) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #backgroundRunner,
-          _backgroundRunner,
-        ),
+        Invocation.setter(#backgroundRunner, _backgroundRunner),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i18.NotificationManager get notificationManager => (super.noSuchMethod(
-        Invocation.getter(#notificationManager),
-        returnValue: _FakeNotificationManager_16(
-          this,
-          Invocation.getter(#notificationManager),
-        ),
-        returnValueForMissingStub: _FakeNotificationManager_16(
-          this,
-          Invocation.getter(#notificationManager),
-        ),
-      ) as _i18.NotificationManager);
+  _i18.NotificationManager get notificationManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#notificationManager),
+            returnValue: _FakeNotificationManager_16(
+              this,
+              Invocation.getter(#notificationManager),
+            ),
+            returnValueForMissingStub: _FakeNotificationManager_16(
+              this,
+              Invocation.getter(#notificationManager),
+            ),
+          )
+          as _i18.NotificationManager);
 
   @override
   set notificationManager(_i18.NotificationManager? _notificationManager) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #notificationManager,
-          _notificationManager,
-        ),
+        Invocation.setter(#notificationManager, _notificationManager),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i19.Talker get talker => (super.noSuchMethod(
-        Invocation.getter(#talker),
-        returnValue: _FakeTalker_17(
-          this,
-          Invocation.getter(#talker),
-        ),
-        returnValueForMissingStub: _FakeTalker_17(
-          this,
-          Invocation.getter(#talker),
-        ),
-      ) as _i19.Talker);
+  _i19.Talker get talker =>
+      (super.noSuchMethod(
+            Invocation.getter(#talker),
+            returnValue: _FakeTalker_17(this, Invocation.getter(#talker)),
+            returnValueForMissingStub: _FakeTalker_17(
+              this,
+              Invocation.getter(#talker),
+            ),
+          )
+          as _i19.Talker);
 
   @override
-  _i28.ManagerStatus get status => (super.noSuchMethod(
-        Invocation.getter(#status),
-        returnValue: _i28.ManagerStatus.finished,
-        returnValueForMissingStub: _i28.ManagerStatus.finished,
-      ) as _i28.ManagerStatus);
+  _i28.ManagerStatus get status =>
+      (super.noSuchMethod(
+            Invocation.getter(#status),
+            returnValue: _i28.ManagerStatus.finished,
+            returnValueForMissingStub: _i28.ManagerStatus.finished,
+          )
+          as _i28.ManagerStatus);
 
   @override
   set status(_i28.ManagerStatus? _status) => super.noSuchMethod(
-        Invocation.setter(
-          #status,
-          _status,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#status, _status),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  String get versionNumber => (super.noSuchMethod(
-        Invocation.getter(#versionNumber),
-        returnValue: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#versionNumber),
-        ),
-        returnValueForMissingStub: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#versionNumber),
-        ),
-      ) as String);
+  String get versionNumber =>
+      (super.noSuchMethod(
+            Invocation.getter(#versionNumber),
+            returnValue: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#versionNumber),
+            ),
+            returnValueForMissingStub: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#versionNumber),
+            ),
+          )
+          as String);
 
   @override
   set versionNumber(String? _versionNumber) => super.noSuchMethod(
-        Invocation.setter(
-          #versionNumber,
-          _versionNumber,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#versionNumber, _versionNumber),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  String get buildNumber => (super.noSuchMethod(
-        Invocation.getter(#buildNumber),
-        returnValue: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#buildNumber),
-        ),
-        returnValueForMissingStub: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#buildNumber),
-        ),
-      ) as String);
+  String get buildNumber =>
+      (super.noSuchMethod(
+            Invocation.getter(#buildNumber),
+            returnValue: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#buildNumber),
+            ),
+            returnValueForMissingStub: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#buildNumber),
+            ),
+          )
+          as String);
 
   @override
   set buildNumber(String? _buildNumber) => super.noSuchMethod(
-        Invocation.setter(
-          #buildNumber,
-          _buildNumber,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#buildNumber, _buildNumber),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  int get loadingState => (super.noSuchMethod(
-        Invocation.getter(#loadingState),
-        returnValue: 0,
-        returnValueForMissingStub: 0,
-      ) as int);
+  int get loadingState =>
+      (super.noSuchMethod(
+            Invocation.getter(#loadingState),
+            returnValue: 0,
+            returnValueForMissingStub: 0,
+          )
+          as int);
 
   @override
   set loadingState(int? _loadingState) => super.noSuchMethod(
-        Invocation.setter(
-          #loadingState,
-          _loadingState,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#loadingState, _loadingState),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  int get maxLoadingState => (super.noSuchMethod(
-        Invocation.getter(#maxLoadingState),
-        returnValue: 0,
-        returnValueForMissingStub: 0,
-      ) as int);
+  int get maxLoadingState =>
+      (super.noSuchMethod(
+            Invocation.getter(#maxLoadingState),
+            returnValue: 0,
+            returnValueForMissingStub: 0,
+          )
+          as int);
 
   @override
   set maxLoadingState(int? _maxLoadingState) => super.noSuchMethod(
-        Invocation.setter(
-          #maxLoadingState,
-          _maxLoadingState,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#maxLoadingState, _maxLoadingState),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i3.StreamController<_i28.ManagerStatus> get managerStatusStreamController =>
       (super.noSuchMethod(
-        Invocation.getter(#managerStatusStreamController),
-        returnValue: _FakeStreamController_1<_i28.ManagerStatus>(
-          this,
-          Invocation.getter(#managerStatusStreamController),
-        ),
-        returnValueForMissingStub: _FakeStreamController_1<_i28.ManagerStatus>(
-          this,
-          Invocation.getter(#managerStatusStreamController),
-        ),
-      ) as _i3.StreamController<_i28.ManagerStatus>);
+            Invocation.getter(#managerStatusStreamController),
+            returnValue: _FakeStreamController_1<_i28.ManagerStatus>(
+              this,
+              Invocation.getter(#managerStatusStreamController),
+            ),
+            returnValueForMissingStub:
+                _FakeStreamController_1<_i28.ManagerStatus>(
+                  this,
+                  Invocation.getter(#managerStatusStreamController),
+                ),
+          )
+          as _i3.StreamController<_i28.ManagerStatus>);
 
   @override
   set managerStatusStreamController(
-          _i3.StreamController<_i28.ManagerStatus>?
-              _managerStatusStreamController) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #managerStatusStreamController,
-          _managerStatusStreamController,
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i3.StreamController<_i28.ManagerStatus>? _managerStatusStreamController,
+  ) => super.noSuchMethod(
+    Invocation.setter(
+      #managerStatusStreamController,
+      _managerStatusStreamController,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i20.Random get random => (super.noSuchMethod(
-        Invocation.getter(#random),
-        returnValue: _FakeRandom_18(
-          this,
-          Invocation.getter(#random),
-        ),
-        returnValueForMissingStub: _FakeRandom_18(
-          this,
-          Invocation.getter(#random),
-        ),
-      ) as _i20.Random);
+  _i20.Random get random =>
+      (super.noSuchMethod(
+            Invocation.getter(#random),
+            returnValue: _FakeRandom_18(this, Invocation.getter(#random)),
+            returnValueForMissingStub: _FakeRandom_18(
+              this,
+              Invocation.getter(#random),
+            ),
+          )
+          as _i20.Random);
 
   @override
   set random(_i20.Random? _random) => super.noSuchMethod(
-        Invocation.setter(
-          #random,
-          _random,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#random, _random),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i3.Future<void> load() => (super.noSuchMethod(
-        Invocation.method(
-          #load,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> load() =>
+      (super.noSuchMethod(
+            Invocation.method(#load, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  String getRandString(int? len) => (super.noSuchMethod(
-        Invocation.method(
-          #getRandString,
-          [len],
-        ),
-        returnValue: _i24.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getRandString,
-            [len],
-          ),
-        ),
-        returnValueForMissingStub: _i24.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getRandString,
-            [len],
-          ),
-        ),
-      ) as String);
+  String getRandString(int? len) =>
+      (super.noSuchMethod(
+            Invocation.method(#getRandString, [len]),
+            returnValue: _i24.dummyValue<String>(
+              this,
+              Invocation.method(#getRandString, [len]),
+            ),
+            returnValueForMissingStub: _i24.dummyValue<String>(
+              this,
+              Invocation.method(#getRandString, [len]),
+            ),
+          )
+          as String);
 
   @override
   void onLoaded() => super.noSuchMethod(
-        Invocation.method(
-          #onLoaded,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#onLoaded, []),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [GeneralManager].
@@ -1206,284 +965,250 @@ class MockManager extends _i1.Mock implements _i22.Manager {
 /// See the documentation for Mockito's code generation for more information.
 class MockGeneralManager extends _i1.Mock implements _i13.GeneralManager {
   @override
-  _i21.Uuid get uuid => (super.noSuchMethod(
-        Invocation.getter(#uuid),
-        returnValue: _FakeUuid_19(
-          this,
-          Invocation.getter(#uuid),
-        ),
-        returnValueForMissingStub: _FakeUuid_19(
-          this,
-          Invocation.getter(#uuid),
-        ),
-      ) as _i21.Uuid);
+  _i21.Uuid get uuid =>
+      (super.noSuchMethod(
+            Invocation.getter(#uuid),
+            returnValue: _FakeUuid_19(this, Invocation.getter(#uuid)),
+            returnValueForMissingStub: _FakeUuid_19(
+              this,
+              Invocation.getter(#uuid),
+            ),
+          )
+          as _i21.Uuid);
 
   @override
   set uuid(_i21.Uuid? _uuid) => super.noSuchMethod(
-        Invocation.setter(
-          #uuid,
-          _uuid,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#uuid, _uuid),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i7.FileManager get fileManager => (super.noSuchMethod(
-        Invocation.getter(#fileManager),
-        returnValue: _FakeFileManager_5(
-          this,
-          Invocation.getter(#fileManager),
-        ),
-        returnValueForMissingStub: _FakeFileManager_5(
-          this,
-          Invocation.getter(#fileManager),
-        ),
-      ) as _i7.FileManager);
+  _i7.FileManager get fileManager =>
+      (super.noSuchMethod(
+            Invocation.getter(#fileManager),
+            returnValue: _FakeFileManager_5(
+              this,
+              Invocation.getter(#fileManager),
+            ),
+            returnValueForMissingStub: _FakeFileManager_5(
+              this,
+              Invocation.getter(#fileManager),
+            ),
+          )
+          as _i7.FileManager);
 
   @override
-  _i22.Manager get manager => (super.noSuchMethod(
-        Invocation.getter(#manager),
-        returnValue: _FakeManager_20(
-          this,
-          Invocation.getter(#manager),
-        ),
-        returnValueForMissingStub: _FakeManager_20(
-          this,
-          Invocation.getter(#manager),
-        ),
-      ) as _i22.Manager);
+  _i22.Manager get manager =>
+      (super.noSuchMethod(
+            Invocation.getter(#manager),
+            returnValue: _FakeManager_20(this, Invocation.getter(#manager)),
+            returnValueForMissingStub: _FakeManager_20(
+              this,
+              Invocation.getter(#manager),
+            ),
+          )
+          as _i22.Manager);
 
   @override
-  String get key => (super.noSuchMethod(
-        Invocation.getter(#key),
-        returnValue: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#key),
-        ),
-        returnValueForMissingStub: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#key),
-        ),
-      ) as String);
+  String get key =>
+      (super.noSuchMethod(
+            Invocation.getter(#key),
+            returnValue: _i24.dummyValue<String>(this, Invocation.getter(#key)),
+            returnValueForMissingStub: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#key),
+            ),
+          )
+          as String);
 
   @override
-  String get buildKey => (super.noSuchMethod(
-        Invocation.getter(#buildKey),
-        returnValue: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#buildKey),
-        ),
-        returnValueForMissingStub: _i24.dummyValue<String>(
-          this,
-          Invocation.getter(#buildKey),
-        ),
-      ) as String);
+  String get buildKey =>
+      (super.noSuchMethod(
+            Invocation.getter(#buildKey),
+            returnValue: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#buildKey),
+            ),
+            returnValueForMissingStub: _i24.dummyValue<String>(
+              this,
+              Invocation.getter(#buildKey),
+            ),
+          )
+          as String);
 
   @override
-  _i3.StreamController<bool> get statusStreamController => (super.noSuchMethod(
-        Invocation.getter(#statusStreamController),
-        returnValue: _FakeStreamController_1<bool>(
-          this,
-          Invocation.getter(#statusStreamController),
-        ),
-        returnValueForMissingStub: _FakeStreamController_1<bool>(
-          this,
-          Invocation.getter(#statusStreamController),
-        ),
-      ) as _i3.StreamController<bool>);
+  _i3.StreamController<bool> get statusStreamController =>
+      (super.noSuchMethod(
+            Invocation.getter(#statusStreamController),
+            returnValue: _FakeStreamController_1<bool>(
+              this,
+              Invocation.getter(#statusStreamController),
+            ),
+            returnValueForMissingStub: _FakeStreamController_1<bool>(
+              this,
+              Invocation.getter(#statusStreamController),
+            ),
+          )
+          as _i3.StreamController<bool>);
 
   @override
   set statusStreamController(
-          _i3.StreamController<bool>? _statusStreamController) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #statusStreamController,
-          _statusStreamController,
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i3.StreamController<bool>? _statusStreamController,
+  ) => super.noSuchMethod(
+    Invocation.setter(#statusStreamController, _statusStreamController),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i3.StreamController<_i29.AlertDialog Function(_i29.BuildContext)>
-      get dialogStreamController => (super.noSuchMethod(
+  get dialogStreamController =>
+      (super.noSuchMethod(
             Invocation.getter(#dialogStreamController),
-            returnValue: _FakeStreamController_1<
-                _i29.AlertDialog Function(_i29.BuildContext)>(
-              this,
-              Invocation.getter(#dialogStreamController),
-            ),
-            returnValueForMissingStub: _FakeStreamController_1<
-                _i29.AlertDialog Function(_i29.BuildContext)>(
-              this,
-              Invocation.getter(#dialogStreamController),
-            ),
-          ) as _i3
-              .StreamController<_i29.AlertDialog Function(_i29.BuildContext)>);
+            returnValue:
+                _FakeStreamController_1<
+                  _i29.AlertDialog Function(_i29.BuildContext)
+                >(this, Invocation.getter(#dialogStreamController)),
+            returnValueForMissingStub:
+                _FakeStreamController_1<
+                  _i29.AlertDialog Function(_i29.BuildContext)
+                >(this, Invocation.getter(#dialogStreamController)),
+          )
+          as _i3.StreamController<
+            _i29.AlertDialog Function(_i29.BuildContext)
+          >);
 
   @override
   set dialogStreamController(
-          _i3.StreamController<_i29.AlertDialog Function(_i29.BuildContext)>?
-              _dialogStreamController) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #dialogStreamController,
-          _dialogStreamController,
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i3.StreamController<_i29.AlertDialog Function(_i29.BuildContext)>?
+    _dialogStreamController,
+  ) => super.noSuchMethod(
+    Invocation.setter(#dialogStreamController, _dialogStreamController),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  bool get vibrateEnabled => (super.noSuchMethod(
-        Invocation.getter(#vibrateEnabled),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
+  bool get vibrateEnabled =>
+      (super.noSuchMethod(
+            Invocation.getter(#vibrateEnabled),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
 
   @override
   set vibrateEnabled(bool? _vibrateEnabled) => super.noSuchMethod(
-        Invocation.setter(
-          #vibrateEnabled,
-          _vibrateEnabled,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#vibrateEnabled, _vibrateEnabled),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set deviceName(String? _deviceName) => super.noSuchMethod(
-        Invocation.setter(
-          #deviceName,
-          _deviceName,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#deviceName, _deviceName),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set deviceID(String? _deviceID) => super.noSuchMethod(
-        Invocation.setter(
-          #deviceID,
-          _deviceID,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#deviceID, _deviceID),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set loginKey(String? _loginKey) => super.noSuchMethod(
-        Invocation.setter(
-          #loginKey,
-          _loginKey,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#loginKey, _loginKey),
+    returnValueForMissingStub: null,
+  );
 
   @override
   set ioBVersion(String? _ioBVersion) => super.noSuchMethod(
-        Invocation.setter(
-          #ioBVersion,
-          _ioBVersion,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#ioBVersion, _ioBVersion),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  bool get useBottomSheet => (super.noSuchMethod(
-        Invocation.getter(#useBottomSheet),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
+  bool get useBottomSheet =>
+      (super.noSuchMethod(
+            Invocation.getter(#useBottomSheet),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
 
   @override
   set useBottomSheet(bool? _useBottomSheet) => super.noSuchMethod(
-        Invocation.setter(
-          #useBottomSheet,
-          _useBottomSheet,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(#useBottomSheet, _useBottomSheet),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i23.CustomLoggerFilter get customLoggerFilter => (super.noSuchMethod(
-        Invocation.getter(#customLoggerFilter),
-        returnValue: _FakeCustomLoggerFilter_21(
-          this,
-          Invocation.getter(#customLoggerFilter),
-        ),
-        returnValueForMissingStub: _FakeCustomLoggerFilter_21(
-          this,
-          Invocation.getter(#customLoggerFilter),
-        ),
-      ) as _i23.CustomLoggerFilter);
+  _i23.CustomLoggerFilter get customLoggerFilter =>
+      (super.noSuchMethod(
+            Invocation.getter(#customLoggerFilter),
+            returnValue: _FakeCustomLoggerFilter_21(
+              this,
+              Invocation.getter(#customLoggerFilter),
+            ),
+            returnValueForMissingStub: _FakeCustomLoggerFilter_21(
+              this,
+              Invocation.getter(#customLoggerFilter),
+            ),
+          )
+          as _i23.CustomLoggerFilter);
 
   @override
   set customLoggerFilter(_i23.CustomLoggerFilter? _customLoggerFilter) =>
       super.noSuchMethod(
-        Invocation.setter(
-          #customLoggerFilter,
-          _customLoggerFilter,
-        ),
+        Invocation.setter(#customLoggerFilter, _customLoggerFilter),
         returnValueForMissingStub: null,
       );
 
   @override
-  bool get isVibrateEnabled => (super.noSuchMethod(
-        Invocation.getter(#isVibrateEnabled),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
+  bool get isVibrateEnabled =>
+      (super.noSuchMethod(
+            Invocation.getter(#isVibrateEnabled),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
 
   @override
   void load() => super.noSuchMethod(
-        Invocation.method(
-          #load,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#load, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i3.Future<void> setDeviceNameBasedOnSettingAndOS(
-          Map<String, dynamic>? settings) =>
+    Map<String, dynamic>? settings,
+  ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setDeviceNameBasedOnSettingAndOS,
-          [settings],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#setDeviceNameBasedOnSettingAndOS, [settings]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   void updateVibrateEnabled(bool? vibrate) => super.noSuchMethod(
-        Invocation.method(
-          #updateVibrateEnabled,
-          [vibrate],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#updateVibrateEnabled, [vibrate]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void updateLoginKey(String? key) => super.noSuchMethod(
-        Invocation.method(
-          #updateLoginKey,
-          [key],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#updateLoginKey, [key]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void updateIobVersion(String? version) => super.noSuchMethod(
-        Invocation.method(
-          #updateIobVersion,
-          [version],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#updateIobVersion, [version]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void changeCustomLoggerFilter() => super.noSuchMethod(
-        Invocation.method(
-          #changeCustomLoggerFilter,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#changeCustomLoggerFilter, []),
+    returnValueForMissingStub: null,
+  );
 }

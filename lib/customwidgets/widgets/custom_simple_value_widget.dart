@@ -17,49 +17,50 @@ class CustomSimpleValueWidget extends CustomWidgetDeprecated {
   String? value;
   String? unit;
 
-  CustomSimpleValueWidget(
-      {required name,
-      required this.device,
-      this.dataPoint,
-      this.round,
-      this.value,
-      this.unit})
-      : super(
-            name: name,
-            type: CustomWidgetTypeDeprecated.simpleValue,
-            settings: {"device": device?.id});
+  CustomSimpleValueWidget({
+    required name,
+    required this.device,
+    this.dataPoint,
+    this.round,
+    this.value,
+    this.unit,
+  }) : super(
+         name: name,
+         type: CustomWidgetTypeDeprecated.simpleValue,
+         settings: {"device": device?.id},
+       );
 
   CustomSimpleValueWidget.edit()
-      : super.edit(type: CustomWidgetTypeDeprecated.simpleValue);
+    : super.edit(type: CustomWidgetTypeDeprecated.simpleValue);
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": CustomWidgetTypeDeprecated.simpleValue.toString(),
-        "device": device?.id, //Device ID
-        "dataPoint": dataPoint?.id, // DataPoint ID
-        "round": round,
-        "name": name,
-        "value": value,
-        "unit": unit,
-      };
+    "type": CustomWidgetTypeDeprecated.simpleValue.toString(),
+    "device": device?.id, //Device ID
+    "dataPoint": dataPoint?.id, // DataPoint ID
+    "round": round,
+    "name": name,
+    "value": value,
+    "unit": unit,
+  };
 
   factory CustomSimpleValueWidget.fromJson(Map<String, dynamic> json) {
-    Device? device =
-        Manager.instance.deviceManager.getDevice(json["device"] ?? "");
+    Device? device = Manager.instance.deviceManager.getDevice(
+      json["device"] ?? "",
+    );
     return CustomSimpleValueWidget(
-        name: json["name"],
-        round: json["round"],
-        device: device,
-        dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
-        value: json["value"],
-        unit: json["unit"]);
+      name: json["name"],
+      round: json["round"],
+      device: device,
+      dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
+      value: json["value"],
+      unit: json["unit"],
+    );
   }
 
   @override
   CustomWidgetSettingWidget get settingWidget {
-    return CustomSimpleValueWidgetSettingWidget(
-      customSimpleValueWidget: this,
-    );
+    return CustomSimpleValueWidgetSettingWidget(customSimpleValueWidget: this);
   }
 
   @override
@@ -68,22 +69,24 @@ class CustomSimpleValueWidget extends CustomWidgetDeprecated {
   @override
   CustomWidgetDeprecated clone() {
     return CustomSimpleValueWidget(
-        name: name,
-        device: device,
-        dataPoint: dataPoint,
-        unit: unit,
-        round: round,
-        value: value);
+      name: name,
+      device: device,
+      dataPoint: dataPoint,
+      unit: unit,
+      round: round,
+      value: value,
+    );
   }
 
   @override
   CustomWidget migrate({required String id, required String name}) {
     return CustomValueWidget(
-        id: id,
-        name: name,
-        dataPoint: dataPoint,
-        label: value,
-        suffix: " $unit",
-        round: round ?? 2);
+      id: id,
+      name: name,
+      dataPoint: dataPoint,
+      label: value,
+      suffix: " $unit",
+      round: round ?? 2,
+    );
   }
 }

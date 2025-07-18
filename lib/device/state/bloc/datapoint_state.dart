@@ -12,9 +12,11 @@ class DataPointState extends Equatable {
 
 class DataPointInitial extends DataPointState {
   const DataPointInitial({dynamic value, dynamic oldValue})
-      : super(value: value, oldValue: oldValue);
+    : super(value: value, oldValue: oldValue);
 
-  const DataPointInitial.value(
-      {dynamic value, dynamic oldValue, required DateTime t})
-      : super(value: value, oldValue: oldValue);
+  const DataPointInitial.value({
+    dynamic value,
+    dynamic oldValue,
+    required DateTime t,
+  }) : super(value: value, oldValue: oldValue);
 }

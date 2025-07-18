@@ -12,7 +12,8 @@ part of 'custom_webview_widget.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CustomWebViewWidget _$CustomWebViewWidgetFromJson(Map<String, dynamic> json) {
   return _CustomWebViewWidget.fromJson(json);
@@ -55,18 +56,20 @@ mixin _$CustomWebViewWidget {
 /// @nodoc
 abstract class $CustomWebViewWidgetCopyWith<$Res> {
   factory $CustomWebViewWidgetCopyWith(
-          CustomWebViewWidget value, $Res Function(CustomWebViewWidget) then) =
-      _$CustomWebViewWidgetCopyWithImpl<$Res, CustomWebViewWidget>;
+    CustomWebViewWidget value,
+    $Res Function(CustomWebViewWidget) then,
+  ) = _$CustomWebViewWidgetCopyWithImpl<$Res, CustomWebViewWidget>;
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      String? url,
-      int height,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    String? url,
+    int height,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  });
 
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
@@ -95,40 +98,43 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      height: null == height
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as int,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as CustomWidgetTypeDeprecated,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            dataPoint: freezed == dataPoint
+                ? _value.dataPoint
+                : dataPoint // ignore: cast_nullable_to_non_nullable
+                      as DataPoint?,
+            url: freezed == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            height: null == height
+                ? _value.height
+                : height // ignore: cast_nullable_to_non_nullable
+                      as int,
+            customPopupmenu: freezed == customPopupmenu
+                ? _value.customPopupmenu
+                : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                      as CustomPopupmenu?,
+            customTheme: freezed == customTheme
+                ? _value.customTheme
+                : customTheme // ignore: cast_nullable_to_non_nullable
+                      as CustomThemeForWidget?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CustomWebViewWidget
@@ -149,20 +155,22 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
 /// @nodoc
 abstract class _$$CustomWebViewWidgetImplCopyWith<$Res>
     implements $CustomWebViewWidgetCopyWith<$Res> {
-  factory _$$CustomWebViewWidgetImplCopyWith(_$CustomWebViewWidgetImpl value,
-          $Res Function(_$CustomWebViewWidgetImpl) then) =
-      __$$CustomWebViewWidgetImplCopyWithImpl<$Res>;
+  factory _$$CustomWebViewWidgetImplCopyWith(
+    _$CustomWebViewWidgetImpl value,
+    $Res Function(_$CustomWebViewWidgetImpl) then,
+  ) = __$$CustomWebViewWidgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {CustomWidgetTypeDeprecated type,
-      String id,
-      String name,
-      @DataPointIdConverter() DataPoint? dataPoint,
-      String? url,
-      int height,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme});
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    @DataPointIdConverter() DataPoint? dataPoint,
+    String? url,
+    int height,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  });
 
   @override
   $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
@@ -172,9 +180,10 @@ abstract class _$$CustomWebViewWidgetImplCopyWith<$Res>
 class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
     extends _$CustomWebViewWidgetCopyWithImpl<$Res, _$CustomWebViewWidgetImpl>
     implements _$$CustomWebViewWidgetImplCopyWith<$Res> {
-  __$$CustomWebViewWidgetImplCopyWithImpl(_$CustomWebViewWidgetImpl _value,
-      $Res Function(_$CustomWebViewWidgetImpl) _then)
-      : super(_value, _then);
+  __$$CustomWebViewWidgetImplCopyWithImpl(
+    _$CustomWebViewWidgetImpl _value,
+    $Res Function(_$CustomWebViewWidgetImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CustomWebViewWidget
   /// with the given fields replaced by the non-null parameter values.
@@ -190,56 +199,58 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
     Object? customPopupmenu = freezed,
     Object? customTheme = freezed,
   }) {
-    return _then(_$CustomWebViewWidgetImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as CustomWidgetTypeDeprecated,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dataPoint: freezed == dataPoint
-          ? _value.dataPoint
-          : dataPoint // ignore: cast_nullable_to_non_nullable
-              as DataPoint?,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      height: null == height
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as int,
-      customPopupmenu: freezed == customPopupmenu
-          ? _value.customPopupmenu
-          : customPopupmenu // ignore: cast_nullable_to_non_nullable
-              as CustomPopupmenu?,
-      customTheme: freezed == customTheme
-          ? _value.customTheme
-          : customTheme // ignore: cast_nullable_to_non_nullable
-              as CustomThemeForWidget?,
-    ));
+    return _then(
+      _$CustomWebViewWidgetImpl(
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as CustomWidgetTypeDeprecated,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        dataPoint: freezed == dataPoint
+            ? _value.dataPoint
+            : dataPoint // ignore: cast_nullable_to_non_nullable
+                  as DataPoint?,
+        url: freezed == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        height: null == height
+            ? _value.height
+            : height // ignore: cast_nullable_to_non_nullable
+                  as int,
+        customPopupmenu: freezed == customPopupmenu
+            ? _value.customPopupmenu
+            : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                  as CustomPopupmenu?,
+        customTheme: freezed == customTheme
+            ? _value.customTheme
+            : customTheme // ignore: cast_nullable_to_non_nullable
+                  as CustomThemeForWidget?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
-  _$CustomWebViewWidgetImpl(
-      {this.type = CustomWidgetTypeDeprecated.webViewNew,
-      required this.id,
-      required this.name,
-      @DataPointIdConverter() required this.dataPoint,
-      this.url,
-      this.height = 500,
-      this.customPopupmenu,
-      this.customTheme})
-      : super._();
+  _$CustomWebViewWidgetImpl({
+    this.type = CustomWidgetTypeDeprecated.webViewNew,
+    required this.id,
+    required this.name,
+    @DataPointIdConverter() required this.dataPoint,
+    this.url,
+    this.height = 500,
+    this.customPopupmenu,
+    this.customTheme,
+  }) : super._();
 
   factory _$CustomWebViewWidgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomWebViewWidgetImplFromJson(json);
@@ -276,27 +287,28 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
   @pragma('vm:prefer-inline')
   _$$CustomWebViewWidgetImplCopyWith<_$CustomWebViewWidgetImpl> get copyWith =>
       __$$CustomWebViewWidgetImplCopyWithImpl<_$CustomWebViewWidgetImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomWebViewWidgetImplToJson(
-      this,
-    );
+    return _$$CustomWebViewWidgetImplToJson(this);
   }
 }
 
 abstract class _CustomWebViewWidget extends CustomWebViewWidget
     implements CustomWidget {
-  factory _CustomWebViewWidget(
-      {CustomWidgetTypeDeprecated type,
-      required String id,
-      required String name,
-      @DataPointIdConverter() required DataPoint? dataPoint,
-      String? url,
-      int height,
-      CustomPopupmenu? customPopupmenu,
-      CustomThemeForWidget? customTheme}) = _$CustomWebViewWidgetImpl;
+  factory _CustomWebViewWidget({
+    CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    @DataPointIdConverter() required DataPoint? dataPoint,
+    String? url,
+    int height,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  }) = _$CustomWebViewWidgetImpl;
   _CustomWebViewWidget._() : super._();
 
   factory _CustomWebViewWidget.fromJson(Map<String, dynamic> json) =

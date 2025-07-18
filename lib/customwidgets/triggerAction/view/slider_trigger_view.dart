@@ -11,7 +11,7 @@ class SliderTriggerView extends StatelessWidget {
   final SliderTriggerAction sliderTriggerAction;
 
   const SliderTriggerView({Key? key, required this.sliderTriggerAction})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +37,12 @@ class _Slider extends StatefulWidget {
   final dynamic value;
   final DataPointBloc dataPointBloc;
 
-  const _Slider(
-      {Key? key,
-      required this.sliderTriggerAction,
-      required this.value,
-      required this.dataPointBloc})
-      : super(key: key);
+  const _Slider({
+    Key? key,
+    required this.sliderTriggerAction,
+    required this.value,
+    required this.dataPointBloc,
+  }) : super(key: key);
 
   @override
   State<_Slider> createState() => _SliderState();
@@ -62,8 +62,8 @@ class _SliderState extends State<_Slider> {
     double value = widget.value is double
         ? widget.value
         : (widget.value is int
-            ? widget.value.toDouble()
-            : widget.sliderTriggerAction.min.toDouble());
+              ? widget.value.toDouble()
+              : widget.sliderTriggerAction.min.toDouble());
     if (value > widget.sliderTriggerAction.max ||
         value < widget.sliderTriggerAction.min) {
       return Text("Error: $value smaller/greater than min/max");
@@ -71,9 +71,10 @@ class _SliderState extends State<_Slider> {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         thumbShape: CustomSliderThumbValueCircle(
-            thumbRadius: 16,
-            max: widget.sliderTriggerAction.max,
-            min: widget.sliderTriggerAction.min),
+          thumbRadius: 16,
+          max: widget.sliderTriggerAction.max,
+          min: widget.sliderTriggerAction.min,
+        ),
       ),
       child: Slider(
         value: vTemp ?? value,
@@ -95,8 +96,12 @@ class _SliderState extends State<_Slider> {
           setState(() {
             vTemp = null;
           });
-          widget.dataPointBloc.add(DataPointValueUpdateRequest(
-              value: d.round(), oldValue: widget.dataPointBloc.state.value));
+          widget.dataPointBloc.add(
+            DataPointValueUpdateRequest(
+              value: d.round(),
+              oldValue: widget.dataPointBloc.state.value,
+            ),
+          );
         },
       ),
     );

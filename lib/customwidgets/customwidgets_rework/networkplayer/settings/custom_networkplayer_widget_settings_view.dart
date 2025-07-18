@@ -9,9 +9,10 @@ import 'package:smart_home/utils/theme.dart';
 class CustomNetworkPlayerWidgetSettingView
     extends CustomWidgetSettingStatefulWidget {
   final CustomNetworkPlayerWidget customNetworkPlayer;
-  const CustomNetworkPlayerWidgetSettingView(
-      {Key? key, required this.customNetworkPlayer})
-      : super(key: key);
+  const CustomNetworkPlayerWidgetSettingView({
+    Key? key,
+    required this.customNetworkPlayer,
+  }) : super(key: key);
 
   @override
   State<CustomNetworkPlayerWidgetSettingView> createState() =>
@@ -45,8 +46,9 @@ class _CustomNetworkPlayerSettingViewState
 
   @override
   void initState() {
-    urlLabelEditingController =
-        TextEditingController(text: widget.customNetworkPlayer.url);
+    urlLabelEditingController = TextEditingController(
+      text: widget.customNetworkPlayer.url,
+    );
     super.initState();
   }
 
@@ -60,38 +62,38 @@ class _CustomNetworkPlayerSettingViewState
   Widget build(BuildContext context) {
     c = context.read<CustomWidgetBlocCubit>();
     return Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(children: [
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
           InputFieldContainer.inputContainer(
-              child: TextField(
-            controller: urlLabelEditingController,
-            decoration: const InputDecoration(label: Text("URL (optional)")),
-            onChanged: (s) => {
-              widget.customNetworkPlayer.url = s,
-              c.update(widget.customNetworkPlayer)
-            },
-          )),
+            child: TextField(
+              controller: urlLabelEditingController,
+              decoration: const InputDecoration(label: Text("URL (optional)")),
+              onChanged: (s) => {
+                widget.customNetworkPlayer.url = s,
+                c.update(widget.customNetworkPlayer),
+              },
+            ),
+          ),
           Container(
             alignment: Alignment.centerLeft,
-            child: const Text(
-              "Aspect ratio",
-              style: TextStyle(fontSize: 20),
-            ),
+            child: const Text("Aspect ratio", style: TextStyle(fontSize: 20)),
           ),
           Row(
             children: [
               Expanded(
                 child: Slider(
-                    value: widget.customNetworkPlayer.width.toDouble(),
-                    max: 20,
-                    min: 5,
-                    divisions: 15,
-                    label: widget.customNetworkPlayer.width.toString(),
-                    onChanged: (s) {
-                      setState(() {
-                        widget.customNetworkPlayer.width = s.round();
-                      });
-                    }),
+                  value: widget.customNetworkPlayer.width.toDouble(),
+                  max: 20,
+                  min: 5,
+                  divisions: 15,
+                  label: widget.customNetworkPlayer.width.toString(),
+                  onChanged: (s) {
+                    setState(() {
+                      widget.customNetworkPlayer.width = s.round();
+                    });
+                  },
+                ),
               ),
               const Text(
                 "\\",
@@ -99,19 +101,22 @@ class _CustomNetworkPlayerSettingViewState
               ),
               Expanded(
                 child: Slider(
-                    value: widget.customNetworkPlayer.height.toDouble(),
-                    max: 20,
-                    min: 5,
-                    divisions: 15,
-                    label: widget.customNetworkPlayer.height.toString(),
-                    onChanged: (s) {
-                      setState(() {
-                        widget.customNetworkPlayer.height = s.round();
-                      });
-                    }),
-              )
+                  value: widget.customNetworkPlayer.height.toDouble(),
+                  max: 20,
+                  min: 5,
+                  divisions: 15,
+                  label: widget.customNetworkPlayer.height.toString(),
+                  onChanged: (s) {
+                    setState(() {
+                      widget.customNetworkPlayer.height = s.round();
+                    });
+                  },
+                ),
+              ),
             ],
-          )
-        ]));
+          ),
+        ],
+      ),
+    );
   }
 }
