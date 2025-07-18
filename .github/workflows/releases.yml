@@ -23,6 +23,7 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: 3.32.6
+      - run: flutter pub get
       - name: Check format
         run: dart format --set-exit-if-changed .
   build-appbundle:
