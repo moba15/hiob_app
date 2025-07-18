@@ -7,7 +7,7 @@ import 'package:smart_home/settings/config_settings/bloc/config_bloc.dart';
 class ConfigSettingsPage extends StatelessWidget {
   final ConfigBloc _configBloc = ConfigBloc();
 
-  ConfigSettingsPage({Key? key}) : super(key: key);
+  ConfigSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,21 +53,34 @@ class ConfigSettingsPage extends StatelessWidget {
 
       return;
     }
-    Manager.instance.settingsSyncManager.createNewSettingsTemplate(name);
+    Manager.instance.settingsSyncManager.createNewSettingsTemplate(name).then(
+      (value) {
+        if (value.success) {
+          _configBloc.add(ConfigAddedEvent());
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            duration: Duration(milliseconds: 700),
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              "Successfully added",
+              style: TextStyle(color: Colors.green),
+            ),
+          ));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            duration: Duration(milliseconds: 1000),
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              "Error adding",
+              style: TextStyle(color: Colors.red),
+            ),
+          ));
+        }
+      },
+    );
     Manager
         .instance.settingsSyncManager.configAddedStreamController.stream.first
         .then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        duration: Duration(milliseconds: 700),
-        behavior: SnackBarBehavior.floating,
-        content: Text(
-          "Added",
-          style: TextStyle(color: Colors.green),
-        ),
-      ));
-
       //TODO: Fetch New list
-      _configBloc.add(ConfigAddedEvent());
     });
   }
 
@@ -86,7 +99,7 @@ class _AddSettingTemplateDialog extends StatelessWidget {
   final Function(String, BuildContext) onAdd;
   final TextEditingController textEditingController = TextEditingController();
 
-  _AddSettingTemplateDialog({Key? key, required this.onAdd}) : super(key: key);
+  _AddSettingTemplateDialog({required this.onAdd});
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +126,7 @@ class _AddSettingTemplateDialog extends StatelessWidget {
 class _ConfigsListView extends StatefulWidget {
   final ConfigBloc configBloc;
 
-  const _ConfigsListView({Key? key, required this.configBloc})
-      : super(key: key);
+  const _ConfigsListView({required this.configBloc});
 
   @override
   State<_ConfigsListView> createState() => _ConfigsListViewState();
@@ -148,11 +160,10 @@ class _ConfigsListViewState extends State<_ConfigsListView> {
 }
 
 class _ConfigCard extends StatelessWidget {
-  final PreConfig preConfig;
+  final String preConfig;
   final bool selected;
 
-  const _ConfigCard({Key? key, required this.preConfig, required this.selected})
-      : super(key: key);
+  const _ConfigCard({required this.preConfig, required this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +176,7 @@ class _ConfigCard extends StatelessWidget {
             children: [
               const Spacer(),
               Text(
-                preConfig.name,
+                preConfig,
                 style: const TextStyle(fontSize: 22),
               ),
               const Spacer(),
@@ -210,26 +221,23 @@ class _ConfigCard extends StatelessWidget {
 }
 
 class _ConfigLoadingDialog extends StatefulWidget {
-  final PreConfig preConfig;
+  final String preConfig;
   final bool upload;
 
-  const _ConfigLoadingDialog(
-      {Key? key, required this.preConfig, required this.upload})
-      : super(key: key);
+  const _ConfigLoadingDialog({required this.preConfig, required this.upload});
 
   @override
   State<_ConfigLoadingDialog> createState() => _ConfigLoadingDialogState();
 }
 
 class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
-  bool device = true;
   bool widgets = true;
   bool screens = true;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Choose what to load: ${widget.preConfig.name}"),
+      title: Text("Choose what to load: ${widget.preConfig}"),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -249,18 +257,6 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
                   selected: widgets,
                   onTap: () => setState(() {
                         widgets = !widgets;
-                      })),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildSelectionCardCard(
-                  name: "Devices",
-                  iconData: Icons.devices,
-                  selected: device,
-                  onTap: () => setState(() {
-                        device = !device;
                       })),
             ],
           ),
@@ -340,7 +336,7 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
         .instance.settingsSyncManager.loadedSuccessStreamController.stream.first
         .then((value) => showSuccessSnackBar(context, "Loaded"));
     Manager.instance.settingsSyncManager.getTemplateSettings(widget.preConfig,
-        device: device, screen: screens, widget: widgets);
+        screen: screens, widget: widgets);
   }
 
   void upload() {
@@ -348,8 +344,8 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
     Manager
         .instance.settingsSyncManager.uploadSuccessStreamController.stream.first
         .then((value) => showSuccessSnackBar(context, "Uploaded"));
-    Manager.instance.settingsSyncManager.uploadSettings(widget.preConfig,
-        device: device, screen: screens, widget: widgets);
+    Manager.instance.settingsSyncManager
+        .uploadSettings(widget.preConfig, screen: screens, widget: widgets);
   }
 
   void showSuccessSnackBar(context, text) {

@@ -12,8 +12,7 @@ class MultiSelectionTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey selectionsKey = GlobalKey();
 
   MultiSelectionTriggerActionSettings(
-      {Key? key, required this.multiSelectionTriggerAction})
-      : super(key: key);
+      {super.key, required this.multiSelectionTriggerAction});
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +53,7 @@ class MultiSelectionTriggerActionSettings extends TriggerActionSetting {
 class _SelectionSettings extends StatefulWidget {
   final MultiSelectionTriggerAction multiSelectionTriggerAction;
 
-  const _SelectionSettings(
-      {Key? key, required this.multiSelectionTriggerAction})
-      : super(key: key);
+  const _SelectionSettings({required this.multiSelectionTriggerAction});
 
   @override
   State<_SelectionSettings> createState() => _SelectionSettingsState();
@@ -181,8 +178,7 @@ class _SelectionAddAlertDialog extends StatelessWidget {
   final String oldValue, newValue;
 
   _SelectionAddAlertDialog(
-      {Key? key, required this.onAdd, this.oldValue = "", this.newValue = ""})
-      : super(key: key) {
+      {required this.onAdd, this.oldValue = "", this.newValue = ""}) {
     keyController.text = oldValue;
     valueController.text = newValue;
   }

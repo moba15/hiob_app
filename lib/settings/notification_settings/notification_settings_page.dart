@@ -7,7 +7,7 @@ import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotificationSettingsPage extends StatefulWidget {
-  const NotificationSettingsPage({Key? key}) : super(key: key);
+  const NotificationSettingsPage({super.key});
 
   @override
   State<NotificationSettingsPage> createState() =>
@@ -27,7 +27,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
 }
 
 class _NotificationSettingsBody extends StatefulWidget {
-  const _NotificationSettingsBody({Key? key}) : super(key: key);
+  const _NotificationSettingsBody();
 
   @override
   State<_NotificationSettingsBody> createState() =>
@@ -55,7 +55,7 @@ class __NotificationSettingsBodyState extends State<_NotificationSettingsBody> {
 }
 
 class _InfoAlertDialog extends StatelessWidget {
-  const _InfoAlertDialog({Key? key}) : super(key: key);
+  const _InfoAlertDialog();
 
   @override
   Widget build(BuildContext context) {

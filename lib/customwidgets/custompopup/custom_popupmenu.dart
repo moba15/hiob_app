@@ -11,7 +11,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_swit
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/reorder_helper.dart';
 
@@ -43,8 +42,8 @@ class CustomPopupmenu with _$CustomPopupmenu {
     return true;
   }
 
-  List<DataPoint> getDependentDataPoints() {
-    List<DataPoint> dataPoints = [];
+  List<String> getDependentDataPoints() {
+    List<String> dataPoints = [];
     for (CustomWidget customWidget in customWidgets) {
       dataPoints.addAll(customWidget.dependentDataPoints);
     }

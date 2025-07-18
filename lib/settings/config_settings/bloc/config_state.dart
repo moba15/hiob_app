@@ -1,7 +1,7 @@
 part of 'config_bloc.dart';
 
 class ConfigState {
-  final List<PreConfig> configs;
+  final List<String> configs;
 
   ConfigState({this.configs = const []});
 }

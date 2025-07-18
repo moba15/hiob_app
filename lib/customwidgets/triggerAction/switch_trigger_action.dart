@@ -19,7 +19,7 @@ class SwitchTriggerAction extends TriggerAction {
 
   factory SwitchTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     return SwitchTriggerAction(
         dataPoint: dataPoint,
         switchFalse: json["switchFalse"],
@@ -62,7 +62,7 @@ class SwitchTriggerAction extends TriggerAction {
     return new_widget.CustomSwitchWidget(
         id: id,
         name: name,
-        dataPoint: dataPoint,
+        dataPoint: dataPoint?.id,
         sendIfOff: switchFalse.toString(),
         sendIfOn: switchTrue.toString());
   }

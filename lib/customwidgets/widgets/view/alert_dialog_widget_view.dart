@@ -5,8 +5,8 @@ import 'package:smart_home/manager/manager.dart';
 
 class AlterDialogWidgetView extends StatelessWidget {
   final CustomAlertDialogWidget customAlertDialogWidget;
-  const AlterDialogWidgetView({Key? key, required this.customAlertDialogWidget})
-      : super(key: key);
+  const AlterDialogWidgetView(
+      {super.key, required this.customAlertDialogWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,7 @@ class AlterDialogWidgetView extends StatelessWidget {
 
 class BottomSheetWidget extends StatelessWidget {
   final CustomAlertDialogWidget customAlertDialogWidget;
-  const BottomSheetWidget({Key? key, required this.customAlertDialogWidget})
-      : super(key: key);
+  const BottomSheetWidget({super.key, required this.customAlertDialogWidget});
 
   @override
   Widget build(BuildContext context) {

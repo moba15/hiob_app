@@ -10,8 +10,7 @@ import '../../../../manager/manager.dart';
 
 class CustomGroupWidgetView extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
-  const CustomGroupWidgetView({Key? key, required this.customGroupWidget})
-      : super(key: key);
+  const CustomGroupWidgetView({super.key, required this.customGroupWidget});
 
   @override
   Widget build(BuildContext context) {

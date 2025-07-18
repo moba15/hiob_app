@@ -14,8 +14,7 @@ _$CustomValueWidgetImpl _$$CustomValueWidgetImplFromJson(
           CustomWidgetTypeDeprecated.valueNew,
       id: json['id'] as String,
       name: json['name'] as String,
-      dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-          json['dataPoint'], const DataPointIdConverter().fromJson),
+      dataPoint: json['dataPoint'] as String?,
       label: json['label'] as String?,
       valueMapper: (json['valueMapper'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(k, e as String),
@@ -38,7 +37,7 @@ Map<String, dynamic> _$$CustomValueWidgetImplToJson(
       'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
-      'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+      'dataPoint': instance.dataPoint,
       'label': instance.label,
       'valueMapper': instance.valueMapper,
       'round': instance.round,
@@ -74,9 +73,3 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);

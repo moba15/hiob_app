@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/device/bloc/device_bloc.dart';
 import 'package:smart_home/device/device.dart';
-import 'package:smart_home/manager/manager.dart';
-
-import '../../settings/device_setting/device_list/view/device_list_page.dart';
-import '../iobroker_device.dart';
 
 class DeviceTileApp extends StatelessWidget {
   final Device device;
-  const DeviceTileApp({Key? key, required this.device}) : super(key: key);
+  const DeviceTileApp({super.key, required this.device});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +16,7 @@ class DeviceTileApp extends StatelessWidget {
 }
 
 class DeviceTile extends StatelessWidget {
-  const DeviceTile({Key? key}) : super(key: key);
+  const DeviceTile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +25,9 @@ class DeviceTile extends StatelessWidget {
 
     final status = context.select((DeviceBloc bloc) => bloc.state.status);
     final device = context.select((DeviceBloc bloc) => bloc.device);
+    return Text("Should not be here");
 
-    return ListTile(
+    /* return ListTile(
       leading: device.iconWrapper.icon,
       title: (device is IoBrokerDevice)
           ? Text("${device.name} (IoBroker)")
@@ -59,7 +56,7 @@ class DeviceTile extends StatelessWidget {
                     deviceManager: Manager.instance.deviceManager,
                     device: device)));
       },
-    );
+    );*/
   }
 
   String durationToString(Duration duration) {

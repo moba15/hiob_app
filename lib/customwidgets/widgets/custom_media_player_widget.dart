@@ -11,14 +11,11 @@ class CustomMediaPlayerWidget extends CustomWidgetDeprecated {
   int width = 16;
   int height = 9;
   CustomMediaPlayerWidget(
-      {required String? name,
+      {required super.name,
       required this.url,
       this.width = 16,
       this.height = 9})
-      : super(
-            name: name,
-            type: CustomWidgetTypeDeprecated.mediaPlayer,
-            settings: {});
+      : super(type: CustomWidgetTypeDeprecated.mediaPlayer, settings: {});
 
   factory CustomMediaPlayerWidget.fromJSON(Map<String, dynamic> json) {
     return CustomMediaPlayerWidget(

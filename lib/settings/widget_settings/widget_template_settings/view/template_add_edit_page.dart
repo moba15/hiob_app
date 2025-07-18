@@ -23,12 +23,11 @@ class TemplateAddPage extends StatefulWidget {
   final Function(CustomWidgetWrapper)? onSave;
   final bool Function(CustomWidgetTypeDeprecated)? filter;
   const TemplateAddPage(
-      {Key? key,
+      {super.key,
       required this.customWidgetManager,
       this.preSelectedTemplate,
       this.onSave,
-      this.filter})
-      : super(key: key);
+      this.filter});
 
   @override
   State<TemplateAddPage> createState() => _TemplateAddPageState();
@@ -343,9 +342,8 @@ class _TemplateTabBarView extends StatefulWidget {
   final CustomWidgetSettingWidget? customWidgetSettingWidget;
 
   const _TemplateTabBarView({
-    Key? key,
     required this.customWidgetSettingWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<_TemplateTabBarView> createState() => __TemplateTabBarViewState();
@@ -488,8 +486,7 @@ class _SaveDialog extends StatelessWidget {
   final Function onSave;
   final Function cancel;
 
-  const _SaveDialog({Key? key, required this.onSave, required this.cancel})
-      : super(key: key);
+  const _SaveDialog({required this.onSave, required this.cancel});
 
   @override
   Widget build(BuildContext context) {

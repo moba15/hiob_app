@@ -86,7 +86,7 @@ class GraphLine {
   factory GraphLine.fromJson(
       Map<String, dynamic> json, List<GraphAxis> xAxes, List<GraphAxis> yAxes) {
     DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     if (!GraphLineType.values
         .any((element) => element.toString() == json["type"])) {
       json["type"] = GraphLineType.normal.toString();

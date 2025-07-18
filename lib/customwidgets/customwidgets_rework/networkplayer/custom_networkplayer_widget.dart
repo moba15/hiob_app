@@ -6,7 +6,6 @@ import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/settings/custom_networkplayer_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/view/custom_networkplayer_widget_view.dart';
-import 'package:smart_home/device/state/state.dart';
 
 part 'custom_networkplayer_widget.freezed.dart';
 part 'custom_networkplayer_widget.g.dart';
@@ -45,7 +44,7 @@ class CustomNetworkPlayerWidget
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return [];
   }
 

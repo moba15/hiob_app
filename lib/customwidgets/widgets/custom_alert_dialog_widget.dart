@@ -10,11 +10,8 @@ class CustomAlertDialogWidget extends CustomWidgetDeprecated {
   List<CustomWidgetWrapper>? templates;
   String? title;
 
-  CustomAlertDialogWidget({required String? name, this.templates, this.title})
-      : super(
-            name: name,
-            type: CustomWidgetTypeDeprecated.alertDialog,
-            settings: {});
+  CustomAlertDialogWidget({required super.name, this.templates, this.title})
+      : super(type: CustomWidgetTypeDeprecated.alertDialog, settings: {});
 
   factory CustomAlertDialogWidget.fromJSON(Map<String, dynamic> json) {
     List<Map<String, dynamic>> rawTemplates =

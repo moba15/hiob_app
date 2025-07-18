@@ -39,8 +39,8 @@ class RequestEnumsPackage extends DataPackage {
 }
 
 class EnumsPackage extends DataPackage {
-  EnumsPackage({required Map<String, dynamic> content})
-      : super(type: DataPackageType.enumPackage, content: content);
+  EnumsPackage({required super.content})
+      : super(type: DataPackageType.enumPackage);
 
   List<Map<String, dynamic>> getList() {
     return content["list"];
@@ -48,8 +48,8 @@ class EnumsPackage extends DataPackage {
 }
 
 class StateChangedIobPackage extends DataPackage {
-  StateChangedIobPackage({required Map<String, dynamic> content})
-      : super(type: DataPackageType.iobStateChanged, content: content);
+  StateChangedIobPackage({required super.content})
+      : super(type: DataPackageType.iobStateChanged);
 }
 
 class StateChangeRequestIobPackage extends DataPackage {

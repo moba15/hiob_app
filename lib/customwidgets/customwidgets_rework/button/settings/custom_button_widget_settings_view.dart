@@ -4,15 +4,14 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomButtonWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomButtonWidget customButtonWidget;
   const CustomButtonWidgetSettingsView(
-      {Key? key, required this.customButtonWidget})
-      : super(key: key);
+      {super.key, required this.customButtonWidget});
 
   @override
   State<CustomButtonWidgetSettingsView> createState() =>
@@ -43,6 +42,9 @@ class _CustomButtonWidgetSettingsViewState
   late final TextEditingController buttonLabelEditingController,
       valueTextEditingController;
   late CustomWidgetBlocCubit c;
+
+  bool _valueTextManuallyChanged = false;
+
   @override
   void initState() {
     buttonLabelEditingController =
@@ -62,32 +64,40 @@ class _CustomButtonWidgetSettingsViewState
               child: TextField(
             controller: valueTextEditingController,
             decoration: const InputDecoration(label: Text("Label (optional)")),
-            onChanged: (s) => {
-              widget.customButtonWidget.label = s,
-              c.update(widget.customButtonWidget)
-            },
+            onChanged: (s) =>
+                {_valueTextManuallyChanged = true, valueTextChanged(s)},
           )),
           InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-            onDeviceSelected: (d) => {c.update(widget.customButtonWidget)},
-            onDataPointSelected: (d) => {
-              widget.customButtonWidget.dataPoint = d,
-              c.update(widget.customButtonWidget)
-            },
-            customWidgetManager: Manager().customWidgetManager,
-            selectedDataPoint: widget.customButtonWidget.dataPoint,
-            selectedDevice: widget.customButtonWidget.dataPoint?.device,
+              child: StateSearchBar(
+            onSelected: onSelect,
           )),
           InputFieldContainer.inputContainer(
               child: TextField(
             controller: buttonLabelEditingController,
             decoration:
                 const InputDecoration(label: Text("Button label (optional)")),
-            onChanged: (s) => {
-              widget.customButtonWidget.buttonLabel = s,
-              c.update(widget.customButtonWidget)
-            },
+            onChanged: (s) => {buttonLabelChanged(s)},
           ))
         ]));
+  }
+
+  void onSelect(IobrokerObject iobrokerObject) {
+    widget.customButtonWidget.dataPoint = iobrokerObject.id;
+    c.update(widget.customButtonWidget);
+    if (valueTextEditingController.text.isEmpty || !_valueTextManuallyChanged) {
+      valueTextChanged("${iobrokerObject.name ?? iobrokerObject.id} Button");
+      valueTextEditingController.text = widget.customButtonWidget.label!;
+      _valueTextManuallyChanged = false;
+    }
+  }
+
+  void buttonLabelChanged(String s) {
+    widget.customButtonWidget.buttonLabel = s;
+    c.update(widget.customButtonWidget);
+  }
+
+  void valueTextChanged(String s) {
+    widget.customButtonWidget.label = s;
+    c.update(widget.customButtonWidget);
   }
 }

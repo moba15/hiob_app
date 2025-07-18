@@ -16,8 +16,7 @@ class CustomLightWidgetSettingWidget extends CustomWidgetSettingStatefulWidget {
   final GlobalKey valueKey = GlobalKey();
   final GlobalKey switchDatapoint = GlobalKey();
   final GlobalKey sliderKey = GlobalKey();
-  CustomLightWidgetSettingWidget({Key? key, required this.customLightWidget})
-      : super(key: key);
+  CustomLightWidgetSettingWidget({super.key, required this.customLightWidget});
 
   @override
   State<CustomLightWidgetSettingWidget> createState() =>

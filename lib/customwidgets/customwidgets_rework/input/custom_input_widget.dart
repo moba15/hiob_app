@@ -7,8 +7,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/input/settings/custom_input_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/view/custom_input_widget_view.dart';
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
 
 part 'custom_input_widget.freezed.dart';
 part 'custom_input_widget.g.dart';
@@ -83,7 +81,7 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
       required String id,
       required String name,
       String? label,
-      @DataPointIdConverter() required DataPoint? dataPoint,
+      required String? dataPoint,
       String? hintText,
       String? suffix,
       CustomPopupmenu? customPopupmenu,
@@ -98,7 +96,7 @@ class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

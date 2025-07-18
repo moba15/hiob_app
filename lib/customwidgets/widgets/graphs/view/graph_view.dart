@@ -4,7 +4,7 @@ import 'package:smart_home/manager/history/bloc/history_data_bloc.dart';
 
 class GraphView extends StatefulWidget {
   final GraphWidget graphWidget;
-  const GraphView({Key? key, required this.graphWidget}) : super(key: key);
+  const GraphView({super.key, required this.graphWidget});
 
   @override
   State<GraphView> createState() => _GraphViewState();

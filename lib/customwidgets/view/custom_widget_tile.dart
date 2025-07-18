@@ -14,14 +14,13 @@ class CustomWidgetTemplateTile extends StatelessWidget {
   //Set null if no selection should be supported
   final Function()? toggleSelect;
   const CustomWidgetTemplateTile(
-      {Key? key,
+      {super.key,
       required this.customWidget,
       required this.customWidgetManager,
       required this.toggleSelect,
       this.selectedMode = false,
       this.selected = false,
-      this.onSave})
-      : super(key: key);
+      this.onSave});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ part of 'custom_attributes.dart';
 class CustomTextAttribute extends CustomAttribute<String> {
   static String typeID = "customText";
 
-  CustomTextAttribute({String data = "Error 401"}) : super(data: data);
+  CustomTextAttribute({super.data = "Error 401"});
 
   @override
   Map<String, dynamic> toJson() => {
@@ -16,7 +16,7 @@ class CustomTextAttribute extends CustomAttribute<String> {
 }
 
 class CustomTextSetting extends StatelessWidget {
-  const CustomTextSetting({Key? key}) : super(key: key);
+  const CustomTextSetting({super.key});
 
   @override
   Widget build(BuildContext context) {

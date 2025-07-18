@@ -15,15 +15,14 @@ class GraphWidget extends CustomWidgetDeprecated {
   GraphUpdateType? updateType;
   bool? trackBall;
   GraphWidget(
-      {required String? name,
+      {required super.name,
       this.title,
       this.yAxes,
       this.xAxes,
       this.graphLines,
       this.updateType,
       this.trackBall})
-      : super(
-            name: name, type: CustomWidgetTypeDeprecated.graph, settings: {}) {
+      : super(type: CustomWidgetTypeDeprecated.graph, settings: {}) {
     if (graphLines != null &&
         graphLines!.isNotEmpty &&
         yAxes != null &&

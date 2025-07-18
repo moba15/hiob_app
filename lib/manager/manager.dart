@@ -82,8 +82,7 @@ class Manager {
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref, manager: this);
-    deviceManager = DeviceManager(fileManager, devicesList: [], manager: this)
-      ..loadDevices();
+    deviceManager = DeviceManager(fileManager, devicesList: [], manager: this);
 
     ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
 
@@ -118,35 +117,36 @@ class Manager {
 
     subscription1 = customWidgetManager.templatesStreamController.stream.listen(
       (event) {
-        onLoaded();
+        onLoaded("customWidgetManager");
       },
     );
 
     subscription2 = deviceManager.deviceListStreamController.stream.listen((
       event,
     ) {
-      onLoaded();
+      onLoaded("deviceManager");
     });
+    deviceManager.loadDevices();
 
     subscription3 = screenManager.screenStreamController.stream.listen((event) {
-      onLoaded();
+      onLoaded("screenManager");
     });
 
     subscription4 = ioBrokerManager.statusStreamController.stream.listen((
       event,
     ) {
-      onLoaded();
+      onLoaded("ioBrokerManager");
     });
 
     subscription5 = connectionManager.statusStreamController.stream.listen((
       event,
     ) {
-      onLoaded();
+      onLoaded("connectionManager");
     });
     subscription6 = generalManager.statusStreamController.stream.listen((
       event,
     ) {
-      onLoaded();
+      onLoaded("generalManager");
     });
   }
 
@@ -155,10 +155,14 @@ class Manager {
     return base64UrlEncode(values);
   }
 
-  void onLoaded() {
+  void onLoaded(String name) {
     loadingState += 1;
+    talker.debug(
+      "Manager | onLoaded | $name: $loadingState / $maxLoadingState",
+    );
     if (loadingState == maxLoadingState - 1) {
       status = ManagerStatus.finished;
+
       managerStatusStreamController.add(ManagerStatus.finished);
       connectionManager.connectIoB();
     }
