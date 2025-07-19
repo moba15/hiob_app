@@ -25,11 +25,13 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
       if (widget.customWebViewWidget.dataPoint!.value == null) {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..enableZoom(true)
           ..loadRequest(Uri.parse("https://github.com/asdasdasd/adasdasd"));
         bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
       } else {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..enableZoom(true)
           ..loadRequest(
             Uri.parse(widget.customWebViewWidget.dataPoint!.value.toString()),
           );
@@ -40,12 +42,14 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
           widget.customWebViewWidget.url.toString().startsWith("http://")) {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..enableZoom(true)
           ..loadRequest(
             Uri.parse(widget.customWebViewWidget.url ?? "https://google.de"),
           );
       } else {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..enableZoom(true)
           ..loadRequest(
             Uri.parse(
               "https://${widget.customWebViewWidget.url ?? "https://google.de"}",
