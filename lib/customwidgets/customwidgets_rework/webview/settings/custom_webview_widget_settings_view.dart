@@ -92,6 +92,18 @@ class _CustomWebViewWidgetSettingViewState
             ),
           ),
           InputFieldContainer.inputContainer(
+            child: CheckboxListTile(
+              value: widget.customWebViewWidget.image,
+              onChanged: (bool? v) {
+                setState(() {
+                  widget.customWebViewWidget.image = v ?? false;
+                });
+                c.update(widget.customWebViewWidget);
+              },
+              title: const Text("Is image"),
+            ),
+          ),
+          InputFieldContainer.inputContainer(
             child: Slider(
               value: widget.customWebViewWidget.height.toDouble(),
               onChanged: (d) {

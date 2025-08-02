@@ -18,6 +18,8 @@ class CustomWebViewWidgetView extends StatefulWidget {
 class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
   late WebViewController _webViewController;
   late DataPointBloc bloc;
+  bool image = false;
+  late String? url;
 
   @override
   void initState() {
@@ -27,6 +29,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
           ..enableZoom(true)
           ..loadRequest(Uri.parse("https://github.com/asdasdasd/adasdasd"));
+
         bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
       } else {
         _webViewController = WebViewController()
@@ -35,6 +38,8 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
           ..loadRequest(
             Uri.parse(widget.customWebViewWidget.dataPoint!.value.toString()),
           );
+
+        url = widget.customWebViewWidget.dataPoint!.value.toString();
         bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
       }
     } else {
@@ -46,6 +51,8 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
           ..loadRequest(
             Uri.parse(widget.customWebViewWidget.url ?? "https://google.de"),
           );
+        url = widget.customWebViewWidget.url;
+        ;
       } else {
         _webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -55,6 +62,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
               "https://${widget.customWebViewWidget.url ?? "https://google.de"}",
             ),
           );
+        url = widget.customWebViewWidget.url;
       }
     }
 
@@ -80,25 +88,37 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
               bloc: bloc,
               child: SizedBox(
                 height: widget.customWebViewWidget.height.toDouble(),
-                child: WebViewWidget(controller: _webViewController),
+                child: !widget.customWebViewWidget.image
+                    ? WebViewWidget(controller: _webViewController)
+                    : Image.network(
+                        url ??
+                            "https://kagi.com/proxy/cute-kitten-4k-im.jpg?c=OvVvcvM20QvRUmySQvVdxCo532pklnGqs7mknbfVuW3rEpaR6GbhZDW6EBeonAwR2JzbQFgoCwWKYmCRMazYqBxJNPnYC8erNS86pzup3Qk%3D",
+                      ),
               ),
               listener: (context, state) {
+                url = state.value;
                 if (state.value.toString().startsWith("https://") ||
                     state.value.toString().startsWith("http://")) {
-                  _webViewController.loadRequest(
-                    Uri.parse(state.value.toString()),
-                  );
                 } else {
-                  _webViewController.loadRequest(
-                    Uri.parse("https://${state.value}"),
-                  );
+                  url = "https://${state.value}";
                 }
+                _webViewController.loadRequest(
+                  Uri.parse(url ?? "https://google.de"),
+                );
+                setState(() {
+                  url = state.value;
+                });
               },
             ),
           if (widget.customWebViewWidget.dataPoint == null)
             SizedBox(
               height: widget.customWebViewWidget.height.toDouble(),
-              child: WebViewWidget(controller: _webViewController),
+              child: !widget.customWebViewWidget.image
+                  ? WebViewWidget(controller: _webViewController)
+                  : Image.network(
+                      url ??
+                          "https://kagi.com/proxy/cute-kitten-4k-im.jpg?c=OvVvcvM20QvRUmySQvVdxCo532pklnGqs7mknbfVuW3rEpaR6GbhZDW6EBeonAwR2JzbQFgoCwWKYmCRMazYqBxJNPnYC8erNS86pzup3Qk%3D",
+                    ),
             ),
         ],
       ),

@@ -27,6 +27,7 @@ class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
+    @Default(false) bool image,
     @DataPointIdConverter() required DataPoint? dataPoint,
     String? url,
     @Default(500) int height,

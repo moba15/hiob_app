@@ -30,10 +30,7 @@ class ChangeLogScreen extends StatelessWidget {
 
   String _changelog() {
     return """
-- Update android compileSdk, minSdk, targetSdk to fulfill googles new guidelines
-- Update flutter version
-- other smaller bug fixes
-- **Note**: New major version incoming (start of Q4/25 at the latest)
+- **WebView**: Added a checkbox option to resolve image loading issues in WebView. Enabling this should fix problems with most images.
   """;
   }
 

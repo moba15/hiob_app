@@ -14,6 +14,7 @@ _$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
       CustomWidgetTypeDeprecated.webViewNew,
   id: json['id'] as String,
   name: json['name'] as String,
+  image: json['image'] as bool? ?? false,
   dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
     json['dataPoint'],
     const DataPointIdConverter().fromJson,
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
   'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
   'id': instance.id,
   'name': instance.name,
+  'image': instance.image,
   'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
   'url': instance.url,
   'height': instance.height,

@@ -28,6 +28,8 @@ mixin _$CustomWebViewWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
+  bool get image => throw _privateConstructorUsedError;
+  set image(bool value) => throw _privateConstructorUsedError;
   @DataPointIdConverter()
   DataPoint? get dataPoint => throw _privateConstructorUsedError;
   @DataPointIdConverter()
@@ -64,6 +66,7 @@ abstract class $CustomWebViewWidgetCopyWith<$Res> {
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
+    bool image,
     @DataPointIdConverter() DataPoint? dataPoint,
     String? url,
     int height,
@@ -92,6 +95,7 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? image = null,
     Object? dataPoint = freezed,
     Object? url = freezed,
     Object? height = null,
@@ -112,6 +116,10 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
                       as String,
+            image: null == image
+                ? _value.image
+                : image // ignore: cast_nullable_to_non_nullable
+                      as bool,
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -165,6 +173,7 @@ abstract class _$$CustomWebViewWidgetImplCopyWith<$Res>
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
+    bool image,
     @DataPointIdConverter() DataPoint? dataPoint,
     String? url,
     int height,
@@ -193,6 +202,7 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? image = null,
     Object? dataPoint = freezed,
     Object? url = freezed,
     Object? height = null,
@@ -213,6 +223,10 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
                   as String,
+        image: null == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                  as bool,
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -245,6 +259,7 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
     this.type = CustomWidgetTypeDeprecated.webViewNew,
     required this.id,
     required this.name,
+    this.image = false,
     @DataPointIdConverter() required this.dataPoint,
     this.url,
     this.height = 500,
@@ -263,6 +278,9 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
   @override
   String name;
   @override
+  @JsonKey()
+  bool image;
+  @override
   @DataPointIdConverter()
   DataPoint? dataPoint;
   @override
@@ -277,7 +295,7 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
 
   @override
   String toString() {
-    return 'CustomWebViewWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, url: $url, height: $height, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
+    return 'CustomWebViewWidget(type: $type, id: $id, name: $name, image: $image, dataPoint: $dataPoint, url: $url, height: $height, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomWebViewWidget
@@ -303,6 +321,7 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
+    bool image,
     @DataPointIdConverter() required DataPoint? dataPoint,
     String? url,
     int height,
@@ -323,6 +342,9 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
   @override
   String get name;
   set name(String value);
+  @override
+  bool get image;
+  set image(bool value);
   @override
   @DataPointIdConverter()
   DataPoint? get dataPoint;
