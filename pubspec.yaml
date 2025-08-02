@@ -51,7 +51,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   community_material_icon: ^5.9.55
   webview_flutter: ^4.13.0
-  permission_handler: ^11.2.0
+  permission_handler: ^12.0.1
   showcaseview: ^3.0.0
  
   device_info_plus: ^9.0.3
