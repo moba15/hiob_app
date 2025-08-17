@@ -15,6 +15,8 @@ _$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
   id: json['id'] as String,
   name: json['name'] as String,
   image: json['image'] as bool? ?? false,
+  enabledZoom: json['enabledZoom'] as bool? ?? false,
+  enableInlineScroll: json['enableInlineScroll'] as bool? ?? false,
   dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
     json['dataPoint'],
     const DataPointIdConverter().fromJson,
@@ -40,6 +42,8 @@ Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
   'id': instance.id,
   'name': instance.name,
   'image': instance.image,
+  'enabledZoom': instance.enabledZoom,
+  'enableInlineScroll': instance.enableInlineScroll,
   'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
   'url': instance.url,
   'height': instance.height,

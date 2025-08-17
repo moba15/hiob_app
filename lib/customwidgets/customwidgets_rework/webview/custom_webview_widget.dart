@@ -28,6 +28,8 @@ class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
     required String id,
     required String name,
     @Default(false) bool image,
+    @Default(false) bool enabledZoom,
+    @Default(false) bool enableInlineScroll,
     @DataPointIdConverter() required DataPoint? dataPoint,
     String? url,
     @Default(500) int height,

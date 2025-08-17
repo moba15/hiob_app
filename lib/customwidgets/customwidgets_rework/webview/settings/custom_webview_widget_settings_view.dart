@@ -92,15 +92,27 @@ class _CustomWebViewWidgetSettingViewState
             ),
           ),
           InputFieldContainer.inputContainer(
-            child: CheckboxListTile(
-              value: widget.customWebViewWidget.image,
+            child: SwitchListTile(
+              value: widget.customWebViewWidget.enabledZoom,
               onChanged: (bool? v) {
                 setState(() {
-                  widget.customWebViewWidget.image = v ?? false;
+                  widget.customWebViewWidget.enabledZoom = v ?? false;
                 });
                 c.update(widget.customWebViewWidget);
               },
-              title: const Text("Is image"),
+              title: const Text("Zoom"),
+            ),
+          ),
+          InputFieldContainer.inputContainer(
+            child: SwitchListTile(
+              value: widget.customWebViewWidget.enableInlineScroll,
+              onChanged: (bool? v) {
+                setState(() {
+                  widget.customWebViewWidget.enableInlineScroll = v ?? false;
+                });
+                c.update(widget.customWebViewWidget);
+              },
+              title: const Text("Inline scrolling"),
             ),
           ),
           InputFieldContainer.inputContainer(
