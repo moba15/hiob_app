@@ -10,6 +10,7 @@ class DropdownSearchAsync<T> extends StatefulWidget {
   final Future<List<T>> Function() loadInitialValues;
   final Widget Function(T, String) toWidget;
   final Widget? selectedObject;
+  final Widget? chipList;
   final String title;
   final String subtitle;
   const DropdownSearchAsync({
@@ -20,6 +21,7 @@ class DropdownSearchAsync<T> extends StatefulWidget {
     required this.toWidget,
     required this.loadInitialValues,
     this.selectedObject,
+    this.chipList,
   });
 
   @override
@@ -100,8 +102,13 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                   onSaved: (newValue) {},
                   onEditingComplete: () {},
                   onFieldSubmitted: (a) {},
-                  decoration: InputDecoration(label: Text("Search")),
+                  decoration: InputDecoration(
+                    label: Text("Search"),
+                    hint: Text("Try searching with regex: .*Licht.*Garten"),
+                  ),
                 ),
+                Gap(8),
+                widget.chipList ?? const SizedBox.shrink(),
                 Text("Result"),
                 StreamBuilder(
                   stream: _controller.stream,

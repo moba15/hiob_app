@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:restart_app/restart_app.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
 import 'package:smart_home/generated/google/protobuf/struct.pb.dart';
@@ -179,6 +180,7 @@ class SettingsSyncManager {
     }
     if (screens != null) {
       fileManager.pref.setString(manager.screenManager.key, screens);
+      Restart.restartApp();
     }
 
     loadedSuccessStreamController.add(true);

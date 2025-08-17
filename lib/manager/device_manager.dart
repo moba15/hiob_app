@@ -233,7 +233,7 @@ class DeviceManager {
 
   Future<List<IobrokerObject>> searchIobrokerObjects(
     String search, {
-    bool regex = false,
+    bool regex = true,
   }) async {
     String query = regex
         ? "SELECT * from ${appDatabase.statesTable.actualTableName} where id REGEXP ? or state_name REGEXP ? or state_desc REGEXP ? LIMIT 250"
