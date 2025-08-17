@@ -30,7 +30,7 @@ class ChangeLogScreen extends StatelessWidget {
 
   String _changelog() {
     return """
-- **WebView**: Added a checkbox option to resolve image loading issues in WebView. Enabling this should fix problems with most images.
+- **WebView**: Fixed a bug where the zoom feature of WebView was not working properly.
   """;
   }
 
