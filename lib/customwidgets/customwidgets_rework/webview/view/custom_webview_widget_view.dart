@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -132,6 +134,14 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
 
   @override
   Widget build(BuildContext context) {
+    if (Platform.isLinux) {
+      return Center(
+        child: Text(
+          "WebView for linux not supported: (${widget.customWebViewWidget.height})",
+          style: TextStyle(color: Colors.red),
+        ),
+      );
+    }
     if (bloc != null) {
       return BlocBuilder<DataPointBloc, DataPointState>(
         bloc: bloc!,

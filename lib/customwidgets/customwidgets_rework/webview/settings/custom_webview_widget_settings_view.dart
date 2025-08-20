@@ -6,6 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/shapes/sldier/custom_slider_thumb_value.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomWebViewWidgetSettingView extends CustomWidgetSettingStatefulWidget {
@@ -115,20 +116,56 @@ class _CustomWebViewWidgetSettingViewState
               title: const Text("Inline scrolling"),
             ),
           ),
-          InputFieldContainer.inputContainer(
-            child: Slider(
-              value: widget.customWebViewWidget.height.toDouble(),
-              onChanged: (d) {
-                setState(() {
-                  widget.customWebViewWidget.height = d.toInt();
-                });
-              },
-              max: 2000,
-              min: widget.customWebViewWidget.height.toDouble() < 100
-                  ? widget.customWebViewWidget.height.toDouble()
-                  : 100,
-              divisions: 1900,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    widget.customWebViewWidget.height--;
+                  });
+                  c.update(widget.customWebViewWidget);
+                },
+                child: const Text("-"),
+              ),
+              Expanded(
+                child: InputFieldContainer.inputContainer(
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbShape: CustomSliderThumbValueCircle(
+                        thumbRadius: 16,
+                        max: 2000,
+                        min: 100,
+                      ),
+                    ),
+                    child: Slider(
+                      value: widget.customWebViewWidget.height.toDouble(),
+                      onChanged: (d) {
+                        setState(() {
+                          widget.customWebViewWidget.height = d.toInt();
+                        });
+                        c.update(widget.customWebViewWidget);
+                      },
+                      max: 2000,
+                      min: widget.customWebViewWidget.height.toDouble() < 100
+                          ? widget.customWebViewWidget.height.toDouble()
+                          : 100,
+                      divisions: 1900,
+                    ),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    widget.customWebViewWidget.height++;
+                  });
+                  c.update(widget.customWebViewWidget);
+                },
+                child: const Text("+"),
+              ),
+            ],
           ),
         ],
       ),
