@@ -30,7 +30,9 @@ class ChangeLogScreen extends StatelessWidget {
 
   String _changelog() {
     return """
-- **WebView**: Fixed a bug where the zoom feature of WebView was not working properly.
+- **WebView**: Improved WebView settings #124
+- **WebView**: A long press on a WebView will reload it
+
   """;
   }
 
