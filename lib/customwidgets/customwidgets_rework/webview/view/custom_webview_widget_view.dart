@@ -155,44 +155,55 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
           } else {
             url = "https://$url";
           }
-          return SizedBox(
-            height: widget.customWebViewWidget.height.toDouble(),
-            child: InAppWebView(
-              gestureRecognizers: {
-                Factory<VerticalDragGestureRecognizer>(
-                  () => VerticalDragGestureRecognizer(),
-                ),
-                Factory<HorizontalDragGestureRecognizer>(
-                  () => HorizontalDragGestureRecognizer(),
-                ),
-              },
-              initialUrlRequest: URLRequest(url: WebUri(url)),
-              onReceivedError: (controller, request, error) =>
-                  print("Error: $error"),
-              initialSettings: _webViewSettings,
-              onWebViewCreated: (controller) => _webViewController = controller,
+          return GestureDetector(
+            onLongPress: () {
+              _webViewController?.reload();
+            },
+            child: SizedBox(
+              height: widget.customWebViewWidget.height.toDouble(),
+              child: InAppWebView(
+                gestureRecognizers: {
+                  Factory<VerticalDragGestureRecognizer>(
+                    () => VerticalDragGestureRecognizer(),
+                  ),
+                  Factory<HorizontalDragGestureRecognizer>(
+                    () => HorizontalDragGestureRecognizer(),
+                  ),
+                },
+                initialUrlRequest: URLRequest(url: WebUri(url)),
+                onReceivedError: (controller, request, error) =>
+                    print("Error: $error"),
+                initialSettings: _webViewSettings,
+                onWebViewCreated: (controller) =>
+                    _webViewController = controller,
+              ),
             ),
           );
         },
       );
     }
-    return SizedBox(
-      height: widget.customWebViewWidget.height.toDouble(),
-      child: InAppWebView(
-        gestureRecognizers: {
-          Factory<VerticalDragGestureRecognizer>(
-            () => VerticalDragGestureRecognizer(),
+    return GestureDetector(
+      onLongPress: () {
+        _webViewController?.reload();
+      },
+      child: SizedBox(
+        height: widget.customWebViewWidget.height.toDouble(),
+        child: InAppWebView(
+          gestureRecognizers: {
+            Factory<VerticalDragGestureRecognizer>(
+              () => VerticalDragGestureRecognizer(),
+            ),
+            Factory<HorizontalDragGestureRecognizer>(
+              () => HorizontalDragGestureRecognizer(),
+            ),
+          },
+          initialUrlRequest: URLRequest(
+            url: WebUri(this.url ?? "https://google.de"),
           ),
-          Factory<HorizontalDragGestureRecognizer>(
-            () => HorizontalDragGestureRecognizer(),
-          ),
-        },
-        initialUrlRequest: URLRequest(
-          url: WebUri(this.url ?? "https://google.de"),
-        ),
 
-        initialSettings: _webViewSettings,
-        onWebViewCreated: (controller) => _webViewController = controller,
+          initialSettings: _webViewSettings,
+          onWebViewCreated: (controller) => _webViewController = controller,
+        ),
       ),
     );
     /* return GestureDetector(
