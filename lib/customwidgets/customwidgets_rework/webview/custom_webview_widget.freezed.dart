@@ -28,8 +28,21 @@ mixin _$CustomWebViewWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
+<<<<<<< HEAD
   String? get dataPoint => throw _privateConstructorUsedError;
   set dataPoint(String? value) => throw _privateConstructorUsedError;
+=======
+  bool get image => throw _privateConstructorUsedError;
+  set image(bool value) => throw _privateConstructorUsedError;
+  bool get enabledZoom => throw _privateConstructorUsedError;
+  set enabledZoom(bool value) => throw _privateConstructorUsedError;
+  bool get enableInlineScroll => throw _privateConstructorUsedError;
+  set enableInlineScroll(bool value) => throw _privateConstructorUsedError;
+  @DataPointIdConverter()
+  DataPoint? get dataPoint => throw _privateConstructorUsedError;
+  @DataPointIdConverter()
+  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+>>>>>>> development
   String? get url => throw _privateConstructorUsedError;
   set url(String? value) => throw _privateConstructorUsedError;
   int get height => throw _privateConstructorUsedError;
@@ -62,7 +75,14 @@ abstract class $CustomWebViewWidgetCopyWith<$Res> {
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
+<<<<<<< HEAD
     String? dataPoint,
+=======
+    bool image,
+    bool enabledZoom,
+    bool enableInlineScroll,
+    @DataPointIdConverter() DataPoint? dataPoint,
+>>>>>>> development
     String? url,
     int height,
     CustomPopupmenu? customPopupmenu,
@@ -90,6 +110,9 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? image = null,
+    Object? enabledZoom = null,
+    Object? enableInlineScroll = null,
     Object? dataPoint = freezed,
     Object? url = freezed,
     Object? height = null,
@@ -110,6 +133,18 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
                       as String,
+            image: null == image
+                ? _value.image
+                : image // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            enabledZoom: null == enabledZoom
+                ? _value.enabledZoom
+                : enabledZoom // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            enableInlineScroll: null == enableInlineScroll
+                ? _value.enableInlineScroll
+                : enableInlineScroll // ignore: cast_nullable_to_non_nullable
+                      as bool,
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -163,7 +198,14 @@ abstract class _$$CustomWebViewWidgetImplCopyWith<$Res>
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
+<<<<<<< HEAD
     String? dataPoint,
+=======
+    bool image,
+    bool enabledZoom,
+    bool enableInlineScroll,
+    @DataPointIdConverter() DataPoint? dataPoint,
+>>>>>>> development
     String? url,
     int height,
     CustomPopupmenu? customPopupmenu,
@@ -191,6 +233,9 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
     Object? type = null,
     Object? id = null,
     Object? name = null,
+    Object? image = null,
+    Object? enabledZoom = null,
+    Object? enableInlineScroll = null,
     Object? dataPoint = freezed,
     Object? url = freezed,
     Object? height = null,
@@ -211,6 +256,18 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
                   as String,
+        image: null == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        enabledZoom: null == enabledZoom
+            ? _value.enabledZoom
+            : enabledZoom // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        enableInlineScroll: null == enableInlineScroll
+            ? _value.enableInlineScroll
+            : enableInlineScroll // ignore: cast_nullable_to_non_nullable
+                  as bool,
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -243,7 +300,14 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
     this.type = CustomWidgetTypeDeprecated.webViewNew,
     required this.id,
     required this.name,
+<<<<<<< HEAD
     required this.dataPoint,
+=======
+    this.image = false,
+    this.enabledZoom = false,
+    this.enableInlineScroll = false,
+    @DataPointIdConverter() required this.dataPoint,
+>>>>>>> development
     this.url,
     this.height = 500,
     this.customPopupmenu,
@@ -261,7 +325,21 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
   @override
   String name;
   @override
+<<<<<<< HEAD
   String? dataPoint;
+=======
+  @JsonKey()
+  bool image;
+  @override
+  @JsonKey()
+  bool enabledZoom;
+  @override
+  @JsonKey()
+  bool enableInlineScroll;
+  @override
+  @DataPointIdConverter()
+  DataPoint? dataPoint;
+>>>>>>> development
   @override
   String? url;
   @override
@@ -274,7 +352,7 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
 
   @override
   String toString() {
-    return 'CustomWebViewWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, url: $url, height: $height, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
+    return 'CustomWebViewWidget(type: $type, id: $id, name: $name, image: $image, enabledZoom: $enabledZoom, enableInlineScroll: $enableInlineScroll, dataPoint: $dataPoint, url: $url, height: $height, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
   /// Create a copy of CustomWebViewWidget
@@ -300,7 +378,14 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
+<<<<<<< HEAD
     required String? dataPoint,
+=======
+    bool image,
+    bool enabledZoom,
+    bool enableInlineScroll,
+    @DataPointIdConverter() required DataPoint? dataPoint,
+>>>>>>> development
     String? url,
     int height,
     CustomPopupmenu? customPopupmenu,
@@ -321,8 +406,24 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
   String get name;
   set name(String value);
   @override
+<<<<<<< HEAD
   String? get dataPoint;
   set dataPoint(String? value);
+=======
+  bool get image;
+  set image(bool value);
+  @override
+  bool get enabledZoom;
+  set enabledZoom(bool value);
+  @override
+  bool get enableInlineScroll;
+  set enableInlineScroll(bool value);
+  @override
+  @DataPointIdConverter()
+  DataPoint? get dataPoint;
+  @DataPointIdConverter()
+  set dataPoint(DataPoint? value);
+>>>>>>> development
   @override
   String? get url;
   set url(String? value);

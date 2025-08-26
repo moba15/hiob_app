@@ -5,6 +5,16 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
+## 0.0710
+- WebView: Improved WebView settings #124
+- WebView: A long press on a WebView will reload it
+
+## 0.0709
+- WebView: Using InAppWebView - possibly fixing #123
+
+## 0.0708
+- WebView: Added a checkbox option to resolve image loading issues in WebView. Enabling this should fix problems with most images (#123)
+
 ## 0.0707
 - Update android compileSdk, minSdk, targetSdk to fulfill googles new guidelines
 - Update flutter version

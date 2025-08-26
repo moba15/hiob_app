@@ -30,10 +30,9 @@ class ChangeLogScreen extends StatelessWidget {
 
   String _changelog() {
     return """
-- Update android compileSdk, minSdk, targetSdk to fulfill googles new guidelines
-- Update flutter version
-- other smaller bug fixes
-- **Note**: New major version incoming (start of Q4/25 at the latest)
+- **WebView**: Improved WebView settings #124
+- **WebView**: A long press on a WebView will reload it
+
   """;
   }
 
