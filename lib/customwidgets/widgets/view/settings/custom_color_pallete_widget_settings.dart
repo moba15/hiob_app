@@ -12,9 +12,9 @@ class CustomColorPaletteWidgetSettings
     extends CustomWidgetSettingStatefulWidget {
   final CustomColorPaletteWidget customColorPaletteWidget;
   const CustomColorPaletteWidgetSettings({
-    Key? key,
+    super.key,
     required this.customColorPaletteWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomColorPaletteWidgetSettings> createState() =>

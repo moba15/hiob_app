@@ -17,11 +17,11 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
   IconWrapper? iconWrapper;
 
   CustomGroupWidget({
-    required String? name,
+    required super.name,
     this.templates = const [],
     this.isExtended = true,
     this.iconWrapper,
-  }) : super(name: name, type: CustomWidgetTypeDeprecated.group, settings: {});
+  }) : super(type: CustomWidgetTypeDeprecated.group, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();

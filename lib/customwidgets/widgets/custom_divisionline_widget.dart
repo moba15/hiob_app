@@ -9,10 +9,10 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
   int thickness;
 
   CustomDivisionLineWidget({
-    required String? name,
+    required super.name,
     this.color = Colors.black,
     this.thickness = 3,
-  }) : super(name: name, type: CustomWidgetTypeDeprecated.line, settings: {});
+  }) : super(type: CustomWidgetTypeDeprecated.line, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>

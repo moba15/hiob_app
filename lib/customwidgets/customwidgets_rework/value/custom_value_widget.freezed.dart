@@ -28,10 +28,8 @@ mixin _$CustomValueWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  DataPoint? get dataPoint => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
   Map<String, String> get valueMapper => throw _privateConstructorUsedError;
@@ -73,7 +71,7 @@ abstract class $CustomValueWidgetCopyWith<$Res> {
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? label,
     Map<String, String> valueMapper,
     int round,
@@ -130,7 +128,7 @@ class _$CustomValueWidgetCopyWithImpl<$Res, $Val extends CustomValueWidget>
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
-                      as DataPoint?,
+                      as String?,
             label: freezed == label
                 ? _value.label
                 : label // ignore: cast_nullable_to_non_nullable
@@ -192,7 +190,7 @@ abstract class _$$CustomValueWidgetImplCopyWith<$Res>
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? label,
     Map<String, String> valueMapper,
     int round,
@@ -249,7 +247,7 @@ class __$$CustomValueWidgetImplCopyWithImpl<$Res>
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
-                  as DataPoint?,
+                  as String?,
         label: freezed == label
             ? _value.label
             : label // ignore: cast_nullable_to_non_nullable
@@ -290,7 +288,7 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
     this.type = CustomWidgetTypeDeprecated.valueNew,
     required this.id,
     required this.name,
-    @DataPointIdConverter() required this.dataPoint,
+    required this.dataPoint,
     this.label,
     this.valueMapper = const {},
     this.round = 2,
@@ -311,8 +309,7 @@ class _$CustomValueWidgetImpl extends _CustomValueWidget {
   @override
   String name;
   @override
-  @DataPointIdConverter()
-  DataPoint? dataPoint;
+  String? dataPoint;
   @override
   String? label;
   @override
@@ -359,7 +356,7 @@ abstract class _CustomValueWidget extends CustomValueWidget
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? label,
     Map<String, String> valueMapper,
     int round,
@@ -383,10 +380,8 @@ abstract class _CustomValueWidget extends CustomValueWidget
   String get name;
   set name(String value);
   @override
-  @DataPointIdConverter()
-  DataPoint? get dataPoint;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value);
+  String? get dataPoint;
+  set dataPoint(String? value);
   @override
   String? get label;
   set label(String? value);

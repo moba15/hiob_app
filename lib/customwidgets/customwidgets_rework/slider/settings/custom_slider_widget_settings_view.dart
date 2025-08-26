@@ -6,16 +6,16 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomSliderWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomSliderWidget customSliderWidget;
   const CustomSliderWidgetSettingsView({
-    Key? key,
+    super.key,
     required this.customSliderWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomSliderWidgetSettingsView> createState() =>
@@ -89,16 +89,7 @@ class _CustomTableWidgetSettingsViewState
             ),
           ),
           InputFieldContainer.inputContainer(
-            child: DeviceSelection(
-              onDeviceSelected: (d) => {c.update(widget.customSliderWidget)},
-              onDataPointSelected: (d) => {
-                widget.customSliderWidget.dataPoint = d,
-                c.update(widget.customSliderWidget),
-              },
-              customWidgetManager: Manager().customWidgetManager,
-              selectedDataPoint: widget.customSliderWidget.dataPoint,
-              selectedDevice: widget.customSliderWidget.dataPoint?.device,
-            ),
+            child: StateSearchBar(onSelected: onSelect),
           ),
           InputFieldContainer.inputContainer(
             child: Row(
@@ -199,5 +190,10 @@ class _CustomTableWidgetSettingsViewState
         ],
       ),
     );
+  }
+
+  void onSelect(IobrokerObject? ioBrokerObject) {
+    widget.customSliderWidget.dataPoint = ioBrokerObject?.id;
+    c.update(widget.customSliderWidget);
   }
 }

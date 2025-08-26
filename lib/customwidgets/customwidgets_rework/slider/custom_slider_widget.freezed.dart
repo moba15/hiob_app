@@ -30,10 +30,8 @@ mixin _$CustomSliderWidget {
   set name(String value) => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  DataPoint? get dataPoint => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
   int get max => throw _privateConstructorUsedError;
   set max(int value) => throw _privateConstructorUsedError;
   int get min => throw _privateConstructorUsedError;
@@ -76,7 +74,7 @@ abstract class $CustomSliderWidgetCopyWith<$Res> {
     String id,
     String name,
     String? label,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     int max,
     int min,
     int step,
@@ -136,7 +134,7 @@ class _$CustomSliderWidgetCopyWithImpl<$Res, $Val extends CustomSliderWidget>
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
-                      as DataPoint?,
+                      as String?,
             max: null == max
                 ? _value.max
                 : max // ignore: cast_nullable_to_non_nullable
@@ -196,7 +194,7 @@ abstract class _$$CustomSliderWidgetImplCopyWith<$Res>
     String id,
     String name,
     String? label,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     int max,
     int min,
     int step,
@@ -256,7 +254,7 @@ class __$$CustomSliderWidgetImplCopyWithImpl<$Res>
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
-                  as DataPoint?,
+                  as String?,
         max: null == max
             ? _value.max
             : max // ignore: cast_nullable_to_non_nullable
@@ -295,7 +293,7 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
     required this.id,
     required this.name,
     this.label,
-    @DataPointIdConverter() required this.dataPoint,
+    required this.dataPoint,
     this.max = 100,
     this.min = 0,
     this.step = 10,
@@ -318,8 +316,7 @@ class _$CustomSliderWidgetImpl extends _CustomSliderWidget {
   @override
   String? label;
   @override
-  @DataPointIdConverter()
-  DataPoint? dataPoint;
+  String? dataPoint;
   @override
   @JsonKey()
   int max;
@@ -367,7 +364,7 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
     required String id,
     required String name,
     String? label,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     int max,
     int min,
     int step,
@@ -393,10 +390,8 @@ abstract class _CustomSliderWidget extends CustomSliderWidget
   String? get label;
   set label(String? value);
   @override
-  @DataPointIdConverter()
-  DataPoint? get dataPoint;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value);
+  String? get dataPoint;
+  set dataPoint(String? value);
   @override
   int get max;
   set max(int value);

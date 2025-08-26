@@ -7,10 +7,10 @@ class TriggerActionSelectionTemplate extends StatefulWidget {
   final Function(TriggerAction?, TriggerActionSetting?) onChange;
   final TriggerAction? preSelectedTriggerAction;
   const TriggerActionSelectionTemplate({
-    Key? key,
+    super.key,
     required this.onChange,
     required this.preSelectedTriggerAction,
-  }) : super(key: key);
+  });
 
   @override
   State<TriggerActionSelectionTemplate> createState() =>

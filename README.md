@@ -26,6 +26,12 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 - Possible fix for crashed 
 - Added more logging
 
+### 0.1.000-alpha.0 (2025-06-28)
+- Added first gRPC support 
+- Added support for client side states database
+- And many more optimizations 
+- **IMPORTANT** This is only an alpha version, it should only be used for testing and feedback. Many features **are not** implemented yet
+
 ## 0.0.704
 - Integrating new workflow
 - Fixed copy of the new templates

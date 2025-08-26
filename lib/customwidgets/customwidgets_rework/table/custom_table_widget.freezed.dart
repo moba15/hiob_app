@@ -28,10 +28,8 @@ mixin _$CustomTableWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  DataPoint? get dataPoint => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
   String? get header => throw _privateConstructorUsedError;
   set header(String? value) => throw _privateConstructorUsedError;
   bool get sortAsc => throw _privateConstructorUsedError;
@@ -72,7 +70,7 @@ abstract class $CustomTableWidgetCopyWith<$Res> {
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? header,
     bool sortAsc,
     int initalSortColumn,
@@ -131,7 +129,7 @@ class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
-                      as DataPoint?,
+                      as String?,
             header: freezed == header
                 ? _value.header
                 : header // ignore: cast_nullable_to_non_nullable
@@ -197,7 +195,7 @@ abstract class _$$CustomTableWidgetImplCopyWith<$Res>
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? header,
     bool sortAsc,
     int initalSortColumn,
@@ -256,7 +254,7 @@ class __$$CustomTableWidgetImplCopyWithImpl<$Res>
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
-                  as DataPoint?,
+                  as String?,
         header: freezed == header
             ? _value.header
             : header // ignore: cast_nullable_to_non_nullable
@@ -301,7 +299,7 @@ class _$CustomTableWidgetImpl extends _CustomTableWidget {
     this.type = CustomWidgetTypeDeprecated.tableNew,
     required this.id,
     required this.name,
-    @DataPointIdConverter() required this.dataPoint,
+    required this.dataPoint,
     this.header,
     this.sortAsc = false,
     this.initalSortColumn = 0,
@@ -323,8 +321,7 @@ class _$CustomTableWidgetImpl extends _CustomTableWidget {
   @override
   String name;
   @override
-  @DataPointIdConverter()
-  DataPoint? dataPoint;
+  String? dataPoint;
   @override
   String? header;
   @override
@@ -374,7 +371,7 @@ abstract class _CustomTableWidget extends CustomTableWidget
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? header,
     bool sortAsc,
     int initalSortColumn,
@@ -399,10 +396,8 @@ abstract class _CustomTableWidget extends CustomTableWidget
   String get name;
   set name(String value);
   @override
-  @DataPointIdConverter()
-  DataPoint? get dataPoint;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value);
+  String? get dataPoint;
+  set dataPoint(String? value);
   @override
   String? get header;
   set header(String? value);

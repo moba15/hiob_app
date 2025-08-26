@@ -9,11 +9,11 @@ class AxisSettingsPage extends StatelessWidget {
   final GraphAxis graphAxis;
   final Function(GraphAxis) onSave;
   const AxisSettingsPage({
-    Key? key,
+    super.key,
     required this.graphWidget,
     required this.graphAxis,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,7 @@ class AxisSettingsPage extends StatelessWidget {
 class _AxisSettingsBody extends StatefulWidget {
   final GraphWidget graphWidget;
   final GraphAxis graphAxis;
-  const _AxisSettingsBody({
-    Key? key,
-    required this.graphWidget,
-    required this.graphAxis,
-  }) : super(key: key);
+  const _AxisSettingsBody({required this.graphWidget, required this.graphAxis});
 
   @override
   State<_AxisSettingsBody> createState() => _AxisSettingsBodyState();

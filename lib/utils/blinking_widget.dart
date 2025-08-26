@@ -8,12 +8,12 @@ class BlinkingWidget extends StatefulWidget {
   final Duration? disablerAfter;
   final bool invisibleAfter;
   const BlinkingWidget({
-    Key? key,
+    super.key,
     required this.child,
     required this.vsync,
     this.disablerAfter,
     this.invisibleAfter = false,
-  }) : super(key: key);
+  });
 
   @override
   State<BlinkingWidget> createState() => _BlinkingWidgetState();

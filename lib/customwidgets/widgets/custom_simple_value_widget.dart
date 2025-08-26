@@ -83,7 +83,7 @@ class CustomSimpleValueWidget extends CustomWidgetDeprecated {
     return CustomValueWidget(
       id: id,
       name: name,
-      dataPoint: dataPoint,
+      dataPoint: dataPoint?.id,
       label: value,
       suffix: " $unit",
       round: round ?? 2,

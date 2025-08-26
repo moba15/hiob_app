@@ -8,8 +8,7 @@ import 'package:smart_home/shapes/sldier/custom_slider_thumb_value.dart';
 
 class CustomSliderWidgetView extends StatefulWidget {
   final CustomSliderWidget customSliderWidget;
-  const CustomSliderWidgetView({Key? key, required this.customSliderWidget})
-    : super(key: key);
+  const CustomSliderWidgetView({super.key, required this.customSliderWidget});
 
   @override
   State<CustomSliderWidgetView> createState() => _CustomSliderWidgetViewState();

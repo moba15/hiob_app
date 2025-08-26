@@ -5,7 +5,7 @@ import 'package:smart_home/manager/manager.dart';
 
 class ChangeLogScreen extends StatelessWidget {
   final Manager manager;
-  const ChangeLogScreen({Key? key, required this.manager}) : super(key: key);
+  const ChangeLogScreen({super.key, required this.manager});
 
   @override
   Widget build(BuildContext context) {

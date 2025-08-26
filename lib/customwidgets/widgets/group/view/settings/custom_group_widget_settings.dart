@@ -22,8 +22,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
 
   late CustomGroupWidget clone;
-  CustomGroupWidgetSettingsPage({Key? key, required this.customGroupWidget})
-    : super(key: key) {
+  CustomGroupWidgetSettingsPage({super.key, required this.customGroupWidget}) {
     clone = customGroupWidget.clone();
   }
 
@@ -202,10 +201,10 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
   final CustomGroupWidget customGroupWidget;
   final Stream stream;
   const CustomGroupWidgetSettings({
-    Key? key,
+    super.key,
     required this.customGroupWidget,
     required this.stream,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomGroupWidgetSettings> createState() =>
@@ -391,11 +390,11 @@ class AddTemplateAlertDialog extends StatefulWidget {
   final ScreenManager screenManager;
   final Function(List<CustomWidgetWrapper>) onAdded;
   const AddTemplateAlertDialog({
-    Key? key,
+    super.key,
     required this.customGroupWidget,
     required this.screenManager,
     required this.onAdded,
-  }) : super(key: key);
+  });
 
   @override
   State<AddTemplateAlertDialog> createState() => _AddTemplateAlertDialogState();
@@ -474,7 +473,7 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
 class _AddDivisionLineTemplate extends StatelessWidget {
   final Function(CustomDivisionLineWidget) onAdd;
   int thickness = 2;
-  _AddDivisionLineTemplate({Key? key, required this.onAdd}) : super(key: key);
+  _AddDivisionLineTemplate({required this.onAdd});
 
   @override
   Widget build(BuildContext context) {
@@ -528,8 +527,7 @@ class _AddDivisionLineTemplate extends StatelessWidget {
 class _SaveDialog extends StatelessWidget {
   final Function onSave;
   final Function cancel;
-  const _SaveDialog({Key? key, required this.onSave, required this.cancel})
-    : super(key: key);
+  const _SaveDialog({required this.onSave, required this.cancel});
 
   @override
   Widget build(BuildContext context) {

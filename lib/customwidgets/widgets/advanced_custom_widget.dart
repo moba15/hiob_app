@@ -57,7 +57,9 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
 
   factory AdvancedCustomWidget.fromJson(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["subTitleDataPoint"].toString());
+        .getIoBrokerDataPointByObjectIDSync(
+          json["subTitleDataPoint"].toString(),
+        );
     TriggerAction triggerAction = TriggerAction.fromJSON(
       jsonDecode(json["bodyTriggerAction"] ?? (json["mainBody"] ?? "{}")),
     );

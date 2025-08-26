@@ -5,16 +5,16 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomInputWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomInputWidget customInputWidget;
   const CustomInputWidgetSettingsView({
-    Key? key,
+    super.key,
     required this.customInputWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomInputWidgetSettingsView> createState() =>
@@ -42,9 +42,10 @@ class CustomInputWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
 
 class _CustomInputWidgetSettingsViewState
     extends State<CustomInputWidgetSettingsView> {
+  late CustomWidgetBlocCubit c;
   @override
   Widget build(BuildContext context) {
-    CustomWidgetBlocCubit c = context.read<CustomWidgetBlocCubit>();
+    c = context.read<CustomWidgetBlocCubit>();
     return Container(
       margin: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
@@ -64,16 +65,7 @@ class _CustomInputWidgetSettingsViewState
             ),
           ),
           InputFieldContainer.inputContainer(
-            child: DeviceSelection(
-              onDeviceSelected: (d) => {c.update(widget.customInputWidget)},
-              onDataPointSelected: (d) => {
-                widget.customInputWidget.dataPoint = d,
-                c.update(widget.customInputWidget),
-              },
-              customWidgetManager: Manager().customWidgetManager,
-              selectedDataPoint: widget.customInputWidget.dataPoint,
-              selectedDevice: widget.customInputWidget.dataPoint?.device,
-            ),
+            child: StateSearchBar(onSelected: onSelect),
           ),
           InputFieldContainer.inputContainer(
             child: DropdownSearch<CustomInputSendMethod>(
@@ -123,5 +115,10 @@ class _CustomInputWidgetSettingsViewState
         ],
       ),
     );
+  }
+
+  void onSelect(IobrokerObject? ioBrokerObject) {
+    widget.customInputWidget.dataPoint = ioBrokerObject?.id;
+    c.update(widget.customInputWidget);
   }
 }

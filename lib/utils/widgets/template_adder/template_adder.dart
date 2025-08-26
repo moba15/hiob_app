@@ -12,13 +12,13 @@ class TemplateSelectionAlertDialog extends StatefulWidget {
   final String selectButton;
 
   const TemplateSelectionAlertDialog({
-    Key? key,
+    super.key,
     required this.screenManager,
     required this.onSelect,
     required this.selected,
     this.filter,
     this.selectButton = "Add",
-  }) : super(key: key);
+  });
 
   @override
   State<TemplateSelectionAlertDialog> createState() =>

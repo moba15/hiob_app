@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:restart_app/restart_app.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
+import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
+import 'package:smart_home/generated/google/protobuf/struct.pb.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -49,43 +52,74 @@ class SettingsSyncManager {
   }
 
   void uploadSettings(
-    PreConfig preConfig, {
-    required bool device,
+    String preConfig, {
     required bool widget,
     required bool screen,
   }) {
-    String? devicesJSON = !device
-        ? null
-        : jsonEncode(Manager.instance.deviceManager.devicesList);
+    if (connectionManager.configSyncStub == null) {
+      Manager().talker.error(
+        "ConfigSyncStub is null, cannot create new settings template.",
+      );
+    }
     String? widgetsJSON = !widget
         ? null
         : jsonEncode(Manager.instance.customWidgetManager.templates);
+
     String? screensJSON = !screen
         ? null
         : jsonEncode(Manager.instance.screenManager.screens);
 
-    connectionManager.sendMsg(
-      UploadTemplateSetting(
-        name: preConfig.name,
-        devicesJSON: devicesJSON,
-        widgetsJSON: widgetsJSON,
-        screensJSON: screensJSON,
+    ConfigSyncUpRequest configSyncUpRequest = ConfigSyncUpRequest(
+      config: Config(
+        name: preConfig,
+        screens: screensJSON,
+        templates: widgetsJSON,
       ),
     );
+    connectionManager.configSyncStub!.configSyncUp(configSyncUpRequest);
   }
 
-  void createNewSettingsTemplate(String name) {
-    connectionManager.sendMsg(CreateTemplateSetting(name: name));
-  }
-
-  Future<List<PreConfig>> fetchTemplatesFromAdapter() async {
-    Manager.instance.connectionManager.sendMsg(RequestTemplateSettings());
-    List rawData = await fetchedConfigListStreamController.stream.first;
-    List<PreConfig> configs = [];
-    for (String name in rawData) {
-      configs.add(PreConfig(name: name, lastUpdate: DateTime.now()));
+  Future<ConfigCreateDeleteResponse> createNewSettingsTemplate(
+    String name,
+  ) async {
+    if (connectionManager.configSyncStub == null) {
+      Manager().talker.error(
+        "ConfigSyncStub is null, cannot create new settings template.",
+      );
     }
-    return configs;
+    ConfigCreateDeleteResponse response = await connectionManager
+        .configSyncStub!
+        .configCreateDelete(
+          ConfigCreateDeleteRequest(configName: name, delete: false),
+        )
+        .onError((error, stackTrace) {
+          Manager().talker.error(
+            "Error creating new settings template: $error, $stackTrace",
+          );
+
+          return ConfigCreateDeleteResponse(success: false);
+        });
+    return response;
+  }
+
+  Future<List<String>> fetchTemplatesFromAdapter() async {
+    if (connectionManager.configSyncStub == null) {
+      Manager().talker.error(
+        "SettingsSyncManager | fetchTemplatesFromAdapter | ConfigSyncStub is null, cannot fetch templates from adapter.",
+      );
+      return [];
+    }
+
+    AvailableConfigsResponse response = await connectionManager.configSyncStub!
+        .getAvailableConfigs(AvailableConfigsRequest())
+        .onError((error, stackTrace) {
+          Manager().talker.error(
+            "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
+          );
+          return AvailableConfigsResponse(configNames: []);
+        });
+
+    return response.configNames;
   }
 
   Map<String, dynamic> _loadDefaultSettings() {
@@ -101,27 +135,43 @@ class SettingsSyncManager {
   }
 
   void getTemplateSettings(
-    PreConfig preConfig, {
-    required bool device,
+    String preConfig, {
     required bool widget,
     required bool screen,
-  }) {
-    connectionManager.sendMsg(
-      GetTemplateSetting(
-        name: preConfig.name,
-        device: device,
-        widget: widget,
-        screen: screen,
-      ),
+  }) async {
+    if (connectionManager.configSyncStub == null) {
+      Manager().talker.error(
+        "SettingsSyncManager | getTemplateSettings | ConfigSyncStub is null.",
+      );
+      return;
+    }
+    SyncType syncType = SyncType.SYNC_ALL;
+    if (widget && !screen) {
+      syncType = SyncType.SYNC_TEMPLATES;
+    } else if (!widget && screen) {
+      syncType = SyncType.SYNC_SCREENS;
+    }
+    ConfigSyncDownRequest request = ConfigSyncDownRequest(
+      configName: preConfig,
+      syncType: syncType,
     );
+    Config config = await connectionManager.configSyncStub!
+        .configSyncDown(request)
+        .onError((error, stackTrace) {
+          Manager().talker.error(
+            "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
+          );
+          return Config();
+        });
+    if (config.name.isNotEmpty) {
+      loadGotTemplate(config.screens, config.templates);
+    }
   }
 
-  void loadGotTemplate(String? devices, String? screens, String? widgets) {
+  void loadGotTemplate(String? screens, String? widgets) {
     Manager manager = Manager.instance;
 
-    if (devices != null) {
-      fileManager.pref.setString(manager.deviceManager.key, devices);
-    }
+    //INFO: Devices are loaded from the adapter
     if (widgets != null) {
       fileManager.pref.setString(
         manager.customWidgetManager.templateKey,
@@ -130,9 +180,9 @@ class SettingsSyncManager {
     }
     if (screens != null) {
       fileManager.pref.setString(manager.screenManager.key, screens);
+      Restart.restartApp();
     }
-    manager.deviceManager.reload();
-    manager.screenManager.reload();
+
     loadedSuccessStreamController.add(true);
   }
 }

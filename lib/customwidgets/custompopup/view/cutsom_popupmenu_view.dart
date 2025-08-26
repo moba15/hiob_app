@@ -5,8 +5,7 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CutsomPopupmenuView extends StatelessWidget {
   final CustomPopupmenu customPopupmenu;
-  const CutsomPopupmenuView({Key? key, required this.customPopupmenu})
-    : super(key: key);
+  const CutsomPopupmenuView({super.key, required this.customPopupmenu});
 
   @override
   Widget build(BuildContext context) {

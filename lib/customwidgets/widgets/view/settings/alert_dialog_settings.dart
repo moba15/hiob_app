@@ -10,8 +10,7 @@ import '../../../custom_widget.dart';
 
 class AlertDialogSettings extends CustomWidgetSettingStatefulWidget {
   final CustomAlertDialogWidget customAlertDialogWidget;
-  const AlertDialogSettings({Key? key, required this.customAlertDialogWidget})
-    : super(key: key);
+  const AlertDialogSettings({super.key, required this.customAlertDialogWidget});
 
   @override
   State<AlertDialogSettings> createState() => _AlertDialogSettingsState();

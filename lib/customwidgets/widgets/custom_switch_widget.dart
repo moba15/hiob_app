@@ -80,7 +80,7 @@ class CustomSimpleSwitchWidget extends CustomWidgetDeprecated {
     return new_widget.CustomButtonWidget(
       id: id,
       name: name,
-      dataPoint: dataPoint,
+      dataPoint: dataPoint?.id,
       label: value,
       buttonLabel: buttonText,
     );

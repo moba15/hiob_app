@@ -7,7 +7,7 @@ import 'package:smart_home/utils/app_locallization_shortcut.dart';
 Translation status: 100%
  */
 class GeneralSettingsPage extends StatelessWidget {
-  const GeneralSettingsPage({Key? key}) : super(key: key);
+  const GeneralSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class GeneralSettingsPage extends StatelessWidget {
 }
 
 class _GeneralSettingsView extends StatelessWidget {
-  const _GeneralSettingsView({Key? key}) : super(key: key);
+  const _GeneralSettingsView();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class _GeneralSettingsView extends StatelessWidget {
 }
 
 class _DeviceInfo extends StatelessWidget {
-  const _DeviceInfo({Key? key}) : super(key: key);
+  const _DeviceInfo();
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class _DeviceInfo extends StatelessWidget {
 }
 
 class _CustomLoggerSettings extends StatefulWidget {
-  const _CustomLoggerSettings({Key? key}) : super(key: key);
+  const _CustomLoggerSettings();
 
   @override
   State<_CustomLoggerSettings> createState() => __CustomLoggerSettingsState();

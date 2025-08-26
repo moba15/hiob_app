@@ -22,10 +22,10 @@ class ScreenEditPage extends StatefulWidget {
   final ScreenManager screenManager;
 
   const ScreenEditPage({
-    Key? key,
+    super.key,
     required this.screen,
     required this.screenManager,
-  }) : super(key: key);
+  });
 
   @override
   State<ScreenEditPage> createState() => _ScreenEditPageState();
@@ -268,8 +268,7 @@ class _SaveDialog extends StatelessWidget {
   final Function onSave;
   final Function cancel;
 
-  const _SaveDialog({Key? key, required this.onSave, required this.cancel})
-    : super(key: key);
+  const _SaveDialog({required this.onSave, required this.cancel});
 
   @override
   Widget build(BuildContext context) {
@@ -299,11 +298,10 @@ class _AddTemplateAlertDialog extends StatefulWidget {
   final Function(List<CustomWidgetWrapper>) onAdd;
 
   const _AddTemplateAlertDialog({
-    Key? key,
     required this.screen,
     required this.screenManager,
     required this.onAdd,
-  }) : super(key: key);
+  });
 
   @override
   State<_AddTemplateAlertDialog> createState() =>
@@ -390,7 +388,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
 class AddGroupAlertDialog extends StatefulWidget {
   final Function(CustomGroupWidget) onAdd;
 
-  const AddGroupAlertDialog({Key? key, required this.onAdd}) : super(key: key);
+  const AddGroupAlertDialog({super.key, required this.onAdd});
 
   @override
   State<AddGroupAlertDialog> createState() => _AddGroupAlertDialogState();
@@ -437,10 +435,10 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
   final ScreenManager screenManager;
 
   const ScreenWidgetTemplateListPage({
-    Key? key,
+    super.key,
     required this.screen,
     required this.screenManager,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -502,7 +500,7 @@ class _AddDivisionLineTemplate extends StatelessWidget {
   final Function(CustomDivisionLineWidget) onAdd;
   int thickness = 2;
 
-  _AddDivisionLineTemplate({Key? key, required this.onAdd}) : super(key: key);
+  _AddDivisionLineTemplate({required this.onAdd});
 
   @override
   Widget build(BuildContext context) {

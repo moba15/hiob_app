@@ -15,7 +15,7 @@ class ButtonTriggerAction extends TriggerAction {
 
   factory ButtonTriggerAction.fromJSON(Map<String, dynamic> json) {
     DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
+        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
     return ButtonTriggerAction(
       dataPoint: dataPoint,
       label: json["label"] ?? "No Label Set",
@@ -58,7 +58,7 @@ class ButtonTriggerAction extends TriggerAction {
     return new_widget.CustomButtonWidget(
       id: id,
       name: name,
-      dataPoint: dataPoint,
+      dataPoint: dataPoint?.id,
       buttonLabel: label,
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/connection/cubit/connection_cubit.dart';
@@ -12,7 +11,7 @@ import '../../../manager/manager.dart';
 bool _isObscure = true;
 
 class IoBrokerSettingsPage extends StatelessWidget {
-  const IoBrokerSettingsPage({Key? key}) : super(key: key);
+  const IoBrokerSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class IoBrokerSettingsView extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
   final TextEditingController portController = TextEditingController();
 
-  IoBrokerSettingsView({Key? key}) : super(key: key);
+  IoBrokerSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -266,64 +265,6 @@ class IoBrokerSettingsView extends StatelessWidget {
           },
         ),
         _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager),
-        StreamBuilder<EnumUpdateState>(
-          stream: ioBrokerManager.enumsUpdateStateStreamController.stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const ListTile(
-                leading: Icon(Icons.extension),
-                title: Text("Enums"),
-                subtitle: Text("Last updated: ERROR"),
-              );
-            } else if (snapshot.hasData) {
-              switch (snapshot.data) {
-                case EnumUpdateState.finished:
-                  return ListTile(
-                    leading: const Icon(Icons.extension),
-                    title: const Text("Enums"),
-                    subtitle: Text(
-                      "Last updated: ${ioBrokerManager.lastEnumUpdate == null ? "None" : DateFormat("dd.MM.yyyy hh:mm a").format(ioBrokerManager.lastEnumUpdate!)}",
-                    ),
-                    trailing: TextButton(
-                      onPressed: ioBrokerManager.updateEnums,
-                      child: const Text("Update"),
-                    ),
-                  );
-                default:
-                  return ListTile(
-                    leading: const Icon(Icons.extension),
-                    title: const Text("Enums"),
-                    subtitle: Text(
-                      "Last updated: ${ioBrokerManager.lastEnumUpdate == null ? "None" : DateFormat("dd.MM.yyyy hh:mm a").format(ioBrokerManager.lastEnumUpdate!)}",
-                    ),
-                    trailing: const CircularProgressIndicator(),
-                  );
-              }
-            } else {
-              return ListTile(
-                leading: const Icon(Icons.extension),
-                title: const Text("Enums"),
-                subtitle: Text(
-                  "Last updated: ${ioBrokerManager.lastEnumUpdate == null ? "None" : DateFormat("dd.MM.yyyy hh:mm a").format(ioBrokerManager.lastEnumUpdate!)}",
-                ),
-                trailing: ioBrokerManager.isUpdating
-                    ? const CircularProgressIndicator()
-                    : TextButton(
-                        onPressed: ioBrokerManager.updateEnums,
-                        child: const Text("Update"),
-                      ),
-              );
-            }
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.import_export),
-          title: const Text("Synchronize Enums"),
-          trailing: TextButton(
-            onPressed: ioBrokerManager.syncEnumsToDevice,
-            child: const Text("Sync"),
-          ),
-        ),
       ],
     );
   }
@@ -332,8 +273,7 @@ class IoBrokerSettingsView extends StatelessWidget {
 class _SecondaryAddressSettings extends StatefulWidget {
   final IoBrokerManager ioBrokerManager;
 
-  const _SecondaryAddressSettings({Key? key, required this.ioBrokerManager})
-    : super(key: key);
+  const _SecondaryAddressSettings({required this.ioBrokerManager});
 
   @override
   State<_SecondaryAddressSettings> createState() =>

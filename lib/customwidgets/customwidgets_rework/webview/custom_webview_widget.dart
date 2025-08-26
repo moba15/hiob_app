@@ -6,8 +6,6 @@ import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/settings/custom_webview_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/view/custom_webview_widget_view.dart';
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
 
 part 'custom_webview_widget.freezed.dart';
 part 'custom_webview_widget.g.dart';
@@ -30,7 +28,7 @@ class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
     @Default(false) bool image,
     @Default(false) bool enabledZoom,
     @Default(false) bool enableInlineScroll,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? url,
     @Default(500) int height,
     CustomPopupmenu? customPopupmenu,
@@ -43,7 +41,7 @@ class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

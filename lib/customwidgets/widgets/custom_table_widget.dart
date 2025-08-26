@@ -18,7 +18,7 @@ class CustomTableWidget extends CustomWidgetDeprecated {
   Map<String, String> columns;
 
   CustomTableWidget({
-    required String? name,
+    required super.name,
     required this.header,
     required this.sortAsc,
     required this.initialSortColumn,
@@ -26,7 +26,7 @@ class CustomTableWidget extends CustomWidgetDeprecated {
     required this.elementsPerPage,
     required this.columns,
     this.dataPoint,
-  }) : super(name: name, type: CustomWidgetTypeDeprecated.table, settings: {});
+  }) : super(type: CustomWidgetTypeDeprecated.table, settings: {});
 
   @override
   CustomWidgetDeprecated clone() => CustomTableWidget(
@@ -65,9 +65,8 @@ class CustomTableWidget extends CustomWidgetDeprecated {
       initialSortColumn: json["initialSortColumn"],
       initialSortEnabled: json["initialSortEnabled"],
       elementsPerPage: json["elementsPerPage"],
-      dataPoint: Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(
-        json["dataPoint"] ?? "",
-      ),
+      dataPoint: Manager.instance.deviceManager
+          .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? ""),
       columns: Map<String, String>.from(json["columns"]),
     );
   }
@@ -80,7 +79,7 @@ class CustomTableWidget extends CustomWidgetDeprecated {
     return new_widget.CustomTableWidget(
       id: id,
       name: name,
-      dataPoint: dataPoint,
+      dataPoint: dataPoint?.id,
       columns: columns,
       initalSortColumn: initialSortColumn,
       elementsPerPage: elementsPerPage,

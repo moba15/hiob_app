@@ -34,10 +34,8 @@ mixin _$CustomWebViewWidget {
   set enabledZoom(bool value) => throw _privateConstructorUsedError;
   bool get enableInlineScroll => throw _privateConstructorUsedError;
   set enableInlineScroll(bool value) => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  DataPoint? get dataPoint => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
   set url(String? value) => throw _privateConstructorUsedError;
   int get height => throw _privateConstructorUsedError;
@@ -73,7 +71,7 @@ abstract class $CustomWebViewWidgetCopyWith<$Res> {
     bool image,
     bool enabledZoom,
     bool enableInlineScroll,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? url,
     int height,
     CustomPopupmenu? customPopupmenu,
@@ -139,7 +137,7 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res, $Val extends CustomWebViewWidget>
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
-                      as DataPoint?,
+                      as String?,
             url: freezed == url
                 ? _value.url
                 : url // ignore: cast_nullable_to_non_nullable
@@ -192,7 +190,7 @@ abstract class _$$CustomWebViewWidgetImplCopyWith<$Res>
     bool image,
     bool enabledZoom,
     bool enableInlineScroll,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? url,
     int height,
     CustomPopupmenu? customPopupmenu,
@@ -258,7 +256,7 @@ class __$$CustomWebViewWidgetImplCopyWithImpl<$Res>
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
-                  as DataPoint?,
+                  as String?,
         url: freezed == url
             ? _value.url
             : url // ignore: cast_nullable_to_non_nullable
@@ -290,7 +288,7 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
     this.image = false,
     this.enabledZoom = false,
     this.enableInlineScroll = false,
-    @DataPointIdConverter() required this.dataPoint,
+    required this.dataPoint,
     this.url,
     this.height = 500,
     this.customPopupmenu,
@@ -317,8 +315,7 @@ class _$CustomWebViewWidgetImpl extends _CustomWebViewWidget {
   @JsonKey()
   bool enableInlineScroll;
   @override
-  @DataPointIdConverter()
-  DataPoint? dataPoint;
+  String? dataPoint;
   @override
   String? url;
   @override
@@ -360,7 +357,7 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
     bool image,
     bool enabledZoom,
     bool enableInlineScroll,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? url,
     int height,
     CustomPopupmenu? customPopupmenu,
@@ -390,10 +387,8 @@ abstract class _CustomWebViewWidget extends CustomWebViewWidget
   bool get enableInlineScroll;
   set enableInlineScroll(bool value);
   @override
-  @DataPointIdConverter()
-  DataPoint? get dataPoint;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value);
+  String? get dataPoint;
+  set dataPoint(String? value);
   @override
   String? get url;
   set url(String? value);
