@@ -147,8 +147,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
         bloc: bloc!,
         builder: (context, state) {
           String url = state.value == null
-              ? (widget.customWebViewWidget.dataPoint!.value?.toString() ??
-                    "https://google.de")
+              ? (state.value?.toString() ?? "https://google.de")
               : state.value.toString();
           if (url.isNotEmpty &&
               (url.startsWith("https://") || url.startsWith("http://"))) {
