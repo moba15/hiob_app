@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,312 +9,424 @@ part of 'custom_table_widget.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
+
+CustomTableWidget _$CustomTableWidgetFromJson(Map<String, dynamic> json) {
+  return _CustomTableWidget.fromJson(json);
+}
 
 /// @nodoc
 mixin _$CustomTableWidget {
-
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get header; set header(String? value); bool get sortAsc; set sortAsc(bool value); int get initalSortColumn; set initalSortColumn(int value); bool get initialSortEnabled; set initialSortEnabled(bool value); int get elementsPerPage; set elementsPerPage(int value); Map<String, String> get columns; set columns(Map<String, String> value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
-/// Create a copy of CustomTableWidget
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CustomTableWidgetCopyWith<CustomTableWidget> get copyWith => _$CustomTableWidgetCopyWithImpl<CustomTableWidget>(this as CustomTableWidget, _$identity);
+  CustomWidgetTypeDeprecated get type => throw _privateConstructorUsedError;
+  set type(CustomWidgetTypeDeprecated value) =>
+      throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  set name(String value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
+  String? get header => throw _privateConstructorUsedError;
+  set header(String? value) => throw _privateConstructorUsedError;
+  bool get sortAsc => throw _privateConstructorUsedError;
+  set sortAsc(bool value) => throw _privateConstructorUsedError;
+  int get initalSortColumn => throw _privateConstructorUsedError;
+  set initalSortColumn(int value) => throw _privateConstructorUsedError;
+  bool get initialSortEnabled => throw _privateConstructorUsedError;
+  set initialSortEnabled(bool value) => throw _privateConstructorUsedError;
+  int get elementsPerPage => throw _privateConstructorUsedError;
+  set elementsPerPage(int value) => throw _privateConstructorUsedError;
+  Map<String, String> get columns => throw _privateConstructorUsedError;
+  set columns(Map<String, String> value) => throw _privateConstructorUsedError;
+  CustomPopupmenu? get customPopupmenu => throw _privateConstructorUsedError;
+  set customPopupmenu(CustomPopupmenu? value) =>
+      throw _privateConstructorUsedError;
+  CustomThemeForWidget? get customTheme => throw _privateConstructorUsedError;
+  set customTheme(CustomThemeForWidget? value) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this CustomTableWidget to a JSON map.
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-
-
-
-@override
-String toString() {
-  return 'CustomTableWidget(isAbleToPopupMenu: $isAbleToPopupMenu, hasCustomTheme: $hasCustomTheme, type: $type, id: $id, name: $name, dataPoint: $dataPoint, header: $header, sortAsc: $sortAsc, initalSortColumn: $initalSortColumn, initialSortEnabled: $initialSortEnabled, elementsPerPage: $elementsPerPage, columns: $columns, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
-}
-
-
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CustomTableWidgetCopyWith<CustomTableWidget> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $CustomTableWidgetCopyWith<$Res>  {
-  factory $CustomTableWidgetCopyWith(CustomTableWidget value, $Res Function(CustomTableWidget) _then) = _$CustomTableWidgetCopyWithImpl;
-@useResult
-$Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
-});
+abstract class $CustomTableWidgetCopyWith<$Res> {
+  factory $CustomTableWidgetCopyWith(
+    CustomTableWidget value,
+    $Res Function(CustomTableWidget) then,
+  ) = _$CustomTableWidgetCopyWithImpl<$Res, CustomTableWidget>;
+  @useResult
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? dataPoint,
+    String? header,
+    bool sortAsc,
+    int initalSortColumn,
+    bool initialSortEnabled,
+    int elementsPerPage,
+    Map<String, String> columns,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  });
 
-
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
-
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
+
 /// @nodoc
-class _$CustomTableWidgetCopyWithImpl<$Res>
+class _$CustomTableWidgetCopyWithImpl<$Res, $Val extends CustomTableWidget>
     implements $CustomTableWidgetCopyWith<$Res> {
-  _$CustomTableWidgetCopyWithImpl(this._self, this._then);
+  _$CustomTableWidgetCopyWithImpl(this._value, this._then);
 
-  final CustomTableWidget _self;
-  final $Res Function(CustomTableWidget) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
-/// Create a copy of CustomTableWidget
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? header = freezed,Object? sortAsc = null,Object? initalSortColumn = null,Object? initialSortEnabled = null,Object? elementsPerPage = null,Object? columns = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
-  return _then(_self.copyWith(
-type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
-as String?,header: freezed == header ? _self.header : header // ignore: cast_nullable_to_non_nullable
-as String?,sortAsc: null == sortAsc ? _self.sortAsc : sortAsc // ignore: cast_nullable_to_non_nullable
-as bool,initalSortColumn: null == initalSortColumn ? _self.initalSortColumn : initalSortColumn // ignore: cast_nullable_to_non_nullable
-as int,initialSortEnabled: null == initialSortEnabled ? _self.initialSortEnabled : initialSortEnabled // ignore: cast_nullable_to_non_nullable
-as bool,elementsPerPage: null == elementsPerPage ? _self.elementsPerPage : elementsPerPage // ignore: cast_nullable_to_non_nullable
-as int,columns: null == columns ? _self.columns : columns // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
-as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
-  ));
-}
-/// Create a copy of CustomTableWidget
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
-    if (_self.customPopupmenu == null) {
-    return null;
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? type = null,
+    Object? id = null,
+    Object? name = null,
+    Object? dataPoint = freezed,
+    Object? header = freezed,
+    Object? sortAsc = null,
+    Object? initalSortColumn = null,
+    Object? initialSortEnabled = null,
+    Object? elementsPerPage = null,
+    Object? columns = null,
+    Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as CustomWidgetTypeDeprecated,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            dataPoint: freezed == dataPoint
+                ? _value.dataPoint
+                : dataPoint // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            header: freezed == header
+                ? _value.header
+                : header // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            sortAsc: null == sortAsc
+                ? _value.sortAsc
+                : sortAsc // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            initalSortColumn: null == initalSortColumn
+                ? _value.initalSortColumn
+                : initalSortColumn // ignore: cast_nullable_to_non_nullable
+                      as int,
+            initialSortEnabled: null == initialSortEnabled
+                ? _value.initialSortEnabled
+                : initialSortEnabled // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            elementsPerPage: null == elementsPerPage
+                ? _value.elementsPerPage
+                : elementsPerPage // ignore: cast_nullable_to_non_nullable
+                      as int,
+            columns: null == columns
+                ? _value.columns
+                : columns // ignore: cast_nullable_to_non_nullable
+                      as Map<String, String>,
+            customPopupmenu: freezed == customPopupmenu
+                ? _value.customPopupmenu
+                : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                      as CustomPopupmenu?,
+            customTheme: freezed == customTheme
+                ? _value.customTheme
+                : customTheme // ignore: cast_nullable_to_non_nullable
+                      as CustomThemeForWidget?,
+          )
+          as $Val,
+    );
   }
 
-  return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
-    return _then(_self.copyWith(customPopupmenu: value));
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
+    if (_value.customPopupmenu == null) {
+      return null;
+    }
+
+    return $CustomPopupmenuCopyWith<$Res>(_value.customPopupmenu!, (value) {
+      return _then(_value.copyWith(customPopupmenu: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$CustomTableWidgetImplCopyWith<$Res>
+    implements $CustomTableWidgetCopyWith<$Res> {
+  factory _$$CustomTableWidgetImplCopyWith(
+    _$CustomTableWidgetImpl value,
+    $Res Function(_$CustomTableWidgetImpl) then,
+  ) = __$$CustomTableWidgetImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    CustomWidgetTypeDeprecated type,
+    String id,
+    String name,
+    String? dataPoint,
+    String? header,
+    bool sortAsc,
+    int initalSortColumn,
+    bool initialSortEnabled,
+    int elementsPerPage,
+    Map<String, String> columns,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
   });
-}
-}
 
-
-/// Adds pattern-matching-related methods to [CustomTableWidget].
-extension CustomTableWidgetPatterns on CustomTableWidget {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CustomTableWidget value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _CustomTableWidget() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CustomTableWidget value)  $default,){
-final _that = this;
-switch (_that) {
-case _CustomTableWidget():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CustomTableWidget value)?  $default,){
-final _that = this;
-switch (_that) {
-case _CustomTableWidget() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _CustomTableWidget() when $default != null:
-return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
-switch (_that) {
-case _CustomTableWidget():
-return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
-switch (_that) {
-case _CustomTableWidget() when $default != null:
-return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
-  return null;
-
-}
+  @override
+  $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
 }
 
+/// @nodoc
+class __$$CustomTableWidgetImplCopyWithImpl<$Res>
+    extends _$CustomTableWidgetCopyWithImpl<$Res, _$CustomTableWidgetImpl>
+    implements _$$CustomTableWidgetImplCopyWith<$Res> {
+  __$$CustomTableWidgetImplCopyWithImpl(
+    _$CustomTableWidgetImpl _value,
+    $Res Function(_$CustomTableWidgetImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? type = null,
+    Object? id = null,
+    Object? name = null,
+    Object? dataPoint = freezed,
+    Object? header = freezed,
+    Object? sortAsc = null,
+    Object? initalSortColumn = null,
+    Object? initialSortEnabled = null,
+    Object? elementsPerPage = null,
+    Object? columns = null,
+    Object? customPopupmenu = freezed,
+    Object? customTheme = freezed,
+  }) {
+    return _then(
+      _$CustomTableWidgetImpl(
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as CustomWidgetTypeDeprecated,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        dataPoint: freezed == dataPoint
+            ? _value.dataPoint
+            : dataPoint // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        header: freezed == header
+            ? _value.header
+            : header // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        sortAsc: null == sortAsc
+            ? _value.sortAsc
+            : sortAsc // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        initalSortColumn: null == initalSortColumn
+            ? _value.initalSortColumn
+            : initalSortColumn // ignore: cast_nullable_to_non_nullable
+                  as int,
+        initialSortEnabled: null == initialSortEnabled
+            ? _value.initialSortEnabled
+            : initialSortEnabled // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        elementsPerPage: null == elementsPerPage
+            ? _value.elementsPerPage
+            : elementsPerPage // ignore: cast_nullable_to_non_nullable
+                  as int,
+        columns: null == columns
+            ? _value.columns
+            : columns // ignore: cast_nullable_to_non_nullable
+                  as Map<String, String>,
+        customPopupmenu: freezed == customPopupmenu
+            ? _value.customPopupmenu
+            : customPopupmenu // ignore: cast_nullable_to_non_nullable
+                  as CustomPopupmenu?,
+        customTheme: freezed == customTheme
+            ? _value.customTheme
+            : customTheme // ignore: cast_nullable_to_non_nullable
+                  as CustomThemeForWidget?,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
+class _$CustomTableWidgetImpl extends _CustomTableWidget {
+  _$CustomTableWidgetImpl({
+    this.type = CustomWidgetTypeDeprecated.tableNew,
+    required this.id,
+    required this.name,
+    required this.dataPoint,
+    this.header,
+    this.sortAsc = false,
+    this.initalSortColumn = 0,
+    this.initialSortEnabled = false,
+    this.elementsPerPage = 10,
+    required this.columns,
+    this.customPopupmenu,
+    this.customTheme,
+  }) : super._();
 
-class _CustomTableWidget extends CustomTableWidget implements CustomWidget {
-   _CustomTableWidget({this.type = CustomWidgetTypeDeprecated.tableNew, required this.id, required this.name, required this.dataPoint, this.header, this.sortAsc = false, this.initalSortColumn = 0, this.initialSortEnabled = false, this.elementsPerPage = 10, required this.columns, this.customPopupmenu, this.customTheme}): super._();
-  factory _CustomTableWidget.fromJson(Map<String, dynamic> json) => _$CustomTableWidgetFromJson(json);
+  factory _$CustomTableWidgetImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CustomTableWidgetImplFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
-@override  String id;
-@override  String name;
-@override  String? dataPoint;
-@override  String? header;
-@override@JsonKey()  bool sortAsc;
-@override@JsonKey()  int initalSortColumn;
-@override@JsonKey()  bool initialSortEnabled;
-@override@JsonKey()  int elementsPerPage;
-@override  Map<String, String> columns;
-@override  CustomPopupmenu? customPopupmenu;
-@override  CustomThemeForWidget? customTheme;
+  @override
+  @JsonKey()
+  CustomWidgetTypeDeprecated type;
+  @override
+  String id;
+  @override
+  String name;
+  @override
+  String? dataPoint;
+  @override
+  String? header;
+  @override
+  @JsonKey()
+  bool sortAsc;
+  @override
+  @JsonKey()
+  int initalSortColumn;
+  @override
+  @JsonKey()
+  bool initialSortEnabled;
+  @override
+  @JsonKey()
+  int elementsPerPage;
+  @override
+  Map<String, String> columns;
+  @override
+  CustomPopupmenu? customPopupmenu;
+  @override
+  CustomThemeForWidget? customTheme;
 
-/// Create a copy of CustomTableWidget
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$CustomTableWidgetCopyWith<_CustomTableWidget> get copyWith => __$CustomTableWidgetCopyWithImpl<_CustomTableWidget>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$CustomTableWidgetToJson(this, );
-}
-
-
-
-@override
-String toString() {
-  return 'CustomTableWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, header: $header, sortAsc: $sortAsc, initalSortColumn: $initalSortColumn, initialSortEnabled: $initialSortEnabled, elementsPerPage: $elementsPerPage, columns: $columns, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$CustomTableWidgetCopyWith<$Res> implements $CustomTableWidgetCopyWith<$Res> {
-  factory _$CustomTableWidgetCopyWith(_CustomTableWidget value, $Res Function(_CustomTableWidget) _then) = __$CustomTableWidgetCopyWithImpl;
-@override @useResult
-$Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
-});
-
-
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
-
-}
-/// @nodoc
-class __$CustomTableWidgetCopyWithImpl<$Res>
-    implements _$CustomTableWidgetCopyWith<$Res> {
-  __$CustomTableWidgetCopyWithImpl(this._self, this._then);
-
-  final _CustomTableWidget _self;
-  final $Res Function(_CustomTableWidget) _then;
-
-/// Create a copy of CustomTableWidget
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? header = freezed,Object? sortAsc = null,Object? initalSortColumn = null,Object? initialSortEnabled = null,Object? elementsPerPage = null,Object? columns = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
-  return _then(_CustomTableWidget(
-type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
-as String?,header: freezed == header ? _self.header : header // ignore: cast_nullable_to_non_nullable
-as String?,sortAsc: null == sortAsc ? _self.sortAsc : sortAsc // ignore: cast_nullable_to_non_nullable
-as bool,initalSortColumn: null == initalSortColumn ? _self.initalSortColumn : initalSortColumn // ignore: cast_nullable_to_non_nullable
-as int,initialSortEnabled: null == initialSortEnabled ? _self.initialSortEnabled : initialSortEnabled // ignore: cast_nullable_to_non_nullable
-as bool,elementsPerPage: null == elementsPerPage ? _self.elementsPerPage : elementsPerPage // ignore: cast_nullable_to_non_nullable
-as int,columns: null == columns ? _self.columns : columns // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
-as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
-  ));
-}
-
-/// Create a copy of CustomTableWidget
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
-    if (_self.customPopupmenu == null) {
-    return null;
+  @override
+  String toString() {
+    return 'CustomTableWidget(type: $type, id: $id, name: $name, dataPoint: $dataPoint, header: $header, sortAsc: $sortAsc, initalSortColumn: $initalSortColumn, initialSortEnabled: $initialSortEnabled, elementsPerPage: $elementsPerPage, columns: $columns, customPopupmenu: $customPopupmenu, customTheme: $customTheme)';
   }
 
-  return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
-    return _then(_self.copyWith(customPopupmenu: value));
-  });
-}
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CustomTableWidgetImplCopyWith<_$CustomTableWidgetImpl> get copyWith =>
+      __$$CustomTableWidgetImplCopyWithImpl<_$CustomTableWidgetImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CustomTableWidgetImplToJson(this);
+  }
 }
 
-// dart format on
+abstract class _CustomTableWidget extends CustomTableWidget
+    implements CustomWidget {
+  factory _CustomTableWidget({
+    CustomWidgetTypeDeprecated type,
+    required String id,
+    required String name,
+    required String? dataPoint,
+    String? header,
+    bool sortAsc,
+    int initalSortColumn,
+    bool initialSortEnabled,
+    int elementsPerPage,
+    required Map<String, String> columns,
+    CustomPopupmenu? customPopupmenu,
+    CustomThemeForWidget? customTheme,
+  }) = _$CustomTableWidgetImpl;
+  _CustomTableWidget._() : super._();
+
+  factory _CustomTableWidget.fromJson(Map<String, dynamic> json) =
+      _$CustomTableWidgetImpl.fromJson;
+
+  @override
+  CustomWidgetTypeDeprecated get type;
+  set type(CustomWidgetTypeDeprecated value);
+  @override
+  String get id;
+  set id(String value);
+  @override
+  String get name;
+  set name(String value);
+  @override
+  String? get dataPoint;
+  set dataPoint(String? value);
+  @override
+  String? get header;
+  set header(String? value);
+  @override
+  bool get sortAsc;
+  set sortAsc(bool value);
+  @override
+  int get initalSortColumn;
+  set initalSortColumn(int value);
+  @override
+  bool get initialSortEnabled;
+  set initialSortEnabled(bool value);
+  @override
+  int get elementsPerPage;
+  set elementsPerPage(int value);
+  @override
+  Map<String, String> get columns;
+  set columns(Map<String, String> value);
+  @override
+  CustomPopupmenu? get customPopupmenu;
+  set customPopupmenu(CustomPopupmenu? value);
+  @override
+  CustomThemeForWidget? get customTheme;
+  set customTheme(CustomThemeForWidget? value);
+
+  /// Create a copy of CustomTableWidget
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CustomTableWidgetImplCopyWith<_$CustomTableWidgetImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

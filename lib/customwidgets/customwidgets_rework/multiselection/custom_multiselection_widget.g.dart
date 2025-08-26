@@ -6,9 +6,9 @@ part of 'custom_multiselection_widget.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_CustomMultiselectionWidget _$CustomMultiselectionWidgetFromJson(
+_$CustomMultiselectionWidgetImpl _$$CustomMultiselectionWidgetImplFromJson(
   Map<String, dynamic> json,
-) => _CustomMultiselectionWidget(
+) => _$CustomMultiselectionWidgetImpl(
   type:
       $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
       CustomWidgetTypeDeprecated.multiselection,
@@ -33,8 +33,8 @@ _CustomMultiselectionWidget _$CustomMultiselectionWidgetFromJson(
   ),
 );
 
-Map<String, dynamic> _$CustomMultiselectionWidgetToJson(
-  _CustomMultiselectionWidget instance,
+Map<String, dynamic> _$$CustomMultiselectionWidgetImplToJson(
+  _$CustomMultiselectionWidgetImpl instance,
 ) => <String, dynamic>{
   'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
   'id': instance.id,

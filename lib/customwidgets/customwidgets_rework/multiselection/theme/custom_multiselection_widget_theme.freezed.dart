@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,276 +9,205 @@ part of 'custom_multiselection_widget_theme.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
+
+CustomMultiselectionWidgetTheme _$CustomMultiselectionWidgetThemeFromJson(
+  Map<String, dynamic> json,
+) {
+  return _CustomMultiselectionWidgetTheme.fromJson(json);
+}
 
 /// @nodoc
 mixin _$CustomMultiselectionWidgetTheme {
-
- String get id; set id(String value); LabelTheme get labelTheme; set labelTheme(LabelTheme value);
-/// Create a copy of CustomMultiselectionWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CustomMultiselectionWidgetThemeCopyWith<CustomMultiselectionWidgetTheme> get copyWith => _$CustomMultiselectionWidgetThemeCopyWithImpl<CustomMultiselectionWidgetTheme>(this as CustomMultiselectionWidgetTheme, _$identity);
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
+  LabelTheme get labelTheme => throw _privateConstructorUsedError;
+  set labelTheme(LabelTheme value) => throw _privateConstructorUsedError;
 
   /// Serializes this CustomMultiselectionWidgetTheme to a JSON map.
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-
-
-
-@override
-String toString() {
-  return 'CustomMultiselectionWidgetTheme(id: $id, labelTheme: $labelTheme)';
-}
-
-
+  /// Create a copy of CustomMultiselectionWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CustomMultiselectionWidgetThemeCopyWith<CustomMultiselectionWidgetTheme>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $CustomMultiselectionWidgetThemeCopyWith<$Res>  {
-  factory $CustomMultiselectionWidgetThemeCopyWith(CustomMultiselectionWidgetTheme value, $Res Function(CustomMultiselectionWidgetTheme) _then) = _$CustomMultiselectionWidgetThemeCopyWithImpl;
-@useResult
-$Res call({
- String id, LabelTheme labelTheme
-});
+abstract class $CustomMultiselectionWidgetThemeCopyWith<$Res> {
+  factory $CustomMultiselectionWidgetThemeCopyWith(
+    CustomMultiselectionWidgetTheme value,
+    $Res Function(CustomMultiselectionWidgetTheme) then,
+  ) =
+      _$CustomMultiselectionWidgetThemeCopyWithImpl<
+        $Res,
+        CustomMultiselectionWidgetTheme
+      >;
+  @useResult
+  $Res call({String id, LabelTheme labelTheme});
 
-
-$LabelThemeCopyWith<$Res> get labelTheme;
-
+  $LabelThemeCopyWith<$Res> get labelTheme;
 }
+
 /// @nodoc
-class _$CustomMultiselectionWidgetThemeCopyWithImpl<$Res>
+class _$CustomMultiselectionWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomMultiselectionWidgetTheme
+>
     implements $CustomMultiselectionWidgetThemeCopyWith<$Res> {
-  _$CustomMultiselectionWidgetThemeCopyWithImpl(this._self, this._then);
+  _$CustomMultiselectionWidgetThemeCopyWithImpl(this._value, this._then);
 
-  final CustomMultiselectionWidgetTheme _self;
-  final $Res Function(CustomMultiselectionWidgetTheme) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
-/// Create a copy of CustomMultiselectionWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? labelTheme = null,}) {
-  return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,labelTheme: null == labelTheme ? _self.labelTheme : labelTheme // ignore: cast_nullable_to_non_nullable
-as LabelTheme,
-  ));
-}
-/// Create a copy of CustomMultiselectionWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$LabelThemeCopyWith<$Res> get labelTheme {
-  
-  return $LabelThemeCopyWith<$Res>(_self.labelTheme, (value) {
-    return _then(_self.copyWith(labelTheme: value));
-  });
-}
-}
+  /// Create a copy of CustomMultiselectionWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
+  }
 
-
-/// Adds pattern-matching-related methods to [CustomMultiselectionWidgetTheme].
-extension CustomMultiselectionWidgetThemePatterns on CustomMultiselectionWidgetTheme {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CustomMultiselectionWidgetTheme value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _CustomMultiselectionWidgetTheme() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CustomMultiselectionWidgetTheme value)  $default,){
-final _that = this;
-switch (_that) {
-case _CustomMultiselectionWidgetTheme():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CustomMultiselectionWidgetTheme value)?  $default,){
-final _that = this;
-switch (_that) {
-case _CustomMultiselectionWidgetTheme() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  LabelTheme labelTheme)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _CustomMultiselectionWidgetTheme() when $default != null:
-return $default(_that.id,_that.labelTheme);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  LabelTheme labelTheme)  $default,) {final _that = this;
-switch (_that) {
-case _CustomMultiselectionWidgetTheme():
-return $default(_that.id,_that.labelTheme);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  LabelTheme labelTheme)?  $default,) {final _that = this;
-switch (_that) {
-case _CustomMultiselectionWidgetTheme() when $default != null:
-return $default(_that.id,_that.labelTheme);case _:
-  return null;
-
-}
+  /// Create a copy of CustomMultiselectionWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LabelThemeCopyWith<$Res> get labelTheme {
+    return $LabelThemeCopyWith<$Res>(_value.labelTheme, (value) {
+      return _then(_value.copyWith(labelTheme: value) as $Val);
+    });
+  }
 }
 
+/// @nodoc
+abstract class _$$CustomMultiselectionWidgetThemeImplCopyWith<$Res>
+    implements $CustomMultiselectionWidgetThemeCopyWith<$Res> {
+  factory _$$CustomMultiselectionWidgetThemeImplCopyWith(
+    _$CustomMultiselectionWidgetThemeImpl value,
+    $Res Function(_$CustomMultiselectionWidgetThemeImpl) then,
+  ) = __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, LabelTheme labelTheme});
+
+  @override
+  $LabelThemeCopyWith<$Res> get labelTheme;
+}
+
+/// @nodoc
+class __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<$Res>
+    extends
+        _$CustomMultiselectionWidgetThemeCopyWithImpl<
+          $Res,
+          _$CustomMultiselectionWidgetThemeImpl
+        >
+    implements _$$CustomMultiselectionWidgetThemeImplCopyWith<$Res> {
+  __$$CustomMultiselectionWidgetThemeImplCopyWithImpl(
+    _$CustomMultiselectionWidgetThemeImpl _value,
+    $Res Function(_$CustomMultiselectionWidgetThemeImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of CustomMultiselectionWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomMultiselectionWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
+class _$CustomMultiselectionWidgetThemeImpl
+    extends _CustomMultiselectionWidgetTheme {
+  _$CustomMultiselectionWidgetThemeImpl(this.id, this.labelTheme) : super._();
 
-class _CustomMultiselectionWidgetTheme extends CustomMultiselectionWidgetTheme implements CustomThemeForWidget {
-   _CustomMultiselectionWidgetTheme(this.id, this.labelTheme): super._();
-  factory _CustomMultiselectionWidgetTheme.fromJson(Map<String, dynamic> json) => _$CustomMultiselectionWidgetThemeFromJson(json);
+  factory _$CustomMultiselectionWidgetThemeImpl.fromJson(
+    Map<String, dynamic> json,
+  ) => _$$CustomMultiselectionWidgetThemeImplFromJson(json);
 
-@override  String id;
-@override  LabelTheme labelTheme;
+  @override
+  String id;
+  @override
+  LabelTheme labelTheme;
 
-/// Create a copy of CustomMultiselectionWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$CustomMultiselectionWidgetThemeCopyWith<_CustomMultiselectionWidgetTheme> get copyWith => __$CustomMultiselectionWidgetThemeCopyWithImpl<_CustomMultiselectionWidgetTheme>(this, _$identity);
+  @override
+  String toString() {
+    return 'CustomMultiselectionWidgetTheme(id: $id, labelTheme: $labelTheme)';
+  }
 
-@override
-Map<String, dynamic> toJson() {
-  return _$CustomMultiselectionWidgetThemeToJson(this, );
+  /// Create a copy of CustomMultiselectionWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CustomMultiselectionWidgetThemeImplCopyWith<
+    _$CustomMultiselectionWidgetThemeImpl
+  >
+  get copyWith =>
+      __$$CustomMultiselectionWidgetThemeImplCopyWithImpl<
+        _$CustomMultiselectionWidgetThemeImpl
+      >(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CustomMultiselectionWidgetThemeImplToJson(this);
+  }
 }
 
+abstract class _CustomMultiselectionWidgetTheme
+    extends CustomMultiselectionWidgetTheme
+    implements CustomThemeForWidget {
+  factory _CustomMultiselectionWidgetTheme(String id, LabelTheme labelTheme) =
+      _$CustomMultiselectionWidgetThemeImpl;
+  _CustomMultiselectionWidgetTheme._() : super._();
 
+  factory _CustomMultiselectionWidgetTheme.fromJson(Map<String, dynamic> json) =
+      _$CustomMultiselectionWidgetThemeImpl.fromJson;
 
-@override
-String toString() {
-  return 'CustomMultiselectionWidgetTheme(id: $id, labelTheme: $labelTheme)';
+  @override
+  String get id;
+  set id(String value);
+  @override
+  LabelTheme get labelTheme;
+  set labelTheme(LabelTheme value);
+
+  /// Create a copy of CustomMultiselectionWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CustomMultiselectionWidgetThemeImplCopyWith<
+    _$CustomMultiselectionWidgetThemeImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
-
-
-}
-
-/// @nodoc
-abstract mixin class _$CustomMultiselectionWidgetThemeCopyWith<$Res> implements $CustomMultiselectionWidgetThemeCopyWith<$Res> {
-  factory _$CustomMultiselectionWidgetThemeCopyWith(_CustomMultiselectionWidgetTheme value, $Res Function(_CustomMultiselectionWidgetTheme) _then) = __$CustomMultiselectionWidgetThemeCopyWithImpl;
-@override @useResult
-$Res call({
- String id, LabelTheme labelTheme
-});
-
-
-@override $LabelThemeCopyWith<$Res> get labelTheme;
-
-}
-/// @nodoc
-class __$CustomMultiselectionWidgetThemeCopyWithImpl<$Res>
-    implements _$CustomMultiselectionWidgetThemeCopyWith<$Res> {
-  __$CustomMultiselectionWidgetThemeCopyWithImpl(this._self, this._then);
-
-  final _CustomMultiselectionWidgetTheme _self;
-  final $Res Function(_CustomMultiselectionWidgetTheme) _then;
-
-/// Create a copy of CustomMultiselectionWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? labelTheme = null,}) {
-  return _then(_CustomMultiselectionWidgetTheme(
-null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,null == labelTheme ? _self.labelTheme : labelTheme // ignore: cast_nullable_to_non_nullable
-as LabelTheme,
-  ));
-}
-
-/// Create a copy of CustomMultiselectionWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$LabelThemeCopyWith<$Res> get labelTheme {
-  
-  return $LabelThemeCopyWith<$Res>(_self.labelTheme, (value) {
-    return _then(_self.copyWith(labelTheme: value));
-  });
-}
-}
-
-// dart format on

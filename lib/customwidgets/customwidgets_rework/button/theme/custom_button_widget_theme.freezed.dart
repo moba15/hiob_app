@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,276 +9,194 @@ part of 'custom_button_widget_theme.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
+
+CustomButtonWidgetTheme _$CustomButtonWidgetThemeFromJson(
+  Map<String, dynamic> json,
+) {
+  return _CustomButtonWidgetTheme.fromJson(json);
+}
 
 /// @nodoc
 mixin _$CustomButtonWidgetTheme {
-
- String get id; set id(String value); LabelTheme get labelTheme; set labelTheme(LabelTheme value);
-/// Create a copy of CustomButtonWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CustomButtonWidgetThemeCopyWith<CustomButtonWidgetTheme> get copyWith => _$CustomButtonWidgetThemeCopyWithImpl<CustomButtonWidgetTheme>(this as CustomButtonWidgetTheme, _$identity);
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
+  LabelTheme get labelTheme => throw _privateConstructorUsedError;
+  set labelTheme(LabelTheme value) => throw _privateConstructorUsedError;
 
   /// Serializes this CustomButtonWidgetTheme to a JSON map.
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-
-
-
-@override
-String toString() {
-  return 'CustomButtonWidgetTheme(id: $id, labelTheme: $labelTheme)';
-}
-
-
+  /// Create a copy of CustomButtonWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CustomButtonWidgetThemeCopyWith<CustomButtonWidgetTheme> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $CustomButtonWidgetThemeCopyWith<$Res>  {
-  factory $CustomButtonWidgetThemeCopyWith(CustomButtonWidgetTheme value, $Res Function(CustomButtonWidgetTheme) _then) = _$CustomButtonWidgetThemeCopyWithImpl;
-@useResult
-$Res call({
- String id, LabelTheme labelTheme
-});
+abstract class $CustomButtonWidgetThemeCopyWith<$Res> {
+  factory $CustomButtonWidgetThemeCopyWith(
+    CustomButtonWidgetTheme value,
+    $Res Function(CustomButtonWidgetTheme) then,
+  ) = _$CustomButtonWidgetThemeCopyWithImpl<$Res, CustomButtonWidgetTheme>;
+  @useResult
+  $Res call({String id, LabelTheme labelTheme});
 
-
-$LabelThemeCopyWith<$Res> get labelTheme;
-
+  $LabelThemeCopyWith<$Res> get labelTheme;
 }
+
 /// @nodoc
-class _$CustomButtonWidgetThemeCopyWithImpl<$Res>
+class _$CustomButtonWidgetThemeCopyWithImpl<
+  $Res,
+  $Val extends CustomButtonWidgetTheme
+>
     implements $CustomButtonWidgetThemeCopyWith<$Res> {
-  _$CustomButtonWidgetThemeCopyWithImpl(this._self, this._then);
+  _$CustomButtonWidgetThemeCopyWithImpl(this._value, this._then);
 
-  final CustomButtonWidgetTheme _self;
-  final $Res Function(CustomButtonWidgetTheme) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
-/// Create a copy of CustomButtonWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? labelTheme = null,}) {
-  return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,labelTheme: null == labelTheme ? _self.labelTheme : labelTheme // ignore: cast_nullable_to_non_nullable
-as LabelTheme,
-  ));
-}
-/// Create a copy of CustomButtonWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$LabelThemeCopyWith<$Res> get labelTheme {
-  
-  return $LabelThemeCopyWith<$Res>(_self.labelTheme, (value) {
-    return _then(_self.copyWith(labelTheme: value));
-  });
-}
-}
+  /// Create a copy of CustomButtonWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            labelTheme: null == labelTheme
+                ? _value.labelTheme
+                : labelTheme // ignore: cast_nullable_to_non_nullable
+                      as LabelTheme,
+          )
+          as $Val,
+    );
+  }
 
-
-/// Adds pattern-matching-related methods to [CustomButtonWidgetTheme].
-extension CustomButtonWidgetThemePatterns on CustomButtonWidgetTheme {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CustomButtonWidgetTheme value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _CustomButtonWidgetTheme() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CustomButtonWidgetTheme value)  $default,){
-final _that = this;
-switch (_that) {
-case _CustomButtonWidgetTheme():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CustomButtonWidgetTheme value)?  $default,){
-final _that = this;
-switch (_that) {
-case _CustomButtonWidgetTheme() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  LabelTheme labelTheme)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _CustomButtonWidgetTheme() when $default != null:
-return $default(_that.id,_that.labelTheme);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  LabelTheme labelTheme)  $default,) {final _that = this;
-switch (_that) {
-case _CustomButtonWidgetTheme():
-return $default(_that.id,_that.labelTheme);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  LabelTheme labelTheme)?  $default,) {final _that = this;
-switch (_that) {
-case _CustomButtonWidgetTheme() when $default != null:
-return $default(_that.id,_that.labelTheme);case _:
-  return null;
-
-}
+  /// Create a copy of CustomButtonWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LabelThemeCopyWith<$Res> get labelTheme {
+    return $LabelThemeCopyWith<$Res>(_value.labelTheme, (value) {
+      return _then(_value.copyWith(labelTheme: value) as $Val);
+    });
+  }
 }
 
+/// @nodoc
+abstract class _$$CustomButtonWidgetThemeImplCopyWith<$Res>
+    implements $CustomButtonWidgetThemeCopyWith<$Res> {
+  factory _$$CustomButtonWidgetThemeImplCopyWith(
+    _$CustomButtonWidgetThemeImpl value,
+    $Res Function(_$CustomButtonWidgetThemeImpl) then,
+  ) = __$$CustomButtonWidgetThemeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, LabelTheme labelTheme});
+
+  @override
+  $LabelThemeCopyWith<$Res> get labelTheme;
+}
+
+/// @nodoc
+class __$$CustomButtonWidgetThemeImplCopyWithImpl<$Res>
+    extends
+        _$CustomButtonWidgetThemeCopyWithImpl<
+          $Res,
+          _$CustomButtonWidgetThemeImpl
+        >
+    implements _$$CustomButtonWidgetThemeImplCopyWith<$Res> {
+  __$$CustomButtonWidgetThemeImplCopyWithImpl(
+    _$CustomButtonWidgetThemeImpl _value,
+    $Res Function(_$CustomButtonWidgetThemeImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of CustomButtonWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? id = null, Object? labelTheme = null}) {
+    return _then(
+      _$CustomButtonWidgetThemeImpl(
+        null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == labelTheme
+            ? _value.labelTheme
+            : labelTheme // ignore: cast_nullable_to_non_nullable
+                  as LabelTheme,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
+class _$CustomButtonWidgetThemeImpl extends _CustomButtonWidgetTheme {
+  _$CustomButtonWidgetThemeImpl(this.id, this.labelTheme) : super._();
 
-class _CustomButtonWidgetTheme extends CustomButtonWidgetTheme implements CustomThemeForWidget {
-   _CustomButtonWidgetTheme(this.id, this.labelTheme): super._();
-  factory _CustomButtonWidgetTheme.fromJson(Map<String, dynamic> json) => _$CustomButtonWidgetThemeFromJson(json);
+  factory _$CustomButtonWidgetThemeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CustomButtonWidgetThemeImplFromJson(json);
 
-@override  String id;
-@override  LabelTheme labelTheme;
+  @override
+  String id;
+  @override
+  LabelTheme labelTheme;
 
-/// Create a copy of CustomButtonWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$CustomButtonWidgetThemeCopyWith<_CustomButtonWidgetTheme> get copyWith => __$CustomButtonWidgetThemeCopyWithImpl<_CustomButtonWidgetTheme>(this, _$identity);
+  @override
+  String toString() {
+    return 'CustomButtonWidgetTheme(id: $id, labelTheme: $labelTheme)';
+  }
 
-@override
-Map<String, dynamic> toJson() {
-  return _$CustomButtonWidgetThemeToJson(this, );
+  /// Create a copy of CustomButtonWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CustomButtonWidgetThemeImplCopyWith<_$CustomButtonWidgetThemeImpl>
+  get copyWith =>
+      __$$CustomButtonWidgetThemeImplCopyWithImpl<
+        _$CustomButtonWidgetThemeImpl
+      >(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CustomButtonWidgetThemeImplToJson(this);
+  }
 }
 
+abstract class _CustomButtonWidgetTheme extends CustomButtonWidgetTheme
+    implements CustomThemeForWidget {
+  factory _CustomButtonWidgetTheme(String id, LabelTheme labelTheme) =
+      _$CustomButtonWidgetThemeImpl;
+  _CustomButtonWidgetTheme._() : super._();
 
+  factory _CustomButtonWidgetTheme.fromJson(Map<String, dynamic> json) =
+      _$CustomButtonWidgetThemeImpl.fromJson;
 
-@override
-String toString() {
-  return 'CustomButtonWidgetTheme(id: $id, labelTheme: $labelTheme)';
+  @override
+  String get id;
+  set id(String value);
+  @override
+  LabelTheme get labelTheme;
+  set labelTheme(LabelTheme value);
+
+  /// Create a copy of CustomButtonWidgetTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CustomButtonWidgetThemeImplCopyWith<_$CustomButtonWidgetThemeImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
-
-
-}
-
-/// @nodoc
-abstract mixin class _$CustomButtonWidgetThemeCopyWith<$Res> implements $CustomButtonWidgetThemeCopyWith<$Res> {
-  factory _$CustomButtonWidgetThemeCopyWith(_CustomButtonWidgetTheme value, $Res Function(_CustomButtonWidgetTheme) _then) = __$CustomButtonWidgetThemeCopyWithImpl;
-@override @useResult
-$Res call({
- String id, LabelTheme labelTheme
-});
-
-
-@override $LabelThemeCopyWith<$Res> get labelTheme;
-
-}
-/// @nodoc
-class __$CustomButtonWidgetThemeCopyWithImpl<$Res>
-    implements _$CustomButtonWidgetThemeCopyWith<$Res> {
-  __$CustomButtonWidgetThemeCopyWithImpl(this._self, this._then);
-
-  final _CustomButtonWidgetTheme _self;
-  final $Res Function(_CustomButtonWidgetTheme) _then;
-
-/// Create a copy of CustomButtonWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? labelTheme = null,}) {
-  return _then(_CustomButtonWidgetTheme(
-null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,null == labelTheme ? _self.labelTheme : labelTheme // ignore: cast_nullable_to_non_nullable
-as LabelTheme,
-  ));
-}
-
-/// Create a copy of CustomButtonWidgetTheme
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$LabelThemeCopyWith<$Res> get labelTheme {
-  
-  return $LabelThemeCopyWith<$Res>(_self.labelTheme, (value) {
-    return _then(_self.copyWith(labelTheme: value));
-  });
-}
-}
-
-// dart format on

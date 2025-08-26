@@ -6,9 +6,9 @@ part of 'custom_networkplayer_widget.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_CustomNetworkPlayerWidget _$CustomNetworkPlayerWidgetFromJson(
+_$CustomNetworkPlayerWidgetImpl _$$CustomNetworkPlayerWidgetImplFromJson(
   Map<String, dynamic> json,
-) => _CustomNetworkPlayerWidget(
+) => _$CustomNetworkPlayerWidgetImpl(
   id: json['id'] as String,
   name: json['name'] as String,
   url: json['url'] as String?,
@@ -26,8 +26,8 @@ _CustomNetworkPlayerWidget _$CustomNetworkPlayerWidgetFromJson(
         ),
 );
 
-Map<String, dynamic> _$CustomNetworkPlayerWidgetToJson(
-  _CustomNetworkPlayerWidget instance,
+Map<String, dynamic> _$$CustomNetworkPlayerWidgetImplToJson(
+  _$CustomNetworkPlayerWidgetImpl instance,
 ) => <String, dynamic>{
   'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
   'id': instance.id,

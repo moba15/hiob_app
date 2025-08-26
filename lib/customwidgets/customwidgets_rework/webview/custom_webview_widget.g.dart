@@ -6,36 +6,34 @@ part of 'custom_webview_widget.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_CustomWebViewWidget _$CustomWebViewWidgetFromJson(Map<String, dynamic> json) =>
-    _CustomWebViewWidget(
-      type:
-          $enumDecodeNullable(
-            _$CustomWidgetTypeDeprecatedEnumMap,
-            json['type'],
-          ) ??
-          CustomWidgetTypeDeprecated.webViewNew,
-      id: json['id'] as String,
-      name: json['name'] as String,
-      image: json['image'] as bool? ?? false,
-      enabledZoom: json['enabledZoom'] as bool? ?? false,
-      enableInlineScroll: json['enableInlineScroll'] as bool? ?? false,
-      dataPoint: json['dataPoint'] as String?,
-      url: json['url'] as String?,
-      height: (json['height'] as num?)?.toInt() ?? 500,
-      customPopupmenu: json['customPopupmenu'] == null
-          ? null
-          : CustomPopupmenu.fromJson(
-              json['customPopupmenu'] as Map<String, dynamic>,
-            ),
-      customTheme: json['customTheme'] == null
-          ? null
-          : CustomThemeForWidget.fromJson(
-              json['customTheme'] as Map<String, dynamic>,
-            ),
-    );
+_$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
+  Map<String, dynamic> json,
+) => _$CustomWebViewWidgetImpl(
+  type:
+      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
+      CustomWidgetTypeDeprecated.webViewNew,
+  id: json['id'] as String,
+  name: json['name'] as String,
+  image: json['image'] as bool? ?? false,
+  enabledZoom: json['enabledZoom'] as bool? ?? false,
+  enableInlineScroll: json['enableInlineScroll'] as bool? ?? false,
+  dataPoint: json['dataPoint'] as String?,
+  url: json['url'] as String?,
+  height: (json['height'] as num?)?.toInt() ?? 500,
+  customPopupmenu: json['customPopupmenu'] == null
+      ? null
+      : CustomPopupmenu.fromJson(
+          json['customPopupmenu'] as Map<String, dynamic>,
+        ),
+  customTheme: json['customTheme'] == null
+      ? null
+      : CustomThemeForWidget.fromJson(
+          json['customTheme'] as Map<String, dynamic>,
+        ),
+);
 
-Map<String, dynamic> _$CustomWebViewWidgetToJson(
-  _CustomWebViewWidget instance,
+Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
+  _$CustomWebViewWidgetImpl instance,
 ) => <String, dynamic>{
   'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
   'id': instance.id,

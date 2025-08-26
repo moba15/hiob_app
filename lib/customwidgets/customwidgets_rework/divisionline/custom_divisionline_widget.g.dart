@@ -6,9 +6,9 @@ part of 'custom_divisionline_widget.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_CustomDivisionlineWidget _$CustomDivisionlineWidgetFromJson(
+_$CustomDivisionlineWidgetImpl _$$CustomDivisionlineWidgetImplFromJson(
   Map<String, dynamic> json,
-) => _CustomDivisionlineWidget(
+) => _$CustomDivisionlineWidgetImpl(
   type:
       $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
       CustomWidgetTypeDeprecated.divisionLine,
@@ -27,8 +27,8 @@ _CustomDivisionlineWidget _$CustomDivisionlineWidgetFromJson(
         ),
 );
 
-Map<String, dynamic> _$CustomDivisionlineWidgetToJson(
-  _CustomDivisionlineWidget instance,
+Map<String, dynamic> _$$CustomDivisionlineWidgetImplToJson(
+  _$CustomDivisionlineWidgetImpl instance,
 ) => <String, dynamic>{
   'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
   'id': instance.id,
