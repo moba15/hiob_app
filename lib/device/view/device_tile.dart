@@ -35,28 +35,26 @@ class DeviceTile extends StatelessWidget {
           ? Text("${device.name} (IoBroker)")
           : Text("${device.name} "),
       trailing: status == DeviceStatus.ready
-          ? const Icon(
-              Icons.signal_cellular_4_bar,
-              color: Colors.green,
-            )
-          : const Icon(
-              Icons.signal_cellular_off,
-              color: Colors.red,
-            ),
+          ? const Icon(Icons.signal_cellular_4_bar, color: Colors.green)
+          : const Icon(Icons.signal_cellular_off, color: Colors.red),
       subtitle: Text(
         "Last updated: ${durationToString(DateTime.now().difference(lastUpdated))} ${device.getBatteryLevel() != null ? "\nBattery: ${device.getBatteryLevel()}%" : ""}",
         style: TextStyle(
-            color: status == DeviceStatus.ready ? Colors.green : Colors.red,
-            fontSize: 13),
+          color: status == DeviceStatus.ready ? Colors.green : Colors.red,
+          fontSize: 13,
+        ),
       ),
       isThreeLine: device.getBatteryLevel() != null,
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (c) => DeviceEditPage(
-                    deviceManager: Manager.instance.deviceManager,
-                    device: device)));
+          context,
+          MaterialPageRoute(
+            builder: (c) => DeviceEditPage(
+              deviceManager: Manager.instance.deviceManager,
+              device: device,
+            ),
+          ),
+        );
       },
     );*/
   }
