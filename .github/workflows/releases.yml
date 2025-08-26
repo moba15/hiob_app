@@ -45,7 +45,7 @@ jobs:
           fileDir: "/home/runner/work/hiob_app/hiob_app/android/app/"
           encodedString: ${{ secrets.KEYSTORE }}
       - run: flutter pub get
-      - name: Build apk
+      - name: Build bundle, release
         run: flutter build appbundle --no-tree-shake-icons
         env:
           KEYALIAS: ${{ secrets.KEYALIAS }}
@@ -73,14 +73,14 @@ jobs:
         with:
           fileName: 'keystore/your_signing_keystore.jks'
           fileDir: "/home/runner/work/hiob_app/hiob_app/android/app/"
-          encodedString: ${{ secrets.KEYSTORE }}
+          encodedString: ${{ secrets.FAKEKEYSTORE }}
       - run: flutter pub get
       - name: Build apk
         run: flutter build apk --no-tree-shake-icons
         env:
-          KEYALIAS: ${{ secrets.KEYALIAS }}
-          KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
-          STOREPASSWORD: ${{ secrets.STOREPASSWORD }}
+          KEYALIAS: ${{ secrets.FAKEKEYALIAS }}
+          KEYPASSWORD: ${{ secrets.FAKEKEYPASSWORD }}
+          STOREPASSWORD: ${{ secrets.FAKESTOREPASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
           name: release-apks
