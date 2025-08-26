@@ -6,9 +6,9 @@ part of 'custom_value_widget_theme.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CustomValueWidgetThemeImpl _$$CustomValueWidgetThemeImplFromJson(
+_CustomValueWidgetTheme _$CustomValueWidgetThemeFromJson(
   Map<String, dynamic> json,
-) => _$CustomValueWidgetThemeImpl(
+) => _CustomValueWidgetTheme(
   json['id'] as String,
   LabelTheme.fromJson(json['labelTheme'] as Map<String, dynamic>),
   const MaterialColorConverter().fromJson(
@@ -20,8 +20,8 @@ _$CustomValueWidgetThemeImpl _$$CustomValueWidgetThemeImplFromJson(
   ),
 );
 
-Map<String, dynamic> _$$CustomValueWidgetThemeImplToJson(
-  _$CustomValueWidgetThemeImpl instance,
+Map<String, dynamic> _$CustomValueWidgetThemeToJson(
+  _CustomValueWidgetTheme instance,
 ) => <String, dynamic>{
   'id': instance.id,
   'labelTheme': instance.labelTheme,

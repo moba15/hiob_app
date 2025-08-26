@@ -6,13 +6,13 @@ part of 'custom_button_widget_theme.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CustomButtonWidgetThemeImpl _$$CustomButtonWidgetThemeImplFromJson(
+_CustomButtonWidgetTheme _$CustomButtonWidgetThemeFromJson(
   Map<String, dynamic> json,
-) => _$CustomButtonWidgetThemeImpl(
+) => _CustomButtonWidgetTheme(
   json['id'] as String,
   LabelTheme.fromJson(json['labelTheme'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$$CustomButtonWidgetThemeImplToJson(
-  _$CustomButtonWidgetThemeImpl instance,
+Map<String, dynamic> _$CustomButtonWidgetThemeToJson(
+  _CustomButtonWidgetTheme instance,
 ) => <String, dynamic>{'id': instance.id, 'labelTheme': instance.labelTheme};
