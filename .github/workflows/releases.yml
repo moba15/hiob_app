@@ -13,7 +13,7 @@ on:
   pull_request: {}
 jobs:
   check-format:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
@@ -27,7 +27,7 @@ jobs:
       - name: Check format
         run: dart format --set-exit-if-changed .
   build-appbundle:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
@@ -57,7 +57,7 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
           compression-level: 1
   build-apk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
@@ -87,7 +87,7 @@ jobs:
           path: build/app/outputs/apk/release/app-release.apk
           compression-level: 1
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v1
       - name: Install build tools
@@ -125,7 +125,7 @@ jobs:
           path: build/windows/x64/runner/Release/
           compression-level: 6
   github-release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [build-linux, build-windows, build-apk, check-format]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     permissions:
