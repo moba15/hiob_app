@@ -179,6 +179,8 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void reconnect() async {
+    await Future.delayed(const Duration(seconds: 5));
+    changeConnectionStatus(ConnectionStatus.connecting);
     // ignore: dead_code
     Uri url = await getUrl();
     tries++;
@@ -411,7 +413,7 @@ class ConnectionManager with WidgetsBindingObserver {
       Manager().talker.error(
         "ConnectionManager | Login error: ${response.errorMsg}",
       );
-      connectionStatusStreamController.add(ConnectionStatus.error);
+      changeConnectionStatus(ConnectionStatus.error);
       return;
     }
 
@@ -432,9 +434,12 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void changeConnectionStatus(ConnectionStatus status, {String? message}) {
     Manager().talker.debug(
-      "ConnectionManager | Change connection status to ${status.name} | $message",
+      "ConnectionManager | Change connection status to ${status.name}",
     );
     connectionStatusStreamController.add(status);
+    if (!status.isConnected && status != ConnectionStatus.connecting) {
+      reconnect();
+    }
   }
 
   void _requestApproval() async {
