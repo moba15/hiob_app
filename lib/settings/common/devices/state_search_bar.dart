@@ -36,7 +36,15 @@ class _StateSearchBarState extends State<StateSearchBar> {
       onSearch: (p0) async {
         return deviceManager.searchIobrokerObjects(p0, regex: regex);
       },
-      chipList: _SearchChipList(regex: regex, onRegexChanged: (regex) {}),
+      chipList: _SearchChipList(
+        regex: regex,
+        onRegexChanged: (regex) {
+          setState(() {
+            this.regex = regex;
+          });
+          this.regex = regex;
+        },
+      ),
       toWidget: (p0, currentSearch) {
         String displayName = p0.name ?? p0.id;
         final regexExp = RegExp("(.*)($currentSearch)(.*)");
@@ -89,10 +97,10 @@ class _SearchChipList extends StatefulWidget {
 }
 
 class __SearchChipListState extends State<_SearchChipList> {
-  bool regex = true;
+  bool regex = false;
   @override
   void initState() {
-    this.regex = widget.regex;
+    regex = widget.regex;
     super.initState();
   }
 
