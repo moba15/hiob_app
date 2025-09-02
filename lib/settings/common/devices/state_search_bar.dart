@@ -17,7 +17,6 @@ class StateSearchBar extends StatefulWidget {
 class _StateSearchBarState extends State<StateSearchBar> {
   late DeviceManager deviceManager;
   IobrokerObject? selectedObject;
-  bool regex = false;
   Map<String, bool> filters = {};
   @override
   void initState() {
@@ -36,22 +35,9 @@ class _StateSearchBarState extends State<StateSearchBar> {
               subtitle: Text(selectedObject?.desc ?? ""),
             ),
       onSearch: (p0) async {
-        return deviceManager.searchIobrokerObjects(
-          p0,
-          regex: regex,
-          filters: filters,
-        );
+        return deviceManager.searchIobrokerObjects(p0, filters: filters);
       },
-      chipList: _SearchChipList(
-        regex: regex,
-        filters: filters,
-        onRegexChanged: (regex) {
-          setState(() {
-            this.regex = regex;
-          });
-          this.regex = regex;
-        },
-      ),
+      chipList: _SearchChipList(filters: filters),
       toWidget: (p0, currentSearch) {
         String displayName = p0.name ?? p0.id;
         final regexExp = RegExp("(.*)($currentSearch)(.*)");
@@ -96,25 +82,16 @@ class _StateSearchBarState extends State<StateSearchBar> {
 }
 
 class _SearchChipList extends StatefulWidget {
-  final bool regex;
   final Map<String, bool> filters;
-  final void Function(bool) onRegexChanged;
-  const _SearchChipList({
-    super.key,
-    required this.regex,
-    required this.onRegexChanged,
-    required this.filters,
-  });
+  const _SearchChipList({super.key, required this.filters});
 
   @override
   State<_SearchChipList> createState() => __SearchChipListState();
 }
 
 class __SearchChipListState extends State<_SearchChipList> {
-  bool regex = false;
   @override
   void initState() {
-    regex = widget.regex;
     super.initState();
   }
 
@@ -127,17 +104,6 @@ class __SearchChipListState extends State<_SearchChipList> {
       spacing: 10.0,
       runSpacing: 5,
       children: [
-        ChoiceChip(
-          label: Text("Regex"),
-          selected: regex,
-          selectedColor: Colors.blue,
-          onSelected: (value) {
-            widget.onRegexChanged(value);
-            setState(() {
-              regex = value;
-            });
-          },
-        ),
         for (MapEntry<String, bool> entry in widget.filters.entries)
           if (entry.value)
             FilterChip(

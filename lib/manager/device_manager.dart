@@ -233,7 +233,6 @@ class DeviceManager {
 
   Future<List<IobrokerObject>> searchIobrokerObjects(
     String search, {
-    bool regex = true,
     Map<String, bool> filters = const {},
   }) async {
     String filterExpression = "";
@@ -248,16 +247,22 @@ class DeviceManager {
       filterExpression += "id LIKE '${entry.key}%'";
     }
 
-    String query = regex
-        ? "SELECT * from ${appDatabase.statesTable.actualTableName} where (id REGEXP ? or state_name REGEXP ? or state_desc REGEXP ?) ${filterExpression.isNotEmpty ? "AND ($filterExpression)" : ""} LIMIT 250"
-        : "SELECT * from ${appDatabase.statesTable.actualTableName} where (id LIKE ? or state_name LIKE ? or state_desc LIKE ?) ${filterExpression.isNotEmpty ? "AND ($filterExpression)" : ""} LIMIT 250";
+    String query =
+        """select * from (SELECT * from ${appDatabase.statesTable.actualTableName} where (id REGEXP ? or state_name REGEXP ? or state_desc REGEXP ?) ${filterExpression.isNotEmpty ? "AND ($filterExpression)" : ""}
+        UNION
+        SELECT * from ${appDatabase.statesTable.actualTableName} where (id LIKE ? or state_name LIKE ? or state_desc LIKE ?) ${filterExpression.isNotEmpty ? "AND ($filterExpression)" : ""} )as z
+        ORDER BY id,state_name,state_desc LIMIT 250
+        """;
     List<QueryRow> resultRaw = await appDatabase
         .customSelect(
           query,
           variables: [
-            Variable<String>(regex ? search : "%$search%"),
-            Variable<String>(regex ? search : "%$search%"),
-            Variable<String>(regex ? search : "%$search%"),
+            Variable<String>(search),
+            Variable<String>(search),
+            Variable<String>(search),
+            Variable<String>("%$search%"),
+            Variable<String>("%$search%"),
+            Variable<String>("%$search%"),
           ],
         )
         .get()
