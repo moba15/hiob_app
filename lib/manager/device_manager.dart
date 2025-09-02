@@ -234,10 +234,23 @@ class DeviceManager {
   Future<List<IobrokerObject>> searchIobrokerObjects(
     String search, {
     bool regex = true,
+    Map<String, bool> filters = const {},
   }) async {
+    String filterExpression = "";
+    for (MapEntry<String, bool> entry in filters.entries) {
+      if (entry.value == false) {
+        continue;
+      }
+      if (filterExpression.isNotEmpty) {
+        filterExpression += " OR ";
+      }
+
+      filterExpression += "id LIKE '${entry.key}%'";
+    }
+
     String query = regex
-        ? "SELECT * from ${appDatabase.statesTable.actualTableName} where id REGEXP ? or state_name REGEXP ? or state_desc REGEXP ? LIMIT 250"
-        : "SELECT * from ${appDatabase.statesTable.actualTableName} where id LIKE ? or state_name LIKE ? or state_desc LIKE ? LIMIT 250";
+        ? "SELECT * from ${appDatabase.statesTable.actualTableName} where (id REGEXP ? or state_name REGEXP ? or state_desc REGEXP ?) ${filterExpression.isNotEmpty ? "AND ($filterExpression)" : ""} LIMIT 250"
+        : "SELECT * from ${appDatabase.statesTable.actualTableName} where (id LIKE ? or state_name LIKE ? or state_desc LIKE ?) ${filterExpression.isNotEmpty ? "AND ($filterExpression)" : ""} LIMIT 250";
     List<QueryRow> resultRaw = await appDatabase
         .customSelect(
           query,
@@ -247,7 +260,15 @@ class DeviceManager {
             Variable<String>(regex ? search : "%$search%"),
           ],
         )
-        .get();
+        .get()
+        .onError((error, stackTrace) {
+          Manager().talker.error(
+            "DeviceManager | searchIobrokerObjects | Error executing SQL statement: $query",
+            stackTrace,
+          );
+
+          return [];
+        });
 
     List<IobrokerObject> result = resultRaw.map((e) {
       return IobrokerObject(
@@ -266,6 +287,33 @@ class DeviceManager {
     }).toList();
     Manager().talker.verbose(
       "DeviceManager | searchIobrokerObjects found ${result.length} results for $search",
+    );
+    return result;
+  }
+
+  Future<List<String>> getIobrokerAdapaters() async {
+    String query = """SELECT  DISTINCT	SUBSTR(id, 1, INSTR(id, '.')-1) 
+    || '.' ||
+		SUBSTR(SUBSTR(id, INSTR(id, '.')+1, length(id)), 1,INSTR(SUBSTR(id, INSTR(id, '.')+1, length(id)), '.')) as adapter
+    FROM states_table""";
+    List<QueryRow>
+    resultRaw = await appDatabase.customSelect(query).get().onError((
+      error,
+      stackTrace,
+    ) {
+      Manager().talker.error(
+        "DeviceManager | searchIobrokerAdapaters | Error executing SQL statement",
+        stackTrace,
+      );
+
+      return [];
+    });
+
+    List<String> result = resultRaw.map((e) {
+      return e.data["adapter"] as String;
+    }).toList();
+    Manager().talker.verbose(
+      "DeviceManager | searchIobrokerAdapaters found ${result.length} results",
     );
     return result;
   }

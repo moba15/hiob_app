@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/utils/pair.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/dropdown_search_async.dart';
 import 'package:smart_home/utils/widgets/substring_highlight_widget.dart';
 
@@ -17,6 +18,7 @@ class _StateSearchBarState extends State<StateSearchBar> {
   late DeviceManager deviceManager;
   IobrokerObject? selectedObject;
   bool regex = false;
+  Map<String, bool> filters = {};
   @override
   void initState() {
     deviceManager = Manager().deviceManager;
@@ -34,10 +36,15 @@ class _StateSearchBarState extends State<StateSearchBar> {
               subtitle: Text(selectedObject?.desc ?? ""),
             ),
       onSearch: (p0) async {
-        return deviceManager.searchIobrokerObjects(p0, regex: regex);
+        return deviceManager.searchIobrokerObjects(
+          p0,
+          regex: regex,
+          filters: filters,
+        );
       },
       chipList: _SearchChipList(
         regex: regex,
+        filters: filters,
         onRegexChanged: (regex) {
           setState(() {
             this.regex = regex;
@@ -77,6 +84,11 @@ class _StateSearchBarState extends State<StateSearchBar> {
         );
       },
       loadInitialValues: () async {
+        List<String> adapaters = await deviceManager.getIobrokerAdapaters();
+        if (adapaters.isNotEmpty) {
+          filters = {for (var element in adapaters) element: false};
+        }
+
         return await deviceManager.getAllIobrokerObjects(limit: 250);
       },
     );
@@ -85,11 +97,13 @@ class _StateSearchBarState extends State<StateSearchBar> {
 
 class _SearchChipList extends StatefulWidget {
   final bool regex;
+  final Map<String, bool> filters;
   final void Function(bool) onRegexChanged;
   const _SearchChipList({
     super.key,
     required this.regex,
     required this.onRegexChanged,
+    required this.filters,
   });
 
   @override
@@ -124,6 +138,29 @@ class __SearchChipListState extends State<_SearchChipList> {
             });
           },
         ),
+        for (MapEntry<String, bool> entry in widget.filters.entries)
+          if (entry.value)
+            FilterChip(
+              label: Text(entry.key),
+              selected: entry.value,
+              onSelected: (value) {
+                setState(() {
+                  widget.filters[entry.key] = value;
+                });
+              },
+            ),
+
+        for (MapEntry<String, bool> entry in widget.filters.entries)
+          if (!entry.value)
+            FilterChip(
+              label: Text(entry.key),
+              selected: entry.value,
+              onSelected: (value) {
+                setState(() {
+                  widget.filters[entry.key] = value;
+                });
+              },
+            ),
       ],
     );
   }

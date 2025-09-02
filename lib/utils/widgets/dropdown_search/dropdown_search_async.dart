@@ -104,7 +104,7 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                   onFieldSubmitted: (a) {},
                   decoration: InputDecoration(
                     label: Text("Search"),
-                    hint: Text("Try searching with regex: .*Licht.*Garten"),
+                    hint: Text("Try searching with regex or wildcard"),
                   ),
                 ),
                 Gap(8),
