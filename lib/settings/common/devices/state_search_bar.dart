@@ -20,6 +20,7 @@ class _StateSearchBarState extends State<StateSearchBar> {
   late DeviceManager deviceManager;
   late AsyncSearchCubit<IobrokerObject> asyncSearchCubit;
   IobrokerObject? selectedObject;
+  String _currentSearch = "";
   Map<String, bool> filters = {};
   @override
   void initState() {
@@ -32,6 +33,13 @@ class _StateSearchBarState extends State<StateSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    if (filters.isEmpty) {
+      deviceManager.getIobrokerAdapaters().then((value) {
+        setState(() {
+          filters = {for (var element in value) element: false};
+        });
+      });
+    }
     return BlocProvider.value(
       value: asyncSearchCubit,
       child: DropdownSearchAsync<IobrokerObject>(
@@ -43,11 +51,21 @@ class _StateSearchBarState extends State<StateSearchBar> {
                 subtitle: Text(selectedObject?.desc ?? ""),
               ),
         onSearch: (p0) async {
+          _currentSearch = p0;
           asyncSearchCubit.onSearched(
             await deviceManager.searchIobrokerObjects(p0, filters: filters),
           );
         },
-        chipList: _SearchChipList(filters: filters, filterUpdated: () => {}),
+        chipList: _SearchChipList(
+          filters: filters,
+          filterUpdated: () {
+            deviceManager
+                .searchIobrokerObjects(_currentSearch, filters: filters)
+                .then((value) {
+                  asyncSearchCubit.onSearched(value);
+                });
+          },
+        ),
         toWidget: (p0, currentSearch) {
           String displayName = p0.name ?? p0.id;
           final regexExp = RegExp("(.*)($currentSearch)(.*)");
@@ -78,16 +96,6 @@ class _StateSearchBarState extends State<StateSearchBar> {
               Navigator.pop(context);
             },
           );
-        },
-        loadInitialValues: () async {
-          List<String> adapaters = await deviceManager.getIobrokerAdapaters();
-          if (adapaters.isNotEmpty) {
-            setState(() {
-              filters = {for (var element in adapaters) element: false};
-            });
-          }
-
-          return await deviceManager.getAllIobrokerObjects(limit: 250);
         },
       ),
     );

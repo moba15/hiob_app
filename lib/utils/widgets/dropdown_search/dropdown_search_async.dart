@@ -9,7 +9,6 @@ class GroupedItems {}
 
 class DropdownSearchAsync<T> extends StatefulWidget {
   final void Function(String) onSearch;
-  final Future<List<T>> Function() loadInitialValues;
   final Widget Function(T, String) toWidget;
   final Widget? selectedObject;
   final Widget? chipList;
@@ -21,7 +20,6 @@ class DropdownSearchAsync<T> extends StatefulWidget {
     this.subtitle = "Tap to search",
     required this.onSearch,
     required this.toWidget,
-    required this.loadInitialValues,
     this.selectedObject,
     this.chipList,
   });
@@ -38,10 +36,6 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
   @override
   void initState() {
     super.initState();
-    widget.loadInitialValues().then((value) {
-      items = value;
-      _controller.sink.add(items);
-    });
   }
 
   @override
