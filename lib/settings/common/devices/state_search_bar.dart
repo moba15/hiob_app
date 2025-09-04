@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/utils/pair.dart';
+import 'package:smart_home/utils/widgets/dropdown_search/cubit/cubit/async_search_cubit.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/dropdown_search_async.dart';
 import 'package:smart_home/utils/widgets/substring_highlight_widget.dart';
 
@@ -16,74 +18,90 @@ class StateSearchBar extends StatefulWidget {
 
 class _StateSearchBarState extends State<StateSearchBar> {
   late DeviceManager deviceManager;
+  late AsyncSearchCubit<IobrokerObject> asyncSearchCubit;
   IobrokerObject? selectedObject;
   Map<String, bool> filters = {};
   @override
   void initState() {
     deviceManager = Manager().deviceManager;
+    asyncSearchCubit = AsyncSearchCubit(
+      getInitalValues: () => deviceManager.getAllIobrokerObjects(limit: 250),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownSearchAsync<IobrokerObject>(
-      title: "Select a state",
-      selectedObject: selectedObject == null
-          ? null
-          : ListTile(
-              title: Text(selectedObject?.name ?? selectedObject?.id ?? ""),
-              subtitle: Text(selectedObject?.desc ?? ""),
+    return BlocProvider.value(
+      value: asyncSearchCubit,
+      child: DropdownSearchAsync<IobrokerObject>(
+        title: "Select a state",
+        selectedObject: selectedObject == null
+            ? null
+            : ListTile(
+                title: Text(selectedObject?.name ?? selectedObject?.id ?? ""),
+                subtitle: Text(selectedObject?.desc ?? ""),
+              ),
+        onSearch: (p0) async {
+          asyncSearchCubit.onSearched(
+            await deviceManager.searchIobrokerObjects(p0, filters: filters),
+          );
+        },
+        chipList: _SearchChipList(filters: filters, filterUpdated: () => {}),
+        toWidget: (p0, currentSearch) {
+          String displayName = p0.name ?? p0.id;
+          final regexExp = RegExp("(.*)($currentSearch)(.*)");
+          return ListTile(
+            title: SubstringHighlightWidget(
+              text: displayName,
+              exp: regexExp,
+              highlightedGroup: 2,
             ),
-      onSearch: (p0) async {
-        return deviceManager.searchIobrokerObjects(p0, filters: filters);
-      },
-      chipList: _SearchChipList(filters: filters),
-      toWidget: (p0, currentSearch) {
-        String displayName = p0.name ?? p0.id;
-        final regexExp = RegExp("(.*)($currentSearch)(.*)");
-        return ListTile(
-          title: SubstringHighlightWidget(
-            text: displayName,
-            exp: regexExp,
-            highlightedGroup: 2,
-          ),
-          subtitle: p0.name == null
-              ? (p0.desc != null
-                    ? SubstringHighlightWidget(
-                        text: p0.desc!,
-                        exp: regexExp,
-                        highlightedGroup: 2,
-                      )
-                    : null)
-              : (SubstringHighlightWidget(
-                  text: "${p0.id}: ${p0.desc}",
-                  exp: regexExp,
-                  highlightedGroup: 2,
-                )),
-          onTap: () {
-            widget.onSelected(p0);
+            subtitle: p0.name == null
+                ? (p0.desc != null
+                      ? SubstringHighlightWidget(
+                          text: p0.desc!,
+                          exp: regexExp,
+                          highlightedGroup: 2,
+                        )
+                      : null)
+                : (SubstringHighlightWidget(
+                    text: "${p0.id}: ${p0.desc}",
+                    exp: regexExp,
+                    highlightedGroup: 2,
+                  )),
+            onTap: () {
+              widget.onSelected(p0);
+              setState(() {
+                selectedObject = p0;
+              });
+              Navigator.pop(context);
+            },
+          );
+        },
+        loadInitialValues: () async {
+          List<String> adapaters = await deviceManager.getIobrokerAdapaters();
+          if (adapaters.isNotEmpty) {
             setState(() {
-              selectedObject = p0;
+              filters = {for (var element in adapaters) element: false};
             });
-            Navigator.pop(context);
-          },
-        );
-      },
-      loadInitialValues: () async {
-        List<String> adapaters = await deviceManager.getIobrokerAdapaters();
-        if (adapaters.isNotEmpty) {
-          filters = {for (var element in adapaters) element: false};
-        }
+          }
 
-        return await deviceManager.getAllIobrokerObjects(limit: 250);
-      },
+          return await deviceManager.getAllIobrokerObjects(limit: 250);
+        },
+      ),
     );
   }
 }
 
 class _SearchChipList extends StatefulWidget {
   final Map<String, bool> filters;
-  const _SearchChipList({super.key, required this.filters});
+  final void Function() filterUpdated;
+  const _SearchChipList({
+    super.key,
+    required this.filters,
+    required this.filterUpdated,
+  });
 
   @override
   State<_SearchChipList> createState() => __SearchChipListState();
@@ -113,6 +131,7 @@ class __SearchChipListState extends State<_SearchChipList> {
                 setState(() {
                   widget.filters[entry.key] = value;
                 });
+                widget.filterUpdated();
               },
             ),
 
@@ -125,6 +144,7 @@ class __SearchChipListState extends State<_SearchChipList> {
                 setState(() {
                   widget.filters[entry.key] = value;
                 });
+                widget.filterUpdated();
               },
             ),
       ],

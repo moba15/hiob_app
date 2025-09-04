@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:smart_home/utils/widgets/dropdown_search/cubit/cubit/async_search_cubit.dart';
 
 class GroupedItems {}
 
 class DropdownSearchAsync<T> extends StatefulWidget {
-  final Future<List<T>> Function(String) onSearch;
+  final void Function(String) onSearch;
   final Future<List<T>> Function() loadInitialValues;
   final Widget Function(T, String) toWidget;
   final Widget? selectedObject;
@@ -50,8 +52,12 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<AsyncSearchCubit<T>>();
+    if (cubit.state is InitalAsyncSearchState<T>) {
+      cubit.loadInitialValues();
+    }
     return GestureDetector(
-      onTap: _onTap,
+      onTap: () => _onTap(cubit),
       child: InputDecorator(
         decoration: InputDecoration(
           hintText: "hintText",
@@ -75,13 +81,14 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
     );
   }
 
-  void _onTap() {
+  void _onTap(AsyncSearchCubit<T> cubit) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       isDismissible: true,
       showDragHandle: true,
       enableDrag: true,
+
       builder: (context) {
         return DraggableScrollableSheet(
           expand: false,
@@ -92,12 +99,9 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                 TextFormField(
                   initialValue: currentSearch,
                   onChanged: (value) async {
-                    widget.onSearch(value).then((result) {
-                      _controller.sink.add(result);
-                      items = result;
-                      currentSearch = value;
-                      setState(() {});
-                    });
+                    currentSearch = value;
+                    setState(() {});
+                    widget.onSearch(value);
                   },
                   onSaved: (newValue) {},
                   onEditingComplete: () {},
@@ -110,26 +114,31 @@ class _DropdownSearchAsyncState<T> extends State<DropdownSearchAsync<T>> {
                 Gap(8),
                 widget.chipList ?? const SizedBox.shrink(),
                 Text("Result"),
-                StreamBuilder(
-                  stream: _controller.stream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      items = snapshot.data!;
+                BlocBuilder<AsyncSearchCubit<T>, AsyncSearchState<T>>(
+                  bloc: cubit,
+                  builder: (context, state) {
+                    if (state is LoadingAsyncSearchState<T> ||
+                        state is InitalAsyncSearchState<T>) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state is ErrorAsyncSearchState<T>) {
+                      return Center(child: Text("Error: ${state.errorMsg}"));
+                    } else if (state is LoadedAsyncSearchState<T>) {
+                      items = state.objects;
+                      if (items.isEmpty) {
+                        return Center(child: Text("No results found"));
+                      }
+                      return Expanded(
+                        child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: items.length,
+                          itemBuilder: (_, index) {
+                            final item = items[index];
+                            return widget.toWidget(item, currentSearch);
+                          },
+                        ),
+                      );
                     }
-
-                    if (items.isEmpty) {
-                      return Center(child: Text("No results found"));
-                    }
-                    return Expanded(
-                      child: ListView.builder(
-                        controller: scrollController,
-                        itemCount: items.length,
-                        itemBuilder: (_, index) {
-                          final item = items[index];
-                          return widget.toWidget(item, currentSearch);
-                        },
-                      ),
-                    );
+                    return Text("Error: Unknown state");
                   },
                 ),
               ],
