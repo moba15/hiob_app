@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:grpc/grpc.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
@@ -116,6 +116,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
   Future<void> connectIoB() async {
     Uri url = await getUrl();
+    await channel?.shutdown();
     channel = ClientChannel(
       url.host,
       port: url.port,
@@ -124,10 +125,14 @@ class ConnectionManager with WidgetsBindingObserver {
 
     loginClientStub = LoginClient(channel!);
     configSyncStub = ConfigSyncClient(channel!);
+
     channel!.onConnectionStateChanged.listen((event) {
       Manager().talker.debug(
         "ConnectionManager | onConnectionStateChanged | ${event.name}",
       );
+      if (event == ConnectionState.transientFailure) {
+        changeConnectionStatus(ConnectionStatus.error);
+      }
     });
 
     channel!.createConnection();
@@ -182,7 +187,7 @@ class ConnectionManager with WidgetsBindingObserver {
     if (delayed) {
       await Future.delayed(const Duration(seconds: 3));
     }
-    changeConnectionStatus(ConnectionStatus.connecting);
+
     // ignore: dead_code
     Uri url = await getUrl();
     tries++;
@@ -190,10 +195,13 @@ class ConnectionManager with WidgetsBindingObserver {
       Manager().talker.debug(
         "ConnectionManager | reconnect | More than 10 tries, not reconnecting",
       );
+
+      channel?.shutdown();
       return;
     }
+    changeConnectionStatus(ConnectionStatus.connecting);
     Manager().talker.debug("ConnectionManager | reconnect | reconnecting");
-
+    await channel?.shutdown();
     channel = ClientChannel(
       url.host,
       port: url.port,
@@ -201,10 +209,15 @@ class ConnectionManager with WidgetsBindingObserver {
     );
 
     loginClientStub = LoginClient(channel!);
+
     channel!.onConnectionStateChanged.listen((event) {
       Manager().talker.debug(
         "ConnectionManager | onConnectionStateChanged | ${event.name}",
       );
+      if (event == ConnectionState.transientFailure) {
+        changeConnectionStatus(ConnectionStatus.error);
+        channel?.shutdown();
+      }
     });
 
     channel!.createConnection();
