@@ -5,21 +5,28 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
-## 0.0710
+## 0.1.000-alpha.2
+- Added first gRPC support
+- Added support for client side states database
+- And many more optimizations
+- IMPORTANT This is only an alpha version, it should only be used for testing and feedback. Many features are not implemented yet
+
+
+## 0.0.710
 - WebView: Improved WebView settings #124
 - WebView: A long press on a WebView will reload it
 
-## 0.0709
+## 0.0.709
 - WebView: Using InAppWebView - possibly fixing #123
 
-## 0.0708
+## 0.0.708
 - WebView: Added a checkbox option to resolve image loading issues in WebView. Enabling this should fix problems with most images (#123)
 
-## 0.0707
+## 0.0.707
 - Update android compileSdk, minSdk, targetSdk to fulfill googles new guidelines
 - Update flutter version
 
-## 0.0706
+## 0.0.706
 - Slider can now have negative values
 
 ## 0.0.705
