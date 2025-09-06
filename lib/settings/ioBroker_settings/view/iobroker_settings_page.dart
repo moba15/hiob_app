@@ -166,7 +166,9 @@ class IoBrokerSettingsView extends StatelessWidget {
         Center(
           child: ElevatedButton(
             onPressed: () => {
-              context.read<Manager>().connectionManager.reconnect(),
+              context.read<Manager>().connectionManager.reconnect(
+                delayed: false,
+              ),
             },
             child: const Text("Reconnect"),
           ),

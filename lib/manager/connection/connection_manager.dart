@@ -178,8 +178,10 @@ class ConnectionManager with WidgetsBindingObserver {
     Manager().talker.error("ConnectionManager | onError ", e);
   }
 
-  void reconnect() async {
-    await Future.delayed(const Duration(seconds: 5));
+  void reconnect({bool delayed = true}) async {
+    if (delayed) {
+      await Future.delayed(const Duration(seconds: 3));
+    }
     changeConnectionStatus(ConnectionStatus.connecting);
     // ignore: dead_code
     Uri url = await getUrl();

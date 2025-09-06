@@ -97,15 +97,11 @@ class CompatibilityRequest extends $pb.GeneratedMessage {
 
 class CompatibilityResponse extends $pb.GeneratedMessage {
   factory CompatibilityResponse({
-    $core.String? buildnumber,
-    $core.String? versionumber,
+    $core.bool? compatible,
   }) {
     final $result = create();
-    if (buildnumber != null) {
-      $result.buildnumber = buildnumber;
-    }
-    if (versionumber != null) {
-      $result.versionumber = versionumber;
+    if (compatible != null) {
+      $result.compatible = compatible;
     }
     return $result;
   }
@@ -120,8 +116,7 @@ class CompatibilityResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CompatibilityResponse',
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'buildnumber')
-    ..aOS(2, _omitFieldNames ? '' : 'versionumber')
+    ..aOB(1, _omitFieldNames ? '' : 'compatible')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -150,28 +145,16 @@ class CompatibilityResponse extends $pb.GeneratedMessage {
   static CompatibilityResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get buildnumber => $_getSZ(0);
+  $core.bool get compatible => $_getBF(0);
   @$pb.TagNumber(1)
-  set buildnumber($core.String v) {
-    $_setString(0, v);
+  set compatible($core.bool v) {
+    $_setBool(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasBuildnumber() => $_has(0);
+  $core.bool hasCompatible() => $_has(0);
   @$pb.TagNumber(1)
-  void clearBuildnumber() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get versionumber => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set versionumber($core.String v) {
-    $_setString(1, v);
-  }
-
-  @$pb.TagNumber(2)
-  $core.bool hasVersionumber() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearVersionumber() => clearField(2);
+  void clearCompatible() => clearField(1);
 }
 
 class FirstPing extends $pb.GeneratedMessage {

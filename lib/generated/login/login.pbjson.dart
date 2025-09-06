@@ -31,15 +31,14 @@ final $typed_data.Uint8List compatibilityRequestDescriptor = $convert.base64Deco
 const CompatibilityResponse$json = {
   '1': 'CompatibilityResponse',
   '2': [
-    {'1': 'buildnumber', '3': 1, '4': 1, '5': 9, '10': 'buildnumber'},
-    {'1': 'versionumber', '3': 2, '4': 1, '5': 9, '10': 'versionumber'},
+    {'1': 'compatible', '3': 1, '4': 1, '5': 8, '10': 'compatible'},
   ],
 };
 
 /// Descriptor for `CompatibilityResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List compatibilityResponseDescriptor = $convert.base64Decode(
-    'ChVDb21wYXRpYmlsaXR5UmVzcG9uc2USIAoLYnVpbGRudW1iZXIYASABKAlSC2J1aWxkbnVtYm'
-    'VyEiIKDHZlcnNpb251bWJlchgCIAEoCVIMdmVyc2lvbnVtYmVy');
+    'ChVDb21wYXRpYmlsaXR5UmVzcG9uc2USHgoKY29tcGF0aWJsZRgBIAEoCFIKY29tcGF0aWJsZQ'
+    '==');
 
 @$core.Deprecated('Use firstPingDescriptor instead')
 const FirstPing$json = {
