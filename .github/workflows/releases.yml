@@ -37,7 +37,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: 3.29.2
+          flutter-version: 3.32.6
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
