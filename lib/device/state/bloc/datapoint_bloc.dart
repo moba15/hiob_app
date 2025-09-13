@@ -25,6 +25,11 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
         dataPoint.valueStreamController.stream.listen((event) {
       add(DataPointValueUpdate(value: event));
     });*/
+    add(
+      DataPointValueUpdate(
+        value: Manager().deviceManager.getCurrentValue(objectId),
+      ),
+    );
   }
 
   @override
