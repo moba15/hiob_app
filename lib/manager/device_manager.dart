@@ -146,17 +146,11 @@ class DeviceManager {
     return currentValues[dataPointID] as T?;
   }
 
-  void subscribeToDataPointsIoB(ConnectionManager connectionManager) {
+  void subscribeToDataPointsIoB(ConnectionManager connectionManager) async {
     if (connectionManager.stateUpdateClientStub != null) {
       List<String> dataPoints = Manager().screenManager
-          .getgetDependentDataPoints();
-      for (Device device in devicesList) {
-        if (device is IoBrokerDevice) {
-          for (DataPoint dataPoint in device.dataPoints ?? []) {
-            dataPoints.add(dataPoint.id);
-          }
-        }
-      }
+          .getDependentDataPoints();
+      for (var d in dataPoints) {}
       manager.talker.debug(
         "DeviceManager | subscribe to ${dataPoints.length} datapoints",
       );
@@ -175,7 +169,7 @@ class DeviceManager {
               );
               Manager().talker.verbose(
                 "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map((e) {
-                  return "${e.stateId}: [${e.boolValue}, ${e.doubleValue}, ${e.stringValue}]";
+                  return "${e.stateId}: [${e.boolValue}, ${e.doubleValue},  ${e.stringValue}]";
                 })}",
               );
 
@@ -185,6 +179,10 @@ class DeviceManager {
                 );
                 if (d != null) {
                   valueChange(d, update.stringValue);
+                } else {
+                  Manager().talker.error(
+                    "DeviceManager | stateSubscriptionStream | Datapoint ${update.stateId} not found",
+                  );
                 }
               }
             },
@@ -350,11 +348,6 @@ class DeviceManager {
           .map((e) => e.stateId)
           .toSet();
       Set<String> toDelete = localId.difference(serverIds);
-
-      await appDatabase.statesTable.deleteAll();
-      Manager().talker.debug(
-        "DeviceManager | updateStates cleared statesTable",
-      );
       Manager().talker.debug(
         "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects",
       );

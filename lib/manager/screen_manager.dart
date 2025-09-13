@@ -217,15 +217,26 @@ class ScreenManager {
     screenStreamController.add(screens);
   }
 
-  List<String> getgetDependentDataPoints() {
+  List<String> getDependentDataPoints() {
     List<String> dataPoints = [];
     for (Screen s in screens) {
-      List<CustomWidgetWrapper> customWidgtes = s.widgetTemplates
-          .whereType<CustomWidgetWrapper>()
+      List<CustomWidget> customWidgtes = s.widgetTemplates
+          .whereType<CustomWidget>()
           .map((t) => t)
           .toList();
-      for (CustomWidgetWrapper c in customWidgtes) {
-        if (c is CustomWidget) {
+      for (CustomWidget c in customWidgtes) {
+        dataPoints.addAll(c.dependentDataPoints);
+      }
+      List<CustomGroupWidget> customGroupWidget = s.widgetTemplates
+          .whereType<CustomGroupWidget>()
+          .map((t) => t)
+          .toList();
+      for (CustomGroupWidget group in customGroupWidget) {
+        List<CustomWidget> customWidgtes = group.templates
+            .whereType<CustomWidget>()
+            .map((t) => t)
+            .toList();
+        for (CustomWidget c in customWidgtes) {
           dataPoints.addAll(c.dependentDataPoints);
         }
       }
