@@ -232,15 +232,29 @@ class ScreenManager {
           .map((t) => t)
           .toList();
       for (CustomGroupWidget group in customGroupWidget) {
-        List<CustomWidget> customWidgtes = group.templates
-            .whereType<CustomWidget>()
-            .map((t) => t)
-            .toList();
-        for (CustomWidget c in customWidgtes) {
-          dataPoints.addAll(c.dependentDataPoints);
-        }
+        getDependentDataPointsOfGroup(group, dataPoints);
       }
     }
     return dataPoints;
+  }
+
+  void getDependentDataPointsOfGroup(
+    CustomGroupWidget group,
+    List<String> dataPoints,
+  ) {
+    List<CustomWidget> customWidgtes = group.templates
+        .whereType<CustomWidget>()
+        .map((t) => t)
+        .toList();
+    for (CustomWidget c in customWidgtes) {
+      dataPoints.addAll(c.dependentDataPoints);
+    }
+    List<CustomGroupWidget> customGroupWidget = group.templates
+        .whereType<CustomGroupWidget>()
+        .map((t) => t)
+        .toList();
+    for (CustomGroupWidget newGroup in customGroupWidget) {
+      getDependentDataPointsOfGroup(newGroup, dataPoints);
+    }
   }
 }
