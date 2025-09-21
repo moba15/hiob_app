@@ -308,10 +308,9 @@ class DeviceManager {
   void updateObjects(ConnectionManager connectionManager) async {
     if (connectionManager.stateUpdateClientStub != null) {
       Manager().talker.debug("DeviceManager | updateStates");
-      //TODO Possible filter
       AllObjectsResults allObjectsResults = await connectionManager
           .stateUpdateClientStub!
-          .getAllObjects(AllObjectRequest())
+          .getAllObjects(AllObjectRequest(filterPatterns: []))
           .onError((error, stackTrace) {
             Manager().talker.error(
               "DeviceManager | updateStates $error",

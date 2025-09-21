@@ -90,11 +90,13 @@ class _DeviceInfo extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: TextFormField(
-                  enabled: false,
                   initialValue: Manager.instance.generalManager.deviceName,
                   decoration: InputDecoration(
                     labelText: getAppLocalizations(context).device_name,
                   ),
+                  onChanged: (name) {
+                    Manager().generalManager.updateDeviceName(name);
+                  },
                 ),
               ),
               Container(margin: const EdgeInsets.only(left: 10, right: 5)),

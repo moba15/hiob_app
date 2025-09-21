@@ -5,6 +5,13 @@ Please note this [repository](https://github.com/moba15/ioBroker.hiob) and relea
 ## Download
 [![image](batches/playstore/en.svg)](https://play.google.com/store/apps/details?id=de.bachmaier.smart_home)
 
+## 0.1.000-alpha.3
+- Added first gRPC support
+- Added support for client side states database
+- And many more optimizations
+- IMPORTANT This is only an alpha version, it should only be used for testing and feedback. Many features are not implemented yet
+- Name of device can be changed
+
 ## 0.1.000-alpha.2
 - Added first gRPC support
 - Added support for client side states database
