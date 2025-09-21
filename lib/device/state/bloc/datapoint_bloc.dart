@@ -15,11 +15,12 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   DataPointBloc(this.objectId) : super(DataPointInitial(value: null)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
-    Manager().deviceManager.objectValueStreams.stream.listen((event) {
-      if (event.first == objectId) {
-        add(DataPointValueUpdate(value: event.second));
-      }
-    });
+    _deviceValueSubscription = Manager().deviceManager.objectValueStreams.stream
+        .listen((event) {
+          if (event.first == objectId) {
+            add(DataPointValueUpdate(value: event.second));
+          }
+        });
     //TODO
     /* _deviceValueSubscription =
         dataPoint.valueStreamController.stream.listen((event) {

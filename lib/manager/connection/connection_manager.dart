@@ -251,21 +251,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void readPackage(String msg) {
     Map<String, dynamic> rawMap = jsonDecode(msg);
-    if (ioBrokerManager.secureBox) {
-      rawMap = decryptAes(
-        rawMap: rawMap,
-        secureKey: ioBrokerManager.secureKey,
-        connectionStatusStreamController: connectionStatusStreamController,
-        onError: () {
-          generalManager.dialogStreamController.sink.add(
-            (p0) => const AlertDialog(
-              title: Text("Error"),
-              content: Text("Parse Error - Please check the AES Key!"),
-            ),
-          );
-        },
-      );
-    }
+
     //print(rawMap["content"]);
     DataPackageType packageType = DataPackageType.values.firstWhere(
       (element) => element.name == rawMap["type"],
@@ -364,11 +350,7 @@ class ConnectionManager with WidgetsBindingObserver {
   }
 
   void stateChangedPackage({required String objectID, required dynamic value}) {
-    List<DataPoint>? iobDataPoints = deviceManager
-        .getIoBrokerDataPointsByObjectID(objectID);
-    for (DataPoint dataPoint in iobDataPoints ?? []) {
-      deviceManager.valueChange(dataPoint, value);
-    }
+    throw UnsupportedError("Not supported anymore");
   }
 
   void _onAnswerSubscribeToDataPoints(List<dynamic>? dataValues) {
@@ -532,19 +514,7 @@ class ConnectionManager with WidgetsBindingObserver {
     }
     String pass = dataPackage.type.name;
     dynamic sendContent = dataPackage.content;
-    if (ioBrokerManager.secureBox) {
-      if (ioBrokerManager.secureKey.isNotEmpty) {
-        if (dataPackage.type.name != "requestLogin") {
-          pass = ioBrokerManager.secureKey + pass;
-        } else {
-          pass = "tH8Lm-$pass";
-        }
-        sendContent = encryptAESCryptoJS(jsonEncode(dataPackage.content), pass);
-      } else {
-        connectionStatusStreamController.add(ConnectionStatus.emptyAES);
-        return;
-      }
-    }
+
     _webSocket?.sink.add(
       jsonEncode({"type": dataPackage.type.name, "content": sendContent}),
     );

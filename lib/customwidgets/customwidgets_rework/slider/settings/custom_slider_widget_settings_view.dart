@@ -89,7 +89,10 @@ class _CustomTableWidgetSettingsViewState
             ),
           ),
           InputFieldContainer.inputContainer(
-            child: StateSearchBar(onSelected: onSelect),
+            child: StateSearchBar(
+              selectedObject: widget.customSliderWidget.dataPoint,
+              onSelected: onSelect,
+            ),
           ),
           InputFieldContainer.inputContainer(
             child: Row(

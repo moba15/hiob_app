@@ -90,70 +90,10 @@ class GraphLine {
     List<GraphAxis> xAxes,
     List<GraphAxis> yAxes,
   ) {
-    DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
-    if (!GraphLineType.values.any(
-      (element) => element.toString() == json["type"],
-    )) {
-      json["type"] = GraphLineType.normal.toString();
-    }
-    String? yAxisId = json["yAxis"];
-    String? xAxisId = json["xAxis"];
-
-    GraphAxis? xAxis;
-    if (xAxisId != null && xAxes.any((element) => element.id == xAxisId)) {
-      xAxis = xAxes.firstWhere((element) => element.id == xAxisId);
-    }
-
-    GraphAxis? yAxis;
-    if (yAxisId != null && yAxes.any((element) => element.id == yAxisId)) {
-      yAxis = yAxes.firstWhere((element) => element.id == yAxisId);
-    }
-    return GraphLine(
-      minInterval: json["minInterval"],
-      name: json["name"],
-      type: GraphLineType.values.firstWhere(
-        (element) => element.toString() == json["type"],
-      ),
-      color: json["color"],
-      data: json["data"],
-      dataPoint: dataPoint,
-      background: json["background"],
-      backgroundOpacity: json["backgroundOpacity"],
-      yAxisId: json["yAxis"],
-      xAxis: xAxis,
-      yAxis: yAxis,
-      xAxisId: json["xAxis"],
-      showDataDots: json["showDataDots"],
-    );
-  }
-
-  Map<String, DateTime> getStartEnd(GraphWidget graphWidget) {
-    if (graphWidget.xAxes == null || graphWidget.xAxes!.isEmpty) {
-      return {};
-    }
-
-    GraphAxis xAxis =
-        graphWidget.xAxes!.first; //TODO: Does not find anything!!!!!!
-    if (graphWidget.xAxes!.any((element) => element.id == xAxisId)) {
-      xAxis = graphWidget.xAxes!.firstWhere((element) => element.id == xAxisId);
-    }
-    this.xAxis = xAxis;
-
-    return xAxis.getStartEnd();
+    throw UnsupportedError("Not supported anymore");
   }
 
   void subHistory(GraphWidget graphWidget) {
-    if (dataPoint != null) {
-      Map startEndMap = getStartEnd(graphWidget);
-      DateTime start = startEndMap["start"];
-      DateTime end = startEndMap["end"];
-      Manager.instance.historyManager.subscribeToHistorySmart(
-        dataPoint!,
-        start.millisecondsSinceEpoch,
-        end.millisecondsSinceEpoch,
-        minInterval ?? 0,
-      );
-    }
+    throw UnsupportedError("Not supported anymore");
   }
 }

@@ -25,12 +25,7 @@ class MultiSelectionTriggerAction extends TriggerAction {
   }
 
   factory MultiSelectionTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
-    return MultiSelectionTriggerAction(
-      dataPoint: dataPoint,
-      selections: Map.from(jsonDecode(json["selections"])),
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override

@@ -45,17 +45,7 @@ class CustomSimpleValueWidget extends CustomWidgetDeprecated {
   };
 
   factory CustomSimpleValueWidget.fromJson(Map<String, dynamic> json) {
-    Device? device = Manager.instance.deviceManager.getDevice(
-      json["device"] ?? "",
-    );
-    return CustomSimpleValueWidget(
-      name: json["name"],
-      round: json["round"],
-      device: device,
-      dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
-      value: json["value"],
-      unit: json["unit"],
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override

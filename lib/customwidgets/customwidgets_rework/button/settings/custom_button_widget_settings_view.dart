@@ -78,7 +78,10 @@ class _CustomButtonWidgetSettingsViewState
             ),
           ),
           InputFieldContainer.inputContainer(
-            child: StateSearchBar(onSelected: onSelect),
+            child: StateSearchBar(
+              selectedObject: widget.customButtonWidget.dataPoint,
+              onSelected: onSelect,
+            ),
           ),
           InputFieldContainer.inputContainer(
             child: TextField(

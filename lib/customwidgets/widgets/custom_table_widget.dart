@@ -65,8 +65,6 @@ class CustomTableWidget extends CustomWidgetDeprecated {
       initialSortColumn: json["initialSortColumn"],
       initialSortEnabled: json["initialSortEnabled"],
       elementsPerPage: json["elementsPerPage"],
-      dataPoint: Manager.instance.deviceManager
-          .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? ""),
       columns: Map<String, String>.from(json["columns"]),
     );
   }

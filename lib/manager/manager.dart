@@ -73,7 +73,7 @@ class Manager {
   Manager._internal({required this.versionNumber, required this.buildNumber});
 
   int loadingState = 0;
-  int maxLoadingState = 6;
+  int maxLoadingState = 5;
   StreamController<ManagerStatus> managerStatusStreamController =
       StreamController.broadcast();
   var random = Random();
@@ -82,7 +82,7 @@ class Manager {
     final pref = await SharedPreferences.getInstance();
 
     fileManager = FileManager(pref: pref, manager: this);
-    deviceManager = DeviceManager(fileManager, devicesList: [], manager: this);
+    deviceManager = DeviceManager(fileManager, manager: this);
 
     ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
 
@@ -113,6 +113,8 @@ class Manager {
       fileManager: fileManager,
     )..loadSettings();
 
+    deviceManager.loadFilters();
+
     themeManager = ThemeManager(manager: this)..loadTheme();
 
     subscription1 = customWidgetManager.templatesStreamController.stream.listen(
@@ -126,7 +128,6 @@ class Manager {
     ) {
       onLoaded("deviceManager");
     });
-    deviceManager.loadDevices();
 
     subscription3 = screenManager.screenStreamController.stream.listen((event) {
       onLoaded("screenManager");

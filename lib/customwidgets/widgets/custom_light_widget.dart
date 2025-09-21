@@ -38,30 +38,7 @@ class CustomLightWidget extends CustomWidgetDeprecated {
       CustomLightWidgetSettingWidget(customLightWidget: this);
 
   factory CustomLightWidget.fromJson(Map<String, dynamic> json) {
-    DataPoint? onDataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectIDSync(json["onDataPointID"] ?? "");
-    DataPoint? briDataPoint = json["briDataPointID"] == null
-        ? null
-        : Manager.instance.deviceManager.getIoBrokerDataPointByObjectIDSync(
-            json["briDataPointID"],
-          );
-    DataPoint? reachableDataPoint = json["reachableDataPointID"] == null
-        ? null
-        : Manager.instance.deviceManager.getIoBrokerDataPointByObjectIDSync(
-            json["reachableDataPointID"],
-          );
-
-    return CustomLightWidget(
-      name: json["name"],
-      briMax: json["briMax"],
-      briMin: json["briMin"],
-      onDataPoint: onDataPoint,
-      reachableDataPoint: reachableDataPoint,
-      briDataPoint: briDataPoint,
-      briSteps: json["briSteps"],
-      value: json["value"],
-      briDisplay: json["briDisplay"],
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override

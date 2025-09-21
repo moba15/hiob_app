@@ -75,26 +75,7 @@ class CustomColorPaletteWidget extends CustomWidgetDeprecated {
   Widget get widget => CustomColorPaletteWidgetView(colorPaletteWidget: this);
 
   factory CustomColorPaletteWidget.fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic> pickersEnabledRaw = json["pickersEnabled"] ?? {};
-
-    return CustomColorPaletteWidget(
-      name: json["name"],
-      value: json["value"],
-      prefix: json["prefix"] ?? "0x",
-      alpha: json["alpha"] ?? false,
-      shadesSelection: json["shadesSelection"] ?? true,
-      dataPoint: Manager.instance.deviceManager
-          .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? ""),
-      device: Manager.instance.deviceManager.getDevice(json["device"] ?? ""),
-      pickersEnabled: pickersEnabledRaw.map(
-        (key, value) => MapEntry(
-          ColorPickerType.values.firstWhere(
-            (element) => element.toString() == key,
-          ),
-          value,
-        ),
-      ),
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override

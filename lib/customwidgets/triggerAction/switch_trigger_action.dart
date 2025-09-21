@@ -19,13 +19,7 @@ class SwitchTriggerAction extends TriggerAction {
   });
 
   factory SwitchTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
-    return SwitchTriggerAction(
-      dataPoint: dataPoint,
-      switchFalse: json["switchFalse"],
-      switchTrue: json["switchTrue"],
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override

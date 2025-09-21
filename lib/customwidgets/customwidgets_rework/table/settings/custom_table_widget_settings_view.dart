@@ -72,7 +72,10 @@ class _CustomTableWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-            child: StateSearchBar(onSelected: onSelect),
+            child: StateSearchBar(
+              selectedObject: widget.customTableWidget.dataPoint,
+              onSelected: onSelect,
+            ),
           ),
           InputFieldContainer.inputContainer(
             child: TextField(

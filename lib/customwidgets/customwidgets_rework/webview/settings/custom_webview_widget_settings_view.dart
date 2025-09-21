@@ -69,7 +69,10 @@ class _CustomWebViewWidgetSettingViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-            child: StateSearchBar(onSelected: onSelect),
+            child: StateSearchBar(
+              selectedObject: widget.customWebViewWidget.dataPoint,
+              onSelected: onSelect,
+            ),
           ),
           InputFieldContainer.inputContainer(
             child: TextField(

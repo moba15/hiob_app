@@ -43,17 +43,7 @@ class CustomSimpleSwitchWidget extends CustomWidgetDeprecated {
   };
 
   factory CustomSimpleSwitchWidget.fromJson(Map<String, dynamic> json) {
-    Device? device = Manager.instance.deviceManager.getDevice(
-      json["device"] ?? "",
-    );
-    //DataPoint? onDataPoint = Manager.instance?.deviceManager.getIoBrokerDataPointByObjectID(json["dataPoint"]);
-    return CustomSimpleSwitchWidget(
-      value: json["value"],
-      name: json["name"],
-      device: device,
-      dataPoint: device?.getDataPoint(id: json["dataPoint"] ?? ""),
-      buttonText: json["buttonText"],
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override

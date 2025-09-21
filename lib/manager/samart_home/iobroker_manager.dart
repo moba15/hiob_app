@@ -14,8 +14,6 @@ class IoBrokerManager {
   int port = 8090;
   String user = "user";
   String password = "password";
-  bool secureBox = false;
-  String secureKey = "";
   bool useSecondaryAddress = false;
   String knownNetwork = "";
   String secondaryAddress = "";
@@ -36,8 +34,6 @@ class IoBrokerManager {
       port = settings?["port"] ?? 8090;
       user = settings?["user"] ?? "user";
       password = settings?["password"] ?? "password";
-      secureBox = settings?["secureBox"] ?? false;
-      secureKey = settings?["secureKey"] ?? "";
       knownNetwork = settings?["knownNetwork"] ?? "";
       secondaryAddress = settings?["secondaryAddress"] ?? "";
       useSecondaryAddress = settings?["useSecondaryAddress"] ?? false;
@@ -52,16 +48,6 @@ class IoBrokerManager {
 
     statusStreamController.add(true);
     statusStreamController.close();
-  }
-
-  void changeSecurebox(bool secureBox) async {
-    this.secureBox = secureBox;
-    await _save();
-  }
-
-  void changeSecurekey(String secureKey) async {
-    this.secureKey = secureKey;
-    await _save();
   }
 
   void changeIp(String mainIp) async {
@@ -80,8 +66,6 @@ class IoBrokerManager {
       "port": port,
       "user": user,
       "password": password,
-      "secureBox": secureBox,
-      "secureKey": secureKey,
       "knownNetwork": knownNetwork,
       "secondaryAddress": secondaryAddress,
       "useSecondaryAddress": useSecondaryAddress,

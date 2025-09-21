@@ -56,24 +56,7 @@ class AdvancedCustomWidget extends CustomWidgetDeprecated {
   };
 
   factory AdvancedCustomWidget.fromJson(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectIDSync(
-          json["subTitleDataPoint"].toString(),
-        );
-    TriggerAction triggerAction = TriggerAction.fromJSON(
-      jsonDecode(json["bodyTriggerAction"] ?? (json["mainBody"] ?? "{}")),
-    );
-    return AdvancedCustomWidget(
-      name: json["name"],
-      subTitle: json["subTitle"],
-      subTitleDataPoint: dataPoint,
-      mainBody: triggerAction, //TODO:
-      value: json["value"],
-      bodyIconID: json["bodyIconID"],
-      customAlertDialogWidget: json["customAlertDialogWidget"] == null
-          ? CustomAlertDialogWidget(name: "Not Set")
-          : CustomAlertDialogWidget.fromJSON(json["customAlertDialogWidget"]),
-    );
+    throw UnsupportedError("Not supported anymore");
   }
   @override
   CustomWidgetSettingWidget get settingWidget {

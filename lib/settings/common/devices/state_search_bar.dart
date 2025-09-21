@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
@@ -9,8 +10,13 @@ import 'package:smart_home/utils/widgets/dropdown_search/dropdown_search_async.d
 import 'package:smart_home/utils/widgets/substring_highlight_widget.dart';
 
 class StateSearchBar extends StatefulWidget {
+  final String? selectedObject;
   final Function(IobrokerObject) onSelected;
-  const StateSearchBar({super.key, required this.onSelected});
+  const StateSearchBar({
+    super.key,
+    required this.selectedObject,
+    required this.onSelected,
+  });
 
   @override
   State<StateSearchBar> createState() => _StateSearchBarState();
@@ -28,6 +34,14 @@ class _StateSearchBarState extends State<StateSearchBar> {
     asyncSearchCubit = AsyncSearchCubit(
       getInitalValues: () => deviceManager.getAllIobrokerObjects(limit: 250),
     );
+
+    Manager().deviceManager
+        .getIoBrokerDataPointByObjectID(widget.selectedObject!)
+        .then((value) {
+          setState(() {
+            selectedObject = value;
+          });
+        });
     super.initState();
   }
 
@@ -116,46 +130,57 @@ class _SearchChipList extends StatefulWidget {
 }
 
 class __SearchChipListState extends State<_SearchChipList> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.start,
-      crossAxisAlignment: WrapCrossAlignment.start,
-      runAlignment: WrapAlignment.start,
-      spacing: 10.0,
-      runSpacing: 5,
-      children: [
-        for (MapEntry<String, bool> entry in widget.filters.entries)
-          if (entry.value)
-            FilterChip(
-              label: Text(entry.key),
-              selected: entry.value,
-              onSelected: (value) {
-                setState(() {
-                  widget.filters[entry.key] = value;
-                });
-                widget.filterUpdated();
-              },
-            ),
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
-        for (MapEntry<String, bool> entry in widget.filters.entries)
-          if (!entry.value)
-            FilterChip(
-              label: Text(entry.key),
-              selected: entry.value,
-              onSelected: (value) {
-                setState(() {
-                  widget.filters[entry.key] = value;
-                });
-                widget.filterUpdated();
-              },
-            ),
-      ],
+  @override
+  Widget build(BuildContext context) {
+    final sortedFilters = widget.filters.entries.toList()
+      ..sort((a, b) {
+        if (a.value == b.value) {
+          return a.key.compareTo(b.key);
+        }
+        return a.value ? -1 : 1;
+      });
+    return Listener(
+      onPointerSignal: (pointerSignal) {
+        if (pointerSignal is PointerScrollEvent) {
+          final newOffset =
+              _scrollController.offset + pointerSignal.scrollDelta.dy;
+          _scrollController.jumpTo(newOffset);
+        }
+      },
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: sortedFilters.map((entry) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: FilterChip(
+                label: Text(entry.key),
+                selected: entry.value,
+                onSelected: (value) {
+                  setState(() {
+                    widget.filters[entry.key] = value;
+                  });
+                  widget.filterUpdated();
+                },
+              ),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }

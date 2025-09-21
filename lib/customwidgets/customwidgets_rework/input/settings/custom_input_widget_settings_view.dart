@@ -65,7 +65,10 @@ class _CustomInputWidgetSettingsViewState
             ),
           ),
           InputFieldContainer.inputContainer(
-            child: StateSearchBar(onSelected: onSelect),
+            child: StateSearchBar(
+              selectedObject: widget.customInputWidget.dataPoint,
+              onSelected: onSelect,
+            ),
           ),
           InputFieldContainer.inputContainer(
             child: DropdownSearch<CustomInputSendMethod>(

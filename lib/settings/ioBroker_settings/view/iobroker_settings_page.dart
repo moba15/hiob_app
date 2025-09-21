@@ -187,50 +187,6 @@ class IoBrokerSettingsView extends StatelessWidget {
                   title: const Text("Use wss Connection"),
                 ),
                 CheckboxListTile(
-                  value: ioBrokerManager.secureBox,
-                  onChanged: (b) {
-                    setState(() {
-                      ioBrokerManager.changeSecurebox(b ?? true);
-                    });
-                  },
-                  title: const Text("Use AES encryption"),
-                ),
-                if (ioBrokerManager.secureBox)
-                  Container(
-                    margin: const EdgeInsets.only(left: 30.0, right: 20.0),
-                    child: TextFormField(
-                      initialValue: ioBrokerManager.secureKey,
-                      decoration: InputDecoration(
-                        labelText: "Key from ioBroker Datapoint",
-                        filled: true,
-                        prefixIcon: const Icon(
-                          Icons.lock,
-                          color: Color(0xfff28800),
-                        ),
-                        suffix: IconButton(
-                          padding: const EdgeInsets.all(0),
-                          iconSize: 20.0,
-                          icon: _isObscure
-                              ? const Icon(
-                                  Icons.visibility_off,
-                                  color: Colors.grey,
-                                )
-                              : const Icon(
-                                  Icons.visibility,
-                                  color: Colors.black,
-                                ),
-                          onPressed: () {
-                            setState(() {
-                              _isObscure = !_isObscure;
-                            });
-                          },
-                        ),
-                      ),
-                      obscureText: _isObscure,
-                      onChanged: (v) => ioBrokerManager.changeSecurekey(v),
-                    ),
-                  ),
-                CheckboxListTile(
                   value: ioBrokerManager.usePwd,
                   onChanged: (b) {
                     setState(() {
@@ -267,6 +223,7 @@ class IoBrokerSettingsView extends StatelessWidget {
           },
         ),
         _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager),
+        _IobrokerObjectFilter(),
       ],
     );
   }
@@ -338,6 +295,77 @@ class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
             enabled: widget.ioBrokerManager.useSecondaryAddress,
             onChanged: (v) => widget.ioBrokerManager.changeSecondaryAddress(v),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _IobrokerObjectFilter extends StatefulWidget {
+  const _IobrokerObjectFilter({super.key});
+
+  @override
+  State<_IobrokerObjectFilter> createState() => __IobrokerObjectFilterState();
+}
+
+class __IobrokerObjectFilterState extends State<_IobrokerObjectFilter> {
+  List<String> allAdapaters = [];
+  List<String> selectedFilters = [];
+  @override
+  void initState() {
+    super.initState();
+    Manager().deviceManager.getIobrokerAdapaters().then((value) {
+      setState(() {
+        allAdapaters = value;
+        selectedFilters.clear();
+        selectedFilters.addAll(Manager().deviceManager.preDefinedFilters);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      title: Text("Object filter"),
+      children: [
+        Wrap(
+          spacing: 5,
+          runSpacing: 10,
+          children: [
+            for (String s in selectedFilters)
+              FilterChip(
+                label: Text(s),
+
+                onSelected: (value) {
+                  setState(() {
+                    if (value) {
+                      selectedFilters.add(s);
+                    } else {
+                      selectedFilters.remove(s);
+                    }
+                  });
+                  Manager().deviceManager.updateFilters(selectedFilters);
+                },
+                selected: true,
+              ),
+            for (String s in allAdapaters)
+              if (!selectedFilters.contains(s))
+                FilterChip(
+                  label: Text(s),
+
+                  onSelected: (value) {
+                    setState(() {
+                      if (value) {
+                        selectedFilters.add(s);
+                      } else {
+                        selectedFilters.remove(s);
+                      }
+                    });
+                    Manager().deviceManager.updateFilters(selectedFilters);
+                  },
+                  selected: false,
+                ),
+          ],
         ),
       ],
     );

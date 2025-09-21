@@ -23,14 +23,7 @@ class NoneTriggerAction extends TriggerAction {
   });
 
   factory NoneTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
-    return NoneTriggerAction(
-      dataPoint: dataPoint,
-      displayRules: Map.from(jsonDecode(json["displayRules"]) ?? {}),
-      round: json["round"] ?? 2,
-      unit: json["unit"],
-    );
+    throw UnsupportedError("Not supported anymore");
   }
   @override
   bool isTypeAllowed(value) {

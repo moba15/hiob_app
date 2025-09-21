@@ -18,76 +18,75 @@ class DeviceManager {
   FileManager fileManager;
   AppDatabase appDatabase = AppDatabase(null);
   Manager manager;
-  List<Device> devicesList = [];
   StreamController deviceListStreamController = StreamController.broadcast();
   bool loaded = false;
   final String key = "devices";
   HashMap<String, dynamic> currentValues = HashMap<String, dynamic>();
   StreamController<Pair<String, dynamic>> objectValueStreams =
       StreamController.broadcast();
+  List<String> preDefinedFilters = [];
 
-  DeviceManager(
-    this.fileManager, {
-    required this.devicesList,
-    required this.manager,
-  });
+  DeviceManager(this.fileManager, {required this.manager}) {}
 
-  Future<List<Device>> loadDevices() async {
-    //TODO Load devices from ioBroker sever if possible
-    deviceListStreamController.add(devicesList);
-    return devicesList;
-  }
-
-  void loadPossibleDataPoints(Map<String, dynamic> data) {}
-
-  bool existsDevice(String id) {
-    return devicesList.indexWhere((element) => element.id == id) != -1;
-  }
-
-  Device? getDevice(String id) {
-    for (Device d in devicesList) {
-      if (d.id == id) {
-        return d;
+  void loadFilters() async {
+    var map = await fileManager.getMap(key);
+    Manager().talker.debug("XX ${preDefinedFilters.length}");
+    if (map != null && map.containsKey("filters")) {
+      preDefinedFilters.clear();
+      for (var x in map["filters"]) {
+        preDefinedFilters.add(x);
       }
-    }
-    return null;
+      // ignore: prefer_interpolation_to_compose_strings
+    } else {}
   }
 
-  IoBrokerDevice? getIoBrokerDeviceByObjectID(String objectID) {
-    for (Device d in devicesList) {
-      if (d is IoBrokerDevice) {
-        IoBrokerDevice ioBd = d;
-        if (ioBd.objectID == objectID) {
-          return ioBd;
-        }
-      }
-    }
-    return null;
+  void updateFilters(List<String> filters) {
+    preDefinedFilters.clear();
+    preDefinedFilters.addAll(filters);
+    updateData();
   }
 
-  DataPoint? getIoBrokerDataPointByObjectIDSync(String objectID) {
-    Manager().talker.error("Should not be used");
-    return null;
+  void updateData() {
+    Map<String, dynamic> map = {"filters": preDefinedFilters};
+    fileManager.writeJSON(key, map).then((value) async {
+      Manager().talker.debug("fileManager.writeJSON $value");
+      var map = await fileManager.getMap(key);
+
+      Manager().talker.debug(
+        "fileManager.writeJSON $value ${map!.containsKey("filters")}",
+      );
+    });
   }
 
-  Future<DataPoint?> getIoBrokerDataPointByObjectID(String objectID) async {
+  Future<IobrokerObject?> getIoBrokerDataPointByObjectID(
+    String objectID,
+  ) async {
     String query =
         "SELECT * from ${appDatabase.statesTable.actualTableName} where id = ? LIMIT 1";
-    List<QueryRow> resultRaw = await appDatabase
+    List<QueryRow> result = (await appDatabase
         .customSelect(query, variables: [Variable<String>(objectID)])
-        .get();
-    if (resultRaw.isNotEmpty) {
-      return DataPoint(
-        id: resultRaw[0].data["id"],
-        name: resultRaw[0].data["state_name"],
-        role: resultRaw[0].data["role"] ?? "No Role",
+        .get());
+    if (result.isEmpty) {
+      Manager().talker.error(
+        "DeviceManager | getIoBrokerDataPointByObjectID | $objectID not found",
       );
+      return null;
     }
+    QueryRow e = result[0];
 
-    Manager().talker.error(
-      "DeviceManager | getIoBrokerDataPointByObjectID | $objectID not found",
+    return IobrokerObject(
+      id: e.data["id"],
+      name: e.data["state_name"],
+      parent: e.data["parent"],
+      desc: e.data["state_desc"],
+      stateType: e.data["stateType"],
+      read: e.data["read"] == 1 ? true : false,
+      write: e.data["write"] == 1 ? true : false,
+      role: e.data["role"] ?? "No Role",
+      max: e.data["max"],
+      min: e.data["min"],
+      step: e.data["step"],
     );
-    return null;
   }
 
   Future<List<IobrokerObject>> getAllIobrokerObjects({
@@ -116,29 +115,14 @@ class DeviceManager {
     return result;
   }
 
-  List<DataPoint>? getIoBrokerDataPointsByObjectID(String objectID) {
-    List<DataPoint> dataPoints = [];
-    for (Device d in devicesList) {
-      for (DataPoint dataPoint in d.dataPoints ?? []) {
-        if (dataPoint.id == objectID) {
-          dataPoints.add(dataPoint);
-        }
-      }
-    }
-    return dataPoints;
-  }
-
-  void valueChange(DataPoint? dataPoint, dynamic value) {
-    if (dataPoint == null) {
+  void valueChange(IobrokerObject? iobObject, dynamic value) {
+    if (iobObject == null) {
       return;
     }
-    currentValues[dataPoint.id] = value;
+    currentValues[iobObject.id] = value;
     //TODO valueChange
     objectValueStreams.sink.add(
-      Pair<String, dynamic>(first: dataPoint.id, second: value),
-    );
-    Manager().talker.verbose(
-      "DeviceManager | valueChange | ${dataPoint.id} to $value",
+      Pair<String, dynamic>(first: iobObject.id, second: value),
     );
   }
 
@@ -174,7 +158,7 @@ class DeviceManager {
               );
 
               for (StateValueUpdate update in value.stateUpdates) {
-                DataPoint? d = await getIoBrokerDataPointByObjectID(
+                IobrokerObject? d = await getIoBrokerDataPointByObjectID(
                   update.stateId,
                 );
                 if (d != null) {

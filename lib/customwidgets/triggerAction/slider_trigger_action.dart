@@ -21,14 +21,7 @@ class SliderTriggerAction extends TriggerAction {
   });
 
   factory SliderTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectIDSync(json["dataPoint"] ?? "");
-    return SliderTriggerAction(
-      dataPoint: dataPoint,
-      min: json["min"],
-      max: json["max"],
-      steps: json["steps"],
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override
