@@ -222,8 +222,6 @@ class IoBrokerSettingsView extends StatelessWidget {
             );
           },
         ),
-        _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager),
-        _IobrokerObjectFilter(),
       ],
     );
   }

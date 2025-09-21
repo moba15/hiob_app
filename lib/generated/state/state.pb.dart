@@ -71,7 +71,15 @@ class AllObjectsResults extends $pb.GeneratedMessage {
 }
 
 class AllObjectRequest extends $pb.GeneratedMessage {
-  factory AllObjectRequest() => create();
+  factory AllObjectRequest({
+    $core.Iterable<$core.String>? filterPatterns,
+  }) {
+    final $result = create();
+    if (filterPatterns != null) {
+      $result.filterPatterns.addAll(filterPatterns);
+    }
+    return $result;
+  }
   AllObjectRequest._() : super();
   factory AllObjectRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
@@ -83,6 +91,8 @@ class AllObjectRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'AllObjectRequest',
       createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'filterPatterns',
+        protoName: 'filterPatterns')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -107,6 +117,9 @@ class AllObjectRequest extends $pb.GeneratedMessage {
   static AllObjectRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<AllObjectRequest>(create);
   static AllObjectRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get filterPatterns => $_getList(0);
 }
 
 class StatesValueUpdate extends $pb.GeneratedMessage {

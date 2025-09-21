@@ -28,11 +28,15 @@ final $typed_data.Uint8List allObjectsResultsDescriptor = $convert.base64Decode(
 @$core.Deprecated('Use allObjectRequestDescriptor instead')
 const AllObjectRequest$json = {
   '1': 'AllObjectRequest',
+  '2': [
+    {'1': 'filterPatterns', '3': 1, '4': 3, '5': 9, '10': 'filterPatterns'},
+  ],
 };
 
 /// Descriptor for `AllObjectRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List allObjectRequestDescriptor =
-    $convert.base64Decode('ChBBbGxPYmplY3RSZXF1ZXN0');
+final $typed_data.Uint8List allObjectRequestDescriptor = $convert.base64Decode(
+    'ChBBbGxPYmplY3RSZXF1ZXN0EiYKDmZpbHRlclBhdHRlcm5zGAEgAygJUg5maWx0ZXJQYXR0ZX'
+    'Jucw==');
 
 @$core.Deprecated('Use statesValueUpdateDescriptor instead')
 const StatesValueUpdate$json = {
