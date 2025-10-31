@@ -9,9 +9,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/view/custom_colorpicker_widget_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
-
 part 'custom_colorpicker_widget.freezed.dart';
 part 'custom_colorpicker_widget.g.dart';
 
@@ -55,7 +52,7 @@ class CustomColorPickerWidget
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? label,
     @Default("0x") String prefix,
     @Default(false) alpha,
@@ -71,7 +68,7 @@ class CustomColorPickerWidget
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

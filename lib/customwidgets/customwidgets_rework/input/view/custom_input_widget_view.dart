@@ -6,8 +6,7 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomInputWidgetView extends StatefulWidget {
   final CustomInputWidget customInputWidget;
-  const CustomInputWidgetView({Key? key, required this.customInputWidget})
-    : super(key: key);
+  const CustomInputWidgetView({super.key, required this.customInputWidget});
 
   @override
   State<CustomInputWidgetView> createState() => _CustomInputWidgetViewState();

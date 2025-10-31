@@ -9,9 +9,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/the
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/view/custom_multiselection_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_dropdown_button/cutsom_dropdown_button.dart';
 
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
-
 part 'custom_multiselection_widget.freezed.dart';
 part 'custom_multiselection_widget.g.dart';
 
@@ -55,7 +52,7 @@ class CustomMultiselectionWidget
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? label,
     required Map<String, String> selections,
     @Default(DropdownMenuMode.dropdown) DropdownMenuMode dropdownMenuMode,
@@ -71,7 +68,7 @@ class CustomMultiselectionWidget
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

@@ -9,7 +9,7 @@ import 'package:smart_home/utils/theme.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
 class CustomThemeSettingsPage extends StatelessWidget {
-  const CustomThemeSettingsPage({Key? key}) : super(key: key);
+  const CustomThemeSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CustomThemeSettingsPage extends StatelessWidget {
 
 class _CustomThemeSettingsBody extends StatelessWidget {
   final ThemeManager themeManager = Manager().themeManager;
-  _CustomThemeSettingsBody({Key? key}) : super(key: key);
+  _CustomThemeSettingsBody();
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +154,7 @@ class _CustomThemeSettingsBody extends StatelessWidget {
 }
 
 class _ColorPickerListTile extends StatefulWidget {
-  const _ColorPickerListTile({Key? key}) : super(key: key);
+  const _ColorPickerListTile();
 
   @override
   State<_ColorPickerListTile> createState() => _ColorPickerListTileState();

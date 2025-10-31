@@ -3,7 +3,6 @@ import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_fo
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
-import 'package:smart_home/device/state/state.dart';
 
 abstract class CustomWidget extends CustomWidgetWrapper {
   @override
@@ -35,7 +34,7 @@ abstract class CustomWidget extends CustomWidgetWrapper {
   @override
   Widget get widget;
 
-  List<DataPoint> get dependentDataPoints;
+  List<String> get dependentDataPoints;
 
   Map<String, dynamic> toJson();
 

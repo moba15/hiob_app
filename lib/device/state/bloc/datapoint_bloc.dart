@@ -2,12 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:smart_home/device/state/datapointTypes/datapoint_types.dart';
-import 'package:smart_home/device/state/state.dart';
-import 'package:smart_home/device/iobroker_device.dart';
 import 'package:smart_home/manager/manager.dart';
-
-import '../../../dataPackages/data_package.dart';
 
 part 'datapoint_event.dart';
 
@@ -15,17 +10,27 @@ part 'datapoint_state.dart';
 
 class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   StreamSubscription<dynamic>? _deviceValueSubscription;
-  DataPoint dataPoint;
+  String objectId;
 
-  DataPointBloc(this.dataPoint)
-    : super(DataPointInitial(value: dataPoint.value)) {
+  DataPointBloc(this.objectId) : super(DataPointInitial(value: null)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
-    _deviceValueSubscription = dataPoint.valueStreamController.stream.listen((
-      event,
-    ) {
-      add(DataPointValueUpdate(value: event, oldValue: dataPoint.olderValue));
-    });
+    _deviceValueSubscription = Manager().deviceManager.objectValueStreams.stream
+        .listen((event) {
+          if (event.first == objectId) {
+            add(DataPointValueUpdate(value: event.second));
+          }
+        });
+    //TODO
+    /* _deviceValueSubscription =
+        dataPoint.valueStreamController.stream.listen((event) {
+      add(DataPointValueUpdate(value: event));
+    });*/
+    add(
+      DataPointValueUpdate(
+        value: Manager().deviceManager.getCurrentValue(objectId),
+      ),
+    );
   }
 
   @override
@@ -38,8 +43,8 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     DataPointValueUpdate event,
     Emitter<DataPointState> emit,
   ) {
-    emit(DataPointState(value: event.value, oldValue: event.oldValue));
-    dataPoint.value = event.value;
+    emit(DataPointState(value: event.value));
+    //TODO
   }
 
   void _onValueUpdateRequest(
@@ -54,13 +59,13 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
       value = parsedValue;
     }
 
-    emit(DataPointState(value: value, oldValue: event.oldValue));
-    dataPoint.value = value;
+    emit(DataPointState(value: value));
+    //TODO
+    /*dataPoint.value = value;
     dataPoint.device?.lastUpdated = DateTime.now();
     if (dataPoint.device is IoBrokerDevice) {
       Manager.instance.connectionManager.sendMsg(
-        StateChangeRequestIobPackage(stateID: dataPoint.id, value: value),
-      );
-    }
+          StateChangeRequestIobPackage(stateID: dataPoint.id, value: value));
+    }*/
   }
 }

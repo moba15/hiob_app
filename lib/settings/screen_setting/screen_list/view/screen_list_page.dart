@@ -10,7 +10,7 @@ import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../utils/list_status.dart';
 
 class ScreenListPage extends StatelessWidget {
-  const ScreenListPage({Key? key}) : super(key: key);
+  const ScreenListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class ScreenListPage extends StatelessWidget {
 }
 
 class ScreenListView extends StatelessWidget {
-  const ScreenListView({Key? key}) : super(key: key);
+  const ScreenListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class ScreenListView extends StatelessWidget {
 class ScreensView extends StatelessWidget {
   final List<Screen> screens;
 
-  const ScreensView({Key? key, required this.screens}) : super(key: key);
+  const ScreensView({super.key, required this.screens});
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +117,7 @@ class ScreensView extends StatelessWidget {
 class ScreenAddPage extends StatefulWidget {
   final ScreenManager screenManager;
 
-  const ScreenAddPage({Key? key, required this.screenManager})
-    : super(key: key);
+  const ScreenAddPage({super.key, required this.screenManager});
 
   @override
   State<ScreenAddPage> createState() => _ScreenAddPageState();

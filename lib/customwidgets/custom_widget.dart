@@ -311,10 +311,10 @@ abstract class CustomWidgetSettingWidget {
 
 abstract class CustomWidgetSettingStatelessWidget extends StatelessWidget
     implements CustomWidgetSettingWidget {
-  const CustomWidgetSettingStatelessWidget({Key? key}) : super(key: key);
+  const CustomWidgetSettingStatelessWidget({super.key});
 }
 
 abstract class CustomWidgetSettingStatefulWidget extends StatefulWidget
     implements CustomWidgetSettingWidget {
-  const CustomWidgetSettingStatefulWidget({Key? key}) : super(key: key);
+  const CustomWidgetSettingStatefulWidget({super.key});
 }

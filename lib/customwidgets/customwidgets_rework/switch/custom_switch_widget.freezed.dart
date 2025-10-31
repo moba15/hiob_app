@@ -28,10 +28,8 @@ mixin _$CustomSwitchWidget {
   set id(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  DataPoint? get dataPoint => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
   String get sendIfOn => throw _privateConstructorUsedError;
@@ -68,7 +66,7 @@ abstract class $CustomSwitchWidgetCopyWith<$Res> {
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? label,
     String sendIfOn,
     String sendIfOff,
@@ -121,7 +119,7 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res, $Val extends CustomSwitchWidget>
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
-                      as DataPoint?,
+                      as String?,
             label: freezed == label
                 ? _value.label
                 : label // ignore: cast_nullable_to_non_nullable
@@ -175,7 +173,7 @@ abstract class _$$CustomSwitchWidgetImplCopyWith<$Res>
     CustomWidgetTypeDeprecated type,
     String id,
     String name,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? label,
     String sendIfOn,
     String sendIfOff,
@@ -228,7 +226,7 @@ class __$$CustomSwitchWidgetImplCopyWithImpl<$Res>
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
-                  as DataPoint?,
+                  as String?,
         label: freezed == label
             ? _value.label
             : label // ignore: cast_nullable_to_non_nullable
@@ -261,7 +259,7 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
     this.type = CustomWidgetTypeDeprecated.switchWidget,
     required this.id,
     required this.name,
-    @DataPointIdConverter() required this.dataPoint,
+    required this.dataPoint,
     this.label,
     this.sendIfOn = "true",
     this.sendIfOff = "false",
@@ -280,8 +278,7 @@ class _$CustomSwitchWidgetImpl extends _CustomSwitchWidget {
   @override
   String name;
   @override
-  @DataPointIdConverter()
-  DataPoint? dataPoint;
+  String? dataPoint;
   @override
   String? label;
   @override
@@ -324,7 +321,7 @@ abstract class _CustomSwitchWidget extends CustomSwitchWidget
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? label,
     String sendIfOn,
     String sendIfOff,
@@ -346,10 +343,8 @@ abstract class _CustomSwitchWidget extends CustomSwitchWidget
   String get name;
   set name(String value);
   @override
-  @DataPointIdConverter()
-  DataPoint? get dataPoint;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value);
+  String? get dataPoint;
+  set dataPoint(String? value);
   @override
   String? get label;
   set label(String? value);

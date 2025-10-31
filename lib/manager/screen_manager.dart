@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
@@ -214,5 +215,46 @@ class ScreenManager {
 
   void templateEdited(CustomWidgetWrapper template) {
     screenStreamController.add(screens);
+  }
+
+  List<String> getDependentDataPoints() {
+    List<String> dataPoints = [];
+    for (Screen s in screens) {
+      List<CustomWidget> customWidgtes = s.widgetTemplates
+          .whereType<CustomWidget>()
+          .map((t) => t)
+          .toList();
+      for (CustomWidget c in customWidgtes) {
+        dataPoints.addAll(c.dependentDataPoints);
+      }
+      List<CustomGroupWidget> customGroupWidget = s.widgetTemplates
+          .whereType<CustomGroupWidget>()
+          .map((t) => t)
+          .toList();
+      for (CustomGroupWidget group in customGroupWidget) {
+        getDependentDataPointsOfGroup(group, dataPoints);
+      }
+    }
+    return dataPoints;
+  }
+
+  void getDependentDataPointsOfGroup(
+    CustomGroupWidget group,
+    List<String> dataPoints,
+  ) {
+    List<CustomWidget> customWidgtes = group.templates
+        .whereType<CustomWidget>()
+        .map((t) => t)
+        .toList();
+    for (CustomWidget c in customWidgtes) {
+      dataPoints.addAll(c.dependentDataPoints);
+    }
+    List<CustomGroupWidget> customGroupWidget = group.templates
+        .whereType<CustomGroupWidget>()
+        .map((t) => t)
+        .toList();
+    for (CustomGroupWidget newGroup in customGroupWidget) {
+      getDependentDataPointsOfGroup(newGroup, dataPoints);
+    }
   }
 }

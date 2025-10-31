@@ -7,8 +7,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custo
 import 'package:smart_home/customwidgets/customwidgets_rework/button/view/custom_button_widget_view.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
 
 part 'custom_button_widget.freezed.dart';
 part 'custom_button_widget.g.dart';
@@ -53,12 +51,12 @@ class CustomButtonWidget with _$CustomButtonWidget implements CustomWidget {
     CustomPopupmenu? customPopupmenu,
     @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
     String? label,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? buttonLabel,
   }) = _CustomButtonWidget;
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

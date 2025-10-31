@@ -15,10 +15,7 @@ _$CustomSliderWidgetImpl _$$CustomSliderWidgetImplFromJson(
   id: json['id'] as String,
   name: json['name'] as String,
   label: json['label'] as String?,
-  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-    json['dataPoint'],
-    const DataPointIdConverter().fromJson,
-  ),
+  dataPoint: json['dataPoint'] as String?,
   max: (json['max'] as num?)?.toInt() ?? 100,
   min: (json['min'] as num?)?.toInt() ?? 0,
   step: (json['step'] as num?)?.toInt() ?? 10,
@@ -45,7 +42,7 @@ Map<String, dynamic> _$$CustomSliderWidgetImplToJson(
   'id': instance.id,
   'name': instance.name,
   'label': instance.label,
-  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'dataPoint': instance.dataPoint,
   'max': instance.max,
   'min': instance.min,
   'step': instance.step,
@@ -83,11 +80,6 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) => json == null ? null : fromJson(json as Json);
 
 const _$CustomSliderWidgetUpdateStrategyEnumMap = {
   CustomSliderWidgetUpdateStrategy.onFinish: 'onFinish',

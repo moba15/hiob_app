@@ -11,9 +11,9 @@ class CustomDivisionlineWidgetSettingsView
     extends CustomWidgetSettingStatefulWidget {
   final CustomDivisionlineWidget customDivisionlineWidget;
   const CustomDivisionlineWidgetSettingsView({
-    Key? key,
+    super.key,
     required this.customDivisionlineWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomDivisionlineWidgetSettingsView> createState() =>

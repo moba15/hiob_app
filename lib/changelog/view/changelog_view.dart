@@ -5,7 +5,7 @@ import 'package:smart_home/manager/manager.dart';
 
 class ChangeLogScreen extends StatelessWidget {
   final Manager manager;
-  const ChangeLogScreen({Key? key, required this.manager}) : super(key: key);
+  const ChangeLogScreen({super.key, required this.manager});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,10 @@ class ChangeLogScreen extends StatelessWidget {
 
   String _changelog() {
     return """
-- **WebView**: Improved WebView settings #124
-- **WebView**: A long press on a WebView will reload it
+- Added first gRPC support
+- Added support for client side states database
+- And many more optimizations
+- IMPORTANT This is only an alpha version, it should only be used for testing and feedback. Many features are not implemented yet
 
   """;
   }

@@ -14,12 +14,7 @@ class ButtonTriggerAction extends TriggerAction {
   ButtonTriggerAction({required this.label, required this.dataPoint});
 
   factory ButtonTriggerAction.fromJSON(Map<String, dynamic> json) {
-    DataPoint? dataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["dataPoint"] ?? "");
-    return ButtonTriggerAction(
-      dataPoint: dataPoint,
-      label: json["label"] ?? "No Label Set",
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override
@@ -58,7 +53,7 @@ class ButtonTriggerAction extends TriggerAction {
     return new_widget.CustomButtonWidget(
       id: id,
       name: name,
-      dataPoint: dataPoint,
+      dataPoint: dataPoint?.id,
       buttonLabel: label,
     );
   }

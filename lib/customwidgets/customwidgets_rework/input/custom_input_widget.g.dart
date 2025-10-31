@@ -15,10 +15,7 @@ _$CustomInputWidgetImpl _$$CustomInputWidgetImplFromJson(
   id: json['id'] as String,
   name: json['name'] as String,
   label: json['label'] as String?,
-  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-    json['dataPoint'],
-    const DataPointIdConverter().fromJson,
-  ),
+  dataPoint: json['dataPoint'] as String?,
   hintText: json['hintText'] as String?,
   suffix: json['suffix'] as String?,
   customPopupmenu: json['customPopupmenu'] == null
@@ -47,7 +44,7 @@ Map<String, dynamic> _$$CustomInputWidgetImplToJson(
   'id': instance.id,
   'name': instance.name,
   'label': instance.label,
-  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'dataPoint': instance.dataPoint,
   'hintText': instance.hintText,
   'suffix': instance.suffix,
   'customPopupmenu': instance.customPopupmenu,
@@ -87,11 +84,6 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) => json == null ? null : fromJson(json as Json);
 
 const _$CustomInputSendMethodEnumMap = {
   CustomInputSendMethod.onSubmitted: 'onSubmitted',

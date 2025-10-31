@@ -13,8 +13,7 @@ import 'package:smart_home/view/main/main_screen.dart';
 class App extends StatelessWidget {
   final Manager manager;
   final ScreenManager screenManager;
-  const App({Key? key, required this.manager, required this.screenManager})
-    : super(key: key);
+  const App({super.key, required this.manager, required this.screenManager});
 
   @override
   Widget build(BuildContext context) {

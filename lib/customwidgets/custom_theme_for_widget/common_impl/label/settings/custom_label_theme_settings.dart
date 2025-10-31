@@ -9,8 +9,7 @@ import 'package:smart_home/utils/theme.dart';
 
 class CustomLabelThemeSettings extends StatefulWidget {
   final LabelTheme labelTheme;
-  const CustomLabelThemeSettings({Key? key, required this.labelTheme})
-    : super(key: key);
+  const CustomLabelThemeSettings({super.key, required this.labelTheme});
 
   @override
   State<CustomLabelThemeSettings> createState() =>

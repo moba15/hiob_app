@@ -71,6 +71,7 @@ class GeneralManager {
       "id": deviceID,
       "ioBVersion": ioBVersion,
       "logger": customLoggerFilter,
+      "deviceName": deviceName,
     };
 
     await fileManager.writeJSON(key, settings);
@@ -78,6 +79,11 @@ class GeneralManager {
 
   void updateVibrateEnabled(bool vibrate) {
     vibrateEnabled = vibrate;
+    _save();
+  }
+
+  void updateDeviceName(String name) {
+    deviceName = name;
     _save();
   }
 
