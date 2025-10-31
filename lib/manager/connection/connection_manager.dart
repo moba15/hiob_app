@@ -388,36 +388,54 @@ class ConnectionManager with WidgetsBindingObserver {
       "ConnectionManager | Request login ${generalManager.deviceName}:${generalManager.deviceID}",
     );
     connectionStatusStreamController.add(ConnectionStatus.loggingIn);
+    try {
+      LoginResponse response = await loginClientStub!
+          .login(
+            LoginRequest(
+              deviceId: generalManager.deviceID,
+              deviceName: generalManager.deviceName,
+              key: generalManager.loginKey,
+              password: ioBrokerManager.password,
+              user: ioBrokerManager.user,
+            ),
+          )
+          .catchError((Object e) async {
+            Manager().talker.error("ConnectionManager | errorLogin", e);
+            return LoginResponse(
+              status: LoginResponse_Status.error,
+              errorMsg: "Error during login: ${e.toString()}",
+            );
+          });
+      if (response.status == LoginResponse_Status.error) {
+        Manager().talker.error(
+          "ConnectionManager | Login error: ${response.errorMsg}",
+        );
+        changeConnectionStatus(ConnectionStatus.error);
+        return;
+      }
 
-    LoginResponse response = await loginClientStub!
-        .login(
-          LoginRequest(
-            deviceId: generalManager.deviceID,
-            deviceName: generalManager.deviceName,
-            key: generalManager.loginKey,
-            password: ioBrokerManager.password,
-            user: ioBrokerManager.user,
-          ),
-        )
-        .catchError((Object e) async {
-          Manager().talker.error("ConnectionManager | errorLogin", e);
-          return LoginResponse(
-            status: LoginResponse_Status.error,
-            errorMsg: "Error during login: ${e.toString()}",
-          );
-        });
-    if (response.status == LoginResponse_Status.error) {
-      Manager().talker.error(
-        "ConnectionManager | Login error: ${response.errorMsg}",
-      );
+      if (response.status != LoginResponse_Status.succesfull) {
+        _onLoginDeclined(response.status);
+      } else {
+        _onLoginApproved("");
+      }
+    } catch (e) {
+      Manager().talker.error("ConnectionManager | errorLogin", e);
       changeConnectionStatus(ConnectionStatus.error);
-      return;
-    }
-
-    if (response.status != LoginResponse_Status.succesfull) {
-      _onLoginDeclined(response.status);
-    } else {
-      _onLoginApproved("");
+      generalManager.dialogStreamController.sink.add(
+        (p0) => AlertDialog(
+          title: const Text("Error"),
+          content: const Text(
+            "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(p0).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -515,9 +533,28 @@ class ConnectionManager with WidgetsBindingObserver {
     String pass = dataPackage.type.name;
     dynamic sendContent = dataPackage.content;
 
-    _webSocket?.sink.add(
-      jsonEncode({"type": dataPackage.type.name, "content": sendContent}),
-    );
+    try {
+      _webSocket?.sink.add(
+        jsonEncode({"type": dataPackage.type.name, "content": sendContent}),
+      );
+    } catch (e) {
+      Manager().talker.error("ConnectionManager | errorLogin", e);
+      changeConnectionStatus(ConnectionStatus.error);
+      generalManager.dialogStreamController.sink.add(
+        (p0) => AlertDialog(
+          title: const Text("Error"),
+          content: const Text(
+            "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(p0).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   void _onTemplateSettingCreate() {

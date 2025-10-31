@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:drift/drift.dart';
+import 'package:flutter/material.dart';
 import 'package:smart_home/database/app-database.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/device/state/state.dart';
@@ -174,6 +175,20 @@ class DeviceManager {
               Manager().talker.error(
                 "DeviceManager | stateSubscriptionStream  | onError: $e",
               );
+              Manager.instance.generalManager.dialogStreamController.sink.add(
+                (p0) => AlertDialog(
+                  title: const Text("Error"),
+                  content: const Text(
+                    "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(p0).pop(),
+                      child: const Text("OK"),
+                    ),
+                  ],
+                ),
+              );
               Manager().connectionManager.changeConnectionStatus(
                 ConnectionStatus.error,
                 message: "State subscription error: $e",
@@ -200,14 +215,35 @@ class DeviceManager {
           .connectionManager
           .stateUpdateClientStub!
           .searchStateStream(searchStream)
-          .listen((value) {
-            Manager().talker.verbose(
-              value.states
-                  .map((e) => e.stateId)
-                  .reduce((value, element) => "$value,$element"),
-            );
-            t.sink.add(value);
-          });
+          .listen(
+            (value) {
+              Manager().talker.verbose(
+                value.states
+                    .map((e) => e.stateId)
+                    .reduce((value, element) => "$value,$element"),
+              );
+              t.sink.add(value);
+            },
+            onError: (e) {
+              Manager().talker.error(
+                "DeviceManager | searchIobrokerObjects | onError: $e",
+              );
+              Manager.instance.generalManager.dialogStreamController.sink.add(
+                (p0) => AlertDialog(
+                  title: const Text("Error"),
+                  content: const Text(
+                    "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(p0).pop(),
+                      child: const Text("OK"),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
       return t.stream;
     }
     return null;
@@ -315,6 +351,20 @@ class DeviceManager {
             Manager().talker.error(
               "DeviceManager | updateStates $error",
               stackTrace,
+            );
+            Manager.instance.generalManager.dialogStreamController.sink.add(
+              (p0) => AlertDialog(
+                title: const Text("Error"),
+                content: const Text(
+                  "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(p0).pop(),
+                    child: const Text("OK"),
+                  ),
+                ],
+              ),
             );
             return AllObjectsResults(states: {});
           });

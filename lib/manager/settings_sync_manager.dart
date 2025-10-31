@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
@@ -96,7 +97,20 @@ class SettingsSyncManager {
           Manager().talker.error(
             "Error creating new settings template: $error, $stackTrace",
           );
-
+          Manager.instance.generalManager.dialogStreamController.sink.add(
+            (p0) => AlertDialog(
+              title: const Text("Error"),
+              content: const Text(
+                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(p0).pop(),
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
+          );
           return ConfigCreateDeleteResponse(success: false);
         });
     return response;
@@ -115,6 +129,20 @@ class SettingsSyncManager {
         .onError((error, stackTrace) {
           Manager().talker.error(
             "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
+          );
+          Manager.instance.generalManager.dialogStreamController.sink.add(
+            (p0) => AlertDialog(
+              title: const Text("Error"),
+              content: const Text(
+                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(p0).pop(),
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
           );
           return AvailableConfigsResponse(configNames: []);
         });
@@ -155,14 +183,30 @@ class SettingsSyncManager {
       configName: preConfig,
       syncType: syncType,
     );
-    Config config = await connectionManager.configSyncStub!
-        .configSyncDown(request)
-        .onError((error, stackTrace) {
-          Manager().talker.error(
-            "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
-          );
-          return Config();
-        });
+    Config
+    config = await connectionManager.configSyncStub!.configSyncDown(request).onError((
+      error,
+      stackTrace,
+    ) {
+      Manager().talker.error(
+        "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
+      );
+      Manager.instance.generalManager.dialogStreamController.sink.add(
+        (p0) => AlertDialog(
+          title: const Text("Error"),
+          content: const Text(
+            "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(p0).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return Config();
+    });
     if (config.name.isNotEmpty) {
       loadGotTemplate(config.screens, config.templates);
     }
