@@ -20,7 +20,7 @@ const double breakpoint = 800;
 const int paneProportion = 70;
 
 class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class MainPage extends StatelessWidget {
 class MainScreen extends StatelessWidget {
   final Manager manager;
 
-  const MainScreen({Key? key, required this.manager}) : super(key: key);
+  const MainScreen({super.key, required this.manager});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class MainScreen extends StatelessWidget {
 }
 
 class MainView extends StatelessWidget {
-  const MainView({Key? key}) : super(key: key);
+  const MainView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +187,7 @@ class MainView extends StatelessWidget {
 
 class MainViewBarTitle extends StatefulWidget {
   final List<Screen> screens;
-  const MainViewBarTitle({Key? key, required this.screens}) : super(key: key);
+  const MainViewBarTitle({super.key, required this.screens});
 
   @override
   State<MainViewBarTitle> createState() => _MainViewBarTitleState();
@@ -234,8 +234,7 @@ class _MainViewBarTitleState extends State<MainViewBarTitle> {
 
 class MainViewAppBarLeading extends StatefulWidget {
   final man.ConnectionStatus connectionStatus;
-  const MainViewAppBarLeading({Key? key, required this.connectionStatus})
-    : super(key: key);
+  const MainViewAppBarLeading({super.key, required this.connectionStatus});
 
   @override
   State<MainViewAppBarLeading> createState() => _MainViewAppBarLeadingState();
@@ -313,7 +312,7 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
 }
 
 class MainViewOld extends StatefulWidget {
-  const MainViewOld({Key? key}) : super(key: key);
+  const MainViewOld({super.key});
 
   @override
   State<MainViewOld> createState() => _MainViewOldState();

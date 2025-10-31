@@ -108,8 +108,6 @@ class BackgroundRunner {
         user: ioBrokerManager.user,
         version: Manager.instance.versionNumber,
       ).content,
-      "secureKey": ioBrokerManager.secureKey,
-      "aes_enabled": ioBrokerManager.secureBox,
     });
   }
 

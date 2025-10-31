@@ -6,17 +6,17 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomColorPickerWidgetSettingsView
     extends CustomWidgetSettingStatefulWidget {
   final CustomColorPickerWidget customColorPickerWidget;
   const CustomColorPickerWidgetSettingsView({
-    Key? key,
+    super.key,
     required this.customColorPickerWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomColorPickerWidgetSettingsView> createState() =>
@@ -79,18 +79,9 @@ class _CustomColorPickerWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-            child: DeviceSelection(
-              onDeviceSelected: (d) => {
-                c.update(widget.customColorPickerWidget),
-              },
-              onDataPointSelected: (d) => {
-                widget.customColorPickerWidget.dataPoint = d,
-                c.update(widget.customColorPickerWidget),
-              },
-              customWidgetManager: Manager().customWidgetManager,
-              selectedDataPoint: widget.customColorPickerWidget.dataPoint,
-              selectedDevice: widget.customColorPickerWidget.dataPoint?.device,
-              dataPointLabel: "Datapoint (ARGB or RGB Hex Value)",
+            child: StateSearchBar(
+              selectedObject: widget.customColorPickerWidget.dataPoint,
+              onSelected: onSelect,
             ),
           ),
           InputFieldContainer.inputContainer(
@@ -176,6 +167,11 @@ class _CustomColorPickerWidgetSettingsViewState
         ],
       ),
     );
+  }
+
+  void onSelect(IobrokerObject? ioBrokerObject) {
+    widget.customColorPickerWidget.dataPoint = ioBrokerObject?.id;
+    c.update(widget.customColorPickerWidget);
   }
 
   String _mapTypeToName(ColorPickerType type) {

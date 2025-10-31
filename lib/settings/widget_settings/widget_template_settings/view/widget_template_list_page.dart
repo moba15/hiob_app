@@ -15,8 +15,7 @@ import '../../../../utils/list_status.dart';
 class WidgetTemplateListPage extends StatelessWidget {
   final CustomWidgetManager customWidgetManager;
 
-  const WidgetTemplateListPage({Key? key, required this.customWidgetManager})
-    : super(key: key);
+  const WidgetTemplateListPage({super.key, required this.customWidgetManager});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class WidgetTemplateListPage extends StatelessWidget {
 
 class _WidgetTemplateListAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  const _WidgetTemplateListAppBar({Key? key}) : super(key: key);
+  const _WidgetTemplateListAppBar();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +93,7 @@ class _WidgetTemplateListAppBar extends StatelessWidget
 }
 
 class _WidgetTemplateListView extends StatelessWidget {
-  const _WidgetTemplateListView({Key? key}) : super(key: key);
+  const _WidgetTemplateListView();
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +112,7 @@ class _WidgetTemplateListView extends StatelessWidget {
 class TemplatesView extends StatefulWidget {
   final Map<CustomWidgetWrapper, bool> templates;
 
-  const TemplatesView({Key? key, required this.templates}) : super(key: key);
+  const TemplatesView({super.key, required this.templates});
 
   @override
   State<TemplatesView> createState() => _TemplatesViewState();

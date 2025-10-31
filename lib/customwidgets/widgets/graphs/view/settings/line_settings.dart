@@ -12,11 +12,11 @@ class LineSettingsPage extends StatelessWidget {
   final GraphLine graphLine;
   final Function(GraphLine) onSave;
   const LineSettingsPage({
-    Key? key,
+    super.key,
     required this.graphWidget,
     required this.graphLine,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +46,7 @@ class LineSettingsPage extends StatelessWidget {
 class _LineSettingsBody extends StatelessWidget {
   final GraphWidget graphWidget;
   final GraphLine graphLine;
-  const _LineSettingsBody({
-    Key? key,
-    required this.graphWidget,
-    required this.graphLine,
-  }) : super(key: key);
+  const _LineSettingsBody({required this.graphWidget, required this.graphLine});
 
   @override
   Widget build(BuildContext context) {

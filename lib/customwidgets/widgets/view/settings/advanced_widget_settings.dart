@@ -13,8 +13,7 @@ class AdvancedWidgetSettings extends CustomWidgetSettingStatelessWidget {
   final GlobalKey valueKey = GlobalKey();
   final GlobalKey mainBodyKey = GlobalKey();
   final GlobalKey popupKey = GlobalKey();
-  AdvancedWidgetSettings({Key? key, required this.advancedCustomWidget})
-    : super(key: key);
+  AdvancedWidgetSettings({super.key, required this.advancedCustomWidget});
 
   TriggerActionSetting? setting;
 

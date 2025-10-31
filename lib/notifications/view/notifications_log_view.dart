@@ -4,7 +4,7 @@ import 'package:smart_home/manager/notification/custom_notification.dart';
 import 'package:smart_home/notifications/bloc/notifications_bloc.dart';
 
 class NotificationLogViewScreen extends StatelessWidget {
-  const NotificationLogViewScreen({Key? key}) : super(key: key);
+  const NotificationLogViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class NotificationLogViewScreen extends StatelessWidget {
 }
 
 class _NotificationLogBody extends StatelessWidget {
-  const _NotificationLogBody({Key? key}) : super(key: key);
+  const _NotificationLogBody();
 
   @override
   Widget build(BuildContext context) {

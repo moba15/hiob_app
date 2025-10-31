@@ -23,10 +23,7 @@ _$CustomButtonWidgetImpl _$$CustomButtonWidgetImplFromJson(
     json['customTheme'] as Map<String, dynamic>?,
   ),
   label: json['label'] as String?,
-  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-    json['dataPoint'],
-    const DataPointIdConverter().fromJson,
-  ),
+  dataPoint: json['dataPoint'] as String?,
   buttonLabel: json['buttonLabel'] as String?,
 );
 
@@ -41,7 +38,7 @@ Map<String, dynamic> _$$CustomButtonWidgetImplToJson(
     instance.customTheme,
   ),
   'label': instance.label,
-  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'dataPoint': instance.dataPoint,
   'buttonLabel': instance.buttonLabel,
 };
 
@@ -70,8 +67,3 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) => json == null ? null : fromJson(json as Json);

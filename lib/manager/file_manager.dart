@@ -128,7 +128,6 @@ class FileManager {
         "$result/exportHioB${DateFormat("y_M_d_mm_ss_a").format(DateTime.now())}.json",
       );
       Map<String, dynamic> data = {
-        "devices": jsonEncode(manager.deviceManager.devicesList),
         "widgets": jsonEncode(manager.customWidgetManager.templates),
         "screens": jsonEncode(manager.screenManager.screens),
       };
@@ -209,11 +208,8 @@ class FileManager {
         String t = String.fromCharCodes(fileBytes.toList());
         t = utf8.decode(fileBytes.toList());
         Map<String, dynamic> map = jsonDecode(t);
-        pref.setString(manager.deviceManager.key, map["devices"]);
         pref.setString(manager.customWidgetManager.templateKey, map["widgets"]);
         pref.setString(manager.screenManager.key, map["screens"]);
-        manager.deviceManager.reload();
-        manager.screenManager.reload();
       } catch (e) {
         ScaffoldMessenger.of(
           context,

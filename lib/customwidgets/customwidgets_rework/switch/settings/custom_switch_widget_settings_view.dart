@@ -4,16 +4,16 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/device_selection.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
 class CustomSwitchWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   final CustomSwitchWidget customSwitchWidget;
   const CustomSwitchWidgetSettingsView({
-    Key? key,
+    super.key,
     required this.customSwitchWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomSwitchWidgetSettingsView> createState() =>
@@ -74,15 +74,9 @@ class _CustomSwitchWidgetSettingsViewState
       child: Column(
         children: [
           InputFieldContainer.inputContainer(
-            child: DeviceSelection(
-              onDeviceSelected: (d) => {c.update(widget.customSwitchWidget)},
-              onDataPointSelected: (d) => {
-                widget.customSwitchWidget.dataPoint = d,
-                c.update(widget.customSwitchWidget),
-              },
-              customWidgetManager: Manager().customWidgetManager,
-              selectedDataPoint: widget.customSwitchWidget.dataPoint,
-              selectedDevice: widget.customSwitchWidget.dataPoint?.device,
+            child: StateSearchBar(
+              selectedObject: widget.customSwitchWidget.dataPoint,
+              onSelected: onSelect,
             ),
           ),
           InputFieldContainer.inputContainer(
@@ -120,5 +114,10 @@ class _CustomSwitchWidgetSettingsViewState
         ],
       ),
     );
+  }
+
+  void onSelect(IobrokerObject iobrokerObject) {
+    widget.customSwitchWidget.dataPoint = iobrokerObject.id;
+    c.update(widget.customSwitchWidget);
   }
 }

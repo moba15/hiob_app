@@ -10,25 +10,25 @@ import '../../../manager/manager.dart';
 class SliderTriggerView extends StatelessWidget {
   final SliderTriggerAction sliderTriggerAction;
 
-  const SliderTriggerView({Key? key, required this.sliderTriggerAction})
-    : super(key: key);
+  const SliderTriggerView({super.key, required this.sliderTriggerAction});
 
   @override
   Widget build(BuildContext context) {
-    if (sliderTriggerAction.dataPoint == null) {
-      return const Text("Device not found");
-    }
-    final bloc = DataPointBloc(sliderTriggerAction.dataPoint!);
-    return BlocBuilder<DataPointBloc, DataPointState>(
-      bloc: bloc,
-      builder: (context, state) {
-        return _Slider(
-          sliderTriggerAction: sliderTriggerAction,
-          value: state.value,
-          dataPointBloc: bloc,
-        );
-      },
-    );
+    return const Text("Error");
+    //   if (sliderTriggerAction.dataPoint == null) {
+    //     return const Text("Device not found");
+    //   }
+    //   final bloc = DataPointBloc(sliderTriggerAction.dataPoint!);
+    //   return BlocBuilder<DataPointBloc, DataPointState>(
+    //     bloc: bloc,
+    //     builder: (context, state) {
+    //       return _Slider(
+    //         sliderTriggerAction: sliderTriggerAction,
+    //         value: state.value,
+    //         dataPointBloc: bloc,
+    //       );
+    //     },
+    //   );
   }
 }
 
@@ -38,11 +38,10 @@ class _Slider extends StatefulWidget {
   final DataPointBloc dataPointBloc;
 
   const _Slider({
-    Key? key,
     required this.sliderTriggerAction,
     required this.value,
     required this.dataPointBloc,
-  }) : super(key: key);
+  });
 
   @override
   State<_Slider> createState() => _SliderState();

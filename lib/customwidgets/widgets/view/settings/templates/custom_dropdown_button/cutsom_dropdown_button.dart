@@ -23,14 +23,14 @@ class CustomDropdownButton<T> extends FormField<T> {
   final T? selected;
 
   const CustomDropdownButton({
-    Key? key,
+    super.key,
     this.items = const [],
     this.itemBuilder,
     this.mode = DropdownMenuMode.dropdown,
     this.selected,
     this.label,
     required this.onSelect,
-  }) : super(key: key, builder: _build);
+  }) : super(builder: _build);
 
   static Widget _build<T>(FormFieldState<T> state) {
     return state.build(state.context);
@@ -141,11 +141,11 @@ class _BottomSheetMenu<T> extends StatefulWidget {
   final Widget Function(BuildContext, T) itemBuilder;
   final Function(dynamic) onSelect;
   const _BottomSheetMenu({
-    Key? key,
+    super.key,
     required this.items,
     required this.itemBuilder,
     required this.onSelect,
-  }) : super(key: key);
+  });
 
   @override
   State<_BottomSheetMenu> createState() => _BottomSheetMenuState<T>();

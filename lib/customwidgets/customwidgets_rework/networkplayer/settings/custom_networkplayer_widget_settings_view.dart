@@ -10,9 +10,9 @@ class CustomNetworkPlayerWidgetSettingView
     extends CustomWidgetSettingStatefulWidget {
   final CustomNetworkPlayerWidget customNetworkPlayer;
   const CustomNetworkPlayerWidgetSettingView({
-    Key? key,
+    super.key,
     required this.customNetworkPlayer,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomNetworkPlayerWidgetSettingView> createState() =>

@@ -13,8 +13,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
   final GlobalKey roundToKey = GlobalKey();
   final GlobalKey unitKey = GlobalKey();
   final GlobalKey textRulesKey = GlobalKey();
-  NoneTriggerActionSettings({Key? key, required this.noneTriggerAction})
-    : super(key: key);
+  NoneTriggerActionSettings({super.key, required this.noneTriggerAction});
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +90,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
 
 class _RulesSettings extends StatefulWidget {
   final NoneTriggerAction noneTriggerAction;
-  const _RulesSettings({Key? key, required this.noneTriggerAction})
-    : super(key: key);
+  const _RulesSettings({required this.noneTriggerAction});
 
   @override
   State<_RulesSettings> createState() => _RulesSettingsState();
@@ -195,11 +193,10 @@ class _RuleAddEditAlertDialog extends StatelessWidget {
   final String oldValue;
   final String newValue;
   _RuleAddEditAlertDialog({
-    Key? key,
     required this.onAdd,
     this.oldValue = "",
     this.newValue = "",
-  }) : super(key: key) {
+  }) {
     keyController.text = oldValue;
     valueController.text = newValue;
   }

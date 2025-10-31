@@ -38,10 +38,8 @@ mixin _$CustomButtonWidget {
       throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   set label(String? value) => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  DataPoint? get dataPoint => throw _privateConstructorUsedError;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value) => throw _privateConstructorUsedError;
+  String? get dataPoint => throw _privateConstructorUsedError;
+  set dataPoint(String? value) => throw _privateConstructorUsedError;
   String? get buttonLabel => throw _privateConstructorUsedError;
   set buttonLabel(String? value) => throw _privateConstructorUsedError;
 
@@ -69,7 +67,7 @@ abstract class $CustomButtonWidgetCopyWith<$Res> {
     CustomPopupmenu? customPopupmenu,
     @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
     String? label,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? buttonLabel,
   });
 
@@ -129,7 +127,7 @@ class _$CustomButtonWidgetCopyWithImpl<$Res, $Val extends CustomButtonWidget>
             dataPoint: freezed == dataPoint
                 ? _value.dataPoint
                 : dataPoint // ignore: cast_nullable_to_non_nullable
-                      as DataPoint?,
+                      as String?,
             buttonLabel: freezed == buttonLabel
                 ? _value.buttonLabel
                 : buttonLabel // ignore: cast_nullable_to_non_nullable
@@ -170,7 +168,7 @@ abstract class _$$CustomButtonWidgetImplCopyWith<$Res>
     CustomPopupmenu? customPopupmenu,
     @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
     String? label,
-    @DataPointIdConverter() DataPoint? dataPoint,
+    String? dataPoint,
     String? buttonLabel,
   });
 
@@ -230,7 +228,7 @@ class __$$CustomButtonWidgetImplCopyWithImpl<$Res>
         dataPoint: freezed == dataPoint
             ? _value.dataPoint
             : dataPoint // ignore: cast_nullable_to_non_nullable
-                  as DataPoint?,
+                  as String?,
         buttonLabel: freezed == buttonLabel
             ? _value.buttonLabel
             : buttonLabel // ignore: cast_nullable_to_non_nullable
@@ -250,7 +248,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
     this.customPopupmenu,
     @_CustomButtonThemeConverter() this.customTheme,
     this.label,
-    @DataPointIdConverter() required this.dataPoint,
+    required this.dataPoint,
     this.buttonLabel,
   }) : super._();
 
@@ -272,8 +270,7 @@ class _$CustomButtonWidgetImpl extends _CustomButtonWidget {
   @override
   String? label;
   @override
-  @DataPointIdConverter()
-  DataPoint? dataPoint;
+  String? dataPoint;
   @override
   String? buttonLabel;
 
@@ -308,7 +305,7 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
     CustomPopupmenu? customPopupmenu,
     @_CustomButtonThemeConverter() CustomThemeForWidget? customTheme,
     String? label,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? buttonLabel,
   }) = _$CustomButtonWidgetImpl;
   _CustomButtonWidget._() : super._();
@@ -337,10 +334,8 @@ abstract class _CustomButtonWidget extends CustomButtonWidget
   String? get label;
   set label(String? value);
   @override
-  @DataPointIdConverter()
-  DataPoint? get dataPoint;
-  @DataPointIdConverter()
-  set dataPoint(DataPoint? value);
+  String? get dataPoint;
+  set dataPoint(String? value);
   @override
   String? get buttonLabel;
   set buttonLabel(String? value);

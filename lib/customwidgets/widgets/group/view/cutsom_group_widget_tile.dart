@@ -4,8 +4,7 @@ import 'package:smart_home/customwidgets/widgets/group/view/settings/custom_grou
 
 class CustomGroupWidgetTile extends StatelessWidget {
   final CustomGroupWidget customGroupWidget;
-  const CustomGroupWidgetTile({Key? key, required this.customGroupWidget})
-    : super(key: key);
+  const CustomGroupWidgetTile({super.key, required this.customGroupWidget});
 
   @override
   Widget build(BuildContext context) {

@@ -91,6 +91,6 @@ abstract class TriggerAction {
 }
 
 abstract class TriggerActionSetting extends StatelessWidget {
-  const TriggerActionSetting({Key? key}) : super(key: key);
+  const TriggerActionSetting({super.key});
   List<GlobalKey> get showKeys;
 }

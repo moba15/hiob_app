@@ -7,8 +7,7 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 
 class CustomSwitchWidgetView extends StatefulWidget {
   final CustomSwitchWidget customSwitchWidget;
-  const CustomSwitchWidgetView({Key? key, required this.customSwitchWidget})
-    : super(key: key);
+  const CustomSwitchWidgetView({super.key, required this.customSwitchWidget});
 
   @override
   State<CustomSwitchWidgetView> createState() => _CustomSwitchWidgetViewState();

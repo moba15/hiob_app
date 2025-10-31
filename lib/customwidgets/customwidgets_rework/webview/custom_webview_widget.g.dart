@@ -17,10 +17,7 @@ _$CustomWebViewWidgetImpl _$$CustomWebViewWidgetImplFromJson(
   image: json['image'] as bool? ?? false,
   enabledZoom: json['enabledZoom'] as bool? ?? false,
   enableInlineScroll: json['enableInlineScroll'] as bool? ?? false,
-  dataPoint: _$JsonConverterFromJson<String, DataPoint?>(
-    json['dataPoint'],
-    const DataPointIdConverter().fromJson,
-  ),
+  dataPoint: json['dataPoint'] as String?,
   url: json['url'] as String?,
   height: (json['height'] as num?)?.toInt() ?? 500,
   customPopupmenu: json['customPopupmenu'] == null
@@ -44,7 +41,7 @@ Map<String, dynamic> _$$CustomWebViewWidgetImplToJson(
   'image': instance.image,
   'enabledZoom': instance.enabledZoom,
   'enableInlineScroll': instance.enableInlineScroll,
-  'dataPoint': const DataPointIdConverter().toJson(instance.dataPoint),
+  'dataPoint': instance.dataPoint,
   'url': instance.url,
   'height': instance.height,
   'customPopupmenu': instance.customPopupmenu,
@@ -76,8 +73,3 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) => json == null ? null : fromJson(json as Json);

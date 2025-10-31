@@ -5,7 +5,7 @@ abstract class ConfigEvent {}
 class ConfigAddedEvent extends ConfigEvent {}
 
 class ConfigLoadedEvent extends ConfigEvent {
-  final List<PreConfig> list;
+  final List<String> list;
 
   ConfigLoadedEvent(this.list);
 }

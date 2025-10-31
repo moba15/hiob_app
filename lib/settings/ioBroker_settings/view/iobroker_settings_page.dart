@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/connection/cubit/connection_cubit.dart';
@@ -12,7 +11,7 @@ import '../../../manager/manager.dart';
 bool _isObscure = true;
 
 class IoBrokerSettingsPage extends StatelessWidget {
-  const IoBrokerSettingsPage({Key? key}) : super(key: key);
+  const IoBrokerSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class IoBrokerSettingsView extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
   final TextEditingController portController = TextEditingController();
 
-  IoBrokerSettingsView({Key? key}) : super(key: key);
+  IoBrokerSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +166,9 @@ class IoBrokerSettingsView extends StatelessWidget {
         Center(
           child: ElevatedButton(
             onPressed: () => {
-              context.read<Manager>().connectionManager.reconnect(),
+              context.read<Manager>().connectionManager.reconnect(
+                delayed: false,
+              ),
             },
             child: const Text("Reconnect"),
           ),
@@ -185,50 +186,6 @@ class IoBrokerSettingsView extends StatelessWidget {
                   },
                   title: const Text("Use wss Connection"),
                 ),
-                CheckboxListTile(
-                  value: ioBrokerManager.secureBox,
-                  onChanged: (b) {
-                    setState(() {
-                      ioBrokerManager.changeSecurebox(b ?? true);
-                    });
-                  },
-                  title: const Text("Use AES encryption"),
-                ),
-                if (ioBrokerManager.secureBox)
-                  Container(
-                    margin: const EdgeInsets.only(left: 30.0, right: 20.0),
-                    child: TextFormField(
-                      initialValue: ioBrokerManager.secureKey,
-                      decoration: InputDecoration(
-                        labelText: "Key from ioBroker Datapoint",
-                        filled: true,
-                        prefixIcon: const Icon(
-                          Icons.lock,
-                          color: Color(0xfff28800),
-                        ),
-                        suffix: IconButton(
-                          padding: const EdgeInsets.all(0),
-                          iconSize: 20.0,
-                          icon: _isObscure
-                              ? const Icon(
-                                  Icons.visibility_off,
-                                  color: Colors.grey,
-                                )
-                              : const Icon(
-                                  Icons.visibility,
-                                  color: Colors.black,
-                                ),
-                          onPressed: () {
-                            setState(() {
-                              _isObscure = !_isObscure;
-                            });
-                          },
-                        ),
-                      ),
-                      obscureText: _isObscure,
-                      onChanged: (v) => ioBrokerManager.changeSecurekey(v),
-                    ),
-                  ),
                 CheckboxListTile(
                   value: ioBrokerManager.usePwd,
                   onChanged: (b) {
@@ -265,65 +222,6 @@ class IoBrokerSettingsView extends StatelessWidget {
             );
           },
         ),
-        _SecondaryAddressSettings(ioBrokerManager: ioBrokerManager),
-        StreamBuilder<EnumUpdateState>(
-          stream: ioBrokerManager.enumsUpdateStateStreamController.stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const ListTile(
-                leading: Icon(Icons.extension),
-                title: Text("Enums"),
-                subtitle: Text("Last updated: ERROR"),
-              );
-            } else if (snapshot.hasData) {
-              switch (snapshot.data) {
-                case EnumUpdateState.finished:
-                  return ListTile(
-                    leading: const Icon(Icons.extension),
-                    title: const Text("Enums"),
-                    subtitle: Text(
-                      "Last updated: ${ioBrokerManager.lastEnumUpdate == null ? "None" : DateFormat("dd.MM.yyyy hh:mm a").format(ioBrokerManager.lastEnumUpdate!)}",
-                    ),
-                    trailing: TextButton(
-                      onPressed: ioBrokerManager.updateEnums,
-                      child: const Text("Update"),
-                    ),
-                  );
-                default:
-                  return ListTile(
-                    leading: const Icon(Icons.extension),
-                    title: const Text("Enums"),
-                    subtitle: Text(
-                      "Last updated: ${ioBrokerManager.lastEnumUpdate == null ? "None" : DateFormat("dd.MM.yyyy hh:mm a").format(ioBrokerManager.lastEnumUpdate!)}",
-                    ),
-                    trailing: const CircularProgressIndicator(),
-                  );
-              }
-            } else {
-              return ListTile(
-                leading: const Icon(Icons.extension),
-                title: const Text("Enums"),
-                subtitle: Text(
-                  "Last updated: ${ioBrokerManager.lastEnumUpdate == null ? "None" : DateFormat("dd.MM.yyyy hh:mm a").format(ioBrokerManager.lastEnumUpdate!)}",
-                ),
-                trailing: ioBrokerManager.isUpdating
-                    ? const CircularProgressIndicator()
-                    : TextButton(
-                        onPressed: ioBrokerManager.updateEnums,
-                        child: const Text("Update"),
-                      ),
-              );
-            }
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.import_export),
-          title: const Text("Synchronize Enums"),
-          trailing: TextButton(
-            onPressed: ioBrokerManager.syncEnumsToDevice,
-            child: const Text("Sync"),
-          ),
-        ),
       ],
     );
   }
@@ -332,8 +230,7 @@ class IoBrokerSettingsView extends StatelessWidget {
 class _SecondaryAddressSettings extends StatefulWidget {
   final IoBrokerManager ioBrokerManager;
 
-  const _SecondaryAddressSettings({Key? key, required this.ioBrokerManager})
-    : super(key: key);
+  const _SecondaryAddressSettings({required this.ioBrokerManager});
 
   @override
   State<_SecondaryAddressSettings> createState() =>
@@ -396,6 +293,77 @@ class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
             enabled: widget.ioBrokerManager.useSecondaryAddress,
             onChanged: (v) => widget.ioBrokerManager.changeSecondaryAddress(v),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _IobrokerObjectFilter extends StatefulWidget {
+  const _IobrokerObjectFilter({super.key});
+
+  @override
+  State<_IobrokerObjectFilter> createState() => __IobrokerObjectFilterState();
+}
+
+class __IobrokerObjectFilterState extends State<_IobrokerObjectFilter> {
+  List<String> allAdapaters = [];
+  List<String> selectedFilters = [];
+  @override
+  void initState() {
+    super.initState();
+    Manager().deviceManager.getIobrokerAdapaters().then((value) {
+      setState(() {
+        allAdapaters = value;
+        selectedFilters.clear();
+        selectedFilters.addAll(Manager().deviceManager.preDefinedFilters);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      title: Text("Object filter"),
+      children: [
+        Wrap(
+          spacing: 5,
+          runSpacing: 10,
+          children: [
+            for (String s in selectedFilters)
+              FilterChip(
+                label: Text(s),
+
+                onSelected: (value) {
+                  setState(() {
+                    if (value) {
+                      selectedFilters.add(s);
+                    } else {
+                      selectedFilters.remove(s);
+                    }
+                  });
+                  Manager().deviceManager.updateFilters(selectedFilters);
+                },
+                selected: true,
+              ),
+            for (String s in allAdapaters)
+              if (!selectedFilters.contains(s))
+                FilterChip(
+                  label: Text(s),
+
+                  onSelected: (value) {
+                    setState(() {
+                      if (value) {
+                        selectedFilters.add(s);
+                      } else {
+                        selectedFilters.remove(s);
+                      }
+                    });
+                    Manager().deviceManager.updateFilters(selectedFilters);
+                  },
+                  selected: false,
+                ),
+          ],
         ),
       ],
     );

@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
-import 'package:smart_home/device/bloc/device_bloc.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-import 'package:smart_home/device/state/state.dart';
+import 'package:smart_home/manager/manager.dart';
 
 class CustomValueWidgetView extends StatefulWidget {
   final CustomValueWidget customValueWidget;
-  const CustomValueWidgetView({Key? key, required this.customValueWidget})
-    : super(key: key);
+  const CustomValueWidgetView({super.key, required this.customValueWidget});
 
   @override
   State<CustomValueWidgetView> createState() => _CustomValueWidgetViewState();
@@ -106,18 +104,19 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
                       : null,
                 ),
               ),
-              if (widget.customValueWidget.dataPoint?.device
-                      ?.getDeviceStatus() !=
-                  DeviceStatus.ready)
-                const Flexible(
-                  child: Text(
-                    " U/A",
-                    style: TextStyle(color: Colors.red),
-                    overflow: TextOverflow.clip,
-                    softWrap: false,
-                    maxLines: 1,
-                  ),
-                ),
+              //TODO add status
+              // if (widget.customValueWidget.dataPoint?.device
+              //         ?.getDeviceStatus() !=
+              //     DeviceStatus.ready)
+              //   const Flexible(
+              //     child: Text(
+              //       " U/A",
+              //       style: TextStyle(color: Colors.red),
+              //       overflow: TextOverflow.clip,
+              //       softWrap: false,
+              //       maxLines: 1,
+              //     ),
+              //   )
             ],
           ),
           //subtitle: dataPoint.device?.getDeviceStatus() != DeviceStatus.ready ? const  Text("U/A", style: TextStyle(color: Colors.red),) : null,
@@ -157,7 +156,7 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
         context: context,
         builder: (context) {
           return _ValueDialog(
-            dataPoint: widget.customValueWidget.dataPoint!,
+            dataPointId: widget.customValueWidget.dataPoint!,
             title: title,
           );
         },
@@ -167,10 +166,9 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
 }
 
 class _ValueDialog extends StatelessWidget {
-  final DataPoint dataPoint;
+  final String dataPointId;
   final String title;
-  const _ValueDialog({Key? key, required this.dataPoint, required this.title})
-    : super(key: key);
+  const _ValueDialog({required this.dataPointId, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +182,8 @@ class _ValueDialog extends StatelessWidget {
       ],
       title: Text(title),
       content: Text(
-        dataPoint.value.toString(),
+        Manager().deviceManager.getCurrentValue(dataPointId) ??
+            "No value found",
         style: const TextStyle(fontSize: 17),
       ),
     );

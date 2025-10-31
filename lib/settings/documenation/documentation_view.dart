@@ -3,7 +3,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 class DocumentationView extends StatefulWidget {
   final String currentPage;
-  const DocumentationView({Key? key, this.currentPage = "/"}) : super(key: key);
+  const DocumentationView({super.key, this.currentPage = "/"});
 
   @override
   State<DocumentationView> createState() => _DocumentationViewState();
@@ -46,8 +46,7 @@ class _DocumentationViewState extends State<DocumentationView> {
 class _DocBody extends StatelessWidget {
   final String language;
   final String currentPage;
-  const _DocBody({Key? key, required this.language, required this.currentPage})
-    : super(key: key);
+  const _DocBody({required this.language, required this.currentPage});
 
   @override
   Widget build(BuildContext context) {

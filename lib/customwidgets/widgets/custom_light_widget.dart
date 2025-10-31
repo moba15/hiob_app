@@ -22,7 +22,7 @@ class CustomLightWidget extends CustomWidgetDeprecated {
   String reachableDisplay = "Reachable";
 
   CustomLightWidget({
-    required String? name,
+    required super.name,
     this.onDataPoint,
     this.briDataPoint,
     this.briMax = 100,
@@ -31,37 +31,14 @@ class CustomLightWidget extends CustomWidgetDeprecated {
     this.briSteps = 10,
     this.value,
     this.briDisplay = "Brightness",
-  }) : super(name: name, type: CustomWidgetTypeDeprecated.light, settings: {});
+  }) : super(type: CustomWidgetTypeDeprecated.light, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
       CustomLightWidgetSettingWidget(customLightWidget: this);
 
   factory CustomLightWidget.fromJson(Map<String, dynamic> json) {
-    DataPoint? onDataPoint = Manager.instance.deviceManager
-        .getIoBrokerDataPointByObjectID(json["onDataPointID"] ?? "");
-    DataPoint? briDataPoint = json["briDataPointID"] == null
-        ? null
-        : Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(
-            json["briDataPointID"],
-          );
-    DataPoint? reachableDataPoint = json["reachableDataPointID"] == null
-        ? null
-        : Manager.instance.deviceManager.getIoBrokerDataPointByObjectID(
-            json["reachableDataPointID"],
-          );
-
-    return CustomLightWidget(
-      name: json["name"],
-      briMax: json["briMax"],
-      briMin: json["briMin"],
-      onDataPoint: onDataPoint,
-      reachableDataPoint: reachableDataPoint,
-      briDataPoint: briDataPoint,
-      briSteps: json["briSteps"],
-      value: json["value"],
-      briDisplay: json["briDisplay"],
-    );
+    throw UnsupportedError("Not supported anymore");
   }
 
   @override
@@ -102,14 +79,14 @@ class CustomLightWidget extends CustomWidgetDeprecated {
     return new_widget.CustomSwitchWidget(
       id: id,
       name: name,
-      dataPoint: onDataPoint,
+      dataPoint: onDataPoint?.id,
       label: value,
       customPopupmenu: CustomPopupmenu(
         customWidgets: [
           CustomSliderWidget(
             id: Manager().getRandString(12),
             name: "Brightness",
-            dataPoint: briDataPoint,
+            dataPoint: briDataPoint?.id,
           ),
         ],
       ),

@@ -7,8 +7,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/settings/custom_switch_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/view/custom_switch_widget_view.dart';
-import 'package:smart_home/device/datapoint/converter/datapoint_converter.dart';
-import 'package:smart_home/device/state/state.dart';
 
 part 'custom_switch_widget.freezed.dart';
 part 'custom_switch_widget.g.dart';
@@ -50,7 +48,7 @@ class CustomSwitchWidget with _$CustomSwitchWidget implements CustomWidget {
     CustomWidgetTypeDeprecated type,
     required String id,
     required String name,
-    @DataPointIdConverter() required DataPoint? dataPoint,
+    required String? dataPoint,
     String? label,
     @Default("true") String sendIfOn,
     @Default("false") String sendIfOff,
@@ -64,7 +62,7 @@ class CustomSwitchWidget with _$CustomSwitchWidget implements CustomWidget {
   }
 
   @override
-  List<DataPoint> get dependentDataPoints {
+  List<String> get dependentDataPoints {
     return dataPoint == null ? [] : [dataPoint!];
   }
 

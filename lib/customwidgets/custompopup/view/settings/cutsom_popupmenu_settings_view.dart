@@ -14,10 +14,10 @@ class CustomPopupmenuSettingsView extends StatefulWidget {
   final CustomWidget customWidget;
   final CustomPopupmenu customPopupmenu;
   const CustomPopupmenuSettingsView({
-    Key? key,
+    super.key,
     required this.customWidget,
     required this.customPopupmenu,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomPopupmenuSettingsView> createState() =>

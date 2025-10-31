@@ -7,9 +7,9 @@ import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/cust
 class CustomNetworkPlayerWidgetView extends StatefulWidget {
   final CustomNetworkPlayerWidget customNetworkPlayer;
   const CustomNetworkPlayerWidgetView({
-    Key? key,
+    super.key,
     required this.customNetworkPlayer,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomNetworkPlayerWidgetView> createState() =>

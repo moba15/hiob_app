@@ -9,9 +9,9 @@ import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 class CustomColorPickerWidgetView extends StatefulWidget {
   final CustomColorPickerWidget customColorPickerWidget;
   const CustomColorPickerWidgetView({
-    Key? key,
+    super.key,
     required this.customColorPickerWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomColorPickerWidgetView> createState() =>
