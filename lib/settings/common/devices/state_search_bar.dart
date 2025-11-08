@@ -34,14 +34,16 @@ class _StateSearchBarState extends State<StateSearchBar> {
     asyncSearchCubit = AsyncSearchCubit(
       getInitalValues: () => deviceManager.getAllIobrokerObjects(limit: 250),
     );
-
-    Manager().deviceManager
-        .getIoBrokerDataPointByObjectID(widget.selectedObject!)
-        .then((value) {
-          setState(() {
-            selectedObject = value;
+    if (widget.selectedObject != null) {
+      Manager().deviceManager
+          .getIoBrokerDataPointByObjectID(widget.selectedObject!)
+          .then((value) {
+            setState(() {
+              selectedObject = value;
+            });
           });
-        });
+    }
+
     super.initState();
   }
 
