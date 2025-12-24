@@ -90,20 +90,7 @@ class _CustomSimpleValueWidgetSettingWidgetState
             title: "Datapoint",
             description:
                 "If set the Url of the Datapoint will be shown and therefore also update if the datapoint updates",
-            child: InputFieldContainer.inputContainer(
-              child: DeviceSelection(
-                onDataPointSelected: (d) =>
-                    widget.customWebViewWidget.dataPoint = d,
-                selectedDataPoint: widget.customWebViewWidget.dataPoint,
-                selectedDevice: widget.customWebViewWidget.dataPoint?.device,
-                onDeviceSelected: (d) {
-                  if (d == null) {
-                    widget.customWebViewWidget.dataPoint = null;
-                  }
-                },
-                customWidgetManager: Manager.instance.customWidgetManager,
-              ),
-            ),
+            child: InputFieldContainer.inputContainer(child: Placeholder()),
           ),
           Showcase(
             key: widget.heightKey,

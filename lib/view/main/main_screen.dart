@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
-import 'package:smart_home/manager/connection/connection_manager.dart' as man;
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
 import 'package:smart_home/screen/view/screen_view.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/utils/blinking_widget.dart';
 import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
@@ -233,7 +233,7 @@ class _MainViewBarTitleState extends State<MainViewBarTitle> {
 }
 
 class MainViewAppBarLeading extends StatefulWidget {
-  final man.ConnectionStatus connectionStatus;
+  final ConnectionStatus connectionStatus;
   const MainViewAppBarLeading({super.key, required this.connectionStatus});
 
   @override
@@ -247,12 +247,12 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
     return _getAppBarStatus(widget.connectionStatus);
   }
 
-  Widget _getAppBarStatus(man.ConnectionStatus connectionStatus) {
+  Widget _getAppBarStatus(ConnectionStatus connectionStatus) {
     int n = 0;
     BlinkingWidget blinkingWidget;
     switch (connectionStatus) {
-      case man.ConnectionStatus.connected:
-      case man.ConnectionStatus.loggedIn:
+      case ConnectionStatus.connected:
+      case ConnectionStatus.loggedIn:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           disablerAfter: const Duration(seconds: 3),
@@ -260,31 +260,31 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
           child: const Icon(Icons.done, color: Colors.green),
         );
         break;
-      case man.ConnectionStatus.loggingIn:
+      case ConnectionStatus.loggingIn:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.login, color: Colors.orange),
         );
         break;
-      case man.ConnectionStatus.loginDeclined:
+      case ConnectionStatus.loginDeclined:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.login, color: Colors.orange),
         );
         break;
-      case man.ConnectionStatus.newAesKey:
+      case ConnectionStatus.newAesKey:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.add_moderator, color: Colors.yellow),
         );
         break;
-      case man.ConnectionStatus.wrongAdapterVersion:
+      case ConnectionStatus.wrongAdapterVersion:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.update, color: Colors.yellow),
         );
         break;
-      case man.ConnectionStatus.emptyAES:
+      case ConnectionStatus.emptyAES:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.add_moderator_outlined, color: Colors.red),
@@ -322,7 +322,7 @@ class _MainViewOldState extends State<MainViewOld>
     with TickerProviderStateMixin {
   late StreamController<int> _controller;
   int numberOfRows = 1;
-  late StreamSubscription<man.ConnectionStatus> _ioConnectionSub;
+  late StreamSubscription<ConnectionStatus> _ioConnectionSub;
   bool ioConnected = false;
 
   late TabController _tabController;
@@ -330,7 +330,11 @@ class _MainViewOldState extends State<MainViewOld>
   @override
   void initState() {
     _controller = StreamController.broadcast();
-    ioConnected = context.read<Manager>().connectionManager.ioBConnected;
+    ioConnected = context
+        .read<Manager>()
+        .connectionManager
+        .getConnectionStatus()
+        .isConnected;
     context.read<Manager>().generalManager.dialogStreamController.stream.listen(
       (event) {
         showDialog(context: context, builder: event);
@@ -477,12 +481,12 @@ class _MainViewOldState extends State<MainViewOld>
     );
   }
 
-  Widget? _getAppBarStatus(man.ConnectionStatus connectionStatus) {
+  Widget? _getAppBarStatus(ConnectionStatus connectionStatus) {
     int n = 0;
     BlinkingWidget blinkingWidget;
     switch (connectionStatus) {
-      case man.ConnectionStatus.connected:
-      case man.ConnectionStatus.loggedIn:
+      case ConnectionStatus.connected:
+      case ConnectionStatus.loggedIn:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           disablerAfter: const Duration(seconds: 3),
@@ -490,31 +494,31 @@ class _MainViewOldState extends State<MainViewOld>
           child: const Icon(Icons.done, color: Colors.green),
         );
         break;
-      case man.ConnectionStatus.loggingIn:
+      case ConnectionStatus.loggingIn:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.login, color: Colors.orange),
         );
         break;
-      case man.ConnectionStatus.loginDeclined:
+      case ConnectionStatus.loginDeclined:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.login, color: Colors.orange),
         );
         break;
-      case man.ConnectionStatus.newAesKey:
+      case ConnectionStatus.newAesKey:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.add_moderator, color: Colors.yellow),
         );
         break;
-      case man.ConnectionStatus.wrongAdapterVersion:
+      case ConnectionStatus.wrongAdapterVersion:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.update, color: Colors.yellow),
         );
         break;
-      case man.ConnectionStatus.emptyAES:
+      case ConnectionStatus.emptyAES:
         blinkingWidget = BlinkingWidget(
           vsync: this,
           child: const Icon(Icons.add_moderator_outlined, color: Colors.red),

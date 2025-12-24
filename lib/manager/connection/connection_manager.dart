@@ -6,41 +6,21 @@ import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:grpc/grpc.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_home/dataPackages/data_package.dart';
-import 'package:smart_home/device/state/state.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
 import 'package:smart_home/generated/login/login.pbgrpc.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
-import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/model/device/device_interface.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/utils/cryptojs_aes_encryption_helper.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-enum ConnectionStatus {
-  disconnected,
-  connected,
-  loggedIn,
-  emptyAES,
-  waiting,
-  loggingIn,
-  connecting,
-  tryAgain,
-  error,
-  loginDeclined,
-  newAesKey,
-  wrongAesKey,
-  wrongAdapterVersion,
-}
-
-extension ConnectionStatusExtension on ConnectionStatus {
-  bool get isConnected {
-    return this == ConnectionStatus.connected ||
-        this == ConnectionStatus.loggedIn;
-  }
-}
-
-class ConnectionManager with WidgetsBindingObserver {
+class ConnectionManager
+    with WidgetsBindingObserver
+    implements ConnectionServiceInterface {
   /// Static so it can be used by the background runner
   static Map<String, dynamic> decryptAes({
     required Map<String, dynamic> rawMap,
@@ -83,13 +63,13 @@ class ConnectionManager with WidgetsBindingObserver {
   ConfigSyncClient? configSyncStub;
 
   final StreamController statusStreamController = StreamController();
-  final DeviceManager deviceManager;
+  final DeviceServiceInterface deviceManager;
   final GeneralManager generalManager;
   final IoBrokerManager ioBrokerManager;
   final List<DataPackage> sendOnConnect = [];
 
   final StreamController<ConnectionStatus> connectionStatusStreamController =
-      StreamController.broadcast(); //TODO: Kein Broadcast
+      StreamController.broadcast();
   int tries = 0;
 
   ConnectionManager({
@@ -103,6 +83,7 @@ class ConnectionManager with WidgetsBindingObserver {
     });
   }
 
+  @override
   Future<Uri> getUrl() async {
     if (ioBrokerManager.useSecondaryAddress &&
         (await networkInfo.getWifiName()).toString().trim() !=
@@ -114,7 +95,8 @@ class ConnectionManager with WidgetsBindingObserver {
     );
   }
 
-  Future<void> connectIoB() async {
+  @override
+  Future<void> connect() async {
     Uri url = await getUrl();
     await channel?.shutdown();
     channel = ClientChannel(
@@ -138,17 +120,6 @@ class ConnectionManager with WidgetsBindingObserver {
     channel!.createConnection();
 
     _requestLogin();
-    /*try {
-      _webSocket = IOWebSocketChannel.connect(url,
-          pingInterval: const Duration(minutes: 5));
-      _webSocketStreamSub =
-          _webSocket!.stream.listen(onData, onError: onError, onDone: onDone);
-    } catch (e) {
-      connectionStatusStreamController.addError("Connection failed");
-    } finally {
-      statusStreamController.add(true);
-      statusStreamController.close();
-    }*/
   }
 
   @override
@@ -161,7 +132,7 @@ class ConnectionManager with WidgetsBindingObserver {
         break;
 
       case AppLifecycleState.paused:
-        close();
+        disconnect();
 
         break;
       case AppLifecycleState.resumed:
@@ -177,12 +148,7 @@ class ConnectionManager with WidgetsBindingObserver {
     }
   }
 
-  void onError(e) async {
-    ioBConnected = false;
-    ioBrokerManager.connected = true;
-    Manager().talker.error("ConnectionManager | onError ", e);
-  }
-
+  @override
   void reconnect({bool delayed = true}) async {
     if (delayed) {
       await Future.delayed(const Duration(seconds: 3));
@@ -225,162 +191,12 @@ class ConnectionManager with WidgetsBindingObserver {
     _requestLogin();
   }
 
-  void onData(event) {
-    readPackage(event);
-  }
-
-  void close() async {
+  @override
+  void disconnect() async {
     await _webSocketStreamSub?.cancel();
     await _webSocket?.sink.close();
     connectionStatusStreamController.add(ConnectionStatus.disconnected);
     ioBConnected = false;
-  }
-
-  void onDone() async {
-    ioBrokerManager.connected = false;
-    connectionStatusStreamController.add(ConnectionStatus.disconnected);
-
-    ioBConnected = false;
-    tries++;
-    if (tries <= 20) {
-      connectionStatusStreamController.add(ConnectionStatus.tryAgain);
-      await Future.delayed(const Duration(seconds: 3));
-      reconnect();
-    }
-  }
-
-  void readPackage(String msg) {
-    Map<String, dynamic> rawMap = jsonDecode(msg);
-
-    //print(rawMap["content"]);
-    DataPackageType packageType = DataPackageType.values.firstWhere(
-      (element) => element.name == rawMap["type"],
-    );
-    if (rawMap["content"] == null) {
-      //Give the user information that they need a new version (comp. with older vesions)
-      _onWrongAdapterVersion();
-      return;
-    }
-    //!Dirty quickfix for login error
-    //Fix on Adapater side next time
-    if (packageType == DataPackageType.loginKey &&
-        rawMap["content"] is String) {
-      _onLoginKey(rawMap["content"]);
-      return;
-    }
-    Manager().talker.debug(
-      "ConnectionManager | Recieved package ${packageType.name} | ${jsonEncode(rawMap)}",
-    );
-    rawMap = rawMap["content"];
-    switch (packageType) {
-      case DataPackageType.iobStateChanged:
-        stateChangedPackage(
-          objectID: rawMap["objectID"],
-          value: rawMap["value"],
-        );
-        break;
-      case DataPackageType.enumUpdate:
-        Manager().talker.error("EnumUpdate not implemented");
-        //ioBrokerManager.enumUpdate(rawData: rawMap);
-        break;
-      case DataPackageType.firstPingFromIob:
-        generalManager.dialogStreamController.sink.add(
-          (p0) => const AlertDialog(
-            title: Text("Error"),
-            content: Text("Make sure you installed the newest Hiob adapter"),
-          ),
-        );
-        break;
-      case DataPackageType.firstPingFromIob2:
-        _onFirstPing();
-        break;
-      case DataPackageType.setNewAes:
-        _onNewAes();
-        break;
-      case DataPackageType.wrongAesKey:
-        _onWrongAesKey();
-        break;
-      case DataPackageType.historyDataUpdate:
-        Manager.instance.historyManager.onHistoryUpdate(
-          data: jsonDecode(rawMap["data"]),
-        );
-        break;
-      case DataPackageType.loginDeclined:
-        //_onLoginDeclined();
-        break;
-      case DataPackageType.loginApproved:
-        _onLoginApproved(rawMap["version"]);
-        break;
-      case DataPackageType.loginKey:
-        _onLoginKey(rawMap["key"]);
-        break;
-      case DataPackageType.templateSettingCreate:
-        _onTemplateSettingCreate();
-        break;
-      case DataPackageType.requestTemplatesSettings:
-        Manager
-            .instance
-            .settingsSyncManager
-            .fetchedConfigListStreamController
-            .sink
-            .add(List<String>.from(rawMap["settings"]));
-        break;
-
-      case DataPackageType.uploadTemplateSettingSuccess:
-        Manager.instance.settingsSyncManager.uploadSuccessStreamController.sink
-            .add(true);
-        break;
-      case DataPackageType.getTemplatesSetting:
-        Manager.instance.settingsSyncManager.loadGotTemplate(
-          rawMap["screens"],
-          rawMap["widget"],
-        );
-        break;
-      case DataPackageType.answerSubscribeToDataPoints:
-        _onAnswerSubscribeToDataPoints(rawMap["value"]);
-        break;
-      case DataPackageType.notification:
-        Manager.instance.notificationManager.showIoBNotificationInForeground(
-          rawMap["content"],
-        );
-        break;
-      default:
-        throw UnimplementedError("Error");
-    }
-  }
-
-  void stateChangedPackage({required String objectID, required dynamic value}) {
-    throw UnsupportedError("Not supported anymore");
-  }
-
-  void _onAnswerSubscribeToDataPoints(List<dynamic>? dataValues) {
-    if (dataValues != null) {
-      for (Map<String, dynamic> dataValue in dataValues) {
-        stateChangedPackage(
-          objectID: dataValue["objectID"],
-          value: dataValue["value"],
-        );
-      }
-    }
-  }
-
-  void _onWrongAdapterVersion() {
-    ioBConnected = true;
-    ioBrokerManager.connected = true;
-    connectionStatusStreamController.add(ConnectionStatus.wrongAdapterVersion);
-  }
-
-  void _onFirstPing() {
-    ioBConnected = true;
-
-    ioBrokerManager.connected = true;
-    connectionStatusStreamController.add(ConnectionStatus.connected);
-    tries = 0;
-    _requestLogin();
-
-    for (DataPackage d in sendOnConnect) {
-      sendMsg(d);
-    }
   }
 
   void _requestLogin() async {
@@ -447,6 +263,7 @@ class ConnectionManager with WidgetsBindingObserver {
     connectionStatusStreamController.add(ConnectionStatus.loginDeclined);
   }
 
+  @override
   void changeConnectionStatus(ConnectionStatus status, {String? message}) {
     Manager().talker.debug(
       "ConnectionManager | Change connection status to ${status.name}",
@@ -477,21 +294,18 @@ class ConnectionManager with WidgetsBindingObserver {
     }
   }
 
-  void _onNewAes() {
-    connectionStatusStreamController.add(ConnectionStatus.newAesKey);
-  }
-
-  void _onWrongAesKey() {
-    connectionStatusStreamController.add(ConnectionStatus.emptyAES);
-  }
-
   void _onLoginApproved(String? version) {
     Manager().talker.debug("ConnectionManager | Login approved");
 
     _registerOtherServices();
     connectionStatusStreamController.add(ConnectionStatus.loggedIn);
-    deviceManager.subscribeToDataPointsIoB(this);
-    deviceManager.updateObjects(this);
+    deviceManager.listenToDeviceChanges(
+      devices: Manager().screenManager
+          .getDependentDataPoints()
+          .map((e) => DeviceInterface(id: e))
+          .toList(),
+    );
+    deviceManager.fetchAndUpdateDevices();
   }
 
   void _onLoginKey(String? key) {
@@ -506,9 +320,7 @@ class ConnectionManager with WidgetsBindingObserver {
 
   void _registerOtherServices() {
     Manager().talker.debug("ConnectionManager | Regiserting other services");
-    if (stateUpdateClientStub != null) {
-      //TODO clean
-    }
+    if (stateUpdateClientStub != null) {}
     Map<String, String> header = {
       "token": generalManager.loginKey ?? "",
       "deviceId": generalManager.deviceID ?? "",
@@ -523,41 +335,34 @@ class ConnectionManager with WidgetsBindingObserver {
     );
   }
 
-  void sendMsg(DataPackage dataPackage) {
-    if (!ioBConnected) {
-      if (dataPackage.type == DataPackageType.subscribeHistory) {
-        sendOnConnect.add(dataPackage);
+  @override
+  ConnectionStatus getConnectionStatus() {
+    return connectionStatus;
+  }
+
+  @override
+  T getGrpcService<T>() {
+    if (T == LoginClient) {
+      if (loginClientStub == null) {
+        throw Exception("LoginClient is not initialized");
       }
-      return;
-    }
-    String pass = dataPackage.type.name;
-    dynamic sendContent = dataPackage.content;
-
-    try {
-      _webSocket?.sink.add(
-        jsonEncode({"type": dataPackage.type.name, "content": sendContent}),
-      );
-    } catch (e) {
-      Manager().talker.error("ConnectionManager | errorLogin", e);
-      changeConnectionStatus(ConnectionStatus.error);
-      generalManager.dialogStreamController.sink.add(
-        (p0) => AlertDialog(
-          title: const Text("Error"),
-          content: const Text(
-            "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(p0).pop(),
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
+      return loginClientStub as T;
+    } else if (T == StateUpdateClient) {
+      if (stateUpdateClientStub == null) {
+        throw Exception("StateUpdateClient is not initialized");
+      }
+      return stateUpdateClientStub as T;
+    } else if (T == ConfigSyncClient) {
+      if (configSyncStub == null) {
+        throw Exception("ConfigSyncClient is not initialized");
+      }
+      return configSyncStub as T;
+    } else {
+      throw UnimplementedError("gRPC service of type $T is not implemented");
     }
   }
 
-  void _onTemplateSettingCreate() {
-    Manager.instance.settingsSyncManager.onTemplateCreate();
-  }
+  @override
+  Stream<ConnectionStatus> get connectionStatusStream =>
+      connectionStatusStreamController.stream;
 }

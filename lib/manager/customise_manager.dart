@@ -28,15 +28,15 @@ import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
 import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
     as depc_web_view;
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
-import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomWidgetManager {
   String templateKey = "templateKey";
   bool loaded = false;
   FileManager fileManager;
-  DeviceManager deviceManager;
+  DeviceServiceInterface deviceManager;
   Manager manager;
   final List<CustomWidgetWrapper> templates = [];
   final StreamController<List<CustomWidgetWrapper>> templatesStreamController =

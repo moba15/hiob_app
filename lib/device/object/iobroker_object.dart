@@ -1,5 +1,6 @@
-class IobrokerObject {
-  String id;
+import 'package:smart_home/model/device/device_interface.dart';
+
+class IobrokerObject extends DeviceInterface {
   String? name;
   String? parent;
   String? desc;
@@ -11,7 +12,7 @@ class IobrokerObject {
   int? min;
   int? max;
   IobrokerObject({
-    required this.id,
+    required String id,
     required this.name,
     required this.parent,
     required this.desc,
@@ -22,5 +23,5 @@ class IobrokerObject {
     required this.max,
     required this.min,
     required this.step,
-  });
+  }) : super(id: id);
 }

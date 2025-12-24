@@ -23,13 +23,7 @@ class NoneTriggerActionSettings extends TriggerActionSetting {
           key: dataPointKey,
           title: "Datapoint",
           description: "The Datapoint which value will be shown",
-          child: DeviceSelection(
-            customWidgetManager: Manager.instance.customWidgetManager,
-            onDataPointSelected: (d) => {noneTriggerAction.dataPoint = d},
-            onDeviceSelected: (d) => {noneTriggerAction.dataPoint == null},
-            selectedDataPoint: noneTriggerAction.dataPoint,
-            selectedDevice: noneTriggerAction.dataPoint?.device,
-          ),
+          child: Placeholder(),
         ),
         Showcase(
           key: roundToKey,

@@ -110,18 +110,7 @@ class _CustomLightWidgetSettingWidgetState
             key: widget.switchDatapoint,
             title: "Switch Datapoint",
             description: "The Datapoint which will be controlled by the Button",
-            child: DeviceSelection(
-              onDeviceSelected: (device) => {},
-              onDataPointSelected: (dataPoint) => {
-                widget.customLightWidget.onDataPoint = dataPoint,
-              },
-              customWidgetManager: customWidgetManager,
-              deviceLabel: "Switch Device",
-              dataPointLabel: "Switch Datapoint",
-              preferredRole: "switch.*",
-              selectedDataPoint: _onDataPoint,
-              selectedDevice: _onDataPoint?.device,
-            ),
+            child: Placeholder(),
           ),
 
           Container(height: 20),
@@ -201,19 +190,7 @@ class _CustomLightWidgetSettingWidgetState
                 ),
               ],
             ),
-            DeviceSelection(
-              onDeviceSelected: (device) => {},
-              onDataPointSelected: (dataPoint) => {
-                widget.customLightWidget.briDataPoint = dataPoint,
-              },
-              customWidgetManager: customWidgetManager,
-              deviceLabel: "Device",
-              dataPointLabel: "Datapoint",
-              selectedDataPoint: widget.customLightWidget.briDataPoint,
-              selectedDevice:
-                  widget.customLightWidget.briDataPoint?.device ??
-                  widget.customLightWidget.onDataPoint?.device,
-            ),
+            Placeholder(),
           ],
 
           Container(height: 20),
@@ -244,19 +221,7 @@ class _CustomLightWidgetSettingWidgetState
                 style: TextStyle(fontSize: 16.5),
               ),
             ),
-            DeviceSelection(
-              onDeviceSelected: (device) => {},
-              onDataPointSelected: (dataPoint) => {
-                widget.customLightWidget.reachableDataPoint = dataPoint,
-              },
-              customWidgetManager: customWidgetManager,
-              deviceLabel: "Reachable Device",
-              dataPointLabel: "Reachable Datapoint",
-              selectedDataPoint: widget.customLightWidget.reachableDataPoint,
-              selectedDevice:
-                  widget.customLightWidget.reachableDataPoint?.device ??
-                  widget.customLightWidget.onDataPoint?.device,
-            ),
+            Placeholder(),
           ],
         ],
       ),

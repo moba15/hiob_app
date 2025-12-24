@@ -21,17 +21,7 @@ class ButtonTriggerActionSettings extends TriggerActionSetting {
           key: datapointKey,
           title: "Datapoint",
           description: "The Datapoint which will be controlled by the Button",
-          child: DeviceSelection(
-            onDeviceSelected: (d) => {
-              if (d == null) buttonTriggerAction.dataPoint = null,
-            },
-            onDataPointSelected: (d) => buttonTriggerAction.dataPoint = d,
-            customWidgetManager: Manager.instance.customWidgetManager,
-            deviceLabel: "Device",
-            dataPointLabel: "Datapoint",
-            selectedDevice: buttonTriggerAction.dataPoint?.device,
-            selectedDataPoint: buttonTriggerAction.dataPoint,
-          ),
+          child: Placeholder(),
         ),
         Showcase(
           key: datapointLabel,

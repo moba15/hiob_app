@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/model/device/device_interface.dart';
 
 part 'datapoint_event.dart';
 
@@ -15,12 +16,13 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   DataPointBloc(this.objectId) : super(DataPointInitial(value: null)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
-    _deviceValueSubscription = Manager().deviceManager.objectValueStreams.stream
-        .listen((event) {
-          if (event.first == objectId) {
-            add(DataPointValueUpdate(value: event.second));
-          }
-        });
+    _deviceValueSubscription = Manager().deviceManager.objectValueStream.listen(
+      (event) {
+        if (event.first == objectId) {
+          add(DataPointValueUpdate(value: event.second));
+        }
+      },
+    );
     //TODO
     /* _deviceValueSubscription =
         dataPoint.valueStreamController.stream.listen((event) {
@@ -28,7 +30,9 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     });*/
     add(
       DataPointValueUpdate(
-        value: Manager().deviceManager.getCurrentValue(objectId),
+        value: Manager().deviceManager.getDeviceValue(
+          device: DeviceInterface(id: objectId),
+        ),
       ),
     );
   }
@@ -44,7 +48,6 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     Emitter<DataPointState> emit,
   ) {
     emit(DataPointState(value: event.value));
-    //TODO
   }
 
   void _onValueUpdateRequest(
@@ -60,6 +63,10 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     }
 
     emit(DataPointState(value: value));
+    Manager().deviceManager.controllDevice<dynamic>(
+      deviceId: objectId,
+      value: value,
+    );
     //TODO
     /*dataPoint.value = value;
     dataPoint.device?.lastUpdated = DateTime.now();

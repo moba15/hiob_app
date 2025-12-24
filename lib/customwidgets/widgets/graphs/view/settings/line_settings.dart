@@ -61,15 +61,7 @@ class _LineSettingsBody extends StatelessWidget {
           ),
           StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              return DeviceSelection(
-                selectedDataPoint: graphLine.dataPoint,
-                selectedDevice: graphLine.dataPoint?.device,
-                onDeviceSelected: (d) {
-                  setState(() => graphLine.dataPoint = null);
-                },
-                onDataPointSelected: (d) => graphLine.dataPoint = d,
-                customWidgetManager: Manager.instance.customWidgetManager,
-              );
+              return Placeholder();
             },
           ),
           _buildGraphLineTypeSelector(),

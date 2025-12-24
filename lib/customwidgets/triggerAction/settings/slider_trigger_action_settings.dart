@@ -23,15 +23,7 @@ class SliderTriggerActionSettings extends TriggerActionSetting {
           key: datapointKey,
           title: "Datapoint",
           description: "The Datapoint which will be controlled by the Slider",
-          child: DeviceSelection(
-            customWidgetManager: Manager.instance.customWidgetManager,
-            onDeviceSelected: (d) => {sliderTriggerAction.dataPoint == null},
-            onDataPointSelected: (d) => {sliderTriggerAction.dataPoint = d},
-            selectedDevice: sliderTriggerAction.dataPoint?.device,
-            selectedDataPoint: sliderTriggerAction.dataPoint,
-            dataPointLabel: "Datapoint",
-            deviceLabel: "Device",
-          ),
+          child: Placeholder(),
         ),
         Showcase(
           key: sliderKey,

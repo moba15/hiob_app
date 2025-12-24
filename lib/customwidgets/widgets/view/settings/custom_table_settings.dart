@@ -158,18 +158,7 @@ class _CustomTableSettingsState extends State<CustomTableSettings> {
             key: widget.dataPointKey,
             title: "Datapoint",
             description: "The Datapoint which contains the table data",
-            child: DeviceSelection(
-              onDataPointSelected: (d) =>
-                  widget.customTableWidget.dataPoint = d,
-              selectedDataPoint: widget.customTableWidget.dataPoint,
-              selectedDevice: widget.customTableWidget.dataPoint?.device,
-              onDeviceSelected: (d) {
-                if (d == null) {
-                  widget.customTableWidget.dataPoint = null;
-                }
-              },
-              customWidgetManager: Manager.instance.customWidgetManager,
-            ),
+            child: Placeholder(),
           ),
           Showcase(
             key: widget.columnsKey,

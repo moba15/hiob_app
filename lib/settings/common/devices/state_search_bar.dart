@@ -2,9 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
-import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/utils/pair.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/cubit/cubit/async_search_cubit.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/dropdown_search_async.dart';
 import 'package:smart_home/utils/widgets/substring_highlight_widget.dart';
@@ -23,7 +22,7 @@ class StateSearchBar extends StatefulWidget {
 }
 
 class _StateSearchBarState extends State<StateSearchBar> {
-  late DeviceManager deviceManager;
+  late DeviceServiceInterface<IobrokerObject> deviceManager;
   late AsyncSearchCubit<IobrokerObject> asyncSearchCubit;
   IobrokerObject? selectedObject;
   String _currentSearch = "";
@@ -32,16 +31,16 @@ class _StateSearchBarState extends State<StateSearchBar> {
   void initState() {
     deviceManager = Manager().deviceManager;
     asyncSearchCubit = AsyncSearchCubit(
-      getInitalValues: () => deviceManager.getAllIobrokerObjects(limit: 250),
+      getInitalValues: () => deviceManager.getAllDevices(limit: 250),
     );
     if (widget.selectedObject != null) {
-      Manager().deviceManager
-          .getIoBrokerDataPointByObjectID(widget.selectedObject!)
-          .then((value) {
-            setState(() {
-              selectedObject = value;
-            });
-          });
+      Manager().deviceManager.getDeviceById(id: widget.selectedObject!).then((
+        value,
+      ) {
+        setState(() {
+          selectedObject = value;
+        });
+      });
     }
 
     super.initState();
@@ -50,7 +49,7 @@ class _StateSearchBarState extends State<StateSearchBar> {
   @override
   Widget build(BuildContext context) {
     if (filters.isEmpty) {
-      deviceManager.getIobrokerAdapaters().then((value) {
+      deviceManager.getSelectableFilters().then((value) {
         setState(() {
           filters = {for (var element in value) element: false};
         });
@@ -69,14 +68,14 @@ class _StateSearchBarState extends State<StateSearchBar> {
         onSearch: (p0) async {
           _currentSearch = p0;
           asyncSearchCubit.onSearched(
-            await deviceManager.searchIobrokerObjects(p0, filters: filters),
+            await deviceManager.searchDevices(query: p0, filters: filters),
           );
         },
         chipList: _SearchChipList(
           filters: filters,
           filterUpdated: () {
             deviceManager
-                .searchIobrokerObjects(_currentSearch, filters: filters)
+                .searchDevices(query: _currentSearch, filters: filters)
                 .then((value) {
                   asyncSearchCubit.onSearched(value);
                 });

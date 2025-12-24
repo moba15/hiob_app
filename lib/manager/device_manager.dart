@@ -5,17 +5,17 @@ import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/database/app-database.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
-import 'package:smart_home/device/state/state.dart';
-import 'package:smart_home/device/iobroker_device.dart';
-import 'package:smart_home/generated/state/state.pb.dart';
+import 'package:smart_home/generated/state/state.pbgrpc.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/model/device/device_interface.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/utils/pair.dart';
 
-import '../device/device.dart';
 import 'manager.dart';
 
-class DeviceManager {
+class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
   FileManager fileManager;
   AppDatabase appDatabase = AppDatabase(null);
   Manager manager;
@@ -23,13 +23,15 @@ class DeviceManager {
   bool loaded = false;
   final String key = "devices";
   HashMap<String, dynamic> currentValues = HashMap<String, dynamic>();
-  StreamController<Pair<String, dynamic>> objectValueStreams =
+  final StreamController<Pair<String, dynamic>> _objectValueStreams =
       StreamController.broadcast();
   List<String> preDefinedFilters = [];
 
-  DeviceManager(this.fileManager, {required this.manager}) {}
+  DeviceManager(this.fileManager, {required this.manager}) {
+    _loadFilters();
+  }
 
-  void loadFilters() async {
+  void _loadFilters() async {
     var map = await fileManager.getMap(key);
     Manager().talker.debug("XX ${preDefinedFilters.length}");
     if (map != null && map.containsKey("filters")) {
@@ -41,13 +43,14 @@ class DeviceManager {
     } else {}
   }
 
+  @override
   void updateFilters(List<String> filters) {
     preDefinedFilters.clear();
     preDefinedFilters.addAll(filters);
-    updateData();
+    _updateData();
   }
 
-  void updateData() {
+  void _updateData() {
     Map<String, dynamic> map = {"filters": preDefinedFilters};
     fileManager.writeJSON(key, map).then((value) async {
       Manager().talker.debug("fileManager.writeJSON $value");
@@ -59,17 +62,16 @@ class DeviceManager {
     });
   }
 
-  Future<IobrokerObject?> getIoBrokerDataPointByObjectID(
-    String objectID,
-  ) async {
+  @override
+  Future<IobrokerObject?> getDeviceById({required String id}) async {
     String query =
         "SELECT * from ${appDatabase.statesTable.actualTableName} where id = ? LIMIT 1";
     List<QueryRow> result = (await appDatabase
-        .customSelect(query, variables: [Variable<String>(objectID)])
+        .customSelect(query, variables: [Variable<String>(id)])
         .get());
     if (result.isEmpty) {
       Manager().talker.error(
-        "DeviceManager | getIoBrokerDataPointByObjectID | $objectID not found",
+        "DeviceManager | getIoBrokerDataPointByObjectID | $id not found",
       );
       return null;
     }
@@ -90,9 +92,8 @@ class DeviceManager {
     );
   }
 
-  Future<List<IobrokerObject>> getAllIobrokerObjects({
-    required int limit,
-  }) async {
+  @override
+  Future<List<IobrokerObject>> getAllDevices({required int limit}) async {
     String query =
         "SELECT * from ${appDatabase.statesTable.actualTableName} LIMIT $limit";
     List<QueryRow> resultRaw = await appDatabase
@@ -116,141 +117,104 @@ class DeviceManager {
     return result;
   }
 
-  void valueChange(IobrokerObject? iobObject, dynamic value) {
+  Future<bool> _controllDeviceByObject<T>(
+    IobrokerObject? iobObject,
+    T value,
+  ) async {
     if (iobObject == null) {
-      return;
+      return false;
     }
     currentValues[iobObject.id] = value;
-    //TODO valueChange
-    objectValueStreams.sink.add(
+    // notify listeners
+    _objectValueStreams.sink.add(
       Pair<String, dynamic>(first: iobObject.id, second: value),
     );
+    // send to backend
+    updateValue(iobObject.id, value);
+    return true;
   }
 
-  T? getCurrentValue<T>(String dataPointID) {
-    return currentValues[dataPointID] as T?;
+  @override
+  Future<bool> controllDevice<T>({
+    required String deviceId,
+    required T value,
+  }) async {
+    IobrokerObject? obj = await getDeviceById(id: deviceId);
+    return await _controllDeviceByObject<T>(obj, value);
   }
 
-  void subscribeToDataPointsIoB(ConnectionManager connectionManager) async {
-    if (connectionManager.stateUpdateClientStub != null) {
-      List<String> dataPoints = Manager().screenManager
-          .getDependentDataPoints();
-      for (var d in dataPoints) {}
-      manager.talker.debug(
-        "DeviceManager | subscribe to ${dataPoints.length} datapoints",
-      );
-      StreamSubscription<StatesValueUpdate>? subscription = connectionManager
-          .stateUpdateClientStub
-          ?.subscibe(
-            StateSubscribtion(
-              type: StateSubscribtion_SubscriptionType.subscripe,
-              stateIds: dataPoints,
-            ),
-          )
-          .listen(
-            (value) async {
-              Manager().talker.debug(
-                "DeviceManager | stateSubscriptionStream | Recieved update from ${value.stateUpdates.length} states",
-              );
-              Manager().talker.verbose(
-                "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map((e) {
-                  return "${e.stateId}: [${e.boolValue}, ${e.doubleValue},  ${e.stringValue}]";
-                })}",
-              );
+  @override
+  T? getDeviceValue<T>({required DeviceInterface device}) {
+    return currentValues[device.id] as T?;
+  }
 
-              for (StateValueUpdate update in value.stateUpdates) {
-                IobrokerObject? d = await getIoBrokerDataPointByObjectID(
-                  update.stateId,
+  @override
+  void listenToDeviceChanges({required List<DeviceInterface> devices}) async {
+    List<String> dataPoints = Manager().screenManager.getDependentDataPoints();
+    for (var d in dataPoints) {}
+    manager.talker.debug(
+      "DeviceManager | subscribe to ${dataPoints.length} datapoints",
+    );
+    StreamSubscription<StatesValueUpdate>? subscription = Manager()
+        .connectionManager
+        .getGrpcService<StateUpdateClient>()
+        .subscibe(
+          StateSubscribtion(
+            type: StateSubscribtion_SubscriptionType.subscripe,
+            stateIds: dataPoints,
+          ),
+        )
+        .listen(
+          (value) async {
+            Manager().talker.debug(
+              "DeviceManager | stateSubscriptionStream | Recieved update from ${value.stateUpdates.length} states",
+            );
+            Manager().talker.verbose(
+              "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map((e) {
+                return "${e.stateId}: [${e.boolValue}, ${e.doubleValue},  ${e.stringValue}]";
+              })}",
+            );
+
+            for (StateValueUpdate update in value.stateUpdates) {
+              IobrokerObject? d = await getDeviceById(id: update.stateId);
+              if (d != null) {
+                valueChange(d, update.stringValue);
+              } else {
+                Manager().talker.error(
+                  "DeviceManager | stateSubscriptionStream | Datapoint ${update.stateId} not found",
                 );
-                if (d != null) {
-                  valueChange(d, update.stringValue);
-                } else {
-                  Manager().talker.error(
-                    "DeviceManager | stateSubscriptionStream | Datapoint ${update.stateId} not found",
-                  );
-                }
               }
-            },
-            onError: (e) {
-              Manager().talker.error(
-                "DeviceManager | stateSubscriptionStream  | onError: $e",
-              );
-              Manager.instance.generalManager.dialogStreamController.sink.add(
-                (p0) => AlertDialog(
-                  title: const Text("Error"),
-                  content: const Text(
-                    "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(p0).pop(),
-                      child: const Text("OK"),
-                    ),
-                  ],
+            }
+          },
+          onError: (e) {
+            Manager().talker.error(
+              "DeviceManager | stateSubscriptionStream  | onError: $e",
+            );
+            Manager.instance.generalManager.dialogStreamController.sink.add(
+              (p0) => AlertDialog(
+                title: const Text("Error"),
+                content: const Text(
+                  "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
                 ),
-              );
-              Manager().connectionManager.changeConnectionStatus(
-                ConnectionStatus.error,
-                message: "State subscription error: $e",
-              );
-            },
-          );
-      if (subscription == null) {
-        Manager().talker.error(
-          "DeviceManager | unable to create StreamSubscription for subscribed Datapoints",
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(p0).pop(),
+                    child: const Text("OK"),
+                  ),
+                ],
+              ),
+            );
+            Manager().connectionManager.changeConnectionStatus(
+              ConnectionStatus.error,
+              message: "State subscription error: $e",
+            );
+          },
         );
-      }
-    }
   }
 
-  Stream<SearchStateResponse>? startSearch(
-    Stream<SearchStateRequest> searchStream,
-  ) {
-    Manager().talker.debug("DeviceManager | startSearch ");
-    if (manager.connectionManager.stateUpdateClientStub != null) {
-      StreamController<SearchStateResponse> t = StreamController();
-      //TODO Close streams
-
-      StreamSubscription<SearchStateResponse> subscription = manager
-          .connectionManager
-          .stateUpdateClientStub!
-          .searchStateStream(searchStream)
-          .listen(
-            (value) {
-              Manager().talker.verbose(
-                value.states
-                    .map((e) => e.stateId)
-                    .reduce((value, element) => "$value,$element"),
-              );
-              t.sink.add(value);
-            },
-            onError: (e) {
-              Manager().talker.error(
-                "DeviceManager | searchIobrokerObjects | onError: $e",
-              );
-              Manager.instance.generalManager.dialogStreamController.sink.add(
-                (p0) => AlertDialog(
-                  title: const Text("Error"),
-                  content: const Text(
-                    "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(p0).pop(),
-                      child: const Text("OK"),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-      return t.stream;
-    }
-    return null;
-  }
-
-  Future<List<IobrokerObject>> searchIobrokerObjects(
-    String search, {
+  @override
+  Future<List<IobrokerObject>> searchDevices({
+    required String query,
     Map<String, bool> filters = const {},
   }) async {
     String filterExpression = "";
@@ -275,12 +239,12 @@ class DeviceManager {
         .customSelect(
           query,
           variables: [
-            Variable<String>(search),
-            Variable<String>(search),
-            Variable<String>(search),
-            Variable<String>("%$search%"),
-            Variable<String>("%$search%"),
-            Variable<String>("%$search%"),
+            Variable<String>(query),
+            Variable<String>(query),
+            Variable<String>(query),
+            Variable<String>("%$query%"),
+            Variable<String>("%$query%"),
+            Variable<String>("%$query%"),
           ],
         )
         .get()
@@ -309,11 +273,12 @@ class DeviceManager {
       );
     }).toList();
     Manager().talker.verbose(
-      "DeviceManager | searchIobrokerObjects found ${result.length} results for $search",
+      "DeviceManager | searchIobrokerObjects found ${result.length} results for $query",
     );
     return result;
   }
 
+  //TODO: abstract this to DeviceServiceInterface
   Future<List<String>> getIobrokerAdapaters() async {
     String query = """SELECT  DISTINCT	SUBSTR(id, 1, INSTR(id, '.')-1) 
     || '.' ||
@@ -420,5 +385,28 @@ class DeviceManager {
             );
           });
     }
+  }
+
+  @override
+  Future<void> fetchAndUpdateDevices() {
+    // TODO: implement fetchAndUpdateDevices
+    throw UnimplementedError();
+  }
+
+  void updateValue(String id, Object? value) {
+    throw UnimplementedError("Update value not implemented");
+  }
+
+  void valueChange(IobrokerObject d, String stringValue) {
+    throw UnimplementedError("Value change not implemented");
+  }
+
+  @override
+  Stream<Pair<String, dynamic>> get objectValueStream =>
+      _objectValueStreams.stream;
+
+  @override
+  Future<List<String>> getSelectableFilters() async {
+    return getIobrokerAdapaters();
   }
 }

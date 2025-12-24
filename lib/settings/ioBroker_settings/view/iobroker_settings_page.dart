@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/connection/cubit/connection_cubit.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
 
 import '../../../manager/manager.dart';
 
@@ -160,7 +160,7 @@ class IoBrokerSettingsView extends StatelessWidget {
             );
           },
           bloc: ConnectionCubit(
-            status: Manager.instance.connectionManager.connectionStatus,
+            status: Manager.instance.connectionManager.getConnectionStatus(),
           ),
         ),
         Center(
@@ -312,7 +312,7 @@ class __IobrokerObjectFilterState extends State<_IobrokerObjectFilter> {
   @override
   void initState() {
     super.initState();
-    Manager().deviceManager.getIobrokerAdapaters().then((value) {
+    Manager().deviceManager.getSelectableFilters().then((value) {
       setState(() {
         allAdapaters = value;
         selectedFilters.clear();

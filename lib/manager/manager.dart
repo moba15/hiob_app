@@ -5,18 +5,20 @@ import 'dart:math';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
-import 'package:smart_home/manager/history/history_manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import '../background/background_runner.dart';
 
@@ -37,7 +39,7 @@ class Manager {
   late CustomWidgetManager customWidgetManager;
   StreamSubscription? subscription1;
 
-  late DeviceManager deviceManager;
+  late DeviceServiceInterface<IobrokerObject> deviceManager;
   StreamSubscription? subscription2;
 
   late ScreenManager screenManager;
@@ -46,14 +48,11 @@ class Manager {
   late IoBrokerManager ioBrokerManager;
   StreamSubscription? subscription4;
 
-  late ConnectionManager connectionManager;
+  late ConnectionServiceInterface connectionManager;
   StreamSubscription? subscription5;
 
   late GeneralManager generalManager;
   StreamSubscription? subscription6;
-
-  late HistoryManager historyManager;
-  StreamSubscription? subscription7;
 
   late SettingsSyncManager settingsSyncManager;
 
@@ -95,8 +94,6 @@ class Manager {
       generalManager: generalManager,
     );
 
-    historyManager = HistoryManager(connectionManager: connectionManager);
-
     customWidgetManager = CustomWidgetManager(
       fileManager: fileManager,
       deviceManager: deviceManager,
@@ -113,8 +110,6 @@ class Manager {
       fileManager: fileManager,
     )..loadSettings();
 
-    deviceManager.loadFilters();
-
     themeManager = ThemeManager(manager: this)..loadTheme();
 
     subscription1 = customWidgetManager.templatesStreamController.stream.listen(
@@ -122,12 +117,7 @@ class Manager {
         onLoaded("customWidgetManager");
       },
     );
-
-    subscription2 = deviceManager.deviceListStreamController.stream.listen((
-      event,
-    ) {
-      onLoaded("deviceManager");
-    });
+    onLoaded("deviceManager");
 
     subscription3 = screenManager.screenStreamController.stream.listen((event) {
       onLoaded("screenManager");
@@ -139,11 +129,8 @@ class Manager {
       onLoaded("ioBrokerManager");
     });
 
-    subscription5 = connectionManager.statusStreamController.stream.listen((
-      event,
-    ) {
-      onLoaded("connectionManager");
-    });
+    onLoaded("connectionManager");
+
     subscription6 = generalManager.statusStreamController.stream.listen((
       event,
     ) {
@@ -165,7 +152,7 @@ class Manager {
       status = ManagerStatus.finished;
 
       managerStatusStreamController.add(ManagerStatus.finished);
-      connectionManager.connectIoB();
+      connectionManager.connect();
     }
     if (loadingState >= maxLoadingState - 1) {
       _initManagerAfter();

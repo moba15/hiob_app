@@ -127,30 +127,7 @@ class _CustomSwitchWidgetSettingWidgetState
           description: "The Datapoint which will be controlled by the Button",
           child: Container(
             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DeviceSelection(
-                    selectedDevice: currentDevice,
-                    selectedDataPoint: currentDataPoint,
-                    onDeviceSelected: (d) {
-                      if (d == null) {
-                        currentDataPoint = null;
-                      }
-                      currentDevice = d;
-                      currentDevice = d;
-                      widget.customSimpleSwitchWidget.dataPoint =
-                          currentDataPoint;
-                      widget.customSimpleSwitchWidget.device = d;
-                    },
-                    onDataPointSelected: (DataPoint? d) {
-                      widget.customSimpleSwitchWidget.dataPoint = d;
-                    },
-                    customWidgetManager: customWidgetManager,
-                  ),
-                ),
-              ],
-            ),
+            child: Row(children: [Expanded(child: Placeholder())]),
           ),
         ),
       ],

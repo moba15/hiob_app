@@ -148,34 +148,7 @@ class _CustomSimpleValueWidgetSettingWidgetState
           description: "The Datapoint which value will be shown",
           child: Container(
             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DeviceSelection(
-                    selectedDataPoint: widget.customSimpleValueWidget.dataPoint,
-                    selectedDevice: widget.customSimpleValueWidget.device,
-                    onDeviceSelected: (Device? d) {
-                      if (d != currentDevice) {
-                        currentDataPoint = null;
-                      }
-                      currentDevice = d;
-                      widget.customSimpleValueWidget.dataPoint = null;
-                      widget.customSimpleValueWidget.device = d;
-                    },
-                    onDataPointSelected: (DataPoint? d) {
-                      widget.customSimpleValueWidget.dataPoint = d;
-                      String? unit =
-                          d?.getInformation("unit") ??
-                          widget.customSimpleValueWidget.unit;
-                      setState(() {
-                        widget.customSimpleValueWidget.unit = unit;
-                      });
-                    },
-                    customWidgetManager: customWidgetManager,
-                  ),
-                ),
-              ],
-            ),
+            child: Row(children: [Expanded(child: Placeholder())]),
           ),
         ),
       ],

@@ -56,19 +56,7 @@ class _CustomColorPaletteWidgetSettingsState
               ),
             ),
           ),
-          InputFieldContainer.inputContainer(
-            child: DeviceSelection(
-              onDeviceSelected: (d) => {},
-              onDataPointSelected: (d) {
-                widget.customColorPaletteWidget.dataPoint = d;
-                widget.customColorPaletteWidget.device = d?.device;
-              },
-              dataPointLabel: "Datapoint (ARGB or RGB Hex Value)",
-              selectedDataPoint: widget.customColorPaletteWidget.dataPoint,
-              selectedDevice: widget.customColorPaletteWidget.device,
-              customWidgetManager: Manager().customWidgetManager,
-            ),
-          ),
+          InputFieldContainer.inputContainer(child: Placeholder()),
           InputFieldContainer.inputContainer(
             child: TextFormField(
               onChanged: (s) => {widget.customColorPaletteWidget.prefix = s},

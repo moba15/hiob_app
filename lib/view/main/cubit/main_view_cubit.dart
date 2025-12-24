@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
 
 import '../../../manager/connection/connection_manager.dart';
 import '../../../screen/screen.dart';
@@ -10,7 +11,8 @@ class MainViewCubit extends Cubit<MainViewState> {
   MainViewCubit()
     : super(
         MainViewStateInitial(
-          connectionStatus: Manager.instance.connectionManager.connectionStatus,
+          connectionStatus: Manager.instance.connectionManager
+              .getConnectionStatus(),
         ),
       ) {
     _fetchList();
@@ -21,7 +23,8 @@ class MainViewCubit extends Cubit<MainViewState> {
     emit(
       MainViewStateLoaded(
         screens: screens,
-        connectionStatus: Manager.instance.connectionManager.connectionStatus,
+        connectionStatus: Manager.instance.connectionManager
+            .getConnectionStatus(),
       ),
     );
     _listenToConnectionChanges();
@@ -29,15 +32,11 @@ class MainViewCubit extends Cubit<MainViewState> {
   }
 
   void _listenToConnectionChanges() {
-    Manager.instance.connectionManager.connectionStatusStreamController.stream
-        .listen((event) {
-          emit(
-            MainViewStateLoaded(
-              screens: state.screens,
-              connectionStatus: event,
-            ),
-          );
-        });
+    Manager.instance.connectionManager.connectionStatusStream.listen((event) {
+      emit(
+        MainViewStateLoaded(screens: state.screens, connectionStatus: event),
+      );
+    });
   }
 
   void _listenToScreenChanges() {

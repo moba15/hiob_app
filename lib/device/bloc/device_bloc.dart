@@ -2,10 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:smart_home/device/iobroker_device.dart';
-import 'package:smart_home/manager/manager.dart';
 
-import '../../dataPackages/data_package.dart';
 import '../device.dart';
 
 part 'device_event.dart';
@@ -70,15 +67,9 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
         status: DeviceStatus.ready,
       ),
     );
+    //Manager().deviceManager.updateValue(device, event.value.toString());
     device.value = event.value;
-    if (device is IoBrokerDevice) {
-      Manager.instance.connectionManager.sendMsg(
-        StateChangeRequestIobPackage(
-          stateID: (device as IoBrokerDevice).objectID,
-          value: event.value,
-        ),
-      );
-    }
+    throw UnimplementedError("TODO: implement update value request");
   }
 
   void _onDeviceIdle(DeviceIdle event, Emitter<DeviceState> emit) {

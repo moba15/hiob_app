@@ -23,15 +23,7 @@ class SwitchTriggerActionSettings extends TriggerActionSetting {
           key: datapointKey,
           title: "Datapoint",
           description: "The Datapoint which will be controlled by the Handle",
-          child: DeviceSelection(
-            customWidgetManager: Manager.instance.customWidgetManager,
-            onDeviceSelected: (d) => {switchTriggerAction.dataPoint == null},
-            onDataPointSelected: (d) => {switchTriggerAction.dataPoint = d},
-            selectedDevice: switchTriggerAction.dataPoint?.device,
-            selectedDataPoint: switchTriggerAction.dataPoint,
-            dataPointLabel: "Datapoint",
-            deviceLabel: "Device",
-          ),
+          child: Placeholder(),
         ),
         Showcase(
           key: sendOnKey,

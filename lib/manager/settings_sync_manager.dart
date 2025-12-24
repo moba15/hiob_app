@@ -9,11 +9,12 @@ import 'package:smart_home/generated/google/protobuf/struct.pb.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
 
 import '../preconfigs/preconfig.dart';
 
 class SettingsSyncManager {
-  final ConnectionManager connectionManager;
+  final ConnectionServiceInterface connectionManager;
   final FileManager fileManager;
   String settingsSyncKey = "settingsSyncKey";
 
@@ -57,11 +58,6 @@ class SettingsSyncManager {
     required bool widget,
     required bool screen,
   }) {
-    if (connectionManager.configSyncStub == null) {
-      Manager().talker.error(
-        "ConfigSyncStub is null, cannot create new settings template.",
-      );
-    }
     String? widgetsJSON = !widget
         ? null
         : jsonEncode(Manager.instance.customWidgetManager.templates);
@@ -77,19 +73,16 @@ class SettingsSyncManager {
         templates: widgetsJSON,
       ),
     );
-    connectionManager.configSyncStub!.configSyncUp(configSyncUpRequest);
+    connectionManager.getGrpcService<ConfigSyncClient>().configSyncUp(
+      configSyncUpRequest,
+    );
   }
 
   Future<ConfigCreateDeleteResponse> createNewSettingsTemplate(
     String name,
   ) async {
-    if (connectionManager.configSyncStub == null) {
-      Manager().talker.error(
-        "ConfigSyncStub is null, cannot create new settings template.",
-      );
-    }
     ConfigCreateDeleteResponse response = await connectionManager
-        .configSyncStub!
+        .getGrpcService<ConfigSyncClient>()
         .configCreateDelete(
           ConfigCreateDeleteRequest(configName: name, delete: false),
         )
@@ -117,14 +110,8 @@ class SettingsSyncManager {
   }
 
   Future<List<String>> fetchTemplatesFromAdapter() async {
-    if (connectionManager.configSyncStub == null) {
-      Manager().talker.error(
-        "SettingsSyncManager | fetchTemplatesFromAdapter | ConfigSyncStub is null, cannot fetch templates from adapter.",
-      );
-      return [];
-    }
-
-    AvailableConfigsResponse response = await connectionManager.configSyncStub!
+    AvailableConfigsResponse response = await connectionManager
+        .getGrpcService<ConfigSyncClient>()
         .getAvailableConfigs(AvailableConfigsRequest())
         .onError((error, stackTrace) {
           Manager().talker.error(
@@ -167,12 +154,6 @@ class SettingsSyncManager {
     required bool widget,
     required bool screen,
   }) async {
-    if (connectionManager.configSyncStub == null) {
-      Manager().talker.error(
-        "SettingsSyncManager | getTemplateSettings | ConfigSyncStub is null.",
-      );
-      return;
-    }
     SyncType syncType = SyncType.SYNC_ALL;
     if (widget && !screen) {
       syncType = SyncType.SYNC_TEMPLATES;
@@ -183,30 +164,29 @@ class SettingsSyncManager {
       configName: preConfig,
       syncType: syncType,
     );
-    Config
-    config = await connectionManager.configSyncStub!.configSyncDown(request).onError((
-      error,
-      stackTrace,
-    ) {
-      Manager().talker.error(
-        "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
-      );
-      Manager.instance.generalManager.dialogStreamController.sink.add(
-        (p0) => AlertDialog(
-          title: const Text("Error"),
-          content: const Text(
-            "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(p0).pop(),
-              child: const Text("OK"),
+    Config config = await connectionManager
+        .getGrpcService<ConfigSyncClient>()
+        .configSyncDown(request)
+        .onError((error, stackTrace) {
+          Manager().talker.error(
+            "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
+          );
+          Manager.instance.generalManager.dialogStreamController.sink.add(
+            (p0) => AlertDialog(
+              title: const Text("Error"),
+              content: const Text(
+                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(p0).pop(),
+                  child: const Text("OK"),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-      return Config();
-    });
+          );
+          return Config();
+        });
     if (config.name.isNotEmpty) {
       loadGotTemplate(config.screens, config.templates);
     }
