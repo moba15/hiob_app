@@ -13,9 +13,6 @@ class ChangeLogScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           manager.status = ManagerStatus.finished;
-          manager.managerStatusStreamController.sink.add(
-            ManagerStatus.finished,
-          );
         },
         child: const Icon(Icons.visibility),
       ),

@@ -81,6 +81,7 @@ dependencies:
   flutter_localization: ^0.2.1
   grpc: ^4.0.1
   sqflite: ^2.4.1
+  provider: ^6.0.5
   path_provider: ^2.1.5
   drift: ^2.26.0
   drift_flutter: ^0.2.4

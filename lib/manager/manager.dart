@@ -19,6 +19,7 @@ import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import '../background/background_runner.dart';
 
@@ -35,11 +36,10 @@ class Manager {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
   late FileManager fileManager;
-
   late CustomWidgetManager customWidgetManager;
   StreamSubscription? subscription1;
 
-  late DeviceServiceInterface<IobrokerObject> deviceManager;
+  late DeviceManager deviceManager;
   StreamSubscription? subscription2;
 
   late ScreenManager screenManager;
@@ -48,7 +48,7 @@ class Manager {
   late IoBrokerManager ioBrokerManager;
   StreamSubscription? subscription4;
 
-  late ConnectionServiceInterface connectionManager;
+  late ConnectionManager connectionManager;
   StreamSubscription? subscription5;
 
   late GeneralManager generalManager;
@@ -71,109 +71,33 @@ class Manager {
 
   Manager._internal({required this.versionNumber, required this.buildNumber});
 
-  int loadingState = 0;
-  int maxLoadingState = 5;
-  StreamController<ManagerStatus> managerStatusStreamController =
-      StreamController.broadcast();
-  var random = Random();
+  var _random = Random();
 
+  /// Loads services by delegating creation to [ServiceContainer]. The
+  /// heavy wiring was moved into the container so we can expose values via
+  /// Provider. We still keep the same fields on `Manager` so existing call
+  /// sites can continue to access `Manager().<field>` during incremental
+  /// migration.
   Future<void> load() async {
-    final pref = await SharedPreferences.getInstance();
+    final container = await ServiceContainer.create();
 
-    fileManager = FileManager(pref: pref, manager: this);
-    deviceManager = DeviceManager(fileManager, manager: this);
-
-    ioBrokerManager = IoBrokerManager(fileManager: fileManager)..load();
-
-    generalManager = GeneralManager(manager: this, fileManager: fileManager)
-      ..load();
-
-    connectionManager = ConnectionManager(
-      deviceManager: deviceManager,
-      ioBrokerManager: ioBrokerManager,
-      generalManager: generalManager,
-    );
-
-    customWidgetManager = CustomWidgetManager(
-      fileManager: fileManager,
-      deviceManager: deviceManager,
-      manager: this,
-    );
-    screenManager = ScreenManager(
-      fileManager: fileManager,
-      screens: [],
-      manager: this,
-    )..loadScreens();
-
-    settingsSyncManager = SettingsSyncManager(
-      connectionManager: connectionManager,
-      fileManager: fileManager,
-    )..loadSettings();
-
-    themeManager = ThemeManager(manager: this)..loadTheme();
-
-    subscription1 = customWidgetManager.templatesStreamController.stream.listen(
-      (event) {
-        onLoaded("customWidgetManager");
-      },
-    );
-    onLoaded("deviceManager");
-
-    subscription3 = screenManager.screenStreamController.stream.listen((event) {
-      onLoaded("screenManager");
-    });
-
-    subscription4 = ioBrokerManager.statusStreamController.stream.listen((
-      event,
-    ) {
-      onLoaded("ioBrokerManager");
-    });
-
-    onLoaded("connectionManager");
-
-    subscription6 = generalManager.statusStreamController.stream.listen((
-      event,
-    ) {
-      onLoaded("generalManager");
-    });
+    fileManager = container.fileManager;
+    deviceManager = container.deviceManager;
+    ioBrokerManager = container.ioBrokerManager;
+    generalManager = container.generalManager;
+    connectionManager = container.connectionManager;
+    customWidgetManager = container.customWidgetManager;
+    screenManager = container.screenManager;
+    settingsSyncManager = container.settingsSyncManager;
+    themeManager = container.themeManager;
   }
 
-  String getRandString(int len) {
-    var values = List<int>.generate(len, (i) => random.nextInt(255));
-    return base64UrlEncode(values);
-  }
-
-  void onLoaded(String name) {
-    loadingState += 1;
-    talker.debug(
-      "Manager | onLoaded | $name: $loadingState / $maxLoadingState",
-    );
-    if (loadingState == maxLoadingState - 1) {
-      status = ManagerStatus.finished;
-
-      managerStatusStreamController.add(ManagerStatus.finished);
-      connectionManager.connect();
-    }
-    if (loadingState >= maxLoadingState - 1) {
-      _initManagerAfter();
-      status = ManagerStatus.finished;
-      managerStatusStreamController.sink.add(ManagerStatus.finished);
-      subscription1?.cancel();
-      subscription2?.cancel();
-      subscription3?.cancel();
-      subscription4?.cancel();
-      subscription5?.cancel();
-      subscription6?.cancel();
-    }
-  }
-
-  void _initManagerAfter() {
-    talker.configure(filter: generalManager.customLoggerFilter);
-    talker.configure(filter: generalManager.customLoggerFilter);
-    notificationManager = NotificationManager(fileManager: fileManager);
-    backgroundRunner = BackgroundRunner(
-      generalManager: generalManager,
-      ioBrokerManager: ioBrokerManager,
-    )..init();
+  String getRandString(int length) {
+    const chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789';
+    return List.generate(
+      length,
+      (index) => chars[_random.nextInt(chars.length)],
+    ).join();
   }
 }

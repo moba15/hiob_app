@@ -13,10 +13,7 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   ManagerCubit({required this.manager})
     : super(ManagerState(status: manager.status)) {
-    streamSubscription = manager.managerStatusStreamController.stream.listen(
-      onStatusChange,
-      onDone: () => {},
-    );
+    //TODO: check status
   }
 
   void onStatusChange(ManagerStatus status) {

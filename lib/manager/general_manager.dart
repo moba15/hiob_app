@@ -47,7 +47,7 @@ class GeneralManager {
         (await fileManager.getString(buildKey)) != manager.buildNumber) {
       await Future.delayed(const Duration(seconds: 4));
       manager.status = ManagerStatus.changeLog;
-      manager.managerStatusStreamController.sink.add(ManagerStatus.changeLog);
+      // manager.managerStatusStreamController.sink.add(ManagerStatus.changeLog);
       fileManager.writeString(buildKey, manager.buildNumber);
     }
   }
