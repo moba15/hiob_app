@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
-import 'package:smart_home/preconfigs/preconfig.dart';
 import 'package:smart_home/settings/config_settings/bloc/config_bloc.dart';
 
 class ConfigSettingsPage extends StatelessWidget {
-  final ConfigBloc _configBloc = ConfigBloc();
-
   ConfigSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Configs"),
-        actions: [
-          IconButton(
-            onPressed: () => _configBloc.add(ConfigReloadEvent()),
-            icon: const Icon(Icons.update, size: 30),
-            tooltip: "Reload",
-          ),
-        ],
-      ),
-      body: BlocProvider<ConfigBloc>(
-        create: (BuildContext context) {
-          return _configBloc;
+    return BlocProvider<ConfigBloc>(
+      create: (context) =>
+          ConfigBloc(settingsSyncManager: context.read<SettingsSyncManager>())
+            ..add(ConfigReloadEvent()),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text("Configs"),
+              actions: [
+                IconButton(
+                  onPressed: () =>
+                      context.read<ConfigBloc>().add(ConfigReloadEvent()),
+                  icon: const Icon(Icons.update, size: 30),
+                  tooltip: "Reload",
+                ),
+              ],
+            ),
+            body: const _ConfigsListView(),
+            floatingActionButton: FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () => _onPressed(context),
+            ),
+          );
         },
-        child: _ConfigsListView(configBloc: _configBloc),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => _onPressed(context),
       ),
     );
   }
@@ -57,7 +58,7 @@ class ConfigSettingsPage extends StatelessWidget {
       value,
     ) {
       if (value.success) {
-        _configBloc.add(ConfigAddedEvent());
+        context.read<ConfigBloc>().add(ConfigAddedEvent());
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             duration: Duration(milliseconds: 700),
@@ -129,9 +130,7 @@ class _AddSettingTemplateDialog extends StatelessWidget {
 }
 
 class _ConfigsListView extends StatefulWidget {
-  final ConfigBloc configBloc;
-
-  const _ConfigsListView({required this.configBloc});
+  const _ConfigsListView();
 
   @override
   State<_ConfigsListView> createState() => _ConfigsListViewState();
@@ -141,7 +140,6 @@ class _ConfigsListViewState extends State<_ConfigsListView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ConfigBloc, ConfigState>(
-      bloc: widget.configBloc..add(ConfigReloadEvent()),
       builder: (context, state) {
         if (state.configs.isEmpty) {
           return const Center(
