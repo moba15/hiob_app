@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 
@@ -11,7 +10,10 @@ part 'notifications_state.dart';
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   StreamSubscription? _streamSubscription;
-  NotificationsBloc() : super(const NotificationsInitial()) {
+  final NotificationManager notificationManager;
+
+  NotificationsBloc({required this.notificationManager})
+    : super(const NotificationsInitial()) {
     on<NotificationsGetEvent>((event, emit) {
       loadNotifications(emit);
     });
@@ -25,13 +27,11 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       deleteAllNotifications(emit);
     });
 
-    _streamSubscription = Manager
-        .instance
-        .notificationManager
-        .notificationStream
-        .listen((event) {
-          add(NotificationsGetEvent());
-        });
+    _streamSubscription = notificationManager.notificationStream.listen((
+      event,
+    ) {
+      add(NotificationsGetEvent());
+    });
   }
 
   @override
@@ -49,16 +49,14 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   void readAllNotifications(Emitter<NotificationsState> emit) {
-    Manager.instance.notificationManager.readAllNotifications();
+    notificationManager.readAllNotifications();
   }
 
   void removeNotification(
     NotificationsRemoveEvent event,
     Emitter<NotificationsState> emit,
   ) {
-    Manager.instance.notificationManager.removeNotificationLog(
-      index: event.index,
-    );
+    notificationManager.removeNotificationLog(index: event.index);
     NotificationsLoaded newState = NotificationsLoaded(
       customNotification: NotificationManager.notificationsLog,
     );
@@ -66,7 +64,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   void deleteAllNotifications(Emitter<NotificationsState> emit) {
-    Manager.instance.notificationManager.deletAllNotifications();
+    notificationManager.deletAllNotifications();
     emit(const NotificationsLoaded(customNotification: []));
   }
 }

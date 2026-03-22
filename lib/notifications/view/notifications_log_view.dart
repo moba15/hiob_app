@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
 import 'package:smart_home/notifications/bloc/notifications_bloc.dart';
 
@@ -8,7 +10,9 @@ class NotificationLogViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NotificationsBloc bloc = NotificationsBloc();
+    NotificationsBloc bloc = NotificationsBloc(
+      notificationManager: context.read<NotificationManager>(),
+    );
     bloc.add(NotificationsGetEvent());
     return PopScope(
       onPopInvoked: (didPop) {

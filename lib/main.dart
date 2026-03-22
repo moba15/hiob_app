@@ -66,6 +66,7 @@ void main() async {
         Provider.value(value: container.screenManager),
         Provider.value(value: container.settingsSyncManager),
         Provider.value(value: container.themeManager),
+        Provider.value(value: container.notificationManager),
       ],
       child: App(screenManager: container.screenManager),
     ),
