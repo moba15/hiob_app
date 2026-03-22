@@ -60,7 +60,7 @@ class ServiceContainer {
       fileManager: fileManager,
       screens: [],
       loggingService: loggingService,
-    )..loadScreens();
+    );
 
     final deviceManager = DeviceManager(
       fileManager,
@@ -74,6 +74,7 @@ class ServiceContainer {
       screenManager: screenManager,
     );
     screenManager.customWidgetManager = customWidgetManager;
+    await screenManager.loadScreens();
 
     final ioBrokerManager = IoBrokerManager(fileManager: fileManager);
     ioBrokerManager.load();

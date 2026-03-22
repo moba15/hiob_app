@@ -7,7 +7,9 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 import '../customwidgets/custom_widget.dart';
@@ -30,20 +32,23 @@ class Screen {
     required this.enabled,
   });
 
-  factory Screen.fromJSON(Map<String, dynamic> json) {
+  factory Screen.fromJSON(
+    Map<String, dynamic> json, {
+    required CustomWidgetManager customWidgetManager,
+  }) {
     List<dynamic> widgetTemplates = [];
     for (Map<String, dynamic> templateRaw
         in json["widgetIds"] is String
             ? jsonDecode(json["widgetIds"])
             : json["widgetIds"]) {
       if (templateRaw.containsKey("widget")) {
-        if (!Manager.instance.customWidgetManager.templates.any(
+        if (customWidgetManager.templates.any(
           (element) => element.id == templateRaw["id"],
         )) {
           continue;
         }
         widgetTemplates.add(
-          Manager.instance.customWidgetManager.templates.firstWhere(
+          customWidgetManager.templates.firstWhere(
             (element) => element.id == templateRaw["id"],
           ),
         );
@@ -51,7 +56,7 @@ class Screen {
         if (templateRaw["type"] == CustomWidgetTypeDeprecated.line.toString()) {
           widgetTemplates.add(
             CustomWidgetTemplate(
-              id: Manager.instance.getRandString(12),
+              id: ServiceContainer.randomString(12),
               name: "Line",
               customWidget: CustomDivisionLineWidget.fromJson(templateRaw),
             ),
@@ -60,7 +65,7 @@ class Screen {
           widgetTemplates.add(
             CustomGroupWidget.fromJSON(
               templateRaw,
-              Manager.instance.customWidgetManager.templates,
+              customWidgetManager.templates,
             ),
           );
         }
