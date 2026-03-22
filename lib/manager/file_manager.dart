@@ -1,15 +1,8 @@
 import 'dart:convert';
-import 'dart:developer' as dev;
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
-import 'package:smart_home/services/service_container.dart';
 
 class FileManager {
   SharedPreferences pref;
@@ -81,6 +74,7 @@ class FileManager {
       } catch (e) {
         loggingService.error(
           "FileManager | getMap error during decode: $e for key $key",
+          e,
         );
         return null;
       }
@@ -100,6 +94,7 @@ class FileManager {
       } catch (e) {
         loggingService.error(
           "FileManager | getList error during decode: $e for key $key",
+          e,
         );
         return null;
       }

@@ -5,14 +5,10 @@ import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
-import 'package:smart_home/manager/history/history_manager.dart';
-import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
-import 'package:smart_home/background/background_runner.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/services/metadata/metadata_service.dart';
 
@@ -43,17 +39,12 @@ class ServiceContainer {
     required this.metadataService,
   });
 
-  /// Creates and wires all services/managers in the same order as the
-  /// original `Manager.load()` method. Uses `Manager.instance` where a
-  /// `Manager` reference is required by existing constructors to preserve
-  /// backward compatibility while we migrate callers to Providers.
+  /// Creates and wires all services/managers using provider-friendly
+  /// constructor injection.
   static Future<ServiceContainer> create() async {
     final pref = await SharedPreferences.getInstance();
     final LoggingService loggingService = LoggingService.instance;
     final MetadataService metadataService = await MetadataService.create();
-
-    // Use the existing Manager singleton as the manager argument so
-    // constructors that expect a Manager continue to work.
 
     final fileManager = FileManager(pref: pref, loggingService: loggingService);
     final generalManager = GeneralManager(
@@ -61,16 +52,11 @@ class ServiceContainer {
       fileManager: fileManager,
       metadataService: metadataService,
     )..load();
-    final customWidgetManager = CustomWidgetManager(
-      fileManager: fileManager,
-      deviceManager: deviceManager,
-      manager: manager,
-    );
+
     final screenManager = ScreenManager(
       fileManager: fileManager,
       screens: [],
       loggingService: loggingService,
-      customWidgetManager: customWidgetManager,
     )..loadScreens();
 
     final deviceManager = DeviceManager(
@@ -80,6 +66,12 @@ class ServiceContainer {
       screenManager: screenManager,
     );
 
+    final customWidgetManager = CustomWidgetManager(
+      fileManager: fileManager,
+      screenManager: screenManager,
+    );
+    screenManager.customWidgetManager = customWidgetManager;
+
     final ioBrokerManager = IoBrokerManager(fileManager: fileManager);
     ioBrokerManager.load();
 
@@ -87,19 +79,16 @@ class ServiceContainer {
       deviceManager: deviceManager,
       ioBrokerManager: ioBrokerManager,
       generalManager: generalManager,
+      loggingService: loggingService,
     );
 
     final settingsSyncManager = SettingsSyncManager(
       connectionManager: connectionManager,
       fileManager: fileManager,
+      loggingService: loggingService,
     )..loadSettings();
 
-    final themeManager = ThemeManager(manager: manager)..loadTheme();
-
-    // Note: NotificationManager and BackgroundRunner initialization was
-    // previously done in Manager._initManagerAfter(). We'll keep those
-    // initializations in Manager so existing ordering and talker usage is
-    // preserved.
+    final themeManager = ThemeManager(fileManager: fileManager)..loadTheme();
 
     return ServiceContainer._(
       fileManager: fileManager,

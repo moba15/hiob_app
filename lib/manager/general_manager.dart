@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/services/metadata/metadata_service.dart';
-import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/logger/logger_filter.dart';
 import 'package:uuid/uuid.dart';
 

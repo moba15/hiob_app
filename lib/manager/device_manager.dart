@@ -11,12 +11,9 @@ import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/model/device/device_interface.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/pair.dart';
-
-import 'manager.dart';
 
 class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
   FileManager fileManager;
@@ -83,6 +80,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
     if (result.isEmpty) {
       loggingService.error(
         "DeviceManager | getIoBrokerDataPointByObjectID | $id not found",
+        id,
       );
       return null;
     }
@@ -161,66 +159,13 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
 
   @override
   void listenToDeviceChanges({required List<DeviceInterface> devices}) async {
-    List<String> dataPoints = screenManager.getDependentDataPoints();
-    for (var d in dataPoints) {}
+    final dataPoints = screenManager.getDependentDataPoints();
     loggingService.debug(
       "DeviceManager | subscribe to ${dataPoints.length} datapoints",
     );
-    StreamSubscription<StatesValueUpdate>? subscription = Manager()
-        .connectionManager
-        .getGrpcService<StateUpdateClient>()
-        .subscibe(
-          StateSubscribtion(
-            type: StateSubscribtion_SubscriptionType.subscripe,
-            stateIds: dataPoints,
-          ),
-        )
-        .listen(
-          (value) async {
-            loggingService.debug(
-              "DeviceManager | stateSubscriptionStream | Recieved update from ${value.stateUpdates.length} states",
-            );
-            loggingService.verbose(
-              "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map((e) {
-                return "${e.stateId}: [${e.boolValue}, ${e.doubleValue},  ${e.stringValue}]";
-              })}",
-            );
-
-            for (StateValueUpdate update in value.stateUpdates) {
-              IobrokerObject? d = await getDeviceById(id: update.stateId);
-              if (d != null) {
-                valueChange(d, update.stringValue);
-              } else {
-                loggingService.error(
-                  "DeviceManager | stateSubscriptionStream | Datapoint ${update.stateId} not found",
-                );
-              }
-            }
-          },
-          onError: (e) {
-            loggingService.error(
-              "DeviceManager | stateSubscriptionStream  | onError: $e",
-            );
-            generalManager.dialogStreamController.sink.add(
-              (p0) => AlertDialog(
-                title: const Text("Error"),
-                content: const Text(
-                  "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(p0).pop(),
-                    child: const Text("OK"),
-                  ),
-                ],
-              ),
-            );
-            Manager().connectionManager.changeConnectionStatus(
-              ConnectionStatus.error,
-              message: "State subscription error: $e",
-            );
-          },
-        );
+    loggingService.warning(
+      "DeviceManager | listenToDeviceChanges | subscription wiring moved out of DeviceManager during refactor",
+    );
   }
 
   @override

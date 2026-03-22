@@ -162,6 +162,9 @@ class IoBrokerSettingsView extends StatelessWidget {
             status: context
                 .read<ConnectionServiceInterface>()
                 .getConnectionStatus(),
+            connectionStatusStream: context
+                .read<ConnectionServiceInterface>()
+                .connectionStatusStream,
           ),
         ),
         Center(
