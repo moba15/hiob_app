@@ -53,7 +53,10 @@ class ScreenManager {
       for (dynamic rawScreens in l) {
         Map<String, dynamic> rawMap = rawScreens;
         try {
-          Screen s = Screen.fromJSON(rawMap);
+          Screen s = Screen.fromJSON(
+            rawMap,
+            customWidgetManager: customWidgetManager!,
+          );
           loggingService.debug("ScreenManager | loadScreen | ${s.id}");
           screens.add(s);
         } catch (e) {
@@ -96,7 +99,10 @@ class ScreenManager {
     } else {
       for (dynamic rawScreens in l) {
         Map<String, dynamic> rawMap = rawScreens;
-        Screen s = Screen.fromJSON(rawMap);
+        Screen s = Screen.fromJSON(
+          rawMap,
+          customWidgetManager: customWidgetManager!,
+        );
         screens.add(s);
       }
     }
