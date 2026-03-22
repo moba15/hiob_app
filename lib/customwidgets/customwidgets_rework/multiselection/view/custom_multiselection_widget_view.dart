@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomMultiselectionWidgetView extends StatefulWidget {
   final CustomMultiselectionWidget customMultiselectionWidget;
@@ -24,7 +25,10 @@ class _CustomMultiselectionWidgetViewState
   @override
   void initState() {
     if (widget.customMultiselectionWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customMultiselectionWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customMultiselectionWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
     title =
         widget.customMultiselectionWidget.label ??
@@ -39,7 +43,10 @@ class _CustomMultiselectionWidgetViewState
   void didUpdateWidget(covariant CustomMultiselectionWidgetView oldWidget) {
     bloc?.close();
     if (widget.customMultiselectionWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customMultiselectionWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customMultiselectionWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     } else {
       bloc = null;
     }

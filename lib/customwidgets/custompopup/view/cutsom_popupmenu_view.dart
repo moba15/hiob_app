@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CutsomPopupmenuView extends StatelessWidget {
   final CustomPopupmenu customPopupmenu;
@@ -52,7 +53,10 @@ class CutsomPopupmenuView extends StatelessWidget {
           .getDependentDataPoints()
           .map(
             (t) => BlocProvider<DataPointBloc>(
-              create: (context) => DataPointBloc(t),
+              create: (context) => DataPointBloc(
+                t,
+                deviceService: context.read<DeviceServiceInterface>(),
+              ),
             ),
           )
           .toList(),

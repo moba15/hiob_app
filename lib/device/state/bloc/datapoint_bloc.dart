@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/model/device/device_interface.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 part 'datapoint_event.dart';
 
@@ -11,18 +11,19 @@ part 'datapoint_state.dart';
 
 class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
   StreamSubscription<dynamic>? _deviceValueSubscription;
-  String objectId;
+  final String objectId;
+  final DeviceServiceInterface _deviceService;
 
-  DataPointBloc(this.objectId) : super(DataPointInitial(value: null)) {
+  DataPointBloc(this.objectId, {required DeviceServiceInterface deviceService})
+    : _deviceService = deviceService,
+      super(DataPointInitial(value: null)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
-    _deviceValueSubscription = Manager().deviceManager.objectValueStream.listen(
-      (event) {
-        if (event.first == objectId) {
-          add(DataPointValueUpdate(value: event.second));
-        }
-      },
-    );
+    _deviceValueSubscription = _deviceService.objectValueStream.listen((event) {
+      if (event.first == objectId) {
+        add(DataPointValueUpdate(value: event.second));
+      }
+    });
     //TODO
     /* _deviceValueSubscription =
         dataPoint.valueStreamController.stream.listen((event) {
@@ -30,7 +31,7 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     });*/
     add(
       DataPointValueUpdate(
-        value: Manager().deviceManager.getDeviceValue(
+        value: _deviceService.getDeviceValue(
           device: DeviceInterface(id: objectId),
         ),
       ),
@@ -63,10 +64,7 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
     }
 
     emit(DataPointState(value: value));
-    Manager().deviceManager.controllDevice<dynamic>(
-      deviceId: objectId,
-      value: value,
-    );
+    _deviceService.controllDevice<dynamic>(deviceId: objectId, value: value);
     //TODO
     /*dataPoint.value = value;
     dataPoint.device?.lastUpdated = DateTime.now();

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
@@ -12,6 +13,7 @@ import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
@@ -28,16 +30,17 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenManager = context.read<ScreenManager>();
     return TemplateAdder(
       title: getAppLocalizations(context).group_edit_page_title,
       name: clone.name ?? "",
       toggle: toggleWidget(context),
       isSaved: _isSaved,
-      save: _save,
+      save: (n) => _save(n, screenManager: screenManager),
       addGroup: _addGroup,
       addLine: _addLine,
       addTemplates: _addTemplates,
-      screenManager: Manager.instance.screenManager,
+      screenManager: context.read<ScreenManager>(),
       reorderTemplate: _reorderTemplate,
       removeTemplate: _removeTemplate,
       templates: clone.templates,
@@ -164,12 +167,12 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     return true;
   }
 
-  void _save(String name) {
+  void _save(String name, {required final ScreenManager screenManager}) {
     customGroupWidget.name = name;
     customGroupWidget.templates = clone.templates;
     customGroupWidget.isExtended = clone.isExtended;
     customGroupWidget.iconWrapper = clone.iconWrapper;
-    Manager.instance.screenManager.update();
+    screenManager.update();
   }
 
   void _addTemplates(List<CustomWidgetWrapper> templates) {
@@ -259,6 +262,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final customWidgetManager = context.read<CustomWidgetManager>();
     return Column(
       children: [
         TextField(
@@ -339,7 +343,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   child: CustomWidgetTemplateTile(
                     toggleSelect: () => {},
                     customWidget: widget.customGroupWidget.templates[index],
-                    customWidgetManager: Manager.instance.customWidgetManager,
+                    customWidgetManager: customWidgetManager,
                   ),
                 );
               } else {
@@ -405,8 +409,9 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final customWidgetManager = context.read<CustomWidgetManager>();
     List<CustomWidgetWrapper> templates = List.of(
-      widget.screenManager.manager.customWidgetManager.templates,
+      customWidgetManager.templates,
     );
     templates.removeWhere(
       (element) => widget.customGroupWidget.templates.contains(element),

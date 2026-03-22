@@ -4,6 +4,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slid
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'dart:math' as math;
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/shapes/sldier/custom_slider_thumb_value.dart';
 
 class CustomSliderWidgetView extends StatefulWidget {
@@ -22,7 +23,10 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
   @override
   void initState() {
     if (widget.customSliderWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customSliderWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customSliderWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
     theme = widget.customSliderWidget.customTheme as CustomSliderWidgetTheme?;
     super.initState();
@@ -33,7 +37,10 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
     setState(() {
       bloc?.close();
       if (widget.customSliderWidget.dataPoint != null) {
-        bloc = DataPointBloc(widget.customSliderWidget.dataPoint!);
+        bloc = DataPointBloc(
+          widget.customSliderWidget.dataPoint!,
+          deviceService: context.read<DeviceServiceInterface>(),
+        );
       }
       theme = widget.customSliderWidget.customTheme as CustomSliderWidgetTheme?;
     });

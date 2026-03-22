@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomTableWidgetView extends StatefulWidget {
   final CustomTableWidget customTableWidget;
@@ -27,7 +28,10 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
       sortedColumn = widget.customTableWidget.initalSortColumn;
     }
     if (widget.customTableWidget.dataPoint != null) {
-      _bloc = DataPointBloc(widget.customTableWidget.dataPoint!);
+      _bloc = DataPointBloc(
+        widget.customTableWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
     sortedAsc = widget.customTableWidget.sortAsc;
     super.initState();
@@ -41,7 +45,10 @@ class _CustomTableWidgetViewState extends State<CustomTableWidgetView> {
     }
     _bloc?.close();
     if (widget.customTableWidget.dataPoint != null) {
-      _bloc = DataPointBloc(widget.customTableWidget.dataPoint!);
+      _bloc = DataPointBloc(
+        widget.customTableWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
     sortedAsc = widget.customTableWidget.sortAsc;
     super.didChangeDependencies();
