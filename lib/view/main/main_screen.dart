@@ -60,8 +60,7 @@ class MainScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              MainSettingsScreen(manager: manager),
+                          builder: (context) => MainSettingsScreen(),
                         ),
                       ),
                     },
@@ -75,7 +74,7 @@ class MainScreen extends StatelessWidget {
               ),
             );
           case ManagerStatus.changeLog:
-            return ChangeLogScreen(manager: manager);
+            return ChangeLogScreen();
           default:
             return const MainView();
         }
@@ -123,24 +122,23 @@ class MainView extends StatelessWidget {
               ),
               actions: [
                 StreamBuilder(
-                  stream:
-                      Manager.instance.notificationManager.notificationStream,
+                  stream: context
+                      .read<NotificationManager>()
+                      .notificationStream,
                   builder: (context, state) {
                     return Badge(
                       isLabelVisible:
-                          Manager
-                              .instance
-                              .notificationManager
+                          context
+                              .read<NotificationManager>()
                               .unreadNotifications >
                           0,
                       label:
-                          Manager
-                                  .instance
-                                  .notificationManager
+                          context
+                                  .read<NotificationManager>()
                                   .unreadNotifications >
                               0
                           ? Text(
-                              "${Manager.instance.notificationManager.unreadNotifications}",
+                              "${context.read<NotificationManager>().unreadNotifications}",
                             )
                           : null,
                       child: IconButton(
@@ -163,8 +161,7 @@ class MainView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            MainSettingsScreen(manager: Manager()),
+                        builder: (context) => MainSettingsScreen(),
                       ),
                     ),
                   },
