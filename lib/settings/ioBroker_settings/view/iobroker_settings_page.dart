@@ -5,8 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:smart_home/manager/connection/cubit/connection_cubit.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
-
-import '../../../manager/manager.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 bool _isObscure = true;
 
@@ -40,7 +39,7 @@ class IoBrokerSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    IoBrokerManager ioBrokerManager = Manager().ioBrokerManager;
+    IoBrokerManager ioBrokerManager = context.read<IoBrokerManager>();
     ipController.value = TextEditingValue(text: ioBrokerManager.mainIp);
     portController.value = TextEditingValue(
       text: ioBrokerManager.port.toString(),
@@ -160,13 +159,15 @@ class IoBrokerSettingsView extends StatelessWidget {
             );
           },
           bloc: ConnectionCubit(
-            status: Manager.instance.connectionManager.getConnectionStatus(),
+            status: context
+                .read<ConnectionServiceInterface>()
+                .getConnectionStatus(),
           ),
         ),
         Center(
           child: ElevatedButton(
             onPressed: () => {
-              context.read<Manager>().connectionManager.reconnect(
+              context.read<ConnectionServiceInterface>().reconnect(
                 delayed: false,
               ),
             },
@@ -312,11 +313,13 @@ class __IobrokerObjectFilterState extends State<_IobrokerObjectFilter> {
   @override
   void initState() {
     super.initState();
-    Manager().deviceManager.getSelectableFilters().then((value) {
+    context.read<DeviceServiceInterface>().getSelectableFilters().then((value) {
       setState(() {
         allAdapaters = value;
         selectedFilters.clear();
-        selectedFilters.addAll(Manager().deviceManager.preDefinedFilters);
+        selectedFilters.addAll(
+          context.read<DeviceServiceInterface>().preDefinedFilters,
+        );
       });
     });
   }
@@ -342,7 +345,9 @@ class __IobrokerObjectFilterState extends State<_IobrokerObjectFilter> {
                       selectedFilters.remove(s);
                     }
                   });
-                  Manager().deviceManager.updateFilters(selectedFilters);
+                  context.read<DeviceServiceInterface>().updateFilters(
+                    selectedFilters,
+                  );
                 },
                 selected: true,
               ),
@@ -359,7 +364,9 @@ class __IobrokerObjectFilterState extends State<_IobrokerObjectFilter> {
                         selectedFilters.remove(s);
                       }
                     });
-                    Manager().deviceManager.updateFilters(selectedFilters);
+                    context.read<DeviceServiceInterface>().updateFilters(
+                      selectedFilters,
+                    );
                   },
                   selected: false,
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 /*
@@ -35,34 +36,33 @@ class _GeneralSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Manager manager = context.read<Manager>();
+    FileManager fileManager = context.read<FileManager>();
+    GeneralManager generalManager = context.read<GeneralManager>();
     return ListView(
       children: [
         ListTile(
           title: Text(getAppLocalizations(context).export),
           trailing: IconButton(
             icon: const Icon(Icons.import_export),
-            onPressed: () => {manager.fileManager.export(context)},
+            onPressed: () => {fileManager.export(context)},
           ),
-          onTap: () => {manager.fileManager.export(context)},
+          onTap: () => {fileManager.export(context)},
         ),
         ListTile(
           title: Text(getAppLocalizations(context).import),
           trailing: IconButton(
             icon: const Icon(Icons.import_export),
-            onPressed: () => {
-              context.read<Manager>().fileManager.import(context),
-            },
+            onPressed: () => {context.read<FileManager>().import(context)},
           ),
-          onTap: () => {context.read<Manager>().fileManager.import(context)},
+          onTap: () => {context.read<FileManager>().import(context)},
         ),
         StatefulBuilder(
           builder: (_, setState) {
             return SwitchListTile(
-              value: manager.generalManager.vibrateEnabled,
+              value: generalManager.vibrateEnabled,
               onChanged: (v) {
                 setState(() {
-                  manager.generalManager.updateVibrateEnabled(v);
+                  generalManager.updateVibrateEnabled(v);
                 });
               },
               title: Text(getAppLocalizations(context).vibration),
@@ -90,12 +90,12 @@ class _DeviceInfo extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: TextFormField(
-                  initialValue: Manager.instance.generalManager.deviceName,
+                  initialValue: context.read<GeneralManager>().deviceName,
                   decoration: InputDecoration(
                     labelText: getAppLocalizations(context).device_name,
                   ),
                   onChanged: (name) {
-                    Manager().generalManager.updateDeviceName(name);
+                    context.read<GeneralManager>().updateDeviceName(name);
                   },
                 ),
               ),
@@ -104,7 +104,7 @@ class _DeviceInfo extends StatelessWidget {
                 flex: 1,
                 child: TextFormField(
                   enabled: false,
-                  initialValue: Manager.instance.generalManager.deviceID,
+                  initialValue: context.read<GeneralManager>().deviceID,
                   decoration: InputDecoration(
                     labelText: getAppLocalizations(context).device_id,
                   ),
@@ -128,47 +128,48 @@ class _CustomLoggerSettings extends StatefulWidget {
 class __CustomLoggerSettingsState extends State<_CustomLoggerSettings> {
   @override
   Widget build(BuildContext context) {
+    final generalManager = context.read<GeneralManager>();
     return Column(
       children: [
         SwitchListTile(
           title: const Text("Enable DebugLogs"),
           onChanged: (value) {
-            Manager().generalManager.customLoggerFilter.logDebug = value;
+            generalManager.customLoggerFilter.logDebug = value;
             setState(() {
-              Manager().generalManager.changeCustomLoggerFilter();
+              generalManager.changeCustomLoggerFilter();
             });
           },
-          value: Manager().generalManager.customLoggerFilter.logDebug,
+          value: generalManager.customLoggerFilter.logDebug,
         ),
         SwitchListTile(
           title: const Text("Enable ErrorLogs"),
           onChanged: (value) {
-            Manager().generalManager.customLoggerFilter.logError = value;
+            generalManager.customLoggerFilter.logError = value;
             setState(() {
-              Manager().generalManager.changeCustomLoggerFilter();
+              generalManager.changeCustomLoggerFilter();
             });
           },
-          value: Manager().generalManager.customLoggerFilter.logError,
+          value: generalManager.customLoggerFilter.logError,
         ),
         SwitchListTile(
           title: const Text("Enable InfoLogs"),
           onChanged: (value) {
-            Manager().generalManager.customLoggerFilter.logInfo = value;
+            generalManager.customLoggerFilter.logInfo = value;
             setState(() {
-              Manager().generalManager.changeCustomLoggerFilter();
+              generalManager.changeCustomLoggerFilter();
             });
           },
-          value: Manager().generalManager.customLoggerFilter.logInfo,
+          value: generalManager.customLoggerFilter.logInfo,
         ),
         SwitchListTile(
           title: const Text("Enable VerboseLogs"),
           onChanged: (value) {
-            Manager().generalManager.customLoggerFilter.logVerbose = value;
+            generalManager.customLoggerFilter.logVerbose = value;
             setState(() {
-              Manager().generalManager.changeCustomLoggerFilter();
+              generalManager.changeCustomLoggerFilter();
             });
           },
-          value: Manager().generalManager.customLoggerFilter.logVerbose,
+          value: generalManager.customLoggerFilter.logVerbose,
         ),
       ],
     );

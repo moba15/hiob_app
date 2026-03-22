@@ -10,6 +10,8 @@ import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_flutter/talker_flutter.dart';
@@ -27,26 +29,28 @@ class BackgroundRunner {
 
   GeneralManager generalManager;
   IoBrokerManager ioBrokerManager;
-  Talker? talker;
+  ConnectionServiceInterface connectionService;
+  LoggingService? talker;
   static late FlutterBackgroundService service;
   bool isServiceRunning = false;
 
   BackgroundRunner({
     required this.generalManager,
     required this.ioBrokerManager,
+    required this.connectionService,
   });
   init() {
     return;
-    NotificationManager.init();
+    /*   NotificationManager.init();
     if (!Platform.isAndroid) {
       log("Platfrom is not Android -> disabled Background runner", level: 1);
-      Manager().talker.info(
+      LoggingService.instance.info(
         "Backgroundrunner | init | not supported on this platform",
       );
       return;
     }
     log("OK");
-    talker = Manager().talker;
+    talker = LoggingService.instance;
     talker?.info("Backgroundrunner | init");
     service = FlutterBackgroundService();
     final ios = IosConfiguration();
@@ -63,7 +67,7 @@ class BackgroundRunner {
       initialNotificationTitle: "Connection Status",
     );
     service.configure(iosConfiguration: ios, androidConfiguration: android);
-    talker?.info("Backgroundrunner | init | Service configured");
+    talker?.info("Backgroundrunner | init | Service configured");*/
   }
 
   stopService() {
@@ -72,7 +76,7 @@ class BackgroundRunner {
     }
     isServiceRunning = false;
     log("Stop Background service");
-    talker?.log("Backgroundrunner | stopservice");
+    talker?.debug("Backgroundrunner | stopservice");
 
     NotificationManager.awesomeNotifications.dismiss(
       NotificationManager.ioBrokerConnectionNotificationId,
@@ -95,7 +99,7 @@ class BackgroundRunner {
     }
     await service.startService();
     isServiceRunning = true;
-    final Uri url = await Manager.instance.connectionManager.getUrl();
+    final Uri url = await connectionService.getUrl();
     talker?.debug("Backgroundrunner | startService  | invokeStart");
 
     service.invoke("start", {
@@ -106,7 +110,7 @@ class BackgroundRunner {
         key: generalManager.loginKey,
         password: ioBrokerManager.usePwd ? ioBrokerManager.password : null,
         user: ioBrokerManager.user,
-        version: Manager.instance.versionNumber,
+        version: "",
       ).content,
     });
   }

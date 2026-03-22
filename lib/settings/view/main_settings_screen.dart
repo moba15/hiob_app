@@ -4,7 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/custom_theme/settings/custom_theme_settings_page.dart';
 import 'package:smart_home/l10n/app_localizations.dart' show AppLocalizations;
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/services/metadata/metadata_service.dart';
 import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
 import 'package:smart_home/settings/documenation/documentation_view.dart';
 import 'package:smart_home/settings/general_settings/view/general_settings_page.dart';
@@ -16,9 +19,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
 
 class MainSettingsScreen extends StatelessWidget {
-  final Manager manager;
-
-  const MainSettingsScreen({super.key, required this.manager});
+  const MainSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class MainSettingsScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ScreenListSettingsScreen(
-                    screenManager: manager.screenManager,
+                    screenManager: context.read<ScreenManager>(),
                   ),
                 ),
               ),
@@ -54,7 +55,7 @@ class MainSettingsScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => WidgetTemplateListPage(
-                    customWidgetManager: manager.customWidgetManager,
+                    customWidgetManager: context.read<CustomWidgetManager>(),
                   ),
                 ),
               ),
@@ -70,10 +71,7 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RepositoryProvider.value(
-                    value: manager,
-                    child: const IoBrokerSettingsPage(),
-                  ),
+                  builder: (context) => const IoBrokerSettingsPage(),
                 ),
               ),
             },
@@ -88,10 +86,7 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RepositoryProvider.value(
-                    value: manager,
-                    child: const GeneralSettingsPage(),
-                  ),
+                  builder: (context) => const GeneralSettingsPage(),
                 ),
               ),
             },
@@ -119,10 +114,7 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RepositoryProvider<Manager>.value(
-                    value: Manager(),
-                    child: const CustomThemeSettingsPage(),
-                  ),
+                  builder: (context) => const CustomThemeSettingsPage(),
                 ),
               ),
             },
@@ -147,10 +139,7 @@ class MainSettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RepositoryProvider<Manager>.value(
-                    value: Manager(),
-                    child: const NotificationSettingsPage(),
-                  ),
+                  builder: (context) => const NotificationSettingsPage(),
                 ),
               ),
             },
@@ -163,7 +152,7 @@ class MainSettingsScreen extends StatelessWidget {
               showLicensePage(
                 context: context,
                 applicationName: "HIoB",
-                applicationVersion: Manager.instance.versionNumber,
+                applicationVersion: context.read<MetadataService>().version,
                 applicationLegalese: "LICENCE MIT",
                 applicationIcon: const Icon(Icons.smartphone_sharp),
               ),
@@ -193,7 +182,7 @@ class MainSettingsScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return ChangeLogScreen(manager: manager);
+                    return ChangeLogScreen();
                   },
                 ),
               ),
@@ -203,16 +192,7 @@ class MainSettingsScreen extends StatelessWidget {
             title: const Text("Logs"),
             leading: const Icon(Icons.print),
             trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return TalkerScreen(talker: manager.talker);
-                  },
-                ),
-              ),
-            },
+            onTap: () => {throw UnimplementedError("Show logs screen")},
           ),
         ],
       ),

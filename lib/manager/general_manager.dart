@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/logging/logging_service.dart';
+import 'package:smart_home/services/metadata/metadata_service.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/logger/logger_filter.dart';
 import 'package:uuid/uuid.dart';
 
@@ -11,7 +14,8 @@ class GeneralManager {
   var uuid = const Uuid();
 
   final FileManager fileManager;
-  final Manager manager;
+  final LoggingService loggingService;
+  final MetadataService metadataService;
   final String key = "generalSettings";
   final String buildKey = "buildKey";
   StreamController<bool> statusStreamController = StreamController();
@@ -26,7 +30,11 @@ class GeneralManager {
   bool useBottomSheet = true;
   CustomLoggerFilter customLoggerFilter = CustomLoggerFilter();
 
-  GeneralManager({required this.manager, required this.fileManager});
+  GeneralManager({
+    required this.loggingService,
+    required this.fileManager,
+    required this.metadataService,
+  });
 
   void load() async {
     if (!await fileManager.containsKey(key)) {
@@ -44,11 +52,12 @@ class GeneralManager {
     _save();
     statusStreamController.add(true);
     if (!await fileManager.containsKey(buildKey) ||
-        (await fileManager.getString(buildKey)) != manager.buildNumber) {
+        (await fileManager.getString(buildKey)) !=
+            metadataService.buildNumber) {
       await Future.delayed(const Duration(seconds: 4));
-      manager.status = ManagerStatus.changeLog;
+      //TODO refactor manager.status = ManagerStatus.changeLog;
       // manager.managerStatusStreamController.sink.add(ManagerStatus.changeLog);
-      fileManager.writeString(buildKey, manager.buildNumber);
+      fileManager.writeString(buildKey, metadataService.buildNumber);
     }
   }
 
@@ -56,7 +65,7 @@ class GeneralManager {
     Map<String, dynamic> settings,
   ) async {
     deviceName = settings["deviceName"];
-    deviceName ??= (await manager.deviceInfo.deviceInfo).data["name"];
+    deviceName ??= "No Devicename found";
     deviceName ??= "No Name found";
   }
 
@@ -98,15 +107,15 @@ class GeneralManager {
   }
 
   disableLogger() {
-    manager.talker.disable();
+    loggingService.disable();
   }
 
   enableLogger() {
-    manager.talker.enable();
+    loggingService.enable();
   }
 
   void changeCustomLoggerFilter() {
     _save();
-    Manager().talker.configure(filter: customLoggerFilter);
+    loggingService.configure(filter: customLoggerFilter);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/common_impl/label/widget_label_theme.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
@@ -11,6 +10,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input
 import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
@@ -19,19 +19,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_alert_dialog_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
-    as depc_table;
-import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
-    as depc;
-import 'package:smart_home/customwidgets/widgets/graphs/graph_widget.dart';
 
 enum CustomWidgetTypeDeprecated {
   simpleSwitch,
@@ -62,45 +49,6 @@ enum CustomWidgetTypeDeprecated {
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
   CustomWidgetSettingWidget get settingWidget {
     switch (this) {
-      case CustomWidgetTypeDeprecated.simpleSwitch:
-        return CustomSimpleSwitchWidget.edit().settingWidget;
-      case CustomWidgetTypeDeprecated.light:
-        return CustomLightWidget(name: "").settingWidget;
-      case CustomWidgetTypeDeprecated.group:
-        throw UnimplementedError("Error 12");
-      case CustomWidgetTypeDeprecated.line:
-        return CustomDivisionLineWidget(name: "").settingWidget;
-      case CustomWidgetTypeDeprecated.simpleValue:
-        return CustomSimpleValueWidget.edit().settingWidget;
-      case CustomWidgetTypeDeprecated.advanced:
-        return AdvancedCustomWidget.edit().settingWidget;
-      case CustomWidgetTypeDeprecated.webView:
-        return depc.CustomWebViewWidget(
-          name: null,
-          url: null,
-          dataPoint: null,
-        ).settingWidget;
-      case CustomWidgetTypeDeprecated.alertDialog:
-        return CustomAlertDialogWidget(name: "").settingWidget;
-      case CustomWidgetTypeDeprecated.table:
-        return depc_table.CustomTableWidget(
-          name: "",
-          header: "",
-          sortAsc: true,
-          initialSortColumn: 1,
-          initialSortEnabled: false,
-          elementsPerPage: 10,
-          columns: {},
-        ).settingWidget;
-      case CustomWidgetTypeDeprecated.graph:
-        return GraphWidget(name: "name").settingWidget;
-      case CustomWidgetTypeDeprecated.colorPallete:
-        return CustomColorPaletteWidget(
-          name: "",
-          pickersEnabled: {},
-        ).settingWidget;
-      case CustomWidgetTypeDeprecated.mediaPlayer:
-        return CustomMediaPlayerWidget(name: "", url: "").settingWidget;
       case CustomWidgetTypeDeprecated.input:
         return CustomInputWidget(
           id: "",
@@ -162,7 +110,10 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
           dataPoint: null,
         ).settingWidget;
       case CustomWidgetTypeDeprecated.divisionLine:
-        return CustomDivisionLineWidget(name: "").settingWidget;
+        throw UnimplementedError("No setting widget for division line");
+      //return CustomDivisionLineWidget(name: "").settingWidget;
+      default:
+        throw UnimplementedError("No setting widget implemented for $this");
     }
   }
 

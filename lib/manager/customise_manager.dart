@@ -30,24 +30,25 @@ import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
+import 'package:smart_home/services/service_container.dart';
 
 class CustomWidgetManager {
   String templateKey = "templateKey";
   bool loaded = false;
   FileManager fileManager;
   DeviceServiceInterface deviceManager;
-  Manager manager;
   final List<CustomWidgetWrapper> templates = [];
   final StreamController<List<CustomWidgetWrapper>> templatesStreamController =
       StreamController.broadcast();
+  final ScreenManager screenManager;
 
   CustomWidgetManager({
     required this.fileManager,
     required this.deviceManager,
-    required this.manager,
+    required this.screenManager,
   });
-
   Future<void> loadTemplates() async {
     //fileManager.writeJSONList(templateKey, templates);
 
@@ -245,7 +246,7 @@ class CustomWidgetManager {
       return false;
     }
 
-    manager.screenManager.templateEdited(template);
+    screenManager.templateEdited(template);
 
     return true;
   }
@@ -257,14 +258,14 @@ class CustomWidgetManager {
       templates.add(template);
       templatesStreamController.add(templates);
     } else {
-      manager.screenManager.templateRemoved(template);
+      screenManager.templateRemoved(template);
     }
   }
 
   void removeTemplates(List<CustomWidgetWrapper> templatesToRemove) {
     templates.removeWhere((element) => templatesToRemove.contains(element));
     for (CustomWidgetWrapper c in templatesToRemove) {
-      manager.screenManager.templateRemoved(c);
+      screenManager.templateRemoved(c);
     }
     fileManager.writeJSONList(templateKey, templates);
   }
@@ -275,7 +276,7 @@ class CustomWidgetManager {
         .map((e) => e)
         .map(
           (CustomWidgetTemplate e) => CustomWidgetTemplate(
-            id: Manager.instance.getRandString(12),
+            id: ServiceContainer.randomString(12),
             name: "${e.name}_copy2",
             customWidget: e.customWidget.clone()..name = ("${e.name}_copy"),
           ),
@@ -289,7 +290,7 @@ class CustomWidgetManager {
         .toList();
     for (var element in renamedTemplates) {
       element.name = "${element.name}_copy3";
-      element.id = Manager().getRandString(12);
+      element.id = ServiceContainer.randomString(12);
     }
 
     templates.addAll(renamedTemplates);

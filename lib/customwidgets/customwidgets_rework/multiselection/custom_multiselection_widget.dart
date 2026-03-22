@@ -7,10 +7,11 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/settings/custom_multiselection_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/view/custom_multiselection_widget_view.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_dropdown_button/cutsom_dropdown_button.dart';
 
 part 'custom_multiselection_widget.freezed.dart';
 part 'custom_multiselection_widget.g.dart';
+
+enum DropdownMenuMode { dropdown, dialog, bottomSheet }
 
 class _CustomMultiselectionThemeConverter
     implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
