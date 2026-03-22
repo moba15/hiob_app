@@ -3,11 +3,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/general_settings/view/template_adder.dart';
@@ -314,7 +316,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
   @override
   Widget build(BuildContext context) {
     List<CustomWidgetWrapper> templates = List.of(
-      widget.screenManager.manager.customWidgetManager.templates,
+      context.read<CustomWidgetManager>().templates,
     );
     templates.removeWhere(
       (element) => widget.screen.widgetTemplates.contains(element),
@@ -480,7 +482,7 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
             child: CustomWidgetTemplateTile(
               toggleSelect: () => {}, //TODO
               customWidget: templates[index],
-              customWidgetManager: screenManager.manager.customWidgetManager,
+              customWidgetManager: context.read<CustomWidgetManager>(),
             ),
           );
         } else {

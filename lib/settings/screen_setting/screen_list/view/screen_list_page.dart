@@ -5,6 +5,7 @@ import 'package:smart_home/l10n/app_localizations.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/screen/view/screen_tile.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../utils/list_status.dart';
@@ -178,7 +179,7 @@ class _ScreenAddPageState extends State<ScreenAddPage> {
 
     widget.screenManager.addScreen(
       Screen(
-        id: widget.screenManager.manager.getRandString(12),
+        id: ServiceContainer.randomString(12),
         name: name,
         iconWrapper:
             currentIconWrapper ??

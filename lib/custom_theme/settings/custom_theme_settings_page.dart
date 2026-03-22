@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_home/custom_theme/cubit/custom_theme_cubit.dart';
 import 'package:smart_home/custom_theme/custom_theme.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/theme/theme_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/theme.dart';
@@ -25,11 +25,11 @@ class CustomThemeSettingsPage extends StatelessWidget {
 }
 
 class _CustomThemeSettingsBody extends StatelessWidget {
-  final ThemeManager themeManager = Manager().themeManager;
-  _CustomThemeSettingsBody();
+  const _CustomThemeSettingsBody();
 
   @override
   Widget build(BuildContext context) {
+    final themeManager = context.read<ThemeManager>();
     /*
       TODO: Bloc Pattern etc.
      */
@@ -37,19 +37,22 @@ class _CustomThemeSettingsBody extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, right: 15),
       child: ListView(
         children: [
-          _selectBrightnessMode(),
+          _selectBrightnessMode(context, themeManager),
           const Divider(),
           const Text("App Bar Elevation"),
-          _appBarElevationSlider(),
+          _appBarElevationSlider(context, themeManager),
           const Text("Textscale (beta)", style: TextStyle(color: Colors.green)),
-          _scaleSlider(),
+          _scaleSlider(context, themeManager),
           _seedColorPicker(),
         ],
       ),
     );
   }
 
-  Widget _selectBrightnessMode() {
+  Widget _selectBrightnessMode(
+    BuildContext context,
+    ThemeManager themeManager,
+  ) {
     return InputFieldContainer.inputContainer(
       child: DropdownButtonFormField<CustomThemeBrightness>(
         decoration: const InputDecoration(border: OutlineInputBorder()),
@@ -100,7 +103,10 @@ class _CustomThemeSettingsBody extends StatelessWidget {
     );
   }
 
-  Widget _appBarElevationSlider() {
+  Widget _appBarElevationSlider(
+    BuildContext context,
+    ThemeManager themeManager,
+  ) {
     return StatefulBuilder(
       builder: (context, setState) {
         return Slider(
@@ -125,7 +131,7 @@ class _CustomThemeSettingsBody extends StatelessWidget {
     );
   }
 
-  Widget _scaleSlider() {
+  Widget _scaleSlider(BuildContext context, ThemeManager themeManager) {
     return StatefulBuilder(
       builder: (context, setState) {
         return Slider(
@@ -163,23 +169,31 @@ class _ColorPickerListTile extends StatefulWidget {
 class _ColorPickerListTileState extends State<_ColorPickerListTile> {
   @override
   Widget build(BuildContext context) {
+    final themeManager = context.read<ThemeManager>();
     return ListTile(
       leading: const Icon(Icons.color_lens),
       title: const Text("Seed color"),
       trailing: BlocBuilder<CustomThemeCubit, CustomThemeState>(
-        bloc: CustomThemeCubit(manager: Manager())..loadTheme(),
+        bloc: CustomThemeCubit(themeManager: themeManager)..loadTheme(),
         builder: (context, state) {
           return ColorIndicator(
             color: state.customTheme.customColorScheme.color,
-            onSelect: () =>
-                _colorPicker(state.customTheme.customColorScheme.color),
+            onSelect: () => _colorPicker(
+              context,
+              themeManager,
+              state.customTheme.customColorScheme.color,
+            ),
           );
         },
       ),
     );
   }
 
-  void _colorPicker(Color color) {
+  void _colorPicker(
+    BuildContext context,
+    ThemeManager themeManager,
+    Color color,
+  ) {
     ColorPicker(
       color: color,
       title: const Text("Seed color"),
@@ -193,8 +207,8 @@ class _ColorPickerListTileState extends State<_ColorPickerListTile> {
         ColorPickerType.wheel: false,
       },
       onColorChanged: (value) {
-        Manager().themeManager.changeTheme(
-          customTheme: Manager().themeManager.loadedCustomTheme.copyOf(
+        themeManager.changeTheme(
+          customTheme: themeManager.loadedCustomTheme.copyOf(
             customColorScheme: CustomColorScheme(
               customColorSchemeMode: CustomColorSchemeMode.fromSeed,
               color: value,

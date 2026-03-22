@@ -6,6 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/theme.dart';
@@ -30,6 +31,7 @@ class _CustomPopupmenuSettingsViewState
   @override
   Widget build(BuildContext context) {
     c = context.read<CustomWidgetBlocCubit>();
+    final customWidgetManager = context.read<CustomWidgetManager>();
     return Column(
       children: [
         InputFieldContainer.inputContainer(
@@ -43,14 +45,16 @@ class _CustomPopupmenuSettingsViewState
               widget.customPopupmenu.reorder(oldIndex, newIndex);
             });
           },
-          children: [..._widgetList()],
+          children: [..._widgetList(customWidgetManager: customWidgetManager)],
         ),
-        _addWidgetButton(),
+        _addWidgetButton(customWidgetManager: customWidgetManager),
       ],
     );
   }
 
-  List<Widget> _widgetList() {
+  List<Widget> _widgetList({
+    required final CustomWidgetManager customWidgetManager,
+  }) {
     List<Widget> list = [];
     for (CustomWidget customWidget in widget.customPopupmenu.customWidgets) {
       list.add(
@@ -80,7 +84,7 @@ class _CustomPopupmenuSettingsViewState
           },
           child: CustomWidgetTemplateTile(
             customWidget: customWidget,
-            customWidgetManager: Manager().customWidgetManager,
+            customWidgetManager: customWidgetManager,
             toggleSelect: null,
           ),
         ),
@@ -89,21 +93,23 @@ class _CustomPopupmenuSettingsViewState
     return list;
   }
 
-  Widget _addWidgetButton() {
+  Widget _addWidgetButton({
+    required final CustomWidgetManager customWidgetManager,
+  }) {
     return OutlinedButton(
-      onPressed: _onAddPress,
+      onPressed: () => _onAddPress(customWidgetManager: customWidgetManager),
       child: const Text("Add Widget"),
     );
   }
 
-  void _onAddPress() {
+  void _onAddPress({required final CustomWidgetManager customWidgetManager}) {
     //TODO Open
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
           return TemplateAddPage(
-            customWidgetManager: Manager().customWidgetManager,
+            customWidgetManager: customWidgetManager,
             onSave: _onWidgetSave,
             filter: (CustomWidgetTypeDeprecated p0) {
               return !p0.settingWidget.deprecated;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
@@ -32,7 +34,7 @@ class _TemplateSelectionAlertDialogState
   @override
   Widget build(BuildContext context) {
     List<CustomWidgetWrapper> templates = List.of(
-      widget.screenManager.manager.customWidgetManager.templates,
+      context.read<CustomWidgetManager>().templates,
     );
 
     templates.removeWhere((element) => widget.selected.contains(element));

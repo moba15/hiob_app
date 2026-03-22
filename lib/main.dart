@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_home/di/injection.dart';
 
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/service_container.dart';
 
 import 'app.dart';
@@ -47,8 +47,8 @@ void main() async {
 
   // ignore: unused_local_variable
   String version = "1.31";
+  await configureDependencies();
   final container = await ServiceContainer.create();
-  Manager manager = Manager();
 
   //TODO:
   runApp(
@@ -60,13 +60,14 @@ void main() async {
         Provider.value(value: container.connectionManager),
         Provider.value(value: container.ioBrokerManager),
         Provider.value(value: container.generalManager),
+        Provider.value(value: container.loggingService),
 
         Provider.value(value: container.customWidgetManager),
         Provider.value(value: container.screenManager),
         Provider.value(value: container.settingsSyncManager),
         Provider.value(value: container.themeManager),
       ],
-      child: App(manager: manager, screenManager: manager.screenManager),
+      child: App(screenManager: container.screenManager),
     ),
   );
 }

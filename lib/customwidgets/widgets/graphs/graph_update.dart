@@ -1,1 +1,0 @@
-enum GraphUpdateType { interval, onUpdate }

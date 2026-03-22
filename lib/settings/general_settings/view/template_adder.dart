@@ -7,8 +7,10 @@ import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart'
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
@@ -241,7 +243,7 @@ class _TemplateAdderState extends State<TemplateAdder> {
           setState(() {
             widget.addLine(
               CustomWidgetTemplate(
-                id: Manager.instance.getRandString(12),
+                id: ServiceContainer.randomString(12),
                 name: "Line",
                 customWidget: c,
               ),
@@ -373,7 +375,7 @@ class WidgetTemplateListPage extends StatelessWidget {
             child: CustomWidgetTemplateTile(
               toggleSelect: null,
               customWidget: widgetTemplates[index],
-              customWidgetManager: screenManager.manager.customWidgetManager,
+              customWidgetManager: context.read<CustomWidgetManager>(),
             ),
           );
         } else if (widgetTemplates.length > index &&

@@ -12,6 +12,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/reorder_helper.dart';
 
 part 'custom_popupmenu.freezed.dart';
@@ -86,7 +87,7 @@ class CustomWidgetConverter
         return CustomSwitchWidget.fromJson(json);
       default:
         return CustomValueWidget(
-          id: Manager().getRandString(12),
+          id: ServiceContainer.randomString(12),
           name: "Please only use new widgets",
           dataPoint: null,
         );

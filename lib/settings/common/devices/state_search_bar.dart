@@ -1,10 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_home/di/injection.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/cubit/cubit/async_search_cubit.dart';
+import 'package:smart_home/utils/widgets/dropdown_search/cubit/cubit/async_search_cubit_factory.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/dropdown_search_async.dart';
 import 'package:smart_home/utils/widgets/substring_highlight_widget.dart';
 
@@ -24,23 +26,26 @@ class StateSearchBar extends StatefulWidget {
 class _StateSearchBarState extends State<StateSearchBar> {
   late DeviceServiceInterface<IobrokerObject> deviceManager;
   late AsyncSearchCubit<IobrokerObject> asyncSearchCubit;
+  late AsyncSearchCubitFactory asyncSearchCubitFactory;
   IobrokerObject? selectedObject;
   String _currentSearch = "";
   Map<String, bool> filters = {};
   @override
   void initState() {
-    deviceManager = Manager().deviceManager;
-    asyncSearchCubit = AsyncSearchCubit(
+    deviceManager = context.read<DeviceServiceInterface<IobrokerObject>>();
+    asyncSearchCubitFactory = getIt<AsyncSearchCubitFactory>();
+    asyncSearchCubit = asyncSearchCubitFactory.create(
       getInitalValues: () => deviceManager.getAllDevices(limit: 250),
     );
     if (widget.selectedObject != null) {
-      Manager().deviceManager.getDeviceById(id: widget.selectedObject!).then((
-        value,
-      ) {
-        setState(() {
-          selectedObject = value;
-        });
-      });
+      context
+          .read<DeviceServiceInterface<IobrokerObject>>()
+          .getDeviceById(id: widget.selectedObject!)
+          .then((value) {
+            setState(() {
+              selectedObject = value;
+            });
+          });
     }
 
     super.initState();

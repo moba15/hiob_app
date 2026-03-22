@@ -8,6 +8,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import 'package:smart_home/manager/manager.dart';
 
@@ -87,7 +88,7 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
             CustomWidgetTypeDeprecated.line.toString()) {
           templates.add(
             CustomWidgetTemplate(
-              id: Manager.instance.getRandString(12),
+              id: ServiceContainer.randomString(12),
               name: "Line",
               customWidget: CustomDivisionLineWidget.fromJson(templatesRaw),
             ),
@@ -96,7 +97,7 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
           //!maintain for downward compatibility
           templates.add(
             CustomWidgetTemplate(
-              id: Manager.instance.getRandString(12),
+              id: ServiceContainer.randomString(12),
               name: "Line",
               customWidget: CustomDivisionLineWidget.fromJson(templatesRaw),
             ),

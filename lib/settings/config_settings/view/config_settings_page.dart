@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/settings_sync_manager.dart';
 import 'package:smart_home/preconfigs/preconfig.dart';
 import 'package:smart_home/settings/config_settings/bloc/config_bloc.dart';
 
@@ -52,7 +53,7 @@ class ConfigSettingsPage extends StatelessWidget {
 
       return;
     }
-    Manager.instance.settingsSyncManager.createNewSettingsTemplate(name).then((
+    context.read<SettingsSyncManager>().createNewSettingsTemplate(name).then((
       value,
     ) {
       if (value.success) {
@@ -77,9 +78,8 @@ class ConfigSettingsPage extends StatelessWidget {
         );
       }
     });
-    Manager
-        .instance
-        .settingsSyncManager
+    context
+        .read<SettingsSyncManager>()
         .configAddedStreamController
         .stream
         .first
@@ -336,14 +336,13 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
 
   void load() {
     Navigator.pop(context);
-    Manager
-        .instance
-        .settingsSyncManager
+    context
+        .read<SettingsSyncManager>()
         .loadedSuccessStreamController
         .stream
         .first
         .then((value) => showSuccessSnackBar(context, "Loaded"));
-    Manager.instance.settingsSyncManager.getTemplateSettings(
+    context.read<SettingsSyncManager>().getTemplateSettings(
       widget.preConfig,
       screen: screens,
       widget: widgets,
@@ -352,14 +351,13 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
 
   void upload() {
     Navigator.pop(context);
-    Manager
-        .instance
-        .settingsSyncManager
+    context
+        .read<SettingsSyncManager>()
         .uploadSuccessStreamController
         .stream
         .first
         .then((value) => showSuccessSnackBar(context, "Uploaded"));
-    Manager.instance.settingsSyncManager.uploadSettings(
+    context.read<SettingsSyncManager>().uploadSettings(
       widget.preConfig,
       screen: screens,
       widget: widgets,

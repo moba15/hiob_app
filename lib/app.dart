@@ -7,18 +7,21 @@ import 'package:smart_home/l10n/app_localizations.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/theme/theme_manager.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/view/main/main_screen.dart';
 
 /// Init the MaterialApp widget: Controls the Theme of the complete App
 class App extends StatelessWidget {
-  final Manager manager;
   final ScreenManager screenManager;
-  const App({super.key, required this.manager, required this.screenManager});
+
+  const App({super.key, required this.screenManager});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CustomThemeCubit, CustomThemeState>(
-      bloc: CustomThemeCubit(manager: manager)..loadTheme(),
+      bloc: CustomThemeCubit(themeManager: context.read<ThemeManager>())
+        ..loadTheme(),
       builder: (context, state) {
         debugPrint("Change Theme");
 
@@ -55,17 +58,11 @@ class App extends StatelessWidget {
           supportedLocales: const [
             Locale('en'), // English
           ],
-          navigatorKey: Manager.navigatorKey,
+          //TODO refactor  navigatorKey: Manager.navigatorKey,
           theme: state.customTheme.themeDataLight,
           themeMode: state.customTheme.customThemeBrightness.themeMode,
           darkTheme: state.customTheme.themeDataDark,
-          home: RepositoryProvider<Manager>.value(
-            value: manager,
-            child: BlocProvider(
-              child: const MainPage(),
-              create: (_) => ManagerCubit(manager: manager),
-            ),
-          ),
+          home: const MainPage(),
         );
       },
     );

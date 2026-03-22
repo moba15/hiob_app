@@ -35,9 +35,8 @@ class _NotificationSettingsBody extends StatefulWidget {
 class __NotificationSettingsBodyState extends State<_NotificationSettingsBody> {
   @override
   Widget build(BuildContext context) {
-    NotificationManager notificationManager = context
-        .read<Manager>()
-        .notificationManager;
+    final NotificationManager notificationManager = context
+        .read<NotificationManager>();
     return SwitchListTile(
       value: NotificationManager.backgroundNotificationsEnabled,
       title: Text(getAppLocalizations(context).background_notifications),

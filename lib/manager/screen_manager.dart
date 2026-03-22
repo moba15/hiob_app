@@ -5,14 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screen/screen.dart';
+import 'package:smart_home/services/logging/logging_service.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class ScreenManager {
   final FileManager fileManager;
-  final Manager manager;
+  final CustomWidgetManager customWidgetManager;
+  final LoggingService loggingService;
+
   List<Screen> screens;
   final String key = "screens";
   StreamController screenStreamController = StreamController.broadcast();
@@ -21,7 +26,8 @@ class ScreenManager {
   ScreenManager({
     required this.fileManager,
     required this.screens,
-    required this.manager,
+    required this.customWidgetManager,
+    required this.loggingService,
   });
 
   Future<List<Screen>> loadScreens() async {
@@ -32,7 +38,7 @@ class ScreenManager {
       return screens;
     }
 
-    await manager.customWidgetManager.loadTemplates();
+    await customWidgetManager.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
 
@@ -49,11 +55,12 @@ class ScreenManager {
         Map<String, dynamic> rawMap = rawScreens;
         try {
           Screen s = Screen.fromJSON(rawMap);
-          Manager().talker.debug("ScreenManager | loadScreen | ${s.id}");
+          loggingService.debug("ScreenManager | loadScreen | ${s.id}");
           screens.add(s);
         } catch (e) {
-          Manager().talker.error(
+          loggingService.error(
             "ScreenManager | loadScreen | error while Screen.fromJSON $rawMap",
+            e,
           );
         }
       }
@@ -62,7 +69,7 @@ class ScreenManager {
     if (screens.isEmpty) {
       screens.add(
         Screen(
-          id: Manager.instance.getRandString(15),
+          id: ServiceContainer.randomString(15),
           name: "Template",
           iconWrapper: const IconWrapper(
             iconData: Icons.abc,
@@ -81,7 +88,7 @@ class ScreenManager {
 
   void reload() async {
     screens.clear();
-    await manager.customWidgetManager.reload();
+    await customWidgetManager.reload();
 
     List<dynamic>? l = await fileManager.getList(key);
 

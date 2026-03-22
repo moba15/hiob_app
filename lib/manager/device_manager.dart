@@ -8,17 +8,23 @@ import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
 import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
+import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/pair.dart';
 
 import 'manager.dart';
 
 class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
   FileManager fileManager;
+  LoggingService loggingService;
+  ScreenManager screenManager;
+  GeneralManager generalManager;
   AppDatabase appDatabase = AppDatabase(null);
-  Manager manager;
+
   StreamController deviceListStreamController = StreamController.broadcast();
   bool loaded = false;
   final String key = "devices";
@@ -27,13 +33,18 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
       StreamController.broadcast();
   List<String> preDefinedFilters = [];
 
-  DeviceManager(this.fileManager, {required this.manager}) {
+  DeviceManager(
+    this.fileManager, {
+    required this.loggingService,
+    required this.screenManager,
+    required this.generalManager,
+  }) {
     _loadFilters();
   }
 
   void _loadFilters() async {
     var map = await fileManager.getMap(key);
-    Manager().talker.debug("XX ${preDefinedFilters.length}");
+    loggingService.debug("XX ${preDefinedFilters.length}");
     if (map != null && map.containsKey("filters")) {
       preDefinedFilters.clear();
       for (var x in map["filters"]) {
@@ -53,10 +64,10 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
   void _updateData() {
     Map<String, dynamic> map = {"filters": preDefinedFilters};
     fileManager.writeJSON(key, map).then((value) async {
-      Manager().talker.debug("fileManager.writeJSON $value");
+      loggingService.debug("fileManager.writeJSON $value");
       var map = await fileManager.getMap(key);
 
-      Manager().talker.debug(
+      loggingService.debug(
         "fileManager.writeJSON $value ${map!.containsKey("filters")}",
       );
     });
@@ -70,7 +81,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
         .customSelect(query, variables: [Variable<String>(id)])
         .get());
     if (result.isEmpty) {
-      Manager().talker.error(
+      loggingService.error(
         "DeviceManager | getIoBrokerDataPointByObjectID | $id not found",
       );
       return null;
@@ -150,9 +161,9 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
 
   @override
   void listenToDeviceChanges({required List<DeviceInterface> devices}) async {
-    List<String> dataPoints = Manager().screenManager.getDependentDataPoints();
+    List<String> dataPoints = screenManager.getDependentDataPoints();
     for (var d in dataPoints) {}
-    manager.talker.debug(
+    loggingService.debug(
       "DeviceManager | subscribe to ${dataPoints.length} datapoints",
     );
     StreamSubscription<StatesValueUpdate>? subscription = Manager()
@@ -166,10 +177,10 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
         )
         .listen(
           (value) async {
-            Manager().talker.debug(
+            loggingService.debug(
               "DeviceManager | stateSubscriptionStream | Recieved update from ${value.stateUpdates.length} states",
             );
-            Manager().talker.verbose(
+            loggingService.verbose(
               "DeviceManager | stateSubscriptionStream | Recieved updates: ${value.stateUpdates.map((e) {
                 return "${e.stateId}: [${e.boolValue}, ${e.doubleValue},  ${e.stringValue}]";
               })}",
@@ -180,17 +191,17 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
               if (d != null) {
                 valueChange(d, update.stringValue);
               } else {
-                Manager().talker.error(
+                loggingService.error(
                   "DeviceManager | stateSubscriptionStream | Datapoint ${update.stateId} not found",
                 );
               }
             }
           },
           onError: (e) {
-            Manager().talker.error(
+            loggingService.error(
               "DeviceManager | stateSubscriptionStream  | onError: $e",
             );
-            Manager.instance.generalManager.dialogStreamController.sink.add(
+            generalManager.dialogStreamController.sink.add(
               (p0) => AlertDialog(
                 title: const Text("Error"),
                 content: const Text(
@@ -249,7 +260,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
         )
         .get()
         .onError((error, stackTrace) {
-          Manager().talker.error(
+          loggingService.error(
             "DeviceManager | searchIobrokerObjects | Error executing SQL statement: $query",
             stackTrace,
           );
@@ -272,7 +283,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
         step: e.data["step"],
       );
     }).toList();
-    Manager().talker.verbose(
+    loggingService.verbose(
       "DeviceManager | searchIobrokerObjects found ${result.length} results for $query",
     );
     return result;
@@ -289,7 +300,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
       error,
       stackTrace,
     ) {
-      Manager().talker.error(
+      loggingService.error(
         "DeviceManager | searchIobrokerAdapaters | Error executing SQL statement",
         stackTrace,
       );
@@ -300,7 +311,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
     List<String> result = resultRaw.map((e) {
       return e.data["adapter"] as String;
     }).toList();
-    Manager().talker.verbose(
+    loggingService.verbose(
       "DeviceManager | searchIobrokerAdapaters found ${result.length} results",
     );
     return result;
@@ -308,16 +319,16 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
 
   void updateObjects(ConnectionManager connectionManager) async {
     if (connectionManager.stateUpdateClientStub != null) {
-      Manager().talker.debug("DeviceManager | updateStates");
+      loggingService.debug("DeviceManager | updateStates");
       AllObjectsResults allObjectsResults = await connectionManager
           .stateUpdateClientStub!
           .getAllObjects(AllObjectRequest(filterPatterns: []))
           .onError((error, stackTrace) {
-            Manager().talker.error(
+            loggingService.error(
               "DeviceManager | updateStates $error",
               stackTrace,
             );
-            Manager.instance.generalManager.dialogStreamController.sink.add(
+            generalManager.dialogStreamController.sink.add(
               (p0) => AlertDialog(
                 title: const Text("Error"),
                 content: const Text(
@@ -346,7 +357,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
           .map((e) => e.stateId)
           .toSet();
       Set<String> toDelete = localId.difference(serverIds);
-      Manager().talker.debug(
+      loggingService.debug(
         "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects",
       );
       List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((
@@ -374,13 +385,13 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
             ], mode: InsertMode.insertOrReplace);
           })
           .onError((error, stackTrace) {
-            Manager().talker.error(
+            loggingService.error(
               "DeviceManager | updateStates batch insert error; $error",
               stackTrace,
             );
           })
           .then((value) async {
-            Manager().talker.debug(
+            loggingService.debug(
               "DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}",
             );
           });

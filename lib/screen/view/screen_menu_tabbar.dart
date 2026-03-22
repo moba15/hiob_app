@@ -7,15 +7,14 @@ import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list
 import '../screen.dart';
 
 class ScreenTabBarPage extends StatelessWidget {
-  final Manager manager;
-
-  const ScreenTabBarPage({super.key, required this.manager});
+  const ScreenTabBarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ScreenListCubit(screenManager: manager.screenManager),
-      child: ScreenTabView(screenManager: manager.screenManager),
+      create: (_) =>
+          ScreenListCubit(screenManager: context.read<ScreenManager>()),
+      child: ScreenTabView(screenManager: context.read<ScreenManager>()),
     );
   }
 

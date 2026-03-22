@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
+import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
 import 'package:smart_home/screen/view/screen_view.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
@@ -24,14 +26,12 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainScreen(manager: context.read<Manager>());
+    return MainScreen();
   }
 }
 
 class MainScreen extends StatelessWidget {
-  final Manager manager;
-
-  const MainScreen({super.key, required this.manager});
+  const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -331,15 +331,14 @@ class _MainViewOldState extends State<MainViewOld>
   void initState() {
     _controller = StreamController.broadcast();
     ioConnected = context
-        .read<Manager>()
-        .connectionManager
+        .read<ConnectionServiceInterface>()
         .getConnectionStatus()
         .isConnected;
-    context.read<Manager>().generalManager.dialogStreamController.stream.listen(
-      (event) {
-        showDialog(context: context, builder: event);
-      },
-    );
+    context.read<GeneralManager>().dialogStreamController.stream.listen((
+      event,
+    ) {
+      showDialog(context: context, builder: event);
+    });
 
     _tabController = TabController(initialIndex: 0, length: 1, vsync: this);
 
@@ -369,7 +368,6 @@ class _MainViewOldState extends State<MainViewOld>
     if (width < 960.0) {
       numberOfRows = 1;
     }
-    Manager manager = Manager();
 
     return BlocBuilder<MainViewCubit, MainViewState>(
       bloc: MainViewCubit(),
@@ -408,23 +406,21 @@ class _MainViewOldState extends State<MainViewOld>
                   ),
             actions: [
               StreamBuilder(
-                stream: Manager.instance.notificationManager.notificationStream,
+                stream: context.read<NotificationManager>().notificationStream,
                 builder: (context, state) {
                   return Badge(
                     isLabelVisible:
-                        Manager
-                            .instance
-                            .notificationManager
+                        context
+                            .read<NotificationManager>()
                             .unreadNotifications >
                         0,
                     label:
-                        Manager
-                                .instance
-                                .notificationManager
+                        context
+                                .read<NotificationManager>()
                                 .unreadNotifications >
                             0
                         ? Text(
-                            "${Manager.instance.notificationManager.unreadNotifications}",
+                            "${context.read<NotificationManager>().unreadNotifications}",
                           )
                         : null,
                     child: IconButton(
@@ -447,8 +443,7 @@ class _MainViewOldState extends State<MainViewOld>
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          MainSettingsScreen(manager: manager),
+                      builder: (context) => MainSettingsScreen(),
                     ),
                   ),
                 },

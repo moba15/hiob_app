@@ -8,21 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/logging/logging_service.dart';
+import 'package:smart_home/services/service_container.dart';
 
 class FileManager {
   SharedPreferences pref;
   bool isLoaded = false;
-  final Manager manager;
+  final LoggingService loggingService;
 
-  FileManager({required this.pref, required this.manager}) {
-    //_init();
+  FileManager({required this.pref, required this.loggingService}) {
     _createBackup();
   }
 
-  /*void _init() async {
-    pref = await SharedPreferences.getInstance();
-    isLoaded = true;
-  }*/
   void _createBackup() {
     for (String key in pref.getKeys()) {
       if (pref.containsKey("${key}_backup")) {
@@ -75,45 +72,45 @@ class FileManager {
 
   Future<Map<String, dynamic>?> getMap(String key) async {
     if (pref.getString(key) != null) {
-      Manager().talker.verbose(
+      loggingService.verbose(
         "FileManager | getMap $key:${pref.getString(key)}",
       );
       try {
         Map<String, dynamic>? m = jsonDecode(pref.getString(key)!);
         return m;
       } catch (e) {
-        Manager().talker.error(
+        loggingService.error(
           "FileManager | getMap error during decode: $e for key $key",
         );
         return null;
       }
     }
-    Manager().talker.debug("FileManager | getMap key $key does not exists");
+    loggingService.debug("FileManager | getMap key $key does not exists");
     return null;
   }
 
   Future<List<dynamic>?> getList(String key) async {
     if (pref.containsKey(key)) {
-      Manager().talker.verbose(
+      loggingService.verbose(
         "FileManager | getList $key:${pref.getString(key)}",
       );
       try {
         List<dynamic> l = jsonDecode(pref.getString(key)!);
         return l;
       } catch (e) {
-        Manager().talker.error(
+        loggingService.error(
           "FileManager | getList error during decode: $e for key $key",
         );
         return null;
       }
     } else {
-      Manager().talker.debug("FileManager | getList key $key does not exists");
+      loggingService.debug("FileManager | getList key $key does not exists");
       return null;
     }
   }
 
   void export(BuildContext context) async {
-    String? result = await FilePicker.platform.getDirectoryPath(
+    /*String? result = await FilePicker.platform.getDirectoryPath(
       dialogTitle: 'Please select an output file:',
       initialDirectory: "Download",
     );
@@ -164,13 +161,14 @@ class FileManager {
     }
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text("Export Successful")));
+    ).showSnackBar(const SnackBar(content: Text("Export Successful")));*/
+    throw UnimplementedError("Not supported anymore");
   }
 
   void import(BuildContext context) async {
     //TODO: Add IOS Support
 
-    FilePickerResult? result;
+    /*   FilePickerResult? result;
     try {
       result = await FilePicker.platform.pickFiles(
         allowedExtensions: ["json"],
@@ -237,6 +235,7 @@ class FileManager {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text("Import Successful")));
-    }
+    }*/
+    throw UnimplementedError("Not supported anymore");
   }
 }

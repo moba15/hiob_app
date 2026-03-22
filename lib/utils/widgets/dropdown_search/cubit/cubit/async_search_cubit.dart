@@ -1,13 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/logging/app_logger.dart';
 
 part 'async_search_state.dart';
 part 'async_search_cubit.freezed.dart';
 
 class AsyncSearchCubit<T> extends Cubit<AsyncSearchState<T>> {
   Future<List<T>> Function() getInitalValues;
-  AsyncSearchCubit({required this.getInitalValues})
+  final AppLogger logger;
+  AsyncSearchCubit({required this.getInitalValues, required this.logger})
     : super(AsyncSearchState.initial());
 
   loadInitialValues() async {
@@ -17,7 +18,7 @@ class AsyncSearchCubit<T> extends Cubit<AsyncSearchState<T>> {
       emit(AsyncSearchState.loaded(objects: items));
     } catch (e) {
       emit(AsyncSearchState.error(errorMsg: e.toString()));
-      Manager().talker.error(
+      logger.error(
         "AsyncSearchCubit | loadInitialValues | error loading values",
         e,
       );
