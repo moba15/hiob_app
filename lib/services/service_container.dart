@@ -5,6 +5,7 @@ import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/manager/settings_sync_manager.dart';
@@ -22,6 +23,7 @@ class ServiceContainer {
   final ScreenManager screenManager;
   final SettingsSyncManager settingsSyncManager;
   final ThemeManager themeManager;
+  final NotificationManager notificationManager;
   final LoggingService loggingService;
   final MetadataService metadataService;
 
@@ -35,6 +37,7 @@ class ServiceContainer {
     required this.screenManager,
     required this.settingsSyncManager,
     required this.themeManager,
+    required this.notificationManager,
     required this.loggingService,
     required this.metadataService,
   });
@@ -82,6 +85,11 @@ class ServiceContainer {
       loggingService: loggingService,
     );
 
+    final notificationManager = NotificationManager(
+      fileManager: fileManager,
+      loggingService: loggingService,
+    );
+
     final settingsSyncManager = SettingsSyncManager(
       connectionManager: connectionManager,
       fileManager: fileManager,
@@ -100,6 +108,7 @@ class ServiceContainer {
       screenManager: screenManager,
       settingsSyncManager: settingsSyncManager,
       themeManager: themeManager,
+      notificationManager: notificationManager,
       loggingService: loggingService,
       metadataService: metadataService,
     );
