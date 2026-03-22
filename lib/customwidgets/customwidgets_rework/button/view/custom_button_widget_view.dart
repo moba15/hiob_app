@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custo
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/manager/general_manager.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomButtonWidgetView extends StatelessWidget {
   final CustomButtonWidget customButtonWidget;
@@ -42,7 +42,10 @@ class CustomButtonWidgetView extends StatelessWidget {
       if (e.dataPoint == customButtonWidget.dataPoint) return e;
       throw ErrorDescription("No datapoint bloc was found");
     });*/
-    DataPointBloc dataPointBloc = DataPointBloc(dataPointId);
+    DataPointBloc dataPointBloc = DataPointBloc(
+      dataPointId,
+      deviceService: context.read<DeviceServiceInterface>(),
+    );
     return BlocBuilder<DataPointBloc, DataPointState>(
       bloc: dataPointBloc,
       builder: (context, state) {
@@ -92,7 +95,10 @@ class _CustomButtonWidgetDeviceViewState
       lowerBound: 0,
       upperBound: 0.15,
     );
-    _bloc = DataPointBloc(widget.dataPointId);
+    _bloc = DataPointBloc(
+      widget.dataPointId,
+      deviceService: context.read<DeviceServiceInterface>(),
+    );
     super.initState();
   }
 

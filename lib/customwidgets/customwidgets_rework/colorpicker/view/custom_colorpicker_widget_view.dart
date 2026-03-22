@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomColorPickerWidgetView extends StatefulWidget {
   final CustomColorPickerWidget customColorPickerWidget;
@@ -27,7 +28,10 @@ class _CustomColorPickerWidgetViewState
   @override
   void initState() {
     if (widget.customColorPickerWidget.dataPoint != null) {
-      _bloc = DataPointBloc(widget.customColorPickerWidget.dataPoint!);
+      _bloc = DataPointBloc(
+        widget.customColorPickerWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
     _label =
         widget.customColorPickerWidget.label != null &&
@@ -45,7 +49,10 @@ class _CustomColorPickerWidgetViewState
     _bloc?.close();
     setState(() {
       if (widget.customColorPickerWidget.dataPoint != null) {
-        _bloc = DataPointBloc(widget.customColorPickerWidget.dataPoint!);
+        _bloc = DataPointBloc(
+          widget.customColorPickerWidget.dataPoint!,
+          deviceService: context.read<DeviceServiceInterface>(),
+        );
       }
       _label =
           widget.customColorPickerWidget.label != null &&

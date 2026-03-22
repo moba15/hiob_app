@@ -4,7 +4,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
@@ -27,7 +26,10 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
         ? widget.customValueWidget.name
         : widget.customValueWidget.label!;
     if (widget.customValueWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customValueWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customValueWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
 
     super.initState();
@@ -44,7 +46,10 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
 
       bloc?.close();
       if (widget.customValueWidget.dataPoint != null) {
-        bloc = DataPointBloc(widget.customValueWidget.dataPoint!);
+        bloc = DataPointBloc(
+          widget.customValueWidget.dataPoint!,
+          deviceService: context.read<DeviceServiceInterface>(),
+        );
       } else {
         bloc = null;
       }

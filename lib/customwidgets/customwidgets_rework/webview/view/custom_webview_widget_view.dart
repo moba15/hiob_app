@@ -5,10 +5,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/device/bloc/device_bloc.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class CustomWebViewWidgetView extends StatefulWidget {
@@ -49,7 +48,10 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
       mediaPlaybackRequiresUserGesture: false,
     );
     if (widget.customWebViewWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customWebViewWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
     /*  if (widget.customWebViewWidget.dataPoint != null) {
       if (widget.customWebViewWidget.dataPoint!.value == null) {
@@ -122,7 +124,10 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
       urlRequest: URLRequest(url: WebUri(url ?? "https://google.de")),
     );
     if (widget.customWebViewWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customWebViewWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customWebViewWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
     super.didUpdateWidget(oldWidget);
   }

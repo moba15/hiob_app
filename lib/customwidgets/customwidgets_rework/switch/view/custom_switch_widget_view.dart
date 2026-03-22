@@ -4,6 +4,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_swit
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomSwitchWidgetView extends StatefulWidget {
   final CustomSwitchWidget customSwitchWidget;
@@ -24,7 +25,10 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
         ? widget.customSwitchWidget.name
         : widget.customSwitchWidget.label!;
     if (widget.customSwitchWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customSwitchWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customSwitchWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
 
     super.initState();
@@ -41,7 +45,10 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
 
       bloc?.close();
       if (widget.customSwitchWidget.dataPoint != null) {
-        bloc = DataPointBloc(widget.customSwitchWidget.dataPoint!);
+        bloc = DataPointBloc(
+          widget.customSwitchWidget.dataPoint!,
+          deviceService: context.read<DeviceServiceInterface>(),
+        );
       } else {
         bloc = null;
       }

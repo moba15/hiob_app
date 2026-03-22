@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomInputWidgetView extends StatefulWidget {
   final CustomInputWidget customInputWidget;
@@ -17,7 +18,10 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
   @override
   void initState() {
     if (widget.customInputWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customInputWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
 
     super.initState();
@@ -28,7 +32,10 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
     bloc?.close();
     bloc = null;
     if (widget.customInputWidget.dataPoint != null) {
-      bloc = DataPointBloc(widget.customInputWidget.dataPoint!);
+      bloc = DataPointBloc(
+        widget.customInputWidget.dataPoint!,
+        deviceService: context.read<DeviceServiceInterface>(),
+      );
     }
 
     super.didUpdateWidget(oldWidget);
