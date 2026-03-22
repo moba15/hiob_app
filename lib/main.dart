@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_home/di/injection.dart';
 
 import 'package:smart_home/services/service_container.dart';
+import 'package:smart_home/view/main/main_screen.dart';
 
 import 'app.dart';
 
@@ -45,30 +48,128 @@ void main() async {
 
   //Initialize Logging
 
-  // ignore: unused_local_variable
-  String version = "1.31";
-  await configureDependencies();
-  final container = await ServiceContainer.create();
+  runApp(const _BootstrapApp());
+}
 
-  //TODO:
-  runApp(
-    MultiProvider(
-      providers: [
-        Provider.value(value: container),
-        Provider.value(value: container.fileManager),
-        Provider.value(value: container.deviceManager),
-        Provider.value(value: container.connectionManager),
-        Provider.value(value: container.ioBrokerManager),
-        Provider.value(value: container.generalManager),
-        Provider.value(value: container.loggingService),
+class _BootstrapApp extends StatefulWidget {
+  const _BootstrapApp();
 
-        Provider.value(value: container.customWidgetManager),
-        Provider.value(value: container.screenManager),
-        Provider.value(value: container.settingsSyncManager),
-        Provider.value(value: container.themeManager),
-        Provider.value(value: container.notificationManager),
-      ],
-      child: App(screenManager: container.screenManager),
-    ),
-  );
+  @override
+  State<_BootstrapApp> createState() => _BootstrapAppState();
+}
+
+class _BootstrapAppState extends State<_BootstrapApp> {
+  static const Map<String, String> _labels = {
+    'di': 'Dependency registration',
+    'shared_preferences': 'Shared preferences',
+    'logging_service': 'Logging service',
+    'metadata_service': 'Metadata service',
+    'file_manager': 'File manager',
+    'general_manager': 'General manager',
+    'screen_manager': 'Screen manager',
+    'iobroker_manager': 'ioBroker manager',
+    'connection_manager': 'Connection manager',
+    'notification_manager': 'Notification manager',
+    'settings_sync_manager': 'Settings sync manager',
+    'theme_manager': 'Theme manager',
+  };
+
+  late final ManagerCubit managerCubit;
+  ServiceContainer? _container;
+
+  @override
+  void initState() {
+    super.initState();
+    managerCubit = ManagerCubit(
+      status: ManagerStatus.loading,
+      services: _labels.entries
+          .map(
+            (entry) => ServiceLoadEntry(
+              key: entry.key,
+              label: entry.value,
+              status: ServiceLoadStatus.pending,
+            ),
+          )
+          .toList(growable: false),
+    );
+    _initialize();
+  }
+
+  @override
+  void dispose() {
+    managerCubit.close();
+    super.dispose();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      managerCubit.updateServiceStatus(
+        key: 'di',
+        label: _labels['di']!,
+        status: ServiceLoadStatus.loading,
+      );
+      await configureDependencies();
+      managerCubit.updateServiceStatus(
+        key: 'di',
+        label: _labels['di']!,
+        status: ServiceLoadStatus.loaded,
+      );
+
+      final container = await ServiceContainer.create(
+        onProgress: (key, status, error) {
+          final mappedStatus = switch (status) {
+            ServiceInitStatus.started => ServiceLoadStatus.loading,
+            ServiceInitStatus.loaded => ServiceLoadStatus.loaded,
+            ServiceInitStatus.failed => ServiceLoadStatus.failed,
+          };
+          managerCubit.updateServiceStatus(
+            key: key,
+            label: _labels[key] ?? key,
+            status: mappedStatus,
+            error: error,
+          );
+        },
+      );
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _container = container;
+      });
+      managerCubit.onStatusChange(ManagerStatus.finished);
+    } catch (e) {
+      managerCubit.setStartupError(e.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_container == null) {
+      return BlocProvider.value(
+        value: managerCubit,
+        child: const MaterialApp(home: MainScreen()),
+      );
+    }
+
+    return BlocProvider.value(
+      value: managerCubit,
+      child: MultiProvider(
+        providers: [
+          Provider.value(value: _container!),
+          Provider.value(value: _container!.fileManager),
+          Provider.value(value: _container!.deviceManager),
+          Provider.value(value: _container!.connectionManager),
+          Provider.value(value: _container!.ioBrokerManager),
+          Provider.value(value: _container!.generalManager),
+          Provider.value(value: _container!.loggingService),
+          Provider.value(value: _container!.customWidgetManager),
+          Provider.value(value: _container!.screenManager),
+          Provider.value(value: _container!.settingsSyncManager),
+          Provider.value(value: _container!.themeManager),
+          Provider.value(value: _container!.notificationManager),
+        ],
+        child: App(screenManager: _container!.screenManager),
+      ),
+    );
+  }
 }

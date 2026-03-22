@@ -13,6 +13,11 @@ import 'package:smart_home/manager/theme/theme_manager.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/services/metadata/metadata_service.dart';
 
+enum ServiceInitStatus { started, loaded, failed }
+
+typedef ServiceInitProgressCallback =
+    void Function(String key, ServiceInitStatus status, String? error);
+
 class ServiceContainer {
   final FileManager fileManager;
   final DeviceManager deviceManager;
@@ -44,17 +49,48 @@ class ServiceContainer {
 
   /// Creates and wires all services/managers using provider-friendly
   /// constructor injection.
-  static Future<ServiceContainer> create() async {
-    final pref = await SharedPreferences.getInstance();
-    final LoggingService loggingService = LoggingService.instance;
-    final MetadataService metadataService = await MetadataService.create();
+  static Future<ServiceContainer> create({
+    ServiceInitProgressCallback? onProgress,
+  }) async {
+    void progress(String key, ServiceInitStatus status, [String? error]) {
+      onProgress?.call(key, status, error);
+    }
 
-    final fileManager = FileManager(pref: pref, loggingService: loggingService);
+    Future<T> runStep<T>(String key, Future<T> Function() action) async {
+      progress(key, ServiceInitStatus.started);
+      try {
+        final result = await action();
+        progress(key, ServiceInitStatus.loaded);
+        return result;
+      } catch (e) {
+        progress(key, ServiceInitStatus.failed, e.toString());
+        rethrow;
+      }
+    }
+
+    final pref = await runStep(
+      'shared_preferences',
+      SharedPreferences.getInstance,
+    );
+    final LoggingService loggingService = await runStep(
+      'logging_service',
+      () async => LoggingService.instance,
+    );
+    final MetadataService metadataService = await runStep(
+      'metadata_service',
+      MetadataService.create,
+    );
+
+    final fileManager = await runStep(
+      'file_manager',
+      () async => FileManager(pref: pref, loggingService: loggingService),
+    );
     final generalManager = GeneralManager(
       loggingService: loggingService,
       fileManager: fileManager,
       metadataService: metadataService,
-    )..load();
+    );
+    await runStep('general_manager', generalManager.load);
 
     final screenManager = ScreenManager(
       fileManager: fileManager,
@@ -74,30 +110,38 @@ class ServiceContainer {
       screenManager: screenManager,
     );
     screenManager.customWidgetManager = customWidgetManager;
-    await screenManager.loadScreens();
+    await runStep('screen_manager', screenManager.loadScreens);
 
     final ioBrokerManager = IoBrokerManager(fileManager: fileManager);
-    ioBrokerManager.load();
+    await runStep('iobroker_manager', ioBrokerManager.load);
 
-    final connectionManager = ConnectionManager(
-      deviceManager: deviceManager,
-      ioBrokerManager: ioBrokerManager,
-      generalManager: generalManager,
-      loggingService: loggingService,
+    final connectionManager = await runStep(
+      'connection_manager',
+      () async => ConnectionManager(
+        deviceManager: deviceManager,
+        ioBrokerManager: ioBrokerManager,
+        generalManager: generalManager,
+        loggingService: loggingService,
+      ),
     );
 
-    final notificationManager = NotificationManager(
-      fileManager: fileManager,
-      loggingService: loggingService,
+    final notificationManager = await runStep(
+      'notification_manager',
+      () async => NotificationManager(
+        fileManager: fileManager,
+        loggingService: loggingService,
+      ),
     );
 
     final settingsSyncManager = SettingsSyncManager(
       connectionManager: connectionManager,
       fileManager: fileManager,
       loggingService: loggingService,
-    )..loadSettings();
+    );
+    await runStep('settings_sync_manager', settingsSyncManager.loadSettings);
 
-    final themeManager = ThemeManager(fileManager: fileManager)..loadTheme();
+    final themeManager = ThemeManager(fileManager: fileManager);
+    await runStep('theme_manager', themeManager.loadTheme);
 
     return ServiceContainer._(
       fileManager: fileManager,
