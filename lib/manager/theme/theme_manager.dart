@@ -14,7 +14,7 @@ class ThemeManager {
 
   ThemeManager({required this.fileManager});
 
-  void loadTheme() async {
+  Future<void> loadTheme() async {
     Map<String, dynamic> customThemeJson =
         await fileManager.getMap("customTheme") ?? _loadedCustomTheme.toJson();
     _loadedCustomTheme = CustomTheme.fromJson(customThemeJson);

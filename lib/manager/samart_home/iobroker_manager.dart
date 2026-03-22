@@ -27,7 +27,7 @@ class IoBrokerManager {
   bool isUpdating = false;
   IoBrokerManager({required this.fileManager});
 
-  void load() async {
+  Future<void> load() async {
     if ((await fileManager.containsKey(key))) {
       Map<String, dynamic>? settings = await fileManager.getMap(key);
       mainIp = settings?["ip"] ?? "10.0.2.2";

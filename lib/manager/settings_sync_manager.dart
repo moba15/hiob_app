@@ -41,7 +41,7 @@ class SettingsSyncManager {
     required this.loggingService,
   });
 
-  void loadSettings() async {
+  Future<void> loadSettings() async {
     if (!await fileManager.containsKey(settingsSyncKey)) {
       fileManager.writeJSON(settingsSyncKey, _loadDefaultSettings());
     }

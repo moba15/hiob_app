@@ -33,7 +33,7 @@ class GeneralManager {
     required this.metadataService,
   });
 
-  void load() async {
+  Future<void> load() async {
     if (!await fileManager.containsKey(key)) {
       await fileManager.writeJSON(key, {});
     }

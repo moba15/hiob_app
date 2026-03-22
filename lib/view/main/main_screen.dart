@@ -41,37 +41,60 @@ class MainScreen extends StatelessWidget {
         switch (state.status) {
           case ManagerStatus.loading:
             return Scaffold(
-              appBar: AppBar(
-                title: const Text("Loading"),
-                actions: [
-                  IconButton(
-                    onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const NotificationLogViewScreen(),
-                        ),
+              appBar: AppBar(title: const Text("Loading")),
+              body: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 20),
+                  if (state.startupError != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        state.startupError!,
+                        style: const TextStyle(color: Colors.red),
                       ),
-                    },
-                    icon: const Icon(Icons.notifications),
-                  ),
-                  IconButton(
-                    onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainSettingsScreen(),
-                        ),
-                      ),
-                    },
-                    icon: const Icon(Icons.settings),
+                    ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.services.length,
+                      itemBuilder: (context, index) {
+                        final service = state.services[index];
+                        IconData icon = Icons.circle_outlined;
+                        Color? color;
+                        switch (service.status) {
+                          case ServiceLoadStatus.pending:
+                            icon = Icons.circle_outlined;
+                            color = Colors.grey;
+                            break;
+                          case ServiceLoadStatus.loading:
+                            icon = Icons.hourglass_bottom;
+                            color = Colors.orange;
+                            break;
+                          case ServiceLoadStatus.loaded:
+                            icon = Icons.check_circle;
+                            color = Colors.green;
+                            break;
+                          case ServiceLoadStatus.failed:
+                            icon = Icons.error;
+                            color = Colors.red;
+                            break;
+                        }
+
+                        return ListTile(
+                          leading: Icon(icon, color: color),
+                          title: Text(service.label),
+                          subtitle: service.error == null
+                              ? null
+                              : Text(
+                                  service.error!,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                        );
+                      },
+                    ),
                   ),
                 ],
-              ),
-              body: Center(
-                key: GlobalKey(),
-                child: const CircularProgressIndicator(),
               ),
             );
           case ManagerStatus.changeLog:
