@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
+import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/general_manager.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
+import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
 import 'package:smart_home/screen/view/screen_view.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
@@ -99,7 +100,11 @@ class MainView extends StatelessWidget {
       numberOfRows = 1;
     }*/
     return BlocBuilder<MainViewCubit, MainViewState>(
-      bloc: MainViewCubit(),
+      bloc: MainViewCubit(
+        connectionService: context.read<ConnectionServiceInterface>(),
+        screenManager: context.read<ScreenManager>(),
+        customWidgetManager: context.read<CustomWidgetManager>(),
+      ),
       builder: (context, state) {
         return DefaultTabController(
           length: state.screens.length,
@@ -245,7 +250,6 @@ class _MainViewAppBarLeadingState extends State<MainViewAppBarLeading>
   }
 
   Widget _getAppBarStatus(ConnectionStatus connectionStatus) {
-    int n = 0;
     BlinkingWidget blinkingWidget;
     switch (connectionStatus) {
       case ConnectionStatus.connected:
@@ -367,7 +371,11 @@ class _MainViewOldState extends State<MainViewOld>
     }
 
     return BlocBuilder<MainViewCubit, MainViewState>(
-      bloc: MainViewCubit(),
+      bloc: MainViewCubit(
+        connectionService: context.read<ConnectionServiceInterface>(),
+        screenManager: context.read<ScreenManager>(),
+        customWidgetManager: context.read<CustomWidgetManager>(),
+      ),
       builder: (context, state) {
         List<Screen> screens = state.screens
             .where((element) => element.enabled)
@@ -474,7 +482,6 @@ class _MainViewOldState extends State<MainViewOld>
   }
 
   Widget? _getAppBarStatus(ConnectionStatus connectionStatus) {
-    int n = 0;
     BlinkingWidget blinkingWidget;
     switch (connectionStatus) {
       case ConnectionStatus.connected:
