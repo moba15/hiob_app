@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
-import 'package:smart_home/customwidgets/custom_color_palette_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
@@ -15,40 +14,23 @@ import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slid
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_media_player_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
-import 'package:smart_home/customwidgets/widgets/advanced_custom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_light_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_simple_value_widget.dart'
-    as depc_value;
-import 'package:smart_home/customwidgets/widgets/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_table_widget.dart'
-    as depc_table;
-import 'package:smart_home/customwidgets/widgets/custom_webview_widget.dart'
-    as depc_web_view;
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
-import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/services/service_container.dart';
 
 class CustomWidgetManager {
   String templateKey = "templateKey";
   bool loaded = false;
   FileManager fileManager;
-  DeviceServiceInterface deviceManager;
   final List<CustomWidgetWrapper> templates = [];
   final StreamController<List<CustomWidgetWrapper>> templatesStreamController =
       StreamController.broadcast();
   final ScreenManager screenManager;
 
-  CustomWidgetManager({
-    required this.fileManager,
-    required this.deviceManager,
-    required this.screenManager,
-  });
+  CustomWidgetManager({required this.fileManager, required this.screenManager});
   Future<void> loadTemplates() async {
     //fileManager.writeJSONList(templateKey, templates);
 
@@ -104,10 +86,15 @@ class CustomWidgetManager {
       dynamic customWidget;
       switch (type) {
         case CustomWidgetTypeDeprecated.simpleSwitch:
-          customWidget = CustomSimpleSwitchWidget.fromJson(widgetRaw);
-          break;
         case CustomWidgetTypeDeprecated.light:
-          customWidget = CustomLightWidget.fromJson(widgetRaw);
+        case CustomWidgetTypeDeprecated.simpleValue:
+        case CustomWidgetTypeDeprecated.advanced:
+        case CustomWidgetTypeDeprecated.webView:
+        case CustomWidgetTypeDeprecated.table:
+        case CustomWidgetTypeDeprecated.graph:
+        case CustomWidgetTypeDeprecated.colorPallete:
+        case CustomWidgetTypeDeprecated.mediaPlayer:
+          customWidget = null;
           break;
         case CustomWidgetTypeDeprecated.line:
           customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
@@ -115,27 +102,6 @@ class CustomWidgetManager {
         case CustomWidgetTypeDeprecated.group:
         case CustomWidgetTypeDeprecated.alertDialog:
           continue;
-        case CustomWidgetTypeDeprecated.simpleValue:
-          customWidget = depc_value.CustomSimpleValueWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetTypeDeprecated.advanced:
-          customWidget = AdvancedCustomWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetTypeDeprecated.webView:
-          customWidget = depc_web_view.CustomWebViewWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetTypeDeprecated.table:
-          customWidget = depc_table.CustomTableWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetTypeDeprecated.graph:
-          //customWidget = GraphWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetTypeDeprecated.colorPallete:
-          customWidget = CustomColorPaletteWidget.fromJson(widgetRaw);
-          break;
-        case CustomWidgetTypeDeprecated.mediaPlayer:
-          customWidget = CustomMediaPlayerWidget.fromJSON(widgetRaw);
-          break;
         case CustomWidgetTypeDeprecated.input:
           customWidget = CustomInputWidget.fromJson(widgetRaw);
           break;
@@ -169,8 +135,9 @@ class CustomWidgetManager {
         case CustomWidgetTypeDeprecated.divisionLine:
           customWidget = CustomDivisionlineWidget.fromJson(widgetRaw);
           break;
-        default:
-          throw UnimplementedError(type.name);
+      }
+      if (customWidget == null) {
+        continue;
       }
       if (customWidget is CustomWidgetDeprecated) {
         CustomWidgetTemplate template = CustomWidgetTemplate(

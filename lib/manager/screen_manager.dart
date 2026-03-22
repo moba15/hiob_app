@@ -7,7 +7,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/services/service_container.dart';
@@ -15,7 +14,7 @@ import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 class ScreenManager {
   final FileManager fileManager;
-  final CustomWidgetManager customWidgetManager;
+  CustomWidgetManager? customWidgetManager;
   final LoggingService loggingService;
 
   List<Screen> screens;
@@ -26,7 +25,7 @@ class ScreenManager {
   ScreenManager({
     required this.fileManager,
     required this.screens,
-    required this.customWidgetManager,
+    this.customWidgetManager,
     required this.loggingService,
   });
 
@@ -38,7 +37,7 @@ class ScreenManager {
       return screens;
     }
 
-    await customWidgetManager.loadTemplates();
+    await customWidgetManager?.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
 
@@ -88,7 +87,7 @@ class ScreenManager {
 
   void reload() async {
     screens.clear();
-    await customWidgetManager.reload();
+    await customWidgetManager?.reload();
 
     List<dynamic>? l = await fileManager.getList(key);
 

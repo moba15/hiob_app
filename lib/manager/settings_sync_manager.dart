@@ -1,22 +1,20 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
-import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
-import 'package:smart_home/generated/google/protobuf/struct.pb.dart';
-import 'package:smart_home/manager/connection/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/logging/logging_service.dart';
 
 import '../preconfigs/preconfig.dart';
 
 class SettingsSyncManager {
   final ConnectionServiceInterface connectionManager;
   final FileManager fileManager;
+  final LoggingService loggingService;
   String settingsSyncKey = "settingsSyncKey";
+  String templateStorageKey = "templateKey";
+  String screenStorageKey = "screens";
 
   String? loadedTemplate;
 
@@ -40,6 +38,7 @@ class SettingsSyncManager {
   SettingsSyncManager({
     required this.connectionManager,
     required this.fileManager,
+    required this.loggingService,
   });
 
   void loadSettings() async {
@@ -53,18 +52,18 @@ class SettingsSyncManager {
     autoUpdateToAdapter = settings["autoUpdateToAdapter"];
   }
 
-  void uploadSettings(
+  Future<void> uploadSettings(
     String preConfig, {
     required bool widget,
     required bool screen,
-  }) {
+  }) async {
     String? widgetsJSON = !widget
         ? null
-        : jsonEncode(Manager.instance.customWidgetManager.templates);
+        : await fileManager.getString(templateStorageKey);
 
     String? screensJSON = !screen
         ? null
-        : jsonEncode(Manager.instance.screenManager.screens);
+        : await fileManager.getString(screenStorageKey);
 
     ConfigSyncUpRequest configSyncUpRequest = ConfigSyncUpRequest(
       config: Config(
@@ -87,22 +86,10 @@ class SettingsSyncManager {
           ConfigCreateDeleteRequest(configName: name, delete: false),
         )
         .onError((error, stackTrace) {
-          Manager().talker.error(
+          loggingService.error(
             "Error creating new settings template: $error, $stackTrace",
-          );
-          Manager.instance.generalManager.dialogStreamController.sink.add(
-            (p0) => AlertDialog(
-              title: const Text("Error"),
-              content: const Text(
-                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(p0).pop(),
-                  child: const Text("OK"),
-                ),
-              ],
-            ),
+            error,
+            stackTrace,
           );
           return ConfigCreateDeleteResponse(success: false);
         });
@@ -114,22 +101,10 @@ class SettingsSyncManager {
         .getGrpcService<ConfigSyncClient>()
         .getAvailableConfigs(AvailableConfigsRequest())
         .onError((error, stackTrace) {
-          Manager().talker.error(
+          loggingService.error(
             "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
-          );
-          Manager.instance.generalManager.dialogStreamController.sink.add(
-            (p0) => AlertDialog(
-              title: const Text("Error"),
-              content: const Text(
-                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(p0).pop(),
-                  child: const Text("OK"),
-                ),
-              ],
-            ),
+            error,
+            stackTrace,
           );
           return AvailableConfigsResponse(configNames: []);
         });
@@ -168,22 +143,10 @@ class SettingsSyncManager {
         .getGrpcService<ConfigSyncClient>()
         .configSyncDown(request)
         .onError((error, stackTrace) {
-          Manager().talker.error(
+          loggingService.error(
             "SettingsSyncManager | fetchTemplatesFromAdapter | Error fetching templates from adapter: $error, $stackTrace",
-          );
-          Manager.instance.generalManager.dialogStreamController.sink.add(
-            (p0) => AlertDialog(
-              title: const Text("Error"),
-              content: const Text(
-                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(p0).pop(),
-                  child: const Text("OK"),
-                ),
-              ],
-            ),
+            error,
+            stackTrace,
           );
           return Config();
         });
@@ -193,17 +156,12 @@ class SettingsSyncManager {
   }
 
   void loadGotTemplate(String? screens, String? widgets) {
-    Manager manager = Manager.instance;
-
     //INFO: Devices are loaded from the adapter
     if (widgets != null) {
-      fileManager.pref.setString(
-        manager.customWidgetManager.templateKey,
-        widgets,
-      );
+      fileManager.pref.setString(templateStorageKey, widgets);
     }
     if (screens != null) {
-      fileManager.pref.setString(manager.screenManager.key, screens);
+      fileManager.pref.setString(screenStorageKey, screens);
       Restart.restartApp();
     }
 

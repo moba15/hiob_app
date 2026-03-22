@@ -5,8 +5,8 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/custom_notification.dart';
+import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
 
 class NotificationManager with WidgetsBindingObserver {
@@ -35,13 +35,23 @@ class NotificationManager with WidgetsBindingObserver {
   static List<CustomNotification> notificationsLog = [];
 
   final FileManager fileManager;
+  final LoggingService loggingService;
+  final VoidCallback startBackgroundService;
+  final VoidCallback stopBackgroundService;
   final String notificationSettingsKey = "notificationsettings";
   final StreamController _notificationStreamController =
       StreamController.broadcast();
-  NotificationManager({required this.fileManager}) {
+  NotificationManager({
+    required this.fileManager,
+    required this.loggingService,
+    this.startBackgroundService = _noop,
+    this.stopBackgroundService = _noop,
+  }) {
     readSettings();
     WidgetsBinding.instance.addObserver(this);
   }
+
+  static void _noop() {}
 
   static void init() async {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
@@ -300,38 +310,34 @@ class NotificationManager with WidgetsBindingObserver {
     }
   }
 
-  static void addNotificationToLogInForeground(
-    CustomNotification customNotification,
-  ) {
+  void addNotificationToLogInForeground(CustomNotification customNotification) {
     notificationsLog.add(customNotification);
-    Manager.instance.notificationManager._save();
-    Manager.instance.notificationManager._notificationStreamController.add(
-      customNotification,
-    );
+    _save();
+    _notificationStreamController.add(customNotification);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.detached:
-        Manager().talker.debug("ChangeAppLifecycleState | detached");
+        loggingService.debug("ChangeAppLifecycleState | detached");
         if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.startService();
+          startBackgroundService();
         }
         break;
       case AppLifecycleState.inactive:
-        Manager().talker.debug("ChangeAppLifecycleState | inactive");
+        loggingService.debug("ChangeAppLifecycleState | inactive");
 
         break;
       case AppLifecycleState.paused:
-        Manager().talker.debug("ChangeAppLifecycleState | paused");
+        loggingService.debug("ChangeAppLifecycleState | paused");
         if (backgroundNotificationsEnabled) {
-          Manager.instance.backgroundRunner.startService();
+          startBackgroundService();
         }
         break;
       case AppLifecycleState.resumed:
-        Manager().talker.debug("ChangeAppLifecycleState | resumed");
-        Manager.instance.backgroundRunner.stopService();
+        loggingService.debug("ChangeAppLifecycleState | resumed");
+        stopBackgroundService();
         readSettings();
         break;
       case AppLifecycleState.hidden:
