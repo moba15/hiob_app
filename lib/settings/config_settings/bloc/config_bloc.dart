@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:smart_home/manager/manager.dart';
-
-import '../../../preconfigs/preconfig.dart';
+import 'package:smart_home/manager/settings_sync_manager.dart';
 
 part 'config_event.dart';
 
 part 'config_state.dart';
 
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
-  ConfigBloc() : super(ConfigState()) {
+  final SettingsSyncManager settingsSyncManager;
+
+  ConfigBloc({required this.settingsSyncManager}) : super(ConfigState()) {
     on<ConfigEvent>((event, emit) {
       if (event is ConfigAddedEvent) {
         _onConfigAdded(emit);
@@ -22,15 +22,13 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   }
 
   void _fetch() async {
-    List<String> list = await Manager.instance.settingsSyncManager
-        .fetchTemplatesFromAdapter();
+    List<String> list = await settingsSyncManager.fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));
   }
 
-  void _onConfigAdded(emit) async {
-    List<String> list = await Manager.instance.settingsSyncManager
-        .fetchTemplatesFromAdapter();
+  void _onConfigAdded(Emitter<ConfigState> emit) async {
+    List<String> list = await settingsSyncManager.fetchTemplatesFromAdapter();
 
     add(ConfigLoadedEvent(list));
   }
