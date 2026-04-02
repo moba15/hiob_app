@@ -10,6 +10,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input
 import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
@@ -19,6 +20,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
+import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 
 enum CustomWidgetTypeDeprecated {
   simpleSwitch,
@@ -109,9 +111,10 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
           name: "",
           dataPoint: null,
         ).settingWidget;
+      case CustomWidgetTypeDeprecated.line:
+        return CustomDivisionLineWidget(name: "").settingWidget;
       case CustomWidgetTypeDeprecated.divisionLine:
-        throw UnimplementedError("No setting widget for division line");
-      //return CustomDivisionLineWidget(name: "").settingWidget;
+        return CustomDivisionlineWidget(id: "", name: "").settingWidget;
       default:
         throw UnimplementedError("No setting widget implemented for $this");
     }

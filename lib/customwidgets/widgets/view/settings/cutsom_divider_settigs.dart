@@ -41,8 +41,10 @@ class CustomDividerSettings extends CustomWidgetSettingStatelessWidget {
   @override
   CustomWidgetDeprecated get customWidgetDeprecated => customDivisionLineWidget;
   @override
-  // TODO: implement customWidget
-  CustomWidget get customWidget => throw UnimplementedError();
+  CustomWidget get customWidget => customDivisionLineWidget.migrate(
+    id: "",
+    name: customDivisionLineWidget.name ?? "",
+  );
 
   @override
   bool validate() {

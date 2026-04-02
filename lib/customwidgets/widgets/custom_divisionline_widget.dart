@@ -50,6 +50,6 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
 
   @override
   CustomWidget migrate({required String id, required String name}) {
-    return CustomDivisionlineWidget(id: id, name: name);
+    return CustomDivisionlineWidget(id: id, name: name, thickness: thickness);
   }
 }
