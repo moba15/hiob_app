@@ -72,7 +72,7 @@ class SettingsSyncManager {
         templates: widgetsJSON,
       ),
     );
-    connectionManager.getGrpcService<ConfigSyncClient>().configSyncUp(
+    connectionManager.getGrpcClient<ConfigSyncClient>().configSyncUp(
       configSyncUpRequest,
     );
   }
@@ -81,7 +81,7 @@ class SettingsSyncManager {
     String name,
   ) async {
     ConfigCreateDeleteResponse response = await connectionManager
-        .getGrpcService<ConfigSyncClient>()
+        .getGrpcClient<ConfigSyncClient>()
         .configCreateDelete(
           ConfigCreateDeleteRequest(configName: name, delete: false),
         )
@@ -98,7 +98,7 @@ class SettingsSyncManager {
 
   Future<List<String>> fetchTemplatesFromAdapter() async {
     AvailableConfigsResponse response = await connectionManager
-        .getGrpcService<ConfigSyncClient>()
+        .getGrpcClient<ConfigSyncClient>()
         .getAvailableConfigs(AvailableConfigsRequest())
         .onError((error, stackTrace) {
           loggingService.error(
@@ -140,7 +140,7 @@ class SettingsSyncManager {
       syncType: syncType,
     );
     Config config = await connectionManager
-        .getGrpcService<ConfigSyncClient>()
+        .getGrpcClient<ConfigSyncClient>()
         .configSyncDown(request)
         .onError((error, stackTrace) {
           loggingService.error(

@@ -124,6 +124,7 @@ class ServiceContainer {
         loggingService: loggingService,
       ),
     );
+    deviceManager.connectionServiceInterface = connectionManager;
 
     final notificationManager = await runStep(
       'notification_manager',

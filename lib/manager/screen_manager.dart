@@ -57,6 +57,11 @@ class ScreenManager {
             rawMap,
             customWidgetManager: customWidgetManager!,
           );
+          s.widgetTemplates.forEach((element) {
+            loggingService.debug(
+              "ScreenManager | loadScreen | Screen ${s.id} has template ${element.id}",
+            );
+          });
           loggingService.debug("ScreenManager | loadScreen | ${s.id}");
           screens.add(s);
         } catch (e) {

@@ -12,7 +12,7 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
     required super.name,
     this.color = Colors.black,
     this.thickness = 3,
-  }) : super(type: CustomWidgetTypeDeprecated.line, settings: {});
+  }) : super(type: CustomWidgetTypeDeprecated.divisionLine, settings: {});
 
   @override
   CustomWidgetSettingWidget get settingWidget =>

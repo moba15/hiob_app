@@ -24,13 +24,13 @@ interface class DeviceServiceInterface<Device extends DeviceInterface> {
   }
 
   Future<List<Device>> searchDevices({
-    required String query,
+    required String userQuery,
     Map<String, bool> filters = const {},
   }) {
     throw UnimplementedError();
   }
 
-  void listenToDeviceChanges({required List<DeviceInterface> devices}) {
+  void listenToDeviceChanges() {
     throw UnimplementedError();
   }
 

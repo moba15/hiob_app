@@ -32,20 +32,24 @@ class _StateSearchBarState extends State<StateSearchBar> {
   Map<String, bool> filters = {};
   @override
   void initState() {
-    deviceManager = context.read<DeviceServiceInterface<IobrokerObject>>();
+    DeviceServiceInterface d = context.read<DeviceServiceInterface>();
+    if (d is DeviceServiceInterface<IobrokerObject>) {
+      deviceManager = d;
+    } else {
+      throw Exception("DeviceServiceInterface is not of type IobrokerObject");
+    }
+
     asyncSearchCubitFactory = getIt<AsyncSearchCubitFactory>();
     asyncSearchCubit = asyncSearchCubitFactory.create(
       getInitalValues: () => deviceManager.getAllDevices(limit: 250),
     );
+
     if (widget.selectedObject != null) {
-      context
-          .read<DeviceServiceInterface<IobrokerObject>>()
-          .getDeviceById(id: widget.selectedObject!)
-          .then((value) {
-            setState(() {
-              selectedObject = value;
-            });
-          });
+      deviceManager.getDeviceById(id: widget.selectedObject!).then((value) {
+        setState(() {
+          selectedObject = value;
+        });
+      });
     }
 
     super.initState();
@@ -73,14 +77,14 @@ class _StateSearchBarState extends State<StateSearchBar> {
         onSearch: (p0) async {
           _currentSearch = p0;
           asyncSearchCubit.onSearched(
-            await deviceManager.searchDevices(query: p0, filters: filters),
+            await deviceManager.searchDevices(userQuery: p0, filters: filters),
           );
         },
         chipList: _SearchChipList(
           filters: filters,
           filterUpdated: () {
             deviceManager
-                .searchDevices(query: _currentSearch, filters: filters)
+                .searchDevices(userQuery: _currentSearch, filters: filters)
                 .then((value) {
                   asyncSearchCubit.onSearched(value);
                 });

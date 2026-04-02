@@ -24,11 +24,9 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
         add(DataPointValueUpdate(value: event.second));
       }
     });
-    //TODO
-    /* _deviceValueSubscription =
-        dataPoint.valueStreamController.stream.listen((event) {
-      add(DataPointValueUpdate(value: event));
-    });*/
+
+    // Start listening to device changes for this object
+
     add(
       DataPointValueUpdate(
         value: _deviceService.getDeviceValue(
