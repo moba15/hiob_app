@@ -300,8 +300,9 @@ class ConnectionManager
 
     _registerOtherServices();
     connectionStatusStreamController.add(ConnectionStatus.loggedIn);
-    deviceManager.listenToDeviceChanges(devices: const <DeviceInterface>[]);
+    deviceManager.listenToDeviceChanges();
     deviceManager.fetchAndUpdateDevices();
+    deviceManager.listenToDeviceChanges();
   }
 
   void _onLoginKey(String? key) {
@@ -337,7 +338,7 @@ class ConnectionManager
   }
 
   @override
-  T getGrpcService<T>() {
+  T getGrpcClient<T>() {
     if (T == LoginClient) {
       if (loginClientStub == null) {
         throw Exception("LoginClient is not initialized");

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
+import 'package:smart_home/device/iobroker_device.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
+import 'package:smart_home/services/service_container.dart';
 
 class CustomValueWidgetView extends StatefulWidget {
   final CustomValueWidget customValueWidget;
@@ -28,7 +30,7 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
     if (widget.customValueWidget.dataPoint != null) {
       bloc = DataPointBloc(
         widget.customValueWidget.dataPoint!,
-        deviceService: context.read<DeviceServiceInterface>(),
+        deviceService: context.read<ServiceContainer>().deviceManager,
       );
     }
 

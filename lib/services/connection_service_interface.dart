@@ -26,7 +26,7 @@ interface class ConnectionServiceInterface {
     throw UnimplementedError();
   }
 
-  T getGrpcService<T>() {
+  T getGrpcClient<T>() {
     throw UnimplementedError();
   }
 

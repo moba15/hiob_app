@@ -11,6 +11,7 @@ import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/model/device/device_interface.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/pair.dart';
@@ -21,6 +22,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
   ScreenManager screenManager;
   GeneralManager generalManager;
   AppDatabase appDatabase = AppDatabase(null);
+  late ConnectionServiceInterface connectionServiceInterface;
 
   StreamController deviceListStreamController = StreamController.broadcast();
   bool loaded = false;
@@ -158,19 +160,65 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
   }
 
   @override
-  void listenToDeviceChanges({required List<DeviceInterface> devices}) async {
-    final dataPoints = screenManager.getDependentDataPoints();
+  void listenToDeviceChanges() async {
+    final stateIds = screenManager.getDependentDataPoints().toSet().toList();
+
     loggingService.debug(
-      "DeviceManager | subscribe to ${dataPoints.length} datapoints",
+      "DeviceManager | subscribe to ${stateIds.length} datapoints",
     );
-    loggingService.warning(
-      "DeviceManager | listenToDeviceChanges | subscription wiring moved out of DeviceManager during refactor",
+
+    final subscription = StateSubscribtion(
+      type: StateSubscribtion_SubscriptionType.subscripe,
+      stateIds: stateIds,
     );
+
+    try {
+      final stream = connectionServiceInterface
+          .getGrpcClient<StateUpdateClient>()
+          .subscibe(subscription);
+
+      await for (final update in stream) {
+        for (final stateUpdate in update.stateUpdates) {
+          // Extract the value based on which field is set
+          dynamic value;
+          switch (stateUpdate.whichValue()) {
+            case StateValueUpdate_Value.stringValue:
+              value = stateUpdate.stringValue;
+              break;
+            case StateValueUpdate_Value.boolValue:
+              value = stateUpdate.boolValue;
+              break;
+            case StateValueUpdate_Value.doubleValue:
+              value = stateUpdate.doubleValue;
+              break;
+            case StateValueUpdate_Value.other:
+              value = stateUpdate.other;
+              break;
+            case StateValueUpdate_Value.notSet:
+              value = null;
+              break;
+          }
+
+          // Update local cache
+          currentValues[stateUpdate.stateId] = value;
+
+          // Emit update to listeners
+          _objectValueStreams.sink.add(
+            Pair<String, dynamic>(first: stateUpdate.stateId, second: value),
+          );
+        }
+      }
+    } catch (e, stackTrace) {
+      loggingService.error(
+        "DeviceManager | listenToDeviceChanges | Error subscribing to updates: $e",
+        stackTrace,
+      );
+    }
   }
 
   @override
   Future<List<IobrokerObject>> searchDevices({
-    required String query,
+    required String userQuery,
     Map<String, bool> filters = const {},
   }) async {
     String filterExpression = "";
@@ -195,12 +243,12 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
         .customSelect(
           query,
           variables: [
-            Variable<String>(query),
-            Variable<String>(query),
-            Variable<String>(query),
-            Variable<String>("%$query%"),
-            Variable<String>("%$query%"),
-            Variable<String>("%$query%"),
+            Variable<String>(userQuery),
+            Variable<String>(userQuery),
+            Variable<String>(userQuery),
+            Variable<String>("%$userQuery%"),
+            Variable<String>("%$userQuery%"),
+            Variable<String>("%$userQuery%"),
           ],
         )
         .get()
@@ -262,95 +310,123 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
     return result;
   }
 
-  void updateObjects(ConnectionManager connectionManager) async {
-    if (connectionManager.stateUpdateClientStub != null) {
-      loggingService.debug("DeviceManager | updateStates");
-      AllObjectsResults allObjectsResults = await connectionManager
-          .stateUpdateClientStub!
-          .getAllObjects(AllObjectRequest(filterPatterns: []))
-          .onError((error, stackTrace) {
-            loggingService.error(
-              "DeviceManager | updateStates $error",
-              stackTrace,
-            );
-            generalManager.dialogStreamController.sink.add(
-              (p0) => AlertDialog(
-                title: const Text("Error"),
-                content: const Text(
-                  "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(p0).pop(),
-                    child: const Text("OK"),
-                  ),
-                ],
+  void updateObjects() async {
+    loggingService.debug("DeviceManager | updateStates");
+    AllObjectsResults allObjectsResults = await connectionServiceInterface
+        .getGrpcClient<StateUpdateClient>()
+        .getAllObjects(AllObjectRequest(filterPatterns: []))
+        .onError((error, stackTrace) {
+          loggingService.error(
+            "DeviceManager | updateStates $error",
+            stackTrace,
+          );
+          generalManager.dialogStreamController.sink.add(
+            (p0) => AlertDialog(
+              title: const Text("Error"),
+              content: const Text(
+                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
               ),
-            );
-            return AllObjectsResults(states: {});
-          });
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(p0).pop(),
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
+          );
+          return AllObjectsResults(states: {});
+        });
 
-      Set<String> localId =
-          (await appDatabase
-                  .customSelect(
-                    "SELECT id from (${appDatabase.statesTable.actualTableName})",
-                  )
-                  .get())
-              .map((e) => e.data["id"] as String)
-              .toSet();
-      Set<String> serverIds = allObjectsResults.states
-          .map((e) => e.stateId)
-          .toSet();
-      Set<String> toDelete = localId.difference(serverIds);
-      loggingService.debug(
-        "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects",
+    Set<String> localId =
+        (await appDatabase
+                .customSelect(
+                  "SELECT id from (${appDatabase.statesTable.actualTableName})",
+                )
+                .get())
+            .map((e) => e.data["id"] as String)
+            .toSet();
+    Set<String> serverIds = allObjectsResults.states
+        .map((e) => e.stateId)
+        .toSet();
+    Set<String> toDelete = localId.difference(serverIds);
+    loggingService.debug(
+      "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects",
+    );
+    List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((e) {
+      return StatesTableCompanion.insert(
+        id: e.stateId,
+        read: e.common.read,
+        write: e.common.write,
+        stateName: Value(e.common.name),
+        stateDesc: Value(e.common.desc),
       );
-      List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((
-        e,
-      ) {
-        return StatesTableCompanion.insert(
-          id: e.stateId,
-          read: e.common.read,
-          write: e.common.write,
-          stateName: Value(e.common.name),
-          stateDesc: Value(e.common.desc),
-        );
-      }).toList();
-      appDatabase
-          .batch((batch) {
-            if (toDelete.isNotEmpty) {
-              batch.deleteWhere(
-                appDatabase.statesTable,
-                (t) => t.id.isIn(toDelete.toList()),
-              );
-            }
+    }).toList();
+    appDatabase
+        .batch((batch) {
+          if (toDelete.isNotEmpty) {
+            batch.deleteWhere(
+              appDatabase.statesTable,
+              (t) => t.id.isIn(toDelete.toList()),
+            );
+          }
 
-            batch.insertAll(appDatabase.statesTable, [
-              ...rowsToInsert,
-            ], mode: InsertMode.insertOrReplace);
-          })
-          .onError((error, stackTrace) {
-            loggingService.error(
-              "DeviceManager | updateStates batch insert error; $error",
-              stackTrace,
-            );
-          })
-          .then((value) async {
-            loggingService.debug(
-              "DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}",
-            );
-          });
-    }
+          batch.insertAll(appDatabase.statesTable, [
+            ...rowsToInsert,
+          ], mode: InsertMode.insertOrReplace);
+        })
+        .onError((error, stackTrace) {
+          loggingService.error(
+            "DeviceManager | updateStates batch insert error; $error",
+            stackTrace,
+          );
+        })
+        .then((value) async {
+          loggingService.debug(
+            "DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}",
+          );
+        });
   }
 
   @override
-  Future<void> fetchAndUpdateDevices() {
-    // TODO: implement fetchAndUpdateDevices
-    throw UnimplementedError();
+  Future<void> fetchAndUpdateDevices() async {
+    updateObjects();
+    return;
   }
 
   void updateValue(String id, Object? value) {
-    throw UnimplementedError("Update value not implemented");
+    StateValueUpdateRequest request;
+
+    if (value == null) {
+      request = StateValueUpdateRequest(stateId: id, other: 'null');
+    } else if (value is bool) {
+      request = StateValueUpdateRequest(stateId: id, boolValue: value);
+    } else if (value is double) {
+      request = StateValueUpdateRequest(stateId: id, doubleValue: value);
+    } else if (value is int) {
+      request = StateValueUpdateRequest(
+        stateId: id,
+        doubleValue: value.toDouble(),
+      );
+    } else if (value is String) {
+      request = StateValueUpdateRequest(stateId: id, stringValue: value);
+    } else {
+      request = StateValueUpdateRequest(stateId: id, other: value.toString());
+    }
+
+    connectionServiceInterface
+        .getGrpcClient<StateUpdateClient>()
+        .updateValue(request)
+        .then((v) {
+          loggingService.debug(
+            "DeviceManager | updateValue | updated $id to $value",
+          );
+        })
+        .onError((error, stackTrace) {
+          loggingService.error(
+            "DeviceManager | updateValue | error updating $id to $value",
+            stackTrace,
+          );
+        });
   }
 
   void valueChange(IobrokerObject d, String stringValue) {

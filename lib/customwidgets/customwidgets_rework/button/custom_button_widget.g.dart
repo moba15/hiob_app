@@ -43,15 +43,8 @@ Map<String, dynamic> _$$CustomButtonWidgetImplToJson(
 };
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
-  CustomWidgetTypeDeprecated.simpleSwitch: 'simpleSwitch',
-  CustomWidgetTypeDeprecated.simpleValue: 'simpleValue',
-  CustomWidgetTypeDeprecated.advanced: 'advanced',
-  CustomWidgetTypeDeprecated.light: 'light',
   CustomWidgetTypeDeprecated.group: 'group',
-  CustomWidgetTypeDeprecated.line: 'line',
-  CustomWidgetTypeDeprecated.webView: 'webView',
   CustomWidgetTypeDeprecated.alertDialog: 'alertDialog',
-  CustomWidgetTypeDeprecated.table: 'table',
   CustomWidgetTypeDeprecated.graph: 'graph',
   CustomWidgetTypeDeprecated.colorPallete: 'colorPallete',
   CustomWidgetTypeDeprecated.mediaPlayer: 'mediaPlayer',
@@ -66,4 +59,5 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
+  CustomWidgetTypeDeprecated.line: 'line',
 };

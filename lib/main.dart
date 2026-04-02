@@ -2,9 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_home/di/injection.dart';
+import 'package:smart_home/model/device/device_interface.dart';
+import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/device/device_service_interface.dart';
 
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/view/main/main_screen.dart';
@@ -157,8 +161,12 @@ class _BootstrapAppState extends State<_BootstrapApp> {
         providers: [
           Provider.value(value: _container!),
           Provider.value(value: _container!.fileManager),
-          Provider.value(value: _container!.deviceManager),
-          Provider.value(value: _container!.connectionManager),
+          Provider<DeviceServiceInterface>.value(
+            value: _container!.deviceManager,
+          ),
+          Provider<ConnectionServiceInterface>.value(
+            value: _container!.connectionManager,
+          ),
           Provider.value(value: _container!.ioBrokerManager),
           Provider.value(value: _container!.generalManager),
           Provider.value(value: _container!.loggingService),
@@ -167,6 +175,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
           Provider.value(value: _container!.settingsSyncManager),
           Provider.value(value: _container!.themeManager),
           Provider.value(value: _container!.notificationManager),
+          Provider.value(value: _container!.connectionManager),
         ],
         child: App(screenManager: _container!.screenManager),
       ),

@@ -85,12 +85,6 @@ class CustomWidgetManager {
       //TODO refactor
       dynamic customWidget;
       switch (type) {
-        case CustomWidgetTypeDeprecated.simpleSwitch:
-        case CustomWidgetTypeDeprecated.light:
-        case CustomWidgetTypeDeprecated.simpleValue:
-        case CustomWidgetTypeDeprecated.advanced:
-        case CustomWidgetTypeDeprecated.webView:
-        case CustomWidgetTypeDeprecated.table:
         case CustomWidgetTypeDeprecated.graph:
         case CustomWidgetTypeDeprecated.colorPallete:
         case CustomWidgetTypeDeprecated.mediaPlayer:

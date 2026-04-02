@@ -42,11 +42,6 @@ class Screen {
             ? jsonDecode(json["widgetIds"])
             : json["widgetIds"]) {
       if (templateRaw.containsKey("widget")) {
-        if (customWidgetManager.templates.any(
-          (element) => element.id == templateRaw["id"],
-        )) {
-          continue;
-        }
         widgetTemplates.add(
           customWidgetManager.templates.firstWhere(
             (element) => element.id == templateRaw["id"],
