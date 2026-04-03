@@ -11,13 +11,13 @@ import 'package:smart_home/generated/login/login.pbgrpc.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/cryptojs_aes_encryption_helper.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-class ConnectionManager
+class IoBrokerConnectionService
     with WidgetsBindingObserver
     implements ConnectionServiceInterface {
   static const Duration _retryDelay = Duration(seconds: 3);
@@ -74,7 +74,7 @@ class ConnectionManager
       StreamController.broadcast();
   int tries = 0;
 
-  ConnectionManager({
+  IoBrokerConnectionService({
     required this.deviceManager,
     required this.ioBrokerManager,
     required this.generalManager,

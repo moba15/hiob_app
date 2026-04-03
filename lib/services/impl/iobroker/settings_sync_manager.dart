@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:restart_app/restart_app.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 
-import '../preconfigs/preconfig.dart';
+import '../../../preconfigs/preconfig.dart';
 
-class SettingsSyncManager {
+class IoBrokerSettingsSyncService {
   final ConnectionServiceInterface connectionManager;
   final FileManager fileManager;
   final LoggingService loggingService;
@@ -35,7 +35,7 @@ class SettingsSyncManager {
   StreamController<bool> loadedSuccessStreamController =
       StreamController.broadcast();
 
-  SettingsSyncManager({
+  IoBrokerSettingsSyncService({
     required this.connectionManager,
     required this.fileManager,
     required this.loggingService,

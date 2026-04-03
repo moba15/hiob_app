@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/manager/settings_sync_manager.dart';
+import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
 import 'package:smart_home/settings/config_settings/bloc/config_bloc.dart';
 
 class ConfigSettingsPage extends StatelessWidget {
@@ -9,9 +9,9 @@ class ConfigSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ConfigBloc>(
-      create: (context) =>
-          ConfigBloc(settingsSyncManager: context.read<SettingsSyncManager>())
-            ..add(ConfigReloadEvent()),
+      create: (context) => ConfigBloc(
+        settingsSyncManager: context.read<IoBrokerSettingsSyncService>(),
+      )..add(ConfigReloadEvent()),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -54,33 +54,37 @@ class ConfigSettingsPage extends StatelessWidget {
 
       return;
     }
-    context.read<SettingsSyncManager>().createNewSettingsTemplate(name).then((
-      value,
-    ) {
-      if (value.success) {
-        context.read<ConfigBloc>().add(ConfigAddedEvent());
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            duration: Duration(milliseconds: 700),
-            behavior: SnackBarBehavior.floating,
-            content: Text(
-              "Successfully added",
-              style: TextStyle(color: Colors.green),
-            ),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            duration: Duration(milliseconds: 1000),
-            behavior: SnackBarBehavior.floating,
-            content: Text("Error adding", style: TextStyle(color: Colors.red)),
-          ),
-        );
-      }
-    });
     context
-        .read<SettingsSyncManager>()
+        .read<IoBrokerSettingsSyncService>()
+        .createNewSettingsTemplate(name)
+        .then((value) {
+          if (value.success) {
+            context.read<ConfigBloc>().add(ConfigAddedEvent());
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                duration: Duration(milliseconds: 700),
+                behavior: SnackBarBehavior.floating,
+                content: Text(
+                  "Successfully added",
+                  style: TextStyle(color: Colors.green),
+                ),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                duration: Duration(milliseconds: 1000),
+                behavior: SnackBarBehavior.floating,
+                content: Text(
+                  "Error adding",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            );
+          }
+        });
+    context
+        .read<IoBrokerSettingsSyncService>()
         .configAddedStreamController
         .stream
         .first
@@ -335,12 +339,12 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
   void load() {
     Navigator.pop(context);
     context
-        .read<SettingsSyncManager>()
+        .read<IoBrokerSettingsSyncService>()
         .loadedSuccessStreamController
         .stream
         .first
         .then((value) => showSuccessSnackBar(context, "Loaded"));
-    context.read<SettingsSyncManager>().getTemplateSettings(
+    context.read<IoBrokerSettingsSyncService>().getTemplateSettings(
       widget.preConfig,
       screen: screens,
       widget: widgets,
@@ -350,12 +354,12 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
   void upload() {
     Navigator.pop(context);
     context
-        .read<SettingsSyncManager>()
+        .read<IoBrokerSettingsSyncService>()
         .uploadSuccessStreamController
         .stream
         .first
         .then((value) => showSuccessSnackBar(context, "Uploaded"));
-    context.read<SettingsSyncManager>().uploadSettings(
+    context.read<IoBrokerSettingsSyncService>().uploadSettings(
       widget.preConfig,
       screen: screens,
       widget: widgets,

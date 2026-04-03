@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/cubit/manager_cubit.dart';
+import 'package:smart_home/services/cubit/manager_cubit.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
 import 'package:smart_home/screen/view/screen_view.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/utils/blinking_widget.dart';
 import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
@@ -36,10 +36,10 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ManagerCubit, ManagerState>(
+    return BlocBuilder<ServiceCubit, ServiceState>(
       builder: (context, state) {
         switch (state.status) {
-          case ManagerStatus.loading:
+          case ServiceStatus.loading:
             return Scaffold(
               appBar: AppBar(title: const Text("Loading")),
               body: Column(
@@ -97,7 +97,7 @@ class MainScreen extends StatelessWidget {
                 ],
               ),
             );
-          case ManagerStatus.changeLog:
+          case ServiceStatus.changeLog:
             return ChangeLogScreen();
           default:
             return const MainView();

@@ -1,6 +1,6 @@
 part of 'manager_cubit.dart';
 
-enum ManagerStatus { finished, loading, changeLog }
+enum ServiceStatus { finished, loading, changeLog }
 
 enum ServiceLoadStatus { pending, loading, loaded, failed }
 
@@ -35,23 +35,23 @@ class ServiceLoadEntry extends Equatable {
   List<Object?> get props => [key, label, status, error];
 }
 
-class ManagerState extends Equatable {
-  final ManagerStatus status;
+class ServiceState extends Equatable {
+  final ServiceStatus status;
   final List<ServiceLoadEntry> services;
   final String? startupError;
 
-  const ManagerState({
+  const ServiceState({
     required this.status,
     this.services = const [],
     this.startupError,
   });
 
-  ManagerState copyWith({
-    ManagerStatus? status,
+  ServiceState copyWith({
+    ServiceStatus? status,
     List<ServiceLoadEntry>? services,
     String? startupError,
   }) {
-    return ManagerState(
+    return ServiceState(
       status: status ?? this.status,
       services: services ?? this.services,
       startupError: startupError,

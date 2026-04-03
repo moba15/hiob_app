@@ -4,11 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:smart_home/custom_theme/cubit/custom_theme_cubit.dart';
 import 'package:smart_home/custom_theme/custom_theme.dart';
 import 'package:smart_home/l10n/app_localizations.dart';
-import 'package:smart_home/manager/cubit/manager_cubit.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
-import 'package:smart_home/manager/theme/theme_manager.dart';
-import 'package:smart_home/services/service_container.dart';
+import 'package:smart_home/custom_theme/theme_repository.dart';
 import 'package:smart_home/view/main/main_screen.dart';
 
 /// Init the MaterialApp widget: Controls the Theme of the complete App
@@ -20,7 +17,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CustomThemeCubit, CustomThemeState>(
-      bloc: CustomThemeCubit(themeManager: context.read<ThemeManager>())
+      bloc: CustomThemeCubit(themeRepository: context.read<ThemeRepository>())
         ..loadTheme(),
       builder: (context, state) {
         debugPrint("Change Theme");

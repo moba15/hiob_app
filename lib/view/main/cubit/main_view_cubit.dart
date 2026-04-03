@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:smart_home/manager/customise_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 
 import '../../../screen/screen.dart';
 

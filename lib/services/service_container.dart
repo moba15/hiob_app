@@ -1,15 +1,15 @@
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_home/manager/connection/connection_manager.dart';
+import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
 import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/device_manager.dart';
+import 'package:smart_home/services/impl/iobroker/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
-import 'package:smart_home/manager/settings_sync_manager.dart';
-import 'package:smart_home/manager/theme/theme_manager.dart';
+import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
+import 'package:smart_home/custom_theme/theme_repository.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/services/metadata/metadata_service.dart';
 
@@ -20,14 +20,14 @@ typedef ServiceInitProgressCallback =
 
 class ServiceContainer {
   final FileManager fileManager;
-  final DeviceManager deviceManager;
+  final IoBrokerDeviceService deviceManager;
   final IoBrokerManager ioBrokerManager;
   final GeneralManager generalManager;
-  final ConnectionManager connectionManager;
+  final IoBrokerConnectionService connectionManager;
   final CustomWidgetManager customWidgetManager;
   final ScreenManager screenManager;
-  final SettingsSyncManager settingsSyncManager;
-  final ThemeManager themeManager;
+  final IoBrokerSettingsSyncService settingsSyncManager;
+  final ThemeRepository themeRepository;
   final NotificationManager notificationManager;
   final LoggingService loggingService;
   final MetadataService metadataService;
@@ -41,7 +41,7 @@ class ServiceContainer {
     required this.customWidgetManager,
     required this.screenManager,
     required this.settingsSyncManager,
-    required this.themeManager,
+    required this.themeRepository,
     required this.notificationManager,
     required this.loggingService,
     required this.metadataService,
@@ -98,7 +98,7 @@ class ServiceContainer {
       loggingService: loggingService,
     );
 
-    final deviceManager = DeviceManager(
+    final deviceManager = IoBrokerDeviceService(
       fileManager,
       generalManager: generalManager,
       loggingService: loggingService,
@@ -117,7 +117,7 @@ class ServiceContainer {
 
     final connectionManager = await runStep(
       'connection_manager',
-      () async => ConnectionManager(
+      () async => IoBrokerConnectionService(
         deviceManager: deviceManager,
         ioBrokerManager: ioBrokerManager,
         generalManager: generalManager,
@@ -134,20 +134,17 @@ class ServiceContainer {
       ),
     );
 
-    final settingsSyncManager = SettingsSyncManager(
+    final settingsSyncManager = IoBrokerSettingsSyncService(
       connectionManager: connectionManager,
       fileManager: fileManager,
       loggingService: loggingService,
     );
     await runStep('settings_sync_manager', settingsSyncManager.loadSettings);
 
-    final themeManager = ThemeManager(fileManager: fileManager);
-    await runStep('theme_manager', themeManager.loadTheme);
+    final themeRepository = ThemeRepository(fileManager: fileManager);
+    await runStep('theme_manager', themeRepository.loadTheme);
 
-    await runStep(
-      'connection_manager_connect',
-      connectionManager.connect,
-    );
+    await runStep('connection_manager_connect', connectionManager.connect);
 
     return ServiceContainer._(
       fileManager: fileManager,
@@ -158,7 +155,7 @@ class ServiceContainer {
       customWidgetManager: customWidgetManager,
       screenManager: screenManager,
       settingsSyncManager: settingsSyncManager,
-      themeManager: themeManager,
+      themeRepository: themeRepository,
       notificationManager: notificationManager,
       loggingService: loggingService,
       metadataService: metadataService,

@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/manager/cubit/manager_cubit.dart';
+import 'package:smart_home/services/cubit/manager_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_home/di/injection.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
 import 'package:smart_home/services/service_container.dart';
@@ -53,14 +53,14 @@ class _BootstrapAppState extends State<_BootstrapApp> {
     'theme_manager': 'Theme manager',
   };
 
-  late final ManagerCubit managerCubit;
+  late final ServiceCubit managerCubit;
   ServiceContainer? _container;
 
   @override
   void initState() {
     super.initState();
-    managerCubit = ManagerCubit(
-      status: ManagerStatus.loading,
+    managerCubit = ServiceCubit(
+      status: ServiceStatus.loading,
       services: _labels.entries
           .map(
             (entry) => ServiceLoadEntry(
@@ -115,7 +115,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
       setState(() {
         _container = container;
       });
-      managerCubit.onStatusChange(ManagerStatus.finished);
+      managerCubit.onStatusChange(ServiceStatus.finished);
     } catch (e) {
       managerCubit.setStartupError(e.toString());
     }
@@ -148,7 +148,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
           Provider.value(value: _container!.customWidgetManager),
           Provider.value(value: _container!.screenManager),
           Provider.value(value: _container!.settingsSyncManager),
-          Provider.value(value: _container!.themeManager),
+          Provider.value(value: _container!.themeRepository),
           Provider.value(value: _container!.notificationManager),
           Provider.value(value: _container!.connectionManager),
         ],

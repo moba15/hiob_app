@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 
 part 'connection_state.dart';
 
