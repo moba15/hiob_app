@@ -18,7 +18,7 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/services/service_container.dart';
 
 class CustomWidgetRepository {

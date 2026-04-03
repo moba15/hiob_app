@@ -7,12 +7,12 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
-import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 import '../customwidgets/custom_widget.dart';
-import '../manager/screen_repository.dart';
+import '../repository/screen_repository.dart';
 
 class Screen {
   final String id;

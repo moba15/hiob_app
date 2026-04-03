@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/general_repository.dart';
+import 'package:smart_home/repository/general_repository.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 /*

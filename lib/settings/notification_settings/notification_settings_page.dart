@@ -1,8 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/notification/notification_manager.dart';
+import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:url_launcher/url_launcher.dart';
 

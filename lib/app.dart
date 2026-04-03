@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:smart_home/custom_theme/cubit/custom_theme_cubit.dart';
 import 'package:smart_home/custom_theme/custom_theme.dart';
 import 'package:smart_home/l10n/app_localizations.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/custom_theme/theme_repository.dart';
 import 'package:smart_home/view/main/main_screen.dart';
 

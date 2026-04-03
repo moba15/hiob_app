@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:smart_home/manager/notification/custom_notification.dart';
-import 'package:smart_home/manager/notification/notification_manager.dart';
+import 'package:smart_home/services/notification/custom_notification.dart';
+import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
 
 part 'notifications_event.dart';
 part 'notifications_state.dart';

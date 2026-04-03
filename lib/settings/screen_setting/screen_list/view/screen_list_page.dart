@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/l10n/app_localizations.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/screen/view/screen_tile.dart';
 import 'package:smart_home/services/service_container.dart';

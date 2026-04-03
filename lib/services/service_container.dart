@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
-import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/services/impl/iobroker/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/general_repository.dart';
-import 'package:smart_home/manager/notification/notification_manager.dart';
+import 'package:smart_home/repository/general_repository.dart';
+import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
 import 'package:smart_home/custom_theme/theme_repository.dart';
 import 'package:smart_home/services/logging/logging_service.dart';

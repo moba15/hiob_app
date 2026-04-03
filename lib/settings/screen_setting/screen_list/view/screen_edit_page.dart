@@ -9,8 +9,8 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
-import 'package:smart_home/manager/custom_widget_repository.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/custom_widget_repository.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 

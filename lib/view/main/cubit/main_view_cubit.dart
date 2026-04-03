@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:smart_home/manager/custom_widget_repository.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/custom_widget_repository.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';
 
 import '../../../screen/screen.dart';

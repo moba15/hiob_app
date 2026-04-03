@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
-import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/theme.dart';
 

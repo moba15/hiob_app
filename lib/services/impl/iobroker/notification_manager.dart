@@ -5,7 +5,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/notification/custom_notification.dart';
+import 'package:smart_home/services/notification/custom_notification.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
 

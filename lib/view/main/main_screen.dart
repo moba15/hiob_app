@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
-import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/services/cubit/manager_cubit.dart';
-import 'package:smart_home/manager/general_repository.dart';
-import 'package:smart_home/manager/notification/notification_manager.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/general_repository.dart';
+import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
 import 'package:smart_home/screen/view/screen_view.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';
@@ -16,7 +16,7 @@ import 'package:smart_home/utils/blinking_widget.dart';
 import 'package:smart_home/view/main/cubit/main_view_cubit.dart';
 
 import '../../screen/screen.dart';
-import '../../screen/view/screen_menu_tabbar.dart';
+import '../../services/impl/iobroker/screen_menu_tabbar.dart';
 import '../../settings/view/main_settings_screen.dart';
 
 const double breakpoint = 800;

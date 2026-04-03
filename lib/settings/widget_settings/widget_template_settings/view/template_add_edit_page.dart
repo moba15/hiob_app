@@ -15,7 +15,7 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
-import '../../../../manager/custom_widget_repository.dart';
+import '../../../../repository/custom_widget_repository.dart';
 
 class TemplateAddPage extends StatefulWidget {
   final CustomWidgetRepository customWidgetManager;
