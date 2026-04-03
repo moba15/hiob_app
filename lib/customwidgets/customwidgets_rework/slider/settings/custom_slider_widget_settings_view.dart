@@ -181,7 +181,7 @@ class _CustomTableWidgetSettingsViewState
                   child: Text("On Finish"),
                 ),
               ],
-              value: widget.customSliderWidget.customSliderWidgetUpdateStrategy,
+              initialValue: widget.customSliderWidget.customSliderWidgetUpdateStrategy,
               onChanged: (value) {
                 setState(() {
                   widget.customSliderWidget.customSliderWidgetUpdateStrategy =

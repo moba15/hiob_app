@@ -21,7 +21,7 @@ class _DocumentationViewState extends State<DocumentationView> {
             height: 100,
             width: 170,
             child: DropdownButtonFormField<String>(
-              value: selectedLanguage,
+              initialValue: selectedLanguage,
               items: const [
                 DropdownMenuItem(value: "de", child: Text("Deutsch 🇩🇪")),
                 DropdownMenuItem(value: "en", child: Text("English 🇬🇧")),

@@ -141,7 +141,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                   ))
                 DropdownMenuItem(value: c, child: Text(c.name)),
             ],
-            value: _selectedType,
+            initialValue: _selectedType,
             onChanged: (CustomWidgetTypeDeprecated? type) {
               setState(() {
                 _selectedType = type!;

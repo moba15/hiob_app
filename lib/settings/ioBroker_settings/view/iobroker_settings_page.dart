@@ -8,8 +8,6 @@ import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
-bool _isObscure = true;
-
 class IoBrokerSettingsPage extends StatelessWidget {
   const IoBrokerSettingsPage({super.key});
 
@@ -305,7 +303,7 @@ class _SecondaryAddressSettingsState extends State<_SecondaryAddressSettings> {
 }
 
 class _IobrokerObjectFilter extends StatefulWidget {
-  const _IobrokerObjectFilter({super.key});
+  const _IobrokerObjectFilter();
 
   @override
   State<_IobrokerObjectFilter> createState() => __IobrokerObjectFilterState();

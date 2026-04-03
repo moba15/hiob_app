@@ -32,11 +32,4 @@ class ChangeLogScreen extends StatelessWidget {
 
   """;
   }
-
-  String _changelogComplete() {
-    return """
-- Possible fix for crashed 
-- Added more logging
-  """;
-  }
 }

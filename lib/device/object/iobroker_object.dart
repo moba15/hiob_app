@@ -12,7 +12,7 @@ class IobrokerObject extends DeviceInterface {
   int? min;
   int? max;
   IobrokerObject({
-    required String id,
+    required super.id,
     required this.name,
     required this.parent,
     required this.desc,
@@ -23,5 +23,5 @@ class IobrokerObject extends DeviceInterface {
     required this.max,
     required this.min,
     required this.step,
-  }) : super(id: id);
+  });
 }

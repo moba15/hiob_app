@@ -10,8 +10,8 @@ class NotificationsEvent extends Equatable {
 class NotificationsAddEvent extends NotificationsEvent {}
 
 class NotificationsRemoveEvent extends NotificationsEvent {
-  int index;
-  NotificationsRemoveEvent({required this.index});
+  final int index;
+  const NotificationsRemoveEvent({required this.index});
 }
 
 class NotificationsReadEvent extends NotificationsEvent {}

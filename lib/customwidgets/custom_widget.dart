@@ -20,7 +20,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 
 enum CustomWidgetTypeDeprecated {
   group,

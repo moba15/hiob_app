@@ -202,7 +202,7 @@ class _CustomWebViewWidgetViewState extends State<CustomWebViewWidgetView> {
             ),
           },
           initialUrlRequest: URLRequest(
-            url: WebUri(this.url ?? "https://google.de"),
+            url: WebUri(url ?? "https://google.de"),
           ),
 
           initialSettings: _webViewSettings,

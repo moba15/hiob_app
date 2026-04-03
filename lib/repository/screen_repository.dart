@@ -57,11 +57,11 @@ class ScreenRepository {
             rawMap,
             customWidgetManager: customWidgetManager!,
           );
-          s.widgetTemplates.forEach((element) {
+          for (var element in s.widgetTemplates) {
             loggingService.debug(
               "ScreenManager | loadScreen | Screen ${s.id} has template ${element.id}",
             );
-          });
+          }
           loggingService.debug("ScreenManager | loadScreen | ${s.id}");
           screens.add(s);
         } catch (e) {

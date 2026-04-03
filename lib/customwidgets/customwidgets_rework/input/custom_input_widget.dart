@@ -18,8 +18,6 @@ extension CustomInputSendMethodExtension on CustomInputSendMethod {
     switch (this) {
       case CustomInputSendMethod.onSubmitted:
         return "On enter";
-      default:
-        return "Not found";
     }
   }
 }
@@ -36,8 +34,6 @@ extension CustomInputDisplayConentTypeExtension
         return "Do not show";
       case CustomInputDisplayConentType.value:
         return "Value";
-      default:
-        return "Error";
     }
   }
 }

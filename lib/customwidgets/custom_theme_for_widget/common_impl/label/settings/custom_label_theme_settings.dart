@@ -70,7 +70,7 @@ class _CustomLabelThemeSettingsState extends State<CustomLabelThemeSettings> {
         DropdownMenuItem(value: FontWeight.w800, child: Text("w800")),
         DropdownMenuItem(value: FontWeight.w900, child: Text("w900")),
       ],
-      value: widget.labelTheme.labelFontWeight ?? FontWeight.normal,
+      initialValue: widget.labelTheme.labelFontWeight ?? FontWeight.normal,
       onChanged: (value) {
         widget.labelTheme.labelFontWeight = value;
         c.update(null);
