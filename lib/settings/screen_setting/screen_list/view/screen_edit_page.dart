@@ -17,7 +17,6 @@ import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import '../../../../customwidgets/custom_widget.dart';
-import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
 
 class ScreenEditPage extends StatefulWidget {
   final Screen screen;
@@ -266,34 +265,6 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
   }
 }
 
-class _SaveDialog extends StatelessWidget {
-  final Function onSave;
-  final Function cancel;
-
-  const _SaveDialog({required this.onSave, required this.cancel});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(getAppLocalizations(context).not_saved_alert_title),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [Text(getAppLocalizations(context).want_to_exit_alert)],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => {Navigator.pop(context), cancel()},
-          child: Text(getAppLocalizations(context).exit),
-        ),
-        TextButton(
-          onPressed: () => {Navigator.pop(context), onSave()},
-          child: Text(getAppLocalizations(context).save),
-        ),
-      ],
-    );
-  }
-}
-
 class _AddTemplateAlertDialog extends StatefulWidget {
   final Screen screen;
   final ScreenRepository screenManager;
@@ -494,61 +465,6 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
           );
         }
       },
-    );
-  }
-}
-
-class _AddDivisionLineTemplate extends StatelessWidget {
-  final Function(CustomDivisionLineWidget) onAdd;
-  int thickness = 2;
-
-  _AddDivisionLineTemplate({required this.onAdd});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(getAppLocalizations(context).add_divider_alert_title),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(getAppLocalizations(context).cancel),
-        ),
-        TextButton(
-          onPressed: () {
-            onAdd(
-              CustomDivisionLineWidget(
-                thickness: thickness,
-                name: 'Line (t: ' + thickness.toString() + ")",
-              ),
-            );
-          },
-          child: Text(getAppLocalizations(context).add),
-        ),
-      ],
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(getAppLocalizations(context).thickness),
-          StatefulBuilder(
-            builder: (context, setState) {
-              int value = thickness;
-              return Slider(
-                onChanged: (v) {
-                  setState(() {
-                    value = v.round();
-                    thickness = v.round();
-                  });
-                },
-                max: 10,
-                min: 1,
-                label: value.toString(),
-                divisions: 10,
-                value: value.toDouble(),
-              );
-            },
-          ),
-        ],
-      ),
     );
   }
 }

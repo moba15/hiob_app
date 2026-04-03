@@ -113,7 +113,7 @@ class _MapOrderSettingTemplateState<V>
                         setState(() {
                           data.remove(key);
                           data[p0] = widget.fromStr(p1);
-                          this.reorder(data.length - 1, i);
+                          reorder(data.length - 1, i);
                         });
                         widget.onChange(data);
                       },

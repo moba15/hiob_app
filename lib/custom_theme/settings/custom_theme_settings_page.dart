@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_home/custom_theme/cubit/custom_theme_cubit.dart';
 import 'package:smart_home/custom_theme/custom_theme.dart';
 import 'package:smart_home/custom_theme/theme_repository.dart';
@@ -56,7 +55,7 @@ class _CustomThemeSettingsBody extends StatelessWidget {
     return InputFieldContainer.inputContainer(
       child: DropdownButtonFormField<CustomThemeBrightness>(
         decoration: const InputDecoration(border: OutlineInputBorder()),
-        value: themeRepository.loadedCustomTheme.customThemeBrightness,
+        initialValue: themeRepository.loadedCustomTheme.customThemeBrightness,
         items: [
           DropdownMenuItem(
             value: CustomThemeBrightness.light,

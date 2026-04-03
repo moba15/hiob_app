@@ -21,12 +21,10 @@ class DeviceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lastUpdated = context.select(
-      (DeviceBloc bloc) => bloc.state.lastUpdated,
-    );
+    context.select((DeviceBloc bloc) => bloc.state.lastUpdated);
 
-    final status = context.select((DeviceBloc bloc) => bloc.state.status);
-    final device = context.select((DeviceBloc bloc) => bloc.device);
+    context.select((DeviceBloc bloc) => bloc.state.status);
+    context.select((DeviceBloc bloc) => bloc.device);
     return Text("Should not be here");
 
     /* return ListTile(

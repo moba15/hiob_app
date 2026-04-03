@@ -13,7 +13,6 @@ import 'package:smart_home/settings/general_settings/view/general_settings_page.
 import 'package:smart_home/settings/ioBroker_settings/view/iobroker_settings_page.dart';
 import 'package:smart_home/settings/notification_settings/notification_settings_page.dart';
 import 'package:smart_home/settings/view/screen_setting_screen.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
 import '../widget_settings/widget_template_settings/view/widget_template_list_page.dart';
 

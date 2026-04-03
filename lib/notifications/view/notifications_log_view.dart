@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
 import 'package:smart_home/services/notification/custom_notification.dart';
 import 'package:smart_home/notifications/bloc/notifications_bloc.dart';

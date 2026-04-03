@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_home/di/injection.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
@@ -130,7 +129,6 @@ class _SearchChipList extends StatefulWidget {
   final Map<String, bool> filters;
   final void Function() filterUpdated;
   const _SearchChipList({
-    super.key,
     required this.filters,
     required this.filterUpdated,
   });

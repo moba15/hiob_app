@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:restart_app/restart_app.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';

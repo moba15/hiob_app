@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/database/app-database.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
-import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/repository/general_repository.dart';
 import 'package:smart_home/repository/screen_repository.dart';
@@ -30,6 +29,7 @@ class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
   HashMap<String, dynamic> currentValues = HashMap<String, dynamic>();
   final StreamController<Pair<String, dynamic>> _objectValueStreams =
       StreamController.broadcast();
+  @override
   List<String> preDefinedFilters = [];
 
   IoBrokerDeviceService(

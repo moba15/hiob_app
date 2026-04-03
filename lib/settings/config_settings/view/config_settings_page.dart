@@ -4,7 +4,7 @@ import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
 import 'package:smart_home/settings/config_settings/bloc/config_bloc.dart';
 
 class ConfigSettingsPage extends StatelessWidget {
-  ConfigSettingsPage({super.key});
+  const ConfigSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

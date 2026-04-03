@@ -95,7 +95,7 @@ class _CustomMultiselectionWidgetViewState
       items.add(selected);
     }
     return DropdownButtonFormField<String>(
-      value: selected,
+      initialValue: selected,
       onChanged: (newValue) {
         String value = "";
         widget.customMultiselectionWidget.selections.forEach((key, v) {

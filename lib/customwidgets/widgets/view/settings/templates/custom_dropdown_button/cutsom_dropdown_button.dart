@@ -30,10 +30,10 @@ class CustomDropdownButton<T> extends FormField<T> {
     this.selected,
     this.label,
     required this.onSelect,
-  }) : super(builder: _build);
+  }) : super(builder: _emptyBuilder);
 
-  static Widget _build<T>(FormFieldState<T> state) {
-    return state.build(state.context);
+  static Widget _emptyBuilder<T>(FormFieldState<T> state) {
+    return const SizedBox.shrink();
   }
 
   @override
@@ -75,7 +75,7 @@ class _CustomDropDownState<T> extends FormFieldState<T> {
           }
         },
         child: DropdownButtonFormField<T>(
-          value: selected,
+          initialValue: selected,
           onChanged: (d) {
             setState(() {
               selected = d;

@@ -127,8 +127,6 @@ extension DeviceExtension on DeviceType {
         return 'IoBroker';
       case DeviceType.httpDevice:
         return 'Http';
-      default:
-        return "Unknown, you fucked up";
     }
   }
 
@@ -162,8 +160,6 @@ extension DeviceExtension on DeviceType {
             ),
           ],
         );
-      default:
-        return const Text("LOL");
     }
   }
 }

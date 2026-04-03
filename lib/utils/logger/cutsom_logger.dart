@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart' as fp;
 import 'package:smart_home/manager/file_manager.dart';
 
 class CustomLogger {
