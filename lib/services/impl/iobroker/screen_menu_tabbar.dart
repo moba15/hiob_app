@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 
-import '../screen.dart';
+import '../../../screen/screen.dart';
 
 class ScreenTabBarPage extends StatelessWidget {
   const ScreenTabBarPage({super.key});

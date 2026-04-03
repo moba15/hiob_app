@@ -11,7 +11,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_swit
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/reorder_helper.dart';
 

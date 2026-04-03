@@ -10,7 +10,6 @@ import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
-import 'package:smart_home/manager/manager.dart';
 
 class CustomGroupWidget extends CustomWidgetDeprecated {
   List<dynamic> templates;

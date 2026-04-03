@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:smart_home/services/cubit/manager_cubit.dart';
-import 'package:smart_home/manager/manager.dart';
 
 class ChangeLogScreen extends StatelessWidget {
   const ChangeLogScreen({super.key});

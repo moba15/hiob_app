@@ -9,7 +9,7 @@ import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
 import 'package:smart_home/generated/login/login.pbgrpc.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
-import 'package:smart_home/manager/general_repository.dart';
+import 'package:smart_home/repository/general_repository.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';

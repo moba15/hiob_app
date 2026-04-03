@@ -5,7 +5,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-import 'package:smart_home/manager/general_repository.dart';
+import 'package:smart_home/repository/general_repository.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomButtonWidgetView extends StatelessWidget {
