@@ -37,7 +37,7 @@ class ConfigSettingsPage extends StatelessWidget {
     );
   }
 
-  void _onAdd(context, String name) async {
+  void _onAdd(BuildContext context, String name) async {
     Navigator.pop(context);
 
     if (name.trim().isEmpty) {
@@ -102,7 +102,7 @@ class ConfigSettingsPage extends StatelessWidget {
 }
 
 class _AddSettingTemplateDialog extends StatelessWidget {
-  final Function(String, BuildContext) onAdd;
+  final void Function(String name, BuildContext context) onAdd;
   final TextEditingController textEditingController = TextEditingController();
 
   _AddSettingTemplateDialog({required this.onAdd});

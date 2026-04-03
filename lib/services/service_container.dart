@@ -144,6 +144,11 @@ class ServiceContainer {
     final themeManager = ThemeManager(fileManager: fileManager);
     await runStep('theme_manager', themeManager.loadTheme);
 
+    await runStep(
+      'connection_manager_connect',
+      connectionManager.connect,
+    );
+
     return ServiceContainer._(
       fileManager: fileManager,
       deviceManager: deviceManager,

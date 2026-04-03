@@ -155,14 +155,13 @@ class SettingsSyncManager {
     }
   }
 
-  void loadGotTemplate(String? screens, String? widgets) {
+  void loadGotTemplate(String? screens, String? widgets) async {
     //INFO: Devices are loaded from the adapter
     if (widgets != null) {
-      fileManager.pref.setString(templateStorageKey, widgets);
+      await fileManager.pref.setString(templateStorageKey, widgets);
     }
     if (screens != null) {
-      fileManager.pref.setString(screenStorageKey, screens);
-      Restart.restartApp();
+      await fileManager.pref.setString(screenStorageKey, screens);
     }
 
     loadedSuccessStreamController.add(true);
