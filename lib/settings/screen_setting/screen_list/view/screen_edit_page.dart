@@ -9,8 +9,8 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 
@@ -21,7 +21,7 @@ import '../../../../customwidgets/widgets/custom_divisionline_widget.dart';
 
 class ScreenEditPage extends StatefulWidget {
   final Screen screen;
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
 
   const ScreenEditPage({
     super.key,
@@ -296,7 +296,7 @@ class _SaveDialog extends StatelessWidget {
 
 class _AddTemplateAlertDialog extends StatefulWidget {
   final Screen screen;
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
   final Function(List<CustomWidgetWrapper>) onAdd;
 
   const _AddTemplateAlertDialog({
@@ -316,7 +316,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
   @override
   Widget build(BuildContext context) {
     List<CustomWidgetWrapper> templates = List.of(
-      context.read<CustomWidgetManager>().templates,
+      context.read<CustomWidgetRepository>().templates,
     );
     templates.removeWhere(
       (element) => widget.screen.widgetTemplates.contains(element),
@@ -434,7 +434,7 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
 
 class ScreenWidgetTemplateListPage extends StatelessWidget {
   final Screen screen;
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
 
   const ScreenWidgetTemplateListPage({
     super.key,
@@ -482,7 +482,7 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
             child: CustomWidgetTemplateTile(
               toggleSelect: () => {}, //TODO
               customWidget: templates[index],
-              customWidgetManager: context.read<CustomWidgetManager>(),
+              customWidgetManager: context.read<CustomWidgetRepository>(),
             ),
           );
         } else {

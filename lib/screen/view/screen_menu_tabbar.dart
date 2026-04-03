@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 
 import '../screen.dart';
@@ -13,8 +13,8 @@ class ScreenTabBarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          ScreenListCubit(screenManager: context.read<ScreenManager>()),
-      child: ScreenTabView(screenManager: context.read<ScreenManager>()),
+          ScreenListCubit(screenManager: context.read<ScreenRepository>()),
+      child: ScreenTabView(screenManager: context.read<ScreenRepository>()),
     );
   }
 
@@ -22,7 +22,7 @@ class ScreenTabBarPage extends StatelessWidget {
 }
 
 class ScreenTabView extends StatelessWidget {
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
 
   const ScreenTabView({super.key, required this.screenManager});
 

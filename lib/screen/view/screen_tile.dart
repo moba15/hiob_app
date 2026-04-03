@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/view/screen_edit_page.dart';
 
 import '../screen.dart';
 
 class ScreenListTile extends StatelessWidget {
   final Screen screen;
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
   final bool selected;
 
   const ScreenListTile({

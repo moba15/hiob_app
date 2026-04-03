@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
-import 'package:smart_home/manager/customise_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
 import 'package:smart_home/utils/list_status.dart';
 
 part 'widget_template_list_state.dart';
 
 class WidgetTemplateListCubit extends Cubit<WidgetTemplateListState> {
-  final CustomWidgetManager customWidgetManager;
+  final CustomWidgetRepository customWidgetManager;
   StreamSubscription? templateListSubscription;
 
   WidgetTemplateListCubit({required this.customWidgetManager})

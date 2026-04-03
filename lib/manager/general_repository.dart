@@ -7,7 +7,7 @@ import 'package:smart_home/services/metadata/metadata_service.dart';
 import 'package:smart_home/utils/logger/logger_filter.dart';
 import 'package:uuid/uuid.dart';
 
-class GeneralManager {
+class GeneralRepository {
   var uuid = const Uuid();
 
   final FileManager fileManager;
@@ -27,7 +27,7 @@ class GeneralManager {
   bool useBottomSheet = true;
   CustomLoggerFilter customLoggerFilter = CustomLoggerFilter();
 
-  GeneralManager({
+  GeneralRepository({
     required this.loggingService,
     required this.fileManager,
     required this.metadataService,

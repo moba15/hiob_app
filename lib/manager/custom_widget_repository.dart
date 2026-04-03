@@ -18,19 +18,22 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/services/service_container.dart';
 
-class CustomWidgetManager {
+class CustomWidgetRepository {
   String templateKey = "templateKey";
   bool loaded = false;
   FileManager fileManager;
   final List<CustomWidgetWrapper> templates = [];
   final StreamController<List<CustomWidgetWrapper>> templatesStreamController =
       StreamController.broadcast();
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
 
-  CustomWidgetManager({required this.fileManager, required this.screenManager});
+  CustomWidgetRepository({
+    required this.fileManager,
+    required this.screenManager,
+  });
   Future<void> loadTemplates() async {
     //fileManager.writeJSONList(templateKey, templates);
 

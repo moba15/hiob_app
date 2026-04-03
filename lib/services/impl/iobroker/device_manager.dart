@@ -8,8 +8,8 @@ import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
 import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/general_manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/general_repository.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
@@ -19,8 +19,8 @@ import 'package:smart_home/utils/pair.dart';
 class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
   FileManager fileManager;
   LoggingService loggingService;
-  ScreenManager screenManager;
-  GeneralManager generalManager;
+  ScreenRepository screenManager;
+  GeneralRepository generalManager;
   AppDatabase appDatabase = AppDatabase(null);
   late ConnectionServiceInterface connectionServiceInterface;
 

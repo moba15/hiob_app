@@ -13,9 +13,9 @@ import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
-import 'package:smart_home/manager/customise_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
 import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 import 'package:smart_home/settings/general_settings/view/template_adder.dart';
@@ -30,7 +30,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenManager = context.read<ScreenManager>();
+    final screenManager = context.read<ScreenRepository>();
     return TemplateAdder(
       title: getAppLocalizations(context).group_edit_page_title,
       name: clone.name ?? "",
@@ -40,7 +40,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
       addGroup: _addGroup,
       addLine: _addLine,
       addTemplates: _addTemplates,
-      screenManager: context.read<ScreenManager>(),
+      screenManager: context.read<ScreenRepository>(),
       reorderTemplate: _reorderTemplate,
       removeTemplate: _removeTemplate,
       templates: clone.templates,
@@ -167,7 +167,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     return true;
   }
 
-  void _save(String name, {required final ScreenManager screenManager}) {
+  void _save(String name, {required final ScreenRepository screenManager}) {
     customGroupWidget.name = name;
     customGroupWidget.templates = clone.templates;
     customGroupWidget.isExtended = clone.isExtended;
@@ -262,7 +262,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final customWidgetManager = context.read<CustomWidgetManager>();
+    final customWidgetManager = context.read<CustomWidgetRepository>();
     return Column(
       children: [
         TextField(
@@ -391,7 +391,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
 
 class AddTemplateAlertDialog extends StatefulWidget {
   final CustomGroupWidget customGroupWidget;
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
   final Function(List<CustomWidgetWrapper>) onAdded;
   const AddTemplateAlertDialog({
     super.key,
@@ -409,7 +409,7 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final customWidgetManager = context.read<CustomWidgetManager>();
+    final customWidgetManager = context.read<CustomWidgetRepository>();
     List<CustomWidgetWrapper> templates = List.of(
       customWidgetManager.templates,
     );

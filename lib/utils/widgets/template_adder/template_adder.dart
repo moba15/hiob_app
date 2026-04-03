@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 class TemplateSelectionAlertDialog extends StatefulWidget {
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
   final List<dynamic> selected;
   final Function(List<CustomWidgetWrapper>) onSelect;
   final bool Function(CustomWidgetWrapper)? filter;
@@ -34,7 +34,7 @@ class _TemplateSelectionAlertDialogState
   @override
   Widget build(BuildContext context) {
     List<CustomWidgetWrapper> templates = List.of(
-      context.read<CustomWidgetManager>().templates,
+      context.read<CustomWidgetRepository>().templates,
     );
 
     templates.removeWhere((element) => widget.selected.contains(element));
