@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/manager/cubit/manager_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_home/di/injection.dart';
-import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
@@ -28,30 +26,6 @@ void main() async {
   //TODO Fix this bug and run in zoned
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
-  /* await FlutterLogs.initLogs(
-      logLevelsEnabled: [
-        LogLevel.INFO,
-        LogLevel.WARNING,
-        LogLevel.ERROR,
-        LogLevel.SEVERE
-      ],
-      timeStampFormat: TimeStampFormat.TIME_FORMAT_READABLE,
-      directoryStructure: DirectoryStructure.FOR_DATE,
-      logTypesEnabled: [
-        "device",
-        "network",
-        "errors",
-        "notifications",
-        "backgroundrunner"
-      ],
-      logFileExtension: LogFileExtension.LOG,
-      logsWriteDirectoryName: "MyLogs",
-      logsExportDirectoryName: "MyLogs/Exported",
-      debugFileOperations: true,
-      isDebuggable: true); */
-
-  //Initialize Logging
-
   runApp(const _BootstrapApp());
 }
 
@@ -73,6 +47,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
     'screen_manager': 'Screen manager',
     'iobroker_manager': 'ioBroker manager',
     'connection_manager': 'Connection manager',
+    'connection_manager_connect': 'Connection manager connect',
     'notification_manager': 'Notification manager',
     'settings_sync_manager': 'Settings sync manager',
     'theme_manager': 'Theme manager',

@@ -12,7 +12,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
-import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
@@ -300,9 +299,43 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           }
         }
       } else {
-        throw ErrorDescription(
-          "This should never happen, (old) template is used",
-        );
+        try {
+          //TODO
+          //!Old version support
+          _customWidgetSettingWidget!.customWidgetDeprecated.name =
+              _nameController.text;
+          if (widget.onSave == null) {
+            widget.customWidgetManager.save(
+              template: CustomWidgetTemplate(
+                id: ServiceContainer.randomString(22),
+                name: _nameController.text,
+                customWidget:
+                    _customWidgetSettingWidget!.customWidgetDeprecated,
+              ),
+            );
+          } else {
+            widget.onSave!(
+              CustomWidgetTemplate(
+                id: ServiceContainer.randomString(22),
+                name: _nameController.text,
+                customWidget:
+                    _customWidgetSettingWidget!.customWidgetDeprecated,
+              ),
+            );
+          }
+        } catch (e) {
+          //Template is porbaly new one
+          _customWidgetSettingWidget!.customWidget.name = _nameController.text;
+          _customWidgetSettingWidget!.customWidget.id =
+              ServiceContainer.randomString(22);
+          if (widget.onSave == null) {
+            widget.customWidgetManager.save(
+              template: _customWidgetSettingWidget!.customWidget,
+            );
+          } else {
+            widget.onSave!(_customWidgetSettingWidget!.customWidget);
+          }
+        }
       }
       Navigator.pop(context);
     }

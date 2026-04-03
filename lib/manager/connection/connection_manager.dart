@@ -11,7 +11,6 @@ import 'package:smart_home/generated/login/login.pbgrpc.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
-import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/services/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
@@ -21,6 +20,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class ConnectionManager
     with WidgetsBindingObserver
     implements ConnectionServiceInterface {
+  static const Duration _retryDelay = Duration(seconds: 3);
+
   /// Static so it can be used by the background runner
   static Map<String, dynamic> decryptAes({
     required Map<String, dynamic> rawMap,
@@ -153,7 +154,7 @@ class ConnectionManager
   @override
   void reconnect({bool delayed = true}) async {
     if (delayed) {
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(_retryDelay);
     }
 
     // ignore: dead_code
@@ -207,7 +208,7 @@ class ConnectionManager
     );
     connectionStatusStreamController.add(ConnectionStatus.loggingIn);
     try {
-      LoginResponse response = await loginClientStub!
+      final LoginResponse response = await loginClientStub!
           .login(
             LoginRequest(
               deviceId: generalManager.deviceID,
@@ -217,13 +218,7 @@ class ConnectionManager
               user: ioBrokerManager.user,
             ),
           )
-          .catchError((Object e) async {
-            loggingService.error("ConnectionManager | errorLogin", e);
-            return LoginResponse(
-              status: LoginResponse_Status.error,
-              errorMsg: "Error during login: ${e.toString()}",
-            );
-          });
+          .timeout(_retryDelay);
       if (response.status == LoginResponse_Status.error) {
         loggingService.error(
           "ConnectionManager | Login error: ${response.errorMsg}",
@@ -238,6 +233,12 @@ class ConnectionManager
       } else {
         _onLoginApproved("");
       }
+    } on TimeoutException catch (e) {
+      loggingService.error(
+        "ConnectionManager | Login timeout after ${_retryDelay.inSeconds}s",
+        e,
+      );
+      changeConnectionStatus(ConnectionStatus.tryAgain);
     } catch (e) {
       loggingService.error("ConnectionManager | errorLogin", e);
       changeConnectionStatus(ConnectionStatus.error);
