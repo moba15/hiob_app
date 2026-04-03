@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:smart_home/custom_theme/custom_theme.dart';
 import 'package:smart_home/manager/file_manager.dart';
 
-class ThemeManager {
+class ThemeRepository {
   final FileManager fileManager;
   CustomTheme _loadedCustomTheme = CustomTheme(
     customThemeBrightness: CustomThemeBrightness.system,
@@ -12,7 +12,7 @@ class ThemeManager {
   final StreamController<CustomTheme> _themeStreamSubscription =
       StreamController<CustomTheme>.broadcast();
 
-  ThemeManager({required this.fileManager});
+  ThemeRepository({required this.fileManager});
 
   Future<void> loadTheme() async {
     Map<String, dynamic> customThemeJson =
@@ -35,5 +35,3 @@ class ThemeManager {
     return _loadedCustomTheme;
   }
 }
-
-class ThemeRepository {}

@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/database/app-database.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
-import 'package:smart_home/manager/connection/connection_manager.dart';
+import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/screen_manager.dart';
 import 'package:smart_home/model/device/device_interface.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/pair.dart';
 
-class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
+class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
   FileManager fileManager;
   LoggingService loggingService;
   ScreenManager screenManager;
@@ -32,7 +32,7 @@ class DeviceManager implements DeviceServiceInterface<IobrokerObject> {
       StreamController.broadcast();
   List<String> preDefinedFilters = [];
 
-  DeviceManager(
+  IoBrokerDeviceService(
     this.fileManager, {
     required this.loggingService,
     required this.screenManager,

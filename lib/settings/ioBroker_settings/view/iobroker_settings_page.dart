@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:smart_home/manager/connection/cubit/connection_cubit.dart';
+import 'package:smart_home/services/connection/cubit/connection_cubit.dart';
+
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
 bool _isObscure = true;

@@ -3,13 +3,13 @@ import 'package:equatable/equatable.dart';
 
 part 'manager_state.dart';
 
-class ManagerCubit extends Cubit<ManagerState> {
-  ManagerCubit({
-    required ManagerStatus status,
+class ServiceCubit extends Cubit<ServiceState> {
+  ServiceCubit({
+    required ServiceStatus status,
     List<ServiceLoadEntry> services = const [],
-  }) : super(ManagerState(status: status, services: services));
+  }) : super(ServiceState(status: status, services: services));
 
-  void onStatusChange(ManagerStatus status) {
+  void onStatusChange(ServiceStatus status) {
     emit(state.copyWith(status: status));
   }
 

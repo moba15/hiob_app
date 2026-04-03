@@ -5,12 +5,12 @@ import 'dart:ui';
 
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:smart_home/main.dart';
-import 'package:smart_home/manager/connection/connection_manager.dart';
+import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
 import 'package:smart_home/manager/general_manager.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
-import 'package:smart_home/services/connection_service_interface.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/utils/logger/cutsom_logger.dart';
 import 'package:talker/talker.dart';
@@ -186,7 +186,7 @@ class BackgroundRunner {
     );
     Map<String, dynamic> rawMap = jsonDecode(event);
     if (aesEnabled) {
-      event = ConnectionManager.decryptAes(
+      event = IoBrokerConnectionService.decryptAes(
         rawMap: rawMap,
         secureKey: secureKey,
       );

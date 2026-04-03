@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:smart_home/manager/settings_sync_manager.dart';
+import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
 
 part 'config_event.dart';
 
 part 'config_state.dart';
 
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
-  final SettingsSyncManager settingsSyncManager;
+  final IoBrokerSettingsSyncService settingsSyncManager;
 
   ConfigBloc({required this.settingsSyncManager}) : super(ConfigState()) {
     on<ConfigEvent>((event, emit) {
