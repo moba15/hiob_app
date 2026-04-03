@@ -5,7 +5,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
-import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/general_repository.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
 class CustomButtonWidgetView extends StatelessWidget {
@@ -128,7 +128,7 @@ class _CustomButtonWidgetDeviceViewState
                     oldValue: _bloc.state.value,
                   ),
                 );
-                if (context.read<GeneralManager>().vibrateEnabled) {
+                if (context.read<GeneralRepository>().vibrateEnabled) {
                   //    Vibrate.feedback(FeedbackType.light);
                 }
               }
@@ -172,7 +172,7 @@ class _CustomButtonWidgetDeviceViewState
                       oldValue: _bloc.state.value == true,
                     ),
                   );
-                  if (context.read<GeneralManager>().vibrateEnabled) {
+                  if (context.read<GeneralRepository>().vibrateEnabled) {
                     //    Vibrate.feedback(FeedbackType.light);
                   }
                 },

@@ -5,7 +5,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
-import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/general_repository.dart';
 
 import '../../../../manager/manager.dart';
 
@@ -19,7 +19,7 @@ class CustomGroupWidgetView extends StatelessWidget {
       children: [
         ExpansionTile(
           onExpansionChanged: (v) {
-            if (context.read<GeneralManager>().vibrateEnabled) {
+            if (context.read<GeneralRepository>().vibrateEnabled) {
               HapticFeedback.lightImpact();
             }
           },

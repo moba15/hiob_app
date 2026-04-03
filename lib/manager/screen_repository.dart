@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
-import 'package:smart_home/manager/custom_widget_repository.dart';
 
-class ScreenManager {
+class ScreenRepository {
   final FileManager fileManager;
   CustomWidgetRepository? customWidgetManager;
   final LoggingService loggingService;
@@ -22,7 +22,7 @@ class ScreenManager {
   StreamController screenStreamController = StreamController.broadcast();
   bool loaded = false;
 
-  ScreenManager({
+  ScreenRepository({
     required this.fileManager,
     required this.screens,
     this.customWidgetManager,

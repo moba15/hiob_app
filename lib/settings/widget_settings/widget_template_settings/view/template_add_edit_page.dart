@@ -15,10 +15,10 @@ import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
-import '../../../../manager/customise_manager.dart';
+import '../../../../manager/custom_widget_repository.dart';
 
 class TemplateAddPage extends StatefulWidget {
-  final CustomWidgetManager customWidgetManager;
+  final CustomWidgetRepository customWidgetManager;
   final CustomWidgetWrapper? preSelectedTemplate;
   final Function(CustomWidgetWrapper)? onSave;
   final bool Function(CustomWidgetTypeDeprecated)? filter;

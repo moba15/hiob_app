@@ -7,9 +7,8 @@ import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart'
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/settings/screen_setting/screen_list/cubit/screen_list_cubit.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
@@ -29,7 +28,7 @@ class TemplateAdder extends StatefulWidget {
   final Function(int oldIndex, int newIndex) reorderTemplate;
   final Function(int index) removeTemplate;
   final Function(IconWrapper? newIconWrapper) iconDataChange;
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
   //!Change to call by refernce for better performance
   final List<dynamic> templates;
   const TemplateAdder({
@@ -329,7 +328,7 @@ class _AddGroupAlertDialogState extends State<AddGroupAlertDialog> {
 }
 
 class WidgetTemplateListPage extends StatelessWidget {
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
   final List<dynamic> widgetTemplates;
   final Function(int oldIndex, int newIndex) onReorder;
   final Function(int index) removeTemplate;
@@ -375,7 +374,7 @@ class WidgetTemplateListPage extends StatelessWidget {
             child: CustomWidgetTemplateTile(
               toggleSelect: null,
               customWidget: widgetTemplates[index],
-              customWidgetManager: context.read<CustomWidgetManager>(),
+              customWidgetManager: context.read<CustomWidgetRepository>(),
             ),
           );
         } else if (widgetTemplates.length > index &&

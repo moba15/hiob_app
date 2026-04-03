@@ -6,8 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/theme.dart';
 
@@ -31,7 +30,7 @@ class _CustomPopupmenuSettingsViewState
   @override
   Widget build(BuildContext context) {
     c = context.read<CustomWidgetBlocCubit>();
-    final customWidgetManager = context.read<CustomWidgetManager>();
+    final customWidgetManager = context.read<CustomWidgetRepository>();
     return Column(
       children: [
         InputFieldContainer.inputContainer(
@@ -53,7 +52,7 @@ class _CustomPopupmenuSettingsViewState
   }
 
   List<Widget> _widgetList({
-    required final CustomWidgetManager customWidgetManager,
+    required final CustomWidgetRepository customWidgetManager,
   }) {
     List<Widget> list = [];
     for (CustomWidget customWidget in widget.customPopupmenu.customWidgets) {
@@ -94,7 +93,7 @@ class _CustomPopupmenuSettingsViewState
   }
 
   Widget _addWidgetButton({
-    required final CustomWidgetManager customWidgetManager,
+    required final CustomWidgetRepository customWidgetManager,
   }) {
     return OutlinedButton(
       onPressed: () => _onAddPress(customWidgetManager: customWidgetManager),
@@ -102,7 +101,9 @@ class _CustomPopupmenuSettingsViewState
     );
   }
 
-  void _onAddPress({required final CustomWidgetManager customWidgetManager}) {
+  void _onAddPress({
+    required final CustomWidgetRepository customWidgetManager,
+  }) {
     //TODO Open
     Navigator.push(
       context,

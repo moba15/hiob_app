@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/general_repository.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
 /*
@@ -37,7 +37,7 @@ class _GeneralSettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FileManager fileManager = context.read<FileManager>();
-    GeneralManager generalManager = context.read<GeneralManager>();
+    GeneralRepository generalManager = context.read<GeneralRepository>();
     return ListView(
       children: [
         ListTile(
@@ -90,12 +90,12 @@ class _DeviceInfo extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: TextFormField(
-                  initialValue: context.read<GeneralManager>().deviceName,
+                  initialValue: context.read<GeneralRepository>().deviceName,
                   decoration: InputDecoration(
                     labelText: getAppLocalizations(context).device_name,
                   ),
                   onChanged: (name) {
-                    context.read<GeneralManager>().updateDeviceName(name);
+                    context.read<GeneralRepository>().updateDeviceName(name);
                   },
                 ),
               ),
@@ -104,7 +104,7 @@ class _DeviceInfo extends StatelessWidget {
                 flex: 1,
                 child: TextFormField(
                   enabled: false,
-                  initialValue: context.read<GeneralManager>().deviceID,
+                  initialValue: context.read<GeneralRepository>().deviceID,
                   decoration: InputDecoration(
                     labelText: getAppLocalizations(context).device_id,
                   ),
@@ -128,7 +128,7 @@ class _CustomLoggerSettings extends StatefulWidget {
 class __CustomLoggerSettingsState extends State<_CustomLoggerSettings> {
   @override
   Widget build(BuildContext context) {
-    final generalManager = context.read<GeneralManager>();
+    final generalManager = context.read<GeneralRepository>();
     return Column(
       children: [
         SwitchListTile(

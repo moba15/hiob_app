@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:smart_home/main.dart';
 import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
-import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/general_repository.dart';
 import 'package:smart_home/manager/manager.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
@@ -27,7 +27,7 @@ class BackgroundRunner {
   static int reconnectTries = 0;
   static int maxReconnectTries = 60;
 
-  GeneralManager generalManager;
+  GeneralRepository generalManager;
   IoBrokerManager ioBrokerManager;
   ConnectionServiceInterface connectionService;
   LoggingService? talker;

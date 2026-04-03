@@ -4,9 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/custom_theme/settings/custom_theme_settings_page.dart';
 import 'package:smart_home/l10n/app_localizations.dart' show AppLocalizations;
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/screen_repository.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
 import 'package:smart_home/services/metadata/metadata_service.dart';
 import 'package:smart_home/settings/config_settings/view/config_settings_page.dart';
 import 'package:smart_home/settings/documenation/documentation_view.dart';
@@ -38,7 +37,7 @@ class MainSettingsScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ScreenListSettingsScreen(
-                    screenManager: context.read<ScreenManager>(),
+                    screenManager: context.read<ScreenRepository>(),
                   ),
                 ),
               ),
@@ -55,7 +54,7 @@ class MainSettingsScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => WidgetTemplateListPage(
-                    customWidgetManager: context.read<CustomWidgetManager>(),
+                    customWidgetManager: context.read<CustomWidgetRepository>(),
                   ),
                 ),
               ),

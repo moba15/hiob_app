@@ -7,13 +7,12 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
 import '../customwidgets/custom_widget.dart';
-import '../manager/screen_manager.dart';
+import '../manager/screen_repository.dart';
 
 class Screen {
   final String id;
@@ -34,7 +33,7 @@ class Screen {
 
   factory Screen.fromJSON(
     Map<String, dynamic> json, {
-    required CustomWidgetManager customWidgetManager,
+    required CustomWidgetRepository customWidgetManager,
   }) {
     List<dynamic> widgetTemplates = [];
     for (Map<String, dynamic> templateRaw
@@ -117,7 +116,7 @@ class Screen {
   }
 
   void addWidgetTemplate(
-    ScreenManager screenManager,
+    ScreenRepository screenManager,
     CustomWidgetTemplate customWidgetTemplate,
   ) async {
     widgetTemplates.add(customWidgetTemplate);
@@ -125,7 +124,7 @@ class Screen {
   }
 
   void addWidgetTemplates(
-    ScreenManager screenManager,
+    ScreenRepository screenManager,
     List<CustomWidgetWrapper> customWidgetTemplates,
   ) async {
     for (CustomWidgetWrapper t in customWidgetTemplates) {
@@ -138,7 +137,7 @@ class Screen {
 
   void addGroup(
     CustomGroupWidget customGroupWidget,
-    ScreenManager screenManager,
+    ScreenRepository screenManager,
   ) {
     if (!widgetTemplates.contains(customGroupWidget)) {
       widgetTemplates.add(customGroupWidget);
@@ -146,7 +145,7 @@ class Screen {
     screenManager.update();
   }
 
-  void removeWidgetTemplate(ScreenManager screenManager, dynamic template) {
+  void removeWidgetTemplate(ScreenRepository screenManager, dynamic template) {
     if (template is CustomWidgetTemplate) {
       widgetTemplates.removeWhere(
         (element) =>
@@ -159,7 +158,7 @@ class Screen {
     }
   }
 
-  void removeWidgetTemplateAtIndex(ScreenManager screenManager, int index) {
+  void removeWidgetTemplateAtIndex(ScreenRepository screenManager, int index) {
     widgetTemplates.removeAt(index);
     screenManager.update();
   }
@@ -167,7 +166,7 @@ class Screen {
   void reorderWidgetTemplates({
     required int oldIndex,
     required int newIndex,
-    required ScreenManager screenManager,
+    required ScreenRepository screenManager,
   }) {
     dynamic widget = widgetTemplates[oldIndex];
     int length = widgetTemplates.length;

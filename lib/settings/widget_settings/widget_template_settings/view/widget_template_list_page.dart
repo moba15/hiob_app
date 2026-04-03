@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/bloc/widget_template_list_bloc.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
@@ -14,7 +13,7 @@ import '../../../../customwidgets/view/custom_widget_tile.dart';
 import '../../../../utils/list_status.dart';
 
 class WidgetTemplateListPage extends StatelessWidget {
-  final CustomWidgetManager customWidgetManager;
+  final CustomWidgetRepository customWidgetManager;
 
   const WidgetTemplateListPage({super.key, required this.customWidgetManager});
 
@@ -238,14 +237,14 @@ class _TemplatesViewState extends State<TemplatesView> {
       context: context,
       builder: (context) {
         return TemplateSelectionAlertDialog(
-          screenManager: context.read<ScreenManager>(),
+          screenManager: context.read<ScreenRepository>(),
           filter: (p0) {
             return p0.settingWidget.deprecated &&
                 p0.type != CustomWidgetTypeDeprecated.graph;
           },
           onSelect: (p0) {
             setState(() {
-              context.read<CustomWidgetManager>().migrate(p0);
+              context.read<CustomWidgetRepository>().migrate(p0);
             });
           },
           selected: List.empty(),

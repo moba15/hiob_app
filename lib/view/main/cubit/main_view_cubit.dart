@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:smart_home/manager/customise_manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';
 
 import '../../../screen/screen.dart';
@@ -11,16 +11,16 @@ part 'main_view_state.dart';
 
 class MainViewCubit extends Cubit<MainViewState> {
   final ConnectionServiceInterface _connectionService;
-  final ScreenManager _screenManager;
-  final CustomWidgetManager _customWidgetManager;
+  final ScreenRepository _screenManager;
+  final CustomWidgetRepository _customWidgetManager;
   StreamSubscription<ConnectionStatus>? _connectionSubscription;
   StreamSubscription<dynamic>? _screenSubscription;
   StreamSubscription<dynamic>? _templateSubscription;
 
   MainViewCubit({
     required ConnectionServiceInterface connectionService,
-    required ScreenManager screenManager,
-    required CustomWidgetManager customWidgetManager,
+    required ScreenRepository screenManager,
+    required CustomWidgetRepository customWidgetManager,
   }) : _connectionService = connectionService,
        _screenManager = screenManager,
        _customWidgetManager = customWidgetManager,

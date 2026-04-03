@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/l10n/app_localizations.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/screen/screen.dart';
 import 'package:smart_home/screen/view/screen_tile.dart';
 import 'package:smart_home/services/service_container.dart';
@@ -29,7 +29,7 @@ class ScreenListPage extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (_) =>
-            ScreenListCubit(screenManager: context.read<ScreenManager>())
+            ScreenListCubit(screenManager: context.read<ScreenRepository>())
               ..fetchList(),
         child: const ScreenListView(),
       ),
@@ -38,8 +38,9 @@ class ScreenListPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (c) =>
-                  ScreenAddPage(screenManager: context.read<ScreenManager>()),
+              builder: (c) => ScreenAddPage(
+                screenManager: context.read<ScreenRepository>(),
+              ),
             ),
           );
         },
@@ -97,16 +98,16 @@ class ScreensView extends StatelessWidget {
               ),
               direction: DismissDirection.endToStart,
               onDismissed: (d) => {
-                context.read<ScreenManager>().removeScreen(screens[index]),
+                context.read<ScreenRepository>().removeScreen(screens[index]),
               },
               key: ValueKey(screens[index]),
               child: ScreenListTile(
                 screen: screens[index],
-                screenManager: context.read<ScreenManager>(),
+                screenManager: context.read<ScreenRepository>(),
               ),
             ),
             onReorder: (oldIndex, newIndex) {
-              context.read<ScreenManager>().reorderScreen(
+              context.read<ScreenRepository>().reorderScreen(
                 oldIndex: oldIndex,
                 newIndex: newIndex,
               );
@@ -116,7 +117,7 @@ class ScreensView extends StatelessWidget {
 }
 
 class ScreenAddPage extends StatefulWidget {
-  final ScreenManager screenManager;
+  final ScreenRepository screenManager;
 
   const ScreenAddPage({super.key, required this.screenManager});
 

@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
-import 'package:smart_home/manager/customise_manager.dart';
+import 'package:smart_home/manager/custom_widget_repository.dart';
 import 'package:smart_home/services/impl/iobroker/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
-import 'package:smart_home/manager/general_manager.dart';
+import 'package:smart_home/manager/general_repository.dart';
 import 'package:smart_home/manager/notification/notification_manager.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
-import 'package:smart_home/manager/screen_manager.dart';
+import 'package:smart_home/manager/screen_repository.dart';
 import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
 import 'package:smart_home/custom_theme/theme_repository.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
@@ -22,10 +22,10 @@ class ServiceContainer {
   final FileManager fileManager;
   final IoBrokerDeviceService deviceManager;
   final IoBrokerManager ioBrokerManager;
-  final GeneralManager generalManager;
+  final GeneralRepository generalRepository;
   final IoBrokerConnectionService connectionManager;
-  final CustomWidgetManager customWidgetManager;
-  final ScreenManager screenManager;
+  final CustomWidgetRepository customWidgetRepository;
+  final ScreenRepository screenRepository;
   final IoBrokerSettingsSyncService settingsSyncManager;
   final ThemeRepository themeRepository;
   final NotificationManager notificationManager;
@@ -36,10 +36,10 @@ class ServiceContainer {
     required this.fileManager,
     required this.deviceManager,
     required this.ioBrokerManager,
-    required this.generalManager,
+    required this.generalRepository,
     required this.connectionManager,
-    required this.customWidgetManager,
-    required this.screenManager,
+    required this.customWidgetRepository,
+    required this.screenRepository,
     required this.settingsSyncManager,
     required this.themeRepository,
     required this.notificationManager,
@@ -85,14 +85,14 @@ class ServiceContainer {
       'file_manager',
       () async => FileManager(pref: pref, loggingService: loggingService),
     );
-    final generalManager = GeneralManager(
+    final generalRepository = GeneralRepository(
       loggingService: loggingService,
       fileManager: fileManager,
       metadataService: metadataService,
     );
-    await runStep('general_manager', generalManager.load);
+    await runStep('general_manager', generalRepository.load);
 
-    final screenManager = ScreenManager(
+    final screenRepository = ScreenRepository(
       fileManager: fileManager,
       screens: [],
       loggingService: loggingService,
@@ -100,17 +100,17 @@ class ServiceContainer {
 
     final deviceManager = IoBrokerDeviceService(
       fileManager,
-      generalManager: generalManager,
+      generalManager: generalRepository,
       loggingService: loggingService,
-      screenManager: screenManager,
+      screenManager: screenRepository,
     );
 
-    final customWidgetManager = CustomWidgetManager(
+    final customWidgetRepository = CustomWidgetRepository(
       fileManager: fileManager,
-      screenManager: screenManager,
+      screenManager: screenRepository,
     );
-    screenManager.customWidgetManager = customWidgetManager;
-    await runStep('screen_manager', screenManager.loadScreens);
+    screenRepository.customWidgetManager = customWidgetRepository;
+    await runStep('screen_manager', screenRepository.loadScreens);
 
     final ioBrokerManager = IoBrokerManager(fileManager: fileManager);
     await runStep('iobroker_manager', ioBrokerManager.load);
@@ -120,7 +120,7 @@ class ServiceContainer {
       () async => IoBrokerConnectionService(
         deviceManager: deviceManager,
         ioBrokerManager: ioBrokerManager,
-        generalManager: generalManager,
+        generalManager: generalRepository,
         loggingService: loggingService,
       ),
     );
@@ -150,10 +150,10 @@ class ServiceContainer {
       fileManager: fileManager,
       deviceManager: deviceManager,
       ioBrokerManager: ioBrokerManager,
-      generalManager: generalManager,
+      generalRepository: generalRepository,
       connectionManager: connectionManager,
-      customWidgetManager: customWidgetManager,
-      screenManager: screenManager,
+      customWidgetRepository: customWidgetRepository,
+      screenRepository: screenRepository,
       settingsSyncManager: settingsSyncManager,
       themeRepository: themeRepository,
       notificationManager: notificationManager,
