@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 
 
 android {
-    compileSdkVersion 35
+    compileSdkVersion 36
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,10 +48,24 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "de.bachmaier.smart_home"
         minSdkVersion 25
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
+    }
+
+    flavorDimensions "environment"
+
+    productFlavors {
+        prod {
+            dimension "environment"
+        }
+
+        dev {
+            dimension "environment"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
     }
 
     signingConfigs {

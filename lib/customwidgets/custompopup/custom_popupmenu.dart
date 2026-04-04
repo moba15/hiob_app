@@ -17,7 +17,6 @@ import 'package:smart_home/utils/reorder_helper.dart';
 part 'custom_popupmenu.freezed.dart';
 part 'custom_popupmenu.g.dart';
 
-//TODO maybe do constructor const
 @unfreezed
 class CustomPopupmenu with _$CustomPopupmenu {
   CustomPopupmenu._();
