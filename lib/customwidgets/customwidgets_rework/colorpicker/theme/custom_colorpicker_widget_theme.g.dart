@@ -6,13 +6,13 @@ part of 'custom_colorpicker_widget_theme.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CustomColorpickerWidgetThemeImpl _$$CustomColorpickerWidgetThemeImplFromJson(
+_CustomColorpickerWidgetTheme _$CustomColorpickerWidgetThemeFromJson(
   Map<String, dynamic> json,
-) => _$CustomColorpickerWidgetThemeImpl(
+) => _CustomColorpickerWidgetTheme(
   json['id'] as String,
   LabelTheme.fromJson(json['labelTheme'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$$CustomColorpickerWidgetThemeImplToJson(
-  _$CustomColorpickerWidgetThemeImpl instance,
+Map<String, dynamic> _$CustomColorpickerWidgetThemeToJson(
+  _CustomColorpickerWidgetTheme instance,
 ) => <String, dynamic>{'id': instance.id, 'labelTheme': instance.labelTheme};

@@ -8,7 +8,7 @@ part 'custom_input_widget_theme.freezed.dart';
 part 'custom_input_widget_theme.g.dart';
 
 @unfreezed
-class CustomInputWidgetTheme with _$CustomInputWidgetTheme {
+abstract class CustomInputWidgetTheme with _$CustomInputWidgetTheme {
   CustomInputWidgetTheme._();
   @Implements<CustomThemeForWidget>()
   factory CustomInputWidgetTheme(String id, LabelTheme labelTheme) =

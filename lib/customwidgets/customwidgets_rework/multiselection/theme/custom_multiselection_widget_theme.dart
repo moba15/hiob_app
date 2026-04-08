@@ -8,7 +8,8 @@ part 'custom_multiselection_widget_theme.freezed.dart';
 part 'custom_multiselection_widget_theme.g.dart';
 
 @unfreezed
-class CustomMultiselectionWidgetTheme with _$CustomMultiselectionWidgetTheme {
+abstract class CustomMultiselectionWidgetTheme
+    with _$CustomMultiselectionWidgetTheme {
   CustomMultiselectionWidgetTheme._();
   @Implements<CustomThemeForWidget>()
   factory CustomMultiselectionWidgetTheme(String id, LabelTheme labelTheme) =

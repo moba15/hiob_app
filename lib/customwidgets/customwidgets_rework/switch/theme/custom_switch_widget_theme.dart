@@ -8,7 +8,7 @@ part 'custom_switch_widget_theme.freezed.dart';
 part 'custom_switch_widget_theme.g.dart';
 
 @unfreezed
-class CustomSwitchWidgetTheme with _$CustomSwitchWidgetTheme {
+abstract class CustomSwitchWidgetTheme with _$CustomSwitchWidgetTheme {
   CustomSwitchWidgetTheme._();
   @Implements<CustomThemeForWidget>()
   factory CustomSwitchWidgetTheme(String id, LabelTheme labelTheme) =

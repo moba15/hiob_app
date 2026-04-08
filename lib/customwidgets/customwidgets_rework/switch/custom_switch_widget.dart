@@ -33,7 +33,9 @@ class _CustomSwitchThemeConverter
 }
 
 @unfreezed
-class CustomSwitchWidget with _$CustomSwitchWidget implements CustomWidget {
+abstract class CustomSwitchWidget
+    with _$CustomSwitchWidget
+    implements CustomWidget {
   @override
   final isAbleToPopupMenu = true;
   @override

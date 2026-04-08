@@ -36,7 +36,7 @@ class _CustomMultiselectionThemeConverter
 }
 
 @unfreezed
-class CustomMultiselectionWidget
+abstract class CustomMultiselectionWidget
     with _$CustomMultiselectionWidget
     implements CustomWidget {
   @override

@@ -11,7 +11,9 @@ part 'custom_table_widget.freezed.dart';
 part 'custom_table_widget.g.dart';
 
 @unfreezed
-class CustomTableWidget with _$CustomTableWidget implements CustomWidget {
+abstract class CustomTableWidget
+    with _$CustomTableWidget
+    implements CustomWidget {
   @override
   final isAbleToPopupMenu = false;
   @override

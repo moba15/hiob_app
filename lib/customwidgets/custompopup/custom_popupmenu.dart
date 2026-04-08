@@ -18,7 +18,7 @@ part 'custom_popupmenu.freezed.dart';
 part 'custom_popupmenu.g.dart';
 
 @unfreezed
-class CustomPopupmenu with _$CustomPopupmenu {
+abstract class CustomPopupmenu with _$CustomPopupmenu {
   CustomPopupmenu._();
 
   factory CustomPopupmenu({

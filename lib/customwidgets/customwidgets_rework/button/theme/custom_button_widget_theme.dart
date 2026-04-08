@@ -8,7 +8,7 @@ part 'custom_button_widget_theme.freezed.dart';
 part 'custom_button_widget_theme.g.dart';
 
 @unfreezed
-class CustomButtonWidgetTheme with _$CustomButtonWidgetTheme {
+abstract class CustomButtonWidgetTheme with _$CustomButtonWidgetTheme {
   CustomButtonWidgetTheme._();
   @Implements<CustomThemeForWidget>()
   factory CustomButtonWidgetTheme(String id, LabelTheme labelTheme) =

@@ -33,7 +33,9 @@ class _CustomValueThemeConverter
 }
 
 @unfreezed
-class CustomValueWidget with _$CustomValueWidget implements CustomWidget {
+abstract class CustomValueWidget
+    with _$CustomValueWidget
+    implements CustomWidget {
   @override
   final isAbleToPopupMenu = true;
   @override

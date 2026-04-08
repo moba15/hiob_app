@@ -11,7 +11,9 @@ part 'custom_webview_widget.freezed.dart';
 part 'custom_webview_widget.g.dart';
 
 @unfreezed
-class CustomWebViewWidget with _$CustomWebViewWidget implements CustomWidget {
+abstract class CustomWebViewWidget
+    with _$CustomWebViewWidget
+    implements CustomWidget {
   @override
   final isAbleToPopupMenu = false;
   @override
