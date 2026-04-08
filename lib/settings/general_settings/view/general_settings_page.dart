@@ -69,6 +69,22 @@ class _GeneralSettingsView extends StatelessWidget {
             );
           },
         ),
+        StatefulBuilder(
+          builder: (_, setState) {
+            return SwitchListTile(
+              value: generalManager.useBottomTabBar,
+              onChanged: (value) {
+                setState(() {
+                  generalManager.updateUseBottomTabBar(value);
+                });
+              },
+              title: const Text("Bottom tab bar"),
+              subtitle: const Text(
+                "Place the scrollable tab list at the bottom of the screen.",
+              ),
+            );
+          },
+        ),
         const _DeviceInfo(),
         const _CustomLoggerSettings(),
       ],

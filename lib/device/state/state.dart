@@ -1,4 +1,3 @@
-
 import 'package:smart_home/device/state/datapointTypes/datapoint_types.dart';
 import 'package:smart_home/device/iobroker_device.dart';
 
