@@ -128,10 +128,7 @@ class _StateSearchBarState extends State<StateSearchBar> {
 class _SearchChipList extends StatefulWidget {
   final Map<String, bool> filters;
   final void Function() filterUpdated;
-  const _SearchChipList({
-    required this.filters,
-    required this.filterUpdated,
-  });
+  const _SearchChipList({required this.filters, required this.filterUpdated});
 
   @override
   State<_SearchChipList> createState() => __SearchChipListState();

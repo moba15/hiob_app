@@ -65,9 +65,6 @@ class FileManager {
 
   Future<Map<String, dynamic>?> getMap(String key) async {
     if (pref.getString(key) != null) {
-      loggingService.verbose(
-        "FileManager | getMap $key:${pref.getString(key)}",
-      );
       try {
         Map<String, dynamic>? m = jsonDecode(pref.getString(key)!);
         return m;
@@ -85,9 +82,6 @@ class FileManager {
 
   Future<List<dynamic>?> getList(String key) async {
     if (pref.containsKey(key)) {
-      loggingService.verbose(
-        "FileManager | getList $key:${pref.getString(key)}",
-      );
       try {
         List<dynamic> l = jsonDecode(pref.getString(key)!);
         return l;

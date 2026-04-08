@@ -43,12 +43,6 @@ class CustomWidgetRepository {
     }
 
     List? listRaw = await fileManager.getList(templateKey);
-    developer.log(
-      "Widgets Raw Loaded $listRaw",
-      name: "de.bachmaiers/customise_manager.dart",
-      time: DateTime.now(),
-      zone: Zone.current,
-    );
 
     if (listRaw == null) {
       loaded = true;

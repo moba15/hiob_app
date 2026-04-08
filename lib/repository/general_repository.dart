@@ -16,6 +16,8 @@ class GeneralRepository {
   final String key = "generalSettings";
   final String buildKey = "buildKey";
   StreamController<bool> statusStreamController = StreamController();
+  StreamController<int> settingsChangedStreamController =
+      StreamController.broadcast();
   StreamController<AlertDialog Function(BuildContext)> dialogStreamController =
       StreamController.broadcast();
 
@@ -24,7 +26,7 @@ class GeneralRepository {
   String? deviceID;
   String? loginKey;
   String? ioBVersion;
-  bool useBottomSheet = true;
+  bool useBottomTabBar = false;
   CustomLoggerFilter customLoggerFilter = CustomLoggerFilter();
 
   GeneralRepository({
@@ -40,6 +42,7 @@ class GeneralRepository {
     Map<String, dynamic> settings =
         (await fileManager.getMap(key)) ?? _loadDefaultSettings();
     vibrateEnabled = settings["vibrateEnabled"] ?? false;
+    useBottomTabBar = settings["useBottomTabBar"] ?? false;
     await setDeviceNameBasedOnSettingAndOS(settings);
     loginKey = settings["loginKey"]; //TODO: Exclude in Backup
     deviceID = settings["id"] ?? uuid.v4();
@@ -78,13 +81,20 @@ class GeneralRepository {
       "ioBVersion": ioBVersion,
       "logger": customLoggerFilter,
       "deviceName": deviceName,
+      "useBottomTabBar": useBottomTabBar,
     };
 
     await fileManager.writeJSON(key, settings);
+    settingsChangedStreamController.add(0);
   }
 
   void updateVibrateEnabled(bool vibrate) {
     vibrateEnabled = vibrate;
+    _save();
+  }
+
+  void updateUseBottomTabBar(bool useBottomTabBarValue) {
+    useBottomTabBar = useBottomTabBarValue;
     _save();
   }
 

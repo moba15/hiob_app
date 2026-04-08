@@ -40,13 +40,6 @@ class ScreenRepository {
     await customWidgetManager?.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
-
-    developer.log(
-      "Screens Raw Loaded $l",
-      name: "de.bachmaiers/screen_manager.dart",
-      time: DateTime.now(),
-      zone: Zone.current,
-    );
     if (l == null) {
       screens = [];
     } else {
@@ -57,16 +50,11 @@ class ScreenRepository {
             rawMap,
             customWidgetManager: customWidgetManager!,
           );
-          for (var element in s.widgetTemplates) {
-            loggingService.debug(
-              "ScreenManager | loadScreen | Screen ${s.id} has template ${element.id}",
-            );
-          }
           loggingService.debug("ScreenManager | loadScreen | ${s.id}");
           screens.add(s);
         } catch (e) {
           loggingService.error(
-            "ScreenManager | loadScreen | error while Screen.fromJSON $rawMap",
+            "ScreenManager | loadScreen | error while Screen.fromJSON",
             e,
           );
         }

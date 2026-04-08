@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ import '../../settings/view/main_settings_screen.dart';
 
 const double breakpoint = 800;
 const int paneProportion = 70;
+const bool useBottomTabBar = true;
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -129,85 +131,135 @@ class MainView extends StatelessWidget {
         customWidgetManager: context.read<CustomWidgetRepository>(),
       ),
       builder: (context, state) {
-        return DefaultTabController(
-          length: state.screens.length,
-          child: Scaffold(
-            appBar: AppBar(
-              toolbarHeight: 90,
-              centerTitle: true,
-              leading: MainViewAppBarLeading(
-                connectionStatus: state.connectionStatus,
-              ),
-              title: MainViewBarTitle(screens: state.screens),
-              bottom: TabBar(
-                tabAlignment: TabAlignment.start,
-                onTap: (i) {},
-                indicatorWeight: 3,
-                isScrollable: true,
-                tabs: state.screens
-                    .map<ScreenTab>((e) => ScreenTab(screen: e))
-                    .toList(),
-              ),
-              actions: [
-                StreamBuilder(
-                  stream: context
-                      .read<NotificationManager>()
-                      .notificationStream,
-                  builder: (context, state) {
-                    return Badge(
-                      isLabelVisible:
-                          context
-                              .read<NotificationManager>()
-                              .unreadNotifications >
-                          0,
-                      label:
-                          context
-                                  .read<NotificationManager>()
-                                  .unreadNotifications >
-                              0
-                          ? Text(
-                              "${context.read<NotificationManager>().unreadNotifications}",
-                            )
-                          : null,
-                      child: IconButton(
-                        onPressed: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const NotificationLogViewScreen(),
-                            ),
-                          ),
-                        },
-                        icon: const Icon(Icons.notifications),
-                      ),
-                    );
-                  },
-                ),
-                IconButton(
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainSettingsScreen(),
-                      ),
+        final generalRepository = context.read<GeneralRepository>();
+
+        return StreamBuilder<int>(
+          stream: generalRepository.settingsChangedStreamController.stream,
+          initialData: 0,
+          builder: (context, _) {
+            final useBottomTabBar = generalRepository.useBottomTabBar;
+
+            return DefaultTabController(
+              length: state.screens.length,
+              child: Builder(
+                builder: (context) {
+                  final tabBar = TabBar(
+                    tabAlignment: TabAlignment.start,
+                    onTap: (i) {},
+                    indicatorWeight: 3,
+                    isScrollable: true,
+                    tabs: state.screens
+                        .map<ScreenTab>((e) => ScreenTab(screen: e))
+                        .toList(),
+                  );
+
+                  final PreferredSizeWidget scrollableTabBar = PreferredSize(
+                    preferredSize: tabBar.preferredSize,
+                    child: ScrollConfiguration(
+                      behavior: const _DesktopTabBarScrollBehavior(),
+                      child: tabBar,
                     ),
-                  },
-                  icon: const Icon(Icons.settings),
-                ),
-              ],
-            ),
-            body: TabBarView(
-              key: GlobalKey(),
-              children: state.screens
-                  .map((t) => ScreenView(screen: t, numberOfRows: numberOfRows))
-                  .toList(),
-            ),
-          ),
+                  );
+
+                  return Scaffold(
+                    appBar: AppBar(
+                      toolbarHeight: 90,
+                      centerTitle: true,
+                      leading: MainViewAppBarLeading(
+                        connectionStatus: state.connectionStatus,
+                      ),
+                      title: MainViewBarTitle(screens: state.screens),
+                      bottom: useBottomTabBar ? null : scrollableTabBar,
+                      actions: [
+                        StreamBuilder(
+                          stream: context
+                              .read<NotificationManager>()
+                              .notificationStream,
+                          builder: (context, state) {
+                            return Badge(
+                              isLabelVisible:
+                                  context
+                                      .read<NotificationManager>()
+                                      .unreadNotifications >
+                                  0,
+                              label:
+                                  context
+                                          .read<NotificationManager>()
+                                          .unreadNotifications >
+                                      0
+                                  ? Text(
+                                      "${context.read<NotificationManager>().unreadNotifications}",
+                                    )
+                                  : null,
+                              child: IconButton(
+                                onPressed: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NotificationLogViewScreen(),
+                                    ),
+                                  ),
+                                },
+                                icon: const Icon(Icons.notifications),
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainSettingsScreen(),
+                              ),
+                            ),
+                          },
+                          icon: const Icon(Icons.settings),
+                        ),
+                      ],
+                    ),
+                    body: TabBarView(
+                      key: GlobalKey(),
+                      children: state.screens
+                          .map(
+                            (t) => ScreenView(
+                              screen: t,
+                              numberOfRows: numberOfRows,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    bottomNavigationBar: useBottomTabBar
+                        ? Material(
+                            elevation: 8,
+                            child: SafeArea(
+                              top: false,
+                              child: scrollableTabBar,
+                            ),
+                          )
+                        : null,
+                  );
+                },
+              ),
+            );
+          },
         );
       },
     );
   }
+}
+
+class _DesktopTabBarScrollBehavior extends MaterialScrollBehavior {
+  const _DesktopTabBarScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.unknown,
+  };
 }
 
 class MainViewBarTitle extends StatefulWidget {
