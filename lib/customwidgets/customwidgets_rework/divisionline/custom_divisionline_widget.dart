@@ -11,7 +11,7 @@ part 'custom_divisionline_widget.freezed.dart';
 part 'custom_divisionline_widget.g.dart';
 
 @unfreezed
-class CustomDivisionlineWidget
+abstract class CustomDivisionlineWidget
     with _$CustomDivisionlineWidget
     implements CustomWidget {
   @override

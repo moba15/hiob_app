@@ -8,7 +8,7 @@ part 'custom_slider_widget_theme.freezed.dart';
 part 'custom_slider_widget_theme.g.dart';
 
 @unfreezed
-class CustomSliderWidgetTheme with _$CustomSliderWidgetTheme {
+abstract class CustomSliderWidgetTheme with _$CustomSliderWidgetTheme {
   CustomSliderWidgetTheme._();
   @Implements<CustomThemeForWidget>()
   factory CustomSliderWidgetTheme(String id, LabelTheme labelTheme) =

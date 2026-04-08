@@ -33,7 +33,9 @@ class _CustomButtonThemeConverter
 }
 
 @unfreezed
-class CustomButtonWidget with _$CustomButtonWidget implements CustomWidget {
+abstract class CustomButtonWidget
+    with _$CustomButtonWidget
+    implements CustomWidget {
   @override
   final isAbleToPopupMenu = true;
 

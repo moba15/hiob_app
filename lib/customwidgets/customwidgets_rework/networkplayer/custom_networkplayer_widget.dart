@@ -11,7 +11,7 @@ part 'custom_networkplayer_widget.freezed.dart';
 part 'custom_networkplayer_widget.g.dart';
 
 @unfreezed
-class CustomNetworkPlayerWidget
+abstract class CustomNetworkPlayerWidget
     with _$CustomNetworkPlayerWidget
     implements CustomWidget {
   @override

@@ -8,7 +8,8 @@ part 'custom_colorpicker_widget_theme.freezed.dart';
 part 'custom_colorpicker_widget_theme.g.dart';
 
 @unfreezed
-class CustomColorpickerWidgetTheme with _$CustomColorpickerWidgetTheme {
+abstract class CustomColorpickerWidgetTheme
+    with _$CustomColorpickerWidgetTheme {
   CustomColorpickerWidgetTheme._();
   @Implements<CustomThemeForWidget>()
   factory CustomColorpickerWidgetTheme(String id, LabelTheme labelTheme) =

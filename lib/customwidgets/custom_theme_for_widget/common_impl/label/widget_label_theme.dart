@@ -10,7 +10,7 @@ part 'widget_label_theme.freezed.dart';
 part 'widget_label_theme.g.dart';
 
 @unfreezed
-class LabelTheme with _$LabelTheme {
+abstract class LabelTheme with _$LabelTheme {
   LabelTheme._();
   @Implements<CustomThemeForWidget>()
   factory LabelTheme(

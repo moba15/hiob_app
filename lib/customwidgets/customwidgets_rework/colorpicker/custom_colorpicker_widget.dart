@@ -35,7 +35,7 @@ class _CustomColorpickerThemeConverter
 }
 
 @unfreezed
-class CustomColorPickerWidget
+abstract class CustomColorPickerWidget
     with _$CustomColorPickerWidget
     implements CustomWidget {
   @override

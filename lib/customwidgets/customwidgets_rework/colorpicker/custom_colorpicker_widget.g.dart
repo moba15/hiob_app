@@ -6,9 +6,9 @@ part of 'custom_colorpicker_widget.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CustomColorPickerWidgetImpl _$$CustomColorPickerWidgetImplFromJson(
+_CustomColorPickerWidget _$CustomColorPickerWidgetFromJson(
   Map<String, dynamic> json,
-) => _$CustomColorPickerWidgetImpl(
+) => _CustomColorPickerWidget(
   type:
       $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
       CustomWidgetTypeDeprecated.colorPicker,
@@ -34,8 +34,8 @@ _$CustomColorPickerWidgetImpl _$$CustomColorPickerWidgetImplFromJson(
   ),
 );
 
-Map<String, dynamic> _$$CustomColorPickerWidgetImplToJson(
-  _$CustomColorPickerWidgetImpl instance,
+Map<String, dynamic> _$CustomColorPickerWidgetToJson(
+  _CustomColorPickerWidget instance,
 ) => <String, dynamic>{
   'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
   'id': instance.id,

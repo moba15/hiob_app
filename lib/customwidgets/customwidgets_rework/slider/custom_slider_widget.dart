@@ -35,7 +35,9 @@ class _CustomSliderThemeConverter
 }
 
 @unfreezed
-class CustomSliderWidget with _$CustomSliderWidget implements CustomWidget {
+abstract class CustomSliderWidget
+    with _$CustomSliderWidget
+    implements CustomWidget {
   @override
   final isAbleToPopupMenu = false;
   @override

@@ -10,7 +10,7 @@ part 'custom_value_widget_theme.freezed.dart';
 part 'custom_value_widget_theme.g.dart';
 
 @unfreezed
-class CustomValueWidgetTheme with _$CustomValueWidgetTheme {
+abstract class CustomValueWidgetTheme with _$CustomValueWidgetTheme {
   CustomValueWidgetTheme._();
   @Implements<CustomThemeForWidget>()
   factory CustomValueWidgetTheme(

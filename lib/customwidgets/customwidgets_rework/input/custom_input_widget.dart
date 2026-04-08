@@ -60,7 +60,9 @@ class _CustomInputThemeConverter
 }
 
 @unfreezed
-class CustomInputWidget with _$CustomInputWidget implements CustomWidget {
+abstract class CustomInputWidget
+    with _$CustomInputWidget
+    implements CustomWidget {
   @JsonKey(includeToJson: false, includeFromJson: false)
   @override
   final isAbleToPopupMenu = true;
