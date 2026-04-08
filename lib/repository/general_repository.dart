@@ -15,6 +15,7 @@ class GeneralRepository {
   final MetadataService metadataService;
   final String key = "generalSettings";
   final String buildKey = "buildKey";
+  bool _shouldShowChangelogOnStartup = false;
   StreamController<bool> statusStreamController = StreamController();
   StreamController<int> settingsChangedStreamController =
       StreamController.broadcast();
@@ -28,6 +29,8 @@ class GeneralRepository {
   String? ioBVersion;
   bool useBottomTabBar = false;
   CustomLoggerFilter customLoggerFilter = CustomLoggerFilter();
+
+  bool get shouldShowChangelogOnStartup => _shouldShowChangelogOnStartup;
 
   GeneralRepository({
     required this.loggingService,
@@ -55,9 +58,10 @@ class GeneralRepository {
         (await fileManager.getString(buildKey)) !=
             metadataService.buildNumber) {
       await Future.delayed(const Duration(seconds: 4));
-      //TODO refactor manager.status = ManagerStatus.changeLog;
-      // manager.managerStatusStreamController.sink.add(ManagerStatus.changeLog);
-      fileManager.writeString(buildKey, metadataService.buildNumber);
+      _shouldShowChangelogOnStartup = true;
+      await fileManager.writeString(buildKey, metadataService.buildNumber);
+    } else {
+      _shouldShowChangelogOnStartup = false;
     }
   }
 

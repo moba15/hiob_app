@@ -112,10 +112,18 @@ class _BootstrapAppState extends State<_BootstrapApp> {
       if (!mounted) {
         return;
       }
+
+      final showChangelogAtStartup =
+          container.generalRepository.shouldShowChangelogOnStartup;
+
       setState(() {
         _container = container;
       });
-      managerCubit.onStatusChange(ServiceStatus.finished);
+      managerCubit.onStatusChange(
+        showChangelogAtStartup
+            ? ServiceStatus.changeLog
+            : ServiceStatus.finished,
+      );
     } catch (e) {
       managerCubit.setStartupError(e.toString());
     }
