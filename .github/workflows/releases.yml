@@ -24,9 +24,8 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: 3.41.6
-      - run: flutter pub get
       - name: Check format
-        run: dart format --set-exit-if-changed .
+        run: make format-check
   build-appbundle:
     runs-on: ubuntu-22.04
     strategy:
@@ -50,7 +49,7 @@ jobs:
           encodedString: ${{ secrets.KEYSTORE }}
       - run: flutter pub get
       - name: Build bundle, release
-        run: flutter build appbundle --flavor ${{ matrix.flavor }} --no-tree-shake-icons
+        run: make build-android-appbundle-${{ matrix.flavor }}
         env:
           KEYALIAS: ${{ secrets.KEYALIAS }}
           KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
@@ -83,7 +82,7 @@ jobs:
           encodedString: ${{ secrets.FAKEKEYSTORE }}
       - run: flutter pub get
       - name: Build apk
-        run: flutter build apk --flavor ${{ matrix.flavor }} --no-tree-shake-icons
+        run: make build-android-apk-${{ matrix.flavor }}
         env:
           KEYALIAS: ${{ secrets.FAKEKEYALIAS }}
           KEYPASSWORD: ${{ secrets.FAKEKEYPASSWORD }}
@@ -103,10 +102,8 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: 3.41.6
-      - run: flutter pub get
-      - run: flutter create --platforms=linux .
       - name: Build linux
-        run: flutter build linux --release
+        run: make build-linux
       - uses: actions/upload-artifact@v4
         with:
           name: linux-release
@@ -122,10 +119,8 @@ jobs:
           flutter-version: 3.41.6
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
-      - run: flutter pub get
-      - run: flutter create --platforms=windows .
       - name: Build windows
-        run: flutter build windows --release
+        run: make build-windows
       - uses: actions/upload-artifact@v4
         with:
           name: windows-release
