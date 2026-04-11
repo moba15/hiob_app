@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_home/services/connection/connection_service_interface.dart';
 import 'package:smart_home/services/impl/iobroker/connection_manager.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/services/impl/iobroker/device_manager.dart';
@@ -23,7 +24,7 @@ class ServiceContainer {
   final IoBrokerDeviceService deviceManager;
   final IoBrokerManager ioBrokerManager;
   final GeneralRepository generalRepository;
-  final IoBrokerConnectionService connectionManager;
+  final ConnectionServiceInterface connectionService;
   final CustomWidgetRepository customWidgetRepository;
   final ScreenRepository screenRepository;
   final IoBrokerSettingsSyncService settingsSyncManager;
@@ -37,7 +38,7 @@ class ServiceContainer {
     required this.deviceManager,
     required this.ioBrokerManager,
     required this.generalRepository,
-    required this.connectionManager,
+    required this.connectionService,
     required this.customWidgetRepository,
     required this.screenRepository,
     required this.settingsSyncManager,
@@ -151,7 +152,7 @@ class ServiceContainer {
       deviceManager: deviceManager,
       ioBrokerManager: ioBrokerManager,
       generalRepository: generalRepository,
-      connectionManager: connectionManager,
+      connectionService: connectionManager,
       customWidgetRepository: customWidgetRepository,
       screenRepository: screenRepository,
       settingsSyncManager: settingsSyncManager,

@@ -148,7 +148,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
             value: _container!.deviceManager,
           ),
           Provider<ConnectionServiceInterface>.value(
-            value: _container!.connectionManager,
+            value: _container!.connectionService,
           ),
           Provider.value(value: _container!.ioBrokerManager),
           Provider.value(value: _container!.generalRepository),
@@ -158,7 +158,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
           Provider.value(value: _container!.settingsSyncManager),
           Provider.value(value: _container!.themeRepository),
           Provider.value(value: _container!.notificationManager),
-          Provider.value(value: _container!.connectionManager),
+          Provider.value(value: _container!.connectionService),
         ],
         child: App(screenManager: _container!.screenRepository),
       ),
