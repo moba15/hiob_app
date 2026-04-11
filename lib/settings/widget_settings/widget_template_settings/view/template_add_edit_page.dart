@@ -270,19 +270,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
       if (widget.preSelectedTemplate != null) {
         //TODO Refector
         if (_customWidgetSettingWidget!.deprecated) {
-          //!Support older versions
-          widget.preSelectedTemplate!.name = _nameController.text;
-          (widget.preSelectedTemplate! as CustomWidgetTemplate).customWidget =
-              _customWidgetSettingWidget!.customWidgetDeprecated;
-
-          widget.preSelectedTemplate!.name = _nameController.text;
-          if (widget.onSave == null) {
-            widget.customWidgetManager.edit(
-              template: widget.preSelectedTemplate!,
-            );
-          } else {
-            widget.onSave!(widget.preSelectedTemplate!);
-          }
+          throw Deprecated("Old template editing is not supported anymore");
         } else if (!_customWidgetSettingWidget!.deprecated) {
           _customWidgetSettingWidget!.customWidget.name = _nameController.text;
 
@@ -299,43 +287,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
           }
         }
       } else {
-        try {
-          //TODO
-          //!Old version support
-          _customWidgetSettingWidget!.customWidgetDeprecated.name =
-              _nameController.text;
-          if (widget.onSave == null) {
-            widget.customWidgetManager.save(
-              template: CustomWidgetTemplate(
-                id: ServiceContainer.randomString(22),
-                name: _nameController.text,
-                customWidget:
-                    _customWidgetSettingWidget!.customWidgetDeprecated,
-              ),
-            );
-          } else {
-            widget.onSave!(
-              CustomWidgetTemplate(
-                id: ServiceContainer.randomString(22),
-                name: _nameController.text,
-                customWidget:
-                    _customWidgetSettingWidget!.customWidgetDeprecated,
-              ),
-            );
-          }
-        } catch (e) {
-          //Template is porbaly new one
-          _customWidgetSettingWidget!.customWidget.name = _nameController.text;
-          _customWidgetSettingWidget!.customWidget.id =
-              ServiceContainer.randomString(22);
-          if (widget.onSave == null) {
-            widget.customWidgetManager.save(
-              template: _customWidgetSettingWidget!.customWidget,
-            );
-          } else {
-            widget.onSave!(_customWidgetSettingWidget!.customWidget);
-          }
-        }
+        throw Deprecated("Old template editing is not supported anymore");
       }
       Navigator.pop(context);
     }

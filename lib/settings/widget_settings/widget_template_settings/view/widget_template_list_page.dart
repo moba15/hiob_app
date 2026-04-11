@@ -77,7 +77,14 @@ class _WidgetTemplateListAppBar extends StatelessWidget
       icon: const Icon(Icons.copy_all),
     );
 
-    return [copySelected, deleteSelected];
+    IconButton selectAll = IconButton(
+      onPressed: () {
+        bloc.add(const WidgetTemplateSelectAllEvent());
+      },
+      icon: const Icon(Icons.select_all),
+    );
+
+    return [selectAll, copySelected, deleteSelected];
   }
 
   void _removeSelectedWidgets(WidgetTemplateListBloc bloc) {
@@ -139,24 +146,7 @@ class _TemplatesViewState extends State<TemplatesView> {
     WidgetTemplateListBloc bloc = context.read<WidgetTemplateListBloc>();
     return widget.templates.isEmpty
         ? Center(child: Text(getAppLocalizations(context).no_templates_found))
-        : ListView(
-            children: [
-              ListTile(
-                title: const Text("Migration"),
-                subtitle: const Text(
-                  "Please do a backup before",
-                  style: TextStyle(color: Colors.red),
-                ),
-                trailing: TextButton(
-                  onPressed: () {
-                    _startMigration();
-                  },
-                  child: const Text("Start"),
-                ),
-              ),
-              ...templates(bloc),
-            ],
-          );
+        : ListView(children: [...templates(bloc)]);
   }
 
   List<Widget> templates(WidgetTemplateListBloc bloc) {
@@ -230,27 +220,5 @@ class _TemplatesViewState extends State<TemplatesView> {
     if (!bloc.state.templates.values.contains(true)) {
       bloc.add(const WidgetTemplateListToggleSelectionEvent(selection: false));
     }
-  }
-
-  void _startMigration() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return TemplateSelectionAlertDialog(
-          screenManager: context.read<ScreenRepository>(),
-          filter: (p0) {
-            return p0.settingWidget.deprecated &&
-                p0.type != CustomWidgetTypeDeprecated.graph;
-          },
-          onSelect: (p0) {
-            setState(() {
-              context.read<CustomWidgetRepository>().migrate(p0);
-            });
-          },
-          selected: List.empty(),
-          selectButton: "Migrate",
-        );
-      },
-    );
   }
 }

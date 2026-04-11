@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -12,6 +13,7 @@ import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/screen/screen.dart';
+import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/settings/general_settings/view/template_adder.dart';
 
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
@@ -66,134 +68,6 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
       currentIconWrapper: screen.iconWrapper,
       iconDataChange: _iconChange,
     );
-    // return WillPopScope(
-    //   child: Scaffold(
-    //     appBar: AppBar(
-    //       title: const Text("Edit Screen"),
-    //       actions: [
-    //         IconButton(
-    //             onPressed: () {
-    //               if (!_isSaved()) {
-    //                 showDialog(
-    //                     context: context,
-    //                     builder: (_) => _SaveDialog(
-    //                           onSave: () => {
-    //                             _save(),
-    //                             Navigator.popUntil(
-    //                                 context, (route) => route.isFirst)
-    //                           },
-    //                           cancel: () => Navigator.popUntil(
-    //                               context, (route) => route.isFirst),
-    //                         ));
-    //                 return;
-    //               }
-    //               Navigator.popUntil(context, (route) => route.isFirst);
-    //             },
-    //             icon: const Icon(Icons.home)),
-    //       ],
-    //     ),
-    //     floatingActionButton: Stack(
-    //       children: [
-    //         Padding(
-    //           padding: const EdgeInsets.only(left: 31),
-    //           child: Align(
-    //             alignment: Alignment.bottomLeft,
-    //             child: FloatingActionButton(
-    //               onPressed: addTemplate,
-    //               child: const Icon(Icons.add),
-    //             ),
-    //           ),
-    //         ),
-    //         Container(
-    //           padding: const EdgeInsets.only(left: 90),
-    //           alignment: Alignment.bottomLeft,
-    //           child: FloatingActionButton(
-    //             heroTag: "d",
-    //             onPressed: addGroup,
-    //             child: const Icon(Icons.group_add),
-    //           ),
-    //         ),
-    //         Container(
-    //           padding: const EdgeInsets.only(left: 149),
-    //           alignment: Alignment.bottomLeft,
-    //           child: FloatingActionButton(
-    //             heroTag: "dasd",
-    //             onPressed: addLine,
-    //             child: const Icon(Icons.splitscreen),
-    //           ),
-    //         ),
-    //         Align(
-    //           alignment: Alignment.bottomRight,
-    //           child: FloatingActionButton(
-    //             heroTag: "tag",
-    //             onPressed: () => {_save(), Navigator.pop(context)},
-    //             child: const Icon(Icons.save),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     body: Center(
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.center,
-    //         children: [
-    //           Container(
-    //             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 15),
-    //             child: TextField(
-    //               controller: nameController,
-    //               decoration: const InputDecoration(
-    //                 labelText: "Name",
-    //               ),
-    //               keyboardType: TextInputType.text,
-    //             ),
-    //           ),
-    //           Container(
-    //               margin: const EdgeInsets.only(
-    //                   left: 20.0, right: 20.0, top: 10, bottom: 5),
-    //               child: IconPickerTemplate(
-    //                 onChange: (IconData? iconData) {
-    //                   currentIconData = iconData;
-    //                 },
-    //                 selected: currentIconData ?? Icons.home,
-    //               )),
-    //           CheckboxListTile(
-    //             onChanged: (value) {
-    //               setState(() {
-    //                 enabled = value ?? true;
-    //               });
-    //             },
-    //             value: enabled ?? true,
-    //             title: Text(AppLocalizations.of(context)!.enabled),
-    //             secondary: enabled == true || enabled == null
-    //                 ? const Icon(Icons.visibility)
-    //                 : const Icon(Icons.visibility_off),
-    //           ),
-    //           Expanded(
-    //               child: Padding(
-    //             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-    //             child: BlocProvider(
-    //               create: (_) =>
-    //                   ScreenListCubit(screenManager: widget.screenManager),
-    //               child: ScreenWidgetTemplateListPage(
-    //                   screen: screen, screenManager: widget.screenManager),
-    //             ),
-    //           )),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    //   onWillPop: () async {
-    //     if (!_isSaved()) {
-    //       showDialog(
-    //           context: context,
-    //           builder: (_) => _SaveDialog(
-    //                 onSave: () => {_save(), Navigator.pop(context)},
-    //                 cancel: () => Navigator.pop(context),
-    //               ));
-    //       return false;
-    //     }
-    //     return true;
-    //   },
-    // );
   }
 
   bool _isSaved() {
@@ -224,8 +98,8 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     screen.addGroup(customGroupWidget, widget.screenManager);
   }
 
-  void _addLine(CustomWidgetTemplate customWidgetTemplate) {
-    screen.addWidgetTemplate(widget.screenManager, customWidgetTemplate);
+  void _addLine(CustomDivisionlineWidget line) {
+    screen.directlyAddLine(widget.screenManager, line);
   }
 
   void _reorderTemplate(int oldIndex, int newIndex) {

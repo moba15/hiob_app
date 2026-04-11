@@ -52,11 +52,12 @@ class ScreenRepository {
           );
           loggingService.debug("ScreenManager | loadScreen | ${s.id}");
           screens.add(s);
-        } catch (e) {
+        } catch (e, stackTrace) {
           loggingService.error(
             "ScreenManager | loadScreen | error while Screen.fromJSON",
             e,
           );
+          developer.log("Screen.fromJSON stacktrace:", stackTrace: stackTrace);
         }
       }
     }

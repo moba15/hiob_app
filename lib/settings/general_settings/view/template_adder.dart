@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -23,7 +24,7 @@ class TemplateAdder extends StatefulWidget {
   final Function(String name) save;
   final Function(List<CustomWidgetWrapper>) addTemplates;
   final IconWrapper? currentIconWrapper;
-  final Function(CustomWidgetTemplate) addLine;
+  final Function(CustomDivisionlineWidget) addLine;
   final Function(CustomGroupWidget) addGroup;
   final Function(int oldIndex, int newIndex) reorderTemplate;
   final Function(int index) removeTemplate;
@@ -238,15 +239,9 @@ class _TemplateAdderState extends State<TemplateAdder> {
     showDialog(
       context: context,
       builder: (context) => _AddDivisionLineTemplate(
-        onAdd: (CustomDivisionLineWidget c) {
+        onAdd: (CustomDivisionlineWidget c) {
           setState(() {
-            widget.addLine(
-              CustomWidgetTemplate(
-                id: ServiceContainer.randomString(12),
-                name: "Line",
-                customWidget: c,
-              ),
-            );
+            widget.addLine(c);
           });
         },
       ),
@@ -428,7 +423,7 @@ class WidgetTemplateListPage extends StatelessWidget {
             child: ListTile(
               title: const Text("Line"),
               subtitle: Text(
-                "Thickness: ${(widgetTemplates[index] as CustomDivisionLineWidget).thickness}",
+                "Thickness: ${(widgetTemplates[index] as CustomDivisionlineWidget).thickness}",
               ),
             ),
           );
@@ -439,7 +434,7 @@ class WidgetTemplateListPage extends StatelessWidget {
 }
 
 class _AddDivisionLineTemplate extends StatelessWidget {
-  final Function(CustomDivisionLineWidget) onAdd;
+  final Function(CustomDivisionlineWidget) onAdd;
   int thickness = 2;
 
   _AddDivisionLineTemplate({required this.onAdd});
@@ -456,7 +451,8 @@ class _AddDivisionLineTemplate extends StatelessWidget {
         TextButton(
           onPressed: () {
             onAdd(
-              CustomDivisionLineWidget(
+              CustomDivisionlineWidget(
+                id: ServiceContainer.randomString(12),
                 thickness: thickness,
                 name: 'Line (t: ' + thickness.toString() + ")",
               ),
