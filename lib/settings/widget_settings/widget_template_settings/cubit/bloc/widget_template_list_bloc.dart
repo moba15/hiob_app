@@ -53,6 +53,19 @@ class WidgetTemplateListBloc
       );
     }));
 
+    on<WidgetTemplateSelectAllEvent>((event, emit) {
+      final newTemplates = Map.fromEntries(
+        state.templates.keys.map((e) => MapEntry(e, true)),
+      );
+      emit(
+        WidgetTemplateListState(
+          templates: newTemplates,
+          status: ListStatus.success,
+          toggleSelection: true,
+        ),
+      );
+    });
+
     on<WidgetTemplateDeletSelectedEvent>((event, emit) {
       customWidgetManager.removeTemplates(
         state.templates.keys

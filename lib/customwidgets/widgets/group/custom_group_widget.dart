@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
@@ -37,9 +38,8 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
     for (dynamic w in templates) {
       if (w is CustomGroupWidget) {
         widgets.add(w.toJson());
-      } else if (w is CustomWidgetTemplate &&
-          w.customWidget is CustomDivisionLineWidget) {
-        widgets.add(w.customWidget.toJson());
+      } else if (w is CustomDivisionlineWidget) {
+        widgets.add(w.toJson());
       } else if (w is CustomWidgetWrapper) {
         widgets.add({"widget": w.name, "id": w.id});
       }
@@ -50,14 +50,16 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
 
   void addTemplate(CustomWidgetTemplate template) {
     templates.add(template);
-    //TODO: Update
   }
 
   void addGroup(CustomGroupWidget customGroupWidget) {
     if (!templates.contains(customGroupWidget)) {
       templates.add(customGroupWidget);
     }
-    //TODO Update
+  }
+
+  void addLine(CustomDivisionlineWidget line) {
+    templates.add(line);
   }
 
   factory CustomGroupWidget.fromJSON(
@@ -83,26 +85,9 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
           );
         } else if (templatesRaw.containsKey("isExtended")) {
           templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
-        } else if (templatesRaw["type"] ==
-            CustomWidgetTypeDeprecated.line.toString()) {
-          templates.add(
-            CustomWidgetTemplate(
-              id: ServiceContainer.randomString(12),
-              name: "Line",
-              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw),
-            ),
-          );
-        } else {
-          //!maintain for downward compatibility
-          templates.add(
-            CustomWidgetTemplate(
-              id: ServiceContainer.randomString(12),
-              name: "Line",
-              customWidget: CustomDivisionLineWidget.fromJson(templatesRaw),
-            ),
-          );
-          //Is a Line Widget
-          //templates.add(CustomDivisionLineWidget.fromJson(templatesRaw));
+        } else if (templatesRaw.containsKey("type") &&
+            templatesRaw["type"] == "divisionLine") {
+          templates.add(CustomDivisionlineWidget.fromJson(templatesRaw));
         }
       }
     }

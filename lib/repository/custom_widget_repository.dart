@@ -88,7 +88,9 @@ class CustomWidgetRepository {
           customWidget = null;
           break;
         case CustomWidgetTypeDeprecated.line:
-          customWidget = CustomDivisionLineWidget.fromJson(widgetRaw);
+          customWidget = CustomDivisionLineWidgetDeprecated.fromJson(
+            widgetRaw,
+          ).migrate(id: id, name: name);
           break;
         case CustomWidgetTypeDeprecated.group:
         case CustomWidgetTypeDeprecated.alertDialog:
@@ -131,12 +133,7 @@ class CustomWidgetRepository {
         continue;
       }
       if (customWidget is CustomWidgetDeprecated) {
-        CustomWidgetTemplate template = CustomWidgetTemplate(
-          name: name,
-          customWidget: customWidget,
-          id: id,
-        );
-        templates.add(template);
+        throw Deprecated("CustomWidgetDeprecated is not supported anymore");
       } else if (customWidget is CustomWidget) {
         templates.add(customWidget);
       }
@@ -254,17 +251,6 @@ class CustomWidgetRepository {
     templates.addAll(renamedTemplates);
     sort();
 
-    fileManager.writeJSONList(templateKey, templates);
-  }
-
-  void migrate(List<CustomWidgetWrapper> widgets) {
-    for (CustomWidgetWrapper w in widgets) {
-      if (w.settingWidget.deprecated) {
-        CustomWidgetTemplate wD = w as CustomWidgetTemplate;
-        templates.removeWhere((c) => c == w);
-        templates.add(wD.customWidget.migrate(id: w.id, name: w.name));
-      }
-    }
     fileManager.writeJSONList(templateKey, templates);
   }
 }

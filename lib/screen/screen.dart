@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -46,23 +47,16 @@ class Screen {
             (element) => element.id == templateRaw["id"],
           ),
         );
+      } else if (templateRaw.containsKey("type") &&
+          templateRaw["type"] == "divisionLine") {
+        widgetTemplates.add(CustomDivisionlineWidget.fromJson(templateRaw));
       } else {
-        if (templateRaw["type"] == CustomWidgetTypeDeprecated.line.toString()) {
-          widgetTemplates.add(
-            CustomWidgetTemplate(
-              id: ServiceContainer.randomString(12),
-              name: "Line",
-              customWidget: CustomDivisionLineWidget.fromJson(templateRaw),
-            ),
-          );
-        } else {
-          widgetTemplates.add(
-            CustomGroupWidget.fromJSON(
-              templateRaw,
-              customWidgetManager.templates,
-            ),
-          );
-        }
+        widgetTemplates.add(
+          CustomGroupWidget.fromJSON(
+            templateRaw,
+            customWidgetManager.templates,
+          ),
+        );
       }
     }
     //!Support for older versions
@@ -103,9 +97,8 @@ class Screen {
     for (dynamic w in widgetTemplates) {
       if (w is CustomGroupWidget) {
         widgets.add(w.toJson());
-      } else if (w is CustomWidgetTemplate &&
-          w.customWidget is CustomDivisionLineWidget) {
-        widgets.add(w.customWidget.toJson());
+      } else if (w is CustomDivisionlineWidget) {
+        widgets.add(w.toJson());
       } else if (w is CustomWidgetWrapper) {
         widgets.add({"widget": w.name, "id": w.id});
       }
@@ -132,6 +125,14 @@ class Screen {
         widgetTemplates.add(t);
       }
     }
+    screenManager.update();
+  }
+
+  void directlyAddLine(
+    ScreenRepository screenManager,
+    CustomDivisionlineWidget line,
+  ) {
+    widgetTemplates.add(line);
     screenManager.update();
   }
 

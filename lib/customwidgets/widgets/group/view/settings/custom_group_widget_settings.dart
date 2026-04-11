@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
@@ -182,8 +183,8 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     clone.addGroup(customGroupWidget);
   }
 
-  void _addLine(CustomWidgetTemplate line) {
-    clone.addTemplates([line]);
+  void _addLine(CustomDivisionlineWidget line) {
+    clone.addLine(line);
   }
 
   void _reorderTemplate(int oldIndex, int newIndex) {
@@ -375,7 +376,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
                   child: ListTile(
                     title: const Text("Line"),
                     subtitle: Text(
-                      "Thickness: ${(widget.customGroupWidget.templates[index] as CustomDivisionLineWidget).thickness}",
+                      "Thickness: ${(widget.customGroupWidget.templates[index] as CustomDivisionlineWidget).thickness}",
                     ),
                   ),
                 );

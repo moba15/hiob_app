@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/cutsom_divider_settigs.dart';
 
-class CustomDivisionLineWidget extends CustomWidgetDeprecated {
+class CustomDivisionLineWidgetDeprecated extends CustomWidgetDeprecated {
   Color color;
   int thickness;
 
-  CustomDivisionLineWidget({
+  CustomDivisionLineWidgetDeprecated({
     required super.name,
     this.color = Colors.black,
     this.thickness = 3,
@@ -16,20 +15,14 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
-      CustomDividerSettings(customDivisionLineWidget: this);
-
+      throw Deprecated("Not supported anymore");
   @override
-  Map<String, dynamic> toJson() => {
-    "type": type.toString(),
-    "name": name,
-    "colorR": color.red,
-    "colorB": color.blue,
-    "colorG": color.green,
-    "thickness": thickness,
-  };
+  Map<String, dynamic> toJson() => throw Deprecated("Not supported anymore");
 
-  factory CustomDivisionLineWidget.fromJson(Map<String, dynamic> json) {
-    return CustomDivisionLineWidget(
+  factory CustomDivisionLineWidgetDeprecated.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return CustomDivisionLineWidgetDeprecated(
       name: json["name"],
       color: Color.fromRGBO(json["colorR"], json["colorG"], json["colorB"], 1),
       thickness: json["thickness"],
@@ -41,11 +34,7 @@ class CustomDivisionLineWidget extends CustomWidgetDeprecated {
 
   @override
   CustomWidgetDeprecated clone() {
-    return CustomDivisionLineWidget(
-      name: name,
-      color: color,
-      thickness: thickness,
-    );
+    throw Deprecated("Not supported anymore");
   }
 
   @override
