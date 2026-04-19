@@ -10,6 +10,7 @@ import 'package:smart_home/services/device/device_service_interface.dart';
 
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/view/main/main_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
 
@@ -22,10 +23,14 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
+String SUPABASE_URL = 'https://chvazplrvwsvznegekqy.supabase.co';
+String SUPABASE_ANON_KEY = 'sb_publishable_3dW4LAbXNar4lLW8iyOLKQ_fucrNUi-';
+
 void main() async {
   //TODO Fix this bug and run in zoned
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
+  await Supabase.initialize(url: SUPABASE_URL, anonKey: SUPABASE_ANON_KEY);
   runApp(const _BootstrapApp());
 }
 

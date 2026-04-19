@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:smart_home/services/notification/custom_notification.dart';
-import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
+import 'package:smart_home/services/impl/iobroker/notification_service.dart';
 
 part 'notifications_event.dart';
 part 'notifications_state.dart';
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   StreamSubscription? _streamSubscription;
-  final NotificationManager notificationManager;
+  final NotificationServiceImpl notificationService;
 
-  NotificationsBloc({required this.notificationManager})
+  NotificationsBloc({required this.notificationService})
     : super(const NotificationsInitial()) {
     on<NotificationsGetEvent>((event, emit) {
       loadNotifications(emit);
@@ -27,7 +27,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       deleteAllNotifications(emit);
     });
 
-    _streamSubscription = notificationManager.notificationStream.listen((
+    _streamSubscription = notificationService.notificationStream.listen((
       event,
     ) {
       add(NotificationsGetEvent());
@@ -43,28 +43,28 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   void loadNotifications(Emitter<NotificationsState> emit) {
     emit(
       NotificationsLoaded(
-        customNotification: NotificationManager.notificationsLog,
+        customNotification: notificationService.notificationsLog,
       ),
     );
   }
 
   void readAllNotifications(Emitter<NotificationsState> emit) {
-    notificationManager.readAllNotifications();
+    notificationService.readAllNotifications();
   }
 
   void removeNotification(
     NotificationsRemoveEvent event,
     Emitter<NotificationsState> emit,
   ) {
-    notificationManager.removeNotificationLog(index: event.index);
+    notificationService.removeNotificationLog(index: event.index);
     NotificationsLoaded newState = NotificationsLoaded(
-      customNotification: NotificationManager.notificationsLog,
+      customNotification: notificationService.notificationsLog,
     );
     emit(newState);
   }
 
   void deleteAllNotifications(Emitter<NotificationsState> emit) {
-    notificationManager.deletAllNotifications();
+    notificationService.deleteAllNotifications();
     emit(const NotificationsLoaded(customNotification: []));
   }
 }
