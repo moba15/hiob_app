@@ -7,7 +7,7 @@ import 'package:smart_home/changelog/view/changelog_view.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/services/cubit/manager_cubit.dart';
 import 'package:smart_home/repository/general_repository.dart';
-import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
+import 'package:smart_home/services/impl/iobroker/notification_service.dart';
 import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/notifications/view/notifications_log_view.dart';
 import 'package:smart_home/screen/view/screen_view.dart';
@@ -173,22 +173,22 @@ class MainView extends StatelessWidget {
                       actions: [
                         StreamBuilder(
                           stream: context
-                              .read<NotificationManager>()
+                              .read<NotificationServiceImpl>()
                               .notificationStream,
                           builder: (context, state) {
                             return Badge(
                               isLabelVisible:
                                   context
-                                      .read<NotificationManager>()
+                                      .read<NotificationServiceImpl>()
                                       .unreadNotifications >
                                   0,
                               label:
                                   context
-                                          .read<NotificationManager>()
+                                          .read<NotificationServiceImpl>()
                                           .unreadNotifications >
                                       0
                                   ? Text(
-                                      "${context.read<NotificationManager>().unreadNotifications}",
+                                      "${context.read<NotificationServiceImpl>().unreadNotifications}",
                                     )
                                   : null,
                               child: IconButton(
@@ -486,21 +486,23 @@ class _MainViewOldState extends State<MainViewOld>
                   ),
             actions: [
               StreamBuilder(
-                stream: context.read<NotificationManager>().notificationStream,
+                stream: context
+                    .read<NotificationServiceImpl>()
+                    .notificationStream,
                 builder: (context, state) {
                   return Badge(
                     isLabelVisible:
                         context
-                            .read<NotificationManager>()
+                            .read<NotificationServiceImpl>()
                             .unreadNotifications >
                         0,
                     label:
                         context
-                                .read<NotificationManager>()
+                                .read<NotificationServiceImpl>()
                                 .unreadNotifications >
                             0
                         ? Text(
-                            "${context.read<NotificationManager>().unreadNotifications}",
+                            "${context.read<NotificationServiceImpl>().unreadNotifications}",
                           )
                         : null,
                     child: IconButton(

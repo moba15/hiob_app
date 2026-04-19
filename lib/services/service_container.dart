@@ -6,7 +6,8 @@ import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/services/impl/iobroker/device_manager.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/repository/general_repository.dart';
-import 'package:smart_home/services/impl/iobroker/notification_manager.dart';
+import 'package:smart_home/repository/notification_repository.dart';
+import 'package:smart_home/services/impl/iobroker/notification_service.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
@@ -24,12 +25,13 @@ class ServiceContainer {
   final IoBrokerDeviceService deviceManager;
   final IoBrokerManager ioBrokerManager;
   final GeneralRepository generalRepository;
+  final NotificationRepository notificationRepository;
   final ConnectionServiceInterface connectionService;
   final CustomWidgetRepository customWidgetRepository;
   final ScreenRepository screenRepository;
   final IoBrokerSettingsSyncService settingsSyncManager;
   final ThemeRepository themeRepository;
-  final NotificationManager notificationManager;
+  final NotificationServiceImpl notificationManager;
   final LoggingService loggingService;
   final MetadataService metadataService;
 
@@ -38,6 +40,7 @@ class ServiceContainer {
     required this.deviceManager,
     required this.ioBrokerManager,
     required this.generalRepository,
+    required this.notificationRepository,
     required this.connectionService,
     required this.customWidgetRepository,
     required this.screenRepository,
@@ -93,6 +96,11 @@ class ServiceContainer {
     );
     await runStep('general_manager', generalRepository.load);
 
+    final notificationRepository = NotificationRepository(
+      fileManager: fileManager,
+    );
+    await runStep('notification_repository', notificationRepository.load);
+
     final screenRepository = ScreenRepository(
       fileManager: fileManager,
       screens: [],
@@ -129,9 +137,8 @@ class ServiceContainer {
 
     final notificationManager = await runStep(
       'notification_manager',
-      () async => NotificationManager(
-        fileManager: fileManager,
-        loggingService: loggingService,
+      () async => NotificationServiceImpl(
+        notificationRepository: notificationRepository,
       ),
     );
 
@@ -152,6 +159,7 @@ class ServiceContainer {
       deviceManager: deviceManager,
       ioBrokerManager: ioBrokerManager,
       generalRepository: generalRepository,
+      notificationRepository: notificationRepository,
       connectionService: connectionManager,
       customWidgetRepository: customWidgetRepository,
       screenRepository: screenRepository,
