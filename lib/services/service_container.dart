@@ -139,6 +139,7 @@ class ServiceContainer {
       'notification_manager',
       () async => NotificationServiceImpl(
         notificationRepository: notificationRepository,
+        generalRepository: generalRepository,
       ),
     );
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/services/cubit/manager_cubit.dart';
@@ -30,6 +31,7 @@ void main() async {
   //TODO Fix this bug and run in zoned
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
+  await Firebase.initializeApp();
   await Supabase.initialize(url: SUPABASE_URL, anonKey: SUPABASE_ANON_KEY);
   runApp(const _BootstrapApp());
 }
