@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/repository/notification_repository.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
@@ -26,6 +28,27 @@ class NotificationServiceImpl with WidgetsBindingObserver {
     }
 
     await login(userUuid: userUuid, password: password);
+    if (!await _initFirebaseMessaging()) {
+      LoggingService.instance.error(
+        "NotificationService | Failed to initialize Firebase Messaging. Notifications might not work properly.",
+        null,
+      );
+      updateAuthStatus(NotificationAuthStatus.error);
+    }
+  }
+
+  Future<bool> _initFirebaseMessaging() async {
+    if (Platform.isAndroid) {
+      final notificationSettings = await FirebaseMessaging.instance
+          .requestPermission(provisional: true);
+
+      return notificationSettings.authorizationStatus ==
+              AuthorizationStatus.authorized ||
+          notificationSettings.authorizationStatus ==
+              AuthorizationStatus.provisional;
+    } else {
+      return true;
+    }
   }
 
   bool get backgroundNotificationsEnabled {
@@ -82,7 +105,9 @@ class NotificationServiceImpl with WidgetsBindingObserver {
         password: password,
       );
       await updateAuthStatus(NotificationAuthStatus.loggedInAndEnabled);
-      return NotificationAuthStatus.loggedInAndEnabled;
+      return await _initFirebaseMessaging()
+          ? NotificationAuthStatus.loggedInAndEnabled
+          : NotificationAuthStatus.error;
     } catch (e) {
       await updateAuthStatus(NotificationAuthStatus.error);
       LoggingService.instance.error(

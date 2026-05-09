@@ -92,6 +92,7 @@ dependencies:
   flutter_inappwebview: ^6.1.5
   package_info_plus: ^9.0.0
   supabase_flutter: ^2.12.4
+  firebase_messaging: ^16.2.0
 
  
 
