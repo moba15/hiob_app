@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_home/manager/file_manager.dart';
+import 'package:smart_home/services/notification/custom_notification.dart';
 
 enum NotificationAuthStatus { loggedOut, loggedInAndEnabled, error }
 
@@ -9,10 +10,12 @@ class NotificationRepository {
 
   final String _settingsKey = 'notificationSettings';
   final String _passwordKey = 'notificationSettingsPassword';
+  final String _logKey = 'notificationLog';
 
   bool backgroundNotificationsEnabled = false;
   String userUuid = '';
   NotificationAuthStatus authStatus = NotificationAuthStatus.loggedOut;
+  List<CustomNotification> notificationLog = [];
 
   NotificationRepository({
     required this.fileManager,
@@ -39,7 +42,27 @@ class NotificationRepository {
       orElse: () => NotificationAuthStatus.loggedOut,
     );
 
+    if (await fileManager.containsKey(_logKey)) {
+      final List<dynamic>? log = await fileManager.getJSON(_logKey);
+      if (log != null) {
+        notificationLog =
+            log.map((e) => CustomNotification.fromJSON(e)).toList();
+      }
+    }
+
     await _save();
+  }
+
+  Future<void> saveNotificationLog() async {
+    await fileManager.writeJSON(
+      _logKey,
+      notificationLog.map((e) => e.toJson()).toList(),
+    );
+  }
+
+  Future<void> clearNotificationLog() async {
+    notificationLog.clear();
+    await saveNotificationLog();
   }
 
   Future<void> updateBackgroundNotificationsEnabled(bool enabled) async {
