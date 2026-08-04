@@ -19,15 +19,15 @@ build-android-apk-prod:
 
 build-linux:
 	flutter create --platforms=linux .
-	flutter build linux --release
+	flutter build linux --release $(BUILD_ARGS)
 
 build-windows:
 	flutter create --platforms=windows .
-	flutter build windows --release
+	flutter build windows --release $(BUILD_ARGS)
 
 build-macos:
 	flutter create --platforms=macos .
-	flutter build macos --release
+	flutter build macos --release $(BUILD_ARGS)
 
 pub-get:
 	flutter pub get
