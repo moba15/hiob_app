@@ -1,4 +1,4 @@
-.PHONY: clean build-android-appbundle-dev build-android-appbundle-prod build-android-apk-dev build-android-apk-prod build-linux build-windows
+.PHONY: clean build-android-appbundle-dev build-android-appbundle-prod build-android-apk-dev build-android-apk-prod build-linux build-windows build-macos
 
 BUILD_NUMBER = $(shell git rev-list --count HEAD)
 BUILD_ARGS = --no-tree-shake-icons
@@ -24,6 +24,10 @@ build-linux:
 build-windows:
 	flutter create --platforms=windows .
 	flutter build windows --release
+
+build-macos:
+	flutter create --platforms=macos .
+	flutter build macos --release
 
 pub-get:
 	flutter pub get

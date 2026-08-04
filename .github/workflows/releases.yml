@@ -20,10 +20,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '21.x'
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: 3.44.8
+          cache: true
       - name: Check format
         run: make format-check
   build-appbundle:
@@ -36,10 +37,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '21.x'
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: 3.44.8
+          cache: true
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
@@ -69,10 +71,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '21.x'
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: 3.44.8
+          cache: true
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
@@ -105,10 +108,17 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install build tools
         run: sudo apt-get install -y libgtk-3-0 libblkid1 liblzma5 ninja-build libgtk-3-dev
-      - uses: subosito/flutter-action@v1
+      - name: Setup Flutter (manual for arm64)
+        if: matrix.arch == 'arm64'
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable $HOME/flutter
+          echo "$HOME/flutter/bin" >> $GITHUB_PATH
+      - uses: subosito/flutter-action@v2
+        if: matrix.arch != 'arm64'
         with:
           channel: 'stable'
           flutter-version: 3.44.8
+          cache: true
       - name: Build linux
         run: make build-linux
       - uses: actions/upload-artifact@v4
@@ -127,10 +137,17 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
+      - name: Setup Flutter (manual for arm64)
+        if: matrix.arch == 'arm64'
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable $env:USERPROFILE\flutter
+          echo "$env:USERPROFILE\flutter\bin" >> $env:GITHUB_PATH
+      - uses: subosito/flutter-action@v2
+        if: matrix.arch != 'arm64'
         with:
           channel: 'stable'
           flutter-version: 3.44.8
+          cache: true
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
       - name: Build windows
@@ -140,9 +157,25 @@ jobs:
           name: windows-release-${{ matrix.arch }}
           path: build/windows/${{ matrix.arch }}/runner/Release/
           compression-level: 6
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: 3.44.8
+          cache: true
+      - name: Build macos
+        run: make build-macos
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-release
+          path: build/macos/Build/Products/Release/
+          compression-level: 6
   github-release:
     runs-on: ubuntu-22.04
-    needs: [build-linux, build-windows, build-apk, check-format]
+    needs: [build-linux, build-windows, build-macos, build-apk, check-format]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     permissions:
       contents: write
@@ -158,6 +191,10 @@ jobs:
           path: artifacts/
       - uses: actions/download-artifact@v4
         with:
+          name: macos-release
+          path: artifacts/macos-release/
+      - uses: actions/download-artifact@v4
+        with:
           pattern: release-apks-*
           merge-multiple: true
           path: artifacts/release-apks/
@@ -165,7 +202,7 @@ jobs:
         run: |
           mkdir artifacts/zip
           cd artifacts
-          for d in linux-release-* windows-release-*; do
+          for d in linux-release-* windows-release-* macos-release; do
             if [ -d "$d" ]; then
               zip -r "zip/$d.zip" "$d/"
             fi
