@@ -132,18 +132,10 @@ jobs:
         include:
           - arch: x64
             runner: windows-latest
-          - arch: arm64
-            runner: windows-11-arm
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v1
-      - name: Setup Flutter (manual for arm64)
-        if: matrix.arch == 'arm64'
-        run: |
-          git clone https://github.com/flutter/flutter.git -b stable $env:USERPROFILE\flutter
-          echo "$env:USERPROFILE\flutter\bin" >> $env:GITHUB_PATH
       - uses: subosito/flutter-action@v2
-        if: matrix.arch != 'arm64'
         with:
           channel: 'stable'
           flutter-version: 3.44.8
