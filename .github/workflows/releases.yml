@@ -23,7 +23,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: 3.41.6
+          flutter-version: 3.44.8
       - name: Check format
         run: make format-check
   build-appbundle:
@@ -39,7 +39,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: 3.41.6
+          flutter-version: 3.44.8
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
@@ -72,7 +72,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: 3.41.6
+          flutter-version: 3.44.8
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
@@ -101,7 +101,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: 3.41.6
+          flutter-version: 3.44.8
       - name: Build linux
         run: make build-linux
       - uses: actions/upload-artifact@v4
@@ -116,7 +116,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: 3.41.6
+          flutter-version: 3.44.8
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
       - name: Build windows
