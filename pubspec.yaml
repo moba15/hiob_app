@@ -93,6 +93,7 @@ dependencies:
   supabase_flutter: ^2.12.4
   firebase_messaging: ^16.2.0
   ionicons_plus: ^0.2.5
+  firebase_core: ^4.13.0
 
  
 

@@ -11,7 +11,8 @@ import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/view/main/main_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'app.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -37,6 +38,7 @@ const String SUPABASE_ANON_KEY = String.fromEnvironment(
 void main() async {
   //TODO Fix this bug and run in zoned
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   HttpOverrides.global = MyHttpOverrides();
   await Supabase.initialize(url: SUPABASE_URL, anonKey: SUPABASE_ANON_KEY);
   runApp(const _BootstrapApp());
