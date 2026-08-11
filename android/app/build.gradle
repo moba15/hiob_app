@@ -67,6 +67,11 @@ android {
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
         }
+        deb {
+            dimension "environment"
+            applicationIdSuffix ".deb"
+            versionNameSuffix "-deb"
+        }
     }
 
     signingConfigs {
