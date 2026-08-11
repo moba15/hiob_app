@@ -20,14 +20,19 @@ import 'package:protobuf/well_known_types/google/protobuf/struct.pbenum.dart';
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 export 'package:protobuf/well_known_types/google/protobuf/struct.pbenum.dart';
 
-/// `Struct` represents a structured data value, consisting of fields
-/// which map to dynamically typed values. In some languages, `Struct`
-/// might be supported by a native representation. For example, in
-/// scripting languages like JS a struct is represented as an
-/// object. The details of that representation are described together
-/// with the proto support for the language.
+/// Represents a JSON object.
 ///
-/// The JSON representation for `Struct` is JSON object.
+/// An unordered key-value map, intending to perfectly capture the semantics of a
+/// JSON object. This enables parsing any arbitrary JSON payload as a message
+/// field in ProtoJSON format.
+///
+/// This follows RFC 8259 guidelines for interoperable JSON: notably this type
+/// cannot represent large Int64 values or `NaN`/`Infinity` numbers,
+/// since the JSON format generally does not support those values in its number
+/// type.
+///
+/// If you do not intend to parse arbitrary JSON into your message, a custom
+/// typed message should be preferred instead of using this type.
 class Struct extends $pb.GeneratedMessage with $mixin.StructMixin {
   factory Struct({
     $core.Iterable<$core.MapEntry<$core.String, Value>>? fields,
@@ -94,12 +99,12 @@ enum Value_Kind {
   notSet
 }
 
+/// Represents a JSON value.
+///
 /// `Value` represents a dynamically typed value which can be either
 /// null, a number, a string, a boolean, a recursive struct value, or a
 /// list of values. A producer of value is expected to set one of these
-/// variants. Absence of any variant indicates an error.
-///
-/// The JSON representation for `Value` is JSON value.
+/// variants. Absence of any variant is an invalid state.
 class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   factory Value({
     NullValue? nullValue,
@@ -188,7 +193,7 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$pb.TagNumber(6)
   void clearKind() => $_clearField($_whichOneof(0));
 
-  /// Represents a null value.
+  /// Represents a JSON `null`.
   @$pb.TagNumber(1)
   NullValue get nullValue => $_getN(0);
   @$pb.TagNumber(1)
@@ -198,7 +203,10 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$pb.TagNumber(1)
   void clearNullValue() => $_clearField(1);
 
-  /// Represents a double value.
+  /// Represents a JSON number. Must not be `NaN`, `Infinity` or
+  /// `-Infinity`, since those are not supported in JSON. This also cannot
+  /// represent large Int64 values, since JSON format generally does not
+  /// support them in its number type.
   @$pb.TagNumber(2)
   $core.double get numberValue => $_getN(1);
   @$pb.TagNumber(2)
@@ -208,7 +216,7 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$pb.TagNumber(2)
   void clearNumberValue() => $_clearField(2);
 
-  /// Represents a string value.
+  /// Represents a JSON string.
   @$pb.TagNumber(3)
   $core.String get stringValue => $_getSZ(2);
   @$pb.TagNumber(3)
@@ -218,7 +226,7 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$pb.TagNumber(3)
   void clearStringValue() => $_clearField(3);
 
-  /// Represents a boolean value.
+  /// Represents a JSON boolean (`true` or `false` literal in JSON).
   @$pb.TagNumber(4)
   $core.bool get boolValue => $_getBF(3);
   @$pb.TagNumber(4)
@@ -228,7 +236,7 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$pb.TagNumber(4)
   void clearBoolValue() => $_clearField(4);
 
-  /// Represents a structured value.
+  /// Represents a JSON object.
   @$pb.TagNumber(5)
   Struct get structValue => $_getN(4);
   @$pb.TagNumber(5)
@@ -240,7 +248,7 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$pb.TagNumber(5)
   Struct ensureStructValue() => $_ensure(4);
 
-  /// Represents a repeated `Value`.
+  /// Represents a JSON array.
   @$pb.TagNumber(6)
   ListValue get listValue => $_getN(5);
   @$pb.TagNumber(6)
@@ -253,9 +261,7 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   ListValue ensureListValue() => $_ensure(5);
 }
 
-/// `ListValue` is a wrapper around a repeated field of values.
-///
-/// The JSON representation for `ListValue` is JSON array.
+/// Represents a JSON array.
 class ListValue extends $pb.GeneratedMessage with $mixin.ListValueMixin {
   factory ListValue({
     $core.Iterable<Value>? values,
