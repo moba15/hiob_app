@@ -23,8 +23,16 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-String SUPABASE_URL = 'https://chvazplrvwsvznegekqy.supabase.co';
-String SUPABASE_ANON_KEY = 'sb_publishable_3dW4LAbXNar4lLW8iyOLKQ_fucrNUi-';
+const String SUPABASE_URL = String.fromEnvironment(
+  'SUPABASE_URL',
+  defaultValue: 'http://127.0.0.1:54321', // Local Dev URL
+);
+
+const String SUPABASE_ANON_KEY = String.fromEnvironment(
+  'SUPABASE_ANON_KEY',
+  defaultValue:
+      'sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH', // Local Dev Key
+);
 
 void main() async {
   //TODO Fix this bug and run in zoned
