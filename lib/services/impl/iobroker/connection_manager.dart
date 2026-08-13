@@ -152,7 +152,7 @@ class IoBrokerConnectionService
   }
 
   @override
-  void reconnect({bool delayed = true}) async {
+  void reconnect({bool delayed = true, bool ignoreTries = false}) async {
     if (delayed) {
       await Future.delayed(_retryDelay);
     }
@@ -160,7 +160,7 @@ class IoBrokerConnectionService
     // ignore: dead_code
     Uri url = await getUrl();
     tries++;
-    if (tries > 10) {
+    if (tries > 10 && !ignoreTries) {
       loggingService.debug(
         "ConnectionManager | reconnect | More than 10 tries, not reconnecting",
       );
@@ -169,8 +169,9 @@ class IoBrokerConnectionService
       return;
     }
     changeConnectionStatus(ConnectionStatus.connecting);
+
+    channel?.shutdown();
     loggingService.debug("ConnectionManager | reconnect | reconnecting");
-    await channel?.shutdown();
     channel = ClientChannel(
       url.host,
       port: url.port,

@@ -171,6 +171,7 @@ class IoBrokerSettingsView extends StatelessWidget {
             onPressed: () => {
               context.read<ConnectionServiceInterface>().reconnect(
                 delayed: false,
+                ignoreTries: true,
               ),
             },
             child: const Text("Reconnect"),

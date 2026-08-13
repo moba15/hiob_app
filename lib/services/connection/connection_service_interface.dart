@@ -30,7 +30,7 @@ interface class ConnectionServiceInterface {
     throw UnimplementedError();
   }
 
-  void reconnect({bool delayed = true}) {
+  void reconnect({bool delayed = true, bool ignoreTries = false}) {
     throw UnimplementedError();
   }
 
