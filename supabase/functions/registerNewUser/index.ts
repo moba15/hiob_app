@@ -1,13 +1,15 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import type { RegisterNewUserRequest, RegisterNewUserResponse } from "../_shared/types.ts";
+
 // This function creates a new user in Supabase Auth using a password.
 Deno.serve(async (req) => {
   try {
-    const { password } = await req.json();
+    const { password } = await req.json() as RegisterNewUserRequest;
 
     if (!password) {
       return new Response(
-        JSON.stringify({ error: "Password is required" }),
+        JSON.stringify({ error: "Password is required" } satisfies RegisterNewUserResponse),
         { headers: { "Content-Type": "application/json" }, status: 400 },
       );
     }
@@ -38,7 +40,7 @@ Deno.serve(async (req) => {
           continue; // If the UUID collision occurs, generate a new one and try again
         }
         return new Response(
-          JSON.stringify({ error: error.message }),
+          JSON.stringify({ error: error.message } satisfies RegisterNewUserResponse),
           { headers: { "Content-Type": "application/json" }, status: 400 },
         );
       }
@@ -47,7 +49,7 @@ Deno.serve(async (req) => {
         JSON.stringify({
           message: "User created successfully",
           user: data.user,
-        }),
+        } satisfies RegisterNewUserResponse),
         { headers: { "Content-Type": "application/json" }, status: 201 },
       );
     }
@@ -55,7 +57,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         error: err instanceof Error ? err.message : "Unknown error occurred",
-      }),
+      } satisfies RegisterNewUserResponse),
       { headers: { "Content-Type": "application/json" }, status: 500 },
     );
   }

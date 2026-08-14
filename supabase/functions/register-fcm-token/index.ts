@@ -25,9 +25,16 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { fcm_token, device_name } = await req.json();
+    const { fcm_token, device_name, device_id } = await req.json();
     if (!fcm_token) {
       return new Response(JSON.stringify({ error: "fcm_token is required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (!device_id) {
+      return new Response(JSON.stringify({ error: "device_id is required" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
@@ -41,7 +48,7 @@ Deno.serve(async (req) => {
     const { error: upsertError } = await supabaseAdmin
       .from("fcm_tokens")
       .upsert(
-        { user_id: user.id, fcm_token: fcm_token, device_name: device_name },
+        { user_id: user.id, fcm_token: fcm_token, device_name: device_name, device_id: device_id },
         { onConflict: "user_id, fcm_token" }
       );
 

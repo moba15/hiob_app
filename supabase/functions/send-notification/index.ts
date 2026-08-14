@@ -1,14 +1,17 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { JWT } from "npm:google-auth-library@9";
 
 // This function sends a notification to all registered devices of a user.
 Deno.serve(async (req) => {
   try {
-    const { user_id, title, body, data } = await req.json();
+    const { user_id, device_id, title, body, data } = await req.json();
 
-    if (!user_id || !title || !body) {
+    console.log(`[send-notification] Received request - user_id: ${user_id}, device_id: ${device_id}, title: ${title}`);
+
+    if (!user_id || !title || !body || !device_id) {
       return new Response(
-        JSON.stringify({ error: "user_id, title, and body are required" }),
+        JSON.stringify({ error: "user_id, device_id, title, and body are required" }),
         { headers: { "Content-Type": "application/json" }, status: 400 },
       );
     }
@@ -18,11 +21,12 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     );
 
-    // Get all FCM tokens for the user
+    // Get FCM token for the specific user and device
     const { data: tokens, error: tokenError } = await supabaseAdmin
       .from("fcm_tokens")
       .select("fcm_token, device_name")
-      .eq("user_id", user_id);
+      .eq("user_id", user_id)
+      .eq("device_id", device_id);
 
     if (tokenError) {
       return new Response(JSON.stringify({ error: tokenError.message }), {
@@ -38,42 +42,99 @@ Deno.serve(async (req) => {
       );
     }
 
-    // In a real implementation, you would use the Firebase Admin SDK or the HTTP v1 API.
-    // For Deno, you can use a library like 'google-auth-library' to get an access token
-    // and then call https://fcm.googleapis.com/v1/projects/{project_id}/messages:send
-    
-    // For now, we'll log the attempt. To fully implement this, you need to set up
-    // Google Service Account credentials in your Supabase project.
-    
     console.log(`Sending notification to user ${user_id}: ${title} - ${body}`);
-    console.log(`Tokens: ${tokens.map(t => `${t.fcm_token} (${t.device_name || 'unknown'})`).join(', ')}`);
+    console.log(`Tokens: ${tokens.map((t) => `${t.fcm_token} (${t.device_name || "unknown"})`).join(", ")}`);
 
-    // Placeholder for actual FCM call:
-    /*
-    const accessToken = await getAccessToken(); // Implement this with service account
-    const projectId = Deno.env.get("FIREBASE_PROJECT_ID");
-    
-    for (const token of tokens) {
-      await fetch(`https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: {
-            token: token.fcm_token,
-            notification: { title, body },
-            data: data || {},
-          }
-        })
-      });
+    const serviceAccountKeyStr = Deno.env.get("FIREBASE_SERVICE_ACCOUNT_KEY");
+    if (!serviceAccountKeyStr) {
+      return new Response(
+        JSON.stringify({ error: "Server Configuration Error: FIREBASE_SERVICE_ACCOUNT_KEY is not set" }),
+        { headers: { "Content-Type": "application/json" }, status: 500 },
+      );
     }
-    */
+
+    let serviceAccount;
+    try {
+      serviceAccount = JSON.parse(serviceAccountKeyStr);
+    } catch (e) {
+      return new Response(
+        JSON.stringify({ error: "Server Configuration Error: FIREBASE_SERVICE_ACCOUNT_KEY is not valid JSON" }),
+        { headers: { "Content-Type": "application/json" }, status: 500 },
+      );
+    }
+
+    const projectId = serviceAccount.project_id;
+    if (!projectId) {
+      return new Response(
+        JSON.stringify({ error: "Server Configuration Error: FIREBASE_SERVICE_ACCOUNT_KEY is missing project_id" }),
+        { headers: { "Content-Type": "application/json" }, status: 500 },
+      );
+    }
+
+    const jwtClient = new JWT({
+      email: serviceAccount.client_email,
+      key: serviceAccount.private_key,
+      scopes: ["https://www.googleapis.com/auth/firebase.messaging"],
+    });
+
+    let accessToken;
+    try {
+      const jwtResponse = await jwtClient.getAccessToken();
+      accessToken = jwtResponse.token;
+    } catch (e) {
+      return new Response(
+        JSON.stringify({ error: `Failed to authenticate with Google: ${e instanceof Error ? e.message : String(e)}` }),
+        { headers: { "Content-Type": "application/json" }, status: 500 },
+      );
+    }
+
+    const fcmResponses = await Promise.all(
+      tokens.map(async (token) => {
+        const stringifiedData: Record<string, string> = {};
+        if (data && typeof data === "object") {
+          for (const [key, value] of Object.entries(data)) {
+            stringifiedData[key] = typeof value === "object" ? JSON.stringify(value) : String(value);
+          }
+        }
+
+        const res = await fetch(
+          `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              message: {
+                token: token.fcm_token,
+                notification: { title, body },
+                data: stringifiedData,
+              },
+            }),
+          },
+        );
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error(`Failed to send to ${token.fcm_token}: ${res.status} ${errorText}`);
+          return { success: false, error: errorText, token: token.fcm_token };
+        }
+        return { success: true, token: token.fcm_token };
+      }),
+    );
+
+    const failedCount = fcmResponses.filter((r) => !r.success).length;
 
     return new Response(
-      JSON.stringify({ message: "Notification dispatch initiated", count: tokens.length }),
-      { headers: { "Content-Type": "application/json" }, status: 200 },
+      JSON.stringify({
+        message: "Notification dispatch completed",
+        total: tokens.length,
+        successful: tokens.length - failedCount,
+        failed: failedCount,
+        details: fcmResponses,
+      }),
+      { headers: { "Content-Type": "application/json" }, status: failedCount === tokens.length ? 500 : 200 },
     );
   } catch (err) {
     return new Response(
