@@ -5,13 +5,13 @@ import { JWT } from "npm:google-auth-library@9";
 // This function sends a notification to all registered devices of a user.
 Deno.serve(async (req) => {
   try {
-    const { user_id, device_id, title, body, data } = await req.json();
+    const { user_id, device_id, data } = await req.json();
 
-    console.log(`[send-notification] Received request - user_id: ${user_id}, device_id: ${device_id}, title: ${title}`);
+    console.log(`[send-notification] Received request - user_id: ${user_id}, device_id: ${device_id}`);
 
-    if (!user_id || !title || !body || !device_id) {
+    if (!user_id || !device_id) {
       return new Response(
-        JSON.stringify({ error: "user_id, device_id, title, and body are required" }),
+        JSON.stringify({ error: "user_id and device_id are required" }),
         { headers: { "Content-Type": "application/json" }, status: 400 },
       );
     }
@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`Sending notification to user ${user_id}: ${title} - ${body}`);
+    console.log(`Sending wakeup call to user ${user_id}`);
     console.log(`Tokens: ${tokens.map((t) => `${t.fcm_token} (${t.device_name || "unknown"})`).join(", ")}`);
 
     const serviceAccountKeyStr = Deno.env.get("FIREBASE_SERVICE_ACCOUNT_KEY");
@@ -108,8 +108,10 @@ Deno.serve(async (req) => {
             body: JSON.stringify({
               message: {
                 token: token.fcm_token,
-                notification: { title, body },
-                data: stringifiedData,
+                data: {
+                  ...stringifiedData,
+                  wakeup: "true",
+                },
               },
             }),
           },
