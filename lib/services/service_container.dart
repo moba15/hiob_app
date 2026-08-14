@@ -140,6 +140,7 @@ class ServiceContainer {
       () async => NotificationServiceImpl(
         notificationRepository: notificationRepository,
         generalRepository: generalRepository,
+        connectionService: connectionManager,
       ),
     );
 

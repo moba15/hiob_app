@@ -9,6 +9,7 @@ import 'package:smart_home/dataPackages/data_package.dart';
 import 'package:smart_home/generated/config_sync/config_sync.pbgrpc.dart';
 import 'package:smart_home/generated/login/login.pbgrpc.dart';
 import 'package:smart_home/generated/state/state.pbgrpc.dart';
+import 'package:smart_home/generated/notification/notification.pbgrpc.dart';
 import 'package:smart_home/repository/general_repository.dart';
 import 'package:smart_home/manager/samart_home/iobroker_manager.dart';
 import 'package:smart_home/services/connection/connection_service_interface.dart';
@@ -62,6 +63,7 @@ class IoBrokerConnectionService
   LoginClient? loginClientStub;
   StateUpdateClient? stateUpdateClientStub;
   ConfigSyncClient? configSyncStub;
+  NotificationServiceClient? notificationServiceStub;
 
   final StreamController statusStreamController = StreamController();
   final DeviceServiceInterface deviceManager;
@@ -332,6 +334,10 @@ class IoBrokerConnectionService
       channel!,
       options: CallOptions(metadata: header),
     );
+    notificationServiceStub = NotificationServiceClient(
+      channel!,
+      options: CallOptions(metadata: header),
+    );
   }
 
   @override
@@ -356,6 +362,11 @@ class IoBrokerConnectionService
         throw Exception("ConfigSyncClient is not initialized");
       }
       return configSyncStub as T;
+    } else if (T == NotificationServiceClient) {
+      if (notificationServiceStub == null) {
+        throw Exception("NotificationServiceClient is not initialized");
+      }
+      return notificationServiceStub as T;
     } else {
       throw UnimplementedError("gRPC service of type $T is not implemented");
     }
