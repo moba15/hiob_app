@@ -47,27 +47,27 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAVqNFMFxRM3cNXHiKfWH_68AZbn-ZuK3w',
-    appId: '1:997387779603:android:b17408871a2faae574c9e6',
-    messagingSenderId: '997387779603',
-    projectId: 'hiob-6dd5e',
-    storageBucket: 'hiob-6dd5e.firebasestorage.app',
+    apiKey: 'AIzaSyB0Jiw8hwO9oUliEHHgdWVcWmhyg8UA3tI',
+    appId: '1:951761708298:android:e5083a69c44dac68b1c6f3',
+    messagingSenderId: '951761708298',
+    projectId: 'hiob-60f81',
+    storageBucket: 'hiob-60f81.firebasestorage.app',
   );
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDPAmlv2hnsJR6ruEFbyOP2b98SxJ1mfbE',
-    appId: '1:997387779603:ios:441fbb0497c86c5d74c9e6',
-    messagingSenderId: '997387779603',
-    projectId: 'hiob-6dd5e',
-    storageBucket: 'hiob-6dd5e.firebasestorage.app',
+    apiKey: 'AIzaSyAJQmlBvhwS4m49Q3H4_R4FlIQpudpiLEI',
+    appId: '1:951761708298:ios:7baf5a2193698a98b1c6f3',
+    messagingSenderId: '951761708298',
+    projectId: 'hiob-60f81',
+    storageBucket: 'hiob-60f81.firebasestorage.app',
     iosBundleId: 'de.bachmaier.smartHome',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAjiLV8pjgd8kLwEF_19bjgaT-FnVIkM4w',
-    appId: '1:997387779603:web:cf13e6765992f28774c9e6',
-    messagingSenderId: '997387779603',
-    projectId: 'hiob-6dd5e',
-    authDomain: 'hiob-6dd5e.firebaseapp.com',
-    storageBucket: 'hiob-6dd5e.firebasestorage.app',
+    apiKey: 'AIzaSyACxeN9X8h3AA0icvziq0S81D2zbnl23As',
+    appId: '1:951761708298:web:1318596a0994b3eab1c6f3',
+    messagingSenderId: '951761708298',
+    projectId: 'hiob-60f81',
+    authDomain: 'hiob-60f81.firebaseapp.com',
+    storageBucket: 'hiob-60f81.firebasestorage.app',
   );
 }
