@@ -71,7 +71,11 @@ class NotificationServiceImpl with WidgetsBindingObserver {
     }
   }
 
+  bool _isFirebaseInitialized = false;
+
   Future<bool> _initFirebaseMessaging() async {
+    if (_isFirebaseInitialized) return true;
+    
     try {
       if (Platform.isAndroid || Platform.isIOS) {
         final notificationSettings = await FirebaseMessaging.instance
@@ -95,6 +99,7 @@ class NotificationServiceImpl with WidgetsBindingObserver {
             _registerFCMToken(newToken);
           });
 
+          _isFirebaseInitialized = true;
           return true;
         }
       }
