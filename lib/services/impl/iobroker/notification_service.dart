@@ -115,7 +115,11 @@ class NotificationServiceImpl with WidgetsBindingObserver {
       );
       await supabase.functions.invoke(
         'register-fcm-token',
-        body: {'fcm_token': token, 'device_name': generalRepository.deviceName},
+        body: {
+          'fcm_token': token, 
+          'device_name': generalRepository.deviceName,
+          'device_id': generalRepository.deviceID,
+        },
       );
     } catch (e) {
       LoggingService.instance.error(

@@ -43,10 +43,11 @@ class NotificationRepository {
     );
 
     if (await fileManager.containsKey(_logKey)) {
-      final List<dynamic>? log = await fileManager.getJSON(_logKey);
+      final List<dynamic>? log = await fileManager.getList(_logKey);
       if (log != null) {
-        notificationLog =
-            log.map((e) => CustomNotification.fromJSON(e)).toList();
+        notificationLog = log
+            .map((e) => CustomNotification.fromJSON(e))
+            .toList();
       }
     }
 
@@ -54,7 +55,7 @@ class NotificationRepository {
   }
 
   Future<void> saveNotificationLog() async {
-    await fileManager.writeJSON(
+    await fileManager.writeJSONList(
       _logKey,
       notificationLog.map((e) => e.toJson()).toList(),
     );
