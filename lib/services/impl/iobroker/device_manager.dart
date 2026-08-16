@@ -312,79 +312,75 @@ class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
 
   void updateObjects() async {
     loggingService.debug("DeviceManager | updateStates");
-    AllObjectsResults allObjectsResults = await connectionServiceInterface
-        .getGrpcClient<StateUpdateClient>()
-        .getAllObjects(AllObjectRequest(filterPatterns: []))
-        .onError((error, stackTrace) {
-          loggingService.error(
-            "DeviceManager | updateStates $error",
-            stackTrace,
-          );
-          generalManager.dialogStreamController.sink.add(
-            (p0) => AlertDialog(
-              title: const Text("Error"),
-              content: const Text(
-                "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(p0).pop(),
-                  child: const Text("OK"),
-                ),
-              ],
-            ),
-          );
-          return AllObjectsResults(states: {});
-        });
+    try {
+      final stream = connectionServiceInterface
+          .getGrpcClient<StateUpdateClient>()
+          .getAllObjects(AllObjectRequest(filterPatterns: []));
 
-    Set<String> localId =
-        (await appDatabase
-                .customSelect(
-                  "SELECT id from (${appDatabase.statesTable.actualTableName})",
-                )
-                .get())
-            .map((e) => e.data["id"] as String)
-            .toSet();
-    Set<String> serverIds = allObjectsResults.states
-        .map((e) => e.stateId)
-        .toSet();
-    Set<String> toDelete = localId.difference(serverIds);
-    loggingService.debug(
-      "DeviceManager | updateStates recievced ${allObjectsResults.states.length} states/objects",
-    );
-    List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((e) {
-      return StatesTableCompanion.insert(
-        id: e.stateId,
-        read: e.common.read,
-        write: e.common.write,
-        stateName: Value(e.common.name),
-        stateDesc: Value(e.common.desc),
-      );
-    }).toList();
-    appDatabase
-        .batch((batch) {
-          if (toDelete.isNotEmpty) {
-            batch.deleteWhere(
-              appDatabase.statesTable,
-              (t) => t.id.isIn(toDelete.toList()),
-            );
-          }
+      Set<String> localId =
+          (await appDatabase
+                  .customSelect(
+                    "SELECT id from (${appDatabase.statesTable.actualTableName})",
+                  )
+                  .get())
+              .map((e) => e.data["id"] as String)
+              .toSet();
 
+      Set<String> serverIds = {};
+
+      await for (final allObjectsResults in stream) {
+        serverIds.addAll(allObjectsResults.states.map((e) => e.stateId));
+
+        List<StatesTableCompanion> rowsToInsert = allObjectsResults.states.map((
+          e,
+        ) {
+          return StatesTableCompanion.insert(
+            id: e.stateId,
+            read: e.common.read,
+            write: e.common.write,
+            stateName: Value(e.common.name),
+            stateDesc: Value(e.common.desc),
+          );
+        }).toList();
+
+        await appDatabase.batch((batch) {
           batch.insertAll(appDatabase.statesTable, [
             ...rowsToInsert,
           ], mode: InsertMode.insertOrReplace);
-        })
-        .onError((error, stackTrace) {
-          loggingService.error(
-            "DeviceManager | updateStates batch insert error; $error",
-            stackTrace,
-          );
-        })
-        .then((value) async {
-          loggingService.debug(
-            "DeviceManager | updateStates batch inserted ${await appDatabase.statesTable.count().getSingle()}",
+        });
+      }
+
+      Set<String> toDelete = localId.difference(serverIds);
+
+      if (toDelete.isNotEmpty) {
+        await appDatabase.batch((batch) {
+          batch.deleteWhere(
+            appDatabase.statesTable,
+            (t) => t.id.isIn(toDelete.toList()),
           );
         });
+      }
+
+      loggingService.debug(
+        "DeviceManager | updateStates completed. Total inserted/updated: ${serverIds.length}. Total deleted: ${toDelete.length}",
+      );
+    } catch (error, stackTrace) {
+      loggingService.error("DeviceManager | updateStates $error", stackTrace);
+      generalManager.dialogStreamController.sink.add(
+        (p0) => AlertDialog(
+          title: const Text("Error"),
+          content: const Text(
+            "Could not connect to the backend. Make sure you installed the newest Hiob adapter",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(p0).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override

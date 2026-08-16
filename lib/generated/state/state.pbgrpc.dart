@@ -62,11 +62,13 @@ class StateUpdateClient extends $grpc.Client {
     return $createStreamingCall(_$searchStateStream, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.AllObjectsResults> getAllObjects(
+  $grpc.ResponseStream<$0.AllObjectsResults> getAllObjects(
     $0.AllObjectRequest request, {
     $grpc.CallOptions? options,
   }) {
-    return $createUnaryCall(_$getAllObjects, request, options: options);
+    return $createStreamingCall(
+        _$getAllObjects, $async.Stream.fromIterable([request]),
+        options: options);
   }
 
   // method descriptors
@@ -141,7 +143,7 @@ abstract class StateUpdateServiceBase extends $grpc.Service {
         'GetAllObjects',
         getAllObjects_Pre,
         false,
-        false,
+        true,
         ($core.List<$core.int> value) => $0.AllObjectRequest.fromBuffer(value),
         ($0.AllObjectsResults value) => value.writeToBuffer()));
   }
@@ -174,11 +176,11 @@ abstract class StateUpdateServiceBase extends $grpc.Service {
   $async.Stream<$0.SearchStateResponse> searchStateStream(
       $grpc.ServiceCall call, $async.Stream<$0.SearchStateRequest> request);
 
-  $async.Future<$0.AllObjectsResults> getAllObjects_Pre($grpc.ServiceCall $call,
-      $async.Future<$0.AllObjectRequest> $request) async {
-    return getAllObjects($call, await $request);
+  $async.Stream<$0.AllObjectsResults> getAllObjects_Pre($grpc.ServiceCall $call,
+      $async.Future<$0.AllObjectRequest> $request) async* {
+    yield* getAllObjects($call, await $request);
   }
 
-  $async.Future<$0.AllObjectsResults> getAllObjects(
+  $async.Stream<$0.AllObjectsResults> getAllObjects(
       $grpc.ServiceCall call, $0.AllObjectRequest request);
 }
