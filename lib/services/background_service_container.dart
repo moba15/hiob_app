@@ -132,13 +132,19 @@ class DummyDeviceManager implements DeviceServiceInterface<IobrokerObject> {
   Future<void> fetchAndUpdateDevices() async {}
 
   @override
-  Future<bool> controllDevice<T>({required String deviceId, required T value}) async => false;
+  Future<bool> controllDevice<T>({
+    required String deviceId,
+    required T value,
+  }) async => false;
 
   @override
   T? getDeviceValue<T>({required DeviceInterface device}) => null;
 
   @override
-  Future<List<IobrokerObject>> searchDevices({required String userQuery, Map<String, bool> filters = const {}}) async => [];
+  Future<List<IobrokerObject>> searchDevices({
+    required String userQuery,
+    Map<String, bool> filters = const {},
+  }) async => [];
 
   @override
   void listenToDeviceChanges() {}
