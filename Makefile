@@ -18,7 +18,8 @@ build-android-apk-prod:
 	flutter build apk --flavor prod --build-number=$(BUILD_NUMBER) $(BUILD_ARGS)
 
 build-linux:
-	flutter create --platforms=linux .
+	flutter config --enable-linux-desktop
+	@if [ ! -d linux ]; then flutter create --platforms=linux .; fi
 	flutter build linux --release $(BUILD_ARGS)
 
 build-windows:

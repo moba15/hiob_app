@@ -113,8 +113,13 @@ jobs:
       - name: Setup Flutter (manual for arm64)
         if: matrix.arch == 'arm64'
         run: |
-          git clone https://github.com/flutter/flutter.git -b stable $HOME/flutter
+          git clone https://github.com/flutter/flutter.git $HOME/flutter
+          cd $HOME/flutter
+          git checkout ${{ env.FLUTTER_VERSION }}
           echo "$HOME/flutter/bin" >> $GITHUB_PATH
+          echo "PUB_CACHE=$HOME/.pub-cache" >> $GITHUB_ENV
+          $HOME/flutter/bin/flutter --version
+          $HOME/flutter/bin/flutter precache --linux --linux-arm64
       - uses: subosito/flutter-action@v2
         if: matrix.arch != 'arm64'
         with:
