@@ -51,6 +51,12 @@ jobs:
           fileName: 'keystore/your_signing_keystore.jks'
           fileDir: "/home/runner/work/hiob_app/hiob_app/android/app/"
           encodedString: ${{ secrets.KEYSTORE }}
+      - name: Decode Google Services
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'google-services.json'
+          fileDir: "/home/runner/work/hiob_app/hiob_app/android/app/"
+          encodedString: ${{ secrets.GOOGLE_SERVICES_JSON }}
       - run: flutter pub get
       - name: Build bundle, release
         run: make build-android-appbundle-${{ matrix.flavor }}
@@ -85,6 +91,12 @@ jobs:
           fileName: 'keystore/your_signing_keystore.jks'
           fileDir: "/home/runner/work/hiob_app/hiob_app/android/app/"
           encodedString: ${{ secrets.FAKEKEYSTORE }}
+      - name: Decode Google Services
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'google-services.json'
+          fileDir: "/home/runner/work/hiob_app/hiob_app/android/app/"
+          encodedString: ${{ secrets.GOOGLE_SERVICES_JSON }}
       - run: flutter pub get
       - name: Build apk
         run: make build-android-apk-${{ matrix.flavor }}
