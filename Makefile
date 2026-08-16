@@ -2,6 +2,15 @@
 
 BUILD_NUMBER = $(shell git rev-list --count HEAD)
 BUILD_ARGS = --no-tree-shake-icons
+
+ifneq ($(SUPABASE_URL),)
+BUILD_ARGS += --dart-define=SUPABASE_URL=$(SUPABASE_URL)
+endif
+
+ifneq ($(SUPABASE_ANON_KEY),)
+BUILD_ARGS += --dart-define=SUPABASE_ANON_KEY=$(SUPABASE_ANON_KEY)
+endif
+
 clean:
 	flutter clean
 

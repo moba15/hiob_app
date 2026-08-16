@@ -64,6 +64,8 @@ jobs:
           KEYALIAS: ${{ secrets.KEYALIAS }}
           KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
           STOREPASSWORD: ${{ secrets.STOREPASSWORD }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       - uses: actions/upload-artifact@v4
         with:
           name: release-appbundle-${{ matrix.flavor }}
@@ -104,6 +106,8 @@ jobs:
           KEYALIAS: ${{ secrets.FAKEKEYALIAS }}
           KEYPASSWORD: ${{ secrets.FAKEKEYPASSWORD }}
           STOREPASSWORD: ${{ secrets.FAKESTOREPASSWORD }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       - uses: actions/upload-artifact@v4
         with:
           name: release-apks-${{ matrix.flavor }}
