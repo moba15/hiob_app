@@ -119,8 +119,6 @@ jobs:
         include:
           - arch: x64
             runner: ubuntu-22.04
-          - arch: arm64
-            runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v1
@@ -172,25 +170,9 @@ jobs:
           name: windows-release-${{ matrix.arch }}
           path: build/windows/${{ matrix.arch }}/runner/Release/
           compression-level: 6
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
-      - name: Build macos
-        run: make build-macos
-      - uses: actions/upload-artifact@v4
-        with:
-          name: macos-release
-          path: build/macos/Build/Products/Release/
-          compression-level: 6
   github-release:
     runs-on: ubuntu-22.04
-    needs: [build-linux, build-windows, build-macos, build-apk, check-format]
+    needs: [build-linux, build-windows, build-apk, check-format]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     permissions:
       contents: write
