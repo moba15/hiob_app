@@ -6,6 +6,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/repository/general_repository.dart';
 import 'package:smart_home/repository/notification_repository.dart';
+import 'package:smart_home/services/background_service_container.dart';
 import 'package:smart_home/services/logging/logging_service.dart';
 import 'package:smart_home/services/notification/custom_notification.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,8 +20,47 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `Firebase.initializeApp()` before using other Firebase services.
   debugPrint("Handling a background message: ${message.messageId}");
-  // TODO: In the background isolate, you need to instantiate your ServiceContainer
-  // or a standalone ConnectionManager to call _fetchAndProcessNotifications() via gRPC.
+
+  final service = await BackgroundServiceContaier.create();
+
+  if (service.connectionService.getConnectionStatus() !=
+      ConnectionStatus.loggedIn) {
+    try {
+      await service.connectionService.connectionStatusStream
+          .firstWhere((status) => status == ConnectionStatus.loggedIn)
+          .timeout(
+            const Duration(seconds: 15),
+            onTimeout: () {
+              throw TimeoutException(
+                "Timeout waiting for login in background handler",
+              );
+            },
+          );
+    } catch (e) {
+      debugPrint("Timeout or error waiting for login in background: $e");
+      AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+          channelKey: 'missing_messages_channel',
+          title: "Missing Notifications",
+          body:
+              "You might have missed some notifications because the app couldn't log in to the ioBroker adapter in time. Please open the app to ensure you receive all notifications.",
+          notificationLayout: NotificationLayout.Default,
+        ),
+      );
+    }
+  }
+
+  if (service.connectionService.getConnectionStatus() ==
+      ConnectionStatus.loggedIn) {
+    await NotificationServiceImpl._fetchAndProcessNotifications(
+      connection: service.connectionService,
+      generalRepository: service.generalRepository,
+      notificationRepository: service.notificationRepository,
+    );
+  } else {
+    debugPrint("Failed to login to ioBroker adapter in background handler");
+  }
 }
 
 class NotificationServiceImpl with WidgetsBindingObserver {
@@ -43,7 +83,12 @@ class NotificationServiceImpl with WidgetsBindingObserver {
 
     connectionService.connectionStatusStream.listen((status) {
       if (status == ConnectionStatus.loggedIn) {
-        _fetchAndProcessNotifications();
+        _fetchAndProcessNotifications(
+          connection: connectionService,
+          generalRepository: generalRepository,
+          notificationRepository: notificationRepository,
+          notificationStreamController: _notificationStreamController,
+        );
       }
     });
   }
@@ -53,11 +98,20 @@ class NotificationServiceImpl with WidgetsBindingObserver {
       null, // null for default icon
       [
         NotificationChannel(
-          channelKey: 'basic_channel',
-          channelName: 'Basic notifications',
-          channelDescription: 'Notification channel for basic tests',
+          channelKey: 'notification_channel',
+          channelName: 'Basic Notifications',
+          channelDescription: 'Notifications from the backend service',
           defaultColor: const Color(0xFF9D50BB),
           ledColor: Colors.white,
+          importance: NotificationImportance.Default,
+        ),
+        NotificationChannel(
+          channelKey: 'missing_messages_channel',
+          channelName: 'Missing Messages',
+          channelDescription:
+              'This channel is used to notify the user about missing messages due to login timeout or error',
+          defaultColor: const Color(0xFF9D50BB),
+          ledColor: Colors.red,
           importance: NotificationImportance.High,
         ),
       ],
@@ -88,7 +142,13 @@ class NotificationServiceImpl with WidgetsBindingObserver {
   bool _isFirebaseInitialized = false;
 
   Future<bool> _initFirebaseMessaging() async {
-    if (_isFirebaseInitialized) return true;
+    if (_isFirebaseInitialized) {
+      String? token = await FirebaseMessaging.instance.getToken();
+      if (token != null) {
+        await _registerFCMToken(token);
+      }
+      return true;
+    }
 
     try {
       if (Platform.isAndroid || Platform.isIOS) {
@@ -152,13 +212,22 @@ class NotificationServiceImpl with WidgetsBindingObserver {
     LoggingService.instance.verbose(
       "NotificationService | Handling message: ${message.messageId}",
     );
-    _fetchAndProcessNotifications();
+    _fetchAndProcessNotifications(
+      connection: connectionService,
+      generalRepository: generalRepository,
+      notificationRepository: notificationRepository,
+      notificationStreamController: _notificationStreamController,
+    );
   }
 
-  Future<void> _fetchAndProcessNotifications() async {
+  static Future<void> _fetchAndProcessNotifications({
+    required ConnectionServiceInterface connection,
+    required GeneralRepository generalRepository,
+    NotificationRepository? notificationRepository,
+    StreamController<void>? notificationStreamController,
+  }) async {
     try {
-      final client = connectionService
-          .getGrpcClient<grpc.NotificationServiceClient>();
+      final client = connection.getGrpcClient<grpc.NotificationServiceClient>();
       if (generalRepository.deviceID == null) return;
 
       final response = await client.fetchNotifications(
@@ -174,12 +243,12 @@ class NotificationServiceImpl with WidgetsBindingObserver {
           dateTime: DateTime.fromMillisecondsSinceEpoch(grpcNotif.ts.toInt()),
         );
 
-        notificationRepository.notificationLog.insert(0, notification);
+        notificationRepository?.notificationLog.insert(0, notification);
 
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: grpcNotif.id.hashCode,
-            channelKey: 'basic_channel',
+            channelKey: 'notification_channel',
             title: notification.title,
             body: notification.bodyText,
             notificationLayout: NotificationLayout.Default,
@@ -190,8 +259,8 @@ class NotificationServiceImpl with WidgetsBindingObserver {
       }
 
       if (processedIds.isNotEmpty) {
-        notificationRepository.saveNotificationLog();
-        _notificationStreamController.add(null);
+        notificationRepository?.saveNotificationLog();
+        notificationStreamController?.add(null);
 
         // Acknowledge to backend to clear from queue
         await client.ackNotifications(
@@ -259,20 +328,33 @@ class NotificationServiceImpl with WidgetsBindingObserver {
 
     try {
       LoggingService.instance.verbose(
-        "NotificationService | login attempt for userUuid: $userUuid@hiob-app.local",
+        "NotificationService | login attempt for userUuid: ${userUuid.trim()}@hiob-app.local with password: ${password.trim()}",
       );
       await supabase.auth.signInWithPassword(
-        email: "$userUuid@hiob-app.local",
-        password: password,
+        email: "${userUuid.trim()}@hiob-app.local",
+        password: password.trim(),
       );
+      LoggingService.instance.verbose(
+        "NotificationService | signInWithPassword succeeded",
+      );
+
       await updateAuthStatus(NotificationAuthStatus.loggedInAndEnabled);
-      return await _initFirebaseMessaging()
+      LoggingService.instance.verbose(
+        "NotificationService | updateAuthStatus succeeded",
+      );
+
+      final result = await _initFirebaseMessaging();
+      LoggingService.instance.verbose(
+        "NotificationService | _initFirebaseMessaging finished with result: $result",
+      );
+
+      return result
           ? NotificationAuthStatus.loggedInAndEnabled
           : NotificationAuthStatus.error;
     } catch (e) {
       await updateAuthStatus(NotificationAuthStatus.error);
       LoggingService.instance.error(
-        "NotificationService | login error during login",
+        "NotificationService | login error during login: $e",
         e,
       );
       return NotificationAuthStatus.error;
