@@ -6,7 +6,7 @@ class CustomNotification {
   final String? bodyText;
   final Color? color;
   final int? id;
-  final bool group;
+  final String? groupKey;
   final bool locked;
 
   bool read;
@@ -18,7 +18,7 @@ class CustomNotification {
     this.bodyText,
     this.color,
     this.id,
-    this.group = false,
+    this.groupKey,
     this.locked = false,
     this.dateTime,
     this.read = false,
@@ -44,7 +44,7 @@ class CustomNotification {
       bodyText: content["body"],
       color: color,
       id: id,
-      group: content["group"] ?? false,
+      groupKey: content["groupKey"] ?? false,
       locked: content["locked"] ?? false,
       dateTime: dateTime,
       read: content["read"] ?? false,
@@ -55,7 +55,7 @@ class CustomNotification {
     return {
       "title": title,
       "body": bodyText,
-      "group": group,
+      "groupKey": groupKey,
       "dateTime": dateTime?.millisecondsSinceEpoch,
       "read": read,
     };
@@ -64,12 +64,11 @@ class CustomNotification {
   NotificationContent getNotificationContent({
     required id,
     required String channelKey,
-    required String groupKey,
   }) {
     return NotificationContent(
       id: this.id ?? id,
       channelKey: channelKey,
-      groupKey: group ? groupKey : null,
+      groupKey: groupKey,
       title: title,
       body: bodyText,
       color: color,

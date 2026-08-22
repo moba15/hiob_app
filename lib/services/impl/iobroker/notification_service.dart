@@ -241,17 +241,15 @@ class NotificationServiceImpl with WidgetsBindingObserver {
           title: grpcNotif.title.isNotEmpty ? grpcNotif.title : "Notification",
           bodyText: grpcNotif.body,
           dateTime: DateTime.fromMillisecondsSinceEpoch(grpcNotif.ts.toInt()),
+          groupKey: grpcNotif.group ? grpcNotif.groupKey : null,
         );
 
         notificationRepository?.notificationLog.insert(0, notification);
 
         AwesomeNotifications().createNotification(
-          content: NotificationContent(
-            id: grpcNotif.id.hashCode,
+          content: notification.getNotificationContent(
+            id: grpcNotif.id,
             channelKey: 'notification_channel',
-            title: notification.title,
-            body: notification.bodyText,
-            notificationLayout: NotificationLayout.Default,
           ),
         );
 

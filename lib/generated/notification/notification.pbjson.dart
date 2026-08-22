@@ -37,13 +37,30 @@ const NotificationContent$json = {
     {'1': 'title', '3': 2, '4': 1, '5': 9, '10': 'title'},
     {'1': 'body', '3': 3, '4': 1, '5': 9, '10': 'body'},
     {'1': 'ts', '3': 4, '4': 1, '5': 4, '10': 'ts'},
+    {'1': 'group', '3': 5, '4': 1, '5': 8, '10': 'group'},
+    {'1': 'data', '3': 7, '4': 3, '5': 9, '10': 'data'},
+    {
+      '1': 'groupKey',
+      '3': 8,
+      '4': 1,
+      '5': 9,
+      '9': 0,
+      '10': 'groupKey',
+      '17': true
+    },
+    {'1': 'locked', '3': 9, '4': 1, '5': 8, '10': 'locked'},
+  ],
+  '8': [
+    {'1': '_groupKey'},
   ],
 };
 
 /// Descriptor for `NotificationContent`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List notificationContentDescriptor = $convert.base64Decode(
     'ChNOb3RpZmljYXRpb25Db250ZW50Eg4KAmlkGAEgASgJUgJpZBIUCgV0aXRsZRgCIAEoCVIFdG'
-    'l0bGUSEgoEYm9keRgDIAEoCVIEYm9keRIOCgJ0cxgEIAEoBFICdHM=');
+    'l0bGUSEgoEYm9keRgDIAEoCVIEYm9keRIOCgJ0cxgEIAEoBFICdHMSFAoFZ3JvdXAYBSABKAhS'
+    'BWdyb3VwEhIKBGRhdGEYByADKAlSBGRhdGESHwoIZ3JvdXBLZXkYCCABKAlIAFIIZ3JvdXBLZX'
+    'mIAQESFgoGbG9ja2VkGAkgASgIUgZsb2NrZWRCCwoJX2dyb3VwS2V5');
 
 @$core.Deprecated('Use fetchNotificationsResponseDescriptor instead')
 const FetchNotificationsResponse$json = {
