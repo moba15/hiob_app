@@ -77,12 +77,20 @@ class NotificationContent extends $pb.GeneratedMessage {
     $core.String? title,
     $core.String? body,
     $fixnum.Int64? ts,
+    $core.bool? group,
+    $core.Iterable<$core.String>? data,
+    $core.String? groupKey,
+    $core.bool? locked,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (title != null) result.title = title;
     if (body != null) result.body = body;
     if (ts != null) result.ts = ts;
+    if (group != null) result.group = group;
+    if (data != null) result.data.addAll(data);
+    if (groupKey != null) result.groupKey = groupKey;
+    if (locked != null) result.locked = locked;
     return result;
   }
 
@@ -103,6 +111,10 @@ class NotificationContent extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'body')
     ..a<$fixnum.Int64>(4, _omitFieldNames ? '' : 'ts', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOB(5, _omitFieldNames ? '' : 'group')
+    ..pPS(7, _omitFieldNames ? '' : 'data')
+    ..aOS(8, _omitFieldNames ? '' : 'groupKey', protoName: 'groupKey')
+    ..aOB(9, _omitFieldNames ? '' : 'locked')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -159,6 +171,36 @@ class NotificationContent extends $pb.GeneratedMessage {
   $core.bool hasTs() => $_has(3);
   @$pb.TagNumber(4)
   void clearTs() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.bool get group => $_getBF(4);
+  @$pb.TagNumber(5)
+  set group($core.bool value) => $_setBool(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasGroup() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearGroup() => $_clearField(5);
+
+  @$pb.TagNumber(7)
+  $pb.PbList<$core.String> get data => $_getList(5);
+
+  @$pb.TagNumber(8)
+  $core.String get groupKey => $_getSZ(6);
+  @$pb.TagNumber(8)
+  set groupKey($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(8)
+  $core.bool hasGroupKey() => $_has(6);
+  @$pb.TagNumber(8)
+  void clearGroupKey() => $_clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.bool get locked => $_getBF(7);
+  @$pb.TagNumber(9)
+  set locked($core.bool value) => $_setBool(7, value);
+  @$pb.TagNumber(9)
+  $core.bool hasLocked() => $_has(7);
+  @$pb.TagNumber(9)
+  void clearLocked() => $_clearField(9);
 }
 
 class FetchNotificationsResponse extends $pb.GeneratedMessage {
