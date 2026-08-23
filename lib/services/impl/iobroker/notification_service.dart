@@ -40,7 +40,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       debugPrint("Timeout or error waiting for login in background: $e");
       AwesomeNotifications().createNotification(
         content: NotificationContent(
-          id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+          id: DateTime.now().millisecondsSinceEpoch.remainder(100000) + 1028,
           channelKey: 'missing_messages_channel',
           title: "Missing Notifications",
           body:
@@ -238,10 +238,12 @@ class NotificationServiceImpl with WidgetsBindingObserver {
 
       for (var grpcNotif in response.notifications) {
         final notification = CustomNotification(
+          id: int.tryParse(grpcNotif.id) ?? grpcNotif.id.hashCode,
           title: grpcNotif.title.isNotEmpty ? grpcNotif.title : "Notification",
           bodyText: grpcNotif.body,
           dateTime: DateTime.fromMillisecondsSinceEpoch(grpcNotif.ts.toInt()),
           groupKey: grpcNotif.group ? grpcNotif.groupKey : null,
+          locked: grpcNotif.locked,
         );
 
         notificationRepository?.notificationLog.insert(0, notification);
@@ -373,10 +375,15 @@ class NotificationServiceImpl with WidgetsBindingObserver {
     }
     notificationRepository.saveNotificationLog();
     _notificationStreamController.add(null);
+    AwesomeNotifications().cancelAll();
   }
 
   void removeNotificationLog({required int index}) {
     if (index >= 0 && index < notificationRepository.notificationLog.length) {
+      final notif = notificationRepository.notificationLog[index];
+      if (notif.id != null) {
+        AwesomeNotifications().cancel(notif.id!);
+      }
       notificationRepository.notificationLog.removeAt(index);
       notificationRepository.saveNotificationLog();
       _notificationStreamController.add(null);
@@ -386,5 +393,6 @@ class NotificationServiceImpl with WidgetsBindingObserver {
   void deleteAllNotifications() {
     notificationRepository.clearNotificationLog();
     _notificationStreamController.add(null);
+    AwesomeNotifications().cancelAll();
   }
 }
