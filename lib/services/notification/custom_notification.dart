@@ -44,7 +44,7 @@ class CustomNotification {
       bodyText: content["body"],
       color: color,
       id: id,
-      groupKey: content["groupKey"] ?? false,
+      groupKey: content["groupKey"],
       locked: content["locked"] ?? false,
       dateTime: dateTime,
       read: content["read"] ?? false,
@@ -55,7 +55,10 @@ class CustomNotification {
     return {
       "title": title,
       "body": bodyText,
+      "colorARGB": color?.value.toRadixString(16),
+      "id": id != null ? id! - 500 : null,
       "groupKey": groupKey,
+      "locked": locked,
       "dateTime": dateTime?.millisecondsSinceEpoch,
       "read": read,
     };
@@ -65,8 +68,19 @@ class CustomNotification {
     required id,
     required String channelKey,
   }) {
+    int? parsedId = this.id;
+    if (parsedId == null) {
+      if (id is int) {
+        parsedId = id;
+      } else if (id is String) {
+        parsedId = int.tryParse(id) ?? id.hashCode;
+      } else {
+        parsedId = id?.hashCode;
+      }
+    }
+
     return NotificationContent(
-      id: this.id ?? id,
+      id: parsedId ?? -1,
       channelKey: channelKey,
       groupKey: groupKey,
       title: title,
