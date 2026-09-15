@@ -19,6 +19,15 @@ class AppDatabase extends _$AppDatabase {
         // database files in `getApplicationDocumentsDirectory()`.
         databaseDirectory: getApplicationSupportDirectory,
       ),
+      web: DriftWebOptions(
+        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+        driftWorker: Uri.parse('drift_worker.js'),
+        onResult: (result) {
+          if (result.missingFeatures.isNotEmpty) {
+            print('Using ${result.chosenImplementation} due to unsupported browser features: ${result.missingFeatures}');
+          }
+        },
+      ),
       // If you need web support, see https://drift.simonbinder.eu/platforms/web/
     );
   }
