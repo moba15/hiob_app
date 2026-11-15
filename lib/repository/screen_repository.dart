@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
@@ -206,7 +205,7 @@ class ScreenRepository {
     }
   }
 
-  void templateRemoved(CustomWidgetWrapper template) async {
+  void templateRemoved(CustomWidget template) async {
     for (Screen s in screens) {
       s.widgetTemplates.removeWhere((element) => template == element);
       for (dynamic temp in s.widgetTemplates) {
@@ -219,7 +218,7 @@ class ScreenRepository {
     screenStreamController.add(screens);
   }
 
-  void templateEdited(CustomWidgetWrapper template) {
+  void templateEdited(CustomWidget template) {
     screenStreamController.add(screens);
   }
 

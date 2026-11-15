@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/repository/screen_repository.dart';
@@ -21,7 +20,7 @@ class TemplateAdder extends StatefulWidget {
   final Widget? toggle;
   final bool Function() isSaved;
   final Function(String name) save;
-  final Function(List<CustomWidgetWrapper>) addTemplates;
+  final Function(List<CustomWidget>) addTemplates;
   final IconWrapper? currentIconWrapper;
   final Function(CustomDivisionlineWidget) addLine;
   final Function(CustomGroupWidget) addGroup;
@@ -211,7 +210,7 @@ class _TemplateAdderState extends State<TemplateAdder> {
       builder: (context) => TemplateSelectionAlertDialog(
         screenManager: widget.screenManager,
         selected: widget.templates,
-        onSelect: (List<CustomWidgetWrapper> templates) {
+        onSelect: (List<CustomWidget> templates) {
           setState(() {
             widget.addTemplates(templates);
           });
@@ -344,7 +343,7 @@ class WidgetTemplateListPage extends StatelessWidget {
       },
       itemBuilder: (BuildContext context, int index) {
         if (widgetTemplates.length > index &&
-            widgetTemplates[index] is CustomWidgetWrapper) {
+            widgetTemplates[index] is CustomWidget) {
           return Dismissible(
             background: Container(
               color: Colors.red,

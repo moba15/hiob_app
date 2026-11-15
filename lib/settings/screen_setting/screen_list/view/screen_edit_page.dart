@@ -4,9 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/cutsom_group_widget_tile.dart';
@@ -90,7 +89,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
     );
   }
 
-  void _addTemplates(List<CustomWidgetWrapper> templates) {
+  void _addTemplates(List<CustomWidget> templates) {
     screen.addWidgetTemplates(widget.screenManager, templates);
   }
 
@@ -142,7 +141,7 @@ class _ScreenEditPageState extends State<ScreenEditPage> {
 class _AddTemplateAlertDialog extends StatefulWidget {
   final Screen screen;
   final ScreenRepository screenManager;
-  final Function(List<CustomWidgetWrapper>) onAdd;
+  final Function(List<CustomWidget>) onAdd;
 
   const _AddTemplateAlertDialog({
     required this.screen,
@@ -156,11 +155,11 @@ class _AddTemplateAlertDialog extends StatefulWidget {
 }
 
 class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
-  List<CustomWidgetWrapper> selected = [];
+  List<CustomWidget> selected = [];
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetWrapper> templates = List.of(
+    List<CustomWidget> templates = List.of(
       context.read<CustomWidgetRepository>().templates,
     );
     templates.removeWhere(
@@ -193,7 +192,7 @@ class _AddTemplateAlertDialogState extends State<_AddTemplateAlertDialog> {
                     "${type.name} (${templates.where((element) => element.type?.name == type.name).length})",
                   ),
                   children: [
-                    for (CustomWidgetWrapper t in templates.where(
+                    for (CustomWidget t in templates.where(
                       (element) => element.type?.name == type.name,
                     ))
                       ListTile(
@@ -301,8 +300,7 @@ class ScreenWidgetTemplateListPage extends StatelessWidget {
         );
       },
       itemBuilder: (BuildContext context, int index) {
-        if (templates.length > index &&
-            templates[index] is CustomWidgetTemplate) {
+        if (templates.length > index && templates[index] is CustomWidget) {
           return Dismissible(
             background: Container(
               color: Colors.red,

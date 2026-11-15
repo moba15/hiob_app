@@ -1,11 +1,10 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/services/service_container.dart';
@@ -92,14 +91,13 @@ class Screen {
       "enabled": enabled,
     };
     List<Map<String, dynamic>> widgets = [];
-    //! Old version Support
     for (dynamic w in widgetTemplates) {
       if (w is CustomGroupWidget) {
         widgets.add(w.toJson());
       } else if (w is CustomDivisionlineWidget) {
         widgets.add(w.toJson());
-      } else if (w is CustomWidgetWrapper) {
-        widgets.add({"widget": w.name, "id": w.id});
+      } else if (w is CustomWidget) {
+        widgets.add(w.toJson());
       }
     }
     map["widgetIds"] = widgets;
@@ -109,7 +107,7 @@ class Screen {
 
   void addWidgetTemplate(
     ScreenRepository screenManager,
-    CustomWidgetTemplate customWidgetTemplate,
+    CustomWidget customWidgetTemplate,
   ) async {
     widgetTemplates.add(customWidgetTemplate);
     screenManager.update();
@@ -117,9 +115,9 @@ class Screen {
 
   void addWidgetTemplates(
     ScreenRepository screenManager,
-    List<CustomWidgetWrapper> customWidgetTemplates,
+    List<CustomWidget> customWidgetTemplates,
   ) async {
-    for (CustomWidgetWrapper t in customWidgetTemplates) {
+    for (CustomWidget t in customWidgetTemplates) {
       if (!widgetTemplates.contains(t)) {
         widgetTemplates.add(t);
       }
@@ -146,10 +144,9 @@ class Screen {
   }
 
   void removeWidgetTemplate(ScreenRepository screenManager, dynamic template) {
-    if (template is CustomWidgetTemplate) {
+    if (template is CustomWidget) {
       widgetTemplates.removeWhere(
-        (element) =>
-            (element is CustomWidgetTemplate) && element.id == template.id,
+        (element) => (element is CustomWidget) && element.id == template.id,
       );
     } else {
       widgetTemplates.removeWhere(
@@ -187,7 +184,7 @@ class Screen {
     screenManager.update();
   }
 
-  void onTemplateRemove(CustomWidgetTemplate customWidgetTemplate) {}
+  void onTemplateRemove(CustomWidget customWidgetTemplate) {}
 
   List<String> getDependentDataPoints() {
     List<String> dataPoints = [];

@@ -1,7 +1,7 @@
 part of 'widget_template_list_bloc.dart';
 
 class WidgetTemplateListState {
-  final Map<CustomWidgetWrapper, bool> templates;
+  final Map<CustomWidget, bool> templates;
   final ListStatus status;
   final bool toggleSelection;
 

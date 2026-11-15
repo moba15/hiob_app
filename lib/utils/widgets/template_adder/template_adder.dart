@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
@@ -9,8 +9,8 @@ import 'package:smart_home/utils/app_locallization_shortcut.dart';
 class TemplateSelectionAlertDialog extends StatefulWidget {
   final ScreenRepository screenManager;
   final List<dynamic> selected;
-  final Function(List<CustomWidgetWrapper>) onSelect;
-  final bool Function(CustomWidgetWrapper)? filter;
+  final Function(List<CustomWidget>) onSelect;
+  final bool Function(CustomWidget)? filter;
   final String selectButton;
 
   const TemplateSelectionAlertDialog({
@@ -29,11 +29,11 @@ class TemplateSelectionAlertDialog extends StatefulWidget {
 
 class _TemplateSelectionAlertDialogState
     extends State<TemplateSelectionAlertDialog> {
-  List<CustomWidgetWrapper> selected = [];
+  List<CustomWidget> selected = [];
 
   @override
   Widget build(BuildContext context) {
-    List<CustomWidgetWrapper> templates = List.of(
+    List<CustomWidget> templates = List.of(
       context.read<CustomWidgetRepository>().templates,
     );
 
@@ -95,7 +95,7 @@ class _TemplateSelectionAlertDialogState
                     "${type.name} (${templates.where((element) => element.type?.name == type.name).length})",
                   ),
                   children: [
-                    for (CustomWidgetWrapper t in templates.where(
+                    for (CustomWidget t in templates.where(
                       (element) =>
                           element.type?.name == type.name &&
                           (widget.filter == null || widget.filter!(element)),

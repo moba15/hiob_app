@@ -4,7 +4,6 @@ import 'dart:developer' as developer;
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
@@ -14,7 +13,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slid
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/repository/screen_repository.dart';
@@ -24,8 +22,8 @@ class CustomWidgetRepository {
   String templateKey = "templateKey";
   bool loaded = false;
   FileManager fileManager;
-  final List<CustomWidgetWrapper> templates = [];
-  final StreamController<List<CustomWidgetWrapper>> templatesStreamController =
+  final List<CustomWidget> templates = [];
+  final StreamController<List<CustomWidget>> templatesStreamController =
       StreamController.broadcast();
   final ScreenRepository screenManager;
 
@@ -55,8 +53,8 @@ class CustomWidgetRepository {
     templatesStreamController.add(templates);
   }
 
-  List<CustomWidgetWrapper> loadTemplate(List<dynamic> listRaw) {
-    List<CustomWidgetWrapper> templates = [];
+  List<CustomWidget> loadTemplate(List<dynamic> listRaw) {
+    List<CustomWidget> templates = [];
     for (Map<String, dynamic> templateRaw in listRaw) {
       //TODO
 
@@ -78,7 +76,7 @@ class CustomWidgetRepository {
         );
         continue;
       }
-
+      //TODO maybe removeable
       if (typeRaw == "graph" ||
           typeRaw == "colorPallete" ||
           typeRaw == "mediaPlayer" ||
@@ -172,11 +170,9 @@ class CustomWidgetRepository {
     });
   }
 
-  List<CustomWidgetWrapper> getTemplatesByType(
-    CustomWidgetTypeDeprecated type,
-  ) {
-    List<CustomWidgetWrapper> tmps = [];
-    for (CustomWidgetWrapper t in templates) {
+  List<CustomWidget> getTemplatesByType(CustomWidgetTypeDeprecated type) {
+    List<CustomWidget> tmps = [];
+    for (CustomWidget t in templates) {
       if (t.type?.name == type.name) {
         tmps.add(t);
       }
@@ -184,7 +180,7 @@ class CustomWidgetRepository {
     return tmps;
   }
 
-  Future<void> save({required CustomWidgetWrapper template}) async {
+  Future<void> save({required CustomWidget template}) async {
     //TODO Random generator
     templates.add(template);
     sort();
@@ -195,7 +191,7 @@ class CustomWidgetRepository {
     }
   }
 
-  Future<bool> edit({required CustomWidgetWrapper template}) async {
+  Future<bool> edit({required CustomWidget template}) async {
     templates.removeWhere((element) => element.id == template.id);
     templates.add(template);
     sort();
@@ -211,7 +207,7 @@ class CustomWidgetRepository {
     return true;
   }
 
-  Future<void> removeTemplate(CustomWidgetWrapper template) async {
+  Future<void> removeTemplate(CustomWidget template) async {
     templates.remove(template);
     templatesStreamController.add(templates);
     if (!await fileManager.writeJSONList(templateKey, templates)) {
@@ -222,40 +218,15 @@ class CustomWidgetRepository {
     }
   }
 
-  void removeTemplates(List<CustomWidgetWrapper> templatesToRemove) {
+  void removeTemplates(List<CustomWidget> templatesToRemove) {
     templates.removeWhere((element) => templatesToRemove.contains(element));
-    for (CustomWidgetWrapper c in templatesToRemove) {
+    for (CustomWidget c in templatesToRemove) {
       screenManager.templateRemoved(c);
     }
     fileManager.writeJSONList(templateKey, templates);
   }
 
-  void copyTemplates(List<CustomWidgetWrapper> templatesToCopy) {
-    List<CustomWidgetTemplate> renamedTemplatesDepc = templatesToCopy
-        .whereType<CustomWidgetTemplate>()
-        .map((e) => e)
-        .map(
-          (CustomWidgetTemplate e) => CustomWidgetTemplate(
-            id: ServiceContainer.randomString(12),
-            name: "${e.name}_copy2",
-            customWidget: e.customWidget.clone()..name = ("${e.name}_copy"),
-          ),
-        )
-        .toList();
-    templates.addAll(renamedTemplatesDepc);
-
-    List<CustomWidget> renamedTemplates = templatesToCopy
-        .whereType<CustomWidget>()
-        .map((e) => e.clone())
-        .toList();
-    for (var element in renamedTemplates) {
-      element.name = "${element.name}_copy3";
-      element.id = ServiceContainer.randomString(12);
-    }
-
-    templates.addAll(renamedTemplates);
-    sort();
-
-    fileManager.writeJSONList(templateKey, templates);
+  void copyTemplates(List<CustomWidget> templatesToCopy) {
+    throw UnimplementedError("Not implemented yet");
   }
 }

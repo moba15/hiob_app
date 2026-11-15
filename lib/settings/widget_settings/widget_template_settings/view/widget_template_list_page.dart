@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/bloc/widget_template_list_bloc.dart';
@@ -117,7 +117,7 @@ class _WidgetTemplateListView extends StatelessWidget {
 }
 
 class TemplatesView extends StatefulWidget {
-  final Map<CustomWidgetWrapper, bool> templates;
+  final Map<CustomWidget, bool> templates;
 
   const TemplatesView({super.key, required this.templates});
 
@@ -153,7 +153,7 @@ class _TemplatesViewState extends State<TemplatesView> {
     List<Widget> templates = [];
     for (CustomWidgetTypeDeprecated type in CustomWidgetTypeDeprecated.values) {
       List<Dismissible> children = [];
-      for (CustomWidgetWrapper t in widget.templates.keys.where(
+      for (CustomWidget t in widget.templates.keys.where(
         (element) => element.type?.name == type.name,
       )) {
         children.add(
@@ -200,19 +200,19 @@ class _TemplatesViewState extends State<TemplatesView> {
     return templates;
   }
 
-  void _delete(CustomWidgetWrapper template) {
+  void _delete(CustomWidget template) {
     context.read<WidgetTemplateListBloc>().customWidgetManager.removeTemplate(
       template,
     );
   }
 
-  void toogleSelect(CustomWidgetWrapper t, WidgetTemplateListBloc bloc) {
+  void toogleSelect(CustomWidget t, WidgetTemplateListBloc bloc) {
     if (!selectionMode) {
       bloc.add(const WidgetTemplateListToggleSelectionEvent(selection: true));
     }
     bloc.add(
       WidgetTemplateToggleSelectEvent(
-        template: t,
+        widget: t,
         selection: !(bloc.state.templates[t] ?? false),
       ),
     );

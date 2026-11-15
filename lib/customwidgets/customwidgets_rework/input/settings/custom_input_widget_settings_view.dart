@@ -33,9 +33,6 @@ class CustomInputWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   }
 
   @override
-  CustomWidget get customWidget => customInputWidget;
-
-  @override
   final bool deprecated = false;
 }
 

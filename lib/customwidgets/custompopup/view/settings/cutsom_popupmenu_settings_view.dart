@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
@@ -112,16 +111,13 @@ class _CustomPopupmenuSettingsViewState
           return TemplateAddPage(
             customWidgetManager: customWidgetManager,
             onSave: _onWidgetSave,
-            filter: (CustomWidgetTypeDeprecated p0) {
-              return !p0.settingWidget.deprecated;
-            },
           );
         },
       ),
     );
   }
 
-  _onWidgetSave(CustomWidgetWrapper p1) {
+  _onWidgetSave(CustomWidget p1) {
     if (p1 is CustomWidget) {
       setState(() {
         widget.customPopupmenu.customWidgets.add(p1);

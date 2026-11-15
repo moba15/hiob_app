@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/utils/list_status.dart';
 
@@ -116,7 +116,7 @@ class WidgetTemplateListBloc
     await customWidgetManager.loadTemplates();
   }
 
-  void update(List<CustomWidgetWrapper> templates) {
+  void update(List<CustomWidget> templates) {
     add(WidgetTemplateLoadedEvent(templates: templates));
   }
 }

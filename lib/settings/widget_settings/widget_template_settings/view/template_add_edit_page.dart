@@ -9,9 +9,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/custompopup/view/settings/cutsom_popupmenu_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
@@ -19,8 +17,8 @@ import '../../../../repository/custom_widget_repository.dart';
 
 class TemplateAddPage extends StatefulWidget {
   final CustomWidgetRepository customWidgetManager;
-  final CustomWidgetWrapper? preSelectedTemplate;
-  final Function(CustomWidgetWrapper)? onSave;
+  final CustomWidget? preSelectedTemplate;
+  final Function(CustomWidget)? onSave;
   final bool Function(CustomWidgetTypeDeprecated)? filter;
   const TemplateAddPage({
     super.key,
@@ -54,9 +52,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
     _customWidgetSettingWidget =
         widget.preSelectedTemplate?.settingWidget ??
         _selectedType!.settingWidget;
-    _oldJSON = jsonEncode(
-      _customWidgetSettingWidget!.customWidget.toJson(),
-    );
+    _oldJSON = jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
 
     customWidgetBlocCubit = CustomWidgetBlocCubit();
     super.initState();
@@ -131,8 +127,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                   in CustomWidgetTypeDeprecated.values.where(
                     (value) =>
                         (value != CustomWidgetTypeDeprecated.group &&
-                            (widget.filter == null ||
-                                widget.filter!(value))) ||
+                            (widget.filter == null || widget.filter!(value))) ||
                         value == _selectedType,
                   ))
                 DropdownMenuItem(value: c, child: Text(c.name)),
@@ -211,7 +206,6 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
 
   Widget _preViewWidget() {
     if (_customWidgetSettingWidget != null &&
-        !_customWidgetSettingWidget!.deprecated &&
         _customWidgetSettingWidget!.validate()) {
       return _customWidgetSettingWidget!.customWidget.widget;
     }
@@ -296,12 +290,10 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
   @override
   void initState() {
     hasPopupmenu =
-        !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
         widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
         (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
             .isAbleToPopupMenu;
     hasCustomTheme =
-        !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
         widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
         (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
             .hasCustomTheme;
@@ -323,13 +315,11 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
   @override
   void didUpdateWidget(covariant _TemplateTabBarView oldWidget) {
     hasPopupmenu =
-        !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
         widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
         (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
             .isAbleToPopupMenu;
 
     hasCustomTheme =
-        !(widget.customWidgetSettingWidget?.deprecated ?? true) &&
         widget.customWidgetSettingWidget?.customWidget is CustomWidget &&
         (widget.customWidgetSettingWidget?.customWidget as CustomWidget)
             .hasCustomTheme;

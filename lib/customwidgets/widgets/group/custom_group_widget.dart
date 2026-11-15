@@ -1,13 +1,12 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/settings/custom_group_widget_settings.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
@@ -23,13 +22,13 @@ class CustomGroupWidget extends CustomWidget {
     this.isExtended = true,
     this.iconWrapper,
   }) : super(
-          type: CustomWidgetTypeDeprecated.group,
-          id: id ?? ServiceContainer.randomString(12),
-          isAbleToPopupMenu: false,
-          hasCustomTheme: false,
-          customPopupmenu: null,
-          customTheme: null,
-        );
+         type: CustomWidgetTypeDeprecated.group,
+         id: id ?? ServiceContainer.randomString(12),
+         isAbleToPopupMenu: false,
+         hasCustomTheme: false,
+         customPopupmenu: null,
+         customTheme: null,
+       );
 
   @override
   CustomWidgetSettingWidget get settingWidget =>
@@ -44,8 +43,8 @@ class CustomGroupWidget extends CustomWidget {
     for (dynamic t in templates) {
       if (t is CustomWidget) {
         dps.addAll(t.dependentDataPoints);
-      } else if (t is CustomWidgetTemplate) {
-        dps.addAll(t.customWidget.dependentDataPoints);
+      } else {
+        throw InvalidDataException("This should never happen!");
       }
     }
     return dps;
@@ -65,15 +64,15 @@ class CustomGroupWidget extends CustomWidget {
         widgets.add(w.toJson());
       } else if (w is CustomDivisionlineWidget) {
         widgets.add(w.toJson());
-      } else if (w is CustomWidgetWrapper) {
-        widgets.add({"widget": w.name, "id": w.id});
+      } else {
+        throw InvalidDataException("Should never happen");
       }
     }
     map["templates"] = widgets;
     return map;
   }
 
-  void addTemplate(CustomWidgetTemplate template) {
+  void addTemplate(CustomWidget template) {
     templates.add(template);
   }
 
@@ -89,7 +88,7 @@ class CustomGroupWidget extends CustomWidget {
 
   factory CustomGroupWidget.fromJSON(
     Map<String, dynamic> json,
-    List<CustomWidgetWrapper> allTemplates,
+    List<CustomWidget> allTemplates,
   ) {
     List<dynamic> templates = [];
     if (json["templates"] != null) {
@@ -149,8 +148,8 @@ class CustomGroupWidget extends CustomWidget {
     );
   }
 
-  void addTemplates(List<CustomWidgetWrapper> templates) {
-    for (CustomWidgetWrapper t in templates) {
+  void addTemplates(List<CustomWidget> templates) {
+    for (CustomWidget t in templates) {
       if (!this.templates.contains(t)) {
         this.templates.add(t);
       }
@@ -175,5 +174,10 @@ class CustomGroupWidget extends CustomWidget {
 
   void removeTemplateAtIndex(int index) {
     templates.removeAt(index);
+  }
+
+  @override
+  set name(String n) {
+    //TODO ? what is that?
   }
 }

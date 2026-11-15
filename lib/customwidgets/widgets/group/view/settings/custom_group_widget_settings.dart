@@ -6,10 +6,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
@@ -46,100 +44,6 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
       currentIconWrapper: clone.iconWrapper,
       iconDataChange: _iconChange,
     );
-    // return WillPopScope(
-    //   child: Scaffold(
-    //     appBar: AppBar(
-    //       title: const Text("Edit Group"),
-    //       actions: [
-    //         IconButton(
-    //             onPressed: () {
-    //               if (!_saved(clone)) {
-    //                 showDialog(
-    //                     context: context,
-    //                     builder: (_) => _SaveDialog(
-    //                           onSave: () => {
-    //                             save(context, clone),
-    //                             Navigator.popUntil(
-    //                                 context, (route) => route.isFirst)
-    //                           },
-    //                           cancel: () => Navigator.popUntil(
-    //                               context, (route) => route.isFirst),
-    //                         ));
-    //                 return;
-    //               }
-    //               Navigator.popUntil(context, (route) => route.isFirst);
-    //             },
-    //             icon: const Icon(Icons.home)),
-    //       ],
-    //     ),
-    //     floatingActionButton: Stack(
-    //       children: [
-    //         Padding(
-    //           padding: const EdgeInsets.only(left: 31),
-    //           child: Align(
-    //             alignment: Alignment.bottomLeft,
-    //             child: FloatingActionButton(
-    //               onPressed: () {
-    //                 showDialog(
-    //                     context: context,
-    //                     builder: (context) => AddTemplateAlertDialog(
-    //                           customGroupWidget: clone,
-    //                           onAdded: (template) =>
-    //                               {_addedController.add(template)},
-    //                           screenManager: Manager.instance.screenManager,
-    //                         ));
-    //               },
-    //               child: const Icon(Icons.add),
-    //             ),
-    //           ),
-    //         ),
-    //         Container(
-    //           padding: const EdgeInsets.only(left: 90),
-    //           alignment: Alignment.bottomLeft,
-    //           child: FloatingActionButton(
-    //             heroTag: "d",
-    //             onPressed: () {
-    //               showDialog(
-    //                   context: context,
-    //                   builder: (context) => _AddDivisionLineTemplate(
-    //                         onAdd: (widget) => {
-    //                           {_addedController.add(widget)},
-    //                         },
-    //                       ));
-    //             },
-    //             child: const Icon(Icons.splitscreen),
-    //           ),
-    //         ),
-    //         Align(
-    //           alignment: Alignment.bottomRight,
-    //           child: FloatingActionButton(
-    //             heroTag: "tag",
-    //             onPressed: () => {
-    //               if (customGroupWidgetSettings.validate())
-    //                 {save(context, clone), Navigator.pop(context)}
-    //             },
-    //             child: const Icon(Icons.save),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     body: Container(
-    //       margin: const EdgeInsets.only(left: 20, right: 20),
-    //       child: customGroupWidgetSettings,
-    //     ),
-    //   ),
-    //   onWillPop: () async {
-    //     if (!_saved(clone)) {
-    //       showDialog(
-    //           context: context,
-    //           builder: (_) => _SaveDialog(
-    //               onSave: () => {save(context, clone), Navigator.pop(context)},
-    //               cancel: () => Navigator.pop(context)));
-    //       return false;
-    //     }
-    //     return true;
-    //   },
-    // );
   }
 
   Widget toggleWidget(BuildContext context) {
@@ -174,7 +78,7 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
     screenManager.update();
   }
 
-  void _addTemplates(List<CustomWidgetWrapper> templates) {
+  void _addTemplates(List<CustomWidget> templates) {
     clone.addTemplates(templates);
   }
 
@@ -235,9 +139,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
       setState(() {
         if (event is List<dynamic>) {
           List<dynamic> e = event;
-          widget.customGroupWidget.addTemplates(
-            List<CustomWidgetTemplate>.from(e),
-          );
+          widget.customGroupWidget.addTemplates(List<CustomWidget>.from(e));
         } else {
           // widget.customGroupWidget.addLine(event);
         }
@@ -304,8 +206,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
             },
             itemCount: widget.customGroupWidget.templates.length,
             itemBuilder: (BuildContext context, int index) {
-              if (widget.customGroupWidget.templates[index]
-                  is CustomWidgetTemplate) {
+              if (widget.customGroupWidget.templates[index] is CustomWidget) {
                 return Dismissible(
                   onDismissed: (d) {
                     setState(() {
@@ -384,7 +285,7 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
 class AddTemplateAlertDialog extends StatefulWidget {
   final CustomGroupWidget customGroupWidget;
   final ScreenRepository screenManager;
-  final Function(List<CustomWidgetWrapper>) onAdded;
+  final Function(List<CustomWidget>) onAdded;
   const AddTemplateAlertDialog({
     super.key,
     required this.customGroupWidget,
@@ -397,14 +298,12 @@ class AddTemplateAlertDialog extends StatefulWidget {
 }
 
 class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
-  List<CustomWidgetWrapper> selected = [];
+  List<CustomWidget> selected = [];
 
   @override
   Widget build(BuildContext context) {
     final customWidgetManager = context.read<CustomWidgetRepository>();
-    List<CustomWidgetWrapper> templates = List.of(
-      customWidgetManager.templates,
-    );
+    List<CustomWidget> templates = List.of(customWidgetManager.templates);
     templates.removeWhere(
       (element) => widget.customGroupWidget.templates.contains(element),
     );
@@ -428,7 +327,7 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
                     "${type.name} (${templates.where((element) => element.type?.name == type.name).length})",
                   ),
                   children: [
-                    for (CustomWidgetWrapper t in templates.where(
+                    for (CustomWidget t in templates.where(
                       (element) => element.type?.name == type.name,
                     ))
                       ListTile(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/common_impl/label/widget_label_theme.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_widget.dart' as old;
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
