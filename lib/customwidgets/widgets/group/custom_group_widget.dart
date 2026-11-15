@@ -1,35 +1,60 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget_rework_wrapper.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
-import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
+import 'package:smart_home/customwidgets/widgets/group/view/settings/custom_group_widget_settings.dart';
+import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/icon_data_wrapper.dart';
 
-class CustomGroupWidget extends CustomWidgetDeprecated {
+class CustomGroupWidget extends CustomWidget {
   List<dynamic> templates;
   bool isExtended;
   IconWrapper? iconWrapper;
 
   CustomGroupWidget({
+    String? id,
     required super.name,
     this.templates = const [],
     this.isExtended = true,
     this.iconWrapper,
-  }) : super(type: CustomWidgetTypeDeprecated.group, settings: {});
+  }) : super(
+          type: CustomWidgetTypeDeprecated.group,
+          id: id ?? ServiceContainer.randomString(12),
+          isAbleToPopupMenu: false,
+          hasCustomTheme: false,
+          customPopupmenu: null,
+          customTheme: null,
+        );
 
   @override
-  CustomWidgetSettingWidget get settingWidget => throw UnimplementedError();
+  CustomWidgetSettingWidget get settingWidget =>
+      CustomGroupWidgetSettings(customGroupWidget: this);
+
+  @override
+  Widget get widget => CustomGroupWidgetView(customGroupWidget: this);
+
+  @override
+  List<String> get dependentDataPoints {
+    List<String> dps = [];
+    for (dynamic t in templates) {
+      if (t is CustomWidget) {
+        dps.addAll(t.dependentDataPoints);
+      } else if (t is CustomWidgetTemplate) {
+        dps.addAll(t.customWidget.dependentDataPoints);
+      }
+    }
+    return dps;
+  }
 
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
+      "id": id,
       "name": name,
       "isExtended": isExtended,
       "iconWrapper": iconWrapper,
@@ -105,6 +130,7 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
       iconWrapper = IconWrapper.fromJSON(json["iconWrapper"]);
     }
     return CustomGroupWidget(
+      id: json["id"] ?? ServiceContainer.randomString(12),
       name: json["name"],
       templates: templates,
       isExtended: json["isExtended"] ?? true,
@@ -115,6 +141,7 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
   @override
   CustomGroupWidget clone() {
     return CustomGroupWidget(
+      id: ServiceContainer.randomString(12),
       name: name,
       templates: List.from(templates),
       isExtended: isExtended,
@@ -146,16 +173,7 @@ class CustomGroupWidget extends CustomWidgetDeprecated {
     }
   }
 
-  @override
-  Widget get widget => CustomGroupWidgetView(customGroupWidget: this);
-
   void removeTemplateAtIndex(int index) {
     templates.removeAt(index);
-  }
-
-  @override
-  CustomWidget migrate({required String id, required String name}) {
-    // TODO: implement migrate
-    throw UnimplementedError();
   }
 }

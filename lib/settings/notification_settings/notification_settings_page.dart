@@ -78,6 +78,8 @@ class __NotificationSettingsBodyState extends State<_NotificationSettingsBody> {
         return "Logged out";
       case NotificationAuthStatus.loggedInAndEnabled:
         return "Logged in and enabled";
+      case NotificationAuthStatus.nonAndroid:
+        return "Currently only supported on Android";
       case NotificationAuthStatus.error:
         return "Error";
     }
@@ -91,6 +93,8 @@ class __NotificationSettingsBodyState extends State<_NotificationSettingsBody> {
         return const Color.fromARGB(255, 200, 230, 201);
       case NotificationAuthStatus.error:
         return const Color.fromARGB(255, 255, 205, 210);
+      case NotificationAuthStatus.nonAndroid:
+        return const Color.fromARGB(255, 200, 230, 201);
     }
   }
 
@@ -102,6 +106,8 @@ class __NotificationSettingsBodyState extends State<_NotificationSettingsBody> {
         return const Color.fromARGB(255, 27, 94, 32);
       case NotificationAuthStatus.error:
         return const Color.fromARGB(255, 183, 28, 28);
+      case NotificationAuthStatus.nonAndroid:
+        return const Color.fromARGB(255, 27, 94, 32);
     }
   }
 
@@ -113,6 +119,8 @@ class __NotificationSettingsBodyState extends State<_NotificationSettingsBody> {
         return Icons.check_circle;
       case NotificationAuthStatus.error:
         return Icons.error;
+      case NotificationAuthStatus.nonAndroid:
+        return Icons.phone_android;
     }
   }
 

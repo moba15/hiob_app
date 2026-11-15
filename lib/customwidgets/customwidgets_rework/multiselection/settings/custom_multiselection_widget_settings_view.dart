@@ -25,13 +25,6 @@ class CustomMultiselectionWidgetSettingsView
   CustomWidget get customWidget => customMultiselectionWidget;
 
   @override
-  CustomWidgetDeprecated get customWidgetDeprecated =>
-      throw UnimplementedError();
-
-  @override
-  bool get deprecated => false;
-
-  @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
 

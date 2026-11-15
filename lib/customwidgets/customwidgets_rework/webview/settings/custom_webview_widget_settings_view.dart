@@ -24,13 +24,6 @@ class CustomWebViewWidgetSettingView extends CustomWidgetSettingStatefulWidget {
   CustomWidget get customWidget => customWebViewWidget;
 
   @override
-  CustomWidgetDeprecated get customWidgetDeprecated =>
-      throw UnimplementedError();
-
-  @override
-  bool get deprecated => false;
-
-  @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
 

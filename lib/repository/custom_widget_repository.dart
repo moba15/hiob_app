@@ -15,7 +15,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_swit
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/repository/screen_repository.dart';
@@ -68,32 +67,43 @@ class CustomWidgetRepository {
         continue;
       }
       String typeRaw = widgetRaw["type"];
-      CustomWidgetTypeDeprecated type = CustomWidgetTypeDeprecated.values
-          .firstWhere(
-            (element) =>
-                element.toString() == typeRaw ||
-                element.toString().replaceAll("Deprecated", "") == typeRaw ||
-                element.toString().replaceAll(
-                      "CustomWidgetTypeDeprecated.",
-                      "",
-                    ) ==
-                    typeRaw,
-          );
-      //TODO refactor
-      dynamic customWidget;
+
+      if (typeRaw == "line") {
+        templates.add(
+          CustomDivisionlineWidget(
+            id: id,
+            name: name,
+            thickness: widgetRaw["thickness"] ?? 3,
+          ),
+        );
+        continue;
+      }
+
+      if (typeRaw == "graph" ||
+          typeRaw == "colorPallete" ||
+          typeRaw == "mediaPlayer" ||
+          typeRaw == "alertDialog" ||
+          typeRaw == "group") {
+        continue;
+      }
+
+      CustomWidgetTypeDeprecated? type;
+      for (var element in CustomWidgetTypeDeprecated.values) {
+        if (element.name == typeRaw ||
+            element.toString() == typeRaw ||
+            element.toString().replaceAll("CustomWidgetTypeDeprecated.", "") ==
+                typeRaw) {
+          type = element;
+          break;
+        }
+      }
+      if (type == null) {
+        continue;
+      }
+
+      CustomWidget? customWidget;
       switch (type) {
-        case CustomWidgetTypeDeprecated.graph:
-        case CustomWidgetTypeDeprecated.colorPallete:
-        case CustomWidgetTypeDeprecated.mediaPlayer:
-          customWidget = null;
-          break;
-        case CustomWidgetTypeDeprecated.line:
-          customWidget = CustomDivisionLineWidgetDeprecated.fromJson(
-            widgetRaw,
-          ).migrate(id: id, name: name);
-          break;
         case CustomWidgetTypeDeprecated.group:
-        case CustomWidgetTypeDeprecated.alertDialog:
           continue;
         case CustomWidgetTypeDeprecated.input:
           customWidget = CustomInputWidget.fromJson(widgetRaw);
@@ -129,12 +139,7 @@ class CustomWidgetRepository {
           customWidget = CustomDivisionlineWidget.fromJson(widgetRaw);
           break;
       }
-      if (customWidget == null) {
-        continue;
-      }
-      if (customWidget is CustomWidgetDeprecated) {
-        throw Deprecated("CustomWidgetDeprecated is not supported anymore");
-      } else if (customWidget is CustomWidget) {
+      if (customWidget != null) {
         templates.add(customWidget);
       }
     }

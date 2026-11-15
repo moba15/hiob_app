@@ -25,13 +25,6 @@ class CustomSliderWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   CustomWidget get customWidget => customSliderWidget;
 
   @override
-  CustomWidgetDeprecated get customWidgetDeprecated =>
-      throw UnimplementedError();
-
-  @override
-  bool get deprecated => false;
-
-  @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
 

@@ -55,9 +55,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
         widget.preSelectedTemplate?.settingWidget ??
         _selectedType!.settingWidget;
     _oldJSON = jsonEncode(
-      _customWidgetSettingWidget!.deprecated
-          ? _customWidgetSettingWidget!.customWidgetDeprecated.toJson()
-          : _customWidgetSettingWidget!.customWidget.toJson(),
+      _customWidgetSettingWidget!.customWidget.toJson(),
     );
 
     customWidgetBlocCubit = CustomWidgetBlocCubit();
@@ -133,10 +131,8 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                   in CustomWidgetTypeDeprecated.values.where(
                     (value) =>
                         (value != CustomWidgetTypeDeprecated.group &&
-                            value != CustomWidgetTypeDeprecated.alertDialog &&
-                            (!value.settingWidget.deprecated &&
-                                (widget.filter == null ||
-                                    widget.filter!(value)))) ||
+                            (widget.filter == null ||
+                                widget.filter!(value))) ||
                         value == _selectedType,
                   ))
                 DropdownMenuItem(value: c, child: Text(c.name)),
@@ -173,12 +169,7 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
                 customWidgetBlocCubit.update(
                   _customWidgetSettingWidget?.customWidget,
                 );
-                try {
-                  _customWidgetSettingWidget?.customWidget.name = value;
-                } catch (e) {
-                  _customWidgetSettingWidget?.customWidgetDeprecated.name =
-                      value;
-                }
+                _customWidgetSettingWidget?.customWidget.name = value;
               },
               decoration: const InputDecoration(labelText: "Name"),
             ),
@@ -248,16 +239,9 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
   }
 
   bool _isSaved() {
-    if (_customWidgetSettingWidget != null &&
-        _customWidgetSettingWidget!.deprecated) {
-      return _oldJSON ==
-          jsonEncode(
-            _customWidgetSettingWidget?.customWidgetDeprecated.toJson() ?? "[]",
-          );
-    } else {
-      return _oldJSON ==
-          jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
-    }
+    if (_customWidgetSettingWidget == null) return true;
+    return _oldJSON ==
+        jsonEncode(_customWidgetSettingWidget!.customWidget.toJson());
   }
 
   void _save() {
@@ -267,27 +251,27 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
 
     if (_customWidgetSettingWidget != null &&
         _customWidgetSettingWidget!.validate()) {
+      _customWidgetSettingWidget!.customWidget.name = _nameController.text;
       if (widget.preSelectedTemplate != null) {
-        //TODO Refector
-        if (_customWidgetSettingWidget!.deprecated) {
-          throw Deprecated("Old template editing is not supported anymore");
-        } else if (!_customWidgetSettingWidget!.deprecated) {
-          _customWidgetSettingWidget!.customWidget.name = _nameController.text;
-
-          _customWidgetSettingWidget!.customWidget.name = _nameController.text;
-          _customWidgetSettingWidget!.customWidget.id =
-              widget.preSelectedTemplate!.id;
-          if (widget.onSave == null) {
-            //TODO FIX
-            widget.customWidgetManager.edit(
-              template: _customWidgetSettingWidget!.customWidget,
-            );
-          } else {
-            widget.onSave!(widget.preSelectedTemplate!);
-          }
+        _customWidgetSettingWidget!.customWidget.id =
+            widget.preSelectedTemplate!.id;
+        if (widget.onSave == null) {
+          widget.customWidgetManager.edit(
+            template: _customWidgetSettingWidget!.customWidget,
+          );
+        } else {
+          widget.onSave!(widget.preSelectedTemplate!);
         }
       } else {
-        throw Deprecated("Old template editing is not supported anymore");
+        _customWidgetSettingWidget!.customWidget.id =
+            ServiceContainer.randomString(12);
+        if (widget.onSave == null) {
+          widget.customWidgetManager.save(
+            template: _customWidgetSettingWidget!.customWidget,
+          );
+        } else {
+          widget.onSave!(_customWidgetSettingWidget!.customWidget);
+        }
       }
       Navigator.pop(context);
     }

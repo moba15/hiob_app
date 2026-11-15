@@ -120,6 +120,12 @@ class NotificationServiceImpl with WidgetsBindingObserver {
   }
 
   Future<void> _tryLoginOnStartup() async {
+    if (Platform.isAndroid == false) {
+      await notificationRepository.updateAuthStatus(
+        NotificationAuthStatus.nonAndroid,
+      );
+      return;
+    }
     if (!backgroundNotificationsEnabled || userUuid.isEmpty) {
       return;
     }
@@ -142,6 +148,12 @@ class NotificationServiceImpl with WidgetsBindingObserver {
   bool _isFirebaseInitialized = false;
 
   Future<bool> _initFirebaseMessaging() async {
+    if (Platform.isAndroid == false) {
+      await notificationRepository.updateAuthStatus(
+        NotificationAuthStatus.nonAndroid,
+      );
+      return false;
+    }
     if (_isFirebaseInitialized) {
       String? token = await FirebaseMessaging.instance.getToken();
       if (token != null) {
@@ -313,6 +325,9 @@ class NotificationServiceImpl with WidgetsBindingObserver {
     required String userUuid,
     required String password,
   }) async {
+    if (!Platform.isAndroid) {
+      return NotificationAuthStatus.nonAndroid;
+    }
     await updateUserUuid(userUuid);
     await updatePassword(password);
 

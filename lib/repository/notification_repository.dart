@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_home/manager/file_manager.dart';
 import 'package:smart_home/services/notification/custom_notification.dart';
 
-enum NotificationAuthStatus { loggedOut, loggedInAndEnabled, error }
+enum NotificationAuthStatus { loggedOut, loggedInAndEnabled, error, nonAndroid }
 
 class NotificationRepository {
   final FileManager fileManager;

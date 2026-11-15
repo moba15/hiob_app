@@ -749,9 +749,7 @@ final class $$StatesTableTableReferences
   $$StatesTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $StatesTableTable _parentTable(_$AppDatabase db) =>
-      db.statesTable.createAlias(
-        $_aliasNameGenerator(db.statesTable.parent, db.statesTable.id),
-      );
+      db.statesTable.createAlias('states_table__parent__states_table__id');
 
   $$StatesTableTableProcessedTableManager? get parent {
     final $_column = $_itemColumn<String>('parent');

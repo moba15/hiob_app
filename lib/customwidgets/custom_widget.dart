@@ -6,11 +6,11 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custo
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
@@ -23,10 +23,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_web
 
 enum CustomWidgetTypeDeprecated {
   group,
-  alertDialog,
-  graph,
-  colorPallete,
-  mediaPlayer,
   input,
   button,
   webViewNew,
@@ -38,12 +34,10 @@ enum CustomWidgetTypeDeprecated {
   colorPicker,
   switchWidget,
   divisionLine,
-  line,
 }
 
 extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
   CustomWidgetSettingWidget get settingWidget {
-    print("Nice");
     switch (this) {
       case CustomWidgetTypeDeprecated.input:
         return CustomInputWidget(
@@ -171,12 +165,6 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
 
   String get name {
     switch (this) {
-      case CustomWidgetTypeDeprecated.graph:
-        return "Graph (only sql Adapter)";
-      case CustomWidgetTypeDeprecated.colorPallete:
-        return "Color Palette (Deprecated)";
-      case CustomWidgetTypeDeprecated.mediaPlayer:
-        return "Network Media Player (Deprecated)";
       case CustomWidgetTypeDeprecated.button:
         return "Button (new)";
       case CustomWidgetTypeDeprecated.input:
@@ -205,41 +193,9 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
   }
 }
 
-abstract class CustomWidgetDeprecated {
-  static String typeID = "-1";
-  String? name;
-  CustomWidgetTypeDeprecated? type;
-  Map<String, dynamic>? settings;
-
-  CustomWidgetDeprecated({
-    required this.name,
-    required this.type,
-    required this.settings,
-  });
-
-  CustomWidgetDeprecated.edit({required this.type});
-
-  Widget get widget;
-
-  CustomWidgetSettingWidget get settingWidget;
-
-  factory CustomWidgetDeprecated.fromJSON(Map<String, dynamic> json) {
-    throw UnimplementedError();
-  }
-
-  Map<String, dynamic> toJson();
-
-  CustomWidgetDeprecated clone();
-
-  CustomWidget migrate({required String id, required String name});
-}
-
 abstract class CustomWidgetSettingWidget {
   bool validate();
 
-  final bool deprecated = true;
-
-  CustomWidgetDeprecated get customWidgetDeprecated;
   CustomWidget get customWidget;
 
   List<GlobalKey> get showKeys;

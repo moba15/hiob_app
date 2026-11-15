@@ -25,13 +25,6 @@ class CustomTableWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   CustomWidget get customWidget => customTableWidget;
 
   @override
-  CustomWidgetDeprecated get customWidgetDeprecated =>
-      throw UnimplementedError();
-
-  @override
-  bool get deprecated => false;
-
-  @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
 

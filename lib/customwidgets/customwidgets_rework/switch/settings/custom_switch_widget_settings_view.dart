@@ -23,13 +23,6 @@ class CustomSwitchWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
   CustomWidget get customWidget => customSwitchWidget;
 
   @override
-  CustomWidgetDeprecated get customWidgetDeprecated =>
-      throw UnimplementedError();
-
-  @override
-  bool get deprecated => false;
-
-  @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
 

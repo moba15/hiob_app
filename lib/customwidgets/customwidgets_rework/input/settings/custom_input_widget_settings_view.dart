@@ -21,8 +21,7 @@ class CustomInputWidgetSettingsView extends CustomWidgetSettingStatefulWidget {
       _CustomInputWidgetSettingsViewState();
 
   @override
-  CustomWidgetDeprecated get customWidgetDeprecated =>
-      throw UnimplementedError();
+  CustomWidget get customWidget => customInputWidget;
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>

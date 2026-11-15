@@ -11,7 +11,6 @@ import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/custom_widget_template.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
-import 'package:smart_home/customwidgets/widgets/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
 import 'package:smart_home/customwidgets/widgets/view/settings/templates/icon_picker.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
@@ -202,11 +201,11 @@ class CustomGroupWidgetSettingsPage extends StatelessWidget {
 
 class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
   final CustomGroupWidget customGroupWidget;
-  final Stream stream;
+  final Stream? stream;
   const CustomGroupWidgetSettings({
     super.key,
     required this.customGroupWidget,
-    required this.stream,
+    this.stream,
   });
 
   @override
@@ -214,23 +213,16 @@ class CustomGroupWidgetSettings extends CustomWidgetSettingStatefulWidget {
       _CustomGroupWidgetSettingsState();
 
   @override
-  CustomWidgetDeprecated get customWidgetDeprecated => customGroupWidget;
-  @override
-  // TODO: implement customWidget
-  CustomWidget get customWidget => throw UnimplementedError();
+  CustomWidget get customWidget => customGroupWidget;
 
   @override
   bool validate() {
-    return customGroupWidget.name != null && customGroupWidget.name!.isNotEmpty;
+    return customGroupWidget.name.isNotEmpty;
   }
 
   @override
   List<GlobalKey<State<StatefulWidget>>> get showKeys =>
       throw UnimplementedError();
-
-  @override
-  // TODO: implement deprecated
-  bool get deprecated => true;
 }
 
 class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
@@ -238,8 +230,8 @@ class _CustomGroupWidgetSettingsState extends State<CustomGroupWidgetSettings> {
   StreamSubscription? _streamSub;
   @override
   void initState() {
-    _nameController.text = widget.customGroupWidget.name ?? "";
-    _streamSub = widget.stream.listen((event) {
+    _nameController.text = widget.customGroupWidget.name;
+    _streamSub = widget.stream?.listen((event) {
       setState(() {
         if (event is List<dynamic>) {
           List<dynamic> e = event;

@@ -45,10 +45,6 @@ Map<String, dynamic> _$CustomButtonWidgetToJson(_CustomButtonWidget instance) =>
 
 const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.group: 'group',
-  CustomWidgetTypeDeprecated.alertDialog: 'alertDialog',
-  CustomWidgetTypeDeprecated.graph: 'graph',
-  CustomWidgetTypeDeprecated.colorPallete: 'colorPallete',
-  CustomWidgetTypeDeprecated.mediaPlayer: 'mediaPlayer',
   CustomWidgetTypeDeprecated.input: 'input',
   CustomWidgetTypeDeprecated.button: 'button',
   CustomWidgetTypeDeprecated.webViewNew: 'webViewNew',
@@ -60,5 +56,4 @@ const _$CustomWidgetTypeDeprecatedEnumMap = {
   CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
   CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
   CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
-  CustomWidgetTypeDeprecated.line: 'line',
 };
