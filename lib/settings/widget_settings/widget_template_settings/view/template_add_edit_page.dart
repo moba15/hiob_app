@@ -9,7 +9,7 @@ import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/custompopup/view/settings/cutsom_popupmenu_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_widget_bloc_cubit.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/services/service_container.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
 
@@ -19,7 +19,7 @@ class TemplateAddPage extends StatefulWidget {
   final CustomWidgetRepository customWidgetManager;
   final CustomWidget? preSelectedTemplate;
   final Function(CustomWidget)? onSave;
-  final bool Function(CustomWidgetTypeDeprecated)? filter;
+  final bool Function(WidgetType)? filter;
   const TemplateAddPage({
     super.key,
     required this.customWidgetManager,
@@ -34,7 +34,7 @@ class TemplateAddPage extends StatefulWidget {
 
 class _TemplateAddPageState extends State<TemplateAddPage> {
   final GlobalKey _nameKey = GlobalKey();
-  CustomWidgetTypeDeprecated? _selectedType;
+  WidgetType? _selectedType;
   String? _oldJSON;
   final TextEditingController _nameController = TextEditingController();
   CustomWidgetSettingWidget? _customWidgetSettingWidget;
@@ -45,9 +45,9 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
       text: widget.preSelectedTemplate?.name ?? "",
     );
     //TODO Refactor Customwidget type
-    _selectedType = CustomWidgetTypeDeprecated.values.firstWhere(
+    _selectedType = WidgetType.values.firstWhere(
       (element) => element.name == widget.preSelectedTemplate?.type?.name,
-      orElse: () => CustomWidgetTypeDeprecated.button,
+      orElse: () => WidgetType.button,
     );
     _customWidgetSettingWidget =
         widget.preSelectedTemplate?.settingWidget ??
@@ -121,19 +121,18 @@ class _TemplateAddPageState extends State<TemplateAddPage> {
       children: [
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          child: DropdownButtonFormField<CustomWidgetTypeDeprecated>(
+          child: DropdownButtonFormField<WidgetType>(
             items: [
-              for (CustomWidgetTypeDeprecated c
-                  in CustomWidgetTypeDeprecated.values.where(
-                    (value) =>
-                        (value != CustomWidgetTypeDeprecated.group &&
-                            (widget.filter == null || widget.filter!(value))) ||
-                        value == _selectedType,
-                  ))
+              for (WidgetType c in WidgetType.values.where(
+                (value) =>
+                    (value != WidgetType.group &&
+                        (widget.filter == null || widget.filter!(value))) ||
+                    value == _selectedType,
+              ))
                 DropdownMenuItem(value: c, child: Text(c.name)),
             ],
             initialValue: _selectedType,
-            onChanged: (CustomWidgetTypeDeprecated? type) {
+            onChanged: (WidgetType? type) {
               setState(() {
                 _selectedType = type!;
                 if (widget.preSelectedTemplate == null) {

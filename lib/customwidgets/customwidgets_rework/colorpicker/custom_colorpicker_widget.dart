@@ -7,7 +7,7 @@ import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/settings/custom_colorpicker_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/view/custom_colorpicker_widget_view.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 
 part 'custom_colorpicker_widget.freezed.dart';
 part 'custom_colorpicker_widget.g.dart';
@@ -48,8 +48,7 @@ abstract class CustomColorPickerWidget
 
   @Implements<CustomWidget>()
   factory CustomColorPickerWidget({
-    @Default(CustomWidgetTypeDeprecated.colorPicker)
-    CustomWidgetTypeDeprecated type,
+    @Default(WidgetType.colorPicker) WidgetType type,
     required String id,
     required String name,
     required String? dataPoint,

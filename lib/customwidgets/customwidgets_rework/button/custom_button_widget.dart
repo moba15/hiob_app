@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/settings/cu
 import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/view/custom_button_widget_view.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 
 part 'custom_button_widget.freezed.dart';
 part 'custom_button_widget.g.dart';
@@ -47,7 +47,7 @@ abstract class CustomButtonWidget
 
   @Implements<CustomWidget>()
   factory CustomButtonWidget({
-    @Default(CustomWidgetTypeDeprecated.button) CustomWidgetTypeDeprecated type,
+    @Default(WidgetType.button) WidgetType type,
     required String id,
     required String name,
     CustomPopupmenu? customPopupmenu,
@@ -67,7 +67,7 @@ abstract class CustomButtonWidget
       CustomButtonWidgetSettingsView(customButtonWidget: this);
 
   @override
-  CustomWidgetTypeDeprecated get type => throw UnimplementedError();
+  WidgetType get type => throw UnimplementedError();
 
   @override
   Widget get widget => CustomButtonWidgetView(customButtonWidget: this);

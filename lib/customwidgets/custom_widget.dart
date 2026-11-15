@@ -6,7 +6,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_butt
 import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
@@ -22,7 +22,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 
-enum CustomWidgetTypeDeprecated {
+enum WidgetType {
   group,
   input,
   button,
@@ -37,10 +37,10 @@ enum CustomWidgetTypeDeprecated {
   divisionLine,
 }
 
-extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
+extension CustomWidgetTypeExtension on WidgetType {
   CustomWidgetSettingWidget get settingWidget {
     switch (this) {
-      case CustomWidgetTypeDeprecated.input:
+      case WidgetType.input:
         return CustomInputWidget(
           id: "",
           name: "",
@@ -48,59 +48,59 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
           dataPoint: null,
           suffix: "",
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.button:
+      case WidgetType.button:
         return CustomButtonWidget(
           id: "",
           name: "",
           dataPoint: null,
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.webViewNew:
+      case WidgetType.webViewNew:
         return CustomWebViewWidget(
           id: "id",
           name: "",
           dataPoint: null,
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.tableNew:
+      case WidgetType.tableNew:
         return CustomTableWidget(
           id: "",
           name: "",
           dataPoint: null,
           columns: {},
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.valueNew:
+      case WidgetType.valueNew:
         return CustomValueWidget(
           id: "",
           name: "",
           dataPoint: null,
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.multiselection:
+      case WidgetType.multiselection:
         return CustomMultiselectionWidget(
           id: "",
           name: "",
           dataPoint: null,
           selections: {},
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.slider:
+      case WidgetType.slider:
         return CustomSliderWidget(
           id: "",
           name: "",
           dataPoint: null,
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.networkPlayer:
+      case WidgetType.networkPlayer:
         return CustomNetworkPlayerWidget(id: "", name: "name").settingWidget;
-      case CustomWidgetTypeDeprecated.colorPicker:
+      case WidgetType.colorPicker:
         return CustomColorPickerWidget(
           id: "",
           name: "",
           dataPoint: null,
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.switchWidget:
+      case WidgetType.switchWidget:
         return CustomSwitchWidget(
           id: "id",
           name: "",
           dataPoint: null,
         ).settingWidget;
-      case CustomWidgetTypeDeprecated.divisionLine:
+      case WidgetType.divisionLine:
         return CustomDivisionlineWidget(id: "", name: "").settingWidget;
       default:
         return CustomSwitchWidget(
@@ -113,7 +113,7 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
 
   CustomThemeForWidget get emptyTheme {
     switch (this) {
-      case CustomWidgetTypeDeprecated.valueNew:
+      case WidgetType.valueNew:
         return CustomValueWidgetTheme(
               "not set",
               LabelTheme("not set", null, null, null, null),
@@ -122,37 +122,37 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
               null,
             )
             as CustomThemeForWidget;
-      case CustomWidgetTypeDeprecated.switchWidget:
+      case WidgetType.switchWidget:
         return CustomSwitchWidgetTheme(
               "not set",
               LabelTheme("not set", null, null, null, null),
             )
             as CustomThemeForWidget;
-      case CustomWidgetTypeDeprecated.button:
+      case WidgetType.button:
         return CustomButtonWidgetTheme(
               "not set",
               LabelTheme("not set", null, null, null, null),
             )
             as CustomThemeForWidget;
-      case CustomWidgetTypeDeprecated.input:
+      case WidgetType.input:
         return CustomInputWidgetTheme(
               "not set",
               LabelTheme("not set", null, null, null, null),
             )
             as CustomThemeForWidget;
-      case CustomWidgetTypeDeprecated.multiselection:
+      case WidgetType.multiselection:
         return CustomMultiselectionWidgetTheme(
               "not set",
               LabelTheme("not set", null, null, null, null),
             )
             as CustomThemeForWidget;
-      case CustomWidgetTypeDeprecated.colorPicker:
+      case WidgetType.colorPicker:
         return CustomColorpickerWidgetTheme(
               "not set",
               LabelTheme("not set", null, null, null, null),
             )
             as CustomThemeForWidget;
-      case CustomWidgetTypeDeprecated.slider:
+      case WidgetType.slider:
         return CustomSliderWidgetTheme(
               "not set",
               LabelTheme("not set", null, null, null, null),
@@ -166,27 +166,27 @@ extension CustomWidgetTypeExtension on CustomWidgetTypeDeprecated {
 
   String get name {
     switch (this) {
-      case CustomWidgetTypeDeprecated.button:
+      case WidgetType.button:
         return "Button (new)";
-      case CustomWidgetTypeDeprecated.input:
+      case WidgetType.input:
         return "Input (new)";
-      case CustomWidgetTypeDeprecated.webViewNew:
+      case WidgetType.webViewNew:
         return "Web view (new)";
-      case CustomWidgetTypeDeprecated.tableNew:
+      case WidgetType.tableNew:
         return "Table (new)";
-      case CustomWidgetTypeDeprecated.valueNew:
+      case WidgetType.valueNew:
         return "Value (new)";
-      case CustomWidgetTypeDeprecated.multiselection:
+      case WidgetType.multiselection:
         return "Multiselection (new)";
-      case CustomWidgetTypeDeprecated.slider:
+      case WidgetType.slider:
         return "Slider (new)";
-      case CustomWidgetTypeDeprecated.networkPlayer:
+      case WidgetType.networkPlayer:
         return "Network player (new)";
-      case CustomWidgetTypeDeprecated.colorPicker:
+      case WidgetType.colorPicker:
         return "Colorpicker (new)";
-      case CustomWidgetTypeDeprecated.switchWidget:
+      case WidgetType.switchWidget:
         return "Switch (new)";
-      case CustomWidgetTypeDeprecated.divisionLine:
+      case WidgetType.divisionLine:
         return "Line (new)";
       default:
         return toString();

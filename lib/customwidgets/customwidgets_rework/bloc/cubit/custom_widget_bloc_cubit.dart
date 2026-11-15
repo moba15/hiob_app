@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 
 class CustomWidgetBlocCubit extends Cubit<int> {
   CustomWidgetBlocCubit() : super(0);

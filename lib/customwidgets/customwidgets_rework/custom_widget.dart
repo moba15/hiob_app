@@ -5,7 +5,7 @@ import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 
 abstract class CustomWidget {
   @override
-  final CustomWidgetTypeDeprecated type;
+  final WidgetType type;
   @override
   String id;
   @override

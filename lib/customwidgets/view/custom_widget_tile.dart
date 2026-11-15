@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 
 import '../../settings/widget_settings/widget_template_settings/view/template_add_edit_page.dart';
@@ -25,8 +25,9 @@ class CustomWidgetTemplateTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CustomWidgetTypeDeprecated? type = CustomWidgetTypeDeprecated.values
-        .firstWhere((element) => element.name == customWidget.type?.name);
+    WidgetType? type = WidgetType.values.firstWhere(
+      (element) => element.name == customWidget.type?.name,
+    );
     return ListTile(
       title: Text(customWidget.name),
       trailing: const Icon(Icons.arrow_forward_ios_sharp),

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomButtonWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomButtonThemeConverter() CustomThemeForWidget? get customTheme;@_CustomButtonThemeConverter() set customTheme(CustomThemeForWidget? value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); String? get buttonLabel; set buttonLabel(String? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomButtonThemeConverter() CustomThemeForWidget? get customTheme;@_CustomButtonThemeConverter() set customTheme(CustomThemeForWidget? value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); String? get buttonLabel; set buttonLabel(String? value);
 /// Create a copy of CustomButtonWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomButtonWidgetCopyWith<$Res>  {
   factory $CustomButtonWidgetCopyWith(CustomButtonWidget value, $Res Function(CustomButtonWidget) _then) = _$CustomButtonWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, CustomPopupmenu? customPopupmenu,@_CustomButtonThemeConverter() CustomThemeForWidget? customTheme, String? label, String? dataPoint, String? buttonLabel
+ WidgetType type, String id, String name, CustomPopupmenu? customPopupmenu,@_CustomButtonThemeConverter() CustomThemeForWidget? customTheme, String? label, String? dataPoint, String? buttonLabel
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomButtonWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,Object? label = freezed,Object? dataPoint = freezed,Object? buttonLabel = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
@@ -165,7 +165,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  CustomPopupmenu? customPopupmenu, @_CustomButtonThemeConverter()  CustomThemeForWidget? customTheme,  String? label,  String? dataPoint,  String? buttonLabel)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  CustomPopupmenu? customPopupmenu, @_CustomButtonThemeConverter()  CustomThemeForWidget? customTheme,  String? label,  String? dataPoint,  String? buttonLabel)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomButtonWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.customPopupmenu,_that.customTheme,_that.label,_that.dataPoint,_that.buttonLabel);case _:
@@ -186,7 +186,7 @@ return $default(_that.type,_that.id,_that.name,_that.customPopupmenu,_that.custo
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  CustomPopupmenu? customPopupmenu, @_CustomButtonThemeConverter()  CustomThemeForWidget? customTheme,  String? label,  String? dataPoint,  String? buttonLabel)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  CustomPopupmenu? customPopupmenu, @_CustomButtonThemeConverter()  CustomThemeForWidget? customTheme,  String? label,  String? dataPoint,  String? buttonLabel)  $default,) {final _that = this;
 switch (_that) {
 case _CustomButtonWidget():
 return $default(_that.type,_that.id,_that.name,_that.customPopupmenu,_that.customTheme,_that.label,_that.dataPoint,_that.buttonLabel);case _:
@@ -206,7 +206,7 @@ return $default(_that.type,_that.id,_that.name,_that.customPopupmenu,_that.custo
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  CustomPopupmenu? customPopupmenu, @_CustomButtonThemeConverter()  CustomThemeForWidget? customTheme,  String? label,  String? dataPoint,  String? buttonLabel)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  CustomPopupmenu? customPopupmenu, @_CustomButtonThemeConverter()  CustomThemeForWidget? customTheme,  String? label,  String? dataPoint,  String? buttonLabel)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomButtonWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.customPopupmenu,_that.customTheme,_that.label,_that.dataPoint,_that.buttonLabel);case _:
@@ -221,10 +221,10 @@ return $default(_that.type,_that.id,_that.name,_that.customPopupmenu,_that.custo
 @JsonSerializable()
 
 class _CustomButtonWidget extends CustomButtonWidget implements CustomWidget {
-   _CustomButtonWidget({this.type = CustomWidgetTypeDeprecated.button, required this.id, required this.name, this.customPopupmenu, @_CustomButtonThemeConverter() this.customTheme, this.label, required this.dataPoint, this.buttonLabel}): super._();
+   _CustomButtonWidget({this.type = WidgetType.button, required this.id, required this.name, this.customPopupmenu, @_CustomButtonThemeConverter() this.customTheme, this.label, required this.dataPoint, this.buttonLabel}): super._();
   factory _CustomButtonWidget.fromJson(Map<String, dynamic> json) => _$CustomButtonWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override  CustomPopupmenu? customPopupmenu;
@@ -259,7 +259,7 @@ abstract mixin class _$CustomButtonWidgetCopyWith<$Res> implements $CustomButton
   factory _$CustomButtonWidgetCopyWith(_CustomButtonWidget value, $Res Function(_CustomButtonWidget) _then) = __$CustomButtonWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, CustomPopupmenu? customPopupmenu,@_CustomButtonThemeConverter() CustomThemeForWidget? customTheme, String? label, String? dataPoint, String? buttonLabel
+ WidgetType type, String id, String name, CustomPopupmenu? customPopupmenu,@_CustomButtonThemeConverter() CustomThemeForWidget? customTheme, String? label, String? dataPoint, String? buttonLabel
 });
 
 
@@ -279,7 +279,7 @@ class __$CustomButtonWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,Object? label = freezed,Object? dataPoint = freezed,Object? buttonLabel = freezed,}) {
   return _then(_CustomButtonWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable

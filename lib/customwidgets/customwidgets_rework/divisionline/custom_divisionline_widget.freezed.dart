@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomDivisionlineWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); dynamic get thickness; set thickness(dynamic value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); dynamic get thickness; set thickness(dynamic value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
 /// Create a copy of CustomDivisionlineWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomDivisionlineWidgetCopyWith<$Res>  {
   factory $CustomDivisionlineWidgetCopyWith(CustomDivisionlineWidget value, $Res Function(CustomDivisionlineWidget) _then) = _$CustomDivisionlineWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomDivisionlineWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? thickness = freezed,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,thickness: freezed == thickness ? _self.thickness : thickness // ignore: cast_nullable_to_non_nullable
 as dynamic,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
@@ -163,7 +163,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomDivisionlineWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopupmenu,_that.customTheme);case _:
@@ -184,7 +184,7 @@ return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopup
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomDivisionlineWidget():
 return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopupmenu,_that.customTheme);case _:
@@ -204,7 +204,7 @@ return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopup
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomDivisionlineWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopupmenu,_that.customTheme);case _:
@@ -219,10 +219,10 @@ return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopup
 @JsonSerializable()
 
 class _CustomDivisionlineWidget extends CustomDivisionlineWidget implements CustomWidget {
-   _CustomDivisionlineWidget({this.type = CustomWidgetTypeDeprecated.divisionLine, required this.id, required this.name, this.thickness = 1, this.customPopupmenu, this.customTheme}): super._();
+   _CustomDivisionlineWidget({this.type = WidgetType.divisionLine, required this.id, required this.name, this.thickness = 1, this.customPopupmenu, this.customTheme}): super._();
   factory _CustomDivisionlineWidget.fromJson(Map<String, dynamic> json) => _$CustomDivisionlineWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override@JsonKey()  dynamic thickness;
@@ -255,7 +255,7 @@ abstract mixin class _$CustomDivisionlineWidgetCopyWith<$Res> implements $Custom
   factory _$CustomDivisionlineWidgetCopyWith(_CustomDivisionlineWidget value, $Res Function(_CustomDivisionlineWidget) _then) = __$CustomDivisionlineWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
 });
 
 
@@ -275,7 +275,7 @@ class __$CustomDivisionlineWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? thickness = freezed,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_CustomDivisionlineWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,thickness: freezed == thickness ? _self.thickness : thickness // ignore: cast_nullable_to_non_nullable
 as dynamic,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable

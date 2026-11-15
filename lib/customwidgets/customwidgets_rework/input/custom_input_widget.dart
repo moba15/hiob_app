@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/settings/custom_input_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/view/custom_input_widget_view.dart';
@@ -74,7 +74,7 @@ abstract class CustomInputWidget
 
   @Implements<CustomWidget>()
   factory CustomInputWidget({
-    @Default(CustomWidgetTypeDeprecated.input) CustomWidgetTypeDeprecated type,
+    @Default(WidgetType.input) WidgetType type,
     required String id,
     required String name,
     String? label,

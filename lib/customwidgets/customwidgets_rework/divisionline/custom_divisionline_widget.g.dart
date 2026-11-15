@@ -10,8 +10,8 @@ _CustomDivisionlineWidget _$CustomDivisionlineWidgetFromJson(
   Map<String, dynamic> json,
 ) => _CustomDivisionlineWidget(
   type:
-      $enumDecodeNullable(_$CustomWidgetTypeDeprecatedEnumMap, json['type']) ??
-      CustomWidgetTypeDeprecated.divisionLine,
+      $enumDecodeNullable(_$WidgetTypeEnumMap, json['type']) ??
+      WidgetType.divisionLine,
   id: json['id'] as String,
   name: json['name'] as String,
   thickness: json['thickness'] ?? 1,
@@ -30,7 +30,7 @@ _CustomDivisionlineWidget _$CustomDivisionlineWidgetFromJson(
 Map<String, dynamic> _$CustomDivisionlineWidgetToJson(
   _CustomDivisionlineWidget instance,
 ) => <String, dynamic>{
-  'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+  'type': _$WidgetTypeEnumMap[instance.type]!,
   'id': instance.id,
   'name': instance.name,
   'thickness': instance.thickness,
@@ -38,17 +38,17 @@ Map<String, dynamic> _$CustomDivisionlineWidgetToJson(
   'customTheme': instance.customTheme,
 };
 
-const _$CustomWidgetTypeDeprecatedEnumMap = {
-  CustomWidgetTypeDeprecated.group: 'group',
-  CustomWidgetTypeDeprecated.input: 'input',
-  CustomWidgetTypeDeprecated.button: 'button',
-  CustomWidgetTypeDeprecated.webViewNew: 'webViewNew',
-  CustomWidgetTypeDeprecated.tableNew: 'tableNew',
-  CustomWidgetTypeDeprecated.valueNew: 'valueNew',
-  CustomWidgetTypeDeprecated.multiselection: 'multiselection',
-  CustomWidgetTypeDeprecated.slider: 'slider',
-  CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
-  CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
-  CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
-  CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
+const _$WidgetTypeEnumMap = {
+  WidgetType.group: 'group',
+  WidgetType.input: 'input',
+  WidgetType.button: 'button',
+  WidgetType.webViewNew: 'webViewNew',
+  WidgetType.tableNew: 'tableNew',
+  WidgetType.valueNew: 'valueNew',
+  WidgetType.multiselection: 'multiselection',
+  WidgetType.slider: 'slider',
+  WidgetType.networkPlayer: 'networkPlayer',
+  WidgetType.colorPicker: 'colorPicker',
+  WidgetType.switchWidget: 'switchWidget',
+  WidgetType.divisionLine: 'divisionLine',
 };

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomSwitchWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); String get sendIfOn; set sendIfOn(String value); String get sendIfOff; set sendIfOff(String value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomSwitchThemeConverter() CustomThemeForWidget? get customTheme;@_CustomSwitchThemeConverter() set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); String get sendIfOn; set sendIfOn(String value); String get sendIfOff; set sendIfOff(String value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomSwitchThemeConverter() CustomThemeForWidget? get customTheme;@_CustomSwitchThemeConverter() set customTheme(CustomThemeForWidget? value);
 /// Create a copy of CustomSwitchWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomSwitchWidgetCopyWith<$Res>  {
   factory $CustomSwitchWidgetCopyWith(CustomSwitchWidget value, $Res Function(CustomSwitchWidget) _then) = _$CustomSwitchWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? label, String sendIfOn, String sendIfOff, CustomPopupmenu? customPopupmenu,@_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, String sendIfOn, String sendIfOff, CustomPopupmenu? customPopupmenu,@_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomSwitchWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? label = freezed,Object? sendIfOn = null,Object? sendIfOff = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
@@ -166,7 +166,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  String sendIfOn,  String sendIfOff,  CustomPopupmenu? customPopupmenu, @_CustomSwitchThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  String sendIfOn,  String sendIfOff,  CustomPopupmenu? customPopupmenu, @_CustomSwitchThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomSwitchWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.sendIfOn,_that.sendIfOff,_that.customPopupmenu,_that.customTheme);case _:
@@ -187,7 +187,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  String sendIfOn,  String sendIfOff,  CustomPopupmenu? customPopupmenu, @_CustomSwitchThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  String sendIfOn,  String sendIfOff,  CustomPopupmenu? customPopupmenu, @_CustomSwitchThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomSwitchWidget():
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.sendIfOn,_that.sendIfOff,_that.customPopupmenu,_that.customTheme);case _:
@@ -207,7 +207,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  String sendIfOn,  String sendIfOff,  CustomPopupmenu? customPopupmenu, @_CustomSwitchThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  String sendIfOn,  String sendIfOff,  CustomPopupmenu? customPopupmenu, @_CustomSwitchThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomSwitchWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.sendIfOn,_that.sendIfOff,_that.customPopupmenu,_that.customTheme);case _:
@@ -222,10 +222,10 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 @JsonSerializable()
 
 class _CustomSwitchWidget extends CustomSwitchWidget implements CustomWidget {
-   _CustomSwitchWidget({this.type = CustomWidgetTypeDeprecated.switchWidget, required this.id, required this.name, required this.dataPoint, this.label, this.sendIfOn = "true", this.sendIfOff = "false", this.customPopupmenu, @_CustomSwitchThemeConverter() this.customTheme}): super._();
+   _CustomSwitchWidget({this.type = WidgetType.switchWidget, required this.id, required this.name, required this.dataPoint, this.label, this.sendIfOn = "true", this.sendIfOff = "false", this.customPopupmenu, @_CustomSwitchThemeConverter() this.customTheme}): super._();
   factory _CustomSwitchWidget.fromJson(Map<String, dynamic> json) => _$CustomSwitchWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override  String? dataPoint;
@@ -261,7 +261,7 @@ abstract mixin class _$CustomSwitchWidgetCopyWith<$Res> implements $CustomSwitch
   factory _$CustomSwitchWidgetCopyWith(_CustomSwitchWidget value, $Res Function(_CustomSwitchWidget) _then) = __$CustomSwitchWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? label, String sendIfOn, String sendIfOff, CustomPopupmenu? customPopupmenu,@_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, String sendIfOn, String sendIfOff, CustomPopupmenu? customPopupmenu,@_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -281,7 +281,7 @@ class __$CustomSwitchWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? label = freezed,Object? sendIfOn = null,Object? sendIfOff = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_CustomSwitchWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable

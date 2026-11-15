@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomSliderWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); int get max; set max(int value); int get min; set min(int value); int get step; set step(int value); CustomSliderWidgetUpdateStrategy? get customSliderWidgetUpdateStrategy; set customSliderWidgetUpdateStrategy(CustomSliderWidgetUpdateStrategy? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomSliderThemeConverter() CustomThemeForWidget? get customTheme;@_CustomSliderThemeConverter() set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); int get max; set max(int value); int get min; set min(int value); int get step; set step(int value); CustomSliderWidgetUpdateStrategy? get customSliderWidgetUpdateStrategy; set customSliderWidgetUpdateStrategy(CustomSliderWidgetUpdateStrategy? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomSliderThemeConverter() CustomThemeForWidget? get customTheme;@_CustomSliderThemeConverter() set customTheme(CustomThemeForWidget? value);
 /// Create a copy of CustomSliderWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomSliderWidgetCopyWith<$Res>  {
   factory $CustomSliderWidgetCopyWith(CustomSliderWidget value, $Res Function(CustomSliderWidget) _then) = _$CustomSliderWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu,@_CustomSliderThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu,@_CustomSliderThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomSliderWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? label = freezed,Object? dataPoint = freezed,Object? max = null,Object? min = null,Object? step = null,Object? customSliderWidgetUpdateStrategy = freezed,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String?,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomSliderWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.max,_that.min,_that.step,_that.customSliderWidgetUpdateStrategy,_that.customPopupmenu,_that.customTheme);case _:
@@ -189,7 +189,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomSliderWidget():
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.max,_that.min,_that.step,_that.customSliderWidgetUpdateStrategy,_that.customPopupmenu,_that.customTheme);case _:
@@ -209,7 +209,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomSliderWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.max,_that.min,_that.step,_that.customSliderWidgetUpdateStrategy,_that.customPopupmenu,_that.customTheme);case _:
@@ -224,10 +224,10 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 @JsonSerializable()
 
 class _CustomSliderWidget extends CustomSliderWidget implements CustomWidget {
-   _CustomSliderWidget({this.type = CustomWidgetTypeDeprecated.slider, required this.id, required this.name, this.label, required this.dataPoint, this.max = 100, this.min = 0, this.step = 10, this.customSliderWidgetUpdateStrategy = CustomSliderWidgetUpdateStrategy.onFinish, this.customPopupmenu, @_CustomSliderThemeConverter() this.customTheme}): super._();
+   _CustomSliderWidget({this.type = WidgetType.slider, required this.id, required this.name, this.label, required this.dataPoint, this.max = 100, this.min = 0, this.step = 10, this.customSliderWidgetUpdateStrategy = CustomSliderWidgetUpdateStrategy.onFinish, this.customPopupmenu, @_CustomSliderThemeConverter() this.customTheme}): super._();
   factory _CustomSliderWidget.fromJson(Map<String, dynamic> json) => _$CustomSliderWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override  String? label;
@@ -265,7 +265,7 @@ abstract mixin class _$CustomSliderWidgetCopyWith<$Res> implements $CustomSlider
   factory _$CustomSliderWidgetCopyWith(_CustomSliderWidget value, $Res Function(_CustomSliderWidget) _then) = __$CustomSliderWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu,@_CustomSliderThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu,@_CustomSliderThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -285,7 +285,7 @@ class __$CustomSliderWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? label = freezed,Object? dataPoint = freezed,Object? max = null,Object? min = null,Object? step = null,Object? customSliderWidgetUpdateStrategy = freezed,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_CustomSliderWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String?,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable

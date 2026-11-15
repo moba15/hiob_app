@@ -9,11 +9,8 @@ part of 'custom_value_widget.dart';
 _CustomValueWidget _$CustomValueWidgetFromJson(Map<String, dynamic> json) =>
     _CustomValueWidget(
       type:
-          $enumDecodeNullable(
-            _$CustomWidgetTypeDeprecatedEnumMap,
-            json['type'],
-          ) ??
-          CustomWidgetTypeDeprecated.valueNew,
+          $enumDecodeNullable(_$WidgetTypeEnumMap, json['type']) ??
+          WidgetType.valueNew,
       id: json['id'] as String,
       name: json['name'] as String,
       dataPoint: json['dataPoint'] as String?,
@@ -38,7 +35,7 @@ _CustomValueWidget _$CustomValueWidgetFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CustomValueWidgetToJson(_CustomValueWidget instance) =>
     <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+      'type': _$WidgetTypeEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
       'dataPoint': instance.dataPoint,
@@ -53,17 +50,17 @@ Map<String, dynamic> _$CustomValueWidgetToJson(_CustomValueWidget instance) =>
       ),
     };
 
-const _$CustomWidgetTypeDeprecatedEnumMap = {
-  CustomWidgetTypeDeprecated.group: 'group',
-  CustomWidgetTypeDeprecated.input: 'input',
-  CustomWidgetTypeDeprecated.button: 'button',
-  CustomWidgetTypeDeprecated.webViewNew: 'webViewNew',
-  CustomWidgetTypeDeprecated.tableNew: 'tableNew',
-  CustomWidgetTypeDeprecated.valueNew: 'valueNew',
-  CustomWidgetTypeDeprecated.multiselection: 'multiselection',
-  CustomWidgetTypeDeprecated.slider: 'slider',
-  CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
-  CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
-  CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
-  CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
+const _$WidgetTypeEnumMap = {
+  WidgetType.group: 'group',
+  WidgetType.input: 'input',
+  WidgetType.button: 'button',
+  WidgetType.webViewNew: 'webViewNew',
+  WidgetType.tableNew: 'tableNew',
+  WidgetType.valueNew: 'valueNew',
+  WidgetType.multiselection: 'multiselection',
+  WidgetType.slider: 'slider',
+  WidgetType.networkPlayer: 'networkPlayer',
+  WidgetType.colorPicker: 'colorPicker',
+  WidgetType.switchWidget: 'switchWidget',
+  WidgetType.divisionLine: 'divisionLine',
 };

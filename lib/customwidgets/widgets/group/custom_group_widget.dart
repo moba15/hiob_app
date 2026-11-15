@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/custom_group_widget_view.dart';
 import 'package:smart_home/customwidgets/widgets/group/view/settings/custom_group_widget_settings.dart';
@@ -22,7 +22,7 @@ class CustomGroupWidget extends CustomWidget {
     this.isExtended = true,
     this.iconWrapper,
   }) : super(
-         type: CustomWidgetTypeDeprecated.group,
+         type: WidgetType.group,
          id: id ?? ServiceContainer.randomString(12),
          isAbleToPopupMenu: false,
          hasCustomTheme: false,

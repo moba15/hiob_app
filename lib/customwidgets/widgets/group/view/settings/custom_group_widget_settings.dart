@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/view/custom_widget_tile.dart';
 import 'package:smart_home/customwidgets/widgets/group/custom_group_widget.dart';
@@ -316,11 +316,9 @@ class _AddTemplateAlertDialogState extends State<AddTemplateAlertDialog> {
       content: SizedBox(
         child: Column(
           children: [
-            for (CustomWidgetTypeDeprecated type
-                in CustomWidgetTypeDeprecated.values.where(
-                  (element) =>
-                      element.name != CustomWidgetTypeDeprecated.group.name,
-                ))
+            for (WidgetType type in WidgetType.values.where(
+              (element) => element.name != WidgetType.group.name,
+            ))
               if (templates.any((element) => element.type?.name == type.name))
                 ExpansionTile(
                   title: Text(

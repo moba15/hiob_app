@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomInputWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); String? get hintText; set hintText(String? value); String? get suffix; set suffix(String? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomInputThemeConverter() CustomThemeForWidget? get customTheme;@_CustomInputThemeConverter() set customTheme(CustomThemeForWidget? value); CustomInputSendMethod? get customInputSendMethod; set customInputSendMethod(CustomInputSendMethod? value); CustomInputDisplayConentType? get customInputDisplayConentType; set customInputDisplayConentType(CustomInputDisplayConentType? value); bool get fullSize; set fullSize(bool value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); String? get hintText; set hintText(String? value); String? get suffix; set suffix(String? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomInputThemeConverter() CustomThemeForWidget? get customTheme;@_CustomInputThemeConverter() set customTheme(CustomThemeForWidget? value); CustomInputSendMethod? get customInputSendMethod; set customInputSendMethod(CustomInputSendMethod? value); CustomInputDisplayConentType? get customInputDisplayConentType; set customInputDisplayConentType(CustomInputDisplayConentType? value); bool get fullSize; set fullSize(bool value);
 /// Create a copy of CustomInputWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomInputWidgetCopyWith<$Res>  {
   factory $CustomInputWidgetCopyWith(CustomInputWidget value, $Res Function(CustomInputWidget) _then) = _$CustomInputWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu,@_CustomInputThemeConverter() CustomThemeForWidget? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
+ WidgetType type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu,@_CustomInputThemeConverter() CustomThemeForWidget? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomInputWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? label = freezed,Object? dataPoint = freezed,Object? hintText = freezed,Object? suffix = freezed,Object? customPopupmenu = freezed,Object? customTheme = freezed,Object? customInputSendMethod = freezed,Object? customInputDisplayConentType = freezed,Object? fullSize = null,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String?,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
@@ -169,7 +169,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomInputWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.hintText,_that.suffix,_that.customPopupmenu,_that.customTheme,_that.customInputSendMethod,_that.customInputDisplayConentType,_that.fullSize);case _:
@@ -190,7 +190,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)  $default,) {final _that = this;
 switch (_that) {
 case _CustomInputWidget():
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.hintText,_that.suffix,_that.customPopupmenu,_that.customTheme,_that.customInputSendMethod,_that.customInputDisplayConentType,_that.fullSize);case _:
@@ -210,7 +210,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomInputWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.hintText,_that.suffix,_that.customPopupmenu,_that.customTheme,_that.customInputSendMethod,_that.customInputDisplayConentType,_that.fullSize);case _:
@@ -225,10 +225,10 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 @JsonSerializable()
 
 class _CustomInputWidget extends CustomInputWidget implements CustomWidget {
-   _CustomInputWidget({this.type = CustomWidgetTypeDeprecated.input, required this.id, required this.name, this.label, required this.dataPoint, this.hintText, this.suffix, this.customPopupmenu, @_CustomInputThemeConverter() this.customTheme, this.customInputSendMethod, this.customInputDisplayConentType, this.fullSize = false}): super._();
+   _CustomInputWidget({this.type = WidgetType.input, required this.id, required this.name, this.label, required this.dataPoint, this.hintText, this.suffix, this.customPopupmenu, @_CustomInputThemeConverter() this.customTheme, this.customInputSendMethod, this.customInputDisplayConentType, this.fullSize = false}): super._();
   factory _CustomInputWidget.fromJson(Map<String, dynamic> json) => _$CustomInputWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override  String? label;
@@ -267,7 +267,7 @@ abstract mixin class _$CustomInputWidgetCopyWith<$Res> implements $CustomInputWi
   factory _$CustomInputWidgetCopyWith(_CustomInputWidget value, $Res Function(_CustomInputWidget) _then) = __$CustomInputWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu,@_CustomInputThemeConverter() CustomThemeForWidget? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
+ WidgetType type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu,@_CustomInputThemeConverter() CustomThemeForWidget? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
 });
 
 
@@ -287,7 +287,7 @@ class __$CustomInputWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? label = freezed,Object? dataPoint = freezed,Object? hintText = freezed,Object? suffix = freezed,Object? customPopupmenu = freezed,Object? customTheme = freezed,Object? customInputSendMethod = freezed,Object? customInputDisplayConentType = freezed,Object? fullSize = null,}) {
   return _then(_CustomInputWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String?,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable

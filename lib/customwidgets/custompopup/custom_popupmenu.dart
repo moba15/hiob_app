@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custompopup/view/cutsom_popupmenu_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';

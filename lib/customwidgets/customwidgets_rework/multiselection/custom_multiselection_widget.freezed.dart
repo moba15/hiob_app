@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomMultiselectionWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); Map<String, String> get selections; set selections(Map<String, String> value); DropdownMenuMode get dropdownMenuMode; set dropdownMenuMode(DropdownMenuMode value);@_CustomMultiselectionThemeConverter() CustomPopupmenu? get customPopupmenu;@_CustomMultiselectionThemeConverter() set customPopupmenu(CustomPopupmenu? value);@_CustomMultiselectionThemeConverter() CustomThemeForWidget? get customTheme;@_CustomMultiselectionThemeConverter() set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); Map<String, String> get selections; set selections(Map<String, String> value); DropdownMenuMode get dropdownMenuMode; set dropdownMenuMode(DropdownMenuMode value);@_CustomMultiselectionThemeConverter() CustomPopupmenu? get customPopupmenu;@_CustomMultiselectionThemeConverter() set customPopupmenu(CustomPopupmenu? value);@_CustomMultiselectionThemeConverter() CustomThemeForWidget? get customTheme;@_CustomMultiselectionThemeConverter() set customTheme(CustomThemeForWidget? value);
 /// Create a copy of CustomMultiselectionWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomMultiselectionWidgetCopyWith<$Res>  {
   factory $CustomMultiselectionWidgetCopyWith(CustomMultiselectionWidget value, $Res Function(CustomMultiselectionWidget) _then) = _$CustomMultiselectionWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode,@_CustomMultiselectionThemeConverter() CustomPopupmenu? customPopupmenu,@_CustomMultiselectionThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode,@_CustomMultiselectionThemeConverter() CustomPopupmenu? customPopupmenu,@_CustomMultiselectionThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomMultiselectionWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? label = freezed,Object? selections = null,Object? dropdownMenuMode = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
@@ -166,7 +166,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomMultiselectionWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.selections,_that.dropdownMenuMode,_that.customPopupmenu,_that.customTheme);case _:
@@ -187,7 +187,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomMultiselectionWidget():
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.selections,_that.dropdownMenuMode,_that.customPopupmenu,_that.customTheme);case _:
@@ -207,7 +207,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomMultiselectionWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.selections,_that.dropdownMenuMode,_that.customPopupmenu,_that.customTheme);case _:
@@ -222,10 +222,10 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 @JsonSerializable()
 
 class _CustomMultiselectionWidget extends CustomMultiselectionWidget implements CustomWidget {
-   _CustomMultiselectionWidget({this.type = CustomWidgetTypeDeprecated.multiselection, required this.id, required this.name, required this.dataPoint, this.label, required this.selections, this.dropdownMenuMode = DropdownMenuMode.dropdown, @_CustomMultiselectionThemeConverter() this.customPopupmenu, @_CustomMultiselectionThemeConverter() this.customTheme}): super._();
+   _CustomMultiselectionWidget({this.type = WidgetType.multiselection, required this.id, required this.name, required this.dataPoint, this.label, required this.selections, this.dropdownMenuMode = DropdownMenuMode.dropdown, @_CustomMultiselectionThemeConverter() this.customPopupmenu, @_CustomMultiselectionThemeConverter() this.customTheme}): super._();
   factory _CustomMultiselectionWidget.fromJson(Map<String, dynamic> json) => _$CustomMultiselectionWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override  String? dataPoint;
@@ -261,7 +261,7 @@ abstract mixin class _$CustomMultiselectionWidgetCopyWith<$Res> implements $Cust
   factory _$CustomMultiselectionWidgetCopyWith(_CustomMultiselectionWidget value, $Res Function(_CustomMultiselectionWidget) _then) = __$CustomMultiselectionWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode,@_CustomMultiselectionThemeConverter() CustomPopupmenu? customPopupmenu,@_CustomMultiselectionThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode,@_CustomMultiselectionThemeConverter() CustomPopupmenu? customPopupmenu,@_CustomMultiselectionThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -281,7 +281,7 @@ class __$CustomMultiselectionWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? label = freezed,Object? selections = null,Object? dropdownMenuMode = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_CustomMultiselectionWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable

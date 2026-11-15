@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomWebViewWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); bool get image; set image(bool value); bool get enabledZoom; set enabledZoom(bool value); bool get enableInlineScroll; set enableInlineScroll(bool value); String? get dataPoint; set dataPoint(String? value); String? get url; set url(String? value); int get height; set height(int value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); bool get image; set image(bool value); bool get enabledZoom; set enabledZoom(bool value); bool get enableInlineScroll; set enableInlineScroll(bool value); String? get dataPoint; set dataPoint(String? value); String? get url; set url(String? value); int get height; set height(int value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
 /// Create a copy of CustomWebViewWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomWebViewWidgetCopyWith<$Res>  {
   factory $CustomWebViewWidgetCopyWith(CustomWebViewWidget value, $Res Function(CustomWebViewWidget) _then) = _$CustomWebViewWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, bool image, bool enabledZoom, bool enableInlineScroll, String? dataPoint, String? url, int height, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, bool image, bool enabledZoom, bool enableInlineScroll, String? dataPoint, String? url, int height, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomWebViewWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? image = null,Object? enabledZoom = null,Object? enableInlineScroll = null,Object? dataPoint = freezed,Object? url = freezed,Object? height = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as bool,enabledZoom: null == enabledZoom ? _self.enabledZoom : enabledZoom // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  bool image,  bool enabledZoom,  bool enableInlineScroll,  String? dataPoint,  String? url,  int height,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  bool image,  bool enabledZoom,  bool enableInlineScroll,  String? dataPoint,  String? url,  int height,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomWebViewWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.image,_that.enabledZoom,_that.enableInlineScroll,_that.dataPoint,_that.url,_that.height,_that.customPopupmenu,_that.customTheme);case _:
@@ -189,7 +189,7 @@ return $default(_that.type,_that.id,_that.name,_that.image,_that.enabledZoom,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  bool image,  bool enabledZoom,  bool enableInlineScroll,  String? dataPoint,  String? url,  int height,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  bool image,  bool enabledZoom,  bool enableInlineScroll,  String? dataPoint,  String? url,  int height,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomWebViewWidget():
 return $default(_that.type,_that.id,_that.name,_that.image,_that.enabledZoom,_that.enableInlineScroll,_that.dataPoint,_that.url,_that.height,_that.customPopupmenu,_that.customTheme);case _:
@@ -209,7 +209,7 @@ return $default(_that.type,_that.id,_that.name,_that.image,_that.enabledZoom,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  bool image,  bool enabledZoom,  bool enableInlineScroll,  String? dataPoint,  String? url,  int height,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  bool image,  bool enabledZoom,  bool enableInlineScroll,  String? dataPoint,  String? url,  int height,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomWebViewWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.image,_that.enabledZoom,_that.enableInlineScroll,_that.dataPoint,_that.url,_that.height,_that.customPopupmenu,_that.customTheme);case _:
@@ -224,10 +224,10 @@ return $default(_that.type,_that.id,_that.name,_that.image,_that.enabledZoom,_th
 @JsonSerializable()
 
 class _CustomWebViewWidget extends CustomWebViewWidget implements CustomWidget {
-   _CustomWebViewWidget({this.type = CustomWidgetTypeDeprecated.webViewNew, required this.id, required this.name, this.image = false, this.enabledZoom = false, this.enableInlineScroll = false, required this.dataPoint, this.url, this.height = 500, this.customPopupmenu, this.customTheme}): super._();
+   _CustomWebViewWidget({this.type = WidgetType.webViewNew, required this.id, required this.name, this.image = false, this.enabledZoom = false, this.enableInlineScroll = false, required this.dataPoint, this.url, this.height = 500, this.customPopupmenu, this.customTheme}): super._();
   factory _CustomWebViewWidget.fromJson(Map<String, dynamic> json) => _$CustomWebViewWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override@JsonKey()  bool image;
@@ -265,7 +265,7 @@ abstract mixin class _$CustomWebViewWidgetCopyWith<$Res> implements $CustomWebVi
   factory _$CustomWebViewWidgetCopyWith(_CustomWebViewWidget value, $Res Function(_CustomWebViewWidget) _then) = __$CustomWebViewWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, bool image, bool enabledZoom, bool enableInlineScroll, String? dataPoint, String? url, int height, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, bool image, bool enabledZoom, bool enableInlineScroll, String? dataPoint, String? url, int height, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
 });
 
 
@@ -285,7 +285,7 @@ class __$CustomWebViewWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? image = null,Object? enabledZoom = null,Object? enableInlineScroll = null,Object? dataPoint = freezed,Object? url = freezed,Object? height = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_CustomWebViewWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as bool,enabledZoom: null == enabledZoom ? _self.enabledZoom : enabledZoom // ignore: cast_nullable_to_non_nullable

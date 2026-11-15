@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/settings/widget_settings/widget_template_settings/cubit/bloc/widget_template_list_bloc.dart';
@@ -126,12 +126,12 @@ class TemplatesView extends StatefulWidget {
 }
 
 class _TemplatesViewState extends State<TemplatesView> {
-  List<CustomWidgetTypeDeprecated> types = [];
+  List<WidgetType> types = [];
   bool selectionMode = false;
 
   @override
   void initState() {
-    types.addAll(CustomWidgetTypeDeprecated.values);
+    types.addAll(WidgetType.values);
     types.removeWhere(
       (type) => !widget.templates.keys.any(
         (template) => template.type?.name == type.name,
@@ -151,7 +151,7 @@ class _TemplatesViewState extends State<TemplatesView> {
 
   List<Widget> templates(WidgetTemplateListBloc bloc) {
     List<Widget> templates = [];
-    for (CustomWidgetTypeDeprecated type in CustomWidgetTypeDeprecated.values) {
+    for (WidgetType type in WidgetType.values) {
       List<Dismissible> children = [];
       for (CustomWidget t in widget.templates.keys.where(
         (element) => element.type?.name == type.name,

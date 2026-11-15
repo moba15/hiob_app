@@ -4,7 +4,7 @@ import 'dart:developer' as developer;
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
@@ -85,8 +85,8 @@ class CustomWidgetRepository {
         continue;
       }
 
-      CustomWidgetTypeDeprecated? type;
-      for (var element in CustomWidgetTypeDeprecated.values) {
+      WidgetType? type;
+      for (var element in WidgetType.values) {
         if (element.name == typeRaw ||
             element.toString() == typeRaw ||
             element.toString().replaceAll("CustomWidgetTypeDeprecated.", "") ==
@@ -101,39 +101,39 @@ class CustomWidgetRepository {
 
       CustomWidget? customWidget;
       switch (type) {
-        case CustomWidgetTypeDeprecated.group:
+        case WidgetType.group:
           continue;
-        case CustomWidgetTypeDeprecated.input:
+        case WidgetType.input:
           customWidget = CustomInputWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.button:
+        case WidgetType.button:
           customWidget = CustomButtonWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.webViewNew:
+        case WidgetType.webViewNew:
           customWidget = CustomWebViewWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.tableNew:
+        case WidgetType.tableNew:
           customWidget = CustomTableWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.valueNew:
+        case WidgetType.valueNew:
           customWidget = CustomValueWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.multiselection:
+        case WidgetType.multiselection:
           customWidget = CustomMultiselectionWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.colorPicker:
+        case WidgetType.colorPicker:
           customWidget = CustomColorPickerWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.networkPlayer:
+        case WidgetType.networkPlayer:
           customWidget = CustomNetworkPlayerWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.slider:
+        case WidgetType.slider:
           customWidget = CustomSliderWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.switchWidget:
+        case WidgetType.switchWidget:
           customWidget = CustomSwitchWidget.fromJson(widgetRaw);
           break;
-        case CustomWidgetTypeDeprecated.divisionLine:
+        case WidgetType.divisionLine:
           customWidget = CustomDivisionlineWidget.fromJson(widgetRaw);
           break;
       }
@@ -170,7 +170,7 @@ class CustomWidgetRepository {
     });
   }
 
-  List<CustomWidget> getTemplatesByType(CustomWidgetTypeDeprecated type) {
+  List<CustomWidget> getTemplatesByType(WidgetType type) {
     List<CustomWidget> tmps = [];
     for (CustomWidget t in templates) {
       if (t.type?.name == type.name) {

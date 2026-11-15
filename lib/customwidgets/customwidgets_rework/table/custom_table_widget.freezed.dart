@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomTableWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get header; set header(String? value); bool get sortAsc; set sortAsc(bool value); int get initalSortColumn; set initalSortColumn(int value); bool get initialSortEnabled; set initialSortEnabled(bool value); int get elementsPerPage; set elementsPerPage(int value); Map<String, String> get columns; set columns(Map<String, String> value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get header; set header(String? value); bool get sortAsc; set sortAsc(bool value); int get initalSortColumn; set initalSortColumn(int value); bool get initialSortEnabled; set initialSortEnabled(bool value); int get elementsPerPage; set elementsPerPage(int value); Map<String, String> get columns; set columns(Map<String, String> value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
 /// Create a copy of CustomTableWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomTableWidgetCopyWith<$Res>  {
   factory $CustomTableWidgetCopyWith(CustomTableWidget value, $Res Function(CustomTableWidget) _then) = _$CustomTableWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomTableWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? header = freezed,Object? sortAsc = null,Object? initalSortColumn = null,Object? initialSortEnabled = null,Object? elementsPerPage = null,Object? columns = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,header: freezed == header ? _self.header : header // ignore: cast_nullable_to_non_nullable
@@ -169,7 +169,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomTableWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
@@ -190,7 +190,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomTableWidget():
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
@@ -210,7 +210,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomTableWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
@@ -225,10 +225,10 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_tha
 @JsonSerializable()
 
 class _CustomTableWidget extends CustomTableWidget implements CustomWidget {
-   _CustomTableWidget({this.type = CustomWidgetTypeDeprecated.tableNew, required this.id, required this.name, required this.dataPoint, this.header, this.sortAsc = false, this.initalSortColumn = 0, this.initialSortEnabled = false, this.elementsPerPage = 10, required this.columns, this.customPopupmenu, this.customTheme}): super._();
+   _CustomTableWidget({this.type = WidgetType.tableNew, required this.id, required this.name, required this.dataPoint, this.header, this.sortAsc = false, this.initalSortColumn = 0, this.initialSortEnabled = false, this.elementsPerPage = 10, required this.columns, this.customPopupmenu, this.customTheme}): super._();
   factory _CustomTableWidget.fromJson(Map<String, dynamic> json) => _$CustomTableWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override  String? dataPoint;
@@ -267,7 +267,7 @@ abstract mixin class _$CustomTableWidgetCopyWith<$Res> implements $CustomTableWi
   factory _$CustomTableWidgetCopyWith(_CustomTableWidget value, $Res Function(_CustomTableWidget) _then) = __$CustomTableWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
 });
 
 
@@ -287,7 +287,7 @@ class __$CustomTableWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? header = freezed,Object? sortAsc = null,Object? initalSortColumn = null,Object? initialSortEnabled = null,Object? elementsPerPage = null,Object? columns = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_CustomTableWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,header: freezed == header ? _self.header : header // ignore: cast_nullable_to_non_nullable

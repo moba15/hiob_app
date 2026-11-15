@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/settings/custom_value_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/view/custom_value_widget_view.dart';
@@ -46,8 +46,7 @@ abstract class CustomValueWidget
 
   @Implements<CustomWidget>()
   factory CustomValueWidget({
-    @Default(CustomWidgetTypeDeprecated.valueNew)
-    CustomWidgetTypeDeprecated type,
+    @Default(WidgetType.valueNew) WidgetType type,
     required String id,
     required String name,
     required String? dataPoint,

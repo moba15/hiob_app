@@ -9,11 +9,8 @@ part of 'custom_slider_widget.dart';
 _CustomSliderWidget _$CustomSliderWidgetFromJson(Map<String, dynamic> json) =>
     _CustomSliderWidget(
       type:
-          $enumDecodeNullable(
-            _$CustomWidgetTypeDeprecatedEnumMap,
-            json['type'],
-          ) ??
-          CustomWidgetTypeDeprecated.slider,
+          $enumDecodeNullable(_$WidgetTypeEnumMap, json['type']) ??
+          WidgetType.slider,
       id: json['id'] as String,
       name: json['name'] as String,
       label: json['label'] as String?,
@@ -39,7 +36,7 @@ _CustomSliderWidget _$CustomSliderWidgetFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CustomSliderWidgetToJson(_CustomSliderWidget instance) =>
     <String, dynamic>{
-      'type': _$CustomWidgetTypeDeprecatedEnumMap[instance.type]!,
+      'type': _$WidgetTypeEnumMap[instance.type]!,
       'id': instance.id,
       'name': instance.name,
       'label': instance.label,
@@ -56,19 +53,19 @@ Map<String, dynamic> _$CustomSliderWidgetToJson(_CustomSliderWidget instance) =>
       ),
     };
 
-const _$CustomWidgetTypeDeprecatedEnumMap = {
-  CustomWidgetTypeDeprecated.group: 'group',
-  CustomWidgetTypeDeprecated.input: 'input',
-  CustomWidgetTypeDeprecated.button: 'button',
-  CustomWidgetTypeDeprecated.webViewNew: 'webViewNew',
-  CustomWidgetTypeDeprecated.tableNew: 'tableNew',
-  CustomWidgetTypeDeprecated.valueNew: 'valueNew',
-  CustomWidgetTypeDeprecated.multiselection: 'multiselection',
-  CustomWidgetTypeDeprecated.slider: 'slider',
-  CustomWidgetTypeDeprecated.networkPlayer: 'networkPlayer',
-  CustomWidgetTypeDeprecated.colorPicker: 'colorPicker',
-  CustomWidgetTypeDeprecated.switchWidget: 'switchWidget',
-  CustomWidgetTypeDeprecated.divisionLine: 'divisionLine',
+const _$WidgetTypeEnumMap = {
+  WidgetType.group: 'group',
+  WidgetType.input: 'input',
+  WidgetType.button: 'button',
+  WidgetType.webViewNew: 'webViewNew',
+  WidgetType.tableNew: 'tableNew',
+  WidgetType.valueNew: 'valueNew',
+  WidgetType.multiselection: 'multiselection',
+  WidgetType.slider: 'slider',
+  WidgetType.networkPlayer: 'networkPlayer',
+  WidgetType.colorPicker: 'colorPicker',
+  WidgetType.switchWidget: 'switchWidget',
+  WidgetType.divisionLine: 'divisionLine',
 };
 
 const _$CustomSliderWidgetUpdateStrategyEnumMap = {

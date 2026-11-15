@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/settings/custom_switch_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/view/custom_switch_widget_view.dart';
@@ -46,8 +46,7 @@ abstract class CustomSwitchWidget
 
   @Implements<CustomWidget>()
   factory CustomSwitchWidget({
-    @Default(CustomWidgetTypeDeprecated.switchWidget)
-    CustomWidgetTypeDeprecated type,
+    @Default(WidgetType.switchWidget) WidgetType type,
     required String id,
     required String name,
     required String? dataPoint,

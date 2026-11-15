@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomColorPickerWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; CustomWidgetTypeDeprecated get type; set type(CustomWidgetTypeDeprecated value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); String get prefix; set prefix(String value); dynamic get alpha; set alpha(dynamic value); dynamic get shadesSelection; set shadesSelection(dynamic value); Map<ColorPickerType, bool> get pickersEnabled; set pickersEnabled(Map<ColorPickerType, bool> value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomColorpickerThemeConverter() CustomThemeForWidget? get customTheme;@_CustomColorpickerThemeConverter() set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); String get prefix; set prefix(String value); dynamic get alpha; set alpha(dynamic value); dynamic get shadesSelection; set shadesSelection(dynamic value); Map<ColorPickerType, bool> get pickersEnabled; set pickersEnabled(Map<ColorPickerType, bool> value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomColorpickerThemeConverter() CustomThemeForWidget? get customTheme;@_CustomColorpickerThemeConverter() set customTheme(CustomThemeForWidget? value);
 /// Create a copy of CustomColorPickerWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,7 +41,7 @@ abstract mixin class $CustomColorPickerWidgetCopyWith<$Res>  {
   factory $CustomColorPickerWidgetCopyWith(CustomColorPickerWidget value, $Res Function(CustomColorPickerWidget) _then) = _$CustomColorPickerWidgetCopyWithImpl;
 @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? label, String prefix, dynamic alpha, dynamic shadesSelection, Map<ColorPickerType, bool> pickersEnabled, CustomPopupmenu? customPopupmenu,@_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, String prefix, dynamic alpha, dynamic shadesSelection, Map<ColorPickerType, bool> pickersEnabled, CustomPopupmenu? customPopupmenu,@_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -61,7 +61,7 @@ class _$CustomColorPickerWidgetCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? label = freezed,Object? prefix = null,Object? alpha = freezed,Object? shadesSelection = freezed,Object? pickersEnabled = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  String prefix,  dynamic alpha,  dynamic shadesSelection,  Map<ColorPickerType, bool> pickersEnabled,  CustomPopupmenu? customPopupmenu, @_CustomColorpickerThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  String prefix,  dynamic alpha,  dynamic shadesSelection,  Map<ColorPickerType, bool> pickersEnabled,  CustomPopupmenu? customPopupmenu, @_CustomColorpickerThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomColorPickerWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.prefix,_that.alpha,_that.shadesSelection,_that.pickersEnabled,_that.customPopupmenu,_that.customTheme);case _:
@@ -189,7 +189,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  String prefix,  dynamic alpha,  dynamic shadesSelection,  Map<ColorPickerType, bool> pickersEnabled,  CustomPopupmenu? customPopupmenu, @_CustomColorpickerThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  String prefix,  dynamic alpha,  dynamic shadesSelection,  Map<ColorPickerType, bool> pickersEnabled,  CustomPopupmenu? customPopupmenu, @_CustomColorpickerThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomColorPickerWidget():
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.prefix,_that.alpha,_that.shadesSelection,_that.pickersEnabled,_that.customPopupmenu,_that.customTheme);case _:
@@ -209,7 +209,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CustomWidgetTypeDeprecated type,  String id,  String name,  String? dataPoint,  String? label,  String prefix,  dynamic alpha,  dynamic shadesSelection,  Map<ColorPickerType, bool> pickersEnabled,  CustomPopupmenu? customPopupmenu, @_CustomColorpickerThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  String prefix,  dynamic alpha,  dynamic shadesSelection,  Map<ColorPickerType, bool> pickersEnabled,  CustomPopupmenu? customPopupmenu, @_CustomColorpickerThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomColorPickerWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.prefix,_that.alpha,_that.shadesSelection,_that.pickersEnabled,_that.customPopupmenu,_that.customTheme);case _:
@@ -224,10 +224,10 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 @JsonSerializable()
 
 class _CustomColorPickerWidget extends CustomColorPickerWidget implements CustomWidget {
-   _CustomColorPickerWidget({this.type = CustomWidgetTypeDeprecated.colorPicker, required this.id, required this.name, required this.dataPoint, this.label, this.prefix = "0x", this.alpha = false, this.shadesSelection = true, this.pickersEnabled = const {}, this.customPopupmenu, @_CustomColorpickerThemeConverter() this.customTheme}): super._();
+   _CustomColorPickerWidget({this.type = WidgetType.colorPicker, required this.id, required this.name, required this.dataPoint, this.label, this.prefix = "0x", this.alpha = false, this.shadesSelection = true, this.pickersEnabled = const {}, this.customPopupmenu, @_CustomColorpickerThemeConverter() this.customTheme}): super._();
   factory _CustomColorPickerWidget.fromJson(Map<String, dynamic> json) => _$CustomColorPickerWidgetFromJson(json);
 
-@override@JsonKey()  CustomWidgetTypeDeprecated type;
+@override@JsonKey()  WidgetType type;
 @override  String id;
 @override  String name;
 @override  String? dataPoint;
@@ -265,7 +265,7 @@ abstract mixin class _$CustomColorPickerWidgetCopyWith<$Res> implements $CustomC
   factory _$CustomColorPickerWidgetCopyWith(_CustomColorPickerWidget value, $Res Function(_CustomColorPickerWidget) _then) = __$CustomColorPickerWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- CustomWidgetTypeDeprecated type, String id, String name, String? dataPoint, String? label, String prefix, dynamic alpha, dynamic shadesSelection, Map<ColorPickerType, bool> pickersEnabled, CustomPopupmenu? customPopupmenu,@_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, String prefix, dynamic alpha, dynamic shadesSelection, Map<ColorPickerType, bool> pickersEnabled, CustomPopupmenu? customPopupmenu,@_CustomColorpickerThemeConverter() CustomThemeForWidget? customTheme
 });
 
 
@@ -285,7 +285,7 @@ class __$CustomColorPickerWidgetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? name = null,Object? dataPoint = freezed,Object? label = freezed,Object? prefix = null,Object? alpha = freezed,Object? shadesSelection = freezed,Object? pickersEnabled = null,Object? customPopupmenu = freezed,Object? customTheme = freezed,}) {
   return _then(_CustomColorPickerWidget(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as CustomWidgetTypeDeprecated,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as WidgetType,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,dataPoint: freezed == dataPoint ? _self.dataPoint : dataPoint // ignore: cast_nullable_to_non_nullable
 as String?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable

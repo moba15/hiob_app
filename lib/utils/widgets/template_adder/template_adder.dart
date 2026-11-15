@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/cutsom_widget.dart';
+import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/repository/custom_widget_repository.dart';
 import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/utils/app_locallization_shortcut.dart';
@@ -52,10 +52,9 @@ class _TemplateSelectionAlertDialogState
       content: SizedBox(
         child: Column(
           children: [
-            for (CustomWidgetTypeDeprecated type
-                in CustomWidgetTypeDeprecated.values.where(
-                  (element) => element != CustomWidgetTypeDeprecated.group,
-                ))
+            for (WidgetType type in WidgetType.values.where(
+              (element) => element != WidgetType.group,
+            ))
               if (templates.any(
                 (element) =>
                     element.type?.name == type.name &&
