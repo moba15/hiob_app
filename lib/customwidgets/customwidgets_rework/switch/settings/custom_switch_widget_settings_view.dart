@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
@@ -109,8 +110,8 @@ class _CustomSwitchWidgetSettingsViewState
     );
   }
 
-  void onSelect(IobrokerObject iobrokerObject) {
-    widget.customSwitchWidget.dataPoint = iobrokerObject.id;
+  void onSelect(DeviceInterface deviceInterface) {
+    widget.customSwitchWidget.dataPoint = deviceInterface.id;
     c.update(widget.customSwitchWidget);
   }
 }

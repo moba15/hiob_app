@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
@@ -90,11 +91,11 @@ class _CustomButtonWidgetSettingsViewState
     );
   }
 
-  void onSelect(IobrokerObject iobrokerObject) {
-    widget.customButtonWidget.dataPoint = iobrokerObject.id;
+  void onSelect(DeviceInterface deviceInterface) {
+    widget.customButtonWidget.dataPoint = deviceInterface.id;
     c.update(widget.customButtonWidget);
     if (valueTextEditingController.text.isEmpty || !_valueTextManuallyChanged) {
-      valueTextChanged("${iobrokerObject.name ?? iobrokerObject.id} Button");
+      valueTextChanged("${deviceInterface.name ?? deviceInterface.id} Button");
       valueTextEditingController.text = widget.customButtonWidget.label!;
       _valueTextManuallyChanged = false;
     }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/di/injection.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/cubit/cubit/async_search_cubit.dart';
 import 'package:smart_home/utils/widgets/dropdown_search/cubit/cubit/async_search_cubit_factory.dart';
@@ -11,7 +12,7 @@ import 'package:smart_home/utils/widgets/substring_highlight_widget.dart';
 
 class StateSearchBar extends StatefulWidget {
   final String? selectedObject;
-  final Function(IobrokerObject) onSelected;
+  final Function(DeviceInterface) onSelected;
   const StateSearchBar({
     super.key,
     required this.selectedObject,
@@ -23,20 +24,16 @@ class StateSearchBar extends StatefulWidget {
 }
 
 class _StateSearchBarState extends State<StateSearchBar> {
-  late DeviceServiceInterface<IobrokerObject> deviceManager;
-  late AsyncSearchCubit<IobrokerObject> asyncSearchCubit;
+  late DeviceServiceInterface<DeviceInterface> deviceManager;
+  late AsyncSearchCubit<DeviceInterface> asyncSearchCubit;
   late AsyncSearchCubitFactory asyncSearchCubitFactory;
-  IobrokerObject? selectedObject;
+  DeviceInterface? selectedObject;
   String _currentSearch = "";
   Map<String, bool> filters = {};
   @override
   void initState() {
     DeviceServiceInterface d = context.read<DeviceServiceInterface>();
-    if (d is DeviceServiceInterface<IobrokerObject>) {
-      deviceManager = d;
-    } else {
-      throw Exception("DeviceServiceInterface is not of type IobrokerObject");
-    }
+    deviceManager = d;
 
     asyncSearchCubitFactory = getIt<AsyncSearchCubitFactory>();
     asyncSearchCubit = asyncSearchCubitFactory.create(
@@ -65,7 +62,7 @@ class _StateSearchBarState extends State<StateSearchBar> {
     }
     return BlocProvider.value(
       value: asyncSearchCubit,
-      child: DropdownSearchAsync<IobrokerObject>(
+      child: DropdownSearchAsync<DeviceInterface>(
         title: "Select a state",
         selectedObject: selectedObject == null
             ? null

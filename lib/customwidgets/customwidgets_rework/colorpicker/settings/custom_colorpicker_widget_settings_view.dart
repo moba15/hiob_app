@@ -7,6 +7,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/utils/theme.dart';
 
@@ -162,8 +163,8 @@ class _CustomColorPickerWidgetSettingsViewState
     );
   }
 
-  void onSelect(IobrokerObject? ioBrokerObject) {
-    widget.customColorPickerWidget.dataPoint = ioBrokerObject?.id;
+  void onSelect(DeviceInterface? deviceInterface) {
+    widget.customColorPickerWidget.dataPoint = deviceInterface?.id;
     c.update(widget.customColorPickerWidget);
   }
 

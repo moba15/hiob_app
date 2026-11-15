@@ -5,6 +5,7 @@ import 'package:smart_home/customwidgets/customwidgets_rework/bloc/cubit/custom_
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 import 'package:smart_home/device/object/iobroker_object.dart';
+import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/settings/common/devices/state_search_bar.dart';
 import 'package:smart_home/shapes/sldier/custom_slider_thumb_value.dart';
 import 'package:smart_home/utils/theme.dart';
@@ -157,8 +158,8 @@ class _CustomWebViewWidgetSettingViewState
     );
   }
 
-  void onSelect(IobrokerObject? iobrokerObject) {
-    widget.customWebViewWidget.dataPoint = iobrokerObject?.id;
+  void onSelect(DeviceInterface? deviceInterface) {
+    widget.customWebViewWidget.dataPoint = deviceInterface?.id;
     c.update(widget.customWebViewWidget);
   }
 }

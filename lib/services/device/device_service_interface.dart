@@ -2,11 +2,11 @@ import 'package:smart_home/model/device/device_interface.dart';
 import 'package:smart_home/utils/pair.dart';
 
 interface class DeviceServiceInterface<Device extends DeviceInterface> {
-  Future<List<Device>> getAllDevices({required int limit}) async {
+  Future<List<DeviceInterface>> getAllDevices({required int limit}) async {
     throw UnimplementedError();
   }
 
-  Future<Device?> getDeviceById({required String id}) async {
+  Future<DeviceInterface?> getDeviceById({required String id}) async {
     throw UnimplementedError();
   }
 
