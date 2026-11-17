@@ -74,7 +74,8 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
           child: SwitchListTile(
             title: Text(
               title,
-              style: widget.customSwitchWidget.customTheme?.labelTheme?.textStyle,
+              style:
+                  widget.customSwitchWidget.customTheme?.labelTheme?.textStyle,
             ),
             onChanged: (value) {
               if (value) {
