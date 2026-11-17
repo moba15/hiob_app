@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/device/state/bloc/device_state_bloc.dart';
 import 'package:smart_home/services/cubit/manager_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_home/di/injection.dart';
@@ -162,8 +163,14 @@ class _BootstrapAppState extends State<_BootstrapApp> {
       );
     }
 
-    return BlocProvider.value(
-      value: managerCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: managerCubit),
+        BlocProvider<DeviceStateBloc>(
+          create: (_) =>
+              DeviceStateBloc(deviceService: _container!.deviceManager),
+        ),
+      ],
       child: MultiProvider(
         providers: [
           Provider.value(value: _container!),
