@@ -29,9 +29,9 @@ _CustomColorPickerWidget _$CustomColorPickerWidgetFromJson(
       : CustomPopupmenu.fromJson(
           json['customPopupmenu'] as Map<String, dynamic>,
         ),
-  customTheme: const _CustomColorpickerThemeConverter().fromJson(
-    json['customTheme'] as Map<String, dynamic>?,
-  ),
+  customTheme: json['customTheme'] == null
+      ? null
+      : WidgetTheme.fromJson(json['customTheme'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$CustomColorPickerWidgetToJson(
@@ -49,9 +49,7 @@ Map<String, dynamic> _$CustomColorPickerWidgetToJson(
     (k, e) => MapEntry(_$ColorPickerTypeEnumMap[k]!, e),
   ),
   'customPopupmenu': instance.customPopupmenu,
-  'customTheme': const _CustomColorpickerThemeConverter().toJson(
-    instance.customTheme,
-  ),
+  'customTheme': instance.customTheme,
 };
 
 const _$WidgetTypeEnumMap = {

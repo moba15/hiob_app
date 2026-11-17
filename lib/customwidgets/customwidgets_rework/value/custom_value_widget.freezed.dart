@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomValueWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); Map<String, String> get valueMapper; set valueMapper(Map<String, String> value); int get round; set round(int value); String? get suffix; set suffix(String? value); String? get prefix; set prefix(String? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomValueThemeConverter() CustomThemeForWidget? get customTheme;@_CustomValueThemeConverter() set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); Map<String, String> get valueMapper; set valueMapper(Map<String, String> value); int get round; set round(int value); String? get suffix; set suffix(String? value); String? get prefix; set prefix(String? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); WidgetTheme? get customTheme; set customTheme(WidgetTheme? value);
 /// Create a copy of CustomValueWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,11 +41,11 @@ abstract mixin class $CustomValueWidgetCopyWith<$Res>  {
   factory $CustomValueWidgetCopyWith(CustomValueWidget value, $Res Function(CustomValueWidget) _then) = _$CustomValueWidgetCopyWithImpl;
 @useResult
 $Res call({
- WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> valueMapper, int round, String? suffix, String? prefix, CustomPopupmenu? customPopupmenu,@_CustomValueThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> valueMapper, int round, String? suffix, String? prefix, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;$WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -71,7 +71,7 @@ as int,suffix: freezed == suffix ? _self.suffix : suffix // ignore: cast_nullabl
 as String?,prefix: freezed == prefix ? _self.prefix : prefix // ignore: cast_nullable_to_non_nullable
 as String?,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 /// Create a copy of CustomValueWidget
@@ -85,6 +85,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomValueWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
@@ -168,7 +180,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> valueMapper,  int round,  String? suffix,  String? prefix,  CustomPopupmenu? customPopupmenu, @_CustomValueThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> valueMapper,  int round,  String? suffix,  String? prefix,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomValueWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.valueMapper,_that.round,_that.suffix,_that.prefix,_that.customPopupmenu,_that.customTheme);case _:
@@ -189,7 +201,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> valueMapper,  int round,  String? suffix,  String? prefix,  CustomPopupmenu? customPopupmenu, @_CustomValueThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> valueMapper,  int round,  String? suffix,  String? prefix,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomValueWidget():
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.valueMapper,_that.round,_that.suffix,_that.prefix,_that.customPopupmenu,_that.customTheme);case _:
@@ -209,7 +221,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> valueMapper,  int round,  String? suffix,  String? prefix,  CustomPopupmenu? customPopupmenu, @_CustomValueThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> valueMapper,  int round,  String? suffix,  String? prefix,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomValueWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.valueMapper,_that.round,_that.suffix,_that.prefix,_that.customPopupmenu,_that.customTheme);case _:
@@ -224,7 +236,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 @JsonSerializable()
 
 class _CustomValueWidget extends CustomValueWidget implements CustomWidget {
-   _CustomValueWidget({this.type = WidgetType.valueNew, required this.id, required this.name, required this.dataPoint, this.label, this.valueMapper = const {}, this.round = 2, this.suffix, this.prefix, this.customPopupmenu, @_CustomValueThemeConverter() this.customTheme}): super._();
+   _CustomValueWidget({this.type = WidgetType.valueNew, required this.id, required this.name, required this.dataPoint, this.label, this.valueMapper = const {}, this.round = 2, this.suffix, this.prefix, this.customPopupmenu, this.customTheme}): super._();
   factory _CustomValueWidget.fromJson(Map<String, dynamic> json) => _$CustomValueWidgetFromJson(json);
 
 @override@JsonKey()  WidgetType type;
@@ -237,7 +249,7 @@ class _CustomValueWidget extends CustomValueWidget implements CustomWidget {
 @override  String? suffix;
 @override  String? prefix;
 @override  CustomPopupmenu? customPopupmenu;
-@override@_CustomValueThemeConverter()  CustomThemeForWidget? customTheme;
+@override  WidgetTheme? customTheme;
 
 /// Create a copy of CustomValueWidget
 /// with the given fields replaced by the non-null parameter values.
@@ -265,11 +277,11 @@ abstract mixin class _$CustomValueWidgetCopyWith<$Res> implements $CustomValueWi
   factory _$CustomValueWidgetCopyWith(_CustomValueWidget value, $Res Function(_CustomValueWidget) _then) = __$CustomValueWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> valueMapper, int round, String? suffix, String? prefix, CustomPopupmenu? customPopupmenu,@_CustomValueThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> valueMapper, int round, String? suffix, String? prefix, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;@override $WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -295,7 +307,7 @@ as int,suffix: freezed == suffix ? _self.suffix : suffix // ignore: cast_nullabl
 as String?,prefix: freezed == prefix ? _self.prefix : prefix // ignore: cast_nullable_to_non_nullable
 as String?,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 
@@ -310,6 +322,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomValueWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }

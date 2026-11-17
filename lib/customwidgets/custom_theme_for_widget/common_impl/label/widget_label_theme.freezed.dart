@@ -205,7 +205,7 @@ return $default(_that.id,_that.labelColor,_that.labelFonSize,_that.labelFontWeig
 /// @nodoc
 @JsonSerializable()
 
-class _LabelTheme extends LabelTheme implements CustomThemeForWidget {
+class _LabelTheme extends LabelTheme {
    _LabelTheme(this.id, @MaterialColorConverter() this.labelColor, this.labelFonSize, @FontWeightConverter() this.labelFontWeight, this.labelFontStyle): super._();
   factory _LabelTheme.fromJson(Map<String, dynamic> json) => _$LabelThemeFromJson(json);
 

@@ -1,9 +1,8 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
-
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
@@ -23,7 +22,7 @@ class _CustomColorPickerWidgetViewState
     extends State<CustomColorPickerWidgetView> {
   late String _label;
   DataPointBloc? _bloc;
-  late CustomColorpickerWidgetTheme? theme;
+  late WidgetTheme? theme;
 
   @override
   void initState() {
@@ -38,9 +37,7 @@ class _CustomColorPickerWidgetViewState
             widget.customColorPickerWidget.label!.isNotEmpty
         ? widget.customColorPickerWidget.label!
         : widget.customColorPickerWidget.name;
-    theme =
-        widget.customColorPickerWidget.customTheme
-            as CustomColorpickerWidgetTheme?;
+    theme = widget.customColorPickerWidget.customTheme;
     super.initState();
   }
 
@@ -59,9 +56,7 @@ class _CustomColorPickerWidgetViewState
               widget.customColorPickerWidget.label!.isNotEmpty
           ? widget.customColorPickerWidget.label!
           : widget.customColorPickerWidget.name;
-      theme =
-          widget.customColorPickerWidget.customTheme
-              as CustomColorpickerWidgetTheme?;
+      theme = widget.customColorPickerWidget.customTheme;
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -94,7 +89,7 @@ class _CustomColorPickerWidgetViewState
             (regExp.allMatches(value).length != 6 &&
                 regExp.allMatches(value).length != 8)) {
           return ListTile(
-            title: Text(_label, style: theme?.labelTheme.textStyle),
+            title: Text(_label, style: theme?.labelTheme?.textStyle),
             trailing: Text("Not supported value: $value"),
             onTap: () => colorPickerDialog(
               context,
@@ -120,7 +115,7 @@ class _CustomColorPickerWidgetViewState
         }
 
         return ListTile(
-          title: Text(_label, style: theme?.labelTheme.textStyle),
+          title: Text(_label, style: theme?.labelTheme?.textStyle),
           trailing:
               alpha == null || red == null || blue == null || green == null
               ? Text("Currently only hex values are supported: ${state.value}")

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
@@ -90,10 +89,7 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
             final Text label = Text(
               labelText,
               style:
-                  (widget.customInputWidget.customTheme
-                          as CustomInputWidgetTheme?)
-                      ?.labelTheme
-                      .textStyle,
+                  (widget.customInputWidget.customTheme)?.labelTheme?.textStyle,
             );
             return ListTile(
               onLongPress: () {
@@ -110,11 +106,11 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
                       onSubmitted != null ? onSubmitted(v, bloc!) : null,
                   decoration: InputDecoration(
                     hintText: hintText,
-                    labelStyle:
-                        (widget.customInputWidget.customTheme
-                                as CustomInputWidgetTheme?)
-                            ?.labelTheme
-                            .textStyle,
+                    labelStyle: (widget
+                        .customInputWidget
+                        .customTheme
+                        ?.labelTheme
+                        ?.textStyle),
                     labelText: labelText,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
@@ -152,19 +148,15 @@ class _CustomInputWidgetViewState extends State<CustomInputWidgetView> {
                     widget.customInputWidget.label!.isEmpty
                 ? Text(
                     widget.customInputWidget.name,
-                    style:
-                        (widget.customInputWidget.customTheme
-                                as CustomInputWidgetTheme?)
-                            ?.labelTheme
-                            .textStyle,
+                    style: (widget.customInputWidget.customTheme)
+                        ?.labelTheme
+                        ?.textStyle,
                   )
                 : Text(
                     widget.customInputWidget.label!,
-                    style:
-                        (widget.customInputWidget.customTheme
-                                as CustomInputWidgetTheme?)
-                            ?.labelTheme
-                            .textStyle,
+                    style: (widget.customInputWidget.customTheme)
+                        ?.labelTheme
+                        ?.textStyle,
                   );
             return TextField(
               controller: textEditingController,

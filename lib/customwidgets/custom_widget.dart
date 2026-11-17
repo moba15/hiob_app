@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/customwidgets/custom_theme_for_widget/common_impl/label/widget_label_theme.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart' as old;
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/custom_colorpicker_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/colorpicker/theme/custom_colorpicker_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/divisionline/custom_divisionline_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/custom_input_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/networkplayer/custom_networkplayer_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/table/custom_table_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/webview/custom_webview_widget.dart';
 
@@ -111,54 +104,29 @@ extension CustomWidgetTypeExtension on WidgetType {
     }
   }
 
-  CustomThemeForWidget get emptyTheme {
+  WidgetTheme get emptyTheme {
     switch (this) {
       case WidgetType.valueNew:
-        return CustomValueWidgetTheme(
-              "not set",
-              LabelTheme("not set", null, null, null, null),
-              null,
-              null,
-              null,
-            )
-            as CustomThemeForWidget;
+        return WidgetTheme(
+          id: "not set",
+          labelTheme: LabelTheme("not set", null, null, null, null),
+          valueTheme: LabelTheme("not set", null, null, null, null),
+        );
       case WidgetType.switchWidget:
-        return CustomSwitchWidgetTheme(
-              "not set",
-              LabelTheme("not set", null, null, null, null),
-            )
-            as CustomThemeForWidget;
       case WidgetType.button:
-        return CustomButtonWidgetTheme(
-              "not set",
-              LabelTheme("not set", null, null, null, null),
-            )
-            as CustomThemeForWidget;
       case WidgetType.input:
-        return CustomInputWidgetTheme(
-              "not set",
-              LabelTheme("not set", null, null, null, null),
-            )
-            as CustomThemeForWidget;
       case WidgetType.multiselection:
-        return CustomMultiselectionWidgetTheme(
-              "not set",
-              LabelTheme("not set", null, null, null, null),
-            )
-            as CustomThemeForWidget;
       case WidgetType.colorPicker:
-        return CustomColorpickerWidgetTheme(
-              "not set",
-              LabelTheme("not set", null, null, null, null),
-            )
-            as CustomThemeForWidget;
       case WidgetType.slider:
-        return CustomSliderWidgetTheme(
-              "not set",
-              LabelTheme("not set", null, null, null, null),
-            )
-            as CustomThemeForWidget;
-
+        return WidgetTheme(
+          id: "not set",
+          labelTheme: LabelTheme("not set", null, null, null, null),
+        );
+      case WidgetType.divisionLine:
+        return WidgetTheme(
+          id: "not set",
+          dividerTheme: const DividerThemeData(),
+        );
       default:
         throw UnimplementedError("Not implemented for $this");
     }

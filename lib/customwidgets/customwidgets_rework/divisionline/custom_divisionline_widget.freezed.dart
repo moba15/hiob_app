@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomDivisionlineWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); dynamic get thickness; set thickness(dynamic value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); dynamic get thickness; set thickness(dynamic value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); WidgetTheme? get customTheme; set customTheme(WidgetTheme? value);
 /// Create a copy of CustomDivisionlineWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,11 +41,11 @@ abstract mixin class $CustomDivisionlineWidgetCopyWith<$Res>  {
   factory $CustomDivisionlineWidgetCopyWith(CustomDivisionlineWidget value, $Res Function(CustomDivisionlineWidget) _then) = _$CustomDivisionlineWidgetCopyWithImpl;
 @useResult
 $Res call({
- WidgetType type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;$WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -66,7 +66,7 @@ as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non
 as String,thickness: freezed == thickness ? _self.thickness : thickness // ignore: cast_nullable_to_non_nullable
 as dynamic,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 /// Create a copy of CustomDivisionlineWidget
@@ -80,6 +80,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomDivisionlineWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
@@ -163,7 +175,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomDivisionlineWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopupmenu,_that.customTheme);case _:
@@ -184,7 +196,7 @@ return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopup
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomDivisionlineWidget():
 return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopupmenu,_that.customTheme);case _:
@@ -204,7 +216,7 @@ return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopup
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  dynamic thickness,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomDivisionlineWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.thickness,_that.customPopupmenu,_that.customTheme);case _:
@@ -227,7 +239,7 @@ class _CustomDivisionlineWidget extends CustomDivisionlineWidget implements Cust
 @override  String name;
 @override@JsonKey()  dynamic thickness;
 @override  CustomPopupmenu? customPopupmenu;
-@override  CustomThemeForWidget? customTheme;
+@override  WidgetTheme? customTheme;
 
 /// Create a copy of CustomDivisionlineWidget
 /// with the given fields replaced by the non-null parameter values.
@@ -255,11 +267,11 @@ abstract mixin class _$CustomDivisionlineWidgetCopyWith<$Res> implements $Custom
   factory _$CustomDivisionlineWidgetCopyWith(_CustomDivisionlineWidget value, $Res Function(_CustomDivisionlineWidget) _then) = __$CustomDivisionlineWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- WidgetType type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, dynamic thickness, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;@override $WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -280,7 +292,7 @@ as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non
 as String,thickness: freezed == thickness ? _self.thickness : thickness // ignore: cast_nullable_to_non_nullable
 as dynamic,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 
@@ -295,6 +307,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomDivisionlineWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
@@ -34,7 +34,7 @@ abstract class CustomTableWidget
     @Default(10) int elementsPerPage,
     required Map<String, String> columns,
     CustomPopupmenu? customPopupmenu,
-    CustomThemeForWidget? customTheme,
+    WidgetTheme? customTheme,
   }) = _CustomTableWidget;
 
   @override

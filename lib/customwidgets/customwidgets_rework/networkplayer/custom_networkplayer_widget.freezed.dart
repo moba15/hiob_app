@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomNetworkPlayerWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; String get id; set id(String value); String get name; set name(String value); String? get url; set url(String? value); int get height; set height(int value); int get width; set width(int value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; String get id; set id(String value); String get name; set name(String value); String? get url; set url(String? value); int get height; set height(int value); int get width; set width(int value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); WidgetTheme? get customTheme; set customTheme(WidgetTheme? value);
 /// Create a copy of CustomNetworkPlayerWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,11 +41,11 @@ abstract mixin class $CustomNetworkPlayerWidgetCopyWith<$Res>  {
   factory $CustomNetworkPlayerWidgetCopyWith(CustomNetworkPlayerWidget value, $Res Function(CustomNetworkPlayerWidget) _then) = _$CustomNetworkPlayerWidgetCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? url, int height, int width, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ String id, String name, String? url, int height, int width, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;$WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -67,7 +67,7 @@ as String?,height: null == height ? _self.height : height // ignore: cast_nullab
 as int,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
 as int,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 /// Create a copy of CustomNetworkPlayerWidget
@@ -81,6 +81,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomNetworkPlayerWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
@@ -164,7 +176,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  int height,  int width,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  int height,  int width,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomNetworkPlayerWidget() when $default != null:
 return $default(_that.id,_that.name,_that.url,_that.height,_that.width,_that.customPopupmenu,_that.customTheme);case _:
@@ -185,7 +197,7 @@ return $default(_that.id,_that.name,_that.url,_that.height,_that.width,_that.cus
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  int height,  int width,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  int height,  int width,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomNetworkPlayerWidget():
 return $default(_that.id,_that.name,_that.url,_that.height,_that.width,_that.customPopupmenu,_that.customTheme);case _:
@@ -205,7 +217,7 @@ return $default(_that.id,_that.name,_that.url,_that.height,_that.width,_that.cus
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? url,  int height,  int width,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? url,  int height,  int width,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomNetworkPlayerWidget() when $default != null:
 return $default(_that.id,_that.name,_that.url,_that.height,_that.width,_that.customPopupmenu,_that.customTheme);case _:
@@ -229,7 +241,7 @@ class _CustomNetworkPlayerWidget extends CustomNetworkPlayerWidget implements Cu
 @override@JsonKey()  int height;
 @override@JsonKey()  int width;
 @override  CustomPopupmenu? customPopupmenu;
-@override  CustomThemeForWidget? customTheme;
+@override  WidgetTheme? customTheme;
 
 /// Create a copy of CustomNetworkPlayerWidget
 /// with the given fields replaced by the non-null parameter values.
@@ -257,11 +269,11 @@ abstract mixin class _$CustomNetworkPlayerWidgetCopyWith<$Res> implements $Custo
   factory _$CustomNetworkPlayerWidgetCopyWith(_CustomNetworkPlayerWidget value, $Res Function(_CustomNetworkPlayerWidget) _then) = __$CustomNetworkPlayerWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? url, int height, int width, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ String id, String name, String? url, int height, int width, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;@override $WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -283,7 +295,7 @@ as String?,height: null == height ? _self.height : height // ignore: cast_nullab
 as int,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
 as int,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 
@@ -298,6 +310,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomNetworkPlayerWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }

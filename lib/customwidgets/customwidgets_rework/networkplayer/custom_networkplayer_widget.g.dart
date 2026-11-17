@@ -21,9 +21,7 @@ _CustomNetworkPlayerWidget _$CustomNetworkPlayerWidgetFromJson(
         ),
   customTheme: json['customTheme'] == null
       ? null
-      : CustomThemeForWidget.fromJson(
-          json['customTheme'] as Map<String, dynamic>,
-        ),
+      : WidgetTheme.fromJson(json['customTheme'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$CustomNetworkPlayerWidgetToJson(

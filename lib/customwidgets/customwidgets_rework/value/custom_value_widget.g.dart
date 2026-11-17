@@ -28,9 +28,9 @@ _CustomValueWidget _$CustomValueWidgetFromJson(Map<String, dynamic> json) =>
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>,
             ),
-      customTheme: const _CustomValueThemeConverter().fromJson(
-        json['customTheme'] as Map<String, dynamic>?,
-      ),
+      customTheme: json['customTheme'] == null
+          ? null
+          : WidgetTheme.fromJson(json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CustomValueWidgetToJson(_CustomValueWidget instance) =>
@@ -45,9 +45,7 @@ Map<String, dynamic> _$CustomValueWidgetToJson(_CustomValueWidget instance) =>
       'suffix': instance.suffix,
       'prefix': instance.prefix,
       'customPopupmenu': instance.customPopupmenu,
-      'customTheme': const _CustomValueThemeConverter().toJson(
-        instance.customTheme,
-      ),
+      'customTheme': instance.customTheme,
     };
 
 const _$WidgetTypeEnumMap = {

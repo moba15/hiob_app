@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/custom_multiselection_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
 
@@ -21,7 +21,7 @@ class _CustomMultiselectionWidgetViewState
     extends State<CustomMultiselectionWidgetView> {
   DataPointBloc? bloc;
   late String title;
-  late CustomMultiselectionWidgetTheme? theme;
+  late WidgetTheme? theme;
   @override
   void initState() {
     if (widget.customMultiselectionWidget.dataPoint != null) {
@@ -33,9 +33,7 @@ class _CustomMultiselectionWidgetViewState
     title =
         widget.customMultiselectionWidget.label ??
         widget.customMultiselectionWidget.name;
-    theme =
-        widget.customMultiselectionWidget.customTheme
-            as CustomMultiselectionWidgetTheme?;
+    theme = widget.customMultiselectionWidget.customTheme;
     super.initState();
   }
 
@@ -53,9 +51,7 @@ class _CustomMultiselectionWidgetViewState
     title =
         widget.customMultiselectionWidget.label ??
         widget.customMultiselectionWidget.name;
-    theme =
-        widget.customMultiselectionWidget.customTheme
-            as CustomMultiselectionWidgetTheme?;
+    theme = widget.customMultiselectionWidget.customTheme;
     setState(() {});
     super.didUpdateWidget(oldWidget);
   }
@@ -75,7 +71,7 @@ class _CustomMultiselectionWidgetViewState
           onLongPress: () {
             widget.customMultiselectionWidget.customPopupmenu?.tryOpen(context);
           },
-          title: Text(title, style: theme?.labelTheme.textStyle),
+          title: Text(title, style: theme?.labelTheme?.textStyle),
           trailing: FractionallySizedBox(
             widthFactor: 0.4,
             child: getDropdown(state.value.toString()),

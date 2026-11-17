@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/settings/custom_input_widget_settings_view.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/input/theme/custom_input_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/input/view/custom_input_widget_view.dart';
 
 part 'custom_input_widget.freezed.dart';
@@ -38,27 +37,6 @@ extension CustomInputDisplayConentTypeExtension
   }
 }
 
-class _CustomInputThemeConverter
-    implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
-  const _CustomInputThemeConverter();
-  @override
-  CustomThemeForWidget? fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return null;
-    } else {
-      return CustomInputWidgetTheme.fromJson(json) as CustomThemeForWidget;
-    }
-  }
-
-  @override
-  Map<String, dynamic>? toJson(CustomThemeForWidget? object) {
-    if (object == null) {
-      return null;
-    }
-    return object.toJson();
-  }
-}
-
 @unfreezed
 abstract class CustomInputWidget
     with _$CustomInputWidget
@@ -82,7 +60,7 @@ abstract class CustomInputWidget
     String? hintText,
     String? suffix,
     CustomPopupmenu? customPopupmenu,
-    @_CustomInputThemeConverter() CustomThemeForWidget? customTheme,
+    WidgetTheme? customTheme,
     CustomInputSendMethod? customInputSendMethod,
     CustomInputDisplayConentType? customInputDisplayConentType,
     @Default(false) bool fullSize,

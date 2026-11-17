@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_value_widget.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
@@ -105,10 +104,9 @@ class _CustomValueWidgetViewState extends State<CustomValueWidgetView> {
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   style: widget.customValueWidget.customTheme != null
-                      ? (widget.customValueWidget.customTheme
-                                as CustomValueWidgetTheme)
-                            .labelTheme
-                            .textStyle
+                      ? (widget.customValueWidget.customTheme)
+                            ?.labelTheme
+                            ?.textStyle
                       : null,
                 ),
               ),

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomMultiselectionWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); Map<String, String> get selections; set selections(Map<String, String> value); DropdownMenuMode get dropdownMenuMode; set dropdownMenuMode(DropdownMenuMode value);@_CustomMultiselectionThemeConverter() CustomPopupmenu? get customPopupmenu;@_CustomMultiselectionThemeConverter() set customPopupmenu(CustomPopupmenu? value);@_CustomMultiselectionThemeConverter() CustomThemeForWidget? get customTheme;@_CustomMultiselectionThemeConverter() set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get label; set label(String? value); Map<String, String> get selections; set selections(Map<String, String> value); DropdownMenuMode get dropdownMenuMode; set dropdownMenuMode(DropdownMenuMode value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); WidgetTheme? get customTheme; set customTheme(WidgetTheme? value);
 /// Create a copy of CustomMultiselectionWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,11 +41,11 @@ abstract mixin class $CustomMultiselectionWidgetCopyWith<$Res>  {
   factory $CustomMultiselectionWidgetCopyWith(CustomMultiselectionWidget value, $Res Function(CustomMultiselectionWidget) _then) = _$CustomMultiselectionWidgetCopyWithImpl;
 @useResult
 $Res call({
- WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode,@_CustomMultiselectionThemeConverter() CustomPopupmenu? customPopupmenu,@_CustomMultiselectionThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;$WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -69,7 +69,7 @@ as String?,selections: null == selections ? _self.selections : selections // ign
 as Map<String, String>,dropdownMenuMode: null == dropdownMenuMode ? _self.dropdownMenuMode : dropdownMenuMode // ignore: cast_nullable_to_non_nullable
 as DropdownMenuMode,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 /// Create a copy of CustomMultiselectionWidget
@@ -83,6 +83,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomMultiselectionWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
@@ -166,7 +178,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomMultiselectionWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.selections,_that.dropdownMenuMode,_that.customPopupmenu,_that.customTheme);case _:
@@ -187,7 +199,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomMultiselectionWidget():
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.selections,_that.dropdownMenuMode,_that.customPopupmenu,_that.customTheme);case _:
@@ -207,7 +219,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode, @_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu, @_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? label,  Map<String, String> selections,  DropdownMenuMode dropdownMenuMode,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomMultiselectionWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that.selections,_that.dropdownMenuMode,_that.customPopupmenu,_that.customTheme);case _:
@@ -222,7 +234,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.label,_that
 @JsonSerializable()
 
 class _CustomMultiselectionWidget extends CustomMultiselectionWidget implements CustomWidget {
-   _CustomMultiselectionWidget({this.type = WidgetType.multiselection, required this.id, required this.name, required this.dataPoint, this.label, required this.selections, this.dropdownMenuMode = DropdownMenuMode.dropdown, @_CustomMultiselectionThemeConverter() this.customPopupmenu, @_CustomMultiselectionThemeConverter() this.customTheme}): super._();
+   _CustomMultiselectionWidget({this.type = WidgetType.multiselection, required this.id, required this.name, required this.dataPoint, this.label, required this.selections, this.dropdownMenuMode = DropdownMenuMode.dropdown, this.customPopupmenu, this.customTheme}): super._();
   factory _CustomMultiselectionWidget.fromJson(Map<String, dynamic> json) => _$CustomMultiselectionWidgetFromJson(json);
 
 @override@JsonKey()  WidgetType type;
@@ -232,8 +244,8 @@ class _CustomMultiselectionWidget extends CustomMultiselectionWidget implements 
 @override  String? label;
 @override  Map<String, String> selections;
 @override@JsonKey()  DropdownMenuMode dropdownMenuMode;
-@override@_CustomMultiselectionThemeConverter()  CustomPopupmenu? customPopupmenu;
-@override@_CustomMultiselectionThemeConverter()  CustomThemeForWidget? customTheme;
+@override  CustomPopupmenu? customPopupmenu;
+@override  WidgetTheme? customTheme;
 
 /// Create a copy of CustomMultiselectionWidget
 /// with the given fields replaced by the non-null parameter values.
@@ -261,11 +273,11 @@ abstract mixin class _$CustomMultiselectionWidgetCopyWith<$Res> implements $Cust
   factory _$CustomMultiselectionWidgetCopyWith(_CustomMultiselectionWidget value, $Res Function(_CustomMultiselectionWidget) _then) = __$CustomMultiselectionWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode,@_CustomMultiselectionThemeConverter() CustomPopupmenu? customPopupmenu,@_CustomMultiselectionThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? label, Map<String, String> selections, DropdownMenuMode dropdownMenuMode, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;@override $WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -289,7 +301,7 @@ as String?,selections: null == selections ? _self.selections : selections // ign
 as Map<String, String>,dropdownMenuMode: null == dropdownMenuMode ? _self.dropdownMenuMode : dropdownMenuMode // ignore: cast_nullable_to_non_nullable
 as DropdownMenuMode,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 
@@ -304,6 +316,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomMultiselectionWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }

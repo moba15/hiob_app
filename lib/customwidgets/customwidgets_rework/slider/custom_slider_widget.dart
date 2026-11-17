@@ -1,38 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/settings/custom_slider_widget_settings_view.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/view/custom_slider_widget_view.dart';
 
 part 'custom_slider_widget.freezed.dart';
 part 'custom_slider_widget.g.dart';
 
 enum CustomSliderWidgetUpdateStrategy { onFinish, onChange }
-
-class _CustomSliderThemeConverter
-    implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
-  const _CustomSliderThemeConverter();
-  @override
-  CustomThemeForWidget? fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return null;
-    } else {
-      return CustomSliderWidgetTheme.fromJson(json) as CustomThemeForWidget;
-    }
-  }
-
-  @override
-  Map<String, dynamic>? toJson(CustomThemeForWidget? object) {
-    if (object == null) {
-      return null;
-    }
-    return object.toJson();
-  }
-}
 
 @unfreezed
 abstract class CustomSliderWidget
@@ -59,7 +37,7 @@ abstract class CustomSliderWidget
     @Default(CustomSliderWidgetUpdateStrategy.onFinish)
     CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,
     CustomPopupmenu? customPopupmenu,
-    @_CustomSliderThemeConverter() CustomThemeForWidget? customTheme,
+    WidgetTheme? customTheme,
   }) = _CustomSliderWidget;
 
   @override

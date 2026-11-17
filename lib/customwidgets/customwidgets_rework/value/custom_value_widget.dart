@@ -1,36 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/value/custom_theme/custom_value_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/settings/custom_value_widget_settings_view.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/value/view/custom_value_widget_view.dart';
 
 part 'custom_value_widget.freezed.dart';
 part 'custom_value_widget.g.dart';
-
-class _CustomValueThemeConverter
-    implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
-  const _CustomValueThemeConverter();
-  @override
-  CustomThemeForWidget? fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return null;
-    } else {
-      return CustomValueWidgetTheme.fromJson(json) as CustomThemeForWidget;
-    }
-  }
-
-  @override
-  Map<String, dynamic>? toJson(CustomThemeForWidget? object) {
-    if (object == null) {
-      return null;
-    }
-    return object.toJson();
-  }
-}
 
 @unfreezed
 abstract class CustomValueWidget
@@ -56,7 +34,7 @@ abstract class CustomValueWidget
     String? suffix,
     String? prefix,
     CustomPopupmenu? customPopupmenu,
-    @_CustomValueThemeConverter() CustomThemeForWidget? customTheme,
+    WidgetTheme? customTheme,
   }) = _CustomValueWidget;
 
   @override

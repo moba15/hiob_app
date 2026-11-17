@@ -1,39 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/settings/custom_multiselection_widget_settings_view.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/theme/custom_multiselection_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/multiselection/view/custom_multiselection_widget_view.dart';
 
 part 'custom_multiselection_widget.freezed.dart';
 part 'custom_multiselection_widget.g.dart';
 
 enum DropdownMenuMode { dropdown, dialog, bottomSheet }
-
-class _CustomMultiselectionThemeConverter
-    implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
-  const _CustomMultiselectionThemeConverter();
-  @override
-  CustomThemeForWidget? fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return null;
-    } else {
-      return CustomMultiselectionWidgetTheme.fromJson(json)
-          as CustomThemeForWidget;
-    }
-  }
-
-  @override
-  Map<String, dynamic>? toJson(CustomThemeForWidget? object) {
-    if (object == null) {
-      return null;
-    }
-    return object.toJson();
-  }
-}
 
 @unfreezed
 abstract class CustomMultiselectionWidget
@@ -56,8 +33,8 @@ abstract class CustomMultiselectionWidget
     String? label,
     required Map<String, String> selections,
     @Default(DropdownMenuMode.dropdown) DropdownMenuMode dropdownMenuMode,
-    @_CustomMultiselectionThemeConverter() CustomPopupmenu? customPopupmenu,
-    @_CustomMultiselectionThemeConverter() CustomThemeForWidget? customTheme,
+    CustomPopupmenu? customPopupmenu,
+    WidgetTheme? customTheme,
   }) = _CustomMultiselectionWidget;
 
   @override

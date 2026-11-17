@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/custom_theme/custom_theme.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 //import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/button/custom_button_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/button/theme/custom_button_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/repository/general_repository.dart';
@@ -54,8 +55,7 @@ class CustomButtonWidgetView extends StatelessWidget {
           buttonLabel: customButtonWidget.buttonLabel ?? "Press",
           dataPointId: customButtonWidget.dataPoint!,
           tryOpenPopup: customButtonWidget.tryOpenPopupmenu,
-          customButtonWidgetTheme:
-              customButtonWidget.customTheme as CustomButtonWidgetTheme?,
+          customButtonWidgetTheme: customButtonWidget.customTheme,
         );
       },
     );
@@ -65,7 +65,7 @@ class CustomButtonWidgetView extends StatelessWidget {
 class CustomButtonWidgetDeviceView extends StatefulWidget {
   final String text;
   final String buttonLabel;
-  final CustomButtonWidgetTheme? customButtonWidgetTheme;
+  final WidgetTheme? customButtonWidgetTheme;
   final bool Function(BuildContext) tryOpenPopup;
   final String dataPointId;
   const CustomButtonWidgetDeviceView({
@@ -139,7 +139,8 @@ class _CustomButtonWidgetDeviceViewState
                   child: Text(
                     widget.text,
                     overflow: TextOverflow.clip,
-                    style: widget.customButtonWidgetTheme?.labelTheme.textStyle,
+                    style:
+                        widget.customButtonWidgetTheme?.labelTheme?.textStyle,
                   ),
                 ),
                 //TODO add status

@@ -1,36 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/custom_widget.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/settings/custom_switch_widget_settings_view.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/view/custom_switch_widget_view.dart';
 
 part 'custom_switch_widget.freezed.dart';
 part 'custom_switch_widget.g.dart';
-
-class _CustomSwitchThemeConverter
-    implements JsonConverter<CustomThemeForWidget?, Map<String, dynamic>?> {
-  const _CustomSwitchThemeConverter();
-  @override
-  CustomThemeForWidget? fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return null;
-    } else {
-      return CustomSwitchWidgetTheme.fromJson(json) as CustomThemeForWidget;
-    }
-  }
-
-  @override
-  Map<String, dynamic>? toJson(CustomThemeForWidget? object) {
-    if (object == null) {
-      return null;
-    }
-    return object.toJson();
-  }
-}
 
 @unfreezed
 abstract class CustomSwitchWidget
@@ -54,7 +32,7 @@ abstract class CustomSwitchWidget
     @Default("true") String sendIfOn,
     @Default("false") String sendIfOff,
     CustomPopupmenu? customPopupmenu,
-    @_CustomSwitchThemeConverter() CustomThemeForWidget? customTheme,
+    WidgetTheme? customTheme,
   }) = _CustomSwitchWidget;
 
   @override

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomTableWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get header; set header(String? value); bool get sortAsc; set sortAsc(bool value); int get initalSortColumn; set initalSortColumn(int value); bool get initialSortEnabled; set initialSortEnabled(bool value); int get elementsPerPage; set elementsPerPage(int value); Map<String, String> get columns; set columns(Map<String, String> value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); CustomThemeForWidget? get customTheme; set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get dataPoint; set dataPoint(String? value); String? get header; set header(String? value); bool get sortAsc; set sortAsc(bool value); int get initalSortColumn; set initalSortColumn(int value); bool get initialSortEnabled; set initialSortEnabled(bool value); int get elementsPerPage; set elementsPerPage(int value); Map<String, String> get columns; set columns(Map<String, String> value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); WidgetTheme? get customTheme; set customTheme(WidgetTheme? value);
 /// Create a copy of CustomTableWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,11 +41,11 @@ abstract mixin class $CustomTableWidgetCopyWith<$Res>  {
   factory $CustomTableWidgetCopyWith(CustomTableWidget value, $Res Function(CustomTableWidget) _then) = _$CustomTableWidgetCopyWithImpl;
 @useResult
 $Res call({
- WidgetType type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;$WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -72,7 +72,7 @@ as bool,elementsPerPage: null == elementsPerPage ? _self.elementsPerPage : eleme
 as int,columns: null == columns ? _self.columns : columns // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 /// Create a copy of CustomTableWidget
@@ -86,6 +86,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomTableWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
@@ -169,7 +181,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomTableWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
@@ -190,7 +202,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomTableWidget():
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
@@ -210,7 +222,7 @@ return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? dataPoint,  String? header,  bool sortAsc,  int initalSortColumn,  bool initialSortEnabled,  int elementsPerPage,  Map<String, String> columns,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomTableWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.dataPoint,_that.header,_that.sortAsc,_that.initalSortColumn,_that.initialSortEnabled,_that.elementsPerPage,_that.columns,_that.customPopupmenu,_that.customTheme);case _:
@@ -239,7 +251,7 @@ class _CustomTableWidget extends CustomTableWidget implements CustomWidget {
 @override@JsonKey()  int elementsPerPage;
 @override  Map<String, String> columns;
 @override  CustomPopupmenu? customPopupmenu;
-@override  CustomThemeForWidget? customTheme;
+@override  WidgetTheme? customTheme;
 
 /// Create a copy of CustomTableWidget
 /// with the given fields replaced by the non-null parameter values.
@@ -267,11 +279,11 @@ abstract mixin class _$CustomTableWidgetCopyWith<$Res> implements $CustomTableWi
   factory _$CustomTableWidgetCopyWith(_CustomTableWidget value, $Res Function(_CustomTableWidget) _then) = __$CustomTableWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- WidgetType type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? dataPoint, String? header, bool sortAsc, int initalSortColumn, bool initialSortEnabled, int elementsPerPage, Map<String, String> columns, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;@override $WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -298,7 +310,7 @@ as bool,elementsPerPage: null == elementsPerPage ? _self.elementsPerPage : eleme
 as int,columns: null == columns ? _self.columns : columns // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 
@@ -313,6 +325,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomTableWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:smart_home/customwidgets/custom_theme_for_widget/custom_theme_for_widget.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/custom_widget.dart';
 import 'package:smart_home/customwidgets/custompopup/custom_popupmenu.dart';
 import 'package:smart_home/customwidgets/custompopup/view/settings/cutsom_popupmenu_settings_view.dart';
@@ -385,7 +385,7 @@ class __TemplateTabBarViewState extends State<_TemplateTabBarView>
       );
     } else if (currentTab == 2 || (!hasPopupmenu && currentTab == 1)) {
       if (widget.customWidgetSettingWidget!.customWidget.customTheme == null) {
-        CustomThemeForWidget customThemeForWidget =
+        WidgetTheme customThemeForWidget =
             (widget.customWidgetSettingWidget!.customWidget).type.emptyTheme;
         widget.customWidgetSettingWidget!.customWidget.customTheme =
             customThemeForWidget;

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomSliderWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); int get max; set max(int value); int get min; set min(int value); int get step; set step(int value); CustomSliderWidgetUpdateStrategy? get customSliderWidgetUpdateStrategy; set customSliderWidgetUpdateStrategy(CustomSliderWidgetUpdateStrategy? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomSliderThemeConverter() CustomThemeForWidget? get customTheme;@_CustomSliderThemeConverter() set customTheme(CustomThemeForWidget? value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); int get max; set max(int value); int get min; set min(int value); int get step; set step(int value); CustomSliderWidgetUpdateStrategy? get customSliderWidgetUpdateStrategy; set customSliderWidgetUpdateStrategy(CustomSliderWidgetUpdateStrategy? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); WidgetTheme? get customTheme; set customTheme(WidgetTheme? value);
 /// Create a copy of CustomSliderWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,11 +41,11 @@ abstract mixin class $CustomSliderWidgetCopyWith<$Res>  {
   factory $CustomSliderWidgetCopyWith(CustomSliderWidget value, $Res Function(CustomSliderWidget) _then) = _$CustomSliderWidgetCopyWithImpl;
 @useResult
 $Res call({
- WidgetType type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu,@_CustomSliderThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;$WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -71,7 +71,7 @@ as int,step: null == step ? _self.step : step // ignore: cast_nullable_to_non_nu
 as int,customSliderWidgetUpdateStrategy: freezed == customSliderWidgetUpdateStrategy ? _self.customSliderWidgetUpdateStrategy : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
 as CustomSliderWidgetUpdateStrategy?,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 /// Create a copy of CustomSliderWidget
@@ -85,6 +85,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomSliderWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
@@ -168,7 +180,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomSliderWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.max,_that.min,_that.step,_that.customSliderWidgetUpdateStrategy,_that.customPopupmenu,_that.customTheme);case _:
@@ -189,7 +201,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)  $default,) {final _that = this;
 switch (_that) {
 case _CustomSliderWidget():
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.max,_that.min,_that.step,_that.customSliderWidgetUpdateStrategy,_that.customPopupmenu,_that.customTheme);case _:
@@ -209,7 +221,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu, @_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  int max,  int min,  int step,  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomSliderWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.max,_that.min,_that.step,_that.customSliderWidgetUpdateStrategy,_that.customPopupmenu,_that.customTheme);case _:
@@ -224,7 +236,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 @JsonSerializable()
 
 class _CustomSliderWidget extends CustomSliderWidget implements CustomWidget {
-   _CustomSliderWidget({this.type = WidgetType.slider, required this.id, required this.name, this.label, required this.dataPoint, this.max = 100, this.min = 0, this.step = 10, this.customSliderWidgetUpdateStrategy = CustomSliderWidgetUpdateStrategy.onFinish, this.customPopupmenu, @_CustomSliderThemeConverter() this.customTheme}): super._();
+   _CustomSliderWidget({this.type = WidgetType.slider, required this.id, required this.name, this.label, required this.dataPoint, this.max = 100, this.min = 0, this.step = 10, this.customSliderWidgetUpdateStrategy = CustomSliderWidgetUpdateStrategy.onFinish, this.customPopupmenu, this.customTheme}): super._();
   factory _CustomSliderWidget.fromJson(Map<String, dynamic> json) => _$CustomSliderWidgetFromJson(json);
 
 @override@JsonKey()  WidgetType type;
@@ -237,7 +249,7 @@ class _CustomSliderWidget extends CustomSliderWidget implements CustomWidget {
 @override@JsonKey()  int step;
 @override@JsonKey()  CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy;
 @override  CustomPopupmenu? customPopupmenu;
-@override@_CustomSliderThemeConverter()  CustomThemeForWidget? customTheme;
+@override  WidgetTheme? customTheme;
 
 /// Create a copy of CustomSliderWidget
 /// with the given fields replaced by the non-null parameter values.
@@ -265,11 +277,11 @@ abstract mixin class _$CustomSliderWidgetCopyWith<$Res> implements $CustomSlider
   factory _$CustomSliderWidgetCopyWith(_CustomSliderWidget value, $Res Function(_CustomSliderWidget) _then) = __$CustomSliderWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- WidgetType type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu,@_CustomSliderThemeConverter() CustomThemeForWidget? customTheme
+ WidgetType type, String id, String name, String? label, String? dataPoint, int max, int min, int step, CustomSliderWidgetUpdateStrategy? customSliderWidgetUpdateStrategy, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme
 });
 
 
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;@override $WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -295,7 +307,7 @@ as int,step: null == step ? _self.step : step // ignore: cast_nullable_to_non_nu
 as int,customSliderWidgetUpdateStrategy: freezed == customSliderWidgetUpdateStrategy ? _self.customSliderWidgetUpdateStrategy : customSliderWidgetUpdateStrategy // ignore: cast_nullable_to_non_nullable
 as CustomSliderWidgetUpdateStrategy?,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,
+as WidgetTheme?,
   ));
 }
 
@@ -310,6 +322,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomSliderWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }

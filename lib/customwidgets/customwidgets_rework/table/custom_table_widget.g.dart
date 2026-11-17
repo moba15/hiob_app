@@ -27,9 +27,7 @@ _CustomTableWidget _$CustomTableWidgetFromJson(Map<String, dynamic> json) =>
             ),
       customTheme: json['customTheme'] == null
           ? null
-          : CustomThemeForWidget.fromJson(
-              json['customTheme'] as Map<String, dynamic>,
-            ),
+          : WidgetTheme.fromJson(json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CustomTableWidgetToJson(_CustomTableWidget instance) =>

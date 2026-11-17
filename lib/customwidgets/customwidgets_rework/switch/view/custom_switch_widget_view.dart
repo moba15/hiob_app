@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/switch/custom_switch_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/switch/theme/custom_switch_widget_theme.dart';
 
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
@@ -75,11 +74,7 @@ class _CustomSwitchWidgetViewState extends State<CustomSwitchWidgetView> {
           child: SwitchListTile(
             title: Text(
               title,
-              style:
-                  (widget.customSwitchWidget.customTheme
-                          as CustomSwitchWidgetTheme?)
-                      ?.labelTheme
-                      .textStyle,
+              style: widget.customSwitchWidget.customTheme?.labelTheme?.textStyle,
             ),
             onChanged: (value) {
               if (value) {

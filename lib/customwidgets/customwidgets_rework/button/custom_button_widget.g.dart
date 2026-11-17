@@ -18,9 +18,9 @@ _CustomButtonWidget _$CustomButtonWidgetFromJson(Map<String, dynamic> json) =>
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>,
             ),
-      customTheme: const _CustomButtonThemeConverter().fromJson(
-        json['customTheme'] as Map<String, dynamic>?,
-      ),
+      customTheme: json['customTheme'] == null
+          ? null
+          : WidgetTheme.fromJson(json['customTheme'] as Map<String, dynamic>),
       label: json['label'] as String?,
       dataPoint: json['dataPoint'] as String?,
       buttonLabel: json['buttonLabel'] as String?,
@@ -32,9 +32,7 @@ Map<String, dynamic> _$CustomButtonWidgetToJson(_CustomButtonWidget instance) =>
       'id': instance.id,
       'name': instance.name,
       'customPopupmenu': instance.customPopupmenu,
-      'customTheme': const _CustomButtonThemeConverter().toJson(
-        instance.customTheme,
-      ),
+      'customTheme': instance.customTheme,
       'label': instance.label,
       'dataPoint': instance.dataPoint,
       'buttonLabel': instance.buttonLabel,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/customwidgets/custom_theme_for_widget/widget_theme.dart';
 import 'package:smart_home/customwidgets/customwidgets_rework/slider/custom_slider_widget.dart';
-import 'package:smart_home/customwidgets/customwidgets_rework/slider/theme/custom_slider_widget_theme.dart';
 import 'dart:math' as math;
 import 'package:smart_home/device/state/bloc/datapoint_bloc.dart';
 import 'package:smart_home/services/device/device_service_interface.dart';
@@ -17,7 +17,7 @@ class CustomSliderWidgetView extends StatefulWidget {
 
 class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
   DataPointBloc? bloc;
-  late CustomSliderWidgetTheme? theme;
+  late WidgetTheme? theme;
   double? _tmpValue;
   bool _currentlyChanging = false;
   @override
@@ -28,7 +28,7 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
         deviceService: context.read<DeviceServiceInterface>(),
       );
     }
-    theme = widget.customSliderWidget.customTheme as CustomSliderWidgetTheme?;
+    theme = widget.customSliderWidget.customTheme;
     super.initState();
   }
 
@@ -42,7 +42,7 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
           deviceService: context.read<DeviceServiceInterface>(),
         );
       }
-      theme = widget.customSliderWidget.customTheme as CustomSliderWidgetTheme?;
+      theme = widget.customSliderWidget.customTheme;
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -80,7 +80,7 @@ class _CustomSliderWidgetViewState extends State<CustomSliderWidgetView> {
         return ListTile(
           title: Text(
             widget.customSliderWidget.label ?? widget.customSliderWidget.name,
-            style: theme?.labelTheme.textStyle,
+            style: theme?.labelTheme?.textStyle,
           ),
           subtitle: SliderTheme(
             data: SliderTheme.of(context).copyWith(

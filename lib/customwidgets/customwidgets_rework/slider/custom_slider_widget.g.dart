@@ -29,9 +29,9 @@ _CustomSliderWidget _$CustomSliderWidgetFromJson(Map<String, dynamic> json) =>
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>,
             ),
-      customTheme: const _CustomSliderThemeConverter().fromJson(
-        json['customTheme'] as Map<String, dynamic>?,
-      ),
+      customTheme: json['customTheme'] == null
+          ? null
+          : WidgetTheme.fromJson(json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CustomSliderWidgetToJson(_CustomSliderWidget instance) =>
@@ -48,9 +48,7 @@ Map<String, dynamic> _$CustomSliderWidgetToJson(_CustomSliderWidget instance) =>
           _$CustomSliderWidgetUpdateStrategyEnumMap[instance
               .customSliderWidgetUpdateStrategy],
       'customPopupmenu': instance.customPopupmenu,
-      'customTheme': const _CustomSliderThemeConverter().toJson(
-        instance.customTheme,
-      ),
+      'customTheme': instance.customTheme,
     };
 
 const _$WidgetTypeEnumMap = {

@@ -22,9 +22,9 @@ _CustomSwitchWidget _$CustomSwitchWidgetFromJson(Map<String, dynamic> json) =>
           : CustomPopupmenu.fromJson(
               json['customPopupmenu'] as Map<String, dynamic>,
             ),
-      customTheme: const _CustomSwitchThemeConverter().fromJson(
-        json['customTheme'] as Map<String, dynamic>?,
-      ),
+      customTheme: json['customTheme'] == null
+          ? null
+          : WidgetTheme.fromJson(json['customTheme'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CustomSwitchWidgetToJson(_CustomSwitchWidget instance) =>
@@ -37,9 +37,7 @@ Map<String, dynamic> _$CustomSwitchWidgetToJson(_CustomSwitchWidget instance) =>
       'sendIfOn': instance.sendIfOn,
       'sendIfOff': instance.sendIfOff,
       'customPopupmenu': instance.customPopupmenu,
-      'customTheme': const _CustomSwitchThemeConverter().toJson(
-        instance.customTheme,
-      ),
+      'customTheme': instance.customTheme,
     };
 
 const _$WidgetTypeEnumMap = {

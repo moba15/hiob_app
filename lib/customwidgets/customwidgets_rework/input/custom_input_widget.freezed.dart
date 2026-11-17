@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CustomInputWidget {
 
- dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); String? get hintText; set hintText(String? value); String? get suffix; set suffix(String? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value);@_CustomInputThemeConverter() CustomThemeForWidget? get customTheme;@_CustomInputThemeConverter() set customTheme(CustomThemeForWidget? value); CustomInputSendMethod? get customInputSendMethod; set customInputSendMethod(CustomInputSendMethod? value); CustomInputDisplayConentType? get customInputDisplayConentType; set customInputDisplayConentType(CustomInputDisplayConentType? value); bool get fullSize; set fullSize(bool value);
+ dynamic get isAbleToPopupMenu; dynamic get hasCustomTheme; WidgetType get type; set type(WidgetType value); String get id; set id(String value); String get name; set name(String value); String? get label; set label(String? value); String? get dataPoint; set dataPoint(String? value); String? get hintText; set hintText(String? value); String? get suffix; set suffix(String? value); CustomPopupmenu? get customPopupmenu; set customPopupmenu(CustomPopupmenu? value); WidgetTheme? get customTheme; set customTheme(WidgetTheme? value); CustomInputSendMethod? get customInputSendMethod; set customInputSendMethod(CustomInputSendMethod? value); CustomInputDisplayConentType? get customInputDisplayConentType; set customInputDisplayConentType(CustomInputDisplayConentType? value); bool get fullSize; set fullSize(bool value);
 /// Create a copy of CustomInputWidget
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,11 +41,11 @@ abstract mixin class $CustomInputWidgetCopyWith<$Res>  {
   factory $CustomInputWidgetCopyWith(CustomInputWidget value, $Res Function(CustomInputWidget) _then) = _$CustomInputWidgetCopyWithImpl;
 @useResult
 $Res call({
- WidgetType type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu,@_CustomInputThemeConverter() CustomThemeForWidget? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
+ WidgetType type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
 });
 
 
-$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+$CustomPopupmenuCopyWith<$Res>? get customPopupmenu;$WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -69,7 +69,7 @@ as String?,hintText: freezed == hintText ? _self.hintText : hintText // ignore: 
 as String?,suffix: freezed == suffix ? _self.suffix : suffix // ignore: cast_nullable_to_non_nullable
 as String?,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,customInputSendMethod: freezed == customInputSendMethod ? _self.customInputSendMethod : customInputSendMethod // ignore: cast_nullable_to_non_nullable
+as WidgetTheme?,customInputSendMethod: freezed == customInputSendMethod ? _self.customInputSendMethod : customInputSendMethod // ignore: cast_nullable_to_non_nullable
 as CustomInputSendMethod?,customInputDisplayConentType: freezed == customInputDisplayConentType ? _self.customInputDisplayConentType : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
 as CustomInputDisplayConentType?,fullSize: null == fullSize ? _self.fullSize : fullSize // ignore: cast_nullable_to_non_nullable
 as bool,
@@ -86,6 +86,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomInputWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
@@ -169,7 +181,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomInputWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.hintText,_that.suffix,_that.customPopupmenu,_that.customTheme,_that.customInputSendMethod,_that.customInputDisplayConentType,_that.fullSize);case _:
@@ -190,7 +202,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)  $default,) {final _that = this;
 switch (_that) {
 case _CustomInputWidget():
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.hintText,_that.suffix,_that.customPopupmenu,_that.customTheme,_that.customInputSendMethod,_that.customInputDisplayConentType,_that.fullSize);case _:
@@ -210,7 +222,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu, @_CustomInputThemeConverter()  CustomThemeForWidget? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WidgetType type,  String id,  String name,  String? label,  String? dataPoint,  String? hintText,  String? suffix,  CustomPopupmenu? customPopupmenu,  WidgetTheme? customTheme,  CustomInputSendMethod? customInputSendMethod,  CustomInputDisplayConentType? customInputDisplayConentType,  bool fullSize)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomInputWidget() when $default != null:
 return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that.hintText,_that.suffix,_that.customPopupmenu,_that.customTheme,_that.customInputSendMethod,_that.customInputDisplayConentType,_that.fullSize);case _:
@@ -225,7 +237,7 @@ return $default(_that.type,_that.id,_that.name,_that.label,_that.dataPoint,_that
 @JsonSerializable()
 
 class _CustomInputWidget extends CustomInputWidget implements CustomWidget {
-   _CustomInputWidget({this.type = WidgetType.input, required this.id, required this.name, this.label, required this.dataPoint, this.hintText, this.suffix, this.customPopupmenu, @_CustomInputThemeConverter() this.customTheme, this.customInputSendMethod, this.customInputDisplayConentType, this.fullSize = false}): super._();
+   _CustomInputWidget({this.type = WidgetType.input, required this.id, required this.name, this.label, required this.dataPoint, this.hintText, this.suffix, this.customPopupmenu, this.customTheme, this.customInputSendMethod, this.customInputDisplayConentType, this.fullSize = false}): super._();
   factory _CustomInputWidget.fromJson(Map<String, dynamic> json) => _$CustomInputWidgetFromJson(json);
 
 @override@JsonKey()  WidgetType type;
@@ -236,7 +248,7 @@ class _CustomInputWidget extends CustomInputWidget implements CustomWidget {
 @override  String? hintText;
 @override  String? suffix;
 @override  CustomPopupmenu? customPopupmenu;
-@override@_CustomInputThemeConverter()  CustomThemeForWidget? customTheme;
+@override  WidgetTheme? customTheme;
 @override  CustomInputSendMethod? customInputSendMethod;
 @override  CustomInputDisplayConentType? customInputDisplayConentType;
 @override@JsonKey()  bool fullSize;
@@ -267,11 +279,11 @@ abstract mixin class _$CustomInputWidgetCopyWith<$Res> implements $CustomInputWi
   factory _$CustomInputWidgetCopyWith(_CustomInputWidget value, $Res Function(_CustomInputWidget) _then) = __$CustomInputWidgetCopyWithImpl;
 @override @useResult
 $Res call({
- WidgetType type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu,@_CustomInputThemeConverter() CustomThemeForWidget? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
+ WidgetType type, String id, String name, String? label, String? dataPoint, String? hintText, String? suffix, CustomPopupmenu? customPopupmenu, WidgetTheme? customTheme, CustomInputSendMethod? customInputSendMethod, CustomInputDisplayConentType? customInputDisplayConentType, bool fullSize
 });
 
 
-@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;
+@override $CustomPopupmenuCopyWith<$Res>? get customPopupmenu;@override $WidgetThemeCopyWith<$Res>? get customTheme;
 
 }
 /// @nodoc
@@ -295,7 +307,7 @@ as String?,hintText: freezed == hintText ? _self.hintText : hintText // ignore: 
 as String?,suffix: freezed == suffix ? _self.suffix : suffix // ignore: cast_nullable_to_non_nullable
 as String?,customPopupmenu: freezed == customPopupmenu ? _self.customPopupmenu : customPopupmenu // ignore: cast_nullable_to_non_nullable
 as CustomPopupmenu?,customTheme: freezed == customTheme ? _self.customTheme : customTheme // ignore: cast_nullable_to_non_nullable
-as CustomThemeForWidget?,customInputSendMethod: freezed == customInputSendMethod ? _self.customInputSendMethod : customInputSendMethod // ignore: cast_nullable_to_non_nullable
+as WidgetTheme?,customInputSendMethod: freezed == customInputSendMethod ? _self.customInputSendMethod : customInputSendMethod // ignore: cast_nullable_to_non_nullable
 as CustomInputSendMethod?,customInputDisplayConentType: freezed == customInputDisplayConentType ? _self.customInputDisplayConentType : customInputDisplayConentType // ignore: cast_nullable_to_non_nullable
 as CustomInputDisplayConentType?,fullSize: null == fullSize ? _self.fullSize : fullSize // ignore: cast_nullable_to_non_nullable
 as bool,
@@ -313,6 +325,18 @@ $CustomPopupmenuCopyWith<$Res>? get customPopupmenu {
 
   return $CustomPopupmenuCopyWith<$Res>(_self.customPopupmenu!, (value) {
     return _then(_self.copyWith(customPopupmenu: value));
+  });
+}/// Create a copy of CustomInputWidget
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WidgetThemeCopyWith<$Res>? get customTheme {
+    if (_self.customTheme == null) {
+    return null;
+  }
+
+  return $WidgetThemeCopyWith<$Res>(_self.customTheme!, (value) {
+    return _then(_self.copyWith(customTheme: value));
   });
 }
 }
