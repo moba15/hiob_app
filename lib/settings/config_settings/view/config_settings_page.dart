@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/repository/screen_repository.dart';
 import 'package:smart_home/services/impl/iobroker/settings_sync_manager.dart';
 import 'package:smart_home/settings/config_settings/bloc/config_bloc.dart';
 
@@ -337,14 +338,15 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
   }
 
   void load() {
+    final messenger = ScaffoldMessenger.of(context);
+    final syncService = context.read<IoBrokerSettingsSyncService>();
+    final screenRepository = context.read<ScreenRepository>();
     Navigator.pop(context);
-    context
-        .read<IoBrokerSettingsSyncService>()
-        .loadedSuccessStreamController
-        .stream
-        .first
-        .then((value) => showSuccessSnackBar(context, "Loaded"));
-    context.read<IoBrokerSettingsSyncService>().getTemplateSettings(
+    syncService.loadedSuccessStreamController.stream.first.then((value) {
+      screenRepository.reload();
+      showSuccessSnackBar(messenger, "Loaded");
+    });
+    syncService.getTemplateSettings(
       widget.preConfig,
       screen: screens,
       widget: widgets,
@@ -352,22 +354,21 @@ class _ConfigLoadingDialogState extends State<_ConfigLoadingDialog> {
   }
 
   void upload() {
+    final messenger = ScaffoldMessenger.of(context);
+    final syncService = context.read<IoBrokerSettingsSyncService>();
     Navigator.pop(context);
-    context
-        .read<IoBrokerSettingsSyncService>()
-        .uploadSuccessStreamController
-        .stream
-        .first
-        .then((value) => showSuccessSnackBar(context, "Uploaded"));
-    context.read<IoBrokerSettingsSyncService>().uploadSettings(
+    syncService.uploadSuccessStreamController.stream.first.then(
+      (value) => showSuccessSnackBar(messenger, "Uploaded"),
+    );
+    syncService.uploadSettings(
       widget.preConfig,
       screen: screens,
       widget: widgets,
     );
   }
 
-  void showSuccessSnackBar(context, text) {
-    ScaffoldMessenger.of(context).showSnackBar(
+  void showSuccessSnackBar(ScaffoldMessengerState messenger, String text) {
+    messenger.showSnackBar(
       SnackBar(
         duration: const Duration(milliseconds: 700),
         behavior: SnackBarBehavior.floating,

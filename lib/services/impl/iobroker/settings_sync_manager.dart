@@ -155,11 +155,14 @@ class IoBrokerSettingsSyncService {
   }
 
   void loadGotTemplate(String? screens, String? widgets) async {
+    loggingService.debug(
+      "SettingsSyncManager | loadGotTemplate screens=${screens?.length ?? 0} widgets=${widgets?.length ?? 0}",
+    );
     //INFO: Devices are loaded from the adapter
-    if (widgets != null) {
+    if (widgets != null && widgets.isNotEmpty) {
       await fileManager.pref.setString(templateStorageKey, widgets);
     }
-    if (screens != null) {
+    if (screens != null && screens.isNotEmpty) {
       await fileManager.pref.setString(screenStorageKey, screens);
     }
 

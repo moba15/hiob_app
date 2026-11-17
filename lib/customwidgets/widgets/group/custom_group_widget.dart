@@ -96,17 +96,17 @@ class CustomGroupWidget extends CustomWidget {
           in json["templates"] is String
               ? jsonDecode(json["templates"])
               : json["templates"]) {
-        if (templatesRaw.containsKey("widget")) {
-          if (!allTemplates.any(
-            (element) => element.id == templatesRaw["id"],
-          )) {
+        if (templatesRaw.containsKey("widget") ||
+            (templatesRaw.containsKey("type") &&
+                templatesRaw["type"] != "divisionLine" &&
+                templatesRaw["type"] != "group")) {
+          final match = allTemplates
+              .where((element) => element.id == templatesRaw["id"])
+              .firstOrNull;
+          if (match == null) {
             continue; //TODO: Delete From file
           }
-          templates.add(
-            allTemplates.firstWhere(
-              (element) => element.id == templatesRaw["id"],
-            ),
-          );
+          templates.add(match);
         } else if (templatesRaw.containsKey("isExtended")) {
           templates.add(CustomGroupWidget.fromJSON(templatesRaw, allTemplates));
         } else if (templatesRaw.containsKey("type") &&

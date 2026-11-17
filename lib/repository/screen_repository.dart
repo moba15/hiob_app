@@ -39,27 +39,7 @@ class ScreenRepository {
     await customWidgetManager?.loadTemplates();
 
     List<dynamic>? l = await fileManager.getList(key);
-    if (l == null) {
-      screens = [];
-    } else {
-      for (dynamic rawScreens in l) {
-        Map<String, dynamic> rawMap = rawScreens;
-        try {
-          Screen s = Screen.fromJSON(
-            rawMap,
-            customWidgetManager: customWidgetManager!,
-          );
-          loggingService.debug("ScreenManager | loadScreen | ${s.id}");
-          screens.add(s);
-        } catch (e, stackTrace) {
-          loggingService.error(
-            "ScreenManager | loadScreen | error while Screen.fromJSON",
-            e,
-          );
-          developer.log("Screen.fromJSON stacktrace:", stackTrace: stackTrace);
-        }
-      }
-    }
+    screens = _parseScreens(l);
     loaded = true;
     if (screens.isEmpty) {
       screens.add(
@@ -81,24 +61,37 @@ class ScreenRepository {
     return screens;
   }
 
+  List<Screen> _parseScreens(List<dynamic>? rawList) {
+    final parsed = <Screen>[];
+    if (rawList == null) {
+      return parsed;
+    }
+    for (dynamic rawScreens in rawList) {
+      Map<String, dynamic> rawMap = rawScreens;
+      try {
+        Screen s = Screen.fromJSON(
+          rawMap,
+          customWidgetManager: customWidgetManager!,
+        );
+        loggingService.debug("ScreenManager | loadScreen | ${s.id}");
+        parsed.add(s);
+      } catch (e, stackTrace) {
+        loggingService.error(
+          "ScreenManager | loadScreen | error while Screen.fromJSON",
+          e,
+        );
+        developer.log("Screen.fromJSON stacktrace:", stackTrace: stackTrace);
+      }
+    }
+    return parsed;
+  }
+
   void reload() async {
     screens.clear();
     await customWidgetManager?.reload();
 
     List<dynamic>? l = await fileManager.getList(key);
-
-    if (l == null) {
-      screens = [];
-    } else {
-      for (dynamic rawScreens in l) {
-        Map<String, dynamic> rawMap = rawScreens;
-        Screen s = Screen.fromJSON(
-          rawMap,
-          customWidgetManager: customWidgetManager!,
-        );
-        screens.add(s);
-      }
-    }
+    screens = _parseScreens(l);
     loaded = true;
     if (screens.isEmpty) {
       screens.add(

@@ -39,12 +39,16 @@ class Screen {
         in json["widgetIds"] is String
             ? jsonDecode(json["widgetIds"])
             : json["widgetIds"]) {
-      if (templateRaw.containsKey("widget")) {
-        widgetTemplates.add(
-          customWidgetManager.templates.firstWhere(
-            (element) => element.id == templateRaw["id"],
-          ),
-        );
+      if (templateRaw.containsKey("widget") ||
+          (templateRaw.containsKey("type") &&
+              templateRaw["type"] != "divisionLine" &&
+              templateRaw["type"] != "group")) {
+        final match = customWidgetManager.templates
+            .where((element) => element.id == templateRaw["id"])
+            .firstOrNull;
+        if (match != null) {
+          widgetTemplates.add(match);
+        }
       } else if (templateRaw.containsKey("type") &&
           templateRaw["type"] == "divisionLine") {
         widgetTemplates.add(CustomDivisionlineWidget.fromJson(templateRaw));

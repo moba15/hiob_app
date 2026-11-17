@@ -42,11 +42,15 @@ class CustomWidgetRepository {
     List? listRaw = await fileManager.getList(templateKey);
 
     if (listRaw == null) {
+      developer.log("CustomWidgetRepository | loadTemplates: listRaw is null");
       loaded = true;
       templatesStreamController.add(templates);
       return;
     }
     templates.addAll(loadTemplate(listRaw));
+    developer.log(
+      "CustomWidgetRepository | loadTemplates: loaded ${templates.length} of ${listRaw.length} templates",
+    );
 
     loaded = true;
     sort();
@@ -56,89 +60,103 @@ class CustomWidgetRepository {
   List<CustomWidget> loadTemplate(List<dynamic> listRaw) {
     List<CustomWidget> templates = [];
     for (Map<String, dynamic> templateRaw in listRaw) {
-      //TODO
-
-      String name = templateRaw["name"];
-      String id = templateRaw["id"];
-      Map<String, dynamic> widgetRaw = templateRaw["widget"] ?? templateRaw;
-      if (widgetRaw["type"] == null) {
-        continue;
-      }
-      String typeRaw = widgetRaw["type"];
-
-      if (typeRaw == "line") {
-        templates.add(
-          CustomDivisionlineWidget(
-            id: id,
-            name: name,
-            thickness: widgetRaw["thickness"] ?? 3,
-          ),
-        );
-        continue;
-      }
-      //TODO maybe removeable
-      if (typeRaw == "graph" ||
-          typeRaw == "colorPallete" ||
-          typeRaw == "mediaPlayer" ||
-          typeRaw == "alertDialog" ||
-          typeRaw == "group") {
-        continue;
-      }
-
-      WidgetType? type;
-      for (var element in WidgetType.values) {
-        if (element.name == typeRaw ||
-            element.toString() == typeRaw ||
-            element.toString().replaceAll("CustomWidgetTypeDeprecated.", "") ==
-                typeRaw) {
-          type = element;
-          break;
-        }
-      }
-      if (type == null) {
-        continue;
-      }
-
-      CustomWidget? customWidget;
-      switch (type) {
-        case WidgetType.group:
+      try {
+        final String? name = templateRaw["name"];
+        final String? id = templateRaw["id"];
+        if (name == null || id == null) {
           continue;
-        case WidgetType.input:
-          customWidget = CustomInputWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.button:
-          customWidget = CustomButtonWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.webViewNew:
-          customWidget = CustomWebViewWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.tableNew:
-          customWidget = CustomTableWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.valueNew:
-          customWidget = CustomValueWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.multiselection:
-          customWidget = CustomMultiselectionWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.colorPicker:
-          customWidget = CustomColorPickerWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.networkPlayer:
-          customWidget = CustomNetworkPlayerWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.slider:
-          customWidget = CustomSliderWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.switchWidget:
-          customWidget = CustomSwitchWidget.fromJson(widgetRaw);
-          break;
-        case WidgetType.divisionLine:
-          customWidget = CustomDivisionlineWidget.fromJson(widgetRaw);
-          break;
-      }
-      if (customWidget != null) {
+        }
+        Map<String, dynamic> widgetRaw = Map<String, dynamic>.from(
+          templateRaw["widget"] ?? templateRaw,
+        );
+        widgetRaw["id"] = id;
+        widgetRaw["name"] = name;
+        if (widgetRaw["type"] == null) {
+          continue;
+        }
+        String typeRaw = widgetRaw["type"];
+        String normalizedType = typeRaw
+            .replaceAll("CustomWidgetTypeDeprecated.", "")
+            .replaceAll("WidgetType.", "");
+
+        if (normalizedType == "line") {
+          templates.add(
+            CustomDivisionlineWidget(
+              id: id,
+              name: name,
+              thickness: widgetRaw["thickness"] ?? 3,
+            ),
+          );
+          continue;
+        }
+        //TODO maybe removeable
+        if (normalizedType == "graph" ||
+            normalizedType == "colorPallete" ||
+            normalizedType == "mediaPlayer" ||
+            normalizedType == "alertDialog" ||
+            normalizedType == "group") {
+          continue;
+        }
+
+        WidgetType? type;
+        for (var element in WidgetType.values) {
+          // Use enum identifier via toString() since CustomWidgetTypeExtension shadows .name.
+          final enumName = element.toString().split('.').last;
+          if (enumName == normalizedType || element.toString() == typeRaw) {
+            type = element;
+            break;
+          }
+        }
+        if (type == null) {
+          continue;
+        }
+        widgetRaw["type"] = type.toString().split('.').last;
+
+        CustomWidget? customWidget;
+        switch (type) {
+          case WidgetType.group:
+            continue;
+          case WidgetType.input:
+            customWidget = CustomInputWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.button:
+            customWidget = CustomButtonWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.webViewNew:
+            customWidget = CustomWebViewWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.tableNew:
+            customWidget = CustomTableWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.valueNew:
+            customWidget = CustomValueWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.multiselection:
+            customWidget = CustomMultiselectionWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.colorPicker:
+            customWidget = CustomColorPickerWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.networkPlayer:
+            customWidget = CustomNetworkPlayerWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.slider:
+            customWidget = CustomSliderWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.switchWidget:
+            customWidget = CustomSwitchWidget.fromJson(widgetRaw);
+            break;
+          case WidgetType.divisionLine:
+            customWidget = CustomDivisionlineWidget.fromJson(widgetRaw);
+            break;
+        }
         templates.add(customWidget);
+      } catch (e, stackTrace) {
+        developer.log(
+          "CustomWidgetRepository | loadTemplate error for ${templateRaw["name"]} (${templateRaw["id"]}): $e",
+          error: e,
+          stackTrace: stackTrace,
+        );
       }
     }
     return templates;
@@ -149,11 +167,15 @@ class CustomWidgetRepository {
     List? listRaw = await fileManager.getList(templateKey);
 
     if (listRaw == null) {
+      developer.log("CustomWidgetRepository | loadTemplates: listRaw is null");
       loaded = true;
       templatesStreamController.add(templates);
       return;
     }
     templates.addAll(loadTemplate(listRaw));
+    developer.log(
+      "CustomWidgetRepository | loadTemplates: loaded ${templates.length} of ${listRaw.length} templates",
+    );
 
     loaded = true;
     sort();
