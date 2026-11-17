@@ -27,7 +27,7 @@ class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
   bool loaded = false;
   final String key = "devices";
   HashMap<String, dynamic> currentValues = HashMap<String, dynamic>();
-  final StreamController<Pair<String, dynamic>> _objectValueStreams =
+  final StreamController<Map<String, dynamic>> _objectValueBatchStreams =
       StreamController.broadcast();
   @override
   List<String> preDefinedFilters = [];
@@ -137,9 +137,8 @@ class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
     }
     currentValues[iobObject.id] = value;
     // notify listeners
-    _objectValueStreams.sink.add(
-      Pair<String, dynamic>(first: iobObject.id, second: value),
-    );
+    _objectValueBatchStreams.sink.add({iobObject.id: value});
+
     // send to backend
     updateValue(iobObject.id, value);
     return true;
@@ -178,6 +177,7 @@ class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
           .subscibe(subscription);
 
       await for (final update in stream) {
+        Map<String, dynamic> updateBatch = {};
         for (final stateUpdate in update.stateUpdates) {
           // Extract the value based on which field is set
           dynamic value;
@@ -201,12 +201,10 @@ class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
 
           // Update local cache
           currentValues[stateUpdate.stateId] = value;
-
+          updateBatch[stateUpdate.stateId] = value;
           // Emit update to listeners
-          _objectValueStreams.sink.add(
-            Pair<String, dynamic>(first: stateUpdate.stateId, second: value),
-          );
         }
+        _objectValueBatchStreams.sink.add(updateBatch);
       }
     } catch (e, stackTrace) {
       loggingService.error(
@@ -430,11 +428,14 @@ class IoBrokerDeviceService implements DeviceServiceInterface<IobrokerObject> {
   }
 
   @override
-  Stream<Pair<String, dynamic>> get objectValueStream =>
-      _objectValueStreams.stream;
-
-  @override
   Future<List<String>> getSelectableFilters() async {
     return getIobrokerAdapaters();
   }
+
+  @override
+  Map<String, dynamic> get currentValuesMap => Map.unmodifiable(currentValues);
+
+  @override
+  Stream<Map<String, dynamic>> get objectBatchValueStream =>
+      _objectValueBatchStreams.stream.asBroadcastStream();
 }

@@ -153,11 +153,14 @@ class DummyDeviceManager implements DeviceServiceInterface<IobrokerObject> {
   void updateFilters(List<String> filters) {}
 
   @override
-  Stream<Pair<String, dynamic>> get objectValueStream => const Stream.empty();
-
-  @override
   List<String> get preDefinedFilters => [];
 
   @override
   Future<List<String>> getSelectableFilters() async => [];
+
+  @override
+  Map<String, dynamic> get currentValuesMap => {};
+
+  @override
+  Stream<Map<String, dynamic>> get objectBatchValueStream => Stream.empty();
 }

@@ -38,8 +38,13 @@ interface class DeviceServiceInterface<Device extends DeviceInterface> {
     throw UnimplementedError();
   }
 
-  Stream<Pair<String, dynamic>> get objectValueStream =>
-      throw UnimplementedError();
+  Stream<Map<String, dynamic>> get objectBatchValueStream {
+    throw UnimplementedError();
+  }
+
+  Map<String, dynamic> get currentValuesMap {
+    throw UnimplementedError();
+  }
 
   List<String> get preDefinedFilters => throw UnimplementedError();
 

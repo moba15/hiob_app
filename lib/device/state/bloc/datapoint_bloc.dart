@@ -19,9 +19,19 @@ class DataPointBloc extends Bloc<DataPointEvent, DataPointState> {
       super(DataPointInitial(value: null)) {
     on<DataPointValueUpdate>(_onValueUpdated);
     on<DataPointValueUpdateRequest>(_onValueUpdateRequest);
-    _deviceValueSubscription = _deviceService.objectValueStream.listen((event) {
-      if (event.first == objectId) {
-        add(DataPointValueUpdate(value: event.second));
+    _deviceValueSubscription = _deviceService.objectBatchValueStream.listen((
+      event,
+    ) {
+      var entry = event.entries.firstWhere(
+        (element) {
+          return element.key == objectId;
+        },
+        orElse: () {
+          return MapEntry("", null);
+        },
+      );
+      if (entry.key.isNotEmpty) {
+        add(DataPointValueUpdate(value: entry.value));
       }
     });
 
